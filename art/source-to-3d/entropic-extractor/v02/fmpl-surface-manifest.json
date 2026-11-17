@@ -1,0 +1,2330 @@
+{
+  "status": "candidate-not-native-integrated",
+  "source_sha256": "cefe48fe2ae9a68fce1da1ca4294f2a434a835653aeba937c95b78d814cc010d",
+  "runtime_sha256": "ad800e1e8b434617b4fe5687c01a253717cf1be9adfa69829c806060e9d94495",
+  "native_footprint": [
+    3,
+    3
+  ],
+  "native_directions": [
+    0,
+    4,
+    8,
+    12
+  ],
+  "purpose": "2MW closed fragment-burning electrical generator",
+  "role_instances": [
+    {
+      "role": "ferrocrete_dark",
+      "fmpl_material_id": "ferrocrete_dark",
+      "model_specific_instance": "ENTROPIC FMPL | ferrocrete_dark",
+      "original_maps": {
+        "albedo": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/ferrocrete_dark_albedo.png",
+          "git_blob_sha": "5799f0d161f15fac48c8307a02369e4c89f28f2a",
+          "sha256": "121ae5f812f14b60204275c702e79590006c4c676e492c90d9b115d383b9ed4d",
+          "color_space": "sRGB"
+        },
+        "orm": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/ferrocrete_dark_orm.png",
+          "git_blob_sha": "77a971618c9104389dd600cbc601b94f3ace74f9",
+          "sha256": "f2dc43e597d7e4d7fccacabe662d1eee9703131dd991a72721357ff6d71a1d72",
+          "color_space": "Non-Color"
+        },
+        "normal": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/ferrocrete_dark_normal.png",
+          "git_blob_sha": "a95f3b28e5dc09300bb37c3e91c7a8ec73f744a9",
+          "sha256": "e81a79eb4d5389939f425c18c7bdb1c4656600b10e7c52098e2e908166e98610",
+          "color_space": "Non-Color"
+        }
+      },
+      "texture_repeat_per_tile": 1.25
+    },
+    {
+      "role": "gunmetal_dark",
+      "fmpl_material_id": "gunmetal_dark",
+      "model_specific_instance": "ENTROPIC FMPL | gunmetal_dark",
+      "original_maps": {
+        "albedo": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/gunmetal_dark_albedo.png",
+          "git_blob_sha": "6ff855c2fe3653400785f6d8257eef6cf8e6c5e3",
+          "sha256": "209761d9c30d3ff2e93fb7e397196e1ac2ebdeb6d2fcc9cc9b5f99207d82cf6b",
+          "color_space": "sRGB"
+        },
+        "orm": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/gunmetal_dark_orm.png",
+          "git_blob_sha": "a51acc6238b2562db812d77098be599afc0398af",
+          "sha256": "b1c09130ac1eb75a586f9e7ab8192459c363529e3f9912db891907edd874cb75",
+          "color_space": "Non-Color"
+        },
+        "normal": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/gunmetal_dark_normal.png",
+          "git_blob_sha": "53421b2b7f74da76bfc5da46e14aaf45494cab0b",
+          "sha256": "7bcb8e13d81fccc5ee051fd0edf256e2a50114f255869bfd0ab840d2ae3e848f",
+          "color_space": "Non-Color"
+        }
+      },
+      "texture_repeat_per_tile": 1.25
+    },
+    {
+      "role": "machine_steel",
+      "fmpl_material_id": "machine_steel",
+      "model_specific_instance": "ENTROPIC FMPL | machine_steel",
+      "original_maps": {
+        "albedo": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/machine_steel_albedo.png",
+          "git_blob_sha": "be1d406ed9a2c3822521422a7389515342f50aea",
+          "sha256": "55e9cb3d4079baeafe2b9ac0e34924afabc93e7a128d95cd755878b7bb29354a",
+          "color_space": "sRGB"
+        },
+        "orm": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/machine_steel_orm.png",
+          "git_blob_sha": "143533c884e893362b1557efd2deb0e98c4e5d7c",
+          "sha256": "a89ad9e908dd1e53ec461e8617bb2f6add873af9389031d98d28839e3c082684",
+          "color_space": "Non-Color"
+        },
+        "normal": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/machine_steel_normal.png",
+          "git_blob_sha": "5c517292babc6a46b6abb22aa2295df3911da040",
+          "sha256": "518e4d4d9359646d11984692d452e1faab751bbb53d873f94f7d7df4bf514015",
+          "color_space": "Non-Color"
+        }
+      },
+      "texture_repeat_per_tile": 1.25
+    },
+    {
+      "role": "brass",
+      "fmpl_material_id": "brass",
+      "model_specific_instance": "ENTROPIC FMPL | brass",
+      "original_maps": {
+        "albedo": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/brass_albedo.png",
+          "git_blob_sha": "b8f291ab3d0ff419c83e60d805a5c2728ff9753c",
+          "sha256": "57034a31f8c7859a6b3661f57c67e60139bb8dbfc7273cd45be7b98904e35038",
+          "color_space": "sRGB"
+        },
+        "orm": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/brass_orm.png",
+          "git_blob_sha": "a74e7f5ffcc591a7e895d10367282a0bd51748fe",
+          "sha256": "acc155e0e7406452e674e70673dcb149cd3d42fa9b0a0e0a069f61b6d91dc1e0",
+          "color_space": "Non-Color"
+        },
+        "normal": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/brass_normal.png",
+          "git_blob_sha": "11a3babbf0a2ce80efdefff190a7873742054de9",
+          "sha256": "8b48a33b75fd08e7cfa0e405c921b48a43682dafd33f49b582482e188f5eb674",
+          "color_space": "Non-Color"
+        }
+      },
+      "texture_repeat_per_tile": 1.25
+    },
+    {
+      "role": "martian_red",
+      "fmpl_material_id": "martian_red",
+      "model_specific_instance": "ENTROPIC FMPL | martian_red",
+      "original_maps": {
+        "albedo": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/martian_red_albedo.png",
+          "git_blob_sha": "c8d06b4677401a1e880872a5b01eac3ee14ba859",
+          "sha256": "2f2df118e10d2d56bf8f895e1d2ce112319e77b9328f29e7b41333a9d74d5262",
+          "color_space": "sRGB"
+        },
+        "orm": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/martian_red_orm.png",
+          "git_blob_sha": "14d866dbdacfed2992334f8b79c29b00378e624e",
+          "sha256": "5487550eb57282b8a5c8aaa404ff0d8fa5ffc4bfea6e2433e8dd419e3b867fa6",
+          "color_space": "Non-Color"
+        },
+        "normal": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/martian_red_normal.png",
+          "git_blob_sha": "b3fd5a4b6a364dd89872993ba7053017bf180867",
+          "sha256": "dd85cc702e0242f62186dd3217699485e4d77fbb411e2975d6a91187f52404a2",
+          "color_space": "Non-Color"
+        }
+      },
+      "texture_repeat_per_tile": 1.25
+    },
+    {
+      "role": "glass",
+      "fmpl_material_id": "glass",
+      "model_specific_instance": "ENTROPIC FMPL | glass",
+      "original_maps": {
+        "albedo": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/glass_albedo.png",
+          "git_blob_sha": "b45dda3e27c9dc0dced22dde72ddcc4f97535612",
+          "sha256": "5b4e39dffba19f359aec51ed677ac50a95a4955ea0fe4b50427175580fc18bde",
+          "color_space": "sRGB"
+        },
+        "orm": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/glass_orm.png",
+          "git_blob_sha": "946228b4e8e4c07d93970c25a89606c6d1ef85b3",
+          "sha256": "04492b1b506a477ed6f858fa30892ab2900668cc3423b0ded42aeee4a2f43455",
+          "color_space": "Non-Color"
+        },
+        "normal": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/glass_normal.png",
+          "git_blob_sha": "c44451b9a273dd95aa3e2bc92288a8feed800df5",
+          "sha256": "06a8637c6ec3b0c46aafd40d686406258798401caebfa73e98a77eecda6ba5fd",
+          "color_space": "Non-Color"
+        }
+      },
+      "texture_repeat_per_tile": 1.25
+    },
+    {
+      "role": "insulator",
+      "fmpl_material_id": "insulator",
+      "model_specific_instance": "ENTROPIC FMPL | insulator",
+      "original_maps": {
+        "albedo": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/insulator_albedo.png",
+          "git_blob_sha": "e716c5a16816af1fe9b14542bf1cbab24571b10d",
+          "sha256": "3d9abd2776ef0efdb05cf7fa4a6fac1047a1ab207791f8f5bd0dd205c05054ff",
+          "color_space": "sRGB"
+        },
+        "orm": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/insulator_orm.png",
+          "git_blob_sha": "b2b35e9f712ce67717023b980a80064b1852da61",
+          "sha256": "f94326f7423fd5e752850d7f9bae5033175adaf842b492a30c97baa4eae0d646",
+          "color_space": "Non-Color"
+        },
+        "normal": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/insulator_normal.png",
+          "git_blob_sha": "fb0c46415572105b2a5438384fd935f9eb3ead60",
+          "sha256": "7113e9eabcd5cc3d962eee3e94283bb67be980189bca474c9d24cf63d5faa49c",
+          "color_space": "Non-Color"
+        }
+      },
+      "texture_repeat_per_tile": 1.25
+    },
+    {
+      "role": "machined_bright",
+      "fmpl_material_id": "machined_bright",
+      "model_specific_instance": "ENTROPIC FMPL | machined_bright",
+      "original_maps": {
+        "albedo": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/machined_bright_albedo.png",
+          "git_blob_sha": "9f15374ad94236a4786f6c220773243f4c1120d4",
+          "sha256": "7f1e53850a34c71510faee4212cf6a7c6ae36b060d44acce61848c0ee2bd48fc",
+          "color_space": "sRGB"
+        },
+        "orm": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/machined_bright_orm.png",
+          "git_blob_sha": "bc7f9022e2c11060745e56d1836a026ed95aee7f",
+          "sha256": "ddf363fc84514cf2c641ebabd7790bfa76f6ad569f4f6ea8f66c92176f99bfd8",
+          "color_space": "Non-Color"
+        },
+        "normal": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/machined_bright_normal.png",
+          "git_blob_sha": "07b159a59235ea10140b19a1e0595f9692961198",
+          "sha256": "0103f5526e933509b89098845509b4e5ef226188bc4049bb4db58370465951cd",
+          "color_space": "Non-Color"
+        }
+      },
+      "texture_repeat_per_tile": 1.25
+    },
+    {
+      "role": "indicator_green",
+      "fmpl_material_id": "indicator_green",
+      "model_specific_instance": "ENTROPIC FMPL | indicator_green",
+      "original_maps": {
+        "albedo": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/indicator_green_albedo.png",
+          "git_blob_sha": "20a4092be509b142629bc88e2bb7570e3c08e8f5",
+          "sha256": "d517b33a490f58e191a56d9625aba87e1c102c51a989922cd130b9e2784ba37e",
+          "color_space": "sRGB"
+        },
+        "orm": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/indicator_green_orm.png",
+          "git_blob_sha": "5a30eef9b9380805bb1799cbf878ba8591461e9c",
+          "sha256": "17e6ebe26dd26a883cb0ccbaee5a6669572a4b890dcf2aef398546758d2fdab9",
+          "color_space": "Non-Color"
+        },
+        "normal": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/indicator_green_normal.png",
+          "git_blob_sha": "380761d58aa6833359c7552e64bb2cd9256b259d",
+          "sha256": "88abec52038a2f403b17b1e974b3cfe6c0bcdaa233ad9c48da8b0df36c8ae3bf",
+          "color_space": "Non-Color"
+        }
+      },
+      "texture_repeat_per_tile": 1.25
+    },
+    {
+      "role": "dark_recess",
+      "fmpl_material_id": "dark_recess",
+      "model_specific_instance": "ENTROPIC FMPL | dark_recess",
+      "original_maps": {
+        "albedo": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/dark_recess_albedo.png",
+          "git_blob_sha": "a34f4725a32b85f57a3c4e4148e4f75abdc17ef6",
+          "sha256": "f693afb6909d4004bd587c4217782f7b28d3d30ff123790a6b25770a54ed2986",
+          "color_space": "sRGB"
+        },
+        "orm": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/dark_recess_orm.png",
+          "git_blob_sha": "526252b087e9ffc18a457ba974f8f5796a723ee1",
+          "sha256": "075e6de0ac5cd008ba3ddccceaee889a3e2b3ce379be5b0627964e1fe8e23b14",
+          "color_space": "Non-Color"
+        },
+        "normal": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/dark_recess_normal.png",
+          "git_blob_sha": "6471dfdd1d63a944fa4b7a09bbf6ebbafacd11a6",
+          "sha256": "d53ed45790b0785e20367a001cb2cee60840bd81ef0ab7b26c0581a59b3d3aca",
+          "color_space": "Non-Color"
+        }
+      },
+      "texture_repeat_per_tile": 1.25
+    },
+    {
+      "role": "iron",
+      "fmpl_material_id": "iron",
+      "model_specific_instance": "ENTROPIC FMPL | iron",
+      "original_maps": {
+        "albedo": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/iron_albedo.png",
+          "git_blob_sha": "48a6e43d56d32b504d84f3206ec0dc773430e546",
+          "sha256": "cbd2e4fd0e9368d69a4b6d255e7440443414155f4cd8c8434c149063fd65cbb7",
+          "color_space": "sRGB"
+        },
+        "orm": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/iron_orm.png",
+          "git_blob_sha": "12a971cde7dbb9205918f9c06e7686c30b830a99",
+          "sha256": "1c9011a45f77e6f0d5f35cbfbb3e4e0d8f8ed5f8d62a6afd33a04d8477c3a617",
+          "color_space": "Non-Color"
+        },
+        "normal": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/iron_normal.png",
+          "git_blob_sha": "e2101d61497c1b243fffe17abd687e57f409ab7a",
+          "sha256": "f26a49e578f648a434e460e5d0484bec4f0440cf4170895aeda380975e282997",
+          "color_space": "Non-Color"
+        }
+      },
+      "texture_repeat_per_tile": 1.25
+    }
+  ],
+  "uv_assignments": [
+    {
+      "object": "ENTROPIC | quarried founded slab",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | ferrocrete_dark"
+    },
+    {
+      "object": "ENTROPIC | dressed plinth block",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | ferrocrete_dark"
+    },
+    {
+      "object": "ENTROPIC | dressed plinth block.001",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | ferrocrete_dark"
+    },
+    {
+      "object": "ENTROPIC | dressed plinth block.002",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | ferrocrete_dark"
+    },
+    {
+      "object": "ENTROPIC | dressed plinth block.003",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | ferrocrete_dark"
+    },
+    {
+      "object": "ENTROPIC | dressed plinth block.004",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | ferrocrete_dark"
+    },
+    {
+      "object": "ENTROPIC | dressed plinth block.005",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | ferrocrete_dark"
+    },
+    {
+      "object": "ENTROPIC | dressed plinth block.006",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | ferrocrete_dark"
+    },
+    {
+      "object": "ENTROPIC | dressed plinth block.007",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | ferrocrete_dark"
+    },
+    {
+      "object": "ENTROPIC | dressed plinth block.008",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | ferrocrete_dark"
+    },
+    {
+      "object": "ENTROPIC | retained armored deck",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | gunmetal_dark"
+    },
+    {
+      "object": "ENTROPIC | deck corner bracket",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | deck foundation anchor",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | deck corner bracket.001",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | deck foundation anchor.001",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | deck corner bracket.002",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | deck foundation anchor.002",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | deck corner bracket.003",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | deck foundation anchor.003",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | core founded shoe",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | closed blackstone conversion mantle",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | gunmetal_dark"
+    },
+    {
+      "object": "ENTROPIC | sealed roof casting",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | mantle seated retaining band",
+      "method": "sweep",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | mantle seated retaining band.001",
+      "method": "sweep",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | mantle seated retaining band.002",
+      "method": "sweep",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | mantle seated retaining band.003",
+      "method": "sweep",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | founded structural rib",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | rib retained band stud",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | rib retained band stud.001",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | rib retained band stud.002",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | rib retained band stud.003",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | founded structural rib.001",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | rib retained band stud.004",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | rib retained band stud.005",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | rib retained band stud.006",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | rib retained band stud.007",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | founded structural rib.002",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | rib retained band stud.008",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | rib retained band stud.009",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | rib retained band stud.010",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | rib retained band stud.011",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | founded structural rib.003",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | rib retained band stud.012",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | rib retained band stud.013",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | rib retained band stud.014",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | rib retained band stud.015",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | founded structural rib.004",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | rib retained band stud.016",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | rib retained band stud.017",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | rib retained band stud.018",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | rib retained band stud.019",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | founded structural rib.005",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | rib retained band stud.020",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | rib retained band stud.021",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | rib retained band stud.022",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | rib retained band stud.023",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | founded structural rib.006",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | rib retained band stud.024",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | rib retained band stud.025",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | rib retained band stud.026",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | rib retained band stud.027",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | founded structural rib.007",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | rib retained band stud.028",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | rib retained band stud.029",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | rib retained band stud.030",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | rib retained band stud.031",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | sealed surface cassette",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | opaque blind green core window",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | glass"
+    },
+    {
+      "object": "ENTROPIC | seated window jamb",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | seated window jamb.001",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | sealed window sill",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | sealed window sill.001",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | green pane retained tracery",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | gunmetal_dark"
+    },
+    {
+      "object": "ENTROPIC | green pane retained tracery.001",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | gunmetal_dark"
+    },
+    {
+      "object": "ENTROPIC | green pane retained tracery.002",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | gunmetal_dark"
+    },
+    {
+      "object": "ENTROPIC | seated blind glazing crossbar",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | seated blind glazing crossbar.001",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | closed lower service tablet",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | martian_red"
+    },
+    {
+      "object": "ENTROPIC | tablet raised retaining edge",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | tablet raised retaining edge.001",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | tablet embossed runic rib",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | tablet embossed runic rib.001",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | tablet embossed runic rib.002",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | tablet embossed runic rib.003",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | tablet embossed runic rib.004",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | sealed surface cassette.001",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | opaque blind green core window.001",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | glass"
+    },
+    {
+      "object": "ENTROPIC | seated window jamb.002",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | seated window jamb.003",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | sealed window sill.002",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | sealed window sill.003",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | green pane retained tracery.003",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | gunmetal_dark"
+    },
+    {
+      "object": "ENTROPIC | green pane retained tracery.004",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | gunmetal_dark"
+    },
+    {
+      "object": "ENTROPIC | green pane retained tracery.005",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | gunmetal_dark"
+    },
+    {
+      "object": "ENTROPIC | seated blind glazing crossbar.002",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | seated blind glazing crossbar.003",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | closed lower service tablet.001",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | martian_red"
+    },
+    {
+      "object": "ENTROPIC | tablet raised retaining edge.002",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | tablet raised retaining edge.003",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | tablet embossed runic rib.005",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | tablet embossed runic rib.006",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | tablet embossed runic rib.007",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | tablet embossed runic rib.008",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | tablet embossed runic rib.009",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | sealed surface cassette.002",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | opaque blind green core window.002",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | glass"
+    },
+    {
+      "object": "ENTROPIC | seated window jamb.004",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | seated window jamb.005",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | sealed window sill.004",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | sealed window sill.005",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | green pane retained tracery.006",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | gunmetal_dark"
+    },
+    {
+      "object": "ENTROPIC | green pane retained tracery.007",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | gunmetal_dark"
+    },
+    {
+      "object": "ENTROPIC | green pane retained tracery.008",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | gunmetal_dark"
+    },
+    {
+      "object": "ENTROPIC | seated blind glazing crossbar.004",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | seated blind glazing crossbar.005",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | closed lower service tablet.002",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | martian_red"
+    },
+    {
+      "object": "ENTROPIC | tablet raised retaining edge.004",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | tablet raised retaining edge.005",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | tablet embossed runic rib.010",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | tablet embossed runic rib.011",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | tablet embossed runic rib.012",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | tablet embossed runic rib.013",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | tablet embossed runic rib.014",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | sealed surface cassette.003",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | opaque blind green core window.003",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | glass"
+    },
+    {
+      "object": "ENTROPIC | seated window jamb.006",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | seated window jamb.007",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | sealed window sill.006",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | sealed window sill.007",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | green pane retained tracery.009",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | gunmetal_dark"
+    },
+    {
+      "object": "ENTROPIC | green pane retained tracery.010",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | gunmetal_dark"
+    },
+    {
+      "object": "ENTROPIC | green pane retained tracery.011",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | gunmetal_dark"
+    },
+    {
+      "object": "ENTROPIC | seated blind glazing crossbar.006",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | seated blind glazing crossbar.007",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | closed lower service tablet.003",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | martian_red"
+    },
+    {
+      "object": "ENTROPIC | tablet raised retaining edge.006",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | tablet raised retaining edge.007",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | tablet embossed runic rib.015",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | tablet embossed runic rib.016",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | tablet embossed runic rib.017",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | tablet embossed runic rib.018",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | tablet embossed runic rib.019",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | sealed surface cassette.004",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | opaque blind green core window.004",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | glass"
+    },
+    {
+      "object": "ENTROPIC | seated window jamb.008",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | seated window jamb.009",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | sealed window sill.008",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | sealed window sill.009",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | green pane retained tracery.012",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | gunmetal_dark"
+    },
+    {
+      "object": "ENTROPIC | green pane retained tracery.013",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | gunmetal_dark"
+    },
+    {
+      "object": "ENTROPIC | green pane retained tracery.014",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | gunmetal_dark"
+    },
+    {
+      "object": "ENTROPIC | seated blind glazing crossbar.008",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | seated blind glazing crossbar.009",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | closed lower service tablet.004",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | martian_red"
+    },
+    {
+      "object": "ENTROPIC | tablet raised retaining edge.008",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | tablet raised retaining edge.009",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | tablet embossed runic rib.020",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | tablet embossed runic rib.021",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | tablet embossed runic rib.022",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | tablet embossed runic rib.023",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | tablet embossed runic rib.024",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | sealed surface cassette.005",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | opaque blind green core window.005",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | glass"
+    },
+    {
+      "object": "ENTROPIC | seated window jamb.010",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | seated window jamb.011",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | sealed window sill.010",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | sealed window sill.011",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | green pane retained tracery.015",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | gunmetal_dark"
+    },
+    {
+      "object": "ENTROPIC | green pane retained tracery.016",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | gunmetal_dark"
+    },
+    {
+      "object": "ENTROPIC | green pane retained tracery.017",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | gunmetal_dark"
+    },
+    {
+      "object": "ENTROPIC | seated blind glazing crossbar.010",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | seated blind glazing crossbar.011",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | closed lower service tablet.005",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | martian_red"
+    },
+    {
+      "object": "ENTROPIC | tablet raised retaining edge.010",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | tablet raised retaining edge.011",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | tablet embossed runic rib.025",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | tablet embossed runic rib.026",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | tablet embossed runic rib.027",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | tablet embossed runic rib.028",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | tablet embossed runic rib.029",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | sealed surface cassette.006",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | opaque blind green core window.006",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | glass"
+    },
+    {
+      "object": "ENTROPIC | seated window jamb.012",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | seated window jamb.013",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | sealed window sill.012",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | sealed window sill.013",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | green pane retained tracery.018",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | gunmetal_dark"
+    },
+    {
+      "object": "ENTROPIC | green pane retained tracery.019",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | gunmetal_dark"
+    },
+    {
+      "object": "ENTROPIC | green pane retained tracery.020",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | gunmetal_dark"
+    },
+    {
+      "object": "ENTROPIC | seated blind glazing crossbar.012",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | seated blind glazing crossbar.013",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | closed lower service tablet.006",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | martian_red"
+    },
+    {
+      "object": "ENTROPIC | tablet raised retaining edge.012",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | tablet raised retaining edge.013",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | tablet embossed runic rib.030",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | tablet embossed runic rib.031",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | tablet embossed runic rib.032",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | tablet embossed runic rib.033",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | tablet embossed runic rib.034",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | sealed surface cassette.007",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | opaque blind green core window.007",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | glass"
+    },
+    {
+      "object": "ENTROPIC | seated window jamb.014",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | seated window jamb.015",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | sealed window sill.014",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | sealed window sill.015",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | green pane retained tracery.021",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | gunmetal_dark"
+    },
+    {
+      "object": "ENTROPIC | green pane retained tracery.022",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | gunmetal_dark"
+    },
+    {
+      "object": "ENTROPIC | green pane retained tracery.023",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | gunmetal_dark"
+    },
+    {
+      "object": "ENTROPIC | seated blind glazing crossbar.014",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | seated blind glazing crossbar.015",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | closed lower service tablet.007",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | martian_red"
+    },
+    {
+      "object": "ENTROPIC | tablet raised retaining edge.014",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | tablet raised retaining edge.015",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | tablet embossed runic rib.035",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | tablet embossed runic rib.036",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | tablet embossed runic rib.037",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | tablet embossed runic rib.038",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | tablet embossed runic rib.039",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | pylon -1.04 -0.91 founded foot",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | pylon -1.04 -0.91 ceramic core",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | insulator"
+    },
+    {
+      "object": "ENTROPIC | pylon -1.04 -0.91 forged end retainer",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | pylon -1.04 -0.91 forged end retainer.001",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | pylon -1.04 -0.91 coil support stave",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | insulator"
+    },
+    {
+      "object": "ENTROPIC | pylon -1.04 -0.91 coil support stave.001",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | insulator"
+    },
+    {
+      "object": "ENTROPIC | pylon -1.04 -0.91 coil support stave.002",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | insulator"
+    },
+    {
+      "object": "ENTROPIC | pylon -1.04 -0.91 coil support stave.003",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | insulator"
+    },
+    {
+      "object": "ENTROPIC | pylon -1.04 -0.91 continuous supported copper winding",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | pylon -1.04 -0.91 sealed terminal crown",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | pylon -1.04 -0.91 green crown indicator",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | indicator_green"
+    },
+    {
+      "object": "ENTROPIC | pylon -1.04 -0.91 foot anchor",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | pylon -1.04 -0.91 foot anchor.001",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | pylon -1.04 -0.91 foot anchor.002",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | pylon -1.04 -0.91 foot anchor.003",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | pylon -1.04 0.91 founded foot",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | pylon -1.04 0.91 ceramic core",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | insulator"
+    },
+    {
+      "object": "ENTROPIC | pylon -1.04 0.91 forged end retainer",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | pylon -1.04 0.91 forged end retainer.001",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | pylon -1.04 0.91 coil support stave",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | insulator"
+    },
+    {
+      "object": "ENTROPIC | pylon -1.04 0.91 coil support stave.001",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | insulator"
+    },
+    {
+      "object": "ENTROPIC | pylon -1.04 0.91 coil support stave.002",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | insulator"
+    },
+    {
+      "object": "ENTROPIC | pylon -1.04 0.91 coil support stave.003",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | insulator"
+    },
+    {
+      "object": "ENTROPIC | pylon -1.04 0.91 continuous supported copper winding",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | pylon -1.04 0.91 sealed terminal crown",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | pylon -1.04 0.91 green crown indicator",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | indicator_green"
+    },
+    {
+      "object": "ENTROPIC | pylon -1.04 0.91 foot anchor",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | pylon -1.04 0.91 foot anchor.001",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | pylon -1.04 0.91 foot anchor.002",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | pylon -1.04 0.91 foot anchor.003",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | pylon 1.04 -0.91 founded foot",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | pylon 1.04 -0.91 ceramic core",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | insulator"
+    },
+    {
+      "object": "ENTROPIC | pylon 1.04 -0.91 forged end retainer",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | pylon 1.04 -0.91 forged end retainer.001",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | pylon 1.04 -0.91 coil support stave",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | insulator"
+    },
+    {
+      "object": "ENTROPIC | pylon 1.04 -0.91 coil support stave.001",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | insulator"
+    },
+    {
+      "object": "ENTROPIC | pylon 1.04 -0.91 coil support stave.002",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | insulator"
+    },
+    {
+      "object": "ENTROPIC | pylon 1.04 -0.91 coil support stave.003",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | insulator"
+    },
+    {
+      "object": "ENTROPIC | pylon 1.04 -0.91 continuous supported copper winding",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | pylon 1.04 -0.91 sealed terminal crown",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | pylon 1.04 -0.91 green crown indicator",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | indicator_green"
+    },
+    {
+      "object": "ENTROPIC | pylon 1.04 -0.91 foot anchor",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | pylon 1.04 -0.91 foot anchor.001",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | pylon 1.04 -0.91 foot anchor.002",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | pylon 1.04 -0.91 foot anchor.003",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | pylon 1.04 0.91 founded foot",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | pylon 1.04 0.91 ceramic core",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | insulator"
+    },
+    {
+      "object": "ENTROPIC | pylon 1.04 0.91 forged end retainer",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | pylon 1.04 0.91 forged end retainer.001",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | pylon 1.04 0.91 coil support stave",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | insulator"
+    },
+    {
+      "object": "ENTROPIC | pylon 1.04 0.91 coil support stave.001",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | insulator"
+    },
+    {
+      "object": "ENTROPIC | pylon 1.04 0.91 coil support stave.002",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | insulator"
+    },
+    {
+      "object": "ENTROPIC | pylon 1.04 0.91 coil support stave.003",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | insulator"
+    },
+    {
+      "object": "ENTROPIC | pylon 1.04 0.91 continuous supported copper winding",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | pylon 1.04 0.91 sealed terminal crown",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | pylon 1.04 0.91 green crown indicator",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | indicator_green"
+    },
+    {
+      "object": "ENTROPIC | pylon 1.04 0.91 foot anchor",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | pylon 1.04 0.91 foot anchor.001",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | pylon 1.04 0.91 foot anchor.002",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | pylon 1.04 0.91 foot anchor.003",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | closed thermal side casting",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | gunmetal_dark"
+    },
+    {
+      "object": "ENTROPIC | thermal casting founded shoe",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | seated external thermal fin",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | seated external thermal fin.001",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | seated external thermal fin.002",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | seated external thermal fin.003",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | seated external thermal fin.004",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | seated external thermal fin.005",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | seated external thermal fin.006",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | seated external thermal fin.007",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | seated external thermal fin.008",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | thermal retaining rail",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | thermal retaining rail.001",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | thermal rail fastener",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | thermal rail fastener.001",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | thermal rail fastener.002",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | thermal rail fastener.003",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | closed thermal side casting.001",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | gunmetal_dark"
+    },
+    {
+      "object": "ENTROPIC | thermal casting founded shoe.001",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | seated external thermal fin.009",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | seated external thermal fin.010",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | seated external thermal fin.011",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | seated external thermal fin.012",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | seated external thermal fin.013",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | seated external thermal fin.014",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | seated external thermal fin.015",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | seated external thermal fin.016",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | seated external thermal fin.017",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | thermal retaining rail.002",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | thermal retaining rail.003",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | thermal rail fastener.004",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | thermal rail fastener.005",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | thermal rail fastener.006",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | thermal rail fastener.007",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | fuel vestibule founded casing",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | closed fragment fuel hatch",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | gunmetal_dark"
+    },
+    {
+      "object": "ENTROPIC | fuel door seat fastener",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | fuel door seat fastener.001",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | fuel door seat fastener.002",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | fuel door seat fastener.003",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | fuel hatch captured hinge",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | fuel hatch captured hinge.001",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | fuel hatch latch seat",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | closed captive latch",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | closed rear regulating casket",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | gunmetal_dark"
+    },
+    {
+      "object": "ENTROPIC | rear casket retaining screw",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | rear casket retaining screw.001",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | rear casket retaining screw.002",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | rear casket retaining screw.003",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | rear blind indicator seat",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | rear green sealed indicator",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | indicator_green"
+    },
+    {
+      "object": "ENTROPIC | rear blind indicator seat.001",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | rear green sealed indicator.001",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | indicator_green"
+    },
+    {
+      "object": "ENTROPIC | rear blind indicator seat.002",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | rear green sealed indicator.002",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | indicator_green"
+    },
+    {
+      "object": "ENTROPIC | rear casket founded support foot",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | rear casket load leg",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | rear casket foot anchor",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | rear casket foot anchor.001",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | rear casket founded support foot.001",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | rear casket load leg.001",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | rear casket foot anchor.002",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | rear casket foot anchor.003",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | radial roof casting relief",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | upper shell retained stud",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | radial roof casting relief.001",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | upper shell retained stud.001",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | radial roof casting relief.002",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | upper shell retained stud.002",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | radial roof casting relief.003",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | upper shell retained stud.003",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | radial roof casting relief.004",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | upper shell retained stud.004",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | radial roof casting relief.005",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | upper shell retained stud.005",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | radial roof casting relief.006",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | upper shell retained stud.006",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | radial roof casting relief.007",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | upper shell retained stud.007",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | radial roof casting relief.008",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | upper shell retained stud.008",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | radial roof casting relief.009",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | upper shell retained stud.009",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | radial roof casting relief.010",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | upper shell retained stud.010",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | radial roof casting relief.011",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | upper shell retained stud.011",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | radial roof casting relief.012",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | upper shell retained stud.012",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | radial roof casting relief.013",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | upper shell retained stud.013",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | radial roof casting relief.014",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | upper shell retained stud.014",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | radial roof casting relief.015",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | upper shell retained stud.015",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | fan opaque backplate",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | gunmetal_dark"
+    },
+    {
+      "object": "ENTROPIC | stationary fan annular housing",
+      "method": "sweep",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | fixed fan shaft",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | shaft retained axial washer",
+      "method": "sweep",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | shaft retained axial washer.001",
+      "method": "sweep",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | bored rotor hub",
+      "method": "sweep",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | fan rigid blade",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | fan rigid blade.001",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | fan rigid blade.002",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | fan rigid blade.003",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | fan rigid blade.004",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | fan rigid blade.005",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | machine_steel"
+    },
+    {
+      "object": "ENTROPIC | shaft top seated retainer",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | fixed fan guard grille",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | fixed fan guard grille.001",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | fixed fan guard grille.002",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | fixed fan guard grille.003",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | fixed fan guard grille.004",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | fixed fan guard grille.005",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | fixed fan guard grille.006",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | fixed fan guard grille.007",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | fixed fan guard grille.008",
+      "method": "panel",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | fan guard grille retained rim",
+      "method": "sweep",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | fan housing axial stud",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | fan housing axial stud.001",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | fan housing axial stud.002",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | fan housing axial stud.003",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | fan housing axial stud.004",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | fan housing axial stud.005",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | fan housing axial stud.006",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    },
+    {
+      "object": "ENTROPIC | fan housing axial stud.007",
+      "method": "cylinder",
+      "material": "ENTROPIC FMPL | brass"
+    }
+  ],
+  "all_original_source_maps_git_blob_verified": true,
+  "packed_images": 24,
+  "animation": "exterior roof cooling rotor; closed energy conversion interior",
+  "owner_visual_approved": false
+}

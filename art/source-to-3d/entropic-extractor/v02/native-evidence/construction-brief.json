@@ -1,0 +1,118 @@
+{
+  "entity": "burner-generator/entropic-extractor",
+  "actual_contract": "native-contract/contract.json",
+  "power_watts": 2000000.0000000002,
+  "electric_buffer_joules": 20000000,
+  "footprint": [
+    3,
+    3
+  ],
+  "native_directions": [
+    0,
+    4,
+    8,
+    12
+  ],
+  "fuel": {
+    "item": "blackstone-fragment",
+    "energy_joules": 1000000000000000,
+    "category": "entropic-extractor-blackstone",
+    "slots": 1,
+    "burnt_output_slots": 0,
+    "raw_chunks_and_ordinary_fuels_rejected": true
+  },
+  "processing_recipes": [],
+  "building_recipe": {
+    "name": "entropic-extractor",
+    "seconds": 30,
+    "categories": [
+      "citadel-manufactoreo"
+    ],
+    "ingredients": [
+      {
+        "type": "item",
+        "name": "offworld-cogitator-components",
+        "amount": 5
+      },
+      {
+        "type": "item",
+        "name": "servitor-parts",
+        "amount": 4
+      },
+      {
+        "type": "item",
+        "name": "blackstone-slab",
+        "amount": 1
+      }
+    ],
+    "products": [
+      {
+        "independent_probability": 1,
+        "shared_probability": {
+          "min": 0,
+          "max": 1
+        },
+        "type": "item",
+        "name": "entropic-extractor",
+        "amount": 1,
+        "affected_by_quality": true
+      },
+      {
+        "independent_probability": 0,
+        "shared_probability": {
+          "min": 0,
+          "max": 1
+        },
+        "type": "item",
+        "name": "mechanical-detritus",
+        "amount": 1,
+        "ignored_by_stats": 1,
+        "ignored_by_productivity": 1,
+        "affected_by_quality": true
+      }
+    ],
+    "initially_locked": true,
+    "unlocked_after_actual_technology": true
+  },
+  "technology": {
+    "name": "blackstone-citadel-manufacture",
+    "prerequisites": [
+      "orbital-relic-procurement",
+      "space-platform"
+    ],
+    "count": 500,
+    "ticks": 2700,
+    "ingredients": [
+      {
+        "name": "automation-science-pack",
+        "amount": 1
+      },
+      {
+        "name": "logistic-science-pack",
+        "amount": 1
+      },
+      {
+        "name": "chemical-science-pack",
+        "amount": 1
+      },
+      {
+        "name": "space-science-pack",
+        "amount": 1
+      }
+    ]
+  },
+  "native_fluid_ports": 0,
+  "native_circuit_or_manual_copper_sockets": 0,
+  "placement": "Space platform only; ordinary half-grid3x3 placement.",
+  "native_operation_proof": "native-contract/operation.json",
+  "native_ordinary_accumulator_energy_after8seconds": 2400000,
+  "no_energy_assignments": true,
+  "construction_brief": "Enclosed Blackstone power reliquary with opaque green glazing, founded heat-management/armature housings and meaningful exterior working movement. Retain the closed-cathedral ideology and dense model-specific service detail; do not expose an invented crafting processor. Correct indexed FMPL images and physical UVs.3x3 scale; four actual native facings.",
+  "source_identity_search": "No named editable Entropic blend/GLB/builder found in current art/model filenames; original shipped sprite sheet retained as recognition reference. No claim that unnamed sources cannot exist.",
+  "preserve_concurrent_work": [
+    "Advanced Space Cargo",
+    "thruster refinements",
+    "separate emergency steam engine"
+  ],
+  "previous_machine": "Citadel accepted COMPLETE. No further refinement/testing."
+}

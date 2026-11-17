@@ -1,0 +1,75 @@
+{
+  "base_commit": "d264c959d10d415e2132e4fbf4c2e27a9c3899f4",
+  "source_sha256": "cefe48fe2ae9a68fce1da1ca4294f2a434a835653aeba937c95b78d814cc010d",
+  "runtime_sha256": "ad800e1e8b434617b4fe5687c01a253717cf1be9adfa69829c806060e9d94495",
+  "generated_lua_sha256": "a6564b6be224fedbd2ec2116036cc1d445aba26046726f1d53f2edd02709494b",
+  "sprite_files": {
+    "east-idle.png": {
+      "sha256": "d1cc1f45ce4b9ab9baeaee59e83eb5f645d0e9eec00c7674843619c6577da2c1",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    "east-working.png": {
+      "sha256": "880049c766b73053667cd5d2d707077a56c3442c63fb2e7e958a0e3bea2c1a7d",
+      "dimensions": [
+        4096,
+        2048
+      ]
+    },
+    "icon.png": {
+      "sha256": "e21ad2dc9574b3629738b83005169a82d747a86eaffd57d126b79a5ed92aaccc",
+      "dimensions": [
+        64,
+        64
+      ]
+    },
+    "north-idle.png": {
+      "sha256": "81021b95b9eb2801df243d724174c5296c255731047d139532e37bb9c3787e59",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    "north-working.png": {
+      "sha256": "0bffdd113678eda8e59d5ac2e4ccf68e68c1811c544bdbb43976f1a99876c8c4",
+      "dimensions": [
+        4096,
+        2048
+      ]
+    },
+    "south-idle.png": {
+      "sha256": "038537c3741f1eb32447d14368c062f65b974e21ea8631559045814df6917106",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    "south-working.png": {
+      "sha256": "eeeabc824514a4ccc711fbf7ee3b1335fcba72ff3158f6438bd5df5e53a56eba",
+      "dimensions": [
+        4096,
+        2048
+      ]
+    },
+    "west-idle.png": {
+      "sha256": "6a00449f5975340229e2b28ab1fc5a8940a98fa4f0ace72c750678ae158559fa",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    "west-working.png": {
+      "sha256": "7b64c4a843e7ffb865cd1fa845aebc563878697635346ef6a2f072b71b6a101f",
+      "dimensions": [
+        4096,
+        2048
+      ]
+    }
+  },
+  "isolated_current_mod": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\tanks-structure-production\\build\\tp-sterling-contract-main01\\mods\\tech-priests_0.1.687",
+  "gameplay_properties_changed": false,
+  "production_repository_integrated": false,
+  "native_final_art_checks_pending": true
+}

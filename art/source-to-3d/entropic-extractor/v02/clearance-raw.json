@@ -1,0 +1,4563 @@
+{
+  "artifact": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\tanks-structure-production\\build\\tp-entropic-extractor-main01\\authored-v02\\entropic-v02.blend",
+  "sha256": "cefe48fe2ae9a68fce1da1ca4294f2a434a835653aeba937c95b78d814cc010d",
+  "sampled_poses": 387,
+  "authored_frames": 194,
+  "includes_half_frames": true,
+  "moving_meshes": [
+    "ENTROPIC | bored rotor hub",
+    "ENTROPIC | fan rigid blade",
+    "ENTROPIC | fan rigid blade.001",
+    "ENTROPIC | fan rigid blade.002",
+    "ENTROPIC | fan rigid blade.003",
+    "ENTROPIC | fan rigid blade.004",
+    "ENTROPIC | fan rigid blade.005"
+  ],
+  "motion_owners": {
+    "ENTROPIC | quarried founded slab": null,
+    "ENTROPIC | dressed plinth block": null,
+    "ENTROPIC | dressed plinth block.001": null,
+    "ENTROPIC | dressed plinth block.002": null,
+    "ENTROPIC | dressed plinth block.003": null,
+    "ENTROPIC | dressed plinth block.004": null,
+    "ENTROPIC | dressed plinth block.005": null,
+    "ENTROPIC | dressed plinth block.006": null,
+    "ENTROPIC | dressed plinth block.007": null,
+    "ENTROPIC | dressed plinth block.008": null,
+    "ENTROPIC | retained armored deck": null,
+    "ENTROPIC | deck corner bracket": null,
+    "ENTROPIC | deck foundation anchor": null,
+    "ENTROPIC | deck corner bracket.001": null,
+    "ENTROPIC | deck foundation anchor.001": null,
+    "ENTROPIC | deck corner bracket.002": null,
+    "ENTROPIC | deck foundation anchor.002": null,
+    "ENTROPIC | deck corner bracket.003": null,
+    "ENTROPIC | deck foundation anchor.003": null,
+    "ENTROPIC | core founded shoe": null,
+    "ENTROPIC | closed blackstone conversion mantle": null,
+    "ENTROPIC | sealed roof casting": null,
+    "ENTROPIC | mantle seated retaining band": null,
+    "ENTROPIC | mantle seated retaining band.001": null,
+    "ENTROPIC | mantle seated retaining band.002": null,
+    "ENTROPIC | mantle seated retaining band.003": null,
+    "ENTROPIC | founded structural rib": null,
+    "ENTROPIC | rib retained band stud": null,
+    "ENTROPIC | rib retained band stud.001": null,
+    "ENTROPIC | rib retained band stud.002": null,
+    "ENTROPIC | rib retained band stud.003": null,
+    "ENTROPIC | founded structural rib.001": null,
+    "ENTROPIC | rib retained band stud.004": null,
+    "ENTROPIC | rib retained band stud.005": null,
+    "ENTROPIC | rib retained band stud.006": null,
+    "ENTROPIC | rib retained band stud.007": null,
+    "ENTROPIC | founded structural rib.002": null,
+    "ENTROPIC | rib retained band stud.008": null,
+    "ENTROPIC | rib retained band stud.009": null,
+    "ENTROPIC | rib retained band stud.010": null,
+    "ENTROPIC | rib retained band stud.011": null,
+    "ENTROPIC | founded structural rib.003": null,
+    "ENTROPIC | rib retained band stud.012": null,
+    "ENTROPIC | rib retained band stud.013": null,
+    "ENTROPIC | rib retained band stud.014": null,
+    "ENTROPIC | rib retained band stud.015": null,
+    "ENTROPIC | founded structural rib.004": null,
+    "ENTROPIC | rib retained band stud.016": null,
+    "ENTROPIC | rib retained band stud.017": null,
+    "ENTROPIC | rib retained band stud.018": null,
+    "ENTROPIC | rib retained band stud.019": null,
+    "ENTROPIC | founded structural rib.005": null,
+    "ENTROPIC | rib retained band stud.020": null,
+    "ENTROPIC | rib retained band stud.021": null,
+    "ENTROPIC | rib retained band stud.022": null,
+    "ENTROPIC | rib retained band stud.023": null,
+    "ENTROPIC | founded structural rib.006": null,
+    "ENTROPIC | rib retained band stud.024": null,
+    "ENTROPIC | rib retained band stud.025": null,
+    "ENTROPIC | rib retained band stud.026": null,
+    "ENTROPIC | rib retained band stud.027": null,
+    "ENTROPIC | founded structural rib.007": null,
+    "ENTROPIC | rib retained band stud.028": null,
+    "ENTROPIC | rib retained band stud.029": null,
+    "ENTROPIC | rib retained band stud.030": null,
+    "ENTROPIC | rib retained band stud.031": null,
+    "ENTROPIC | sealed surface cassette": null,
+    "ENTROPIC | opaque blind green core window": null,
+    "ENTROPIC | seated window jamb": null,
+    "ENTROPIC | seated window jamb.001": null,
+    "ENTROPIC | sealed window sill": null,
+    "ENTROPIC | sealed window sill.001": null,
+    "ENTROPIC | green pane retained tracery": null,
+    "ENTROPIC | green pane retained tracery.001": null,
+    "ENTROPIC | green pane retained tracery.002": null,
+    "ENTROPIC | seated blind glazing crossbar": null,
+    "ENTROPIC | seated blind glazing crossbar.001": null,
+    "ENTROPIC | closed lower service tablet": null,
+    "ENTROPIC | tablet raised retaining edge": null,
+    "ENTROPIC | tablet raised retaining edge.001": null,
+    "ENTROPIC | tablet embossed runic rib": null,
+    "ENTROPIC | tablet embossed runic rib.001": null,
+    "ENTROPIC | tablet embossed runic rib.002": null,
+    "ENTROPIC | tablet embossed runic rib.003": null,
+    "ENTROPIC | tablet embossed runic rib.004": null,
+    "ENTROPIC | sealed surface cassette.001": null,
+    "ENTROPIC | opaque blind green core window.001": null,
+    "ENTROPIC | seated window jamb.002": null,
+    "ENTROPIC | seated window jamb.003": null,
+    "ENTROPIC | sealed window sill.002": null,
+    "ENTROPIC | sealed window sill.003": null,
+    "ENTROPIC | green pane retained tracery.003": null,
+    "ENTROPIC | green pane retained tracery.004": null,
+    "ENTROPIC | green pane retained tracery.005": null,
+    "ENTROPIC | seated blind glazing crossbar.002": null,
+    "ENTROPIC | seated blind glazing crossbar.003": null,
+    "ENTROPIC | closed lower service tablet.001": null,
+    "ENTROPIC | tablet raised retaining edge.002": null,
+    "ENTROPIC | tablet raised retaining edge.003": null,
+    "ENTROPIC | tablet embossed runic rib.005": null,
+    "ENTROPIC | tablet embossed runic rib.006": null,
+    "ENTROPIC | tablet embossed runic rib.007": null,
+    "ENTROPIC | tablet embossed runic rib.008": null,
+    "ENTROPIC | tablet embossed runic rib.009": null,
+    "ENTROPIC | sealed surface cassette.002": null,
+    "ENTROPIC | opaque blind green core window.002": null,
+    "ENTROPIC | seated window jamb.004": null,
+    "ENTROPIC | seated window jamb.005": null,
+    "ENTROPIC | sealed window sill.004": null,
+    "ENTROPIC | sealed window sill.005": null,
+    "ENTROPIC | green pane retained tracery.006": null,
+    "ENTROPIC | green pane retained tracery.007": null,
+    "ENTROPIC | green pane retained tracery.008": null,
+    "ENTROPIC | seated blind glazing crossbar.004": null,
+    "ENTROPIC | seated blind glazing crossbar.005": null,
+    "ENTROPIC | closed lower service tablet.002": null,
+    "ENTROPIC | tablet raised retaining edge.004": null,
+    "ENTROPIC | tablet raised retaining edge.005": null,
+    "ENTROPIC | tablet embossed runic rib.010": null,
+    "ENTROPIC | tablet embossed runic rib.011": null,
+    "ENTROPIC | tablet embossed runic rib.012": null,
+    "ENTROPIC | tablet embossed runic rib.013": null,
+    "ENTROPIC | tablet embossed runic rib.014": null,
+    "ENTROPIC | sealed surface cassette.003": null,
+    "ENTROPIC | opaque blind green core window.003": null,
+    "ENTROPIC | seated window jamb.006": null,
+    "ENTROPIC | seated window jamb.007": null,
+    "ENTROPIC | sealed window sill.006": null,
+    "ENTROPIC | sealed window sill.007": null,
+    "ENTROPIC | green pane retained tracery.009": null,
+    "ENTROPIC | green pane retained tracery.010": null,
+    "ENTROPIC | green pane retained tracery.011": null,
+    "ENTROPIC | seated blind glazing crossbar.006": null,
+    "ENTROPIC | seated blind glazing crossbar.007": null,
+    "ENTROPIC | closed lower service tablet.003": null,
+    "ENTROPIC | tablet raised retaining edge.006": null,
+    "ENTROPIC | tablet raised retaining edge.007": null,
+    "ENTROPIC | tablet embossed runic rib.015": null,
+    "ENTROPIC | tablet embossed runic rib.016": null,
+    "ENTROPIC | tablet embossed runic rib.017": null,
+    "ENTROPIC | tablet embossed runic rib.018": null,
+    "ENTROPIC | tablet embossed runic rib.019": null,
+    "ENTROPIC | sealed surface cassette.004": null,
+    "ENTROPIC | opaque blind green core window.004": null,
+    "ENTROPIC | seated window jamb.008": null,
+    "ENTROPIC | seated window jamb.009": null,
+    "ENTROPIC | sealed window sill.008": null,
+    "ENTROPIC | sealed window sill.009": null,
+    "ENTROPIC | green pane retained tracery.012": null,
+    "ENTROPIC | green pane retained tracery.013": null,
+    "ENTROPIC | green pane retained tracery.014": null,
+    "ENTROPIC | seated blind glazing crossbar.008": null,
+    "ENTROPIC | seated blind glazing crossbar.009": null,
+    "ENTROPIC | closed lower service tablet.004": null,
+    "ENTROPIC | tablet raised retaining edge.008": null,
+    "ENTROPIC | tablet raised retaining edge.009": null,
+    "ENTROPIC | tablet embossed runic rib.020": null,
+    "ENTROPIC | tablet embossed runic rib.021": null,
+    "ENTROPIC | tablet embossed runic rib.022": null,
+    "ENTROPIC | tablet embossed runic rib.023": null,
+    "ENTROPIC | tablet embossed runic rib.024": null,
+    "ENTROPIC | sealed surface cassette.005": null,
+    "ENTROPIC | opaque blind green core window.005": null,
+    "ENTROPIC | seated window jamb.010": null,
+    "ENTROPIC | seated window jamb.011": null,
+    "ENTROPIC | sealed window sill.010": null,
+    "ENTROPIC | sealed window sill.011": null,
+    "ENTROPIC | green pane retained tracery.015": null,
+    "ENTROPIC | green pane retained tracery.016": null,
+    "ENTROPIC | green pane retained tracery.017": null,
+    "ENTROPIC | seated blind glazing crossbar.010": null,
+    "ENTROPIC | seated blind glazing crossbar.011": null,
+    "ENTROPIC | closed lower service tablet.005": null,
+    "ENTROPIC | tablet raised retaining edge.010": null,
+    "ENTROPIC | tablet raised retaining edge.011": null,
+    "ENTROPIC | tablet embossed runic rib.025": null,
+    "ENTROPIC | tablet embossed runic rib.026": null,
+    "ENTROPIC | tablet embossed runic rib.027": null,
+    "ENTROPIC | tablet embossed runic rib.028": null,
+    "ENTROPIC | tablet embossed runic rib.029": null,
+    "ENTROPIC | sealed surface cassette.006": null,
+    "ENTROPIC | opaque blind green core window.006": null,
+    "ENTROPIC | seated window jamb.012": null,
+    "ENTROPIC | seated window jamb.013": null,
+    "ENTROPIC | sealed window sill.012": null,
+    "ENTROPIC | sealed window sill.013": null,
+    "ENTROPIC | green pane retained tracery.018": null,
+    "ENTROPIC | green pane retained tracery.019": null,
+    "ENTROPIC | green pane retained tracery.020": null,
+    "ENTROPIC | seated blind glazing crossbar.012": null,
+    "ENTROPIC | seated blind glazing crossbar.013": null,
+    "ENTROPIC | closed lower service tablet.006": null,
+    "ENTROPIC | tablet raised retaining edge.012": null,
+    "ENTROPIC | tablet raised retaining edge.013": null,
+    "ENTROPIC | tablet embossed runic rib.030": null,
+    "ENTROPIC | tablet embossed runic rib.031": null,
+    "ENTROPIC | tablet embossed runic rib.032": null,
+    "ENTROPIC | tablet embossed runic rib.033": null,
+    "ENTROPIC | tablet embossed runic rib.034": null,
+    "ENTROPIC | sealed surface cassette.007": null,
+    "ENTROPIC | opaque blind green core window.007": null,
+    "ENTROPIC | seated window jamb.014": null,
+    "ENTROPIC | seated window jamb.015": null,
+    "ENTROPIC | sealed window sill.014": null,
+    "ENTROPIC | sealed window sill.015": null,
+    "ENTROPIC | green pane retained tracery.021": null,
+    "ENTROPIC | green pane retained tracery.022": null,
+    "ENTROPIC | green pane retained tracery.023": null,
+    "ENTROPIC | seated blind glazing crossbar.014": null,
+    "ENTROPIC | seated blind glazing crossbar.015": null,
+    "ENTROPIC | closed lower service tablet.007": null,
+    "ENTROPIC | tablet raised retaining edge.014": null,
+    "ENTROPIC | tablet raised retaining edge.015": null,
+    "ENTROPIC | tablet embossed runic rib.035": null,
+    "ENTROPIC | tablet embossed runic rib.036": null,
+    "ENTROPIC | tablet embossed runic rib.037": null,
+    "ENTROPIC | tablet embossed runic rib.038": null,
+    "ENTROPIC | tablet embossed runic rib.039": null,
+    "ENTROPIC | pylon -1.04 -0.91 founded foot": null,
+    "ENTROPIC | pylon -1.04 -0.91 ceramic core": null,
+    "ENTROPIC | pylon -1.04 -0.91 forged end retainer": null,
+    "ENTROPIC | pylon -1.04 -0.91 forged end retainer.001": null,
+    "ENTROPIC | pylon -1.04 -0.91 coil support stave": null,
+    "ENTROPIC | pylon -1.04 -0.91 coil support stave.001": null,
+    "ENTROPIC | pylon -1.04 -0.91 coil support stave.002": null,
+    "ENTROPIC | pylon -1.04 -0.91 coil support stave.003": null,
+    "ENTROPIC | pylon -1.04 -0.91 continuous supported copper winding": null,
+    "ENTROPIC | pylon -1.04 -0.91 sealed terminal crown": null,
+    "ENTROPIC | pylon -1.04 -0.91 green crown indicator": null,
+    "ENTROPIC | pylon -1.04 -0.91 foot anchor": null,
+    "ENTROPIC | pylon -1.04 -0.91 foot anchor.001": null,
+    "ENTROPIC | pylon -1.04 -0.91 foot anchor.002": null,
+    "ENTROPIC | pylon -1.04 -0.91 foot anchor.003": null,
+    "ENTROPIC | pylon -1.04 0.91 founded foot": null,
+    "ENTROPIC | pylon -1.04 0.91 ceramic core": null,
+    "ENTROPIC | pylon -1.04 0.91 forged end retainer": null,
+    "ENTROPIC | pylon -1.04 0.91 forged end retainer.001": null,
+    "ENTROPIC | pylon -1.04 0.91 coil support stave": null,
+    "ENTROPIC | pylon -1.04 0.91 coil support stave.001": null,
+    "ENTROPIC | pylon -1.04 0.91 coil support stave.002": null,
+    "ENTROPIC | pylon -1.04 0.91 coil support stave.003": null,
+    "ENTROPIC | pylon -1.04 0.91 continuous supported copper winding": null,
+    "ENTROPIC | pylon -1.04 0.91 sealed terminal crown": null,
+    "ENTROPIC | pylon -1.04 0.91 green crown indicator": null,
+    "ENTROPIC | pylon -1.04 0.91 foot anchor": null,
+    "ENTROPIC | pylon -1.04 0.91 foot anchor.001": null,
+    "ENTROPIC | pylon -1.04 0.91 foot anchor.002": null,
+    "ENTROPIC | pylon -1.04 0.91 foot anchor.003": null,
+    "ENTROPIC | pylon 1.04 -0.91 founded foot": null,
+    "ENTROPIC | pylon 1.04 -0.91 ceramic core": null,
+    "ENTROPIC | pylon 1.04 -0.91 forged end retainer": null,
+    "ENTROPIC | pylon 1.04 -0.91 forged end retainer.001": null,
+    "ENTROPIC | pylon 1.04 -0.91 coil support stave": null,
+    "ENTROPIC | pylon 1.04 -0.91 coil support stave.001": null,
+    "ENTROPIC | pylon 1.04 -0.91 coil support stave.002": null,
+    "ENTROPIC | pylon 1.04 -0.91 coil support stave.003": null,
+    "ENTROPIC | pylon 1.04 -0.91 continuous supported copper winding": null,
+    "ENTROPIC | pylon 1.04 -0.91 sealed terminal crown": null,
+    "ENTROPIC | pylon 1.04 -0.91 green crown indicator": null,
+    "ENTROPIC | pylon 1.04 -0.91 foot anchor": null,
+    "ENTROPIC | pylon 1.04 -0.91 foot anchor.001": null,
+    "ENTROPIC | pylon 1.04 -0.91 foot anchor.002": null,
+    "ENTROPIC | pylon 1.04 -0.91 foot anchor.003": null,
+    "ENTROPIC | pylon 1.04 0.91 founded foot": null,
+    "ENTROPIC | pylon 1.04 0.91 ceramic core": null,
+    "ENTROPIC | pylon 1.04 0.91 forged end retainer": null,
+    "ENTROPIC | pylon 1.04 0.91 forged end retainer.001": null,
+    "ENTROPIC | pylon 1.04 0.91 coil support stave": null,
+    "ENTROPIC | pylon 1.04 0.91 coil support stave.001": null,
+    "ENTROPIC | pylon 1.04 0.91 coil support stave.002": null,
+    "ENTROPIC | pylon 1.04 0.91 coil support stave.003": null,
+    "ENTROPIC | pylon 1.04 0.91 continuous supported copper winding": null,
+    "ENTROPIC | pylon 1.04 0.91 sealed terminal crown": null,
+    "ENTROPIC | pylon 1.04 0.91 green crown indicator": null,
+    "ENTROPIC | pylon 1.04 0.91 foot anchor": null,
+    "ENTROPIC | pylon 1.04 0.91 foot anchor.001": null,
+    "ENTROPIC | pylon 1.04 0.91 foot anchor.002": null,
+    "ENTROPIC | pylon 1.04 0.91 foot anchor.003": null,
+    "ENTROPIC | closed thermal side casting": null,
+    "ENTROPIC | thermal casting founded shoe": null,
+    "ENTROPIC | seated external thermal fin": null,
+    "ENTROPIC | seated external thermal fin.001": null,
+    "ENTROPIC | seated external thermal fin.002": null,
+    "ENTROPIC | seated external thermal fin.003": null,
+    "ENTROPIC | seated external thermal fin.004": null,
+    "ENTROPIC | seated external thermal fin.005": null,
+    "ENTROPIC | seated external thermal fin.006": null,
+    "ENTROPIC | seated external thermal fin.007": null,
+    "ENTROPIC | seated external thermal fin.008": null,
+    "ENTROPIC | thermal retaining rail": null,
+    "ENTROPIC | thermal retaining rail.001": null,
+    "ENTROPIC | thermal rail fastener": null,
+    "ENTROPIC | thermal rail fastener.001": null,
+    "ENTROPIC | thermal rail fastener.002": null,
+    "ENTROPIC | thermal rail fastener.003": null,
+    "ENTROPIC | closed thermal side casting.001": null,
+    "ENTROPIC | thermal casting founded shoe.001": null,
+    "ENTROPIC | seated external thermal fin.009": null,
+    "ENTROPIC | seated external thermal fin.010": null,
+    "ENTROPIC | seated external thermal fin.011": null,
+    "ENTROPIC | seated external thermal fin.012": null,
+    "ENTROPIC | seated external thermal fin.013": null,
+    "ENTROPIC | seated external thermal fin.014": null,
+    "ENTROPIC | seated external thermal fin.015": null,
+    "ENTROPIC | seated external thermal fin.016": null,
+    "ENTROPIC | seated external thermal fin.017": null,
+    "ENTROPIC | thermal retaining rail.002": null,
+    "ENTROPIC | thermal retaining rail.003": null,
+    "ENTROPIC | thermal rail fastener.004": null,
+    "ENTROPIC | thermal rail fastener.005": null,
+    "ENTROPIC | thermal rail fastener.006": null,
+    "ENTROPIC | thermal rail fastener.007": null,
+    "ENTROPIC | fuel vestibule founded casing": null,
+    "ENTROPIC | closed fragment fuel hatch": null,
+    "ENTROPIC | fuel door seat fastener": null,
+    "ENTROPIC | fuel door seat fastener.001": null,
+    "ENTROPIC | fuel door seat fastener.002": null,
+    "ENTROPIC | fuel door seat fastener.003": null,
+    "ENTROPIC | fuel hatch captured hinge": null,
+    "ENTROPIC | fuel hatch captured hinge.001": null,
+    "ENTROPIC | fuel hatch latch seat": null,
+    "ENTROPIC | closed captive latch": null,
+    "ENTROPIC | closed rear regulating casket": null,
+    "ENTROPIC | rear casket retaining screw": null,
+    "ENTROPIC | rear casket retaining screw.001": null,
+    "ENTROPIC | rear casket retaining screw.002": null,
+    "ENTROPIC | rear casket retaining screw.003": null,
+    "ENTROPIC | rear blind indicator seat": null,
+    "ENTROPIC | rear green sealed indicator": null,
+    "ENTROPIC | rear blind indicator seat.001": null,
+    "ENTROPIC | rear green sealed indicator.001": null,
+    "ENTROPIC | rear blind indicator seat.002": null,
+    "ENTROPIC | rear green sealed indicator.002": null,
+    "ENTROPIC | rear casket founded support foot": null,
+    "ENTROPIC | rear casket load leg": null,
+    "ENTROPIC | rear casket foot anchor": null,
+    "ENTROPIC | rear casket foot anchor.001": null,
+    "ENTROPIC | rear casket founded support foot.001": null,
+    "ENTROPIC | rear casket load leg.001": null,
+    "ENTROPIC | rear casket foot anchor.002": null,
+    "ENTROPIC | rear casket foot anchor.003": null,
+    "ENTROPIC | radial roof casting relief": null,
+    "ENTROPIC | upper shell retained stud": null,
+    "ENTROPIC | radial roof casting relief.001": null,
+    "ENTROPIC | upper shell retained stud.001": null,
+    "ENTROPIC | radial roof casting relief.002": null,
+    "ENTROPIC | upper shell retained stud.002": null,
+    "ENTROPIC | radial roof casting relief.003": null,
+    "ENTROPIC | upper shell retained stud.003": null,
+    "ENTROPIC | radial roof casting relief.004": null,
+    "ENTROPIC | upper shell retained stud.004": null,
+    "ENTROPIC | radial roof casting relief.005": null,
+    "ENTROPIC | upper shell retained stud.005": null,
+    "ENTROPIC | radial roof casting relief.006": null,
+    "ENTROPIC | upper shell retained stud.006": null,
+    "ENTROPIC | radial roof casting relief.007": null,
+    "ENTROPIC | upper shell retained stud.007": null,
+    "ENTROPIC | radial roof casting relief.008": null,
+    "ENTROPIC | upper shell retained stud.008": null,
+    "ENTROPIC | radial roof casting relief.009": null,
+    "ENTROPIC | upper shell retained stud.009": null,
+    "ENTROPIC | radial roof casting relief.010": null,
+    "ENTROPIC | upper shell retained stud.010": null,
+    "ENTROPIC | radial roof casting relief.011": null,
+    "ENTROPIC | upper shell retained stud.011": null,
+    "ENTROPIC | radial roof casting relief.012": null,
+    "ENTROPIC | upper shell retained stud.012": null,
+    "ENTROPIC | radial roof casting relief.013": null,
+    "ENTROPIC | upper shell retained stud.013": null,
+    "ENTROPIC | radial roof casting relief.014": null,
+    "ENTROPIC | upper shell retained stud.014": null,
+    "ENTROPIC | radial roof casting relief.015": null,
+    "ENTROPIC | upper shell retained stud.015": null,
+    "ENTROPIC | fan opaque backplate": null,
+    "ENTROPIC | stationary fan annular housing": null,
+    "ENTROPIC | fixed fan shaft": null,
+    "ENTROPIC | shaft retained axial washer": null,
+    "ENTROPIC | shaft retained axial washer.001": null,
+    "ENTROPIC | bored rotor hub": "ENTROPIC | WORKING cooling rotor",
+    "ENTROPIC | fan rigid blade": "ENTROPIC | WORKING cooling rotor",
+    "ENTROPIC | fan rigid blade.001": "ENTROPIC | WORKING cooling rotor",
+    "ENTROPIC | fan rigid blade.002": "ENTROPIC | WORKING cooling rotor",
+    "ENTROPIC | fan rigid blade.003": "ENTROPIC | WORKING cooling rotor",
+    "ENTROPIC | fan rigid blade.004": "ENTROPIC | WORKING cooling rotor",
+    "ENTROPIC | fan rigid blade.005": "ENTROPIC | WORKING cooling rotor",
+    "ENTROPIC | shaft top seated retainer": null,
+    "ENTROPIC | fixed fan guard grille": null,
+    "ENTROPIC | fixed fan guard grille.001": null,
+    "ENTROPIC | fixed fan guard grille.002": null,
+    "ENTROPIC | fixed fan guard grille.003": null,
+    "ENTROPIC | fixed fan guard grille.004": null,
+    "ENTROPIC | fixed fan guard grille.005": null,
+    "ENTROPIC | fixed fan guard grille.006": null,
+    "ENTROPIC | fixed fan guard grille.007": null,
+    "ENTROPIC | fixed fan guard grille.008": null,
+    "ENTROPIC | fan guard grille retained rim": null,
+    "ENTROPIC | fan housing axial stud": null,
+    "ENTROPIC | fan housing axial stud.001": null,
+    "ENTROPIC | fan housing axial stud.002": null,
+    "ENTROPIC | fan housing axial stud.003": null,
+    "ENTROPIC | fan housing axial stud.004": null,
+    "ENTROPIC | fan housing axial stud.005": null,
+    "ENTROPIC | fan housing axial stud.006": null,
+    "ENTROPIC | fan housing axial stud.007": null
+  },
+  "fixed_mesh_count": 397,
+  "pairs": {
+    "ENTROPIC | deck corner bracket <> ENTROPIC | deck foundation anchor": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "ENTROPIC | deck corner bracket.001 <> ENTROPIC | deck foundation anchor.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "ENTROPIC | deck corner bracket.002 <> ENTROPIC | deck foundation anchor.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "ENTROPIC | deck corner bracket.003 <> ENTROPIC | deck foundation anchor.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "ENTROPIC | closed blackstone conversion mantle <> ENTROPIC | core founded shoe": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 200,
+      "moving": false
+    },
+    "ENTROPIC | core founded shoe <> ENTROPIC | founded structural rib": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "ENTROPIC | core founded shoe <> ENTROPIC | founded structural rib.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "ENTROPIC | core founded shoe <> ENTROPIC | founded structural rib.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "ENTROPIC | core founded shoe <> ENTROPIC | founded structural rib.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "ENTROPIC | core founded shoe <> ENTROPIC | founded structural rib.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "ENTROPIC | core founded shoe <> ENTROPIC | founded structural rib.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "ENTROPIC | core founded shoe <> ENTROPIC | founded structural rib.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "ENTROPIC | core founded shoe <> ENTROPIC | founded structural rib.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "ENTROPIC | core founded shoe <> ENTROPIC | thermal casting founded shoe": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 42,
+      "moving": false
+    },
+    "ENTROPIC | core founded shoe <> ENTROPIC | thermal casting founded shoe.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 42,
+      "moving": false
+    },
+    "ENTROPIC | core founded shoe <> ENTROPIC | fuel vestibule founded casing": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 60,
+      "moving": false
+    },
+    "ENTROPIC | core founded shoe <> ENTROPIC | rear casket founded support foot": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 42,
+      "moving": false
+    },
+    "ENTROPIC | core founded shoe <> ENTROPIC | rear casket founded support foot.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 39,
+      "moving": false
+    },
+    "ENTROPIC | closed blackstone conversion mantle <> ENTROPIC | sealed roof casting": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 210,
+      "moving": false
+    },
+    "ENTROPIC | closed blackstone conversion mantle <> ENTROPIC | mantle seated retaining band": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 624,
+      "moving": false
+    },
+    "ENTROPIC | closed blackstone conversion mantle <> ENTROPIC | mantle seated retaining band.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 624,
+      "moving": false
+    },
+    "ENTROPIC | closed blackstone conversion mantle <> ENTROPIC | mantle seated retaining band.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 624,
+      "moving": false
+    },
+    "ENTROPIC | closed blackstone conversion mantle <> ENTROPIC | mantle seated retaining band.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 624,
+      "moving": false
+    },
+    "ENTROPIC | closed blackstone conversion mantle <> ENTROPIC | founded structural rib": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 38,
+      "moving": false
+    },
+    "ENTROPIC | closed blackstone conversion mantle <> ENTROPIC | founded structural rib.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 38,
+      "moving": false
+    },
+    "ENTROPIC | closed blackstone conversion mantle <> ENTROPIC | founded structural rib.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 38,
+      "moving": false
+    },
+    "ENTROPIC | closed blackstone conversion mantle <> ENTROPIC | founded structural rib.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 38,
+      "moving": false
+    },
+    "ENTROPIC | closed blackstone conversion mantle <> ENTROPIC | founded structural rib.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 38,
+      "moving": false
+    },
+    "ENTROPIC | closed blackstone conversion mantle <> ENTROPIC | founded structural rib.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 38,
+      "moving": false
+    },
+    "ENTROPIC | closed blackstone conversion mantle <> ENTROPIC | founded structural rib.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 38,
+      "moving": false
+    },
+    "ENTROPIC | closed blackstone conversion mantle <> ENTROPIC | founded structural rib.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 38,
+      "moving": false
+    },
+    "ENTROPIC | closed blackstone conversion mantle <> ENTROPIC | sealed surface cassette": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 64,
+      "moving": false
+    },
+    "ENTROPIC | closed blackstone conversion mantle <> ENTROPIC | sealed surface cassette.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 64,
+      "moving": false
+    },
+    "ENTROPIC | closed blackstone conversion mantle <> ENTROPIC | sealed surface cassette.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 64,
+      "moving": false
+    },
+    "ENTROPIC | closed blackstone conversion mantle <> ENTROPIC | sealed surface cassette.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 64,
+      "moving": false
+    },
+    "ENTROPIC | closed blackstone conversion mantle <> ENTROPIC | sealed surface cassette.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 64,
+      "moving": false
+    },
+    "ENTROPIC | closed blackstone conversion mantle <> ENTROPIC | sealed surface cassette.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 64,
+      "moving": false
+    },
+    "ENTROPIC | closed blackstone conversion mantle <> ENTROPIC | sealed surface cassette.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 64,
+      "moving": false
+    },
+    "ENTROPIC | closed blackstone conversion mantle <> ENTROPIC | sealed surface cassette.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 64,
+      "moving": false
+    },
+    "ENTROPIC | closed blackstone conversion mantle <> ENTROPIC | fuel vestibule founded casing": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 35,
+      "moving": false
+    },
+    "ENTROPIC | mantle seated retaining band.003 <> ENTROPIC | sealed roof casting": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 316,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib <> ENTROPIC | sealed roof casting": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 36,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.001 <> ENTROPIC | sealed roof casting": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 40,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.002 <> ENTROPIC | sealed roof casting": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 36,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.003 <> ENTROPIC | sealed roof casting": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 40,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.004 <> ENTROPIC | sealed roof casting": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 36,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.005 <> ENTROPIC | sealed roof casting": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 38,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.006 <> ENTROPIC | sealed roof casting": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 36,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.007 <> ENTROPIC | sealed roof casting": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 40,
+      "moving": false
+    },
+    "ENTROPIC | radial roof casting relief <> ENTROPIC | sealed roof casting": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "ENTROPIC | sealed roof casting <> ENTROPIC | upper shell retained stud": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "ENTROPIC | radial roof casting relief.001 <> ENTROPIC | sealed roof casting": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 22,
+      "moving": false
+    },
+    "ENTROPIC | sealed roof casting <> ENTROPIC | upper shell retained stud.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "ENTROPIC | radial roof casting relief.002 <> ENTROPIC | sealed roof casting": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 24,
+      "moving": false
+    },
+    "ENTROPIC | sealed roof casting <> ENTROPIC | upper shell retained stud.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "ENTROPIC | radial roof casting relief.003 <> ENTROPIC | sealed roof casting": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 24,
+      "moving": false
+    },
+    "ENTROPIC | sealed roof casting <> ENTROPIC | upper shell retained stud.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "ENTROPIC | radial roof casting relief.004 <> ENTROPIC | sealed roof casting": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 24,
+      "moving": false
+    },
+    "ENTROPIC | sealed roof casting <> ENTROPIC | upper shell retained stud.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "ENTROPIC | radial roof casting relief.005 <> ENTROPIC | sealed roof casting": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 22,
+      "moving": false
+    },
+    "ENTROPIC | sealed roof casting <> ENTROPIC | upper shell retained stud.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "ENTROPIC | radial roof casting relief.006 <> ENTROPIC | sealed roof casting": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 22,
+      "moving": false
+    },
+    "ENTROPIC | sealed roof casting <> ENTROPIC | upper shell retained stud.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "ENTROPIC | radial roof casting relief.007 <> ENTROPIC | sealed roof casting": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 24,
+      "moving": false
+    },
+    "ENTROPIC | sealed roof casting <> ENTROPIC | upper shell retained stud.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "ENTROPIC | radial roof casting relief.008 <> ENTROPIC | sealed roof casting": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "ENTROPIC | sealed roof casting <> ENTROPIC | upper shell retained stud.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "ENTROPIC | radial roof casting relief.009 <> ENTROPIC | sealed roof casting": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 24,
+      "moving": false
+    },
+    "ENTROPIC | sealed roof casting <> ENTROPIC | upper shell retained stud.009": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "ENTROPIC | radial roof casting relief.010 <> ENTROPIC | sealed roof casting": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 22,
+      "moving": false
+    },
+    "ENTROPIC | sealed roof casting <> ENTROPIC | upper shell retained stud.010": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "ENTROPIC | radial roof casting relief.011 <> ENTROPIC | sealed roof casting": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 22,
+      "moving": false
+    },
+    "ENTROPIC | sealed roof casting <> ENTROPIC | upper shell retained stud.011": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 13,
+      "moving": false
+    },
+    "ENTROPIC | radial roof casting relief.012 <> ENTROPIC | sealed roof casting": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 24,
+      "moving": false
+    },
+    "ENTROPIC | sealed roof casting <> ENTROPIC | upper shell retained stud.012": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "ENTROPIC | radial roof casting relief.013 <> ENTROPIC | sealed roof casting": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 24,
+      "moving": false
+    },
+    "ENTROPIC | sealed roof casting <> ENTROPIC | upper shell retained stud.013": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "ENTROPIC | radial roof casting relief.014 <> ENTROPIC | sealed roof casting": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 24,
+      "moving": false
+    },
+    "ENTROPIC | sealed roof casting <> ENTROPIC | upper shell retained stud.014": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "ENTROPIC | radial roof casting relief.015 <> ENTROPIC | sealed roof casting": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 22,
+      "moving": false
+    },
+    "ENTROPIC | sealed roof casting <> ENTROPIC | upper shell retained stud.015": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib <> ENTROPIC | mantle seated retaining band": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.001 <> ENTROPIC | mantle seated retaining band": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.002 <> ENTROPIC | mantle seated retaining band": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.003 <> ENTROPIC | mantle seated retaining band": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.004 <> ENTROPIC | mantle seated retaining band": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.005 <> ENTROPIC | mantle seated retaining band": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.006 <> ENTROPIC | mantle seated retaining band": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.007 <> ENTROPIC | mantle seated retaining band": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "ENTROPIC | fuel vestibule founded casing <> ENTROPIC | mantle seated retaining band": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 54,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib <> ENTROPIC | mantle seated retaining band.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.001 <> ENTROPIC | mantle seated retaining band.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.002 <> ENTROPIC | mantle seated retaining band.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.003 <> ENTROPIC | mantle seated retaining band.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.004 <> ENTROPIC | mantle seated retaining band.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.005 <> ENTROPIC | mantle seated retaining band.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.006 <> ENTROPIC | mantle seated retaining band.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.007 <> ENTROPIC | mantle seated retaining band.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib <> ENTROPIC | mantle seated retaining band.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.001 <> ENTROPIC | mantle seated retaining band.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.002 <> ENTROPIC | mantle seated retaining band.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.003 <> ENTROPIC | mantle seated retaining band.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.004 <> ENTROPIC | mantle seated retaining band.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.005 <> ENTROPIC | mantle seated retaining band.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.006 <> ENTROPIC | mantle seated retaining band.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.007 <> ENTROPIC | mantle seated retaining band.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib <> ENTROPIC | mantle seated retaining band.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 44,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.001 <> ENTROPIC | mantle seated retaining band.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 44,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.002 <> ENTROPIC | mantle seated retaining band.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 44,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.003 <> ENTROPIC | mantle seated retaining band.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 44,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.004 <> ENTROPIC | mantle seated retaining band.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 44,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.005 <> ENTROPIC | mantle seated retaining band.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 44,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.006 <> ENTROPIC | mantle seated retaining band.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 44,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.007 <> ENTROPIC | mantle seated retaining band.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 44,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib <> ENTROPIC | rib retained band stud": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib <> ENTROPIC | rib retained band stud.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib <> ENTROPIC | rib retained band stud.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib <> ENTROPIC | rib retained band stud.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib <> ENTROPIC | fuel vestibule founded casing": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 46,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.001 <> ENTROPIC | rib retained band stud.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.001 <> ENTROPIC | rib retained band stud.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.001 <> ENTROPIC | rib retained band stud.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.001 <> ENTROPIC | rib retained band stud.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.002 <> ENTROPIC | rib retained band stud.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.002 <> ENTROPIC | rib retained band stud.009": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.002 <> ENTROPIC | rib retained band stud.010": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.002 <> ENTROPIC | rib retained band stud.011": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.003 <> ENTROPIC | rib retained band stud.012": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.003 <> ENTROPIC | rib retained band stud.013": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.003 <> ENTROPIC | rib retained band stud.014": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.003 <> ENTROPIC | rib retained band stud.015": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.004 <> ENTROPIC | rib retained band stud.016": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.004 <> ENTROPIC | rib retained band stud.017": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.004 <> ENTROPIC | rib retained band stud.018": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.004 <> ENTROPIC | rib retained band stud.019": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.005 <> ENTROPIC | rib retained band stud.020": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.005 <> ENTROPIC | rib retained band stud.021": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.005 <> ENTROPIC | rib retained band stud.022": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.005 <> ENTROPIC | rib retained band stud.023": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.006 <> ENTROPIC | rib retained band stud.024": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.006 <> ENTROPIC | rib retained band stud.025": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.006 <> ENTROPIC | rib retained band stud.026": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.006 <> ENTROPIC | rib retained band stud.027": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.007 <> ENTROPIC | rib retained band stud.028": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.007 <> ENTROPIC | rib retained band stud.029": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.007 <> ENTROPIC | rib retained band stud.030": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.007 <> ENTROPIC | rib retained band stud.031": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "ENTROPIC | founded structural rib.007 <> ENTROPIC | fuel vestibule founded casing": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 46,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window <> ENTROPIC | sealed surface cassette": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window <> ENTROPIC | seated window jamb": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 35,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window <> ENTROPIC | seated window jamb.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 35,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window <> ENTROPIC | sealed window sill": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 45,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window <> ENTROPIC | sealed window sill.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 45,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery <> ENTROPIC | opaque blind green core window": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.001 <> ENTROPIC | opaque blind green core window": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.002 <> ENTROPIC | opaque blind green core window": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window <> ENTROPIC | seated blind glazing crossbar": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 74,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window <> ENTROPIC | seated blind glazing crossbar.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 74,
+      "moving": false
+    },
+    "ENTROPIC | sealed window sill <> ENTROPIC | seated window jamb": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 73,
+      "moving": false
+    },
+    "ENTROPIC | sealed window sill.001 <> ENTROPIC | seated window jamb": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 73,
+      "moving": false
+    },
+    "ENTROPIC | seated blind glazing crossbar <> ENTROPIC | seated window jamb": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "ENTROPIC | seated blind glazing crossbar.001 <> ENTROPIC | seated window jamb": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "ENTROPIC | sealed window sill <> ENTROPIC | seated window jamb.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 73,
+      "moving": false
+    },
+    "ENTROPIC | sealed window sill.001 <> ENTROPIC | seated window jamb.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 73,
+      "moving": false
+    },
+    "ENTROPIC | seated blind glazing crossbar <> ENTROPIC | seated window jamb.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "ENTROPIC | seated blind glazing crossbar.001 <> ENTROPIC | seated window jamb.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery <> ENTROPIC | seated blind glazing crossbar": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 108,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery <> ENTROPIC | seated blind glazing crossbar.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 108,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.001 <> ENTROPIC | seated blind glazing crossbar": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 108,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.001 <> ENTROPIC | seated blind glazing crossbar.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 108,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.002 <> ENTROPIC | seated blind glazing crossbar": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 108,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.002 <> ENTROPIC | seated blind glazing crossbar.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 108,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet <> ENTROPIC | tablet raised retaining edge": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 49,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet <> ENTROPIC | tablet raised retaining edge.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 49,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet <> ENTROPIC | tablet embossed runic rib": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet <> ENTROPIC | tablet embossed runic rib.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet <> ENTROPIC | tablet embossed runic rib.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet <> ENTROPIC | tablet embossed runic rib.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet <> ENTROPIC | tablet embossed runic rib.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet <> ENTROPIC | fuel vestibule founded casing": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 38,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window.001 <> ENTROPIC | sealed surface cassette.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window.001 <> ENTROPIC | seated window jamb.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 37,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window.001 <> ENTROPIC | seated window jamb.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 37,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window.001 <> ENTROPIC | sealed window sill.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 45,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window.001 <> ENTROPIC | sealed window sill.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 45,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.003 <> ENTROPIC | opaque blind green core window.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.004 <> ENTROPIC | opaque blind green core window.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.005 <> ENTROPIC | opaque blind green core window.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window.001 <> ENTROPIC | seated blind glazing crossbar.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 74,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window.001 <> ENTROPIC | seated blind glazing crossbar.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 74,
+      "moving": false
+    },
+    "ENTROPIC | sealed window sill.002 <> ENTROPIC | seated window jamb.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 67,
+      "moving": false
+    },
+    "ENTROPIC | sealed window sill.003 <> ENTROPIC | seated window jamb.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 68,
+      "moving": false
+    },
+    "ENTROPIC | seated blind glazing crossbar.002 <> ENTROPIC | seated window jamb.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "ENTROPIC | seated blind glazing crossbar.003 <> ENTROPIC | seated window jamb.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "ENTROPIC | sealed window sill.002 <> ENTROPIC | seated window jamb.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 67,
+      "moving": false
+    },
+    "ENTROPIC | sealed window sill.003 <> ENTROPIC | seated window jamb.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 66,
+      "moving": false
+    },
+    "ENTROPIC | seated blind glazing crossbar.002 <> ENTROPIC | seated window jamb.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "ENTROPIC | seated blind glazing crossbar.003 <> ENTROPIC | seated window jamb.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.003 <> ENTROPIC | seated blind glazing crossbar.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 108,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.003 <> ENTROPIC | seated blind glazing crossbar.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 108,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.004 <> ENTROPIC | seated blind glazing crossbar.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 108,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.004 <> ENTROPIC | seated blind glazing crossbar.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 108,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.005 <> ENTROPIC | seated blind glazing crossbar.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 108,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.005 <> ENTROPIC | seated blind glazing crossbar.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 108,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet.001 <> ENTROPIC | tablet raised retaining edge.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 49,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet.001 <> ENTROPIC | tablet raised retaining edge.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 49,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet.001 <> ENTROPIC | tablet embossed runic rib.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet.001 <> ENTROPIC | tablet embossed runic rib.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet.001 <> ENTROPIC | tablet embossed runic rib.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet.001 <> ENTROPIC | tablet embossed runic rib.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet.001 <> ENTROPIC | tablet embossed runic rib.009": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window.002 <> ENTROPIC | sealed surface cassette.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window.002 <> ENTROPIC | seated window jamb.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 35,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window.002 <> ENTROPIC | seated window jamb.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 35,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window.002 <> ENTROPIC | sealed window sill.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 45,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window.002 <> ENTROPIC | sealed window sill.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 45,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.006 <> ENTROPIC | opaque blind green core window.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.007 <> ENTROPIC | opaque blind green core window.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.008 <> ENTROPIC | opaque blind green core window.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window.002 <> ENTROPIC | seated blind glazing crossbar.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 74,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window.002 <> ENTROPIC | seated blind glazing crossbar.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 74,
+      "moving": false
+    },
+    "ENTROPIC | sealed window sill.004 <> ENTROPIC | seated window jamb.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 73,
+      "moving": false
+    },
+    "ENTROPIC | sealed window sill.005 <> ENTROPIC | seated window jamb.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 73,
+      "moving": false
+    },
+    "ENTROPIC | seated blind glazing crossbar.004 <> ENTROPIC | seated window jamb.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "ENTROPIC | seated blind glazing crossbar.005 <> ENTROPIC | seated window jamb.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "ENTROPIC | sealed window sill.004 <> ENTROPIC | seated window jamb.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 73,
+      "moving": false
+    },
+    "ENTROPIC | sealed window sill.005 <> ENTROPIC | seated window jamb.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 73,
+      "moving": false
+    },
+    "ENTROPIC | seated blind glazing crossbar.004 <> ENTROPIC | seated window jamb.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "ENTROPIC | seated blind glazing crossbar.005 <> ENTROPIC | seated window jamb.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.006 <> ENTROPIC | seated blind glazing crossbar.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 108,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.006 <> ENTROPIC | seated blind glazing crossbar.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 108,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.007 <> ENTROPIC | seated blind glazing crossbar.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 108,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.007 <> ENTROPIC | seated blind glazing crossbar.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 108,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.008 <> ENTROPIC | seated blind glazing crossbar.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 108,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.008 <> ENTROPIC | seated blind glazing crossbar.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 108,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet.002 <> ENTROPIC | tablet raised retaining edge.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 49,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet.002 <> ENTROPIC | tablet raised retaining edge.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 49,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet.002 <> ENTROPIC | tablet embossed runic rib.010": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet.002 <> ENTROPIC | tablet embossed runic rib.011": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet.002 <> ENTROPIC | tablet embossed runic rib.012": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet.002 <> ENTROPIC | tablet embossed runic rib.013": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet.002 <> ENTROPIC | tablet embossed runic rib.014": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window.003 <> ENTROPIC | sealed surface cassette.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window.003 <> ENTROPIC | seated window jamb.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 37,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window.003 <> ENTROPIC | seated window jamb.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 37,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window.003 <> ENTROPIC | sealed window sill.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 45,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window.003 <> ENTROPIC | sealed window sill.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 45,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.009 <> ENTROPIC | opaque blind green core window.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.010 <> ENTROPIC | opaque blind green core window.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.011 <> ENTROPIC | opaque blind green core window.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window.003 <> ENTROPIC | seated blind glazing crossbar.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 74,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window.003 <> ENTROPIC | seated blind glazing crossbar.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 74,
+      "moving": false
+    },
+    "ENTROPIC | sealed window sill.006 <> ENTROPIC | seated window jamb.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 67,
+      "moving": false
+    },
+    "ENTROPIC | sealed window sill.007 <> ENTROPIC | seated window jamb.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 68,
+      "moving": false
+    },
+    "ENTROPIC | seated blind glazing crossbar.006 <> ENTROPIC | seated window jamb.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "ENTROPIC | seated blind glazing crossbar.007 <> ENTROPIC | seated window jamb.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "ENTROPIC | sealed window sill.006 <> ENTROPIC | seated window jamb.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 67,
+      "moving": false
+    },
+    "ENTROPIC | sealed window sill.007 <> ENTROPIC | seated window jamb.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 66,
+      "moving": false
+    },
+    "ENTROPIC | seated blind glazing crossbar.006 <> ENTROPIC | seated window jamb.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "ENTROPIC | seated blind glazing crossbar.007 <> ENTROPIC | seated window jamb.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.009 <> ENTROPIC | seated blind glazing crossbar.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 108,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.009 <> ENTROPIC | seated blind glazing crossbar.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 108,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.010 <> ENTROPIC | seated blind glazing crossbar.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 108,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.010 <> ENTROPIC | seated blind glazing crossbar.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 108,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.011 <> ENTROPIC | seated blind glazing crossbar.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 108,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.011 <> ENTROPIC | seated blind glazing crossbar.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 108,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet.003 <> ENTROPIC | tablet raised retaining edge.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 49,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet.003 <> ENTROPIC | tablet raised retaining edge.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 49,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet.003 <> ENTROPIC | tablet embossed runic rib.015": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet.003 <> ENTROPIC | tablet embossed runic rib.016": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet.003 <> ENTROPIC | tablet embossed runic rib.017": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet.003 <> ENTROPIC | tablet embossed runic rib.018": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet.003 <> ENTROPIC | tablet embossed runic rib.019": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window.004 <> ENTROPIC | sealed surface cassette.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window.004 <> ENTROPIC | seated window jamb.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 35,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window.004 <> ENTROPIC | seated window jamb.009": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 35,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window.004 <> ENTROPIC | sealed window sill.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 45,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window.004 <> ENTROPIC | sealed window sill.009": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 45,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.012 <> ENTROPIC | opaque blind green core window.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.013 <> ENTROPIC | opaque blind green core window.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.014 <> ENTROPIC | opaque blind green core window.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window.004 <> ENTROPIC | seated blind glazing crossbar.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 74,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window.004 <> ENTROPIC | seated blind glazing crossbar.009": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 74,
+      "moving": false
+    },
+    "ENTROPIC | sealed window sill.008 <> ENTROPIC | seated window jamb.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 73,
+      "moving": false
+    },
+    "ENTROPIC | sealed window sill.009 <> ENTROPIC | seated window jamb.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 73,
+      "moving": false
+    },
+    "ENTROPIC | seated blind glazing crossbar.008 <> ENTROPIC | seated window jamb.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "ENTROPIC | seated blind glazing crossbar.009 <> ENTROPIC | seated window jamb.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "ENTROPIC | sealed window sill.008 <> ENTROPIC | seated window jamb.009": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 73,
+      "moving": false
+    },
+    "ENTROPIC | sealed window sill.009 <> ENTROPIC | seated window jamb.009": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 73,
+      "moving": false
+    },
+    "ENTROPIC | seated blind glazing crossbar.008 <> ENTROPIC | seated window jamb.009": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "ENTROPIC | seated blind glazing crossbar.009 <> ENTROPIC | seated window jamb.009": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.012 <> ENTROPIC | seated blind glazing crossbar.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 108,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.012 <> ENTROPIC | seated blind glazing crossbar.009": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 108,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.013 <> ENTROPIC | seated blind glazing crossbar.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 108,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.013 <> ENTROPIC | seated blind glazing crossbar.009": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 108,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.014 <> ENTROPIC | seated blind glazing crossbar.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 108,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.014 <> ENTROPIC | seated blind glazing crossbar.009": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 108,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet.004 <> ENTROPIC | tablet raised retaining edge.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 49,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet.004 <> ENTROPIC | tablet raised retaining edge.009": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 49,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet.004 <> ENTROPIC | tablet embossed runic rib.020": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet.004 <> ENTROPIC | tablet embossed runic rib.021": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet.004 <> ENTROPIC | tablet embossed runic rib.022": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet.004 <> ENTROPIC | tablet embossed runic rib.023": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet.004 <> ENTROPIC | tablet embossed runic rib.024": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window.005 <> ENTROPIC | sealed surface cassette.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window.005 <> ENTROPIC | seated window jamb.010": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 35,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window.005 <> ENTROPIC | seated window jamb.011": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 37,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window.005 <> ENTROPIC | sealed window sill.010": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 45,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window.005 <> ENTROPIC | sealed window sill.011": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 45,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.015 <> ENTROPIC | opaque blind green core window.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.016 <> ENTROPIC | opaque blind green core window.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.017 <> ENTROPIC | opaque blind green core window.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window.005 <> ENTROPIC | seated blind glazing crossbar.010": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 74,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window.005 <> ENTROPIC | seated blind glazing crossbar.011": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 74,
+      "moving": false
+    },
+    "ENTROPIC | sealed window sill.010 <> ENTROPIC | seated window jamb.010": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 67,
+      "moving": false
+    },
+    "ENTROPIC | sealed window sill.011 <> ENTROPIC | seated window jamb.010": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 68,
+      "moving": false
+    },
+    "ENTROPIC | seated blind glazing crossbar.010 <> ENTROPIC | seated window jamb.010": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "ENTROPIC | seated blind glazing crossbar.011 <> ENTROPIC | seated window jamb.010": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "ENTROPIC | sealed window sill.010 <> ENTROPIC | seated window jamb.011": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 67,
+      "moving": false
+    },
+    "ENTROPIC | sealed window sill.011 <> ENTROPIC | seated window jamb.011": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 70,
+      "moving": false
+    },
+    "ENTROPIC | seated blind glazing crossbar.010 <> ENTROPIC | seated window jamb.011": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "ENTROPIC | seated blind glazing crossbar.011 <> ENTROPIC | seated window jamb.011": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.015 <> ENTROPIC | seated blind glazing crossbar.010": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 108,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.015 <> ENTROPIC | seated blind glazing crossbar.011": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 108,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.016 <> ENTROPIC | seated blind glazing crossbar.010": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 108,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.016 <> ENTROPIC | seated blind glazing crossbar.011": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 108,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.017 <> ENTROPIC | seated blind glazing crossbar.010": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 108,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.017 <> ENTROPIC | seated blind glazing crossbar.011": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 108,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet.005 <> ENTROPIC | tablet raised retaining edge.010": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 49,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet.005 <> ENTROPIC | tablet raised retaining edge.011": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 49,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet.005 <> ENTROPIC | tablet embossed runic rib.025": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet.005 <> ENTROPIC | tablet embossed runic rib.026": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet.005 <> ENTROPIC | tablet embossed runic rib.027": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet.005 <> ENTROPIC | tablet embossed runic rib.028": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet.005 <> ENTROPIC | tablet embossed runic rib.029": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window.006 <> ENTROPIC | sealed surface cassette.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window.006 <> ENTROPIC | seated window jamb.012": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 35,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window.006 <> ENTROPIC | seated window jamb.013": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 35,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window.006 <> ENTROPIC | sealed window sill.012": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 45,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window.006 <> ENTROPIC | sealed window sill.013": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 45,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.018 <> ENTROPIC | opaque blind green core window.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.019 <> ENTROPIC | opaque blind green core window.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.020 <> ENTROPIC | opaque blind green core window.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window.006 <> ENTROPIC | seated blind glazing crossbar.012": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 74,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window.006 <> ENTROPIC | seated blind glazing crossbar.013": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 74,
+      "moving": false
+    },
+    "ENTROPIC | sealed window sill.012 <> ENTROPIC | seated window jamb.012": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 73,
+      "moving": false
+    },
+    "ENTROPIC | sealed window sill.013 <> ENTROPIC | seated window jamb.012": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 73,
+      "moving": false
+    },
+    "ENTROPIC | seated blind glazing crossbar.012 <> ENTROPIC | seated window jamb.012": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "ENTROPIC | seated blind glazing crossbar.013 <> ENTROPIC | seated window jamb.012": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "ENTROPIC | sealed window sill.012 <> ENTROPIC | seated window jamb.013": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 73,
+      "moving": false
+    },
+    "ENTROPIC | sealed window sill.013 <> ENTROPIC | seated window jamb.013": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 73,
+      "moving": false
+    },
+    "ENTROPIC | seated blind glazing crossbar.012 <> ENTROPIC | seated window jamb.013": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "ENTROPIC | seated blind glazing crossbar.013 <> ENTROPIC | seated window jamb.013": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.018 <> ENTROPIC | seated blind glazing crossbar.012": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 108,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.018 <> ENTROPIC | seated blind glazing crossbar.013": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 108,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.019 <> ENTROPIC | seated blind glazing crossbar.012": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 108,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.019 <> ENTROPIC | seated blind glazing crossbar.013": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 108,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.020 <> ENTROPIC | seated blind glazing crossbar.012": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 108,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.020 <> ENTROPIC | seated blind glazing crossbar.013": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 108,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet.006 <> ENTROPIC | tablet raised retaining edge.012": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 49,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet.006 <> ENTROPIC | tablet raised retaining edge.013": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 49,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet.006 <> ENTROPIC | tablet embossed runic rib.030": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet.006 <> ENTROPIC | tablet embossed runic rib.031": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet.006 <> ENTROPIC | tablet embossed runic rib.032": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet.006 <> ENTROPIC | tablet embossed runic rib.033": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet.006 <> ENTROPIC | tablet embossed runic rib.034": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window.007 <> ENTROPIC | sealed surface cassette.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window.007 <> ENTROPIC | seated window jamb.014": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 35,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window.007 <> ENTROPIC | seated window jamb.015": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 37,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window.007 <> ENTROPIC | sealed window sill.014": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 45,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window.007 <> ENTROPIC | sealed window sill.015": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 45,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.021 <> ENTROPIC | opaque blind green core window.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.022 <> ENTROPIC | opaque blind green core window.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.023 <> ENTROPIC | opaque blind green core window.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window.007 <> ENTROPIC | seated blind glazing crossbar.014": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 74,
+      "moving": false
+    },
+    "ENTROPIC | opaque blind green core window.007 <> ENTROPIC | seated blind glazing crossbar.015": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 74,
+      "moving": false
+    },
+    "ENTROPIC | sealed window sill.014 <> ENTROPIC | seated window jamb.014": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 67,
+      "moving": false
+    },
+    "ENTROPIC | sealed window sill.015 <> ENTROPIC | seated window jamb.014": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 68,
+      "moving": false
+    },
+    "ENTROPIC | seated blind glazing crossbar.014 <> ENTROPIC | seated window jamb.014": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "ENTROPIC | seated blind glazing crossbar.015 <> ENTROPIC | seated window jamb.014": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "ENTROPIC | sealed window sill.014 <> ENTROPIC | seated window jamb.015": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 69,
+      "moving": false
+    },
+    "ENTROPIC | sealed window sill.015 <> ENTROPIC | seated window jamb.015": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 70,
+      "moving": false
+    },
+    "ENTROPIC | seated blind glazing crossbar.014 <> ENTROPIC | seated window jamb.015": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "ENTROPIC | seated blind glazing crossbar.015 <> ENTROPIC | seated window jamb.015": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.021 <> ENTROPIC | seated blind glazing crossbar.014": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 108,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.021 <> ENTROPIC | seated blind glazing crossbar.015": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 108,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.022 <> ENTROPIC | seated blind glazing crossbar.014": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 108,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.022 <> ENTROPIC | seated blind glazing crossbar.015": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 108,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.023 <> ENTROPIC | seated blind glazing crossbar.014": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 108,
+      "moving": false
+    },
+    "ENTROPIC | green pane retained tracery.023 <> ENTROPIC | seated blind glazing crossbar.015": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 108,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet.007 <> ENTROPIC | tablet raised retaining edge.014": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 49,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet.007 <> ENTROPIC | tablet raised retaining edge.015": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 49,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet.007 <> ENTROPIC | tablet embossed runic rib.035": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet.007 <> ENTROPIC | tablet embossed runic rib.036": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet.007 <> ENTROPIC | tablet embossed runic rib.037": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet.007 <> ENTROPIC | tablet embossed runic rib.038": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | closed lower service tablet.007 <> ENTROPIC | tablet embossed runic rib.039": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "ENTROPIC | pylon -1.04 -0.91 forged end retainer <> ENTROPIC | pylon -1.04 -0.91 founded foot": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 107,
+      "moving": false
+    },
+    "ENTROPIC | pylon -1.04 -0.91 ceramic core <> ENTROPIC | pylon -1.04 -0.91 forged end retainer": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 64,
+      "moving": false
+    },
+    "ENTROPIC | pylon -1.04 -0.91 ceramic core <> ENTROPIC | pylon -1.04 -0.91 forged end retainer.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 64,
+      "moving": false
+    },
+    "ENTROPIC | pylon -1.04 -0.91 ceramic core <> ENTROPIC | pylon -1.04 -0.91 coil support stave": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 42,
+      "moving": false
+    },
+    "ENTROPIC | pylon -1.04 -0.91 ceramic core <> ENTROPIC | pylon -1.04 -0.91 coil support stave.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 38,
+      "moving": false
+    },
+    "ENTROPIC | pylon -1.04 -0.91 ceramic core <> ENTROPIC | pylon -1.04 -0.91 coil support stave.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 38,
+      "moving": false
+    },
+    "ENTROPIC | pylon -1.04 -0.91 ceramic core <> ENTROPIC | pylon -1.04 -0.91 coil support stave.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 38,
+      "moving": false
+    },
+    "ENTROPIC | pylon -1.04 -0.91 coil support stave <> ENTROPIC | pylon -1.04 -0.91 forged end retainer": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "ENTROPIC | pylon -1.04 -0.91 coil support stave.001 <> ENTROPIC | pylon -1.04 -0.91 forged end retainer": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | pylon -1.04 -0.91 coil support stave.002 <> ENTROPIC | pylon -1.04 -0.91 forged end retainer": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "ENTROPIC | pylon -1.04 -0.91 coil support stave.003 <> ENTROPIC | pylon -1.04 -0.91 forged end retainer": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | pylon -1.04 -0.91 foot anchor <> ENTROPIC | pylon -1.04 -0.91 forged end retainer": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "ENTROPIC | pylon -1.04 -0.91 foot anchor.001 <> ENTROPIC | pylon -1.04 -0.91 forged end retainer": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "ENTROPIC | pylon -1.04 -0.91 foot anchor.002 <> ENTROPIC | pylon -1.04 -0.91 forged end retainer": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "ENTROPIC | pylon -1.04 -0.91 foot anchor.003 <> ENTROPIC | pylon -1.04 -0.91 forged end retainer": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "ENTROPIC | pylon -1.04 -0.91 coil support stave <> ENTROPIC | pylon -1.04 -0.91 forged end retainer.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | pylon -1.04 -0.91 coil support stave.001 <> ENTROPIC | pylon -1.04 -0.91 forged end retainer.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | pylon -1.04 -0.91 coil support stave.002 <> ENTROPIC | pylon -1.04 -0.91 forged end retainer.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | pylon -1.04 -0.91 coil support stave.003 <> ENTROPIC | pylon -1.04 -0.91 forged end retainer.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | pylon -1.04 -0.91 continuous supported copper winding <> ENTROPIC | pylon -1.04 -0.91 forged end retainer.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 118,
+      "moving": false
+    },
+    "ENTROPIC | pylon -1.04 -0.91 coil support stave <> ENTROPIC | pylon -1.04 -0.91 continuous supported copper winding": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 283,
+      "moving": false
+    },
+    "ENTROPIC | pylon -1.04 -0.91 coil support stave.001 <> ENTROPIC | pylon -1.04 -0.91 continuous supported copper winding": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 272,
+      "moving": false
+    },
+    "ENTROPIC | pylon -1.04 -0.91 coil support stave.002 <> ENTROPIC | pylon -1.04 -0.91 continuous supported copper winding": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 270,
+      "moving": false
+    },
+    "ENTROPIC | pylon -1.04 -0.91 coil support stave.003 <> ENTROPIC | pylon -1.04 -0.91 continuous supported copper winding": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 270,
+      "moving": false
+    },
+    "ENTROPIC | pylon -1.04 0.91 forged end retainer <> ENTROPIC | pylon -1.04 0.91 founded foot": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 108,
+      "moving": false
+    },
+    "ENTROPIC | pylon -1.04 0.91 ceramic core <> ENTROPIC | pylon -1.04 0.91 forged end retainer": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 64,
+      "moving": false
+    },
+    "ENTROPIC | pylon -1.04 0.91 ceramic core <> ENTROPIC | pylon -1.04 0.91 forged end retainer.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 64,
+      "moving": false
+    },
+    "ENTROPIC | pylon -1.04 0.91 ceramic core <> ENTROPIC | pylon -1.04 0.91 coil support stave": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 42,
+      "moving": false
+    },
+    "ENTROPIC | pylon -1.04 0.91 ceramic core <> ENTROPIC | pylon -1.04 0.91 coil support stave.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 38,
+      "moving": false
+    },
+    "ENTROPIC | pylon -1.04 0.91 ceramic core <> ENTROPIC | pylon -1.04 0.91 coil support stave.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 38,
+      "moving": false
+    },
+    "ENTROPIC | pylon -1.04 0.91 ceramic core <> ENTROPIC | pylon -1.04 0.91 coil support stave.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 38,
+      "moving": false
+    },
+    "ENTROPIC | pylon -1.04 0.91 coil support stave <> ENTROPIC | pylon -1.04 0.91 forged end retainer": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "ENTROPIC | pylon -1.04 0.91 coil support stave.001 <> ENTROPIC | pylon -1.04 0.91 forged end retainer": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | pylon -1.04 0.91 coil support stave.002 <> ENTROPIC | pylon -1.04 0.91 forged end retainer": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "ENTROPIC | pylon -1.04 0.91 coil support stave.003 <> ENTROPIC | pylon -1.04 0.91 forged end retainer": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | pylon -1.04 0.91 foot anchor <> ENTROPIC | pylon -1.04 0.91 forged end retainer": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "ENTROPIC | pylon -1.04 0.91 foot anchor.001 <> ENTROPIC | pylon -1.04 0.91 forged end retainer": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "ENTROPIC | pylon -1.04 0.91 foot anchor.002 <> ENTROPIC | pylon -1.04 0.91 forged end retainer": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "ENTROPIC | pylon -1.04 0.91 foot anchor.003 <> ENTROPIC | pylon -1.04 0.91 forged end retainer": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "ENTROPIC | pylon -1.04 0.91 coil support stave <> ENTROPIC | pylon -1.04 0.91 forged end retainer.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | pylon -1.04 0.91 coil support stave.001 <> ENTROPIC | pylon -1.04 0.91 forged end retainer.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | pylon -1.04 0.91 coil support stave.002 <> ENTROPIC | pylon -1.04 0.91 forged end retainer.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | pylon -1.04 0.91 coil support stave.003 <> ENTROPIC | pylon -1.04 0.91 forged end retainer.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | pylon -1.04 0.91 continuous supported copper winding <> ENTROPIC | pylon -1.04 0.91 forged end retainer.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 118,
+      "moving": false
+    },
+    "ENTROPIC | pylon -1.04 0.91 coil support stave <> ENTROPIC | pylon -1.04 0.91 continuous supported copper winding": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 281,
+      "moving": false
+    },
+    "ENTROPIC | pylon -1.04 0.91 coil support stave.001 <> ENTROPIC | pylon -1.04 0.91 continuous supported copper winding": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 272,
+      "moving": false
+    },
+    "ENTROPIC | pylon -1.04 0.91 coil support stave.002 <> ENTROPIC | pylon -1.04 0.91 continuous supported copper winding": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 270,
+      "moving": false
+    },
+    "ENTROPIC | pylon -1.04 0.91 coil support stave.003 <> ENTROPIC | pylon -1.04 0.91 continuous supported copper winding": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 270,
+      "moving": false
+    },
+    "ENTROPIC | pylon 1.04 -0.91 forged end retainer <> ENTROPIC | pylon 1.04 -0.91 founded foot": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 108,
+      "moving": false
+    },
+    "ENTROPIC | pylon 1.04 -0.91 ceramic core <> ENTROPIC | pylon 1.04 -0.91 forged end retainer": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 64,
+      "moving": false
+    },
+    "ENTROPIC | pylon 1.04 -0.91 ceramic core <> ENTROPIC | pylon 1.04 -0.91 forged end retainer.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 64,
+      "moving": false
+    },
+    "ENTROPIC | pylon 1.04 -0.91 ceramic core <> ENTROPIC | pylon 1.04 -0.91 coil support stave": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 38,
+      "moving": false
+    },
+    "ENTROPIC | pylon 1.04 -0.91 ceramic core <> ENTROPIC | pylon 1.04 -0.91 coil support stave.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 38,
+      "moving": false
+    },
+    "ENTROPIC | pylon 1.04 -0.91 ceramic core <> ENTROPIC | pylon 1.04 -0.91 coil support stave.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 42,
+      "moving": false
+    },
+    "ENTROPIC | pylon 1.04 -0.91 ceramic core <> ENTROPIC | pylon 1.04 -0.91 coil support stave.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 38,
+      "moving": false
+    },
+    "ENTROPIC | pylon 1.04 -0.91 coil support stave <> ENTROPIC | pylon 1.04 -0.91 forged end retainer": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "ENTROPIC | pylon 1.04 -0.91 coil support stave.001 <> ENTROPIC | pylon 1.04 -0.91 forged end retainer": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | pylon 1.04 -0.91 coil support stave.002 <> ENTROPIC | pylon 1.04 -0.91 forged end retainer": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "ENTROPIC | pylon 1.04 -0.91 coil support stave.003 <> ENTROPIC | pylon 1.04 -0.91 forged end retainer": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | pylon 1.04 -0.91 foot anchor <> ENTROPIC | pylon 1.04 -0.91 forged end retainer": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "ENTROPIC | pylon 1.04 -0.91 foot anchor.001 <> ENTROPIC | pylon 1.04 -0.91 forged end retainer": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "ENTROPIC | pylon 1.04 -0.91 foot anchor.002 <> ENTROPIC | pylon 1.04 -0.91 forged end retainer": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "ENTROPIC | pylon 1.04 -0.91 foot anchor.003 <> ENTROPIC | pylon 1.04 -0.91 forged end retainer": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "ENTROPIC | pylon 1.04 -0.91 coil support stave <> ENTROPIC | pylon 1.04 -0.91 forged end retainer.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | pylon 1.04 -0.91 coil support stave.001 <> ENTROPIC | pylon 1.04 -0.91 forged end retainer.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | pylon 1.04 -0.91 coil support stave.002 <> ENTROPIC | pylon 1.04 -0.91 forged end retainer.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | pylon 1.04 -0.91 coil support stave.003 <> ENTROPIC | pylon 1.04 -0.91 forged end retainer.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | pylon 1.04 -0.91 continuous supported copper winding <> ENTROPIC | pylon 1.04 -0.91 forged end retainer.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 118,
+      "moving": false
+    },
+    "ENTROPIC | pylon 1.04 -0.91 coil support stave <> ENTROPIC | pylon 1.04 -0.91 continuous supported copper winding": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 283,
+      "moving": false
+    },
+    "ENTROPIC | pylon 1.04 -0.91 coil support stave.001 <> ENTROPIC | pylon 1.04 -0.91 continuous supported copper winding": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 272,
+      "moving": false
+    },
+    "ENTROPIC | pylon 1.04 -0.91 coil support stave.002 <> ENTROPIC | pylon 1.04 -0.91 continuous supported copper winding": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 270,
+      "moving": false
+    },
+    "ENTROPIC | pylon 1.04 -0.91 coil support stave.003 <> ENTROPIC | pylon 1.04 -0.91 continuous supported copper winding": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 270,
+      "moving": false
+    },
+    "ENTROPIC | pylon 1.04 0.91 forged end retainer <> ENTROPIC | pylon 1.04 0.91 founded foot": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 107,
+      "moving": false
+    },
+    "ENTROPIC | pylon 1.04 0.91 ceramic core <> ENTROPIC | pylon 1.04 0.91 forged end retainer": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 64,
+      "moving": false
+    },
+    "ENTROPIC | pylon 1.04 0.91 ceramic core <> ENTROPIC | pylon 1.04 0.91 forged end retainer.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 64,
+      "moving": false
+    },
+    "ENTROPIC | pylon 1.04 0.91 ceramic core <> ENTROPIC | pylon 1.04 0.91 coil support stave": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 38,
+      "moving": false
+    },
+    "ENTROPIC | pylon 1.04 0.91 ceramic core <> ENTROPIC | pylon 1.04 0.91 coil support stave.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 38,
+      "moving": false
+    },
+    "ENTROPIC | pylon 1.04 0.91 ceramic core <> ENTROPIC | pylon 1.04 0.91 coil support stave.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 42,
+      "moving": false
+    },
+    "ENTROPIC | pylon 1.04 0.91 ceramic core <> ENTROPIC | pylon 1.04 0.91 coil support stave.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 38,
+      "moving": false
+    },
+    "ENTROPIC | pylon 1.04 0.91 coil support stave <> ENTROPIC | pylon 1.04 0.91 forged end retainer": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "ENTROPIC | pylon 1.04 0.91 coil support stave.001 <> ENTROPIC | pylon 1.04 0.91 forged end retainer": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | pylon 1.04 0.91 coil support stave.002 <> ENTROPIC | pylon 1.04 0.91 forged end retainer": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "ENTROPIC | pylon 1.04 0.91 coil support stave.003 <> ENTROPIC | pylon 1.04 0.91 forged end retainer": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | pylon 1.04 0.91 foot anchor <> ENTROPIC | pylon 1.04 0.91 forged end retainer": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "ENTROPIC | pylon 1.04 0.91 foot anchor.001 <> ENTROPIC | pylon 1.04 0.91 forged end retainer": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "ENTROPIC | pylon 1.04 0.91 foot anchor.002 <> ENTROPIC | pylon 1.04 0.91 forged end retainer": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "ENTROPIC | pylon 1.04 0.91 foot anchor.003 <> ENTROPIC | pylon 1.04 0.91 forged end retainer": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "ENTROPIC | pylon 1.04 0.91 coil support stave <> ENTROPIC | pylon 1.04 0.91 forged end retainer.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | pylon 1.04 0.91 coil support stave.001 <> ENTROPIC | pylon 1.04 0.91 forged end retainer.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | pylon 1.04 0.91 coil support stave.002 <> ENTROPIC | pylon 1.04 0.91 forged end retainer.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | pylon 1.04 0.91 coil support stave.003 <> ENTROPIC | pylon 1.04 0.91 forged end retainer.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | pylon 1.04 0.91 continuous supported copper winding <> ENTROPIC | pylon 1.04 0.91 forged end retainer.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 118,
+      "moving": false
+    },
+    "ENTROPIC | pylon 1.04 0.91 coil support stave <> ENTROPIC | pylon 1.04 0.91 continuous supported copper winding": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 283,
+      "moving": false
+    },
+    "ENTROPIC | pylon 1.04 0.91 coil support stave.001 <> ENTROPIC | pylon 1.04 0.91 continuous supported copper winding": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 272,
+      "moving": false
+    },
+    "ENTROPIC | pylon 1.04 0.91 coil support stave.002 <> ENTROPIC | pylon 1.04 0.91 continuous supported copper winding": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 270,
+      "moving": false
+    },
+    "ENTROPIC | pylon 1.04 0.91 coil support stave.003 <> ENTROPIC | pylon 1.04 0.91 continuous supported copper winding": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 270,
+      "moving": false
+    },
+    "ENTROPIC | closed thermal side casting <> ENTROPIC | thermal casting founded shoe": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 30,
+      "moving": false
+    },
+    "ENTROPIC | closed thermal side casting <> ENTROPIC | seated external thermal fin": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 40,
+      "moving": false
+    },
+    "ENTROPIC | closed thermal side casting <> ENTROPIC | seated external thermal fin.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 40,
+      "moving": false
+    },
+    "ENTROPIC | closed thermal side casting <> ENTROPIC | seated external thermal fin.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 42,
+      "moving": false
+    },
+    "ENTROPIC | closed thermal side casting <> ENTROPIC | seated external thermal fin.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 42,
+      "moving": false
+    },
+    "ENTROPIC | closed thermal side casting <> ENTROPIC | seated external thermal fin.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 42,
+      "moving": false
+    },
+    "ENTROPIC | closed thermal side casting <> ENTROPIC | seated external thermal fin.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 42,
+      "moving": false
+    },
+    "ENTROPIC | closed thermal side casting <> ENTROPIC | seated external thermal fin.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 42,
+      "moving": false
+    },
+    "ENTROPIC | closed thermal side casting <> ENTROPIC | seated external thermal fin.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 40,
+      "moving": false
+    },
+    "ENTROPIC | closed thermal side casting <> ENTROPIC | seated external thermal fin.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 40,
+      "moving": false
+    },
+    "ENTROPIC | seated external thermal fin <> ENTROPIC | thermal retaining rail": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 56,
+      "moving": false
+    },
+    "ENTROPIC | seated external thermal fin <> ENTROPIC | thermal retaining rail.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 56,
+      "moving": false
+    },
+    "ENTROPIC | seated external thermal fin.001 <> ENTROPIC | thermal retaining rail": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 56,
+      "moving": false
+    },
+    "ENTROPIC | seated external thermal fin.001 <> ENTROPIC | thermal retaining rail.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 56,
+      "moving": false
+    },
+    "ENTROPIC | seated external thermal fin.002 <> ENTROPIC | thermal retaining rail": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 56,
+      "moving": false
+    },
+    "ENTROPIC | seated external thermal fin.002 <> ENTROPIC | thermal retaining rail.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 56,
+      "moving": false
+    },
+    "ENTROPIC | seated external thermal fin.003 <> ENTROPIC | thermal retaining rail": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 56,
+      "moving": false
+    },
+    "ENTROPIC | seated external thermal fin.003 <> ENTROPIC | thermal retaining rail.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 56,
+      "moving": false
+    },
+    "ENTROPIC | seated external thermal fin.004 <> ENTROPIC | thermal retaining rail": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 56,
+      "moving": false
+    },
+    "ENTROPIC | seated external thermal fin.004 <> ENTROPIC | thermal retaining rail.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 56,
+      "moving": false
+    },
+    "ENTROPIC | seated external thermal fin.005 <> ENTROPIC | thermal retaining rail": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 56,
+      "moving": false
+    },
+    "ENTROPIC | seated external thermal fin.005 <> ENTROPIC | thermal retaining rail.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 56,
+      "moving": false
+    },
+    "ENTROPIC | seated external thermal fin.006 <> ENTROPIC | thermal retaining rail": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 56,
+      "moving": false
+    },
+    "ENTROPIC | seated external thermal fin.006 <> ENTROPIC | thermal retaining rail.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 56,
+      "moving": false
+    },
+    "ENTROPIC | seated external thermal fin.007 <> ENTROPIC | thermal retaining rail": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 56,
+      "moving": false
+    },
+    "ENTROPIC | seated external thermal fin.007 <> ENTROPIC | thermal retaining rail.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 56,
+      "moving": false
+    },
+    "ENTROPIC | seated external thermal fin.008 <> ENTROPIC | thermal retaining rail": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 56,
+      "moving": false
+    },
+    "ENTROPIC | seated external thermal fin.008 <> ENTROPIC | thermal retaining rail.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 56,
+      "moving": false
+    },
+    "ENTROPIC | thermal rail fastener <> ENTROPIC | thermal retaining rail": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 44,
+      "moving": false
+    },
+    "ENTROPIC | thermal rail fastener.002 <> ENTROPIC | thermal retaining rail": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 44,
+      "moving": false
+    },
+    "ENTROPIC | thermal rail fastener.001 <> ENTROPIC | thermal retaining rail.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 44,
+      "moving": false
+    },
+    "ENTROPIC | thermal rail fastener.003 <> ENTROPIC | thermal retaining rail.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 44,
+      "moving": false
+    },
+    "ENTROPIC | closed thermal side casting.001 <> ENTROPIC | thermal casting founded shoe.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 30,
+      "moving": false
+    },
+    "ENTROPIC | closed thermal side casting.001 <> ENTROPIC | seated external thermal fin.009": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 40,
+      "moving": false
+    },
+    "ENTROPIC | closed thermal side casting.001 <> ENTROPIC | seated external thermal fin.010": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 40,
+      "moving": false
+    },
+    "ENTROPIC | closed thermal side casting.001 <> ENTROPIC | seated external thermal fin.011": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 42,
+      "moving": false
+    },
+    "ENTROPIC | closed thermal side casting.001 <> ENTROPIC | seated external thermal fin.012": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 42,
+      "moving": false
+    },
+    "ENTROPIC | closed thermal side casting.001 <> ENTROPIC | seated external thermal fin.013": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 42,
+      "moving": false
+    },
+    "ENTROPIC | closed thermal side casting.001 <> ENTROPIC | seated external thermal fin.014": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 42,
+      "moving": false
+    },
+    "ENTROPIC | closed thermal side casting.001 <> ENTROPIC | seated external thermal fin.015": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 42,
+      "moving": false
+    },
+    "ENTROPIC | closed thermal side casting.001 <> ENTROPIC | seated external thermal fin.016": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 40,
+      "moving": false
+    },
+    "ENTROPIC | closed thermal side casting.001 <> ENTROPIC | seated external thermal fin.017": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 40,
+      "moving": false
+    },
+    "ENTROPIC | seated external thermal fin.009 <> ENTROPIC | thermal retaining rail.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 56,
+      "moving": false
+    },
+    "ENTROPIC | seated external thermal fin.009 <> ENTROPIC | thermal retaining rail.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 56,
+      "moving": false
+    },
+    "ENTROPIC | seated external thermal fin.010 <> ENTROPIC | thermal retaining rail.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 56,
+      "moving": false
+    },
+    "ENTROPIC | seated external thermal fin.010 <> ENTROPIC | thermal retaining rail.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 56,
+      "moving": false
+    },
+    "ENTROPIC | seated external thermal fin.011 <> ENTROPIC | thermal retaining rail.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 56,
+      "moving": false
+    },
+    "ENTROPIC | seated external thermal fin.011 <> ENTROPIC | thermal retaining rail.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 56,
+      "moving": false
+    },
+    "ENTROPIC | seated external thermal fin.012 <> ENTROPIC | thermal retaining rail.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 56,
+      "moving": false
+    },
+    "ENTROPIC | seated external thermal fin.012 <> ENTROPIC | thermal retaining rail.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 56,
+      "moving": false
+    },
+    "ENTROPIC | seated external thermal fin.013 <> ENTROPIC | thermal retaining rail.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 56,
+      "moving": false
+    },
+    "ENTROPIC | seated external thermal fin.013 <> ENTROPIC | thermal retaining rail.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 56,
+      "moving": false
+    },
+    "ENTROPIC | seated external thermal fin.014 <> ENTROPIC | thermal retaining rail.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 56,
+      "moving": false
+    },
+    "ENTROPIC | seated external thermal fin.014 <> ENTROPIC | thermal retaining rail.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 56,
+      "moving": false
+    },
+    "ENTROPIC | seated external thermal fin.015 <> ENTROPIC | thermal retaining rail.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 56,
+      "moving": false
+    },
+    "ENTROPIC | seated external thermal fin.015 <> ENTROPIC | thermal retaining rail.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 56,
+      "moving": false
+    },
+    "ENTROPIC | seated external thermal fin.016 <> ENTROPIC | thermal retaining rail.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 56,
+      "moving": false
+    },
+    "ENTROPIC | seated external thermal fin.016 <> ENTROPIC | thermal retaining rail.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 56,
+      "moving": false
+    },
+    "ENTROPIC | seated external thermal fin.017 <> ENTROPIC | thermal retaining rail.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 56,
+      "moving": false
+    },
+    "ENTROPIC | seated external thermal fin.017 <> ENTROPIC | thermal retaining rail.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 56,
+      "moving": false
+    },
+    "ENTROPIC | thermal rail fastener.004 <> ENTROPIC | thermal retaining rail.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 44,
+      "moving": false
+    },
+    "ENTROPIC | thermal rail fastener.006 <> ENTROPIC | thermal retaining rail.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 44,
+      "moving": false
+    },
+    "ENTROPIC | thermal rail fastener.005 <> ENTROPIC | thermal retaining rail.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 44,
+      "moving": false
+    },
+    "ENTROPIC | thermal rail fastener.007 <> ENTROPIC | thermal retaining rail.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 44,
+      "moving": false
+    },
+    "ENTROPIC | closed fragment fuel hatch <> ENTROPIC | fuel vestibule founded casing": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 40,
+      "moving": false
+    },
+    "ENTROPIC | closed fragment fuel hatch <> ENTROPIC | fuel hatch captured hinge": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 35,
+      "moving": false
+    },
+    "ENTROPIC | closed fragment fuel hatch <> ENTROPIC | fuel hatch captured hinge.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | closed captive latch <> ENTROPIC | fuel hatch latch seat": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 47,
+      "moving": false
+    },
+    "ENTROPIC | closed rear regulating casket <> ENTROPIC | rear casket retaining screw": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "ENTROPIC | closed rear regulating casket <> ENTROPIC | rear casket retaining screw.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "ENTROPIC | closed rear regulating casket <> ENTROPIC | rear casket retaining screw.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "ENTROPIC | closed rear regulating casket <> ENTROPIC | rear casket retaining screw.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "ENTROPIC | closed rear regulating casket <> ENTROPIC | rear casket load leg": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 38,
+      "moving": false
+    },
+    "ENTROPIC | closed rear regulating casket <> ENTROPIC | rear casket load leg.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 38,
+      "moving": false
+    },
+    "ENTROPIC | rear blind indicator seat <> ENTROPIC | rear green sealed indicator": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 54,
+      "moving": false
+    },
+    "ENTROPIC | rear blind indicator seat.001 <> ENTROPIC | rear green sealed indicator.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 54,
+      "moving": false
+    },
+    "ENTROPIC | rear blind indicator seat.002 <> ENTROPIC | rear green sealed indicator.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 54,
+      "moving": false
+    },
+    "ENTROPIC | rear casket founded support foot <> ENTROPIC | rear casket load leg": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | rear casket founded support foot.001 <> ENTROPIC | rear casket load leg.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "ENTROPIC | fan opaque backplate <> ENTROPIC | fixed fan shaft": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "ENTROPIC | fixed fan shaft <> ENTROPIC | shaft retained axial washer": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 145,
+      "moving": false
+    },
+    "ENTROPIC | fixed fan shaft <> ENTROPIC | shaft retained axial washer.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 148,
+      "moving": false
+    },
+    "ENTROPIC | fixed fan shaft <> ENTROPIC | shaft top seated retainer": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 50,
+      "moving": false
+    },
+    "ENTROPIC | fan guard grille retained rim <> ENTROPIC | fixed fan guard grille": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 78,
+      "moving": false
+    },
+    "ENTROPIC | fan guard grille retained rim <> ENTROPIC | fixed fan guard grille.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 78,
+      "moving": false
+    },
+    "ENTROPIC | fan guard grille retained rim <> ENTROPIC | fixed fan guard grille.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 68,
+      "moving": false
+    },
+    "ENTROPIC | fan guard grille retained rim <> ENTROPIC | fixed fan guard grille.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 72,
+      "moving": false
+    },
+    "ENTROPIC | fan guard grille retained rim <> ENTROPIC | fixed fan guard grille.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 68,
+      "moving": false
+    },
+    "ENTROPIC | fan guard grille retained rim <> ENTROPIC | fixed fan guard grille.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 72,
+      "moving": false
+    },
+    "ENTROPIC | fan guard grille retained rim <> ENTROPIC | fixed fan guard grille.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 68,
+      "moving": false
+    },
+    "ENTROPIC | fan guard grille retained rim <> ENTROPIC | fixed fan guard grille.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 78,
+      "moving": false
+    },
+    "ENTROPIC | fan guard grille retained rim <> ENTROPIC | fixed fan guard grille.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 78,
+      "moving": false
+    },
+    "ENTROPIC | bored rotor hub <> ENTROPIC | fan rigid blade": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 62,
+      "moving": true
+    },
+    "ENTROPIC | bored rotor hub <> ENTROPIC | fan rigid blade.001": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 60,
+      "moving": true
+    },
+    "ENTROPIC | bored rotor hub <> ENTROPIC | fan rigid blade.002": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 60,
+      "moving": true
+    },
+    "ENTROPIC | bored rotor hub <> ENTROPIC | fan rigid blade.003": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 62,
+      "moving": true
+    },
+    "ENTROPIC | bored rotor hub <> ENTROPIC | fan rigid blade.004": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 60,
+      "moving": true
+    },
+    "ENTROPIC | bored rotor hub <> ENTROPIC | fan rigid blade.005": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 60,
+      "moving": true
+    }
+  },
+  "note": "Raw triangle contacts include intentional fitted joints, tooth engagement and fasteners. Every pair requires adjudication; this inventory is not a clearance pass."
+}

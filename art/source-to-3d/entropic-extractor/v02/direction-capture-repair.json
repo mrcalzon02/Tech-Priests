@@ -1,0 +1,9 @@
+{
+  "detected_by": "Visual comparison of actual native direction0/4 and actual GLB facing captures.",
+  "initial_failure": "Imported SCENE animation resets root transforms at frame evaluation. Setting rotation directly on the animated imported root produced the same front body in every facing.",
+  "repair": "A dedicated unsaved direction parent below the square-ground projection rotates the complete imported assembly. The animation can only reset its child root.",
+  "runtime_geometry_changed": false,
+  "old_native_evidence": "native-client-reset-direction-study kept locally; not delivered as final proof",
+  "corrected_side_capture_visually_inspected": true,
+  "owner_visual_approval": false
+}

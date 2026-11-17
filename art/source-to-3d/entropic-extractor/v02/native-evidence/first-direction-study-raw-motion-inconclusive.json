@@ -1,0 +1,42 @@
+{
+  "source_sha256": "cefe48fe2ae9a68fce1da1ca4294f2a434a835653aeba937c95b78d814cc010d",
+  "runtime_sha256": "ad800e1e8b434617b4fe5687c01a253717cf1be9adfa69829c806060e9d94495",
+  "native_capture_receipt_sha256": "1514f40cd25e01482ec0ebdc13bd53725eea0708e6b78a67fbc68bbb277dc56c",
+  "scope": "Real native screenshot fan region; static electricity grid and all native effects outside the fan region are excluded. Quiet idle and script-stopped pairs are compared to actual working motion.",
+  "directions": [
+    {
+      "native_direction": 0,
+      "quiet_idle_mean_absolute_difference": 0.0022829032968729734,
+      "stopped_mean_absolute_difference": 0.0042133936658501625,
+      "working_adjacent_mean_difference_min": 0.0016785019543021917,
+      "working_adjacent_changed_pixels_min": 2,
+      "passed": false
+    },
+    {
+      "native_direction": 4,
+      "quiet_idle_mean_absolute_difference": 0.0022829032968729734,
+      "stopped_mean_absolute_difference": 0.0042133936658501625,
+      "working_adjacent_mean_difference_min": 0.0016785019543021917,
+      "working_adjacent_changed_pixels_min": 2,
+      "passed": false
+    },
+    {
+      "native_direction": 8,
+      "quiet_idle_mean_absolute_difference": 0.0022829032968729734,
+      "stopped_mean_absolute_difference": 0.0042133936658501625,
+      "working_adjacent_mean_difference_min": 0.0016710904892534018,
+      "working_adjacent_changed_pixels_min": 1,
+      "passed": false
+    },
+    {
+      "native_direction": 12,
+      "quiet_idle_mean_absolute_difference": 0.0022829032968729734,
+      "stopped_mean_absolute_difference": 0.0042133936658501625,
+      "working_adjacent_mean_difference_min": 0.0016777606215327978,
+      "working_adjacent_changed_pixels_min": 1,
+      "passed": false
+    }
+  ],
+  "passed": false,
+  "owner_visual_approved": false
+}

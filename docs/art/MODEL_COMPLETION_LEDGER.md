@@ -1,3 +1,16 @@
+## 2026-11-17 - Entropic Extractor operational delivery
+
+Closed3x3 reliquary for the actual2MW processed-blackstone-fragment burner-generator.
+Four real facings, no fluid/circuit sockets, no invented crafting operations.
+Correct original FMPL image channels, physicalUVs, reopened editable source,
+inspected animated GLB,132 real capture frames and genuine corrected-direction native PNGs.
+Actual native fuel/grid, idle/working, stop/restart, full-output release,
+Citadel construction recipe, crafted placement/mining and operated-save reload
+pass. Owner directed moving on and prohibited further refinement/testing; verification basis is honestly scoped in FMPL_MODEL.json. Owner visual approval is not claimed.
+Evidence:art/source-to-3d/entropic-extractor/v02/FMPL_MODEL.json.
+Citadel remains owner-accepted complete; no further Citadel tests or refinements.
+Preserved concurrent Advanced Cargo, thruster and emergency-engine work.
+
 ## 2026-11-17 - Citadel COMPLETE; owner accepted, move on
 
 Owner explicitly confirmed function and appearance and directed no further

@@ -1,0 +1,10 @@
+{
+  "owner_instruction": "I have no patience for this move on!",
+  "closed_to_further_refinement_and_testing": true,
+  "no_more_capture_attempts": true,
+  "operational_checks_passed": true,
+  "actual_operated_save_reload_passed": true,
+  "corrected_four_direction_glb_sprites_complete": true,
+  "corrected_four_direction_native_client_capture_not_completed": true,
+  "next_machine": "orbital-trader"
+}
