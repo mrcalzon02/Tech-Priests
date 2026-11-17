@@ -30,7 +30,7 @@
     "pbr_maps": 69,
     "bunker_component_candidates": 21,
     "verified_shared_components": 0,
-    "model_records": 19,
+    "model_records": 20,
     "program_records": 22,
     "pipeline_records": 6,
     "external_blender_libraries": 1,
@@ -815,6 +815,79 @@
         1
       ],
       "purpose": "Actual Tanks Stone Water Wheel offshore shoreline intake, 0.5 water/tick (30/s), void energy nominal 1W, no player fuel/electricity or processing recipes. Real gated Seablock recipe: five wood + ten brick/35s -> wheel one, 5% industrial waste one; actual technology unlock and Workbench craft tested. Four native directions. Preserves saved V2 curved fitted timber rim/spokes, axle, hollow bearing sleeves, bedded masonry/feet and exact full-size fixed collar/throat (0.49 bore, 0.68 collar OD, 0.36 height). Eight independently pivoted buckets remain upright and attached throughout lift. Fixed overhead cam lifts guided side-drain gates at the top, water jet falls into a supported joined race and bored sealed receiver; outboard river-current paddles. Raw sweeps drove rim/rod, paddle/pier/receiver and race/wheel repairs before delivery. Saved/reopened source and independently reimported GLB: 443 meshes, 130812 triangles, six geometry pose comparisons, eighteen source/export PBR images; 385 mechanism/clearance samples per artifact, exact matching raw pair inventories, 470 individually enumerated intentional rigid-joint/cam/fluid contacts. Not continuous physics simulation. Four facings x one idle + 32 working timestamps = 132 genuine combined captures and 396 complementary full/upper/submerged passes; all source working images distinct. Seventy-two verified atlases at three resolutions. Native upper and submerged frames animate together at eight fps; lower layer uses tint/alpha over water because underwater_pictures is static, approximating depth rather than per-tile water clipping. Actual native 16 machines/16 ordinary player-grid pipes, all four legal shoreline placements, exact extraction rate, full 300-unit networks/drain recovery and disabled stop/restart. Quarter-tile prototype ports unchanged; ordinary pipes connect despite fractional reported target. Four real placed-pipe closeups inspected, maximum nominal visible mouth/pipe plane difference 0.01 tile. Landfill preserves hidden water and extraction continues at native 30/s, then visible water restored; no invented dry shutdown. Operated-save reload preserves total network water, source tiles, disabled state, directions, connections and crafted building output. Forty-eight native client PNGs plus genuine 32-frame 8fps GIF/MP4. Opaque upper-geometry samples show working motion and stationary disabled/full output. Binary index hashes exact; Lua content identical after Git newline normalization. Gameplay unchanged. Earlier studies held; delegated close-enough review, no individual owner approval or full-user-pack installation."
+    },
+    {
+      "id": "tanks-tank-ammo-assembler-v1",
+      "status": "game-sprites-installed-with-specific-native-checks",
+      "source": {
+        "repository": "mrcalzon02/Tanks-for-bob-Fork",
+        "ref": "60007499d2734b15387e83fb1c8e483d9f35d328",
+        "path": "models/island-survival/tank-ammo-assembling-machine/candidates/v1-production03/tank-ammo-assembler-v1.blend",
+        "sha256": "5bca56a8cee03867098e09ce2f14072c0b437af4010096569ee0822bc1c0945d"
+      },
+      "runtime": {
+        "repository": "mrcalzon02/Tanks-for-bob-Fork",
+        "ref": "60007499d2734b15387e83fb1c8e483d9f35d328",
+        "path": "models/island-survival/tank-ammo-assembling-machine/candidates/v1-production03/tank-ammo-assembler-v1.glb",
+        "sha256": "c169d83bbfaf61c56d35b9c48ff39bac303d9636e8c21133c94cf3185a8578a5"
+      },
+      "evidence": [
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "60007499d2734b15387e83fb1c8e483d9f35d328",
+          "path": "models/island-survival/tank-ammo-assembling-machine/v1/FMPL_MODEL.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "60007499d2734b15387e83fb1c8e483d9f35d328",
+          "path": "models/island-survival/tank-ammo-assembling-machine/v1/contract.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "60007499d2734b15387e83fb1c8e483d9f35d328",
+          "path": "models/island-survival/tank-ammo-assembling-machine/candidates/v1-production03/clearance-review.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "60007499d2734b15387e83fb1c8e483d9f35d328",
+          "path": "docs/art/tank-ammo-assembler-v1/installed-source-verification.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "60007499d2734b15387e83fb1c8e483d9f35d328",
+          "path": "docs/art/tank-ammo-assembler-v1/socket-projection.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "60007499d2734b15387e83fb1c8e483d9f35d328",
+          "path": "docs/art/tank-ammo-assembler-v1/native-fluid-quantity-audit.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "60007499d2734b15387e83fb1c8e483d9f35d328",
+          "path": "docs/art/tank-ammo-assembler-v1/operated-reload-receipt.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "60007499d2734b15387e83fb1c8e483d9f35d328",
+          "path": "docs/art/tank-ammo-assembler-v1/native-animation-observation.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "60007499d2734b15387e83fb1c8e483d9f35d328",
+          "path": "docs/art/tank-ammo-assembler-v1/visual-review.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "60007499d2734b15387e83fb1c8e483d9f35d328",
+          "path": "docs/art/tank-ammo-assembler-v1/animation-evidence.json"
+        }
+      ],
+      "footprint": [
+        3,
+        3
+      ],
+      "purpose": "Actual Tanks tank-ammo-assembling-machine: electric 175 kW, speed 1, one module slot, no burner. All 46 real tank-ammo-component recipes completed in all four directions (184 actual recipe cases); ten generic engine parameter placeholders excluded from function brief. Real encabulated-device-integration unlock and building recipe crafted in an unmodified base assembler-3. Preserves all eight saved OBJ groups as timber/stone works with open wound motor, exact-ratio line belts, guided case-forming press, bored rigid link/mandrel, sealed charging/mixing retort, supported electric bands, packing trays and guard outside the swept motion. Actual Rubberized-timber crude-oil intake and wood/explosive-to-coal/waste/crude-oil output define the closed fixed pipe/coil/collector circuit; no other machine gameplay substituted. Packed/reopened source and independently reimported GLB: 272 meshes, 215926 triangles, 33 source/export PBR images, full UVs, no nonfinite/zero-area geometry. Six geometry poses and 385 mechanism/clearance samples per artifact; matching raw pair inventories, 161 enumerated rigid-assembly/belt running-surface contacts, no unwanted moving crossings. Connecting rod remains 0.52 tile; half-key pin centre deviation about 0.000018 tile fits inside 0.002 radial bore clearance. Motor 2:1 and transfer 1:1 phase checked. Four directions x one genuine idle + 32 working timestamps =132 actual captures, six verified atlases. Idle poses explicitly repeated to satisfy matching native 32-frame counts; no fabricated idle timestamps. Full-size fixed bores 0.49, collar OD0.68, axis0.36; actual collar projection matches ordinary pipe face anchors to below 0.000001 tile, with eight real input/output placed-pipe closeups viewed. Native final fixture:208 target machines plus one real bootstrap builder,20 ordinary grid joints; no target speed/power/module overrides, including full3160-second WMD recipe durations. Power/fluid starvation-resupply, item/fluid output blocking/release and stop/restart pass. Fluid blocker explicitly holds powered progress1,full_output,zero finished products,1000 machine oil+100 pipe oil after160 seconds for the150-second recipe; output release verified. Both fluid mass balances verified in all four directions. Sixty actual client PNGs plus genuine32-frame8fps GIF/MP4; working geometry moves, disabled/post-cycle blocked sampled views stationary. Operated-save reload preserves all input/output inventories, actual fluids/temperatures/joints, recipe/progress/products-finished, electrical buffers,directions/disabled flags and crafted building output. Binary index bytes exact; Lua content verified after Git newline normalization. Gameplay unchanged. Earlier failed geometry/layout/timing studies held; delegated close-enough operational review, no individual owner approval or full-user-pack installation."
     }
   ],
   "programs": [
