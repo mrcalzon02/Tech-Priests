@@ -30,7 +30,7 @@
     "pbr_maps": 69,
     "bunker_component_candidates": 21,
     "verified_shared_components": 0,
-    "model_records": 14,
+    "model_records": 15,
     "program_records": 22,
     "pipeline_records": 6,
     "external_blender_libraries": 1,
@@ -510,6 +510,64 @@
         3
       ],
       "purpose": "Tanks chemical-burner quarry with six actual quarrying recipes and no fluid ports. Reused tracked starter, detailed timber hoist, bored bearings/windlass, taut paid-out cable and upright lifting bucket, rigid piston/rod crank, moving hemp belt, contained brick firebox/copper pressure jacket, tools/material handling and continuous excavated terrain roots. Packed editable source reopened; GLB independently reimported, including ground fade in COLOR_0. Six export pose comparisons and 193 mechanism-frame checks pass. Seventeen genuine fixed-north source frames; native idle cells explicitly repeat one capture. Thirty-six machines tested for normal placement, six real recipes, tools returned in output, chemical fuel, no fuel, no-recipe idle, full output, stop/restart and unblocking. Twelve genuine client screenshots on grass; legacy smoke emitter aligned to measured flue outlet. Completed operated-save reload preserves 36 frozen inventory snapshots. Current native orientation is fixed north; no gameplay change. Delegated operational close-enough review, not individual owner approval."
+    },
+    {
+      "id": "tanks-shaler-v2",
+      "status": "game-sprites-installed-with-specific-native-checks",
+      "source": {
+        "repository": "mrcalzon02/Tanks-for-bob-Fork",
+        "ref": "47a3b4351757c1e73a2624f7e5b57ee39828b61f",
+        "path": "models/island-survival/shaler/candidates/v2-mechanisms02/shaler-v2.blend",
+        "sha256": "cce8f253c696ec3cf4db7825b599746e91ca79188de9f52c02641417e70a843d"
+      },
+      "runtime": {
+        "repository": "mrcalzon02/Tanks-for-bob-Fork",
+        "ref": "47a3b4351757c1e73a2624f7e5b57ee39828b61f",
+        "path": "models/island-survival/shaler/candidates/v2-mechanisms02/shaler-v2.glb",
+        "sha256": "e25979ae250bd788be7cf2f1ec0d0b0b7042085a54a5b5a6b19cda82ceaa230e"
+      },
+      "evidence": [
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "47a3b4351757c1e73a2624f7e5b57ee39828b61f",
+          "path": "models/island-survival/shaler/v2/FMPL_MODEL.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "47a3b4351757c1e73a2624f7e5b57ee39828b61f",
+          "path": "models/island-survival/shaler/v1/contract.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "47a3b4351757c1e73a2624f7e5b57ee39828b61f",
+          "path": "docs/art/shaler-v2/native-runtime.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "47a3b4351757c1e73a2624f7e5b57ee39828b61f",
+          "path": "docs/art/shaler-v2/capture-verification.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "47a3b4351757c1e73a2624f7e5b57ee39828b61f",
+          "path": "docs/art/shaler-v2/operated-reload-receipt.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "47a3b4351757c1e73a2624f7e5b57ee39828b61f",
+          "path": "docs/art/shaler-v2/visual-review.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "47a3b4351757c1e73a2624f7e5b57ee39828b61f",
+          "path": "docs/art/shaler-v2/animation-evidence.json"
+        }
+      ],
+      "footprint": [
+        3,
+        3
+      ],
+      "purpose": "Tanks chemical-burner Shaler; actual 17 steam/water processing and waste canister recipes, four facings, fixed north inlet/south acid outlet. Preserves tracked starter geometry and useful V1 engine/cam press. Owner-required refinement adds continuous chimney footing/lower brick courses/corbels, keyed drive shaft, 18:18 miter gears, 18:54 exposed reduction, second rigid connecting arm/process-pump piston and supported reinforced hose/pipe circuits. No gameplay, balance or exterior-port change. Packed editable source saved/reopened; actual GLB reimported with six pose comparisons and 193-frame attachment/cam/gear-ratio/fixed-socket/loop checks. Thirty-six embedded PBR maps and 68 genuine source captures. Eighty-eight machines verify all 17 recipes in four directions, 88 normal grid pipe joints, chemical fuel, missing fuel/steam, idle, item/fluid blocking, stop/restart and unblocking. Largest steam batch supplied by additional ordinary pipes. Thirty-six actual client PNGs include a 16-frame native working loop, also encoded GIF/MP4. Settled operated-save reload preserves inventories, machine/pipe fluid amounts/types/temperatures and connections. Smoke measured from the actual flue for each facing. Rough V1 remains held; delegated operational review, not individual owner approval."
     }
   ],
   "programs": [
