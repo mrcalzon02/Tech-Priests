@@ -30,7 +30,7 @@
     "pbr_maps": 69,
     "bunker_component_candidates": 21,
     "verified_shared_components": 0,
-    "model_records": 21,
+    "model_records": 22,
     "program_records": 22,
     "pipeline_records": 6,
     "external_blender_libraries": 1,
@@ -961,6 +961,84 @@
         3
       ],
       "purpose": "Actual Tanks tank-assembling-machine: electric 250 kW, normal speed one, four empty module slots, no fuel/fluid storage or ports. All13 real vehicle upgrade/light-chassis recipes operated at full native times, including3040-second WMD conversion. Four requested placement directions normalize north; only one actual sprite orientation. Actual encabulated-device-integration unlock, building crafted in delivered ammunition assembler, item/place_result verified and actual crafted item consumed for ordinary scripted placement. All nine saved OBJ groups retained: founded timber/stone gantry, rails, open existing-vehicle hull/tracks with through axles and bored plate openings, upright slung replacement engine, supported exposed electric motor/winch, guided joining head with electrode-rooted effect, rigid hinged electrical arms with separate parallel leaves, supported ceramic supply terminals. Reopened packed source and independently reimported GLB:282 meshes,54704 triangles,33 embedded PBR maps, physical UVs and six pose comparisons.385 source plus385 runtime mechanism/clearance samples verify upright load, rope endpoints, rigid0.37-tile arms, pin fits and winding ratio;347 matching raw contact pairs,58 moving fitted contacts explicitly adjudicated; no unknown/unwanted crossings. This is sampled clearance, not continuous collision simulation.33 genuine source captures:one idle plus32 working north phases. Idle repeats explicitly into32 cells for native matching frame counts. Six atlases; animation_progress explicitly1 gives actual8fps. Final fixture17 machines plus actual ammunition-assembler builder; power starvation/resupply, full_output blocking/release, stop/restart, all13 actual recipes and current-art completed-save reload pass without gameplay/speed/power/module overrides.46 native client PNGs include32 distinct working phases; paused and blocked geometry remains stationary. Full operated save retains inventories, recipe/progress/count, electrical buffers, disabled/north flags, builder output and crafted building placement. Native32-frame GIF/MP4; viewed source/export front/rear/side/clay/close and representative native states. Task binary bytes exact and normalized Lua content verified against tested profile. Delegated operational close-enough review; no individual owner approval, manual-click placement, full user-pack install or Portal publication."
+    },
+    {
+      "id": "tanks-steam-condenser-v2",
+      "status": "game-sprites-installed-with-specific-native-checks",
+      "source": {
+        "repository": "mrcalzon02/Tanks-for-bob-Fork",
+        "ref": "93e4d67c424e2d0afdf57646ac649fcb4af653e3",
+        "path": "models/island-survival/steam-condenser/candidates/v2-production05/steam-condenser-v2.blend",
+        "sha256": "f16cc807dd96b9fe901410fd214657dc913027b959e27e377e5ab2f92cde1526"
+      },
+      "runtime": {
+        "repository": "mrcalzon02/Tanks-for-bob-Fork",
+        "ref": "93e4d67c424e2d0afdf57646ac649fcb4af653e3",
+        "path": "models/island-survival/steam-condenser/candidates/v2-production05/steam-condenser-v2.glb",
+        "sha256": "ac882b649abd69772e6db8ceb6684f2db011bba0cd899bb8bb771cecd23907a5"
+      },
+      "evidence": [
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "93e4d67c424e2d0afdf57646ac649fcb4af653e3",
+          "path": "models/island-survival/steam-condenser/v2/FMPL_MODEL.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "93e4d67c424e2d0afdf57646ac649fcb4af653e3",
+          "path": "models/island-survival/steam-condenser/v2/contract.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "93e4d67c424e2d0afdf57646ac649fcb4af653e3",
+          "path": "models/island-survival/steam-condenser/candidates/v2-production05/runtime-inspection.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "93e4d67c424e2d0afdf57646ac649fcb4af653e3",
+          "path": "models/island-survival/steam-condenser/candidates/v2-production05/clearance-review.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "93e4d67c424e2d0afdf57646ac649fcb4af653e3",
+          "path": "docs/art/steam-condenser-v2/installed-source-verification.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "93e4d67c424e2d0afdf57646ac649fcb4af653e3",
+          "path": "docs/art/steam-condenser-v2/native-runtime.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "93e4d67c424e2d0afdf57646ac649fcb4af653e3",
+          "path": "docs/art/steam-condenser-v2/socket-projection.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "93e4d67c424e2d0afdf57646ac649fcb4af653e3",
+          "path": "docs/art/steam-condenser-v2/operated-reload-receipt.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "93e4d67c424e2d0afdf57646ac649fcb4af653e3",
+          "path": "docs/art/steam-condenser-v2/native-animation-observation.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "93e4d67c424e2d0afdf57646ac649fcb4af653e3",
+          "path": "docs/art/steam-condenser-v2/visual-review.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "93e4d67c424e2d0afdf57646ac649fcb4af653e3",
+          "path": "docs/art/steam-condenser-v2/animation-evidence.json"
+        }
+      ],
+      "footprint": [
+        3,
+        3
+      ],
+      "purpose": "Actual Tanks steam-condenser: wood5+steam200 -> stone10+industrialwaste1, categorySteam, chemical1kW/effectivity1, speed0.6, zero modules, normal58.333-second craft. Four actual native facings. Only the steam inlet is exposed for this recipe; no water product or fluid output invented. Actual Workbench building recipe uses crude-glass10+brick5 and real technology unlock. All ten original OBJ groups preserved as founded brick/clay treatment chamber, crude-glass inspection opening, wood rack, full-size steam collar/reducer and connected four-riser jacket, stone chute with separate waste collection, firebox and continuously founded hollow brick stack. Fitted steam piston, bored fork/pins, rigid0.50-tile connecting rod and distinct offset belt-transfer shaft keep the rod clear; two equal-ratio belts drive the contained rake. Reopened packed source and independently reimported actual GLB:324 meshes,75850 triangles,39 source and39 embedded PBR images, full UVs, six pose matches.385 source plus385 runtime mechanism/clearance samples,342 matching raw contacts,94 enumerated moving rigid-fit/running contacts; four cross-assembly belt/rim engagements and no unknown crossings. Interpolated pin-centre error about0.000015 tile fits inside0.002 radial bore clearance.132 genuine source captures, one idle plus32 work phases per facing, six verified atlases. Idle repeats explicit; native animation_progress1 gives8fps. Fixed inlet0.49 bore/0.68 collar/Z0.36 matches ordinary pipe-face projection below0.000001 tile in all directions, with genuine placed-pipe views. Native fixture24 target machines,20 ordinary machine pipe joints,40 pipe entities: exact200 steam165C supplied through two normal pipes per active machine, actual wood/fuel consumed and stone/waste produced in every completed case. Fuel/steam starvation-resupply, late full_output/progress1/zero-counter blocking and release, stop/restart, actual Workbench building/unlock and scripted consumed-item placement pass without gameplay/speed/power/module overrides. Actual operated-save reload preserves inventories, steam amount/type/temp/joints, remaining chemical fuel and buffer, recipe/progress/count, directions/disabled flags, Workbench output and crafted placement.60 real client PNGs include four pipe and four chimney closeups; smoke leaves actual stack, unused-output legacy cap art suppressed.32 distinct native geometry phases, paused/blocked geometry stationary in left-drive mask excluding smoke;32 real frames encode8fps GIF/MP4. Source/export front/rear/side/clay/close and native views inspected. Historical V1 barrel/water-output candidate remains held/unapproved/uninstalled as a condenser; its separate accepted compressor derivative preserved. Inspection cavity remains dark at game scale. Delegated operational close-enough review, no individual owner approval/full installed pack/Portal claim."
     }
   ],
   "programs": [
