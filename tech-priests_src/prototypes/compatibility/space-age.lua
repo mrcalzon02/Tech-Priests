@@ -974,13 +974,13 @@ local function make_sterling_steam_catalyzer()
   if catalyzer.fluid_box then
     catalyzer.fluid_box.production_type = "input"
     catalyzer.fluid_box.pipe_connections = {
-      { flow_direction = "input", direction = defines.direction.west, position = {-1.5, 0} }
+      { flow_direction = "input", direction = defines.direction.west, position = {-1.5, 0.5} }
     }
   end
   if catalyzer.output_fluid_box then
     catalyzer.output_fluid_box.production_type = "output"
     catalyzer.output_fluid_box.pipe_connections = {
-      { flow_direction = "output", direction = defines.direction.east, position = {1.5, 0} }
+      { flow_direction = "output", direction = defines.direction.east, position = {1.5, 0.5} }
     }
   end
   catalyzer.pictures = tech_priests_primitive_boiler_pictures_0534(STERLING_STEAM_CATALYZER, 1402, 1122, 0.080, {0, -0.05})

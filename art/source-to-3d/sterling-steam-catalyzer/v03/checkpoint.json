@@ -1,0 +1,28 @@
+{
+  "schema": "tp.sterling.source-checkpoint.v1",
+  "baseline_ref": "b5183ef3b570bc49194d1655e9f5e0541ab658b4",
+  "production_source_path": "tech-priests_src/prototypes/compatibility/space-age.lua",
+  "before_sha256": "9238057b08270863b87e1ffdc79057d115590b15620064a3f052088c0d36f229",
+  "after_sha256": "cda0c22f0488172e9503dc80605db2f59001f43bb36d9e755a1352ce95942a8f",
+  "exact_production_bytes_tested": true,
+  "test_data_overrides": false,
+  "platform_placement_four_directions": true,
+  "baseline_zero_flow_four_directions": true,
+  "repaired_real_flow_four_directions": true,
+  "full_output_stop": true,
+  "boiler_thermal_volume_ratio": 10,
+  "nominal_water_per_second": 2,
+  "nominal_steam_per_second": 20,
+  "steam_temperature": 165,
+  "power_watts": 600000,
+  "source_candidate": "art/source-to-3d/sterling-steam-catalyzer/v03",
+  "candidate_native_art_installed": false,
+  "candidate_owner_visual_approved": false,
+  "pending": [
+    "Complete source/GLB attachment and clearance review",
+    "Genuine four-direction idle/working sprites",
+    "Native art integration and pipe/smoke alignment captures",
+    "Fuel/input starvation, blocked recovery, stop/restart, unlock/crafting and operated save/reload",
+    "Final FMPL delivery and remote receipt"
+  ]
+}

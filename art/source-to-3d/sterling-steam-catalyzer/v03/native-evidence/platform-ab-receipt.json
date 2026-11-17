@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "actual_space_platform": true,
+  "ordinary_placement_all_four_directions": true,
+  "baseline_flow_failed": true,
+  "repaired_flow_and_full_output_passed": true,
+  "source_patch_tested_without_test_data_override": true,
+  "production_repository_applied": false,
+  "note": "Earlier grass fixture proved fluid behavior only; this A/B additionally proves legal placement on the actual platform-only surface. Full fuel/stop/restart/unlock/crafting/reload and art integration remain pending."
+}

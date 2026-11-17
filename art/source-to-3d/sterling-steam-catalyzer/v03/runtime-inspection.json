@@ -1,0 +1,25 @@
+{
+  "technical_checks_passed": true,
+  "source_sha256": "efad85fe215276e7c093f39cb308bdc43bfbdb02fa8bc39690074d2bfcb76bc6",
+  "runtime_sha256": "56beeb4af85d2072d8ae6a3302860437385c7c1fc3240449366ca8510871d2f7",
+  "mesh_count": 158,
+  "triangles": 21260,
+  "source_runtime_six_pose_bounds_errors": {
+    "0": 2.384185791015625e-07,
+    "1": 2.562999725341797e-05,
+    "25": 2.8699636459350586e-05,
+    "49": 2.562999725341797e-05,
+    "73": 2.2590160369873047e-05,
+    "97": 2.562999725341797e-05
+  },
+  "degenerates": {},
+  "bad_finite_or_uv": [],
+  "source_packed_images": 27,
+  "source_unpacked_images": [],
+  "runtime_embedded_images": 27,
+  "runtime_external_images": [],
+  "working_loop_seam_error": 0.0,
+  "full_clearance_audit_pending": true,
+  "native_integration": false,
+  "owner_visual_approved": false
+}

@@ -5,6 +5,24 @@
 **Packaged baseline:** `0.1.672`  
 **Active development lane:** `0.1.674-dev`
 
+## 2026-11-17 - Sterling native platform pipe repair and source checkpoint
+
+The existing platform-only Sterling Steam Catalyzer used half-axis pipe
+positions that reported ordinary pipe targets but passed no actual fluid.
+Moving only the inlet/outlet Y coordinates from0 to0.5 restores normal-grid
+flow in all four native facings on a genuine space-platform foundation.
+Its 600kW chemical burner, 165C target, 4x2 footprint, recipe, technology and
+surface restrictions are unchanged. Native water/steam heat capacities give
+2 water/s -> 20 steam/s; the fixture naturally fills400 steam capacity and stops.
+Baseline failure, repaired operation and exact committed-source test evidence
+are in art/source-to-3d/sterling-steam-catalyzer/v03/native-evidence.
+
+The same checkpoint preserves a packed authored model and independently
+inspected GLB, 27 PBR images and genuine reviewed previews. It is a candidate:
+sprites are not integrated, full operational/reload/art gates and FMPL remain
+pending, and no owner visual approval or release is claimed. Concurrent
+Conclave/cache/vault/battery, cogitator and separate-engine work is preserved.
+
 ## 2026-11-16 - Metallicized hydrogen production
 
 Tech Priests 0.1.682 incorporates the seven-machine line, the two player interfaces, and sealed fuel for all three plasma reactors. Factorio 2.1.24 verified ordinary belt-to-reactor delivery in the base game and Space Age, plus migration of active prototype jobs. The [integration record](art/metallic-hydrogen-chain/ORDINARY_CHAIN_INTEGRATION.md) links the engine measurements.
