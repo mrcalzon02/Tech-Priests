@@ -1,0 +1,1 @@
+{"name": "citadel-v1-capture", "version": "0.0.1", "title": "Isolated actual Citadel client capture", "author": "local", "factorio_version": "2.1", "dependencies": ["base", "space-age", "tech-priests", "citadel-v1-proof"]}

@@ -631,3 +631,5 @@ require("prototypes.generated_graphics.atmospheric-water-condenser-v24")
 require("prototypes.generated_graphics.sterling-steam-catalyzer-v1")
 
 require("prototypes.generated_graphics.void-steam-engine-v1")
+
+require("prototypes.generated_graphics.citadel-manufactoreo-v1")

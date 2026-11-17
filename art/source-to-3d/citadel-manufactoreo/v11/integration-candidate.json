@@ -1,0 +1,36 @@
+{
+  "installed_isolated_current_mod": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\tanks-structure-production\\build\\tp-sterling-contract-main01\\mods\\tech-priests_0.1.687",
+  "base_commit": "12fe5163fd02e644c56227976e03da843e5fc7d7",
+  "source_sha256": "994819cdc6732ef365f56de46d9b1b017e62656462bbc8ae99973d728525d25c",
+  "runtime_sha256": "b75bbfa292e9fa0f74c8dcedcca89e2376506d66558c0f67890e0940a8627cc2",
+  "files": {
+    "north-idle.png": "b0dc605913977236d1b8760e1f32f4ababb76faee155c5f686d4d819f5129da9",
+    "north-working.png": "e31ee425d5dcf51f7e4963c7d3f71e0e1097db1e9c79bbeadd5222383bda54af",
+    "icon.png": "26c3054b091a391858ed958e6ea7c6c43d5340889e70e63fa334b016c4322529"
+  },
+  "generated_lua_sha256": "f1bcc34f70d57df24600a33eb4bf0807eee768072bf292e16aababdb4681e278",
+  "sprite_shift": [
+    0,
+    -1.131370849898476
+  ],
+  "sprite_scale": 0.625,
+  "native_orientations": [
+    0
+  ],
+  "circuit_terminal_model_heads_native_projection": [
+    [
+      -1.5806024177369653,
+      1.5392782915956529,
+      2.2236385120151483
+    ],
+    [
+      -1.4778554735165768,
+      1.539278310266989,
+      2.2236385306864843
+    ]
+  ],
+  "fluid_ports": 0,
+  "gameplay_properties_changed": false,
+  "production_repository_integrated": false,
+  "native_operation_and_reload_pending": true
+}

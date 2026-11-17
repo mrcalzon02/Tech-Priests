@@ -1,0 +1,39 @@
+{
+  "status": "native-operational-integration-checkpoint-final-fixed-joint-review-pending",
+  "source_sha256": "994819cdc6732ef365f56de46d9b1b017e62656462bbc8ae99973d728525d25c",
+  "runtime_sha256": "b75bbfa292e9fa0f74c8dcedcca89e2376506d66558c0f67890e0940a8627cc2",
+  "meshes": 4041,
+  "triangles": 588248,
+  "packed_and_embedded_images": 30,
+  "correct_fmpl_source_maps_and_actual_glb_channels": true,
+  "genuine_glb_captures": 33,
+  "genuine_native_pngs": 315,
+  "actual_native_motion_frames": 96,
+  "native_all_three_recipes_and_four_side_logistics": true,
+  "native_stop_blocked_starved_power_and_circuit_gates": true,
+  "actual_operated_save_reload_300ticks": true,
+  "console_red_green_wire_attachment_native_viewed": true,
+  "full_clearance_inventories": [
+    {
+      "report": "clearance-raw.json",
+      "sha256": "994819cdc6732ef365f56de46d9b1b017e62656462bbc8ae99973d728525d25c",
+      "poses": 387,
+      "raw_pairs": 4203,
+      "foreign_moving_contacts": 0,
+      "targeted_fixed_interferences": 0
+    },
+    {
+      "report": "clearance-runtime-raw.json",
+      "sha256": "b75bbfa292e9fa0f74c8dcedcca89e2376506d66558c0f67890e0940a8627cc2",
+      "poses": 385,
+      "raw_pairs": 4285,
+      "foreign_moving_contacts": 0,
+      "targeted_fixed_interferences": 0
+    }
+  ],
+  "fixed_contact_full_adjudication_pending": true,
+  "canonical_fmpl_model_registration_pending": true,
+  "owner_visual_approved": false,
+  "machine_done": false,
+  "whole_goal_complete": false
+}

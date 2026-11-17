@@ -5,6 +5,25 @@
 **Packaged baseline:** `0.1.672`  
 **Active development lane:** `0.1.674-dev`
 
+## 2026-11-17 - Citadel native operational art integration V11
+
+Installed the enclosed FMPL cathedral's fixed-north32-frame animation and idle
+art into the actual current mod source. Source/GLB/evidence are preserved at
+art/source-to-3d/citadel-manufactoreo/v11.315 real native PNGs,96 close motion
+frames, all three actual recipes and normal belt/inserter input/output on every
+side pass. Native stop/block/starvation/power/circuit recovery, two module
+slots, actual building craft/place/mine and300-tick operated-save reload pass.
+The floating inherited connector is replaced by wire points at source console
+heads. Original FMPL maps and actual exported channels pass. Earlier failed
+fixture/analysis studies remain honest. No gameplay/runtime controller change.
+
+Source4041meshes/588248triangles;30 packed/embedded images;33 actual GLB
+captures. Raw source/runtime half-frame sweeps include every surviving mesh.
+Foreign moving contacts and specifically repaired bus/feed/plug/stud contacts
+are zero. Full fixed-contact adjudication and final canonical FMPL registration
+remain required; machine completion is not claimed. Continue on this machine.
+All prior production code, completed assets and concurrent work/index preserved.
+
 ## 2026-11-17 - Citadel continued enclosed-cathedral greeble refinement V09
 
 Continued the owner's requested extreme exterior detail while preserving the

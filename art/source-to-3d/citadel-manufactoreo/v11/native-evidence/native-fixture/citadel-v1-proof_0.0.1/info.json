@@ -1,0 +1,1 @@
+{"name": "citadel-v1-proof", "version": "0.0.1", "title": "Isolated actual Citadel operational proof", "author": "local", "factorio_version": "2.1", "dependencies": ["base", "space-age", "tech-priests"]}

@@ -1,0 +1,1 @@
+local p=table.deepcopy(data.raw['electric-energy-interface']['electric-energy-interface']);p.name='citadel-proof-power';p.energy_production='100MW';p.energy_usage='0W';p.energy_source={type='electric',buffer_capacity='100MJ',usage_priority='primary-output',input_flow_limit='0W',output_flow_limit='100MW'};p.minable=nil;data:extend({p})

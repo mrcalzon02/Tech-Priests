@@ -1,0 +1,33 @@
+{
+  "source_sha256": "994819cdc6732ef365f56de46d9b1b017e62656462bbc8ae99973d728525d25c",
+  "runtime_sha256": "b75bbfa292e9fa0f74c8dcedcca89e2376506d66558c0f67890e0940a8627cc2",
+  "actually_viewed": {
+    "actual-glb-detail.png": "eb134bbbe361714af1746cadbf1840bf780eaaeb3b1f0359ba23124eaf247aaa",
+    "actual-glb-rear.png": "20b05da4fcd197d1bf2c2917d194a0d6451de6fbf3b8d2b641849d2e3a0252dd",
+    "actual-glb-clay.png": "19531a9032c0a20f2b7505609fccfd91d30807ce352f236bd5323352bb5c5162"
+  },
+  "native_views_actually_inspected": {
+    "blackstone-slab-compression-working.png": "b22294f715ba1731098be948469149e3963b9be9d8a92bcd0be3c5af422b4e99",
+    "blackstone-slab-compression-circuits.png": "d02a3ed71cf43ed0187a56c9e9e006c04517309892f6bd56387d15440a33c895",
+    "blackstone-slab-compression-mechanism-motion-00.png": "ba4e1121a87af6ad9be36c0b5f684850088849ef3d3f7e2d984eeb339e93c52b",
+    "blackstone-slab-compression-mechanism-motion-08.png": "302cfea9900eb08ce9f1750573a4f978c851ce6cd1bc100afc21dccee0964a4c",
+    "blackstone-slab-compression-mechanism-stopped-a.png": "819f63051df8c6c6e04cf66b0c3f79d93c37b9d6beb31316fd3ed1167f54a88c"
+  },
+  "score_scale": "0 unacceptable;5 strong",
+  "scores": {
+    "enclosed_cathedral_identity": 5,
+    "exterior_detail_density": 4,
+    "fmpl_surface_identity": 4,
+    "visible_supported_construction": 4,
+    "native_scale_and_console_attachment": 4
+  },
+  "delegated_practical_visual_review": true,
+  "hidden_factory_interior_preserved": true,
+  "native_facing_fixed_north_only": true,
+  "native_fluids_and_burner": false,
+  "remaining_required": [
+    "Full fixed contact adjudication.",
+    "Final canonical FMPL registration and completion receipt."
+  ],
+  "owner_visual_approved": false
+}

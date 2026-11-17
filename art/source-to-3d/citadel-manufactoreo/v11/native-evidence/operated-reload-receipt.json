@@ -1,0 +1,7 @@
+{
+  "passed": true,
+  "save_sha256": "e1cca110ed920edd129e42fad2d01b0318e1f2416685355429e9e29aa8044f25",
+  "actual_operated_save_not_fresh_fixture": true,
+  "stopped_state_persists_300ticks": true,
+  "candidate": "v11"
+}

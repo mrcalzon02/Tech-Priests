@@ -1,0 +1,42 @@
+   0.001 2026-11-17 11:32:24; Factorio 2.1.24 (build 87808, win64, steam, space-age)
+   0.001 Operating system: Windows 11 (build 26200) 
+   0.001 Program arguments: "C:\Program Files (x86)\Steam\steamapps\common\Factorio\bin\x64\factorio.exe" "--config" "C:/Users/Admin/Documents/ChatGPT/Tech priests/tanks-structure-production/build/tp-citadel-manufactoreo-main01/config.ini" "--mod-directory" "C:/Users/Admin/Documents/ChatGPT/Tech priests/tanks-structure-production/build/tp-sterling-contract-main01/mods" "--create" "C:/Users/Admin/Documents/ChatGPT/Tech priests/tanks-structure-production/build/tp-citadel-manufactoreo-main01/citadel-art-v10-contract.zip" 
+   0.002 Config path: C:/Users/Admin/Documents/ChatGPT/Tech priests/tanks-structure-production/build/tp-citadel-manufactoreo-main01/config.ini
+   0.002 Read data path: C:/Program Files (x86)/Steam/steamapps/common/Factorio/data
+   0.002 Write data path: C:/Users/Admin/Documents/ChatGPT/Tech priests/tanks-structure-production/build/tp-citadel-manufactoreo-main01/runtime [207820/1906722MB]
+   0.002 Binaries path: C:/Program Files (x86)/Steam/steamapps/common/Factorio/bin
+   0.007 System info: [CPU: Intel(R) Core(TM) i7-14700K, 28 cores, RAM: 19442/32526 MB, page: 28591/43790 MB, virtual: 4304/134217727 MB, extended virtual: 0 MB]
+   0.059 Memory info:
+   0.059  [0]: Corsair CMH32GX5M2E6000C36 16384 MB 6000 MHz 1.35 v 64|64
+   0.059  [1]: Corsair CMH32GX5M2E6000C36 16384 MB 6000 MHz 1.35 v 64|64
+   0.105 Running in headless mode
+   0.105 Audio is disabled
+   0.107 Info ModManager.cpp:455: FeatureFlag: expansion, expansion-shaders, freezing, quality, rail-bridges, segmented-units, space-travel, spoiling
+   0.109 Loading mod settings tech-priests 0.1.687 (settings.lua)
+   0.114 Loading mod settings tech-priests 0.1.687 (settings-updates.lua)
+   0.115 Loading mod settings tech-priests 0.1.687 (settings-final-fixes.lua)
+   0.118 Loading mod core 0.0.0 (data.lua)
+   0.129 Loading mod base 2.1.24 (data.lua)
+   0.272 Loading mod elevated-rails 2.1.24 (data.lua)
+   0.294 Loading mod recycler 2.1.24 (data.lua)
+   0.303 Loading mod quality 2.1.24 (data.lua)
+   0.309 Loading mod space-age 2.1.24 (data.lua)
+   0.581 Loading mod tech-priests 0.1.687 (data.lua)
+   0.763 Loading mod citadel-contract 0.0.1 (data.lua)
+   0.772 Loading mod base 2.1.24 (data-updates.lua)
+   0.781 Loading mod recycler 2.1.24 (data-updates.lua)
+   0.796 Loading mod quality 2.1.24 (data-updates.lua)
+   0.805 Loading mod space-age 2.1.24 (data-updates.lua)
+   0.813 Loading mod tech-priests 0.1.687 (data-updates.lua)
+   0.845 Loading mod tech-priests 0.1.687 (data-final-fixes.lua)
+   0.862 Script @__tech-priests__/prototypes/bunker_family.lua:189: [BUNKER-FAMILY] GRENADE_TYPES cluster-grenade,grenade,sacred-incense-grenade
+   0.991 Checksum for core: 3668028660
+   0.991 Checksum of base: 3864816957
+   0.991 Checksum of elevated-rails: 1429039930
+   0.991 Checksum of recycler: 3293728126
+   0.991 Checksum of quality: 4220722184
+   0.991 Checksum of space-age: 3636981730
+   0.991 Checksum of tech-priests: 1124358639
+   0.991 Checksum of citadel-contract: 1188035704
+   1.200 Error Util.cpp:81: Error while loading entity prototype "citadel-manufactoreo" (assembling-machine): Idle animation must have the same frame count as animation.
+Modifications: Tech Priests
