@@ -1,0 +1,223 @@
+{
+  "cells": [
+    {
+      "x": -1.0199999999999998,
+      "z": 2.92,
+      "supporting_wall_y": -1.9,
+      "type": "blind-cooling-slots"
+    },
+    {
+      "x": -0.8499999999999999,
+      "z": 2.12,
+      "supporting_wall_y": -1.9,
+      "type": "blind-cooling-slots"
+    },
+    {
+      "x": -0.8499999999999999,
+      "z": 2.2800000000000002,
+      "supporting_wall_y": -1.9,
+      "type": "hex-tamper-seal"
+    },
+    {
+      "x": -0.8499999999999999,
+      "z": 2.44,
+      "supporting_wall_y": -1.9,
+      "type": "protected-signal-trace"
+    },
+    {
+      "x": -0.8499999999999999,
+      "z": 2.6,
+      "supporting_wall_y": -1.9,
+      "type": "cast-consecration-mark"
+    },
+    {
+      "x": -0.8499999999999999,
+      "z": 2.7600000000000002,
+      "supporting_wall_y": -1.9,
+      "type": "blind-cooling-slots"
+    },
+    {
+      "x": -0.8499999999999999,
+      "z": 2.92,
+      "supporting_wall_y": -1.9,
+      "type": "hex-tamper-seal"
+    },
+    {
+      "x": -0.8499999999999999,
+      "z": 3.08,
+      "supporting_wall_y": -1.9,
+      "type": "protected-signal-trace"
+    },
+    {
+      "x": -0.6799999999999999,
+      "z": 2.44,
+      "supporting_wall_y": -1.9,
+      "type": "cast-consecration-mark"
+    },
+    {
+      "x": -0.6799999999999999,
+      "z": 2.6,
+      "supporting_wall_y": -1.9,
+      "type": "blind-cooling-slots"
+    },
+    {
+      "x": -0.6799999999999999,
+      "z": 2.7600000000000002,
+      "supporting_wall_y": -1.9,
+      "type": "hex-tamper-seal"
+    },
+    {
+      "x": -0.6799999999999999,
+      "z": 2.92,
+      "supporting_wall_y": -1.9,
+      "type": "protected-signal-trace"
+    },
+    {
+      "x": -0.6799999999999999,
+      "z": 3.08,
+      "supporting_wall_y": -1.9,
+      "type": "cast-consecration-mark"
+    },
+    {
+      "x": -0.6799999999999999,
+      "z": 3.24,
+      "supporting_wall_y": -1.9,
+      "type": "blind-cooling-slots"
+    },
+    {
+      "x": -0.5099999999999998,
+      "z": 2.6,
+      "supporting_wall_y": -1.9,
+      "type": "hex-tamper-seal"
+    },
+    {
+      "x": 0.5100000000000002,
+      "z": 2.6,
+      "supporting_wall_y": -1.9,
+      "type": "cast-consecration-mark"
+    },
+    {
+      "x": 0.6800000000000002,
+      "z": 2.44,
+      "supporting_wall_y": -1.9,
+      "type": "cast-consecration-mark"
+    },
+    {
+      "x": 0.6800000000000002,
+      "z": 2.6,
+      "supporting_wall_y": -1.9,
+      "type": "blind-cooling-slots"
+    },
+    {
+      "x": 0.6800000000000002,
+      "z": 2.7600000000000002,
+      "supporting_wall_y": -1.9,
+      "type": "hex-tamper-seal"
+    },
+    {
+      "x": 0.6800000000000002,
+      "z": 2.92,
+      "supporting_wall_y": -1.9,
+      "type": "protected-signal-trace"
+    },
+    {
+      "x": 0.6800000000000002,
+      "z": 3.08,
+      "supporting_wall_y": -1.9,
+      "type": "cast-consecration-mark"
+    },
+    {
+      "x": 0.6800000000000002,
+      "z": 3.24,
+      "supporting_wall_y": -1.9,
+      "type": "blind-cooling-slots"
+    },
+    {
+      "x": 0.8500000000000001,
+      "z": 2.12,
+      "supporting_wall_y": -1.9,
+      "type": "protected-signal-trace"
+    },
+    {
+      "x": 0.8500000000000001,
+      "z": 2.2800000000000002,
+      "supporting_wall_y": -1.9,
+      "type": "cast-consecration-mark"
+    },
+    {
+      "x": 0.8500000000000001,
+      "z": 2.44,
+      "supporting_wall_y": -1.9,
+      "type": "blind-cooling-slots"
+    },
+    {
+      "x": 0.8500000000000001,
+      "z": 2.6,
+      "supporting_wall_y": -1.9,
+      "type": "hex-tamper-seal"
+    },
+    {
+      "x": 0.8500000000000001,
+      "z": 2.7600000000000002,
+      "supporting_wall_y": -1.9,
+      "type": "protected-signal-trace"
+    },
+    {
+      "x": 0.8500000000000001,
+      "z": 2.92,
+      "supporting_wall_y": -1.9,
+      "type": "cast-consecration-mark"
+    },
+    {
+      "x": 0.8500000000000001,
+      "z": 3.08,
+      "supporting_wall_y": -1.9,
+      "type": "blind-cooling-slots"
+    },
+    {
+      "x": 1.0200000000000005,
+      "z": 2.92,
+      "supporting_wall_y": -1.9,
+      "type": "blind-cooling-slots"
+    },
+    {
+      "x": 1.7000000000000002,
+      "z": 0.52,
+      "supporting_wall_y": -1.875,
+      "type": "hex-tamper-seal"
+    },
+    {
+      "x": 1.7000000000000002,
+      "z": 1.1600000000000001,
+      "supporting_wall_y": -1.875,
+      "type": "hex-tamper-seal"
+    },
+    {
+      "x": 1.87,
+      "z": 0.52,
+      "supporting_wall_y": -1.875,
+      "type": "protected-signal-trace"
+    },
+    {
+      "x": 1.87,
+      "z": 1.1600000000000001,
+      "supporting_wall_y": -1.875,
+      "type": "protected-signal-trace"
+    },
+    {
+      "x": 2.04,
+      "z": 0.52,
+      "supporting_wall_y": -1.875,
+      "type": "cast-consecration-mark"
+    },
+    {
+      "x": 2.04,
+      "z": 1.1600000000000001,
+      "supporting_wall_y": -1.875,
+      "type": "cast-consecration-mark"
+    }
+  ],
+  "count": 36,
+  "factory_interior_visible": false,
+  "fan_and_operator_keepouts_preserved": true
+}

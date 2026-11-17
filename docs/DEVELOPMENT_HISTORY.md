@@ -5,6 +5,23 @@
 **Packaged baseline:** `0.1.672`  
 **Active development lane:** `0.1.674-dev`
 
+## 2026-11-17 - Citadel enclosed mechanical-cathedral model checkpoint V05
+
+Owner direction is explicit: preserve the closed space-manufacturing cathedral
+and its hidden interior; cover the exterior with extreme source-image greeble
+density. Continued refinement is requested. The current candidate has2599
+meshes/357000 triangles, source-verified FMPL surfaces with30 packed/embedded
+maps, and a4s exterior cooling/pressure loop. Indexed FMPL console geometry is
+reused. Actual GLB channels, UVs, finite/degenerate geometry and eight source
+pose matches pass. Actual front/rear/clay/true-proportion renders were viewed.
+
+Source/runtime half-frame contact inventories show no foreign moving contacts.
+Fixed-contact adjudication and continued surface refinement remain. Source and
+evidence: art/source-to-3d/citadel-manufactoreo/v05. This is not final model
+approval, native art integration or completed machine delivery. The real
+platform5x5 fixed-north/three-recipe contract is unchanged. All accepted assets
+and concurrent Advanced Space Cargo/thruster work remain untouched.
+
 ## 2026-11-17 - Citadel Manufactureo contract and enclosed cathedral direction
 
 Next unclaimed machine: actual platform-only5x5 fixed-north electric Citadel

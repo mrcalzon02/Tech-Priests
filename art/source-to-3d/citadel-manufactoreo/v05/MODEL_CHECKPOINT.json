@@ -1,0 +1,17 @@
+{
+  "status": "candidate-refinement-ongoing-not-native-integrated-not-approved",
+  "source_sha256": "ce395bcd66dce017b69f897ca12ad6350b6264edb9c767216ef9c9b08e17be79",
+  "runtime_sha256": "7467272a823e6975c8a3425fec2a2f46637a120a73bddec0c5d50e0ac4fbc399",
+  "meshes": 2599,
+  "triangles": 357000,
+  "packed_and_embedded_pbr_images": 30,
+  "source_runtime_eight_pose_match": true,
+  "source_maps_and_exported_fmpl_channels_verified": true,
+  "native_fixed_north_5x5_contract": "../v01/native-contract",
+  "native_baseline_recipe_cases": 12,
+  "new_model_native_art_integration": false,
+  "fixed_contact_review_pending": true,
+  "continued_greeble_refinement_authorized": true,
+  "owner_visual_approved": false,
+  "machine_done": false
+}
