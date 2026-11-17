@@ -30,7 +30,7 @@
     "pbr_maps": 69,
     "bunker_component_candidates": 21,
     "verified_shared_components": 0,
-    "model_records": 11,
+    "model_records": 12,
     "program_records": 22,
     "pipeline_records": 6,
     "external_blender_libraries": 1,
@@ -376,6 +376,49 @@
         3
       ],
       "purpose": "Owner-accepted clay-basin fish pond; four swimming fish with editable tail strokes, packed PBR, one combined GLB working loop, 68 true frames, tested native idle/working states and four-way socket alignment. Gameplay preserved; current recipes use no fluids."
+    },
+    {
+      "id": "tanks-steam-compressor-v2",
+      "status": "game-sprites-installed-with-specific-native-checks",
+      "source": {
+        "repository": "mrcalzon02/Tanks-for-bob-Fork",
+        "ref": "180b24a221b1b24805dd63d27bb17ba99ee0cd8f",
+        "path": "models\\island-survival\\steam-compressor\\candidates\\v2-barrel02\\steam-compressor-v2.blend",
+        "sha256": "d406d9532bf85f08b49b2a9edb9f4e1a6d3bdd3f33384601b72e08f21439512f"
+      },
+      "runtime": {
+        "repository": "mrcalzon02/Tanks-for-bob-Fork",
+        "ref": "180b24a221b1b24805dd63d27bb17ba99ee0cd8f",
+        "path": "models\\island-survival\\steam-compressor\\candidates\\v2-barrel02\\steam-compressor-v2.glb",
+        "sha256": "92bdbb31538191458c20c598b19e9d8626c1b5030d5c645724a62ed1e1b65e44"
+      },
+      "evidence": [
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "180b24a221b1b24805dd63d27bb17ba99ee0cd8f",
+          "path": "models/island-survival/steam-compressor/v2/FMPL_MODEL.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "180b24a221b1b24805dd63d27bb17ba99ee0cd8f",
+          "path": "docs/art/steam-compressor-v2/engine-receipt.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "180b24a221b1b24805dd63d27bb17ba99ee0cd8f",
+          "path": "docs/art/steam-compressor-v2/capture-receipt.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "180b24a221b1b24805dd63d27bb17ba99ee0cd8f",
+          "path": "docs/art/steam-compressor-v2/visual-review.json"
+        }
+      ],
+      "footprint": [
+        3,
+        3
+      ],
+      "purpose": "Tanks Steam-Compressor: owner-identified barrel/frame source preserved in a separate derivative; supported crank, rigid rod, guided piston, chemical burner fireboxes and removable canister. Existing steam charging/recovery recipes unchanged. Reopened packed source, combined animated GLB, 68 genuine frames, 97-frame joint checks, four native facings, 20 player-grid pipes, actual recipes/fuel/blocked/stop-restart and completed-state reload verified. Delegated operational close-enough review; individual owner visual approval not claimed."
     }
   ],
   "programs": [
