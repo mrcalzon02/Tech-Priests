@@ -1,0 +1,23 @@
+{
+  "machine": "void-steam-engine",
+  "done": true,
+  "whole_goal_complete": false,
+  "source_commit": "5588fe5bbc5e4eab8973a8b40b8e1ae00f0f2f3c",
+  "source_sha256": "b9e1b442531592f629511b57e2cabf609ff3308b12ffad5c949524f89b07486d",
+  "runtime_sha256": "62b06a131b927fc91705531ba6699952e5bd0c50f610529806eb7f72113095a9",
+  "source_remote_main_and_pinned_manifest_channels_reload_readback_verified": true,
+  "canonical_fmpl_model_id": "tech-priests-void-steam-engine-v2",
+  "canonical_model_records": 24,
+  "prior_23_model_records_preserved": true,
+  "canonical_checkpoint_event": "tech-priests-void-steam-v02-fmpl-native-2026-11-17",
+  "canonical_event_state": "verified; explicit owner visual approval not claimed",
+  "native_operational_and_reload_pass": true,
+  "fmpl_texture_source_and_actual_channel_pass": true,
+  "proportion_preview_corrected": true,
+  "remaining_for_this_machine": [],
+  "scope_limits": [
+    "Individual owner visual approval not claimed.",
+    "Full user mod pack and Portal release not claimed."
+  ],
+  "native_input_recovery_note": "Input-only cold retained steam requires manual buffer flush before hot resupply; this existing behavior is preserved."
+}

@@ -29,8 +29,8 @@
     "materials": 23,
     "pbr_maps": 69,
     "bunker_component_candidates": 21,
-    "verified_shared_components": 0,
-    "model_records": 22,
+    "verified_shared_components": 2,
+    "model_records": 24,
     "program_records": 22,
     "pipeline_records": 6,
     "external_blender_libraries": 1,
@@ -266,7 +266,7 @@
         "glb_sha256": "394b88e22c3f2deddd18c9e13578a1c4fdc892e1015fb7a0df6a80cb8e1e0868",
         "model_meshes": 50,
         "process_meshes": 136,
-        "model_space_connections": "±X 1.5 / Y0 / Z.36",
+        "model_space_connections": "\u00b1X 1.5 / Y0 / Z.36",
         "native_fluidbox_verified": false,
         "camera": "45deg zero-azimuth orthographic single-view",
         "static_sizes": [
@@ -1122,6 +1122,98 @@
         2
       ],
       "purpose": "Actual platform-only Sterling chemical boiler,600kW/effectivity1/fuel-slot1: water2/s -> steam20/s165C at the native10:1 thermal volume ratio. Existing item,12s building recipe, hydrogen-thruster-propulsion unlock and surface restrictions retained; no invented assembler process or power generation. Two ordinary-grid port positions repaired and actual platform flow/full-output proven in all four facings. Original sprite recognition retained as supported horizontal pressure drum, seated bands/end flanges, continuous heated circulation circuit, full-bore sockets/reducers, founded furnace/exhaust, instrument and console. Owner-selected native connector seated on console; both circuit colors read real fuel. Packed editable source and independently inspected GLB:166 meshes,28320 triangles,27 packed/embedded PBR images, UV/finite/degenerate checks and six working pose matches. Clean0..4s exported working loop; idle0 stays in source and native sprites.195 source and193 runtime half-frame samples,157 exact adjudicated contacts, fitted bored needle shaft and rooted flames.68 genuine captures and four-direction16-frame4fps working clips. All final sprites/adapter byte-identical to native client/reload-tested files; fresh source idle RGBA equality explicitly checked.24 native boilers,48 normal pipe joints,96 pipes; actual recipe/unlock and consumed-crafted-item scripted placement, fuel/water starvation-resupply, natural full-output fuel stop/drain recovery, forced pause/restart and red/green fuel readings pass.122 real client PNGs include all eight pipe joins, four smoke and console views and64 motion frames. Actual operated save/reload preserves fuel, fluid, energy, directions, ordinary pipes, circuits, placement and unlock. Native hot forced-script pause retains burner graphics while production state holds; natural full-output and cold/starved states extinguish. No new runtime authority or balance change. Delegated operational close-enough delivery; individual owner approval, full user-pack install and Portal release not claimed."
+    },
+    {
+      "id": "tech-priests-void-steam-engine-v2",
+      "status": "game-sprites-installed-with-specific-native-checks",
+      "source": {
+        "repository": "mrcalzon02/Tech-Priests",
+        "ref": "5588fe5bbc5e4eab8973a8b40b8e1ae00f0f2f3c",
+        "path": "art/source-to-3d/void-steam-engine/v02/void-steam-v02.blend",
+        "sha256": "b9e1b442531592f629511b57e2cabf609ff3308b12ffad5c949524f89b07486d"
+      },
+      "runtime": {
+        "repository": "mrcalzon02/Tech-Priests",
+        "ref": "5588fe5bbc5e4eab8973a8b40b8e1ae00f0f2f3c",
+        "path": "art/source-to-3d/void-steam-engine/v02/void-steam-v02.glb",
+        "sha256": "62b06a131b927fc91705531ba6699952e5bd0c50f610529806eb7f72113095a9"
+      },
+      "evidence": [
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "5588fe5bbc5e4eab8973a8b40b8e1ae00f0f2f3c",
+          "path": "art/source-to-3d/void-steam-engine/v02/FMPL_MODEL.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "5588fe5bbc5e4eab8973a8b40b8e1ae00f0f2f3c",
+          "path": "art/source-to-3d/void-steam-engine/v02/fmpl-surface-manifest.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "5588fe5bbc5e4eab8973a8b40b8e1ae00f0f2f3c",
+          "path": "art/source-to-3d/void-steam-engine/v02/fmpl-channel-verification.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "5588fe5bbc5e4eab8973a8b40b8e1ae00f0f2f3c",
+          "path": "art/source-to-3d/void-steam-engine/v02/runtime-inspection.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "5588fe5bbc5e4eab8973a8b40b8e1ae00f0f2f3c",
+          "path": "art/source-to-3d/void-steam-engine/v02/mechanical-inspection.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "5588fe5bbc5e4eab8973a8b40b8e1ae00f0f2f3c",
+          "path": "art/source-to-3d/void-steam-engine/v02/clearance-review.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "5588fe5bbc5e4eab8973a8b40b8e1ae00f0f2f3c",
+          "path": "art/source-to-3d/void-steam-engine/v02/capture-manifest.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "5588fe5bbc5e4eab8973a8b40b8e1ae00f0f2f3c",
+          "path": "art/source-to-3d/void-steam-engine/v02/visual-review.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "5588fe5bbc5e4eab8973a8b40b8e1ae00f0f2f3c",
+          "path": "art/source-to-3d/void-steam-engine/v02/proportion-review.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "5588fe5bbc5e4eab8973a8b40b8e1ae00f0f2f3c",
+          "path": "art/source-to-3d/void-steam-engine/v02/native-evidence/installed-source-binding.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "5588fe5bbc5e4eab8973a8b40b8e1ae00f0f2f3c",
+          "path": "art/source-to-3d/void-steam-engine/v02/native-evidence/native-runtime.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "5588fe5bbc5e4eab8973a8b40b8e1ae00f0f2f3c",
+          "path": "art/source-to-3d/void-steam-engine/v02/native-evidence/native-motion-verification.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "5588fe5bbc5e4eab8973a8b40b8e1ae00f0f2f3c",
+          "path": "art/source-to-3d/void-steam-engine/v02/native-evidence/reload.json"
+        }
+      ],
+      "footprint": [
+        2,
+        2
+      ],
+      "native_directions": [
+        0,
+        4
+      ],
+      "purpose": "Actual platform-only2x2 Void Steam Engine generator,165C steam30/s ->300kW; no burner, fluid output, circuit connector or manual power-wire socket. Existing12s building recipe, hydrogen-thruster-propulsion unlock and surface rules retained. Native north/east only; south/west normalize to them. Earlier sole inletY0->.5 repair enables genuine standard-grid flow. Paired cylinders, bored guided stems, fitted rods, split-journal crank, flywheel and grooved equal-pulley alternator drive, founded vessels/bearings/exhaust and terminated services. Geometry/keys preserved while replacing first custom maps with correct FMPL surfacing: eight indexed source-verified presets, nine model-specific instances, one declared copper pigment derivative,25 packed/embedded images and actual exported albedo/normal/ORM G/B pixel proof. Continuous physical cylinder/sweep UVs and planar caps/panels.294 meshes,83896 triangles; eight source/runtime pose matches,4s working-only loop,387 source/385 runtime half-frame checks,208 exact adjudicated fitted contacts and0.000181tile maximum pin closure error.132 genuine actual-GLB captures,32 working frames8fps per four standalone views, only two native facings installed with current2.1 pictures. Angled previews corrected to undistorted world proportions; native pipe scale/registration and exhaust positions inspected. Two separate real platforms prove finite-steam generation into native empty accumulators, stop/hold/restart, natural full electrical output hold, actual new-load recovery, starvation/resupply, cold-fluid rejection/manual flush recovery, real native recipe/unlock and consumed-crafted-item scripted placement.100 real client PNGs/64 motion frames, working GIF/MP4, actual operated save and300-tick reload. Stopped mechanical pose verified against unique real working references; minor native brightness changes are not claimed pixel-static. Final installed art/adapter byte-bound to tested source. No new runtime authority or economy change. Delegated operational close-enough delivery; individual owner approval, full user mod pack and Portal release not claimed."
     }
   ],
   "programs": [

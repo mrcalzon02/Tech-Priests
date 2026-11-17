@@ -1,60 +1,43 @@
 {
-  "schema": "fmpl.checkpoints.v1",
   "events": [
     {
-      "event_id": "hb-mh7-water-purifier-42698350899-1",
       "asset_id": "water-purifier-mh7",
       "asset_kind": "model",
-      "revision": "goal-pilot-2026-11-09-four-goals",
-      "state": "candidate",
-      "source_sha256": "3090f184375644a7a004f544c1a776e327e16ef44a3d7d6cab45794489bce80a",
+      "event_id": "hb-mh7-water-purifier-42698350899-1",
       "evidence": {
-        "source_artifact_sha256": "3090f184375644a7a004f544c1a776e327e16ef44a3d7d6cab45794489bce80a",
-        "original_baseline_sha256": "fdbb4db50ad7911328c4abc79d8060af3c9a1af97a7243393ec00c15d3aace2e",
-        "glb_sha256": "ecbe531ef02a085d3147d37263fb36f64be3917ad1ab35d124577e44295ced34",
-        "render_sha256": "a4deaf4e58bacd3ac8c40ae788c395dea180340e30cb6e021130d7c07af0ca35",
-        "native_reopen_verified": true,
-        "mesh_count_original": 38,
         "additional_meshes": 12,
-        "source_geometry_preserved": true,
-        "local_inference_model": "qwen2.5-coder:7b",
         "completed_goals": [
           "load_path",
           "filter_pump_path",
           "pipe_interfaces",
           "controls_service"
         ],
-        "github_run": "https://github.com/mrcalzon02/HB-TTRPG-tools/actions/runs/42698350899",
-        "github_artifact_id": 13710392252,
-        "github_artifact_expires_utc": "2026-11-23",
-        "owner_visual_approval": false,
         "factorio_runtime_verified": false,
+        "github_artifact_expires_utc": "2026-11-23",
+        "github_artifact_id": 13710392252,
+        "github_run": "https://github.com/mrcalzon02/HB-TTRPG-tools/actions/runs/42698350899",
+        "glb_sha256": "ecbe531ef02a085d3147d37263fb36f64be3917ad1ab35d124577e44295ced34",
+        "local_inference_model": "qwen2.5-coder:7b",
+        "mesh_count_original": 38,
         "native_port_alignment_verified": false,
+        "native_reopen_verified": true,
+        "original_baseline_sha256": "fdbb4db50ad7911328c4abc79d8060af3c9a1af97a7243393ec00c15d3aace2e",
+        "owner_visual_approval": false,
+        "render_sha256": "a4deaf4e58bacd3ac8c40ae788c395dea180340e30cb6e021130d7c07af0ca35",
+        "source_artifact_sha256": "3090f184375644a7a004f544c1a776e327e16ef44a3d7d6cab45794489bce80a",
+        "source_geometry_preserved": true,
         "visual_note": "actual renders show minimal externally visible change; functional/mechanical detail and PBR pass remain open"
-      }
+      },
+      "revision": "goal-pilot-2026-11-09-four-goals",
+      "source_sha256": "3090f184375644a7a004f544c1a776e327e16ef44a3d7d6cab45794489bce80a",
+      "state": "candidate"
     },
     {
-      "event_id": "fmpl-water-purifier-42715980695-1",
       "asset_id": "water-purifier-mh7",
       "asset_kind": "model",
-      "revision": "v03-glass-agitator-concrete-process",
-      "state": "verified",
-      "source_sha256": "2b365b9e5c153dc915bab2f91e47beb15f247498908de4583c876bc5a514fe4e",
+      "event_id": "fmpl-water-purifier-42715980695-1",
       "evidence": {
-        "source_artifact_sha256": "2b365b9e5c153dc915bab2f91e47beb15f247498908de4583c876bc5a514fe4e",
-        "native_reopen_verified": true,
-        "glb_reimported": true,
-        "glb_sha256": "d6cfdc31d6e4b9f174afffd4ee05077d37fd927e614aa4679a3e0aead6517042",
-        "source_original_meshes_preserved": 50,
         "added_process_meshes": 114,
-        "independent_glb_meshes": 155,
-        "packed_PBR_images": 30,
-        "paving_PBR_materials": [
-          "ferrocrete",
-          "ferrocrete_light",
-          "ferrocrete_dark"
-        ],
-        "glass_transmission": 0.93,
         "agitator_keyframes": [
           1,
           25,
@@ -62,145 +45,139 @@
           73,
           97
         ],
-        "steam_keys_checked": true,
-        "source_png_alpha_valid": true,
-        "four_static_orientations": 4,
-        "atlas_sha256": {
-          "idle_64": "503056763951d9ef3a964e5392b5fe50eb81f3e17741f10949ec63aa01c0691d",
-          "idle_128": "9858a3b0cf814bba0b927c16a257a0dcac8f84b59b0ab8dfdca8746376d5653c",
-          "idle_256": "18dad131824623c27c5103e8cc2ee9b7b60c85cb7a0632a97a373a728e143ca8"
-        },
-        "preview_idle_sha256": "a69cf768ddc0ee2fa1542e1b1e1320897e345382ffd10ce3dd884bb415f91681",
-        "preview_working_sha256": "e2d212cd237501cd82dd7c713e9a212bd17c6a8c108a8f05f1ac3b4b826e73f5",
-        "github_run": "https://github.com/mrcalzon02/HB-TTRPG-tools/actions/runs/42715980695",
-        "github_runner_commit": "d90857d19d6d8e9c6df3206cf210a6e33de9012f",
-        "github_artifact_id": 13717104705,
         "artifact_relative_blend": "fmpl-production/water-purifier-fmpl-process.blend",
         "artifact_retention_days": 14,
-        "owner_visual_approval": false,
-        "native_factorio_ports_verified": false,
+        "atlas_sha256": {
+          "idle_128": "9858a3b0cf814bba0b927c16a257a0dcac8f84b59b0ab8dfdca8746376d5653c",
+          "idle_256": "18dad131824623c27c5103e8cc2ee9b7b60c85cb7a0632a97a373a728e143ca8",
+          "idle_64": "503056763951d9ef3a964e5392b5fe50eb81f3e17741f10949ec63aa01c0691d"
+        },
         "factorio_runtime_verified": false,
+        "four_static_orientations": 4,
         "game_integrated": false,
-        "source_note": "Technically verified source candidate; no native Factorio fluid or visual acceptance"
-      }
+        "github_artifact_id": 13717104705,
+        "github_run": "https://github.com/mrcalzon02/HB-TTRPG-tools/actions/runs/42715980695",
+        "github_runner_commit": "d90857d19d6d8e9c6df3206cf210a6e33de9012f",
+        "glass_transmission": 0.93,
+        "glb_reimported": true,
+        "glb_sha256": "d6cfdc31d6e4b9f174afffd4ee05077d37fd927e614aa4679a3e0aead6517042",
+        "independent_glb_meshes": 155,
+        "native_factorio_ports_verified": false,
+        "native_reopen_verified": true,
+        "owner_visual_approval": false,
+        "packed_PBR_images": 30,
+        "paving_PBR_materials": [
+          "ferrocrete",
+          "ferrocrete_light",
+          "ferrocrete_dark"
+        ],
+        "preview_idle_sha256": "a69cf768ddc0ee2fa1542e1b1e1320897e345382ffd10ce3dd884bb415f91681",
+        "preview_working_sha256": "e2d212cd237501cd82dd7c713e9a212bd17c6a8c108a8f05f1ac3b4b826e73f5",
+        "source_artifact_sha256": "2b365b9e5c153dc915bab2f91e47beb15f247498908de4583c876bc5a514fe4e",
+        "source_note": "Technically verified source candidate; no native Factorio fluid or visual acceptance",
+        "source_original_meshes_preserved": 50,
+        "source_png_alpha_valid": true,
+        "steam_keys_checked": true
+      },
+      "revision": "v03-glass-agitator-concrete-process",
+      "source_sha256": "2b365b9e5c153dc915bab2f91e47beb15f247498908de4583c876bc5a514fe4e",
+      "state": "verified"
     },
     {
-      "event_id": "fmpl-water-purifier-pipe-camera-42722511833-1",
       "asset_id": "water-purifier-mh7",
       "asset_kind": "model",
-      "revision": "v04-grid-aligned-full-bore-single-view",
-      "state": "verified",
-      "source_sha256": "5d03419b7861278ed21f89cb08686d79d5ebb80d886d42ed265d866ea7f08c30",
+      "event_id": "fmpl-water-purifier-pipe-camera-42722511833-1",
       "evidence": {
-        "source_artifact_sha256": "5d03419b7861278ed21f89cb08686d79d5ebb80d886d42ed265d866ea7f08c30",
-        "glb_sha256": "394b88e22c3f2deddd18c9e13578a1c4fdc892e1015fb7a0df6a80cb8e1e0868",
-        "native_reopen_verified": true,
-        "glb_reimported": true,
-        "original_meshes_preserved": 50,
         "added_process_meshes": 136,
-        "reimported_glb_meshes": 175,
-        "pbr_images_packed": 30,
-        "camera_policy": "fmpl.factorio45.v1",
-        "camera_elevation_deg": 45,
-        "camera_azimuth_deg": 0,
-        "saved_camera_count": 1,
-        "rendered_static_directions": 1,
-        "rendered_direction_angles": [
-          0
-        ],
         "atlas_images": {
-          "64": {
-            "size": [
-              64,
-              64
-            ],
-            "sha256": "a4b2a9e327d7419e19f9d8904edad505abb2494efb635cefc84a6d2314b68f46"
-          },
           "128": {
+            "sha256": "ad9976fb47a2aa8e13dd402673b42be18045044abe64ed6e9d1aa086cd7a687e",
             "size": [
               128,
               128
-            ],
-            "sha256": "ad9976fb47a2aa8e13dd402673b42be18045044abe64ed6e9d1aa086cd7a687e"
+            ]
           },
           "256": {
+            "sha256": "b995a8e51340f8bcdb75fa60883706b609effcf31c38de87033057ca3435168d",
             "size": [
               256,
               256
-            ],
-            "sha256": "b995a8e51340f8bcdb75fa60883706b609effcf31c38de87033057ca3435168d"
+            ]
+          },
+          "64": {
+            "sha256": "a4b2a9e327d7419e19f9d8904edad505abb2494efb635cefc84a6d2314b68f46",
+            "size": [
+              64,
+              64
+            ]
           }
         },
+        "camera_azimuth_deg": 0,
+        "camera_elevation_deg": 45,
+        "camera_policy": "fmpl.factorio45.v1",
+        "game_integrated": false,
+        "github_artifact_id": 13720187552,
+        "github_artifact_retention_days": 14,
+        "github_build_run_url": "https://github.com/mrcalzon02/HB-TTRPG-tools/actions/runs/42721689714",
+        "github_pack_run_url": "https://github.com/mrcalzon02/HB-TTRPG-tools/actions/runs/42722511833",
+        "glb_reimported": true,
+        "glb_sha256": "394b88e22c3f2deddd18c9e13578a1c4fdc892e1015fb7a0df6a80cb8e1e0868",
         "model_mating_joints": [
           {
+            "bore_diameter": 0.49,
+            "collar_diameter": 0.68,
+            "contact_residual_tiles": 6.143906154658885e-08,
+            "facing": "W",
+            "fasteners": 8,
+            "ring_vertices": 128,
             "role": "raw-water-in",
             "xyz": [
               -1.5,
               0,
               0.36
-            ],
-            "facing": "W",
-            "bore_diameter": 0.49,
-            "collar_diameter": 0.68,
-            "fasteners": 8,
-            "ring_vertices": 128,
-            "contact_residual_tiles": 6.143906154658885e-8
+            ]
           },
           {
+            "bore_diameter": 0.49,
+            "collar_diameter": 0.68,
+            "contact_residual_tiles": 6.143906154658885e-08,
+            "facing": "E",
+            "fasteners": 8,
+            "ring_vertices": 128,
             "role": "purified-water-out",
             "xyz": [
               1.5,
               0,
               0.36
-            ],
-            "facing": "E",
-            "bore_diameter": 0.49,
-            "collar_diameter": 0.68,
-            "fasteners": 8,
-            "ring_vertices": 128,
-            "contact_residual_tiles": 6.143906154658885e-8
+            ]
           }
         ],
-        "github_build_run_url": "https://github.com/mrcalzon02/HB-TTRPG-tools/actions/runs/42721689714",
-        "github_pack_run_url": "https://github.com/mrcalzon02/HB-TTRPG-tools/actions/runs/42722511833",
-        "github_artifact_id": 13720187552,
-        "github_artifact_retention_days": 14,
-        "owner_visual_approval": false,
         "native_factorio_fluidbox_verified": false,
-        "game_integrated": false,
-        "note": "Single fixed-camera static QA produced, not a working-entity sprite set or approved item icon. User visual approval and Lua fluidbox mapping pending."
-      }
+        "native_reopen_verified": true,
+        "note": "Single fixed-camera static QA produced, not a working-entity sprite set or approved item icon. User visual approval and Lua fluidbox mapping pending.",
+        "original_meshes_preserved": 50,
+        "owner_visual_approval": false,
+        "pbr_images_packed": 30,
+        "reimported_glb_meshes": 175,
+        "rendered_direction_angles": [
+          0
+        ],
+        "rendered_static_directions": 1,
+        "saved_camera_count": 1,
+        "source_artifact_sha256": "5d03419b7861278ed21f89cb08686d79d5ebb80d886d42ed265d866ea7f08c30"
+      },
+      "revision": "v04-grid-aligned-full-bore-single-view",
+      "source_sha256": "5d03419b7861278ed21f89cb08686d79d5ebb80d886d42ed265d866ea7f08c30",
+      "state": "verified"
     },
     {
-      "event_id": "fmpl-super-greeble-v041-dens-42739292638-1",
       "asset_id": "water-purifier-mh7",
       "asset_kind": "model",
-      "revision": "super-greeble-v01-den-mortis-animated-technical",
-      "state": "verified",
-      "source_sha256": "cd6ec0c5f22cacea1d3da396308d3a8ef52be87eec2302dbed816507bc8a7019",
+      "event_id": "fmpl-super-greeble-v041-dens-42739292638-1",
       "evidence": {
-        "source_artifact_sha256": "cd6ec0c5f22cacea1d3da396308d3a8ef52be87eec2302dbed816507bc8a7019",
-        "native_reopen_verified": true,
-        "glb_reimported": true,
-        "glb_sha256": "588cb6b219caef96f71c7c4460032ffd0fb1b4d7918a6f85f11f70f892bb77aa",
-        "previous_native_source_sha256": "5d03419b7861278ed21f89cb08686d79d5ebb80d886d42ed265d866ea7f08c30",
-        "original_meshes_preserved": 50,
-        "previous_process_meshes_preserved": 136,
-        "new_mechanical_meshes": 177,
-        "glb_reimported_meshes": 352,
-        "camera_preserved": true,
-        "canonical_pipe_mating_faces_unchanged": true,
-        "keyed_pump_rotation_samples": [
-          0,
-          3.142,
-          6.283
-        ],
+        "actual_png_alpha_valid": true,
         "animated_gauge_needles": 2,
         "animated_treatment_bubbles": 12,
-        "packed_PBR_images": 27,
-        "actual_png_alpha_valid": true,
-        "one_canonical_camera_direction": true,
-        "static_directions": 1,
         "animation_working_frames": [
           1,
           13,
@@ -211,95 +188,161 @@
           73,
           85
         ],
-        "sprite_atlases": {
-          "idle_64": "8eda7d1df125be0371f4d5ee875c772bae62f1c5b80832f8d77840349a26da2a",
-          "working_64": "10bc4b02e940f75d66ff9b94e3468d42be8517017a56ef001cad2e065a19675e",
-          "idle_128": "77b90b8d8ffc6444b53f517ca9043c1ba9509ee9e792be650156f62872f2b720",
-          "working_128": "132587f1323d68589cd437b785d5683a9f8ccf346bce96cf94e47112c5aad5af",
-          "idle_256": "8b4237f8b5de26f51b0a04a8b91987de1e7c76226fc0611bdfc940361662114a",
-          "working_256": "1eb7407ef1c79276a88153d8595dce33be9ab18be2eb0780e793520cea1ddbc8"
-        },
-        "proof_idle_png_sha256": "775c8e19c383a820a35e29dc23df25f099c50b3688564717c1fd6dde6c4ccef3",
-        "proof_working_png_sha256": "20c66ec3b4f3e4fe2ad85c300dd284b7d917ca657023374ab55f35f29616c78f",
-        "github_runner_repo": "mrcalzon02/Dens-Mortis",
-        "github_run": "https://github.com/mrcalzon02/Dens-Mortis/actions/runs/42739292638",
-        "github_runner_commit": "7f15774711e3600939de3175ee74bd14fa17edc4",
+        "archived_private_donor_available": false,
+        "camera_preserved": true,
+        "canonical_pipe_mating_faces_unchanged": true,
+        "game_integrated": false,
         "github_artifact_id": 13727559949,
         "github_artifact_retention_days": 14,
-        "archived_private_donor_available": false,
-        "private_greebles_meshes_imported": 0,
-        "private_donor_reason": "Private Greebles.blend not cached on runner and individual parts unapproved",
-        "owner_visual_approval": false,
+        "github_run": "https://github.com/mrcalzon02/Dens-Mortis/actions/runs/42739292638",
+        "github_runner_commit": "7f15774711e3600939de3175ee74bd14fa17edc4",
+        "github_runner_repo": "mrcalzon02/Dens-Mortis",
+        "glb_reimported": true,
+        "glb_reimported_meshes": 352,
+        "glb_sha256": "588cb6b219caef96f71c7c4460032ffd0fb1b4d7918a6f85f11f70f892bb77aa",
+        "keyed_pump_rotation_samples": [
+          0,
+          3.142,
+          6.283
+        ],
         "native_factorio_port_verified": false,
-        "game_integrated": false,
-        "note": "Saved native Blender/GLB and six real RGBA atlases passed; result is technical candidate, not approved game sprite or Factorio entity."
-      }
+        "native_reopen_verified": true,
+        "new_mechanical_meshes": 177,
+        "note": "Saved native Blender/GLB and six real RGBA atlases passed; result is technical candidate, not approved game sprite or Factorio entity.",
+        "one_canonical_camera_direction": true,
+        "original_meshes_preserved": 50,
+        "owner_visual_approval": false,
+        "packed_PBR_images": 27,
+        "previous_native_source_sha256": "5d03419b7861278ed21f89cb08686d79d5ebb80d886d42ed265d866ea7f08c30",
+        "previous_process_meshes_preserved": 136,
+        "private_donor_reason": "Private Greebles.blend not cached on runner and individual parts unapproved",
+        "private_greebles_meshes_imported": 0,
+        "proof_idle_png_sha256": "775c8e19c383a820a35e29dc23df25f099c50b3688564717c1fd6dde6c4ccef3",
+        "proof_working_png_sha256": "20c66ec3b4f3e4fe2ad85c300dd284b7d917ca657023374ab55f35f29616c78f",
+        "source_artifact_sha256": "cd6ec0c5f22cacea1d3da396308d3a8ef52be87eec2302dbed816507bc8a7019",
+        "sprite_atlases": {
+          "idle_128": "77b90b8d8ffc6444b53f517ca9043c1ba9509ee9e792be650156f62872f2b720",
+          "idle_256": "8b4237f8b5de26f51b0a04a8b91987de1e7c76226fc0611bdfc940361662114a",
+          "idle_64": "8eda7d1df125be0371f4d5ee875c772bae62f1c5b80832f8d77840349a26da2a",
+          "working_128": "132587f1323d68589cd437b785d5683a9f8ccf346bce96cf94e47112c5aad5af",
+          "working_256": "1eb7407ef1c79276a88153d8595dce33be9ab18be2eb0780e793520cea1ddbc8",
+          "working_64": "10bc4b02e940f75d66ff9b94e3468d42be8517017a56ef001cad2e065a19675e"
+        },
+        "static_directions": 1
+      },
+      "revision": "super-greeble-v01-den-mortis-animated-technical",
+      "source_sha256": "cd6ec0c5f22cacea1d3da396308d3a8ef52be87eec2302dbed816507bc8a7019",
+      "state": "verified"
     },
     {
-      "event_id": "tanks-pipe-pump-v3-installed-2026-11-15",
       "asset_id": "tanks-primitive-steam-powered-pump-v3",
       "asset_kind": "model",
-      "revision": "v3-owner-accepted-native-integrated",
-      "state": "installed",
-      "source_sha256": "1324db1d55ae14bc68724cdaff8f13ecd8fd0d67945c017c210d828839af95f1",
+      "event_id": "tanks-pipe-pump-v3-installed-2026-11-15",
       "evidence": {
-        "source_artifact_sha256": "1324db1d55ae14bc68724cdaff8f13ecd8fd0d67945c017c210d828839af95f1",
+        "actual_graphical_screenshots": 8,
+        "embedded_pbr_images": 21,
+        "factorio_runtime_verified": true,
+        "gameplay_fields_changed": false,
         "glb_sha256": "f0b9ba976e40736613859d0ed87820dff178f9d8ec712ae3384e149ea766e74b",
+        "manifest_path": "models/island-survival/primitive-steam-powered-pump/v3/FMPL_MODEL.json",
+        "native_connections": 24,
+        "native_engine": "2.1.24",
+        "native_port_alignment_verified": true,
         "native_reopen_verified": true,
         "owner_visual_approval": true,
-        "factorio_runtime_verified": true,
-        "native_port_alignment_verified": true,
-        "source_repository": "mrcalzon02/Tanks-for-bob-Fork",
+        "pose_checks": 97,
+        "production_frame_count": 68,
+        "runtime_path": "models/island-survival/primitive-steam-powered-pump/candidates/v3-production02/pipe-pump-v3.glb",
+        "save_reload": true,
+        "source_artifact_sha256": "1324db1d55ae14bc68724cdaff8f13ecd8fd0d67945c017c210d828839af95f1",
         "source_commit": "eac7b729742959c48b9b2f7d86347ad1732ba80a",
         "source_path": "models/island-survival/primitive-steam-powered-pump/candidates/v3-production02/pipe-pump-v3.blend",
-        "runtime_path": "models/island-survival/primitive-steam-powered-pump/candidates/v3-production02/pipe-pump-v3.glb",
-        "manifest_path": "models/island-survival/primitive-steam-powered-pump/v3/FMPL_MODEL.json",
-        "native_engine": "2.1.24",
-        "production_frame_count": 68,
-        "pose_checks": 97,
-        "embedded_pbr_images": 21,
-        "native_connections": 24,
-        "water_and_oil_transfer": true,
+        "source_repository": "mrcalzon02/Tanks-for-bob-Fork",
         "stop_restart_full_output_no_fuel": true,
-        "save_reload": true,
-        "actual_graphical_screenshots": 8,
-        "gameplay_fields_changed": false
-      }
+        "water_and_oil_transfer": true
+      },
+      "revision": "v3-owner-accepted-native-integrated",
+      "source_sha256": "1324db1d55ae14bc68724cdaff8f13ecd8fd0d67945c017c210d828839af95f1",
+      "state": "installed"
     },
     {
-      "event_id": "tanks-fish-pond-v2-installed-2026-11-15",
       "asset_id": "tanks-fish-pond-v2",
       "asset_kind": "model",
-      "revision": "v2-owner-accepted-native-integrated",
-      "state": "installed",
-      "source_sha256": "a3e28a08e21a3c8325e3f8a27719432a83d5befdb7fc7acbac247cf88dce4eaa",
+      "event_id": "tanks-fish-pond-v2-installed-2026-11-15",
       "evidence": {
-        "source_artifact_sha256": "a3e28a08e21a3c8325e3f8a27719432a83d5befdb7fc7acbac247cf88dce4eaa",
-        "glb_sha256": "c806f92bc6e43727e13a3d168302a54981e3df0c0a8c8d05d0d4a088dfa2cef9",
-        "native_reopen_verified": true,
-        "owner_visual_approval": true,
+        "actual_graphical_screenshots": 24,
+        "embedded_pbr_images": 3,
         "factorio_runtime_verified": true,
-        "native_port_alignment_verified": true,
-        "source_repository": "mrcalzon02/Tanks-for-bob-Fork",
-        "source_commit": "648470b4448b4db9e619d48d4a64d2c2034d236e",
-        "source_path": "models/island-survival/fish-pond/candidates/v2-production01/fish-pond-v2.blend",
-        "runtime_path": "models/island-survival/fish-pond/candidates/v2-production01/fish-pond-v2.glb",
+        "gameplay_fields_changed": false,
+        "glb_sha256": "c806f92bc6e43727e13a3d168302a54981e3df0c0a8c8d05d0d4a088dfa2cef9",
+        "harvest_and_catch_fish": true,
         "manifest_path": "models/island-survival/fish-pond/v2/FMPL_MODEL.json",
         "native_engine": "2.1.24",
-        "production_frame_count": 68,
-        "pose_checks": 97,
-        "embedded_pbr_images": 3,
-        "native_test_ponds": 20,
         "native_facings": 4,
-        "stop_restart_blocked_output_no_fuel": true,
-        "harvest_and_catch_fish": true,
-        "test_only_fluid_contract": true,
+        "native_port_alignment_verified": true,
+        "native_reopen_verified": true,
+        "native_test_ponds": 20,
+        "owner_visual_approval": true,
+        "pose_checks": 97,
+        "production_frame_count": 68,
         "production_recipes_use_fluids": false,
-        "save_reload": true,
-        "actual_graphical_screenshots": 24,
         "proof_addon_overrides_production_art": false,
-        "gameplay_fields_changed": false
-      }
+        "runtime_path": "models/island-survival/fish-pond/candidates/v2-production01/fish-pond-v2.glb",
+        "save_reload": true,
+        "source_artifact_sha256": "a3e28a08e21a3c8325e3f8a27719432a83d5befdb7fc7acbac247cf88dce4eaa",
+        "source_commit": "648470b4448b4db9e619d48d4a64d2c2034d236e",
+        "source_path": "models/island-survival/fish-pond/candidates/v2-production01/fish-pond-v2.blend",
+        "source_repository": "mrcalzon02/Tanks-for-bob-Fork",
+        "stop_restart_blocked_output_no_fuel": true,
+        "test_only_fluid_contract": true
+      },
+      "revision": "v2-owner-accepted-native-integrated",
+      "source_sha256": "a3e28a08e21a3c8325e3f8a27719432a83d5befdb7fc7acbac247cf88dce4eaa",
+      "state": "installed"
+    },
+    {
+      "asset_id": "tech-priests-void-steam-engine-v2",
+      "asset_kind": "model",
+      "event_id": "tech-priests-void-steam-v02-fmpl-native-2026-11-17",
+      "evidence": {
+        "actual_motion_frames": 64,
+        "actual_recipe_and_unlock": true,
+        "actual_source_and_runtime_published_and_read_back": true,
+        "cold_buffer_manual_flush_scope_honest": true,
+        "continuous_model_specific_uvs": true,
+        "correct_fmpl_texturing": "8 canonical presets; original map Git-blob identities;9 role instances; declared copper albedo derivative;25 packed/embedded images; actual exported ORM G roughness/B metallic pixel check.",
+        "delegated_operational_delivery": true,
+        "exact_contacts_adjudicated": 208,
+        "factorio_runtime_verified": true,
+        "full_user_mod_pack_verified": false,
+        "genuine_glb_frames": 132,
+        "genuine_native_pngs": 100,
+        "glb_sha256": "62b06a131b927fc91705531ba6699952e5bd0c50f610529806eb7f72113095a9",
+        "half_frames_included": true,
+        "independent_native_platforms": 2,
+        "manifest_path": "art/source-to-3d/void-steam-engine/v02/FMPL_MODEL.json",
+        "native_directions": [
+          0,
+          4
+        ],
+        "native_engine": "2.1.24",
+        "native_reopen_verified": true,
+        "no_target_or_accumulator_energy_assignments": true,
+        "operated_save_reload": true,
+        "owner_visual_approval": false,
+        "portal_release": false,
+        "runtime_clearance_poses": 385,
+        "runtime_path": "art/source-to-3d/void-steam-engine/v02/void-steam-v02.glb",
+        "source_artifact_sha256": "b9e1b442531592f629511b57e2cabf609ff3308b12ffad5c949524f89b07486d",
+        "source_clearance_poses": 387,
+        "source_commit": "5588fe5bbc5e4eab8973a8b40b8e1ae00f0f2f3c",
+        "source_path": "art/source-to-3d/void-steam-engine/v02/void-steam-v02.blend",
+        "source_repository": "mrcalzon02/Tech-Priests"
+      },
+      "revision": "v02-fmpl-textured-native-operational",
+      "source_sha256": "b9e1b442531592f629511b57e2cabf609ff3308b12ffad5c949524f89b07486d",
+      "state": "verified"
     }
-  ]
+  ],
+  "schema": "fmpl.checkpoints.v1"
 }

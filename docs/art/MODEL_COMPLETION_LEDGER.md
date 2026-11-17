@@ -1,3 +1,28 @@
+## 2026-11-17 - Void Steam Engine COMPLETE: FMPL/native delivery verified
+
+Void Steam Engine is operationally complete. Source/code/sprites/native evidence
+are published in commit5588fe5bbc5e4eab8973a8b40b8e1ae00f0f2f3c and pinned
+manifest, actual FMPL channel proof and operated reload were independently read
+back from GitHub. The canonical FMPL index now adds exactly one model (24total,
+prior23 unchanged), plus a verified checkpoint that does not fabricate owner
+visual approval. See art/source-to-3d/void-steam-engine/v02/DELIVERY_COMPLETE.json.
+
+Correct FMPL materials, continuous physical UVs,25 packed/embedded maps,
+preserved supported geometry and meaningful4s animation, inspected actual GLB,
+132 real GLB captures, current two-facing native integration and100 real client
+PNGs are delivered. Two separate platforms verify normal pipe joins, real
+300kW steam generation, idle/stop/restart, natural full electrical output and
+new-load recovery, starvation/resupply, cold-fluid rejection/manual flush,
+native recipe/unlock and crafted-item placement. The actual operated save
+passes300-tick reload. The oblique preview now shows undistorted proportions.
+Minor native idle brightness drift is recorded separately from fixed mechanism
+phase. No new runtime controller/economy change, entire user-pack verification,
+Portal release or individual owner visual approval is claimed.
+
+Preserve completed Sterling, all accepted Tanks assets and concurrent work.
+The enduring goal remains active for other unfinished Tech-Priests structures,
+engines and dropped turrets. This machine has no required delivery work left.
+
 ## 2026-11-17 - Void Steam Engine FMPL source and native operational delivery
 
 The actual2x2 platform generator now has packed editable source, independently

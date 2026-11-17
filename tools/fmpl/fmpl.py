@@ -88,7 +88,7 @@ def validate(root=None, check_files=False):
         assert reg["inventory"]["emergency_component_candidates"] == 18
         assert catalog["map_count"] == reg["inventory"]["pbr_maps"] == 69
         parts = load_json(root / reg["parts_registry"])
-        assert len(parts.get("parts", [])) == reg["inventory"]["verified_shared_components"] == 0
+        assert sum(p.get("status") == "verified" for p in parts.get("parts", [])) == reg["inventory"]["verified_shared_components"]
         if check_files:
             for item in reg["models"] + reg["programs"]:
                 src = item["source"]
