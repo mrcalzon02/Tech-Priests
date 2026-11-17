@@ -30,7 +30,7 @@
     "pbr_maps": 69,
     "bunker_component_candidates": 21,
     "verified_shared_components": 0,
-    "model_records": 17,
+    "model_records": 18,
     "program_records": 22,
     "pipeline_records": 6,
     "external_blender_libraries": 1,
@@ -689,6 +689,64 @@
         3
       ],
       "purpose": "Tanks fixed-north Thinking Hut chemical-burner research lab: 20 kW, speed 0.5, no modules, fluid sockets or manufacturing output. Initially available wood-ten building recipe. Four requested placement directions normalize to north; rotation returns false. Fourteen actual food/document inputs support 75 current technology contracts in nineteen distinct ingredient combinations. Preserves/refines six tracked starter groups into timber flooring/frame, knee braces/rafter seats, bound staggered reed roof, real windows, open study porch with records/food/ink and a sensitive balance. Bored trunnion and exact suspended-pan endpoints; pans stay upright. Continuous grounded hearth/clay flue and actual roof clearance. Owner-requested lantern refinement replaces the dark box with anchored hook/bail/legs, oil reservoir and wick, open guards, reflector, raised hood and exported warm translucent outer flame/hot core. Gameplay-view hood occlusion corrected; native day/night working/idle lamp views verified. Saved/reopened packed source; actual GLB independently reimported, six pose comparisons, 193-key suspension/upright/fit/static/loop checks. All moving meshes checked at 385 sampled poses independently in source and GLB; intentional rigid/cord contacts enumerated, not continuous collision simulation. Thirty-nine embedded PBR images and seventeen genuine source captures for the one native facing. Twenty-four native labs exercise nineteen actual technologies covering all nineteen combinations and consuming all fourteen accepted inputs; not a claim of completing all 75 technologies. Missing fuel/meal and resupply, idle, real early-research completion/new research, deactivation/restart and fully operated-save reload preserve inventories, remaining fuel, progress, unlocks and directions. Thirty-three genuine client PNGs and a sixteen-frame native GIF/MP4. No gameplay changes. Earlier studies held; delegated operational review, no individual owner approval."
+    },
+    {
+      "id": "tanks-pondering-hovel-v1",
+      "status": "game-sprites-installed-with-specific-native-checks",
+      "source": {
+        "repository": "mrcalzon02/Tanks-for-bob-Fork",
+        "ref": "753363eef45d3a0e9b264aed954b12157427f7ba",
+        "path": "models/island-survival/pondering-hovel/candidates/v1-production03/pondering-hovel-v1.blend",
+        "sha256": "1c1221819d9b8f1b7ed391ba46bdf9bcac1f2788a297dccbefa68d91c52407a3"
+      },
+      "runtime": {
+        "repository": "mrcalzon02/Tanks-for-bob-Fork",
+        "ref": "753363eef45d3a0e9b264aed954b12157427f7ba",
+        "path": "models/island-survival/pondering-hovel/candidates/v1-production03/pondering-hovel-v1.glb",
+        "sha256": "c8a553cc1f580b5a0bc12c50356c61a40e54ca9fa5309f938b18196c829375e1"
+      },
+      "evidence": [
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "753363eef45d3a0e9b264aed954b12157427f7ba",
+          "path": "models/island-survival/pondering-hovel/v1/FMPL_MODEL.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "753363eef45d3a0e9b264aed954b12157427f7ba",
+          "path": "models/island-survival/pondering-hovel/v1/contract.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "753363eef45d3a0e9b264aed954b12157427f7ba",
+          "path": "models/island-survival/pondering-hovel/candidates/v1-production03/clearance-review.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "753363eef45d3a0e9b264aed954b12157427f7ba",
+          "path": "docs/art/pondering-hovel-v1/capture-receipt.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "753363eef45d3a0e9b264aed954b12157427f7ba",
+          "path": "docs/art/pondering-hovel-v1/installed-source-verification.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "753363eef45d3a0e9b264aed954b12157427f7ba",
+          "path": "docs/art/pondering-hovel-v1/operated-reload-receipt.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "753363eef45d3a0e9b264aed954b12157427f7ba",
+          "path": "docs/art/pondering-hovel-v1/visual-review.json"
+        }
+      ],
+      "footprint": [
+        3,
+        3
+      ],
+      "purpose": "Tanks Pondering Hovel fixed-north 3x3 chemical-burner research upgrade: speed 0.8, 100 kW, efficiency 0.5, fourteen food/document inputs, no modules, manufacturing output, electricity or fluid connections. Real technology unlock and Seablock building recipe (Thinking Hut one + brick ten, 35 seconds) verified, including actual coal-fuelled Workbench craft and ingredient consumption. All seven saved OBJ groups preserved/refined into bonded brick walls, real windows/horn panes, stone paving, bearing rafters/tapered cedar shingles, founded brick hearth/stack and open clay flue. Retains the accepted Thinking Hut's fitted balance, supported oil lantern and braced study porch without changing that source. Animated folio on bored hinge with fixed pin/pedestals; upright attached balance pans. Saved/reopened source, independently reimported GLB with six pose comparisons, full UVs, 51 packed source maps and 45 exported embedded images; 193-key kinematic checks and matching 385-pose source/export clearance inventories with 23 intentional contact pairs. Seventeen genuine source frames, six atlases, one actual facing: four requested directions normalize north and rotate returns false. Twenty-four native labs exercise nineteen real technologies covering every nineteen supported input combinations and all fourteen accepted items; not all 75 eligible technologies completed. Actual fuel/input starvation-resupply, idle/completed-research/new-research and script stop/restart verified. Thirty-three client PNGs including day/night lamp/smoke and sixteen-frame 4fps native GIF/MP4. Actual operated-save reload preserves lab inventories/fuel/research/unlocks/fixed directions and crafted building output. Gameplay unchanged; earlier folio/roof studies held. Delegated operational review, no individual owner approval or full-user-pack installation."
     }
   ],
   "programs": [
