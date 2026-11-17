@@ -32,19 +32,25 @@ local function receive(job)
  for i=1,#inv do if inv[i].valid_for_read then
   touch(inv[i]);local item=inv[i]
   if formed[item.name] or item.name==c.shell or item.name==c.inert then
-   for j=10,24 do if not job.stock[j].valid_for_read then assert(job.stock[j].transfer_stack(item));break end end
+   local slot=10
+   while slot<=#job.stock and job.stock[slot].valid_for_read do slot=slot+1 end
+   -- Older saves can have every private slot full and a partner already
+   -- delivered to the native input. Keep that original stack through the
+   -- recipe switch; players can collect these extra slots but cannot fill them.
+   if slot>#job.stock then job.stock.resize(slot) end
+   assert(job.stock[slot].transfer_stack(item))
   end
  end end
 end
 local function counts(job)
  local pellets,shells=0,0
- for i=10,24 do local s=job.stock[i];if s.valid_for_read then
+ for i=10,#job.stock do local s=job.stock[i];if s.valid_for_read then
   if formed[s.name] then pellets=pellets+1 elseif s.name==c.shell then shells=shells+s.count end
  end end
  return pellets,shells
 end
-local function intake_quality(job)
- local e=job.entity;local pellets,shells=counts(job)
+local function intake_quality(job,pellets,shells)
+ local e=job.entity
  local function wanted(s)
   return s and s.valid_for_read and ((formed[s.name] and pellets<3) or (s.name==c.shell and shells<3) or s.name==c.inert)
  end
@@ -96,9 +102,9 @@ local function seal(job,station)
 end
 local function begin(job)
  local reserved={};local pairs={}
- for i=10,24 do local raw=job.stock[i]
+ for i=10,#job.stock do local raw=job.stock[i]
   if raw.valid_for_read and formed[raw.name] and #pairs<3 then
-   for j=10,24 do local shell=job.stock[j]
+   for j=10,#job.stock do local shell=job.stock[j]
     if shell.valid_for_read and shell.name==c.shell and shell.count>(reserved[j] or 0) and shell.health>0 then
      local station=#pairs+1;assert(job.stock[station].transfer_stack(raw));pairs[station]={shell_slot=j};reserved[j]=(reserved[j] or 0)+1;break
     end
@@ -122,10 +128,10 @@ function A.on_tick()
    if finished then e.disabled_by_script=true;job.in_flight=nil;job.pairs=nil;job.cycles=job.cycles+1 end
   else
    e.disabled_by_script=true
+   receive(job)
    if dispatch(job) and empty(e.get_output_inventory()) then
-    receive(job)
     -- Spent queue entries leave as inert material, never as revived contents.
-    for i=10,24 do if job.stock[i].valid_for_read then
+    for i=10,#job.stock do if job.stock[i].valid_for_read then
      touch(job.stock[i]);if job.stock[i].name==c.inert then
       for j=7,9 do if not job.stock[j].valid_for_read then assert(job.stock[j].transfer_stack(job.stock[i]));break end end
      end
@@ -135,8 +141,11 @@ function A.on_tick()
      if not ready then begin(job) end
     end
     if not job.in_flight then
-     local quality=intake_quality(job);local current=e.get_recipe()
-     if quality~=job.quality or not current or current.name~=accept then if recipe(job,accept,quality) then job.quality=quality end end
+     local pellets,shells=counts(job)
+     local intake=accept
+     if shells>=3 then intake=accept..'-pellets' elseif pellets>=3 then intake=accept..'-shells' end
+     local quality=intake_quality(job,pellets,shells);local current=e.get_recipe()
+     if quality~=job.quality or not current or current.name~=intake then if recipe(job,intake,quality) then job.quality=quality end end
     end
    end
   end
@@ -160,11 +169,10 @@ function A.inspect(e)
  local recipe,quality=e.get_recipe();return {completed=job.completed,cycles=job.cycles,in_flight=job.in_flight,started=job.started,stock=stock,conversions=job.conversions,crafting=e.is_crafting(),crafting_progress=e.crafting_progress,recipe=recipe and recipe.name,recipe_quality=quality and quality.name,output=snap(e.get_output_inventory() and e.get_output_inventory()[1])}
 end
 -- Appended inside the assembler controller; shells in active pairs stay reserved.
-local slots={1,2,3,7,8,9};for i=10,24 do slots[#slots+1]=i end
 require('hydrogen.stock-access').bind(A,function(e)return state()[e.unit_number] end,{
- slots=slots,touch=touch,accepts=function(s)return formed[s.name] or s.name==c.shell or s.name==c.inert end,
+ touch=touch,accepts=function(s)return formed[s.name] or s.name==c.shell or s.name==c.inert end,
  input_hint='Load formed metallicized pellets and pressure shells.',
- group=function(i)if i>=10 and i<=24 then return 'Input' elseif i>=1 and i<=3 then return 'Processing' elseif i>=7 and i<=9 then return 'Ready' end end,
+ group=function(i)if i>24 then return 'Inserter buffer' elseif i>=10 then return 'Input' elseif i>=1 and i<=3 then return 'Processing' elseif i>=7 and i<=9 then return 'Ready' end end,
  locked=function(job,i)
   if not job.in_flight then return false end
   if i>=1 and i<=3 then return true end

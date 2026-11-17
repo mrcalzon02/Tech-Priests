@@ -1,4 +1,15 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.1.683
+Date: 2026-11-16
+  Balancing:
+    - The hydrogen compressor liquefies 500 units of gas into 10 units of metallization-grade liquid hydrogen in 8 seconds. Its gas inlet now holds 1,000 units.
+    - One raw metallicized pellet requires 20 units of liquid hydrogen, or 1,000 units of hydrogen gas. Existing fluid stock and machines keep their prototype IDs.
+    - Reduced electrolyzer power use to 200 kW and halved the power draw of the other six fuel production machines.
+    - Increased sealed pellet fuel value from 120 MJ to 180 MJ. Minoris, Majoris and Maximus still produce 1, 2 and 4 MW, burning one pellet in 180, 90 and 45 seconds respectively at full load.
+  Bugfixes:
+    - The canister assembler pauses incoming shells or pellets once it has a batch of three waiting for partners. A steady shell supply can no longer block the first pellet at startup.
+
+---------------------------------------------------------------------------------------------------
 Version: 0.1.682
 Date: 2026-11-16
   Features:

@@ -1,12 +1,16 @@
 # Metallicized hydrogen production
 
-## Built into Tech Priests 0.1.682
+## Fuel production in Tech Priests 0.1.683
 
-Research **Metallicized hydrogen production** after **Nuclear power** and **Production science pack**. Purify water, electrolyze it, compress the hydrogen, and feed the metallization crucible and pelletization forge. Supply the pressure-vessel fabricator with water and steel in parallel. The canister assembler takes a formed pellet and an empty shell. A sealed pellet delivers 120 MJ to Minoris, Majoris, or Maximus. Burning consumes the shell. Unsealing instead recovers the shell and the original remaining pellet lifetime.
+Research **Metallicized hydrogen production** after **Nuclear power** and **Production science pack**. Each 8-second compressor cycle liquefies **500 hydrogen gas into 10 metallization-grade liquid hydrogen**. The crucible consumes **20 liquid hydrogen** in 8 seconds to make a single raw pellet. The pelletization forge forms it and the canister assembler seals it in a pressure shell. One canister delivers **180 MJ**. At full load, it powers a Minoris for 180 seconds at 1 MW, a Majoris for 90 seconds at 2 MW, or a Maximus for 45 seconds at 4 MW. Burning consumes the shell. Unsealing recovers the shell and the original remaining pellet lifetime.
 
-The main mod owns all seven animated machines, their sounds, research, player controls, and fuel behavior. Both former prototype add-ons can be removed together on upgrade. Factorio transfers their existing material inventories and in-progress jobs to Tech Priests. Native validation covers the base game and Space Age, all three reactors under load, and a save with both the forge and the canister assembler mid-cycle.
+One sealed canister requires **1,020 water and 2 steel plates**, assuming every pellet reaches the sealer. Electrolysis converts 1,000 purified water into 1,000 hydrogen gas and 500 oxygen across 50 cycles. The pressure-vessel fabricator consumes the remaining 20 water and 2 steel to make the shell. At crafting speed 1, one purifier and one electrolyzer together supply one pellet every 200 seconds in steady state (0.30/minute). The seven machines consume **81.4 MJ of active recipe work per canister** when sealing one at a time, before machine drain, inserters and steelmaking. A cold line needs power to produce its first canister. Active draws in production order are 50 kW for the purifier, 200 kW for the electrolyzer, 375 kW for the compressor, 2.5 MW for the crucible, 200 kW for the forge, 150 kW for the shell fabricator, and 125 kW for the canister assembler.
 
-[Connected factory and reactor measurements](../../../tests/evidence/metallicized-hydrogen/integrated-line.json) · [Active-job upgrade comparison](../../../tests/evidence/metallicized-hydrogen/prototype-migration.json)
+The canister assembler can work as soon as it has one formed pellet and one shell. It pauses incoming shells once a batch of three is waiting for pellets, so a faster fabricator can stay connected through cold startup. It likewise pauses incoming pellets while waiting for shells.
+
+The main mod owns all seven animated machines, their sounds, research, player controls, and fuel behavior. Existing pipes, tanks, barrels and blueprints retain their fluid prototype ID. If upgrading a save with both former prototype add-ons, disable them together to transfer the existing material inventories and in-progress jobs to Tech Priests. Keeping the production prototype add-on enabled applies the new fluid recipes and power values but leaves its old assembler controller in charge. Native validation covers the base game and Space Age, all three reactors under load, and a save with both the forge and the canister assembler mid-cycle.
+
+[0.1.683 production rates, electricity meters and upgrade tests](../../../tests/evidence/metallicized-hydrogen/rebalanced-line.json) · [Original 0.1.682 measurements](../../../tests/evidence/metallicized-hydrogen/integrated-line.json) · [Active-job upgrade comparison](../../../tests/evidence/metallicized-hydrogen/prototype-migration.json)
 
 ## Archived prototype checkpoints
 

@@ -26,6 +26,15 @@ end
 local function slot(parent,name,bank,index)
  return parent.add{type='sprite-button',name=name,style='slot_button',tags={hydrogen=true,bank=bank,slot=index}}
 end
+local function stock_button(machine,row)
+ local group=machine[row.group]
+ if not group then
+  machine.add{type='label',caption=row.group}
+  group=machine.add{type='table',name=row.group,column_count=5}
+ end
+ local name='slot'..row.slot
+ return group[name] or slot(group,name,'stock',row.slot)
+end
 local function construct(p,e,state)
  local frame=p.gui.screen.add{type='frame',name=root,direction='vertical',caption=state.title};frame.auto_center=true
  local header=frame.add{type='flow',direction='horizontal'}
@@ -37,10 +46,7 @@ local function construct(p,e,state)
  machine.add{type='progressbar',name='progress',value=0}
  machine.add{type='label',name='completed',caption='Completed: 0'}
  local input_hint=machine.add{type='label',caption=state.input_hint};input_hint.style.single_line=false;input_hint.style.maximal_width=260
- local groups={};for _,row in ipairs(state.slots) do
-  if not groups[row.group] then machine.add{type='label',caption=row.group};groups[row.group]=machine.add{type='table',name=row.group,column_count=5} end
-  slot(groups[row.group],'slot'..row.slot,'stock',row.slot)
- end
+ for _,row in ipairs(state.slots) do stock_button(machine,row) end
  machine.add{type='label',caption='Output'};local output=machine.add{type='table',name='output',column_count=5}
  for _,row in ipairs(state.output) do slot(output,'slot'..row.slot,'output',row.slot) end
  local hint=machine.add{type='label',caption='Click to move material. Shift-click to collect into your inventory.'};hint.style.single_line=false;hint.style.maximal_width=260
@@ -57,7 +63,7 @@ local function refresh(p,session)
  local frame=p.gui.screen[root] or construct(p,e,state);local machine=frame.body.machine
  machine.status.caption=state.working and (state.powered and 'Working' or 'No power') or 'Waiting for material or output space'
  machine.progress.value=state.progress;machine.completed.caption='Completed: '..state.completed
- for _,row in ipairs(state.slots) do paint(machine[row.group]['slot'..row.slot],row) end
+ for _,row in ipairs(state.slots) do paint(stock_button(machine,row),row) end
  for _,row in ipairs(state.output) do paint(machine.output['slot'..row.slot],row) end
  local main=p.get_main_inventory();local grid=frame.body.player_bag.slots
  if main then

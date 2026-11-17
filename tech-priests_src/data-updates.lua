@@ -26,3 +26,5 @@ require("prototypes.plasma_reactor_family")
 
 -- A retained legacy decay add-on may define its pellet prototypes after data.lua.
 if not mods["tp-hydrogen-production"] then require("hydrogen.resource-icons") end
+
+require("hydrogen.balance")

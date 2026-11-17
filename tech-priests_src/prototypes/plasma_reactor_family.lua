@@ -9,7 +9,7 @@ local plasma_fuel_category = "tp-metallicized-hydrogen"
 data:extend({{type = "fuel-category", name = plasma_fuel_category}})
 local sealed_pellet = data.raw["item-with-tags"]["tp-mh7-contained-metallicized-pellet"]
 sealed_pellet.fuel_categories = {plasma_fuel_category}
-sealed_pellet.fuel_value = "120MJ"
+sealed_pellet.fuel_value = "180MJ"
 sealed_pellet.burnt_result = nil
 sealed_pellet.localised_description = {"item-description.tp-mh7-contained-metallicized-pellet"}
 
