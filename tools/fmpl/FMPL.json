@@ -30,7 +30,7 @@
     "pbr_maps": 69,
     "bunker_component_candidates": 21,
     "verified_shared_components": 0,
-    "model_records": 16,
+    "model_records": 17,
     "program_records": 22,
     "pipeline_records": 6,
     "external_blender_libraries": 1,
@@ -631,6 +631,64 @@
         3
       ],
       "purpose": "Tanks chemical-burner Calcifier; eight actual stone/mineral/scum/sediment/crystal recipes, water/steam input, item-only products, four directions and unused capped south output. Preserves six tracked starter groups. Heated wet mineral bed, geared paddles, engine piston and belt, driven settling/sieve chest and wet bioceramic two-cavity forming die. Owner-required clearance repair replaces the straight shaker rail with a rigid offset arm from the upper pulley and relocates circuits away from swept mechanisms. All moving meshes checked against every component at 193 keys plus 192 half-frames in both saved source and actual GLB; intentional joint/belt/tooth/material contacts enumerated, with separate endpoint, stroke, guide and seating checks. Stylized gear engagement is not manufacturing-grade contact simulation. Owner-required full-size pipe mouths have 0.56-tile bores, 0.84-tile flanges and measured sprite registration at unchanged native grid endpoints; four actual placed-pipe close captures. Saved/reopened packed source, independently reimported GLB, six pose comparisons, 39 embedded PBR images, 68 genuine source captures. Native 2.1.24: 48 machines, all eight recipes in four directions, 44 ordinary grid pipe connections, fuel/fluid starvation, item blocking, stop/restart and unblocking. Settled operated-save reload preserves inventories, pipe/machine fluid amounts/types/temperatures and connections. Thirty-eight genuine client PNGs and a sixteen-frame native GIF/MP4. No gameplay changes. Earlier studies held; delegated operational review, no individual owner approval."
+    },
+    {
+      "id": "tanks-thinking-hut-v1",
+      "status": "game-sprites-installed-with-specific-native-checks",
+      "source": {
+        "repository": "mrcalzon02/Tanks-for-bob-Fork",
+        "ref": "1b39f0ee1c66d5375d92aac621d37e85e2fa6181",
+        "path": "models/island-survival/thinking-hut/candidates/v1-lantern08/thinking-hut-v1.blend",
+        "sha256": "4c7dee2ad5124ea1c078b0f4f997c994b8d971d9395f86b083254f3bc9e75b13"
+      },
+      "runtime": {
+        "repository": "mrcalzon02/Tanks-for-bob-Fork",
+        "ref": "1b39f0ee1c66d5375d92aac621d37e85e2fa6181",
+        "path": "models/island-survival/thinking-hut/candidates/v1-lantern08/thinking-hut-v1.glb",
+        "sha256": "12d9d0039544f95d5a5fc77be20e85da7277a261d110c50f1a80c9b86224b857"
+      },
+      "evidence": [
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "1b39f0ee1c66d5375d92aac621d37e85e2fa6181",
+          "path": "models/island-survival/thinking-hut/v1/FMPL_MODEL.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "1b39f0ee1c66d5375d92aac621d37e85e2fa6181",
+          "path": "models/island-survival/thinking-hut/v1/contract.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "1b39f0ee1c66d5375d92aac621d37e85e2fa6181",
+          "path": "models/island-survival/thinking-hut/candidates/v1-lantern08/clearance-review.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "1b39f0ee1c66d5375d92aac621d37e85e2fa6181",
+          "path": "docs/art/thinking-hut-v1/capture-verification.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "1b39f0ee1c66d5375d92aac621d37e85e2fa6181",
+          "path": "docs/art/thinking-hut-v1/operated-reload-receipt.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "1b39f0ee1c66d5375d92aac621d37e85e2fa6181",
+          "path": "docs/art/thinking-hut-v1/visual-review.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "1b39f0ee1c66d5375d92aac621d37e85e2fa6181",
+          "path": "docs/art/thinking-hut-v1/animation-evidence.json"
+        }
+      ],
+      "footprint": [
+        3,
+        3
+      ],
+      "purpose": "Tanks fixed-north Thinking Hut chemical-burner research lab: 20 kW, speed 0.5, no modules, fluid sockets or manufacturing output. Initially available wood-ten building recipe. Four requested placement directions normalize to north; rotation returns false. Fourteen actual food/document inputs support 75 current technology contracts in nineteen distinct ingredient combinations. Preserves/refines six tracked starter groups into timber flooring/frame, knee braces/rafter seats, bound staggered reed roof, real windows, open study porch with records/food/ink and a sensitive balance. Bored trunnion and exact suspended-pan endpoints; pans stay upright. Continuous grounded hearth/clay flue and actual roof clearance. Owner-requested lantern refinement replaces the dark box with anchored hook/bail/legs, oil reservoir and wick, open guards, reflector, raised hood and exported warm translucent outer flame/hot core. Gameplay-view hood occlusion corrected; native day/night working/idle lamp views verified. Saved/reopened packed source; actual GLB independently reimported, six pose comparisons, 193-key suspension/upright/fit/static/loop checks. All moving meshes checked at 385 sampled poses independently in source and GLB; intentional rigid/cord contacts enumerated, not continuous collision simulation. Thirty-nine embedded PBR images and seventeen genuine source captures for the one native facing. Twenty-four native labs exercise nineteen actual technologies covering all nineteen combinations and consuming all fourteen accepted inputs; not a claim of completing all 75 technologies. Missing fuel/meal and resupply, idle, real early-research completion/new research, deactivation/restart and fully operated-save reload preserve inventories, remaining fuel, progress, unlocks and directions. Thirty-three genuine client PNGs and a sixteen-frame native GIF/MP4. No gameplay changes. Earlier studies held; delegated operational review, no individual owner approval."
     }
   ],
   "programs": [
