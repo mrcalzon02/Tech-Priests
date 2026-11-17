@@ -51,14 +51,24 @@ script.on_init(function()
     name = fuel, count = 1, quality = quality, health = 0.5,
     tags = {mh7_remaining_ticks = 149, mh7_shell_health = 0.25}, custom_description = "transport test"
   }
-  assert(source.insert(pellet) == 1)
+  assert(source.is_empty() and dest.is_empty())
   assert(discover(nil, 1).acted == 1 and pair.energy_family_candidate_0707.item == fuel)
-  assert(logistics.service_pair(pair, "begin").waiting == 1)
-  assert(logistics.service_pair(pair, "pickup").acted == 1 and source.is_empty())
+  assert(logistics.service_pair(pair, "begin").detail == "waiting-source")
+  assert(pair.active_supply_request.item == fuel and pair.active_supply_request.target_unit == reactor.unit_number)
+  assert(pair.logistic_requested_item.item == fuel and pair.logistic_requested_item.count > 0)
+  assert(source.insert{name = "coal", count = 10} == 10)
+  assert(logistics.service_pair(pair, "only-coal-available").detail == "waiting-source")
+  assert(pair.active_supply_request.item == fuel and dest.is_empty())
+  assert(source.insert(pellet) == 1)
+  assert(logistics.service_pair(pair, "canister-arrives").detail == "source-ready")
+  assert(logistics.service_pair(pair, "pickup").acted == 1 and source.get_item_count("coal") == 10)
+  assert(not pair.active_supply_request and not pair.logistic_requested_item)
+  log("Cold plasma reactor requested a sealed canister, waited through a coal delivery, and collected the canister")
   priest.position = reactor.position
   assert(logistics.service_pair(pair, "deliver").acted == 1)
   check_pellet(dest[1], quality)
   dest.clear()
+  assert(source.remove{name = "coal", count = 10} == 10 and source.is_empty())
 
   assert(source.insert(pellet) == 1)
   pair.energy_family_candidate_0707 = {

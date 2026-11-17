@@ -1,4 +1,4 @@
--- Run as a separate Factorio 2.1 test scenario with Tech Priests in the base game or Space Age.
+-- Factorio 2.1 with Tech Priests, base or Space Age. Allow 45,200 ticks.
 local fuel = "tp-mh7-contained-metallicized-pellet"
 local tiers = {"minoris", "majoris", "maximus"}
 local keys = {"purifier", "electrolyzer", "compressor", "crucible", "forge", "fabricator", "assembler"}
@@ -7,6 +7,7 @@ local reactor_watts = {1e6, 2e6, 4e6}
 local shell = "tp-mh7-empty-pressure-shell"
 local formed = "tp-mh7-forged-metallicized-pellet"
 local critical = formed .. "-critical"
+local canister_joules = 3e9
 
 local function pellet_deadline(stack)
   if script.feature_flags.spoiling then return stack.spoil_tick end
@@ -68,7 +69,7 @@ script.on_init(function()
   assert(not script.active_mods["tp-hydrogen-production"] and not script.active_mods["tp-mh7-pellet-decay"])
   local force = game.forces.player
   force.technologies["tp-metallicized-hydrogen-production"].researched = true
-  assert(prototypes.item[fuel].fuel_value == 240e6, "sealed canister must supply 240 MJ")
+  assert(prototypes.item[fuel].fuel_value == canister_joules, "sealed canister must supply 3 GJ")
   for index, key in ipairs(keys) do
     local recipe = force.recipes["tp-hydrogen-build-" .. key]
     assert(recipe and recipe.enabled, key .. " construction recipe missing")
@@ -81,6 +82,13 @@ script.on_init(function()
   local surface = game.surfaces[1]
   surface.request_to_generate_chunks({75, 12}, 4)
   surface.force_generate_chunk_requests()
+  local furnace = assert(surface.create_entity{name = "stone-furnace", position = {65, 0}, force = force})
+  local chemical = furnace.get_fuel_inventory()
+  assert(chemical.insert{name = "coal", count = 1} == 1)
+  chemical.clear()
+  assert(chemical.insert{name = fuel, count = 1} == 0, "plasma canister entered a chemical burner")
+  furnace.destroy()
+  log("Stone furnace accepted coal and rejected the sealed plasma canister")
   local gas, liquid = "tp-mh7-review-hydrogen-gas", "tp-mh7-review-compressed-hydrogen"
   check_process(force, "tp-mh7-review-compress", gas, 500, liquid, 10)
   check_process(force, "tp-mh7-review-metallize", liquid, 20, "tp-mh7-raw-metallicized-pellet", 1)
@@ -111,7 +119,19 @@ script.on_init(function()
     load.energy = 0
     local inventory = reactor.get_fuel_inventory()
     assert(inventory.is_empty() and inventory.can_insert{name = fuel, count = 1})
-    assert(not inventory.can_insert{name = "tp-mh7-inert-pellet", count = 1})
+    local refused = 0
+    for name, prototype in pairs(prototypes.item) do
+      if prototype.fuel_value > 0 and name ~= fuel then
+        assert(not inventory.can_insert{name = name, count = 1}, reactor.name .. " accepted " .. name)
+        assert(inventory.insert{name = name, count = 1} == 0, reactor.name .. " inserted " .. name)
+        refused = refused + 1
+      end
+    end
+    assert(refused > 0)
+    for _, name in ipairs({"tp-mh7-raw-metallicized-pellet", formed, critical, shell, "tp-mh7-inert-pellet"}) do
+      assert(inventory.insert{name = name, count = 1} == 0, reactor.name .. " inserted " .. name)
+    end
+    log(reactor.name .. " rejected all " .. refused .. " other fuel items and all tested unsealed material")
     assert(inventory.insert{name = fuel, count = 1} == 1)
     storage.grids[i] = {reactor = reactor, load = load, pole = pole}
   end
@@ -175,15 +195,22 @@ script.on_event(defines.events.on_tick, function(event)
       end
     end
   end
-  if event.tick ~= 14600 then return end
-  for _, grid in ipairs(storage.grids) do
+  -- The 4 MW machine consumes a full canister in 45,000 game ticks.
+  if event.tick ~= 45120 then return end
+  for index, grid in ipairs(storage.grids) do
     local stats = grid.pole.electric_network_statistics
     local produced = stats.get_input_count(grid.reactor.name) + stats.get_output_count(grid.reactor.name)
     local consumed = stats.get_input_count(grid.load.name) + stats.get_output_count(grid.load.name)
-    assert(math.abs(produced - prototypes.item[fuel].fuel_value) < 100, grid.reactor.name .. " fuel yield")
-    assert(math.abs(produced - consumed) < 100, grid.reactor.name .. " load mismatch")
-    assert(grid.reactor.status == defines.entity_status.no_fuel, grid.reactor.name .. " did not finish burning")
-    log(grid.reactor.name .. " supplied " .. produced .. " joules")
+    local remaining = grid.reactor.burner.remaining_burning_fuel
+    local watts = reactor_watts[index]
+    assert(math.abs(produced + remaining - canister_joules) < watts / 60 + 2000, grid.reactor.name .. " energy balance")
+    assert(math.abs(produced - consumed) < 2000, grid.reactor.name .. " load mismatch")
+    if index == 3 then
+      assert(grid.reactor.status == defines.entity_status.no_fuel and math.abs(produced - canister_joules) < 2000)
+    else
+      assert(remaining > 0 and math.abs(produced - event.tick * watts / 60) < 2 * watts / 60)
+    end
+    log(grid.reactor.name .. " supplied " .. produced .. " joules; " .. remaining .. " joules remain")
   end
   script.finish_test(true)
 end)

@@ -34,7 +34,7 @@ local FUEL_PREFERENCE = {
 -- ordinary logistics chain must still acquire every requested item.
 local MISSING_FUEL_PREFERENCE = {
   "coal", "wood", "solid-fuel", "rocket-fuel",
-  "nuclear-fuel", "uranium-fuel-cell",
+  "nuclear-fuel", "uranium-fuel-cell", SEALED_PELLET,
 }
 local TERMINAL = { complete=true,completed=true,done=true,failed=true,aborted=true }
 local function now() return game and game.tick or 0 end

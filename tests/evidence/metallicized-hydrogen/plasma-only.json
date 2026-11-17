@@ -1,0 +1,64 @@
+{
+  "version": "0.1.687",
+  "factorio": "2.1.24",
+  "canister_joules": 3000000000,
+  "fuel_category": "tp-metallicized-hydrogen",
+  "integrated_mod_archive": {
+    "files": 5348,
+    "bytes": 1407242522,
+    "sha256": "59854e3a8cda0c50adebb8d54d3c3a77a293494ffcd1ebfd7c9a96a08179d2bc",
+    "mod_tree": "bf465ed62fb7eda538922248e4e379c1d8791ae3"
+  },
+  "tests": {
+    "package-space-platform-freight": {
+      "passed_at_tick": 22561,
+      "measurements": [
+        "mars-plasma-reactor-minoris chassis watts by quality: 1000000, 1299999.9523163, 1600000.0238419, 1899999.9761581, 2500000",
+        "mars-plasma-reactor-majoris chassis watts by quality: 2000000, 2599999.9046326, 3200000.0476837, 3799999.9523163, 5000000",
+        "mars-plasma-reactor-maximus chassis watts by quality: 4000000, 5199999.8092651, 6400000.0953674, 7599999.9046326, 10000000",
+        "Platform received ten individually tagged fuel canisters and built three normal reactors and one legendary Maximus from the second rocket",
+        "The hub inserter fed one landed canister to Minoris; platform accumulator charge: 3000000 J",
+        "Legendary Maximus supplied 10000000.3125 joules in one second",
+        "Legendary Maximus supplied 3000000093.7504 joules in 18000 full-load game ticks from one orbit-delivered normal canister"
+      ]
+    },
+    "package-base-integrated-power": {
+      "passed_at_tick": 45121,
+      "measurements": [
+        "Stone furnace accepted coal and rejected the sealed plasma canister",
+        "mars-plasma-reactor-minoris rejected all 6 other fuel items and all tested unsealed material",
+        "mars-plasma-reactor-majoris rejected all 6 other fuel items and all tested unsealed material",
+        "mars-plasma-reactor-maximus rejected all 6 other fuel items and all tested unsealed material",
+        "mars-plasma-reactor-minoris supplied 751999970.625 joules; 2248000000.0072 joules remain",
+        "mars-plasma-reactor-majoris supplied 1503999941.25 joules; 1495999999.9975 joules remain",
+        "mars-plasma-reactor-maximus supplied 2999999882.8135 joules; 0 joules remain"
+      ]
+    },
+    "source-space-integrated-power": {
+      "passed_at_tick": 45121,
+      "measurements": [
+        "Stone furnace accepted coal and rejected the sealed plasma canister",
+        "mars-plasma-reactor-minoris rejected all 21 other fuel items and all tested unsealed material",
+        "mars-plasma-reactor-majoris rejected all 21 other fuel items and all tested unsealed material",
+        "mars-plasma-reactor-maximus rejected all 21 other fuel items and all tested unsealed material",
+        "mars-plasma-reactor-minoris supplied 751999970.625 joules; 2248000000.0072 joules remain",
+        "mars-plasma-reactor-majoris supplied 1503999941.25 joules; 1495999999.9975 joules remain",
+        "mars-plasma-reactor-maximus supplied 2999999882.8135 joules; 0 joules remain"
+      ]
+    },
+    "dispatcher-base": {
+      "passed_at_tick": 1,
+      "measurements": [
+        "Cold plasma reactor requested a sealed canister, waited through a coal delivery, and collected the canister",
+        "HYDROGEN_TAGGED_CUSTODY normal discovery, delivery and orphan recovery passed"
+      ]
+    },
+    "dispatcher-space": {
+      "passed_at_tick": 1,
+      "measurements": [
+        "Cold plasma reactor requested a sealed canister, waited through a coal delivery, and collected the canister",
+        "HYDROGEN_TAGGED_CUSTODY rare discovery, delivery and orphan recovery passed"
+      ]
+    }
+  }
+}

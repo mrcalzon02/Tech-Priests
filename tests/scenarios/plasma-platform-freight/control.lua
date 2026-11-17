@@ -1,6 +1,10 @@
--- Factorio 2.1 with Tech Priests and Space Age. Allow 22,000 ticks.
+-- Factorio 2.1 with Tech Priests and Space Age. Allow 26,000 ticks.
 local fuel = "tp-mh7-contained-metallicized-pellet"
 local shell = "tp-mh7-empty-pressure-shell"
+local canister_joules = 3e9
+local legendary_watts = 10e6
+local five_minutes = 300 * 60
+local quality_meter = {name = "mars-plasma-reactor-maximus", quality = "legendary"}
 local reactors = {
   {name = "mars-plasma-reactor-minoris", position = {-7, 0}, watts = 1e6},
   {name = "mars-plasma-reactor-majoris", position = {0, -10}, watts = 2e6},
@@ -79,7 +83,7 @@ end
 
 script.on_init(function()
   assert(script.active_mods["space-age"], "Space Age required")
-  assert(prototypes.item[fuel].fuel_value == 240e6 and prototypes.item[fuel].weight == 100000)
+  assert(prototypes.item[fuel].fuel_value == canister_joules and prototypes.item[fuel].weight == 100000)
   assert(prototypes.item[fuel].stack_size == 1 and prototypes.item[shell].stack_size == 20)
   for _, phase in ipairs({"raw", "forged"}) do
     for _, suffix in ipairs({"", "-waning", "-degraded", "-critical"}) do
@@ -124,7 +128,19 @@ local function unload_canisters()
   return true
 end
 
-script.on_event(defines.events.on_tick, function()
+local function legendary_output()
+  local stats = storage.hub.surface.global_electric_network_statistics
+  return stats.get_input_count(quality_meter) + stats.get_output_count(quality_meter)
+end
+
+script.on_event(defines.events.on_tick, function(event)
+  if storage.elite and not storage.last_power_tick then
+    local joules = legendary_output()
+    -- Count the ticks that deliver at least half a rated tick's electricity.
+    local half_tick = legendary_watts / 120
+    if joules >= half_tick and not storage.first_power_tick then storage.first_power_tick = event.tick end
+    if joules >= canister_joules - half_tick then storage.last_power_tick = event.tick end
+  end
   local arm = storage.arm
   if not arm then return end
   if arm.held_stack.valid_for_read then
@@ -168,36 +184,34 @@ script.on_nth_tick(60, function(event)
       end
       storage.remaining[i] = remaining
     end
-  elseif age == 16020 then
-    local stats = storage.hub.surface.global_electric_network_statistics
-    for i, spec in ipairs(reactors) do
-      local produced = stats.get_input_count(spec.name) + stats.get_output_count(spec.name)
-      assert(math.abs(produced - 240e6) < 100, spec.name .. " orbital electrical yield " .. produced)
-      assert(storage.generators[i].status == defines.entity_status.no_fuel)
-      log(spec.name .. " supplied " .. produced .. " J on the platform")
+    if age == 1260 then
+      local hub = storage.hub
+      local generator = assert(hub.surface.find_entity(quality_meter, legendary.position))
+      assert(generator.quality.name == "legendary" and legendary_output() == 0)
+      local cargo = hub.get_inventory(defines.inventory.hub_main)
+      local canister = cargo.find_item_stack(fuel)
+      assert(canister.quality.name == "normal" and canister.tags.test_batch)
+      assert(generator.get_fuel_inventory()[1].transfer_stack(canister))
+      assert(hub.get_item_count(fuel) == 6)
+      storage.load.power_usage = 20e6 / 60
+      storage.elite = generator
     end
-    assert(storage.hub.get_item_count(fuel) == 7)
-    local hub = storage.hub
-    local generator = assert(hub.surface.find_entity({name = legendary.name, quality = legendary.quality}, legendary.position))
-    assert(generator.quality.name == "legendary")
-    storage.elite = generator
-    local cargo = hub.get_inventory(defines.inventory.hub_main)
-    assert(generator.get_fuel_inventory()[1].transfer_stack(cargo.find_item_stack(fuel)))
-    storage.load.power_usage = 20e6 / 60
-  elseif age == 16080 then
-    storage.elite_remaining = storage.elite.burner.remaining_burning_fuel
-  elseif age == 16140 then
-    local used = storage.elite_remaining - storage.elite.burner.remaining_burning_fuel
-    assert(math.abs(used - 10e6) < 100, "legendary Maximus burn rate")
-    log("Legendary Maximus, joules of canister consumed in one second: " .. used)
-  elseif age == 17580 then
-    assert(storage.elite.status == defines.entity_status.no_fuel, "legendary Maximus full-load burn")
-    local stats = storage.hub.surface.global_electric_network_statistics
-    local item = {name = legendary.name, quality = legendary.quality}
-    local output = stats.get_input_count(item) + stats.get_output_count(item)
-    assert(math.abs(output - 240e6) < 100, "legendary Maximus electrical yield")
-    log("Legendary Maximus, joules generated from one normal canister: " .. output)
-    assert(storage.hub.get_item_count(fuel) == 6)
+  elseif age == 1320 then
+    storage.elite_sample = legendary_output()
+  elseif age == 1380 then
+    local delivered = legendary_output() - storage.elite_sample
+    assert(math.abs(delivered - legendary_watts) < 100, "legendary Maximus full-load watts")
+    log("Legendary Maximus supplied " .. delivered .. " joules in one second")
+  elseif age == 1260 + five_minutes + 120 then
+    local delivered = legendary_output()
+    assert(storage.elite.status == defines.entity_status.no_fuel, "legendary Maximus must exhaust the one canister")
+    assert(math.abs(delivered - canister_joules) < 2000, "legendary Maximus total electrical yield")
+    assert(storage.first_power_tick and storage.last_power_tick, "missing metered burn window")
+    local duration = storage.last_power_tick - storage.first_power_tick + 1
+    assert(duration == five_minutes, "legendary burn duration measured " .. duration .. " ticks")
+    assert(storage.hub.get_item_count(fuel) == 6, "more than one canister used by legendary Maximus")
+    log("Legendary Maximus supplied " .. delivered .. " joules in " .. duration ..
+      " full-load game ticks from one orbit-delivered normal canister")
     script.finish_test(true)
   end
 end)

@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.1.687
+Date: 2026-11-16
+  Balancing:
+    - Minoris, Majoris and Maximus reactors accept only sealed metallicized hydrogen canisters through their dedicated fuel category.
+    - Each canister supplies 3 GJ. At full load this lasts five minutes in a legendary 10 MW Maximus, or 50, 25 and 12.5 minutes respectively in the three normal reactors. A full ten-canister rocket carries 30 GJ.
+
+---------------------------------------------------------------------------------------------------
 Version: 0.1.686
 Date: 2026-11-16
   Features:
