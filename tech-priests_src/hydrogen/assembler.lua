@@ -100,14 +100,30 @@ local function seal(job,station)
  job.conversions[#job.conversions+1]=record;if #job.conversions>32 then table.remove(job.conversions,1) end
  if destination.name==c.contained then job.completed=job.completed+1 end
 end
+local function shell_for(stock,pellet,reserved)
+ local best, best_level
+ local grade=pellet.quality.level
+ for j=10,#stock do
+  local shell=stock[j]
+  if shell.valid_for_read and shell.name==c.shell and shell.health>0 and shell.count>(reserved[j] or 0) then
+   if shell.quality.name==pellet.quality.name then return j end
+   local level=shell.quality.level
+   -- Use the least expensive shell that carries the full grade. If none
+   -- can, take the best available shell while the pellet is still live.
+   if not best or (best_level<grade and level>best_level) or (level>=grade and level<best_level) then
+    best,best_level=j,level
+   end
+  end
+ end
+ return best
+end
 local function begin(job)
  local reserved={};local pairs={}
  for i=10,#job.stock do local raw=job.stock[i]
   if raw.valid_for_read and formed[raw.name] and #pairs<3 then
-   for j=10,#job.stock do local shell=job.stock[j]
-    if shell.valid_for_read and shell.name==c.shell and shell.count>(reserved[j] or 0) and shell.health>0 then
-     local station=#pairs+1;assert(job.stock[station].transfer_stack(raw));pairs[station]={shell_slot=j};reserved[j]=(reserved[j] or 0)+1;break
-    end
+   local j=shell_for(job.stock,raw,reserved)
+   if j then
+    local station=#pairs+1;assert(job.stock[station].transfer_stack(raw));pairs[station]={shell_slot=j};reserved[j]=(reserved[j] or 0)+1
    end
   end
  end

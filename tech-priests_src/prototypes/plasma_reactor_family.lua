@@ -9,9 +9,15 @@ local plasma_fuel_category = "tp-metallicized-hydrogen"
 data:extend({{type = "fuel-category", name = plasma_fuel_category}})
 local sealed_pellet = data.raw["item-with-tags"]["tp-mh7-contained-metallicized-pellet"]
 sealed_pellet.fuel_categories = {plasma_fuel_category}
-sealed_pellet.fuel_value = "180MJ"
+sealed_pellet.fuel_value = "240MJ"
+sealed_pellet.weight = 100 * kg
 sealed_pellet.burnt_result = nil
 sealed_pellet.localised_description = {"item-description.tp-mh7-contained-metallicized-pellet"}
+if mods["tp-mh7-pellet-decay"] then
+  local inert = data.raw.item["tp-mh7-inert-pellet"]
+  inert.localised_name = {"item-name." .. inert.name}
+  inert.localised_description = {"item-description." .. inert.name}
+end
 
 local function ingredient(name, amount)
   return {type = "item", name = name, amount = amount}
@@ -92,6 +98,8 @@ for index, class in ipairs(classes) do
   generator.minable = {mining_time = 0.35, result = name}
   generator.collision_box = {{-half + 0.15, -half + 0.15}, {half - 0.15, half - 0.15}}
   generator.selection_box = {{-half, -half}, {half, half}}
+  -- The enclosed reactor operates on both planet surfaces and platform foundations.
+  generator.surface_conditions = {}
   generator.max_power_output = class.megawatts .. "MW"
   generator.burner.fuel_categories = {"chemical", plasma_fuel_category}
   generator.burner.effectivity = 1

@@ -1,0 +1,174 @@
+{
+  "mod_version": "0.1.686",
+  "factorio_version": "2.1.24",
+  "release_archive": {
+    "files": 5348,
+    "bytes": 1407242419,
+    "sha256": "513cb4f3ee5dbf64b90ead079d46f4bebbefa1dc07f0ca8c4d49479f126e3cd4",
+    "mod_tree": "5bf7a5e3f82de5c8341d104c804a076774f707ef"
+  },
+  "packed_scenarios": {
+    "base-packed": {
+      "scenario": "power",
+      "passed_at_tick": 14601,
+      "measurements": [
+        "mars-plasma-reactor-minoris supplied 239999990.62505 joules",
+        "mars-plasma-reactor-majoris supplied 239999990.625 joules",
+        "mars-plasma-reactor-maximus supplied 239999990.62501 joules"
+      ]
+    },
+    "space-pack-integrated-power": {
+      "scenario": "power",
+      "passed_at_tick": 14601,
+      "measurements": [
+        "mars-plasma-reactor-minoris supplied 239999990.62505 joules",
+        "mars-plasma-reactor-majoris supplied 239999990.625 joules",
+        "mars-plasma-reactor-maximus supplied 239999990.62501 joules"
+      ]
+    },
+    "base-pack-quality": {
+      "scenario": "quality",
+      "passed_at_tick": 6001,
+      "measurements": [
+        "Hydrogen quality: 1 grade combinations, 0 quality upgrades in 12 crucible crafts; hydroformed normal shell"
+      ]
+    },
+    "space-pack-hydrogen-quality": {
+      "scenario": "quality",
+      "passed_at_tick": 6001,
+      "measurements": [
+        "Hydrogen quality: 25 grade combinations, 4 quality upgrades in 9 crucible crafts; hydroformed legendary shell"
+      ]
+    },
+    "space-pack-platform-freight": {
+      "scenario": "platform_freight",
+      "passed_at_tick": 20761,
+      "measurements": [
+        "mars-plasma-reactor-minoris chassis watts by quality: 1000000, 1299999.9523163, 1600000.0238419, 1899999.9761581, 2500000",
+        "mars-plasma-reactor-majoris chassis watts by quality: 2000000, 2599999.9046326, 3200000.0476837, 3799999.9523163, 5000000",
+        "mars-plasma-reactor-maximus chassis watts by quality: 4000000, 5199999.8092651, 6400000.0953674, 7599999.9046326, 10000000",
+        "Platform received ten individually tagged fuel canisters and built three normal reactors and one legendary Maximus from the second rocket",
+        "The hub inserter fed one landed canister to Minoris; platform accumulator charge: 3000000 J",
+        "mars-plasma-reactor-minoris supplied 239999990.64227 J on the platform",
+        "mars-plasma-reactor-majoris supplied 239999990.66248 J on the platform",
+        "mars-plasma-reactor-maximus supplied 239999990.69995 J on the platform",
+        "Legendary Maximus, joules of canister consumed in one second: 9999999.9999994",
+        "Legendary Maximus, joules generated from one normal canister: 240000007.5"
+      ]
+    }
+  },
+  "save_upgrade_from": "0.1.685",
+  "save_upgrade": {
+    "on-load": {
+      "version": "0.1.686",
+      "tick": 602,
+      "remaining": 139866666.66667265,
+      "expected": 139866666.66667262,
+      "current_fuel_value": 240000000,
+      "stack_limit": 100,
+      "boxes": {
+        "open": {
+          "total": 23,
+          "counts": [
+            23
+          ],
+          "stone": 0
+        },
+        "full": {
+          "total": 23,
+          "counts": [
+            23
+          ],
+          "stone": 2350
+        },
+        "ground": 0
+      }
+    },
+    "unseal": {
+      "pellet": {
+        "name": "tp-mh7-forged-metallicized-pellet-degraded",
+        "quality": "rare",
+        "health": 0.375
+      },
+      "shell": {
+        "name": "tp-mh7-empty-pressure-shell",
+        "quality": "uncommon",
+        "health": 0.875
+      },
+      "remaining_ticks": 720
+    },
+    "after": {
+      "tick": 3100,
+      "total_joules": 179999992.9687528,
+      "boxes": {
+        "open": {
+          "total": 23,
+          "counts": [
+            23
+          ],
+          "stone": 0
+        },
+        "full": {
+          "total": 23,
+          "counts": [
+            23
+          ],
+          "stone": 2350
+        },
+        "ground": 0
+      }
+    }
+  },
+  "normal_maximus_fuel_quality_and_condition": [
+    {
+      "quality": "normal",
+      "integrity": 1.0,
+      "metered_joules": 239999990.62501
+    },
+    {
+      "quality": "normal",
+      "integrity": 0.25,
+      "metered_joules": 239999990.62501
+    },
+    {
+      "quality": "uncommon",
+      "integrity": 1.0,
+      "metered_joules": 239999990.62501
+    },
+    {
+      "quality": "uncommon",
+      "integrity": 0.25,
+      "metered_joules": 239999990.62501
+    },
+    {
+      "quality": "rare",
+      "integrity": 1.0,
+      "metered_joules": 239999990.62501
+    },
+    {
+      "quality": "rare",
+      "integrity": 0.25,
+      "metered_joules": 239999990.62501
+    },
+    {
+      "quality": "epic",
+      "integrity": 1.0,
+      "metered_joules": 239999990.62501
+    },
+    {
+      "quality": "epic",
+      "integrity": 0.25,
+      "metered_joules": 239999990.62501
+    },
+    {
+      "quality": "legendary",
+      "integrity": 1.0,
+      "metered_joules": 239999990.62501
+    },
+    {
+      "quality": "legendary",
+      "integrity": 0.25,
+      "metered_joules": 239999990.62501
+    }
+  ]
+}

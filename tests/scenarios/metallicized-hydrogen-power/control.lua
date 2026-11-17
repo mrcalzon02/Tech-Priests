@@ -1,4 +1,4 @@
--- Run as a separate Factorio 2.1 test scenario with only the Tech Priests mod enabled.
+-- Run as a separate Factorio 2.1 test scenario with Tech Priests in the base game or Space Age.
 local fuel = "tp-mh7-contained-metallicized-pellet"
 local tiers = {"minoris", "majoris", "maximus"}
 local keys = {"purifier", "electrolyzer", "compressor", "crucible", "forge", "fabricator", "assembler"}
@@ -6,6 +6,12 @@ local machine_kw = {50, 200, 375, 2500, 200, 150, 125}
 local reactor_watts = {1e6, 2e6, 4e6}
 local shell = "tp-mh7-empty-pressure-shell"
 local formed = "tp-mh7-forged-metallicized-pellet"
+local critical = formed .. "-critical"
+
+local function pellet_deadline(stack)
+  if script.feature_flags.spoiling then return stack.spoil_tick end
+  return stack.tags.mh7_spoil_tick
+end
 
 local function create_shell_first_line(surface, force)
   local function place(name, x, y, direction)
@@ -62,7 +68,7 @@ script.on_init(function()
   assert(not script.active_mods["tp-hydrogen-production"] and not script.active_mods["tp-mh7-pellet-decay"])
   local force = game.forces.player
   force.technologies["tp-metallicized-hydrogen-production"].researched = true
-  assert(prototypes.item[fuel].fuel_value == 180e6, "sealed canister must supply 180 MJ")
+  assert(prototypes.item[fuel].fuel_value == 240e6, "sealed canister must supply 240 MJ")
   for index, key in ipairs(keys) do
     local recipe = force.recipes["tp-hydrogen-build-" .. key]
     assert(recipe and recipe.enabled, key .. " construction recipe missing")
@@ -84,6 +90,11 @@ script.on_init(function()
   local forging = force.recipes["tp-mh7-review-forge-work"]
   local hydroforming = force.recipes["tp-mh7-review-hydroform"]
   assert(forging.energy == 24 and hydroforming.energy == 4 * forging.energy, "four hydroformers per forge")
+  local chest = assert(surface.create_entity{name = "steel-chest", position = {75, 0}, force = force})
+  local inventory = chest.get_inventory(defines.inventory.chest)
+  assert(inventory.insert{name = critical, count = 1} == 1)
+  remote.call("tp-mh7-pellet-decay", "register_inventory", inventory)
+  storage.pellets = {inventory = inventory, first_due = pellet_deadline(inventory[1])}
   storage.forming_line = create_forming_line(surface, force)
   storage.shell_first = create_shell_first_line(surface, force)
   storage.grids = {}
@@ -107,6 +118,16 @@ script.on_init(function()
 end)
 
 script.on_event(defines.events.on_tick, function(event)
+  local pellets = storage.pellets
+  if event.tick == pellets.first_due - 60 then
+    assert(pellets.inventory.insert{name = critical, count = 1} == 1)
+    remote.call("tp-mh7-pellet-decay", "initialize_stack", pellets.inventory[2])
+    assert(pellets.inventory[1].count == 1 and pellets.inventory[2].count == 1)
+    assert(pellet_deadline(pellets.inventory[2]) > pellets.first_due)
+  elseif event.tick == pellets.first_due + 5 then
+    assert(pellets.inventory.get_item_count("tp-mh7-inert-pellet") == 1, "first pellet must expire alone")
+    assert(pellets.inventory.get_item_count(critical) == 1, "second pellet must remain live")
+  end
   local line = storage.forming_line
   if event.tick == 60 then
     for _, fabricator in ipairs(line.fabricators) do
@@ -154,7 +175,7 @@ script.on_event(defines.events.on_tick, function(event)
       end
     end
   end
-  if event.tick ~= 11000 then return end
+  if event.tick ~= 14600 then return end
   for _, grid in ipairs(storage.grids) do
     local stats = grid.pole.electric_network_statistics
     local produced = stats.get_input_count(grid.reactor.name) + stats.get_output_count(grid.reactor.name)

@@ -12,6 +12,20 @@ local power = {
 local machines = data.raw["assembling-machine"]
 for name, draw in pairs(power) do machines[name].energy_usage = draw end
 
+-- The purifier takes raw water. The six downstream machines process made
+-- intermediates, including the steel plate shaped by the hydroformer.
+for _, spec in ipairs(require("hydrogen.specs")) do
+  local machine = machines[spec.entity]
+  machine.quality_affects_module_slots = false
+  if spec.key ~= "purifier" then
+    machine.module_slots = 4
+    machine.allowed_effects = {"speed", "consumption", "pollution"}
+    if feature_flags.quality and (spec.key == "crucible" or spec.key == "fabricator") then
+      table.insert(machine.allowed_effects, "quality")
+    end
+  end
+end
+
 -- Existing saves may still load the retired add-on that owns these prototypes.
 -- Use the same craft times as the integrated machines in that case.
 if mods["tp-hydrogen-production"] then

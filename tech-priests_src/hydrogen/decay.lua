@@ -176,9 +176,10 @@ function M.seal(raw,shell,destination)
  if raw.health<=0 or Clock.deadline(raw)<=game.tick then return false,'pellet-expired' end
  if not shell or not shell.valid_for_read or shell.name~=c.shell or shell.health<=0 then return false,'sound-pressure-shell-required' end
  if not destination or destination.valid_for_read then return false,'empty-output-required' end
- local integrity=raw.health;local quality=raw.quality.name
+ local integrity=raw.health
+ local quality=raw.quality.level<=shell.quality.level and raw.quality.name or shell.quality.name
  local tags={mh7_raw_name=raw.name,mh7_remaining_ticks=Clock.deadline(raw)-game.tick,mh7_integrity=integrity,
-  mh7_shell_quality=shell.quality.name,mh7_shell_health=shell.health}
+  mh7_raw_quality=raw.quality.name,mh7_shell_quality=shell.quality.name,mh7_shell_health=shell.health}
  if not destination.set_stack{name=c.contained,count=1,quality=quality,health=integrity,tags=tags} then return false,'output-rejected' end
  raw.clear();shell.count=shell.count-1
  return true
@@ -187,7 +188,9 @@ function M.unseal(contained,destination,shell_return)
  if not contained or not contained.valid_for_read or contained.name~=c.contained then return false,'contained-pellet-required' end
  local tags=contained.tags or {};if not stages[tags.mh7_raw_name] or not tags.mh7_remaining_ticks then return false,'invalid-containment-metadata' end
  if not destination or destination.valid_for_read or not shell_return or shell_return.valid_for_read then return false,'two-empty-outputs-required' end
- if not destination.set_stack{name=tags.mh7_raw_name,count=1,quality=contained.quality.name,health=math.min(contained.health,tags.mh7_integrity),tags={mh7_decay_phase=tags.mh7_raw_name}} then return false,'output-rejected' end
+ -- Older containers used the pellet grade as their visible item quality.
+ local pellet_quality=tags.mh7_raw_quality or contained.quality.name
+ if not destination.set_stack{name=tags.mh7_raw_name,count=1,quality=pellet_quality,health=math.min(contained.health,tags.mh7_integrity),tags={mh7_decay_phase=tags.mh7_raw_name}} then return false,'output-rejected' end
  Clock.set_deadline(destination,game.tick+math.max(1,tags.mh7_remaining_ticks))
  if not shell_return.set_stack{name=c.shell,count=1,quality=tags.mh7_shell_quality,health=tags.mh7_shell_health} then destination.clear();return false,'shell-output-rejected' end
  contained.clear();M.touch_stack(destination);return true

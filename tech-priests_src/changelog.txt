@@ -1,4 +1,15 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.1.686
+Date: 2026-11-16
+  Features:
+    - Minoris, Majoris and Maximus plasma reactors can be shipped to a Space Age platform and built on its foundation.
+    - All six hydrogen machines downstream of raw-water purification accept four modules. The crucible and pressure-vessel fabricator can roll item quality with the Quality expansion.
+    - Mixed-grade pellets and shells produce a canister at the lower component grade. Unsealing recovers each component's original grade, condition and remaining pellet lifetime.
+  Balancing:
+    - Raised sealed fuel from 180 MJ to 240 MJ. One 100 kg canister runs a normal Minoris for four minutes, a Majoris for two, or a Maximus for one at full load. A one-tonne rocket carries ten canisters.
+    - Every raw, formed and sealed pellet occupies its own slot. Fully expired pellets become inert pellet residue, which stacks to 100 and preserves existing waste storage on upgrade.
+
+---------------------------------------------------------------------------------------------------
 Version: 0.1.685
 Date: 2026-11-16
   Balancing:

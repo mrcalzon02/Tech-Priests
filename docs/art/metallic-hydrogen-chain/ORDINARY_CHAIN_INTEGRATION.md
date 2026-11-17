@@ -1,8 +1,8 @@
 # Metallicized hydrogen production
 
-## Fuel production in Tech Priests 0.1.685
+## Fuel production in Tech Priests 0.1.686
 
-Research **Metallicized hydrogen production** after **Nuclear power** and **Production science pack**. Each 8-second compressor cycle liquefies **500 hydrogen gas into 10 metallization-grade liquid hydrogen**. The crucible consumes **20 liquid hydrogen** in 8 seconds to make a single raw pellet. The pelletization forge forms it and the canister assembler seals it in a pressure shell. One canister delivers **180 MJ**. At full load, it powers a Minoris for 180 seconds at 1 MW, a Majoris for 90 seconds at 2 MW, or a Maximus for 45 seconds at 4 MW. Burning consumes the shell. Unsealing recovers the shell and the original remaining pellet lifetime.
+Research **Metallicized hydrogen production** after **Nuclear power** and **Production science pack**. Each 8-second compressor cycle liquefies **500 hydrogen gas into 10 metallization-grade liquid hydrogen**. The crucible consumes **20 liquid hydrogen** in 8 seconds to make a single raw pellet. The pelletization forge forms it and the canister assembler seals it in a pressure shell. One sealed canister supplies **240 MJ**. At full load it powers a normal Minoris for 4 minutes at 1 MW, a Majoris for 2 minutes at 2 MW, or a Maximus for 1 minute at 4 MW. Burning consumes the shell. Unsealing recovers the shell and the original remaining pellet lifetime.
 
 One sealed canister requires **1,020 water and 2 steel plates**, assuming every pellet reaches the sealer. Electrolysis converts 1,000 purified water into 1,000 hydrogen gas and 500 oxygen across 50 cycles. The pressure-vessel fabricator consumes the remaining 20 water and 2 steel to make the shell. At crafting speed 1, one purifier and one electrolyzer together supply one pellet every 200 seconds in steady state (0.30/minute). The seven stages consume **97.2 MJ of active recipe work per canister** when sealing one at a time, before machine drain, inserters and steelmaking. A cold line needs power to produce its first canister. Active draws in production order are 50 kW for the purifier, 200 kW for the electrolyzer, 375 kW for the compressor, 2.5 MW for the crucible, 200 kW for the forge, 150 kW for the shell fabricator, and 125 kW for the canister assembler.
 
@@ -14,9 +14,36 @@ The canister assembler can work as soon as it has one formed pellet and one shel
 
 The main mod owns all seven animated machines, their sounds, research, player controls, and fuel behavior. Existing pipes, tanks, barrels and blueprints retain their fluid prototype ID. If upgrading a save with both former prototype add-ons, disable them together to transfer the existing material inventories and in-progress jobs to Tech Priests. Keeping the production prototype add-on enabled applies the new fluid recipes and power values but leaves its old assembler controller in charge. Native validation covers the base game and Space Age, all three reactors under load, and a save with both the forge and the canister assembler mid-cycle.
 
-In a connected eight-pair plant on Factorio 2.1.24, one, two, three and four hydroformers exported 35, 20, 6 and 0 inert pellets respectively between game minutes 10 and 30. Over a separate 15-minute window with matching material inventories, four hydroformers delivered all 36 pellets as fuel. This supplies the three reactor tiers at full load with four canisters per hour to spare. A previously started forge job and shell job each completed once when a 0.1.684 save was loaded in 0.1.685.
+In a connected eight-pair plant on Factorio 2.1.24, one, two, three and four hydroformers exported 35, 20, 6 and 0 inert pellets respectively between game minutes 10 and 30. Over a separate 15-minute window with matching material inventories, four hydroformers delivered all 36 pellets as fuel. At that measured production rate of 144 canisters per hour, the 240 MJ recipe supplies one of each normal reactor at full load (105 canisters per hour) and leaves 39 canisters per hour for storage or export. A previously started forge job and shell job each completed once when a 0.1.684 save was loaded in 0.1.685.
 
 [Four-hydroformer production, electricity and upgrade measurements](../../../tests/evidence/metallicized-hydrogen/four-hydroformers.json) · [0.1.683 production rates, electricity meters and upgrade tests](../../../tests/evidence/metallicized-hydrogen/rebalanced-line.json) · [Original 0.1.682 measurements](../../../tests/evidence/metallicized-hydrogen/integrated-line.json) · [Active-job upgrade comparison](../../../tests/evidence/metallicized-hydrogen/prototype-migration.json)
+
+## Supplying a space platform
+
+In Space Age the three reactors can be built on platform foundation. Launch reactor chassis and sealed fuel from a planetary silo. A platform inserter can feed canisters from the hub into a reactor to supply the ship’s electrical network.
+
+| Normal reactor | Full output | Canisters per hour | Full-load time per ten-canister rocket |
+| --- | ---: | ---: | ---: |
+| Minoris | 1 MW | 15 | 40 min |
+| Majoris | 2 MW | 30 | 20 min |
+| Maximus | 4 MW | 60 | 10 min |
+
+| Material | Items per slot | Mass per item | Reactor energy per occupied slot |
+| --- | ---: | ---: | ---: |
+| Live raw or formed pellet, any stage | 1 | 2 kg | Requires a shell |
+| Inert pellet residue | 100 | 2 kg | 0 MJ |
+| Empty pressure shell | 20 | 50 kg | 0 MJ |
+| Sealed canister | 1 | 100 kg | 240 MJ |
+
+A dedicated one-tonne launch carries ten canisters, **2.4 GJ per rocket** or **2.4 MJ/kg**. For comparison, conventional rocket fuel also fits these reactors. It carries 100 MJ per item at 10 kg each, so a dedicated launch of 100 units supplies 10 GJ. Each live pellet has its own countdown. A spent pellet becomes inert residue. Keeping its existing prototype and stack size preserves stored waste and inserter filters on upgrade. A late seal preserves the remaining life and condition, and even a critical pellet delivers the full 240 MJ if sealed in time.
+
+## Modules and quality
+
+The raw-water purifier has no module slots. The electrolyzer, hydrogen compressor, metallization crucible, pelletization forge, pressure-vessel fabricator and canister assembler each have four slots at every machine quality. The hydroformer qualifies because it shapes steel plate into an intermediate shell. Speed and efficiency modules work downstream. With Quality enabled, the crucible can roll higher-grade pellets and the fabricator can roll higher-grade shells. The forge carries a pellet’s current grade through forming. At different effective crafting speeds the required hydroformer count is four times the forge speed divided by the hydroformer speed, rounded up.
+
+Any sound shell can accept any live pellet. The finished canister takes the lower of the shell and pellet grades. For example, a rare pellet sealed in an uncommon shell yields an uncommon canister. Unsealing restores the rare pellet and uncommon shell, including the pellet’s remaining lifetime. The same rule works across all five standard grades. A sealed canister delivers 240 MJ at every quality. Reactor chassis quality multiplies the maximum electrical output by 1, 1.3, 1.6, 1.9 or 2.5 from normal through legendary. A legendary Maximus therefore supplies 10 MW for 24 seconds from one 240 MJ canister at full load.
+
+[Factorio 2.1.24 orbital freight, power, quality and save-upgrade measurements](../../../tests/evidence/metallicized-hydrogen/orbital-plasma.json)
 
 ## Archived prototype checkpoints
 

@@ -16,8 +16,7 @@ for i,stage in ipairs(group) do
  rows[#rows+1]=item
 end
 end
-local inert=table.deepcopy(data.raw.item.stone);inert.name=c.inert;inert.localised_name='Inert pellet';inert.stack_size=100
-inert.localised_description='Spent, non-fuel material. Cannot be restored by containment.'
+local inert=table.deepcopy(data.raw.item.stone);inert.name=c.inert;inert.stack_size=100
 rows[#rows+1]=inert
 local shell=table.deepcopy(data.raw.item['steel-plate']);shell.name=c.shell;shell.localised_name='Empty pressure shell';shell.stack_size=20
 rows[#rows+1]=shell

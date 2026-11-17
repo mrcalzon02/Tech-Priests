@@ -18,7 +18,7 @@ for index,spec in ipairs(specs) do
   recipe.ingredients={{type='fluid',name='water',amount=20}};recipe.results={{type='fluid',name='tp-mh7-review-purified-water',amount=20}};recipe.main_product='tp-mh7-review-purified-water'
  elseif spec.key=='electrolyzer' then
   recipe.ingredients={{type='fluid',name='tp-mh7-review-purified-water',amount=20}};recipe.results={{type='fluid',name='tp-mh7-review-hydrogen-gas',amount=20},{type='fluid',name='tp-mh7-review-oxygen-gas',amount=10}};recipe.main_product='tp-mh7-review-hydrogen-gas'
- elseif spec.key=='crucible' then recipe.auto_recycle=false;e.module_slots=2;e.allowed_effects=feature_flags.quality and {'quality','consumption'} or {'consumption'} end
+ elseif spec.key=='crucible' then recipe.auto_recycle=false end
  local mix=mixes[spec.key];e.working_sound={sound={filename=root..'sound/'..spec.key..'-working.ogg',volume=mix.gain,audible_distance_modifier=mix.distance,priority=mix.priority,preload=true},match_volume_to_activity=true,match_speed_to_activity=false,fade_in_ticks=12,fade_out_ticks=20,max_sounds_per_prototype=3}
  for _,pair in ipairs{{'idle_sound','idle',.08},{'activate_sound','start',.50},{'deactivate_sound','stop',.40}} do
   if spec.key~='purifier' and spec.key~='electrolyzer' then e.working_sound[pair[1]]={filename=root..'sound/'..spec.key..'-'..pair[2]..'.ogg',volume=pair[3],audible_distance_modifier=1.2} end

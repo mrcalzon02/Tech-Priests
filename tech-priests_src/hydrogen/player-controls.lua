@@ -20,6 +20,7 @@ local function details(row)
 end
 local function paint(button,row)
  button.sprite=not row.empty and 'item/'..row.name or nil;button.number=not row.empty and row.count or nil
+ button.quality=not row.empty and row.quality or nil
  button.elem_tooltip=not row.empty and {type='item',name=row.name,quality=row.quality} or nil
  button.tooltip=details(row);button.enabled=not row.locked
 end
@@ -34,6 +35,35 @@ local function stock_button(machine,row)
  end
  local name='slot'..row.slot
  return group[name] or slot(group,name,'stock',row.slot)
+end
+local function refresh_modules(machine, entity)
+ local inventory=entity.get_module_inventory()
+ if not inventory or #inventory==0 then return end
+ local grid=machine.modules
+ if not grid then
+  machine.add{type='label',caption={'technology-name.modules'}}
+  grid=machine.add{type='table',name='modules',column_count=4}
+ end
+ for i=1,#inventory do
+  local item=inventory[i]
+  local button=grid['slot'..i] or slot(grid,'slot'..i,'modules',i)
+  button.sprite=item.valid_for_read and 'item/'..item.name or nil
+  button.quality=item.valid_for_read and item.quality.name or nil
+  button.elem_tooltip=item.valid_for_read and {type='item',name=item.name,quality=item.quality.name} or nil
+ end
+end
+local function transfer_module(entity,player,index,to_inventory)
+ local inventory=entity.get_module_inventory()
+ local cursor=player.cursor_stack
+ if not inventory or not cursor or not index or index<1 or index>#inventory then return false end
+ local item=inventory[index]
+ if to_inventory then
+  local main=player.get_main_inventory()
+  return item.valid_for_read and main and main.transfer_from_stack(item)>0
+ end
+ if not cursor.valid_for_read then return item.valid_for_read and cursor.transfer_stack(item) end
+ if item.valid_for_read or cursor.prototype.type~='module' or not inventory.can_insert(cursor) then return false end
+ return item.transfer_stack(cursor,1)
 end
 local function construct(p,e,state)
  local frame=p.gui.screen.add{type='frame',name=root,direction='vertical',caption=state.title};frame.auto_center=true
@@ -65,6 +95,7 @@ local function refresh(p,session)
  machine.progress.value=state.progress;machine.completed.caption='Completed: '..state.completed
  for _,row in ipairs(state.slots) do paint(stock_button(machine,row),row) end
  for _,row in ipairs(state.output) do paint(machine.output['slot'..row.slot],row) end
+ refresh_modules(machine,e)
  local main=p.get_main_inventory();local grid=frame.body.player_bag.slots
  if main then
   if #grid.children~=#main then grid.clear();for i=1,#main do slot(grid,'slot'..i,'player',i) end end
@@ -101,6 +132,7 @@ function U.on_click(event)
   elseif target.valid_for_read then ok=cursor.transfer_stack(target) else ok=false end
   if cursor.valid_for_read then remote.call('tp-mh7-pellet-decay','initialize_stack',cursor) end
   if target.valid_for_read then remote.call('tp-mh7-pellet-decay','initialize_stack',target) end
+ elseif bank=='modules' then ok=transfer_module(e,p,index,event.shift==true)
  elseif e.name==forge then ok,reason=remote.call('tp-mh7-pellet-decay','forge_player_transfer',e,p,bank,index,event.shift==true)
  else ok,reason=A.player_transfer(e,p,bank,index,event.shift==true) end
  if reason and p.connected then p.create_local_flying_text{text=reason,create_at_cursor=true} end
