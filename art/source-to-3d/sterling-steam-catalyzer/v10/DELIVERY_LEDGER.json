@@ -8,7 +8,12 @@
   "genuine_sprites_done": true,
   "actual_mod_integration_and_native_verification": true,
   "operated_reload_done": true,
-  "publication_receipts_pending": true,
+  "publication_receipts_pending": false,
   "owner_visual_approved": false,
-  "next": "Source push/readback, canonical FMPL registration/readback and final delivery receipt; then Void Steam Engine."
+  "next": "Preserve this delivered machine; continue the actual Void Steam Engine.",
+  "done": true,
+  "source_commit": "b2ccd1bd91d7d489f6375e061e47103faddcd2fc",
+  "source_remote_readback_verified": true,
+  "canonical_fmpl_ref": "18e14893a3884e8e3662d15918610dec7fd8d2c6",
+  "canonical_fmpl_readback_verified": true
 }

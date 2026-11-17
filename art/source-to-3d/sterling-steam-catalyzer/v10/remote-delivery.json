@@ -1,0 +1,27 @@
+{
+  "schema": "tp.structure.remote-delivery.v1",
+  "id": "tech-priests-sterling-steam-catalyzer-v1",
+  "source_repository": "mrcalzon02/Tech-Priests",
+  "source_checkpoint_commit": "9b17b3c9bc2b4f71f16bc430fb4e594534ee02f6",
+  "source_commit": "b2ccd1bd91d7d489f6375e061e47103faddcd2fc",
+  "remote_source_main_verified": true,
+  "pinned_source_manifest_readback_verified": true,
+  "pinned_source_manifest_blob_sha": "773134e7ebea06e0e8b048aad9813b37a2b55662",
+  "source_sha256": "ff0cd75f2083fa4270520f9dd937f4116b930c5642c93e95b0a645e9fa2f6af8",
+  "runtime_sha256": "409db745f841138f5b600afead2bd831df25e61ef7a7efb76dc4ec924fd33287",
+  "canonical_fmpl": {
+    "repository": "mrcalzon02/Tech-Priests",
+    "path": "tools/fmpl/FMPL.json",
+    "ref": "18e14893a3884e8e3662d15918610dec7fd8d2c6",
+    "model_id": "tech-priests-sterling-steam-catalyzer-v1",
+    "pinned_readback_verified": true,
+    "prior22_models_unchanged": true
+  },
+  "native_operational_delivery_complete": true,
+  "owner_requested_console_connector_mount_implemented": true,
+  "individual_owner_visual_approved": false,
+  "full_user_mod_pack_installation": false,
+  "portal_publication": false,
+  "next": "Void Steam Engine: establish actual current contract and recover source; preserve completed Sterling and concurrent work.",
+  "whole_goal_complete": false
+}

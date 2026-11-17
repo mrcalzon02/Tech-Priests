@@ -8,7 +8,8 @@ facings; the owner-selected native connector is seated on the console. Packed
 source,27 PBR images, clean four-second GLB, four-direction animation,24-machine
 native operation, real recipe/unlock/placement and actual operated reload pass.
 No further cosmetic work is scheduled. Individual owner visual approval is not
-claimed. Source/FMPL publication receipts are being closed in DELIVERY_LEDGER.json.
+claimed. Source and canonical FMPL delivery are remotely verified. Source b2ccd1bd91d7d489f6375e061e47103faddcd2fc;
+registry 18e14893a3884e8e3662d15918610dec7fd8d2c6. See DELIVERY_LEDGER.json.
 Continue the actual Void Steam Engine next; preserve concurrent/accepted work.
 
 ## 2026-11-15 seven-machine normal prototype and player controls verified; purifier closed
