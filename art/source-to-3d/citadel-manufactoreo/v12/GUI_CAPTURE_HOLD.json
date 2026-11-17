@@ -1,10 +1,15 @@
 {
-  "active": true,
+  "active": false,
   "scope": "Factorio GUI clients for this goal",
-  "reason": "Owner is doing active work; prior test windows interrupted it.",
+  "reason": "Citadel accepted complete. Do not reopen for refinement or retesting.",
   "owner_message": "Yes, you were interrupting active work.",
   "do_not_launch_again_until_owner_ready": true,
   "headless_final_v12_checks_already_passed": true,
   "model_source_and_glb_clearance_passed": true,
-  "whole_goal_paused": false
+  "whole_goal_paused": false,
+  "owner_resumed_message": "go",
+  "resume_scope": "Run the previously held final Factorio verification now.",
+  "machine_done": true,
+  "no_more_citadel_clients": true,
+  "owner_acceptance": "No more improvement needed. It functions, it works, it looks good. Move on."
 }

@@ -1,0 +1,30 @@
+{
+  "machine": "citadel-manufactoreo",
+  "done": true,
+  "owner_visual_approval": true,
+  "owner_functional_acceptance": true,
+  "owner_instruction_summary": "It functions, works and looks good. No further improvement or testing; move on.",
+  "source_sha256": "6be42c95040f44972f1933caf7bd288ec2d48dd959fea9814e1bfaf6bdfeb63e",
+  "runtime_sha256": "227a991cd12f731ceae48181ddd74e8b1f10aea1b2509cebed2da68ef9025579",
+  "fmpl_source_maps_and_export_channels_pass": true,
+  "full_source_and_runtime_contact_review_pass": true,
+  "genuine_glb_frames": 33,
+  "genuine_final_native_pngs": 315,
+  "actual_final_native_all_operating_gates_passed": true,
+  "reload_verification": {
+    "actual_operated_save_300tick_reload_passed_on_v11": true,
+    "evidence_commit": "9f4970321f401c05457912e092968489d6622e8e",
+    "evidence_path": "art/source-to-3d/citadel-manufactoreo/v11/native-evidence/operated-reload-receipt.json",
+    "runtime_and_visual_adapter_lua_unchanged": true,
+    "not_repeated_for_static_v12_sprite_fitting": true,
+    "final_named_autosave_not_created_before_owner_closed_client": true,
+    "owner_accepted_function_appearance_and_directed_no_further_testing": true,
+    "not_a_deferred_task": true
+  },
+  "production_art_installed": true,
+  "prior_deferred_status_superseded": true,
+  "remaining_for_this_machine": [],
+  "next_machine": "entropic-extractor",
+  "whole_goal_complete": false,
+  "canonical_fmpl_registration_follows_this_commit": true
+}

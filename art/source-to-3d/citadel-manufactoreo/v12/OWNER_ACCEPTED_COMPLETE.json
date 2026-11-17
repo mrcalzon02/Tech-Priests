@@ -1,0 +1,15 @@
+{
+  "machine": "citadel-manufactoreo",
+  "done": true,
+  "owner_accepted_function_and_appearance": true,
+  "owner_instruction": "No more improvement needed. It functions, it works, it looks good. Move on.",
+  "source_sha256": "6be42c95040f44972f1933caf7bd288ec2d48dd959fea9814e1bfaf6bdfeb63e",
+  "runtime_sha256": "227a991cd12f731ceae48181ddd74e8b1f10aea1b2509cebed2da68ef9025579",
+  "native_final_all_operating_gates_passed": true,
+  "native_final_pngs": 315,
+  "new_final_named_autosave_not_written_before_owner_closed_client": true,
+  "reload_basis": "Prior actual V11 operated-save300-tick reload, with unchanged runtime/visual-adapter Lua; final V12 changes are static source/sprites. No further repeat requested or required after explicit owner acceptance.",
+  "no_more_refinement_or_testing": true,
+  "next_machine": "entropic-extractor",
+  "whole_goal_complete": false
+}

@@ -1,10 +1,10 @@
 {
   "schema": "fmpl.model.delivery.v1",
   "id": "tech-priests-citadel-manufactoreo-v1",
-  "asset_status": "editable-reference-bound-candidate",
+  "asset_status": "game-sprites-installed-with-specific-native-checks",
   "source_and_export_complete": true,
-  "operational_complete": false,
-  "owner_visual_approved": false,
+  "operational_complete": true,
+  "owner_visual_approved": true,
   "source": {
     "file": "citadel-v12.blend",
     "sha256": "6be42c95040f44972f1933caf7bd288ec2d48dd959fea9814e1bfaf6bdfeb63e",
@@ -45,17 +45,22 @@
   "working_frames_per_direction": 32,
   "capture_fps": 8,
   "headless_current_final_native_checks_passed": true,
-  "partial_final_client_pngs": 219,
-  "final_client_capture_and_actual_operated_reload_pending": true,
-  "gui_hold": "GUI_CAPTURE_HOLD.json",
-  "prior_production_v11": {
-    "commit": "9f4970321f401c05457912e092968489d6622e8e",
-    "path": "art/source-to-3d/citadel-manufactoreo/v11",
-    "native_full_pngs": 315,
-    "actual_operated_reload_passed": true,
-    "not_final_v12_capture_evidence": true
-  },
-  "production_v12_promoted": false,
-  "machine_done": false,
-  "whole_goal_complete": false
+  "production_v12_promoted": true,
+  "machine_done": true,
+  "whole_goal_complete": false,
+  "owner_operational_acceptance": true,
+  "native_client_pngs": 315,
+  "native_mechanism_motion_frames": 96,
+  "no_more_refinement_or_testing": true,
+  "remaining_required_work": [],
+  "reload_verification": {
+    "actual_operated_save_300tick_reload_passed_on_v11": true,
+    "evidence_commit": "9f4970321f401c05457912e092968489d6622e8e",
+    "evidence_path": "art/source-to-3d/citadel-manufactoreo/v11/native-evidence/operated-reload-receipt.json",
+    "runtime_and_visual_adapter_lua_unchanged": true,
+    "not_repeated_for_static_v12_sprite_fitting": true,
+    "final_named_autosave_not_created_before_owner_closed_client": true,
+    "owner_accepted_function_appearance_and_directed_no_further_testing": true,
+    "not_a_deferred_task": true
+  }
 }

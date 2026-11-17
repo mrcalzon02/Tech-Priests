@@ -1,3 +1,23 @@
+## 2026-11-17 - Citadel COMPLETE; owner accepted, move on
+
+Owner explicitly confirmed function and appearance and directed no further
+improvement/testing. Citadel is complete, not deferred. V12 source/export/full
+contact review and correct FMPL maps pass. Installed final three sprite/icon
+PNGs; gameplay and visual-adapter Lua unchanged.315 real final native PNGs and
+the engine's complete three-recipe/all-operating-gates pass are delivered.
+
+Source:art/source-to-3d/citadel-manufactoreo/v12/DELIVERY_COMPLETE.json.
+Actual prior V11 operated-save300-tick reload is retained as unchanged-runtime
+evidence; a new specifically named V12 final autosave was not created before
+the owner closed the passed client. This is honestly scoped and is not a future
+task. Previous pending/deferred entries are superseded by owner acceptance.
+Do not reopen accepted Citadel for refinement or repeat testing.
+
+Move to Entropic Extractor. Actual source identifies a3x3 platform-only2MW
+burner-generator using processed blackstone-fragment1PJ fuel, not a crafting
+processor. Current native contract/rotation/fuel verification has begun.
+Preserve concurrent Advanced Space Cargo/thruster/emergency-engine work.
+
 ## 2026-11-17 - Citadel V12 source/clearance complete; owner GUI hold
 
 Finished the complete fixed-interface review and fitting repairs. Final
