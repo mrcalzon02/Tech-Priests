@@ -1,0 +1,47 @@
+{
+  "scope": "Exact executed recipe bytes are retained under the binary-preserving art attributes. Production tool files may normalize line endings in Git; LF-normalized hashes prove source equivalence.",
+  "recipes": [
+    {
+      "source": "tools/art/capture_artillery_animation.py",
+      "archive": "art/bunker-artillery/candidate-v19/capture-recipes/capture_artillery_animation.py",
+      "raw_sha256": "91f07c63ae36fa646a8f183769a3c5b765a4b3c5c9caacca7d564bdbb933b76d",
+      "lf_normalized_sha256": "675e32e38c11f7c05042e73657561253ecf6cdeeb08028a2686c9fbe0a64f0fe"
+    },
+    {
+      "source": "tools/art/capture_artillery_shadows.py",
+      "archive": "art/bunker-artillery/candidate-v19/capture-recipes/capture_artillery_shadows.py",
+      "raw_sha256": "a3c9771f3d587824d057ca752fc6d9c2ae215cc8e5a651c27627e250aa25fc19",
+      "lf_normalized_sha256": "9f9d693209bde4e8d1327970162e35d25fd4a891e447a06d62b77cd92b48d152"
+    },
+    {
+      "source": "tools/art/capture_bullet_turrets.py",
+      "archive": "art/bunker-artillery/candidate-v19/capture-recipes/capture_bullet_turrets.py",
+      "raw_sha256": "3642e264b054796f42d4009db793ab7f18131856fc4e6545918da4704e482a74",
+      "lf_normalized_sha256": "3642e264b054796f42d4009db793ab7f18131856fc4e6545918da4704e482a74"
+    },
+    {
+      "source": "tools/art/artillery_render_worker.py",
+      "archive": "art/bunker-artillery/candidate-v19/capture-recipes/artillery_render_worker.py",
+      "raw_sha256": "eef6bc1ec61e160e388c886181f09a71ebc0f67d6fa33d0289443cf942d5c1a9",
+      "lf_normalized_sha256": "eef6bc1ec61e160e388c886181f09a71ebc0f67d6fa33d0289443cf942d5c1a9"
+    },
+    {
+      "source": "tools/art/add_artillery_shell_feeding.py",
+      "archive": "art/bunker-artillery/candidate-v19/capture-recipes/add_artillery_shell_feeding.py",
+      "raw_sha256": "ebed565b71c551f354955c8c4ae41fc631eab81427588019b6ebe89e0583948d",
+      "lf_normalized_sha256": "ebed565b71c551f354955c8c4ae41fc631eab81427588019b6ebe89e0583948d"
+    },
+    {
+      "source": "tools/art/verify_artillery_capture_reuse.py",
+      "archive": "art/bunker-artillery/candidate-v19/capture-recipes/verify_artillery_capture_reuse.py",
+      "raw_sha256": "66c0daf1dfdcf9cf2eb524afaba858ee29c16d4cf2e75e72afb5e0d15e162a95",
+      "lf_normalized_sha256": "18aae27f84948326d2b240b7e95fa7d99c8924045062dce8ab6854f827581eb3"
+    },
+    {
+      "source": "tools/art/check_artillery_motion.py",
+      "archive": "art/bunker-artillery/candidate-v19/capture-recipes/check_artillery_motion.py",
+      "raw_sha256": "7a0972fe99cd472d996c30863c9c643da47ec32aac3d701a811253527f303856",
+      "lf_normalized_sha256": "3de52ded25f6c0bd0b4fceb64bed25a08496a611e8e7ae5b2efbe09c7370421e"
+    }
+  ]
+}

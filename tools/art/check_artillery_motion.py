@@ -10,12 +10,13 @@ from mathutils.bvhtree import BVHTree
 
 source=Path(sys.argv[sys.argv.index('--')+1]).resolve()
 bpy.ops.wm.open_mainfile(filepath=str(source));s=bpy.context.scene
+asset_scale=float(s.get('asset_scale',1))
 drum=bpy.data.objects['THREE_CHAMBER_BREECH'];carriage=bpy.data.objects['DEEP_RECOIL_CARRIAGE']
 rounds=[bpy.data.objects['LOADED_ARTILLERY_SHELL_'+str(i)] for i in range(3)]
 rotating=[o for o in s.objects if o.type=='MESH' and o.name.startswith(('Pressure chamber','Chamber locking ring'))]
-guards=[o for o in s.objects if o.type=='MESH' and o.name.startswith(('Curved rear breech crown','Revolver outer support ring','Revolver support saddle','Rear reload gate ring','Lower inspection guard','Inspection guard curved','Guard mounting band','Guard clamp fastener'))]
+guards=[o for o in s.objects if o.type=='MESH' and o.name.startswith(('Curved rear breech crown','Revolver outer support ring','Revolver support saddle','Rear reload gate ring','Lower inspection guard','Inspection guard curved','Guard mounting band','Guard clamp fastener','Hollow siege barrel','Barrel rear counterbore','Curved breech shoulder armour'))]
 sliding=[o for o in s.objects if o.type=='MESH' and o.name.startswith(('Sliding carriage guide bushing','Ring to recoil-bed structural strut'))]
-supports=[o for o in s.objects if o.type=='MESH' and o.name.startswith(('Longitudinal recoil-bed casting','Bearing pedestal on recoil bed','Load-bearing fork cheek','Inset sloped cheek armour','Elevation trunnion','Trunnion bearing retaining ring','Forward cradle load strut','Rear cradle load strut'))]
+supports=[o for o in s.objects if o.type=='MESH' and o.name.startswith(('Longitudinal recoil-bed casting','Bearing pedestal on recoil bed','Load-bearing fork cheek','Inset sloped cheek armour','Elevation trunnion','Trunnion bearing retaining ring','Forward cradle load strut','Rear cradle load strut','Recuperator bolted cradle','Recuperator cradle clamp'))]
 assert len(rotating)==9 and guards
 
 def tree(obj,deps):
@@ -32,11 +33,18 @@ def descendant(obj,parent):
     return False
 moving_cap=[o for o in s.objects if o.type in ('MESH','CURVE') and descendant(o,carriage)]
 mount=[o for o in s.objects if o.type=='MESH' and o.name.startswith(('Central load-bearing pedestal','Thick pedestal distribution plate','Machined distribution plate edge','Radial pedestal gusset','Bolted full-contact yoke foot','Yoke foot anchor bolt','Visible yoke foot anchor nut','Traverse bearing socket','Exposed azimuth bearing','Traverse bearing retainer','Traverse bearing anchor nut'))]
-collisions=[];slide_collisions=[];gate_collisions=[];mount_collisions=[];floor=100;max_recoil=0;alignment=[];loaded_samples=[];reload_angles=[]
+collisions=[];slide_collisions=[];gate_collisions=[];mount_collisions=[];lock_collisions=[];floor=100;max_recoil=0;alignment=[];loaded_samples=[];reload_angles=[]
+previous_drum_angle=None
 rest=carriage.location.y
 for tick in range(601):
     s.frame_set(tick+1);bpy.context.view_layer.update();deps=bpy.context.evaluated_depsgraph_get()
     fixed=[(o,tree(o,deps)) for o in guards]
+    if previous_drum_angle is not None and abs(drum.rotation_euler.y-previous_drum_angle)>.000001 and 'BREECH_LOCK' in bpy.data.objects:
+        if bpy.data.objects['BREECH_LOCK'].location.y>.705:lock_collisions.append({'tick':tick,'failure':'Breech lock remains engaged during indexing'})
+        lock_tree=tree(bpy.data.objects['Sliding breech locking ring'],deps)
+        for obj in rotating:
+            if tree(obj,deps).overlap(lock_tree):lock_collisions.append({'tick':tick,'failure':'Indexed chamber intersects retracted breech lock'})
+    previous_drum_angle=drum.rotation_euler.y
     for moving in rotating:
         moving_tree=tree(moving,deps)
         for guard,guard_tree in fixed:
@@ -87,12 +95,13 @@ if collisions:failures.append('Rotating chamber intersects protective structure'
 if slide_collisions:failures.append('Sliding carriage intersects stationary support')
 if gate_collisions:failures.append('Reload gate intersects breech or protective structure')
 if mount_collisions:failures.append('Recoiling assembly intersects the pedestal or mounting plate')
+if lock_collisions:failures.append('Breech lock does not clear the indexing drum')
 if floor<1.699:failures.append('Moving cap dips below the fixed bunker socket')
 if abs(max_recoil-.76)>.0001:failures.append('Deep recoil travel differs from source contract')
 if any(max(a['x_error'],a['height_error'],a['recoil_error'])>.0001 for a in alignment):failures.append('Next shell does not align with the bore in battery')
 if any(abs(a['firing_angle_degrees']-35)>.0001 for a in alignment):failures.append('Artillery does not fire at 35 degrees')
 if any(a>.0001 for a in reload_angles):failures.append('Artillery does not lower level for reload')
-if [x['loaded'] for x in loaded_samples]!=[3,2,2,1,1,0,0,3,3]:failures.append('Visible round state differs from three-shot demonstration')
+if [x['loaded'] for x in loaded_samples]!=[3,2,2,1,1,0,3,3,3]:failures.append('Visible round state differs from three-shot demonstration')
 pivot=bpy.data.objects['ELEVATION_CRADLE'].matrix_world.translation
 if math.hypot(pivot.x,pivot.y)>.0001:failures.append('Trunnion is not centered over the mounting plate')
 feet=[o for o in s.objects if o.name.startswith('Bolted full-contact yoke foot')]
@@ -101,13 +110,14 @@ for foot in feet:
     corners=[foot.matrix_world@Vector(p) for p in foot.bound_box]
     radius=max(math.hypot(p.x,p.y) for p in corners);height=min(p.z for p in corners)
     foot_contact.append({'name':foot.name,'maximum_corner_radius':radius,'bottom_height':height})
-    if radius>1.50 or abs(height-2.36)>.015:failures.append('Yoke foot does not fully seat on the distribution plate')
+    if radius>1.50*asset_scale or abs(height-(1.70+(2.36-1.70)*asset_scale))>.015*asset_scale:failures.append('Yoke foot does not fully seat on the distribution plate')
 if len(feet)!=2:failures.append('Two full-contact yoke feet required')
 report={'status':'FAIL' if failures else 'PASS_SOURCE_INTERFACES','source_sha256':hashlib.sha256(source.read_bytes()).hexdigest(),
  'frames_checked':601,'tested_rotating_meshes':len(rotating),'tested_guard_meshes':len(guards),
- 'failures':failures,'collision_examples':collisions,'slide_collision_examples':slide_collisions,'gate_collision_examples':gate_collisions,'mount_collision_examples':mount_collisions,'minimum_height':floor,'maximum_recoil':max_recoil,
+ 'failures':failures,'collision_examples':collisions,'slide_collision_examples':slide_collisions,'gate_collision_examples':gate_collisions,'mount_collision_examples':mount_collisions,'minimum_height':floor,'maximum_recoil':max_recoil*asset_scale,'local_recoil':max_recoil,'asset_scale':asset_scale,
  'trunnion_xy':[pivot.x,pivot.y],'foot_contacts':foot_contact,'tested_moving_cap_meshes':len(moving_cap),'tested_mount_meshes':len(mount),
  'redundant_cage_crossbars':obsolete_bars,
+ 'breech_lock_collisions':lock_collisions,
  'hardware_attachments':attachment_checks,
  'bore_alignment':alignment,'visible_round_samples':loaded_samples,'reload_angles_degrees':reload_angles,
  'scope':'Full-frame chamber/guard, reload-gate, sliding-bushing/support and recoiling-assembly/mount intersections; centered trunnion, full-foot contact, elevated bore alignment, level reload, floor and recoil. Not continuous collision proof, exported-model validity or native gameplay acceptance'}

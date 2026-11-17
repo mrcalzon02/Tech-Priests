@@ -20,6 +20,7 @@ require("prototypes.bunker_family").register("tech-priests")
 require("prototypes.bunker_bullet_weapons").register("tech-priests")
 require("prototypes.bunker_twin_cannon").register("tech-priests")
 require("prototypes.bunker_rocket_salvo").register("tech-priests")
+require("prototypes.bunker_artillery").register("tech-priests")
 
 if mods["space-age"] then
   require("prototypes.compatibility.space-age")

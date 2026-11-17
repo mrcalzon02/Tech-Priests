@@ -1,0 +1,52 @@
+{
+  "status": "DELIVERED_PROTOTYPE_VERIFIED",
+  "base_included": false,
+  "socket": [
+    0,
+    0,
+    1.7
+  ],
+  "mechanism": "Single siege barrel with three-chamber revolving breech and entire breech/barrel recoil carriage",
+  "owner_agreed": "Three-shell rolling barrage, then long reload",
+  "provisional_shot_ticks": [
+    0,
+    90,
+    180
+  ],
+  "cycle_ticks": 600,
+  "last_shot_to_next": 420,
+  "vanilla_artillery_cooldown": 200,
+  "balance_plan": "Native shell damage, range and one shell consumed per shot; same 3 shells / 600 ticks sustained output as vanilla. Research scales the full cycle.",
+  "firing_elevation_degrees": 35,
+  "reload_elevation_degrees": 0,
+  "mechanical_direction_owner_accepted": true,
+  "mount_load_path": "Yoke feet -> full distribution plate -> radial gussets -> central pedestal -> 16-bolt traverse flange",
+  "centered_trunnion_over_plate": true,
+  "asset_scale": 0.65,
+  "fixed_bunker_interface_preserved": true,
+  "relative_barrel_diameter_increase": 1.5813953488372094,
+  "relative_shell_diameter_increase": 1.4963503649635035,
+  "relative_recuperator_diameter_increase": 2.2857142857142856,
+  "runtime_implemented": true,
+  "visual_approval": false,
+  "collision_acceptance": "PASS_SOURCE_INTERFACES_601_POSES",
+  "native_sha256": "6bfc8337a2b8dc61acc526943861dde64759a2127b870c274338f0d190be37cb",
+  "source_basis_sha256": "ff95190166ff5121d0f6a22fba403bf972ef3bd5fabc0fccce714912a89aea51",
+  "shell_feed_ticks": [
+    [
+      450,
+      465
+    ],
+    [
+      465,
+      480
+    ],
+    [
+      480,
+      495
+    ]
+  ],
+  "scope": "Exact inspected structural master; adds rearward shell emergence and sliding insertion after the drum returns home.",
+  "runtime_review": "../../../docs/prototypes/artillery-production-acceptance/review.json",
+  "owner_visual_approval_claimed": false
+}

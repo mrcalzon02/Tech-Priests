@@ -1,10 +1,13 @@
 {
   "name": "tech-priests",
-  "version": "0.1.682",
+  "version": "0.1.683",
   "title": "Tech Priests",
   "author": "christopher vardeman",
   "factorio_version": "2.1",
-  "migrates_from": ["tp-mh7-pellet-decay", "tp-hydrogen-production"],
+  "migrates_from": [
+    "tp-mh7-pellet-decay",
+    "tp-hydrogen-production"
+  ],
   "dependencies": [
     "base >= 2.1.18",
     "? mechanicist-factorio",

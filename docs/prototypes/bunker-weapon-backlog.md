@@ -1,24 +1,18 @@
-# Bunker weapon family checklist
+# Bunker weapon family — final scope
 
-Owner's remaining list, updated 2026-11-14. These are separate weapon families;
-the list does not imply that their models, mechanics or ammunition are built.
+Owner instruction, 2026-11-15: artillery is the last weapon. Finish its animation,
+effects, Tech Priests registration, in-game checks and GitHub delivery, then stop.
+Radium, grav, plasma and flamer development is canceled; do not resume those items.
 
-- [x] Autocannon prototype
-- [x] Six-station grenade lobber prototype
-- [x] Energy dish prototype
-- [x] Chicago piano prototype
-- [x] Twin minigun prototype
-- [x] Twin siege cannon - full main-mod runtime, graphics and save/reload verified
-- [ ] Rocket turret
-- [ ] Artillery turret
-- [ ] Radium turret
-- [ ] Grav turret
-- [ ] Plasma turret
-- [ ] Flamer turrets
+- [x] Autocannon
+- [x] Six-station grenade lobber
+- [x] Energy dish
+- [x] Chicago piano
+- [x] Twin minigun
+- [x] Twin siege cannon
+- [x] Six-cell rocket salvo — native combat and animated bunker integration published
+- [x] Revolving-breech artillery — complete animation, native effects and full-main acceptance (0.1.683)
 
-Rocket is the missile weapon family discussed earlier, not an additional
-duplicate missile-turret entry. The six remaining families need their own
-mechanical silhouette, ammunition or energy choice, firing rhythm and gameplay
-role. Carry forward the shared fixed bunker, force-coloured corner stanchions,
-independently traversing weapon, proper native preview and direction-aware
-effects. Design decisions for those families remain open.
+Carry forward the fixed bunker, force-coloured corner stanchions, independent
+weapon traverse and direction-aware native effects. The artillery uses existing
+native artillery shells without increasing their damage or sustained throughput.

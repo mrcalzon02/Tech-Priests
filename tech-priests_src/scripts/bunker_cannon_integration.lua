@@ -1,12 +1,13 @@
--- Shared event ownership for the six-weapon prototype. Combat remains native.
+-- Shared event ownership for the bunker weapons. Combat remains native.
 local M={}
 local family=require('scripts.bunker_family_visuals')
 local bullet=require('scripts.bullet_turret_controller')
 local cannon=require('scripts.twin_cannon_controller')
 local rocket=require('scripts.rocket_salvo_controller')
-function M.init()family.init();cannon.init();rocket.init()end
-function M.tick(e)family.tick(e);cannon.tick(e);rocket.tick(e)end
-local function add(entity)family.add(entity);cannon.add(entity);rocket.add(entity)end
+local artillery=require('scripts.artillery_barrage_controller')
+function M.init()family.init();cannon.init();rocket.init();artillery.init()end
+function M.tick(e)family.tick(e);cannon.tick(e);rocket.tick(e);artillery.tick(e)end
+local function add(entity)family.add(entity);cannon.add(entity);rocket.add(entity);artillery.add(entity)end
 function M.install_main(registry)
   assert(registry and registry.on_event and registry.on_init,'Canonical runtime event registry required')
   local owner='bunker_weapons'
@@ -22,6 +23,11 @@ function M.install_main(registry)
   registry.on_configuration_changed(M.init,{owner=owner,route='configuration',category='combat',priority=200})
   event(defines.events.on_tick,M.tick,'weapon-motion')
   event(defines.events.on_entity_damaged,bullet.hit,'bullet-shot-observer')
+  event(defines.events.on_trigger_fired_artillery,artillery.fired,'artillery-native-shot')
+  event(defines.events.on_gui_opened,artillery.gui_opened,'artillery-live-preview')
+  event(defines.events.on_gui_closed,artillery.gui_closed,'artillery-preview-closed')
+  event(defines.events.on_gui_click,artillery.gui_click,'artillery-window-click')
+  event(defines.events.on_gui_checked_state_changed,artillery.gui_checked,'artillery-auto-targeting')
   event(defines.events.on_script_trigger_effect,function(e)family.shot(e);cannon.effect(e);rocket.effect(e)end,'native-shot-effects')
   event(defines.events.on_trigger_created_entity,function(e)
     if not cannon.muzzle_created(e) and not rocket.muzzle_created(e) then bullet.muzzle_created(e) end
@@ -38,6 +44,11 @@ function M.install_main(registry)
 end
 function M.install()
   family.install()
+  script.on_event(defines.events.on_trigger_fired_artillery,artillery.fired)
+  script.on_event(defines.events.on_gui_opened,artillery.gui_opened)
+  script.on_event(defines.events.on_gui_closed,artillery.gui_closed)
+  script.on_event(defines.events.on_gui_click,artillery.gui_click)
+  script.on_event(defines.events.on_gui_checked_state_changed,artillery.gui_checked)
   script.on_init(M.init)
   script.on_configuration_changed(M.init)
   script.on_event(defines.events.on_tick,M.tick)

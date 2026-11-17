@@ -1,0 +1,47 @@
+{
+  "status": "READY_FOR_FINAL_REVIEW",
+  "phases": [
+    {
+      "phase": "pack",
+      "status": "PASS"
+    },
+    {
+      "phase": "stage",
+      "status": "PASS"
+    },
+    {
+      "phase": "main-physics",
+      "status": "PASS"
+    },
+    {
+      "phase": "main-save",
+      "status": "PASS"
+    },
+    {
+      "phase": "main-reload",
+      "status": "PASS"
+    },
+    {
+      "phase": "main-graphics",
+      "status": "PASS"
+    },
+    {
+      "phase": "cannon-family-regression",
+      "status": "PASS"
+    },
+    {
+      "phase": "rocket-regression",
+      "status": "PASS"
+    }
+  ],
+  "phase": "review",
+  "version": "0.1.683",
+  "source_sha256": "6bfc8337a2b8dc61acc526943861dde64759a2127b870c274338f0d190be37cb",
+  "base_commit": "baab06377a60b2f430887f9c5a5af48a69a78fde",
+  "scoped_shared_files": {
+    "control.lua": "6354bf3aac8e83debf010571d5d8aac840503eaba818b64b6962bfc68c6cf789",
+    "data.lua": "ff12bc2962407dcac1cc6dc455e76cbbb13469b5d283786467d3a161af33299e",
+    "data-final-fixes.lua": "83582a9c829e621788b57fa7b32efd9641e4fd91b2c1d985aa815acf31efdc77",
+    "info.json": "3dbe981243035f643061374fcf789c0217751b0cf83106b4dbf49f2b8aceae40"
+  }
+}

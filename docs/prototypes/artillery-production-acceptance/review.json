@@ -1,0 +1,99 @@
+{
+  "status": "PASS_DELIVERED_PROTOTYPE_REVIEW",
+  "reviewer": "Codex",
+  "owner_visual_approval_claimed": false,
+  "base_commit": "baab06377a60b2f430887f9c5a5af48a69a78fde",
+  "version": "0.1.683",
+  "source_sha256": "6bfc8337a2b8dc61acc526943861dde64759a2127b870c274338f0d190be37cb",
+  "glb_sha256": "a05fc95d3cdbc8f99012acefceca486ccb7523dc6063f3c3100e7b9b055bbb85",
+  "asset_manifest_sha256": "58e89dbd7e36ed3823b3d5a77dc9b6125ecffc95d8eba9a5b24edf6a511f9f5a",
+  "criteria": [
+    {
+      "criterion": "Construction and support",
+      "score": 8.5,
+      "reason": "Centered pedestal, full-contact feet, heavy recuperators and attached cage/gate hardware; 601 source poses pass the named clearance checks."
+    },
+    {
+      "criterion": "Surface and silhouette",
+      "score": 8.5,
+      "reason": "Larger bore and shells read against the compact cap; oxide armour, dark forged support, steel tube and brass rounds remain distinct at game scale."
+    },
+    {
+      "criterion": "Mechanism and ammunition",
+      "score": 9,
+      "reason": "Actual native launches drive recoil and indexing. Lowering, gate opening, three visible sliding rounds, closure and re-elevation are visible in the recorded game."
+    },
+    {
+      "criterion": "Directional integration",
+      "score": 9,
+      "reason": "20 native sites include cardinal and diagonal launch checks. All 64 body headings and shadows are packed; all 64 runtime heading selections pass. No static cap covers the cage."
+    },
+    {
+      "criterion": "Team and inventory readability",
+      "score": 9,
+      "reason": "Orange and blue corner stanchions visibly identify forces. The complete live model appears beside real inventory widgets and the auto-targeting control."
+    }
+  ],
+  "minimum_score": 8,
+  "average_score": 8.8,
+  "runtime_sources": {
+    "prototypes/bunker_artillery.lua": {
+      "lf_normalized_sha256": "080a74d260ac0499e8d0460e406063c36171f3e6a91802af9c7aea76cc317daa"
+    },
+    "scripts/artillery_barrage_controller.lua": {
+      "lf_normalized_sha256": "bf3167147c38a1d55b92a2ed0b65ce7dfff359efafb9643c4a8c153b0acaef9d"
+    },
+    "scripts/bunker_cannon_integration.lua": {
+      "lf_normalized_sha256": "04a4be66a31bdcab2160178995072ec3edb0d51319ce0bd4e552c2cc6dc766ae"
+    }
+  },
+  "scope": "Full main-mod native combat, damage, ammunition, research, recipe, manual targeting, partial resupply, target loss, external disable, destruction/rebuild, save/resume, GUI and force-colour evidence. Source clearance covers 601 sampled poses, not arbitrary continuous retiming.",
+  "native_static_cap_overlay_removed": true,
+  "native_projectiles_and_damage": true,
+  "native_muzzle_mapping": "64 already-projected LUT entries; no duplicate 1.0 endpoint or second projection.",
+  "cadence": {
+    "base_gaps": [
+      90,
+      90,
+      420
+    ],
+    "double_speed_gaps": [
+      45,
+      45,
+      210
+    ],
+    "stock_sustained_shells_per_600_ticks": 3
+  },
+  "counts": {
+    "artillery_sites": 20,
+    "artillery_heading_selections": 64,
+    "cannon_sites": 32,
+    "legacy_sites": 5,
+    "cannon_headings": 64,
+    "rocket_sites": 23
+  },
+  "scoped_shared_files": {
+    "control.lua": "6354bf3aac8e83debf010571d5d8aac840503eaba818b64b6962bfc68c6cf789",
+    "data.lua": "ff12bc2962407dcac1cc6dc455e76cbbb13469b5d283786467d3a161af33299e",
+    "data-final-fixes.lua": "83582a9c829e621788b57fa7b32efd9641e4fd91b2c1d985aa815acf31efdc77",
+    "info.json": "3dbe981243035f643061374fcf789c0217751b0cf83106b4dbf49f2b8aceae40"
+  },
+  "files": {
+    ".gitattributes": "f06202a408fef9b9ea69bb6b1cb8160dbb0378c5bb67a444d510d231813824c8",
+    "cannon-regression.json": "2dcac7d04cfb3b2a1e59b128edf1c888a92e3ee174494d63241668dee66c77f0",
+    "direction-1-reload-3.png": "02806eaddf4f929653682ef4f928da7c8fe71c070283fe0dc5d5fedd761d1e71",
+    "direction-2-reload-3.png": "69ffe1a308e6a56340de69703637c23e8cf528c5dbe170fdaa05e77c333c2e5c",
+    "direction-3-reload-3.png": "827d9e3c85664999f6e1212e4a22eb6c8988faa86a9db0316619066bb7619d07",
+    "direction-4-reload-3.png": "1630df2768f9237d8db0fff22a35a8c26aba41fbc425e975cb6c67ac054e23ca",
+    "first-native-launch.png": "017aa2857d27d94e62e78419b9c48bdc8db7d4c40ba8cafa53ae18a1457179c1",
+    "fresh.json": "a00c4d06bb0e700650e7d84f3b05f9914c3a9c050d699039ab09b07f63dca1ee",
+    "graphical.json": "89e34229888b9d0ba56b71988334983cfae9ea42fba1f597758f3d5d101c0690",
+    "native-direction-review.png": "819843c3d39b42740b4db09c72f494754dac423d092dbea21124183002a7a0de",
+    "pipeline.json": "419b2c8ba3b61a0d189e3dcea71fc16469d3106df64d4ecc079acf962fd92b8e",
+    "reload-in-game.gif": "733808737a961ad53084925cdcc24ea8e5ff2949f3d339c2a6e9f6cb6fc3fabe",
+    "reload-preview.png": "30c623317d1cbb2443b9886defda149d0d0fddddcbcec91793f49088b90df3e9",
+    "rocket-regression.json": "ef725735d899020d85ccd23ebfda0f5adfac6f37ad692c390774452bcf3cff97",
+    "save-reload.json": "9d9b3fcfd889bdbee2d814af5911e39c8983d6ff2dd63da8d85ace85a3dfeda3",
+    "team-corners.png": "4d1f9681251b3281b12f4b0cc4e0a673cd5aad26254efdd6a5be266e231e739d"
+  }
+}

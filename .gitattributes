@@ -12,3 +12,14 @@ tech-priests_src/scripts/rocket_salvo_geometry.lua -text whitespace=cr-at-eol
 tech-priests_src/scripts/rocket_salvo_geometry.json -text whitespace=cr-at-eol
 tools/art/*artillery*.py text eol=lf
 tools/make_artillery*.py text eol=lf
+
+# Artillery capture and generated metadata retain their verified writer bytes.
+tools/pack_artillery*.py text eol=lf
+tools/run_artillery*.py text eol=lf
+tests/scenarios/artillery-*/*.lua text eol=lf
+tech-priests_src/prototypes/bunker_artillery.lua text eol=lf
+tech-priests_src/scripts/artillery_barrage_controller.lua text eol=lf
+tech-priests_src/scripts/artillery_barrage_geometry.* -text whitespace=cr-at-eol
+tech-priests_src/scripts/artillery_barrage_visuals.lua -text whitespace=cr-at-eol
+tech-priests_src/graphics/entity/bunker-artillery/* -text whitespace=cr-at-eol
+tools/render_artillery*.py text eol=lf

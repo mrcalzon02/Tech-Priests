@@ -1,3 +1,19 @@
+# Artillery completion - 2026-11-16
+
+The final weapon is complete in Tech Priests 0.1.683: 64 directional body and
+shadow captures, visible three-round loading, native barrage effects, complete
+live inventory view, save/resume and full-main graphical acceptance. Source and
+acceptance evidence are checkpointed together. No further weapons are planned.
+The following entries describe earlier work and superseded continuation plans.
+
+# Final scope — 2026-11-15
+
+The owner has ended the weapon list at artillery. Complete the artillery's
+animation, native firing effects, Tech Priests integration, acceptance checks
+and GitHub publication, then close this development goal. Do not start radium,
+grav, plasma, flamer or another weapon. The earlier continuation below is history.
+Rocket development was completed and published in 57dc08bc.
+
 # Turret continuation â€” 2026-11-15
 
 Reconciled the detached model-production checkout from ab19aeb7 to GitHub main

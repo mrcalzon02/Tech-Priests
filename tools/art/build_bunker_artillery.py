@@ -30,6 +30,7 @@ for j in range(16):
         (math.cos(a)*.99,math.sin(a)*.99,1.98),.026)
     pin('Traverse bearing anchor nut',(math.cos(a)*.99,math.sin(a)*.99,1.96),
         (math.cos(a)*.99,math.sin(a)*.99,2.02),.032)
+interface_parts=set(created)
 # An actual pedestal transfers the yoke loads into the full bolt circle.
 cylinder('Central load-bearing pedestal',(0,0,1.94),(0,0,2.22),.83,'dark')
 cylinder('Thick pedestal distribution plate',(0,0,2.20),(0,0,2.36),1.50,'dark')
@@ -48,12 +49,12 @@ foundation_parts=set(created)
 assembly=empty('CENTERED_ARTILLERY_MOUNT',(0,0,0))
 for x in (-1.10,1.10):
     cheek=profile_body('Load-bearing fork cheek',x,.19,
-        [(1.15,2.48),(2.55,2.48),(2.65,3.25),(2.08,4.74),(1.60,4.74),(1.05,3.60)],'dark')
+        [(1.15,2.48),(2.55,2.48),(2.65,3.25),(2.08,4.74),(1.65,4.74),(1.05,3.60)],'dark')
     armour=profile_body('Inset sloped cheek armour',x+(.112 if x>0 else -.112),.045,
         [(1.20,2.58),(2.43,2.58),(2.45,2.75),(1.98,4.55),(1.65,4.55),(1.15,3.08)],'red')
     # A real clearance aperture through both plates carries the recoil link
     # under the elevated trunnion; painted-on slots would still collide.
-    for casting in (cheek,armour):cut_port(casting,(x,2.20,3.70),(.70,.95,.88))
+    for casting in (cheek,armour):cut_port(casting,(x,2.20,3.73),(.70,.95,.94))
     for y,z in ((1.35,2.75),(2.40,2.75),(1.80,4.38)):
         pin('Cheek armour through-fastener',(x-.15,y,z),(x+.15,y,z),.041)
     cylinder('Elevation trunnion',(x-.16,1.85,4.55),(x+.16,1.85,4.55),.23,'steel')
@@ -66,39 +67,55 @@ box('Rear fork transverse tie',(0,2.45,2.62),(2.05,.19,.20),'steel',bevel=.024)
 
 elevation=empty('ELEVATION_CRADLE',(0,1.85,3.40))
 carriage=empty('DEEP_RECOIL_CARRIAGE',(0,0,3.40),elevation)
+guide_bushings={}
 for x in (-1.45,1.45):
-    profile_body('Longitudinal recoil-bed casting',x,.15,
+    profile_body('Longitudinal recoil-bed casting',x,.32,
         [(-1.12,2.92),(3.70,2.92),(3.70,3.13),(-1.12,3.13)],'dark',elevation)
-    cylinder('Polished recoil slide',(x,-1.11,3.25),(x,3.70,3.25),.053,'steel',elevation)
+    cylinder('Polished recoil slide',(x,-1.11,3.32),(x,3.70,3.32),.085,'steel',elevation)
     for y in (-1.03,3.56):
-        box('Bearing pedestal on recoil bed',(x,y,3.15),(.25,.18,.21),'red',elevation,.015)
+        box('Bearing pedestal on recoil bed',(x,y,3.20),(.36,.18,.29),'red',elevation,.015)
+    side=1 if x>0 else -1;guide_bushings[side]=[]
     for y in (.80,2.31):
-        tube('Sliding carriage guide bushing',(x,y-.12,3.25),(x,y+.12,3.25),.087,.025,'brass',carriage)
-    tube('Hydropneumatic recuperator',(x,-.93,3.55),(x,1.28,3.55),.105,.040,'dark',elevation)
-    cylinder('Recuperator return rod',(x,.20,3.55),(x,2.43,3.55),.047,'steel',carriage)
-    box('Recuperator clevis lug',(x,2.44,3.43),(.20,.16,.30),'red',carriage,.018)
-    pin('Recuperator clevis pin',(x-.14,2.44,3.55),(x+.14,2.44,3.55),.056,carriage)
+        guide_bushings[side].append(tube('Sliding carriage guide bushing',(x,y-.12,3.32),(x,y+.12,3.32),.13,.035,'brass',carriage))
+    housing=tube('Heavy hydropneumatic recuperator',(x,-.93,3.82),(x,1.95,3.82),.24,.070,'dark',elevation)
+    cylinder('Recuperator pressure end cap',(x,-.98,3.82),(x,-.93,3.82),.24,'red',elevation)
+    tube('Recuperator rear gland',(x,1.87,3.82),(x,2.04,3.82),.25,.140,'brass',elevation)
+    cylinder('Recuperator return rod',(x,.20,3.82),(x,2.43,3.82),.105,'steel',carriage)
+    box('Recuperator clevis lug',(x,2.44,3.72),(.42,.30,.50),'red',carriage,.025)
+    pin('Recuperator clevis pin',(x-.25,2.44,3.82),(x+.25,2.44,3.82),.090,carriage)
+    for y in (-.80,1.85):
+        saddle=profile_body('Recuperator bolted cradle',x,.28,
+            [(y-.13,3.10),(y+.13,3.10),(y+.13,3.60),(y-.13,3.60)],'dark',elevation)
+        bpy.ops.mesh.primitive_cylinder_add(vertices=32,radius=.096,depth=.55,location=(x,y,3.32),rotation=(math.pi/2,0,0))
+        cutter=bpy.context.object;mod=saddle.modifiers.new('Recoil guide clearance through cradle','BOOLEAN');mod.object=cutter;mod.operation='DIFFERENCE'
+        bpy.context.view_layer.objects.active=saddle;bpy.ops.object.modifier_apply(modifier=mod.name);bpy.data.objects.remove(cutter,do_unlink=True)
+        clamp=tube('Recuperator cradle clamp',(x,y-.06,3.82),(x,y+.06,3.82),.29,.055,'steel',elevation)
+        clamp['attachment_targets']=json.dumps([saddle.name,housing.name])
+        for dx in (-.095,.095):pin('Recuperator cradle anchor',(x+dx,y,3.06),(x+dx,y,3.21),.029,elevation)
     side=1 if x>0 else -1
     for name,y in (('Forward cradle load strut',-1.03),('Rear cradle load strut',3.56)):
         cylinder(name,(side*1.10,1.85,3.40),(side*1.10,y,3.04),.075,'dark',elevation)
         cylinder(name+' bed connection',(side*1.10,y,3.04),(x,y,3.04),.075,'dark',elevation)
 
 # Bored single gun tube, stepped forged breech and a vented muzzle brake.
-tube('Hollow siege barrel',(0,-3.37,3.40),(0,.84,3.40),.215,.065,'steel',carriage)
-tube('Forged barrel jacket',(0,-1.40,3.40),(0,.69,3.40),.335,.10,'dark',carriage)
+tube('Hollow siege barrel',(0,-3.37,3.40),(0,.65,3.40),.34,.100,'steel',carriage)
+tube('Barrel rear counterbore',(0,.65,3.40),(0,.80,3.40),.34,.020,'steel',carriage)
+lock=empty('BREECH_LOCK',(0,.80,3.40),carriage)
+tube('Sliding breech locking ring',(0,.78,3.40),(0,.85,3.40),.31,.070,'brass',lock)
+tube('Forged barrel jacket',(0,-1.40,3.40),(0,.69,3.40),.45,.11,'dark',carriage)
 for y in (-1.41,-.94,.55):
-    tube('Jacket retaining collar',(0,y-.06,3.40),(0,y+.06,3.40),.365,.085,'steel',carriage)
+    tube('Jacket retaining collar',(0,y-.06,3.40),(0,y+.06,3.40),.48,.12,'steel',carriage)
 for side in (-1,1):
-    profile_body('Curved breech shoulder armour',side*.31,.12,
-        [(-.86,3.30),(.91,3.30),(1.03,3.50),(.62,3.79),(-.54,3.75),(-.93,3.56)],'red',carriage)
+    profile_body('Curved breech shoulder armour',side*.44,.14,
+        [(-.86,3.30),(.70,3.30),(.74,3.50),(.55,3.90),(-.54,3.85),(-.93,3.56)],'red',carriage)
     for y in (-.65,.56):
-        pin('Shoulder armour fastener',(side*.35,y,3.58),(side*.40,y,3.58),.035,carriage)
-tube('Bored muzzle-brake rear band',(0,-3.35,3.40),(0,-3.18,3.40),.295,.145,'dark',carriage)
-tube('Bored muzzle-brake front band',(0,-3.91,3.40),(0,-3.80,3.40),.295,.145,'steel',carriage)
+        pin('Shoulder armour fastener',(side*.48,y,3.58),(side*.53,y,3.58),.035,carriage)
+tube('Bored muzzle-brake rear band',(0,-3.35,3.40),(0,-3.18,3.40),.43,.190,'dark',carriage)
+tube('Bored muzzle-brake front band',(0,-3.91,3.40),(0,-3.80,3.40),.43,.190,'steel',carriage)
 # Four real open exhaust windows, rather than a solid perforation texture.
 for j in range(4):
     a=j*math.pi/2+.17
-    arc_shell('Muzzle brake bridge',0,-3.80,-3.35,3.40,.295,.055,a,a+.42,'dark',carriage)
+    arc_shell('Muzzle brake bridge',0,-3.80,-3.35,3.40,.43,.075,a,a+.42,'dark',carriage)
 muzzle=empty('MUZZLE_ARTILLERY',(0,-3.93,3.40),carriage)
 bore=empty('BREECH_BORE',(0,.84,3.40),carriage)
 
@@ -108,24 +125,27 @@ drum=empty('THREE_CHAMBER_BREECH',(0,1.50,2.80),carriage)
 rounds=[]
 for cell in range(3):
     a=math.pi/2+cell*math.tau/3;x=.60*math.cos(a);z=2.80+.60*math.sin(a)
-    tube('Pressure chamber %d'%cell,(x,.86,z),(x,2.17,z),.209,.055,'dark',drum)
+    tube('Pressure chamber %d'%cell,(x,.86,z),(x,2.17,z),.27,.045,'dark',drum)
     for y in (.87,2.10):
-        tube('Chamber locking ring %d'%cell,(x,y-.045,z),(x,y+.045,z),.230,.065,'steel',drum)
+        tube('Chamber locking ring %d'%cell,(x,y-.045,z),(x,y+.045,z),.29,.065,'steel',drum)
     shell=empty('LOADED_ARTILLERY_SHELL_%d'%cell,(x,1.55,z),drum);rounds.append(shell)
-    cylinder('Brass case %d'%cell,(x,1.25,z),(x,2.12,z),.137,'brass',shell)
-    tube('Case extraction rim %d'%cell,(x,2.08,z),(x,2.15,z),.151,.030,'steel',shell)
-    bpy.ops.mesh.primitive_cone_add(vertices=24,radius1=.137,radius2=.018,depth=.30,location=(x,1.10,z))
+    cylinder('Brass case %d'%cell,(x,1.20,z),(x,2.27,z),.205,'brass',shell)
+    tube('Case extraction rim %d'%cell,(x,2.24,z),(x,2.29,z),.220,.030,'steel',shell)
+    bpy.ops.mesh.primitive_cone_add(vertices=24,radius1=.205,radius2=.018,depth=.42,location=(x,1.10,z))
     ob=bpy.context.object;ob.rotation_euler.x=math.pi/2;finish(ob,'Protected shell ogive %d'%cell,'red',shell)
     for y in (1.00,2.04):
         cylinder('Drum radial load web %d'%cell,(0,y,2.80),(x,y,z),.072,'steel',drum)
 cylinder('Revolving breech central axle',(0,.78,2.80),(0,2.37,2.80),.135,'steel',carriage)
 support_rings=[]
-for y in (.80,2.31):
-    support_rings.append(tube('Revolver outer support ring',(0,y-.045,2.80),(0,y+.045,2.80),.94,.06,'dark',carriage))
+for bank,y in enumerate((.80,2.31)):
+    support_rings.append(tube('Revolver outer support ring',(0,y-.045,2.80),(0,y+.045,2.80),.99,.06,'dark',carriage))
     for side in (-1,1):
-        cylinder('Ring to recoil-bed structural strut',(side*.90,y,2.85),(side*1.32,y,2.85),.045,'dark',carriage)
-        cylinder('Ring to recoil-bed structural strut upright',(side*1.32,y,2.85),(side*1.32,y,3.25),.045,'dark',carriage)
-        cylinder('Ring to recoil-bed structural strut upper lug',(side*1.32,y,3.25),(side*1.37,y,3.32),.045,'dark',carriage)
+        lower=cylinder('Ring to recoil-bed structural strut',(side*.96,y,2.85),(side*1.75,y,2.85),.060,'dark',carriage)
+        upright=cylinder('Ring to recoil-bed structural strut upright',(side*1.75,y,2.85),(side*1.75,y,3.32),.060,'dark',carriage)
+        upper=cylinder('Ring to recoil-bed structural strut upper bridge',(side*1.75,y,3.32),(side*1.55,y,3.32),.060,'dark',carriage)
+        lower['attachment_targets']=json.dumps([support_rings[-1].name])
+        upright['attachment_targets']=json.dumps([lower.name,upper.name])
+        upper['attachment_targets']=json.dumps([guide_bushings[side][bank].name])
 # Protective crown and mesh inspection guards clear the entire drum sweep.
 arc_shell('Curved rear breech crown',0,.85,2.27,2.80,.99,.055,.12,math.pi-.12,'red',carriage)
 guard_wires=[]
@@ -164,7 +184,7 @@ for x in (-.56,.56):
     hinge_bore(lug,x,.050);lug['attachment_targets']=json.dumps([gate_ring.name,knuckle.name])
     knuckle['attachment_targets']=json.dumps([lug.name])
     for side in (-1,1):
-        px=x+side*.12;az=2.80-math.sqrt(.91**2-px**2)
+        px=x+side*.12;az=2.80-math.sqrt(.96**2-px**2)
         clevis=profile_body('Fixed gate hinge clevis',px,.04,
             [(2.28,az-.05),(2.28,az+.05),(2.34,az+.05),(2.34,1.94),(2.44,1.90),(2.44,1.80),(2.28,1.80)],'steel',carriage)
         hinge_bore(clevis,px,.037);clevis['attachment_targets']=json.dumps([support_rings[1].name])
@@ -190,6 +210,7 @@ for obj in list(S.objects):
 assembly.location.y-=1.85
 elevation.location.z+=1.15
 rest=carriage.location.copy()
+shell_rest=[shell.location.copy()for shell in rounds]
 for tick in range(601):
     S.frame_set(tick+1)
     down=max(0,min(1,(tick-250)/50));up=max(0,min(1,(tick-550)/50))
@@ -210,16 +231,35 @@ for tick in range(601):
         u=max(0,min(1,(tick-360)/80));indexes+=u*u*(3-2*u)
     drum.rotation_euler.y=indexes*math.tau/3;drum.keyframe_insert('rotation_euler')
     for cell,shell in enumerate(rounds):
-        loaded=tick<=cell*90 or tick>=500
+        feed_start=450+cell*15
+        loaded=tick<=cell*90 or tick>=feed_start
+        feed=max(0,min(1,(tick-feed_start)/15));feed=feed*feed*(3-2*feed)
+        shell.location=shell_rest[cell]+Vector((0,2.70*(1-feed)if tick>=feed_start else 0,0))
+        shell.keyframe_insert('location')
         shell.scale=(1,1,1) if loaded else (0,0,0);shell.keyframe_insert('scale')
+    aperture=0
+    for shot in (0,90):
+        a=max(0,min(1,(tick-shot-58)/5));b=max(0,min(1,(tick-shot-83)/5))
+        aperture=max(aperture,a*a*(3-2*a)-b*b*(3-2*b))
+    a=max(0,min(1,(tick-250)/20));b=max(0,min(1,(tick-500)/20))
+    aperture=max(aperture,a*a*(3-2*a)-b*b*(3-2*b))
+    lock.location.y=.80-.10*aperture;lock.keyframe_insert('location')
     # Rearward gate swing stays outside both the drum and support ring.
     u=max(0,min(1,(tick-315)/45));v=max(0,min(1,(tick-500)/45))
     gate.rotation_euler.x=-math.radians(82)*(u*u*(3-2*u)-v*v*(3-2*v));gate.keyframe_insert('rotation_euler')
 S.frame_set(1)
+compact=empty('COMPACT_GUN_ASSEMBLY',(0,0,1.70))
+for obj in list(S.objects):
+    if obj.parent==root and obj not in interface_parts and obj!=compact:parent_world(obj,compact)
+compact.scale=(.65,.65,.65)
+bpy.context.view_layer.update()
 S['variant']='rolling-artillery';S['base_included']=False;S['mount_socket']=[0,0,1.70]
 S['surface_plan']='Oxide red removable cheek and breech crown armour, dark forged load-bearing fork, longitudinal steel bore/recoil rails, brass cases and bushes. Real open muzzle-brake ports and lower mesh inspection guard. Packed family PBR maps, physical-scale per-part UVs.'
 S['status']='CANDIDATE_NOT_IN_GAME';S['provisional_shot_ticks']=[0,90,180];S['cycle_ticks']=600
 S['firing_elevation_degrees']=35;S['reload_elevation_degrees']=0
+S['asset_scale']=.65;S['fixed_bunker_interface_preserved']=True
+S['relative_barrel_diameter_increase']=.34/.215;S['relative_shell_diameter_increase']=.205/.137
+S['relative_recuperator_diameter_increase']=.24/.105
 S['centered_trunnion_over_plate']=True;S['mount_load_path']='Yoke feet -> full distribution plate -> radial gussets -> central pedestal -> 16-bolt traverse flange'
 for obj in created:
     if obj.type=='MESH' and len(obj.data.polygons)==96:
@@ -228,7 +268,7 @@ for im in bpy.data.images:
     if im.source=='FILE' and not im.packed_file:im.pack()
 native=O/'rolling-artillery.blend';bpy.ops.wm.save_as_mainfile(filepath=str(native),compress=True)
 bpy.ops.object.select_all(action='DESELECT')
-for ob in created+[root,assembly,elevation,carriage,drum,gate,muzzle,bore]+rounds:ob.select_set(True)
+for ob in created+[root,compact,assembly,elevation,carriage,drum,gate,muzzle,bore,lock]+rounds:ob.select_set(True)
 bpy.context.view_layer.objects.active=root
 bpy.ops.export_scene.gltf(filepath=str(O/'rolling-artillery.glb'),use_selection=True,export_format='GLB',export_apply=True,export_animations=False)
 S.camera.data.ortho_scale=13.5
@@ -242,6 +282,8 @@ contract={'status':'MODEL_CANDIDATE_REVIEW_PENDING','base_included':False,'socke
  'balance_plan':'Native shell damage, range and one shell consumed per shot; same 3 shells / 600 ticks sustained output as vanilla. Research scales the full cycle.',
  'firing_elevation_degrees':35,'reload_elevation_degrees':0,'mechanical_direction_owner_accepted':True,
  'mount_load_path':S['mount_load_path'],'centered_trunnion_over_plate':True,
+ 'asset_scale':.65,'fixed_bunker_interface_preserved':True,'relative_barrel_diameter_increase':.34/.215,
+ 'relative_shell_diameter_increase':.205/.137,'relative_recuperator_diameter_increase':.24/.105,
  'runtime_implemented':False,'visual_approval':False,'collision_acceptance':False,
  'native_sha256':hashlib.sha256(native.read_bytes()).hexdigest()}
 (O/'contract.json').write_text(json.dumps(contract,indent=2)+'\n')

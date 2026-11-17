@@ -1,0 +1,14 @@
+{
+  "base_commit": "07ca4a0673d9ef69203aa95ad1c3bec7bed5fe47",
+  "files": {
+    "control.lua": "144e7821f675e162f5eab730a1c81535f407a6af03cb631e2afa103ada22d9e4",
+    "data.lua": "588309987064d464a651c828df6fd90e51ecfbaffb50a193a7da6cb1f55295d9",
+    "data-final-fixes.lua": "43a4d8178277677686ed12081efbd69a7ddf7ddf0563cbd118015a6c440d75c7",
+    "info.json": "c1104ea75e5a5b0114d48c5ca98c6f263a121cf0e4291e4839edd499fdba0458"
+  },
+  "status": "PASS_RECONCILED_MAIN",
+  "sites": 20,
+  "preserved_routes": 180,
+  "evidence_sha256": "a00c4d06bb0e700650e7d84f3b05f9914c3a9c050d699039ab09b07f63dca1ee",
+  "note": "Artillery sources and graphics unchanged since full graphical acceptance; final main check includes subsequent hydrogen integration."
+}

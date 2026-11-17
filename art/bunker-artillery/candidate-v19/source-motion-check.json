@@ -1,0 +1,538 @@
+{
+  "status": "PASS_SOURCE_INTERFACES",
+  "source_sha256": "6bfc8337a2b8dc61acc526943861dde64759a2127b870c274338f0d190be37cb",
+  "frames_checked": 601,
+  "tested_rotating_meshes": 9,
+  "tested_guard_meshes": 38,
+  "failures": [],
+  "collision_examples": [],
+  "slide_collision_examples": [],
+  "gate_collision_examples": [],
+  "mount_collision_examples": [],
+  "minimum_height": 1.7000000476837158,
+  "maximum_recoil": 0.493999993801117,
+  "local_recoil": 0.7599999904632568,
+  "asset_scale": 0.65,
+  "trunnion_xy": [
+    0.0,
+    0.0
+  ],
+  "foot_contacts": [
+    {
+      "name": "Bolted full-contact yoke foot",
+      "maximum_corner_radius": 0.9539953738038947,
+      "bottom_height": 2.122499942779541
+    },
+    {
+      "name": "Bolted full-contact yoke foot.001",
+      "maximum_corner_radius": 0.9539953738038947,
+      "bottom_height": 2.122499942779541
+    }
+  ],
+  "tested_moving_cap_meshes": 119,
+  "tested_mount_meshes": 63,
+  "redundant_cage_crossbars": [],
+  "breech_lock_collisions": [],
+  "hardware_attachments": [
+    {
+      "part": "Recuperator cradle clamp",
+      "support": "Recuperator bolted cradle",
+      "material_intersection": true
+    },
+    {
+      "part": "Recuperator cradle clamp",
+      "support": "Heavy hydropneumatic recuperator",
+      "material_intersection": true
+    },
+    {
+      "part": "Recuperator cradle clamp.001",
+      "support": "Recuperator bolted cradle.001",
+      "material_intersection": true
+    },
+    {
+      "part": "Recuperator cradle clamp.001",
+      "support": "Heavy hydropneumatic recuperator",
+      "material_intersection": true
+    },
+    {
+      "part": "Recuperator cradle clamp.002",
+      "support": "Recuperator bolted cradle.002",
+      "material_intersection": true
+    },
+    {
+      "part": "Recuperator cradle clamp.002",
+      "support": "Heavy hydropneumatic recuperator.001",
+      "material_intersection": true
+    },
+    {
+      "part": "Recuperator cradle clamp.003",
+      "support": "Recuperator bolted cradle.003",
+      "material_intersection": true
+    },
+    {
+      "part": "Recuperator cradle clamp.003",
+      "support": "Heavy hydropneumatic recuperator.001",
+      "material_intersection": true
+    },
+    {
+      "part": "Ring to recoil-bed structural strut",
+      "support": "Revolver outer support ring",
+      "material_intersection": true
+    },
+    {
+      "part": "Ring to recoil-bed structural strut upright",
+      "support": "Ring to recoil-bed structural strut",
+      "material_intersection": true
+    },
+    {
+      "part": "Ring to recoil-bed structural strut upright",
+      "support": "Ring to recoil-bed structural strut upper bridge",
+      "material_intersection": true
+    },
+    {
+      "part": "Ring to recoil-bed structural strut upper bridge",
+      "support": "Sliding carriage guide bushing",
+      "material_intersection": true
+    },
+    {
+      "part": "Ring to recoil-bed structural strut.001",
+      "support": "Revolver outer support ring",
+      "material_intersection": true
+    },
+    {
+      "part": "Ring to recoil-bed structural strut upright.001",
+      "support": "Ring to recoil-bed structural strut.001",
+      "material_intersection": true
+    },
+    {
+      "part": "Ring to recoil-bed structural strut upright.001",
+      "support": "Ring to recoil-bed structural strut upper bridge.001",
+      "material_intersection": true
+    },
+    {
+      "part": "Ring to recoil-bed structural strut upper bridge.001",
+      "support": "Sliding carriage guide bushing.002",
+      "material_intersection": true
+    },
+    {
+      "part": "Ring to recoil-bed structural strut.002",
+      "support": "Revolver outer support ring.001",
+      "material_intersection": true
+    },
+    {
+      "part": "Ring to recoil-bed structural strut upright.002",
+      "support": "Ring to recoil-bed structural strut.002",
+      "material_intersection": true
+    },
+    {
+      "part": "Ring to recoil-bed structural strut upright.002",
+      "support": "Ring to recoil-bed structural strut upper bridge.002",
+      "material_intersection": true
+    },
+    {
+      "part": "Ring to recoil-bed structural strut upper bridge.002",
+      "support": "Sliding carriage guide bushing.001",
+      "material_intersection": true
+    },
+    {
+      "part": "Ring to recoil-bed structural strut.003",
+      "support": "Revolver outer support ring.001",
+      "material_intersection": true
+    },
+    {
+      "part": "Ring to recoil-bed structural strut upright.003",
+      "support": "Ring to recoil-bed structural strut.003",
+      "material_intersection": true
+    },
+    {
+      "part": "Ring to recoil-bed structural strut upright.003",
+      "support": "Ring to recoil-bed structural strut upper bridge.003",
+      "material_intersection": true
+    },
+    {
+      "part": "Ring to recoil-bed structural strut upper bridge.003",
+      "support": "Sliding carriage guide bushing.003",
+      "material_intersection": true
+    },
+    {
+      "part": "Lower inspection guard longitudinal wire",
+      "support": "Guard mounting band 0",
+      "material_intersection": true
+    },
+    {
+      "part": "Lower inspection guard longitudinal wire",
+      "support": "Guard mounting band 1",
+      "material_intersection": true
+    },
+    {
+      "part": "Lower inspection guard longitudinal wire.001",
+      "support": "Guard mounting band 0",
+      "material_intersection": true
+    },
+    {
+      "part": "Lower inspection guard longitudinal wire.001",
+      "support": "Guard mounting band 1",
+      "material_intersection": true
+    },
+    {
+      "part": "Lower inspection guard longitudinal wire.002",
+      "support": "Guard mounting band 0",
+      "material_intersection": true
+    },
+    {
+      "part": "Lower inspection guard longitudinal wire.002",
+      "support": "Guard mounting band 1",
+      "material_intersection": true
+    },
+    {
+      "part": "Lower inspection guard longitudinal wire.003",
+      "support": "Guard mounting band 0",
+      "material_intersection": true
+    },
+    {
+      "part": "Lower inspection guard longitudinal wire.003",
+      "support": "Guard mounting band 1",
+      "material_intersection": true
+    },
+    {
+      "part": "Lower inspection guard longitudinal wire.004",
+      "support": "Guard mounting band 0",
+      "material_intersection": true
+    },
+    {
+      "part": "Lower inspection guard longitudinal wire.004",
+      "support": "Guard mounting band 1",
+      "material_intersection": true
+    },
+    {
+      "part": "Lower inspection guard longitudinal wire.005",
+      "support": "Guard mounting band 0",
+      "material_intersection": true
+    },
+    {
+      "part": "Lower inspection guard longitudinal wire.005",
+      "support": "Guard mounting band 1",
+      "material_intersection": true
+    },
+    {
+      "part": "Lower inspection guard longitudinal wire.006",
+      "support": "Guard mounting band 0",
+      "material_intersection": true
+    },
+    {
+      "part": "Lower inspection guard longitudinal wire.006",
+      "support": "Guard mounting band 1",
+      "material_intersection": true
+    },
+    {
+      "part": "Lower inspection guard longitudinal wire.007",
+      "support": "Guard mounting band 0",
+      "material_intersection": true
+    },
+    {
+      "part": "Lower inspection guard longitudinal wire.007",
+      "support": "Guard mounting band 1",
+      "material_intersection": true
+    },
+    {
+      "part": "Lower inspection guard longitudinal wire.008",
+      "support": "Guard mounting band 0",
+      "material_intersection": true
+    },
+    {
+      "part": "Lower inspection guard longitudinal wire.008",
+      "support": "Guard mounting band 1",
+      "material_intersection": true
+    },
+    {
+      "part": "Lower inspection guard longitudinal wire.009",
+      "support": "Guard mounting band 0",
+      "material_intersection": true
+    },
+    {
+      "part": "Lower inspection guard longitudinal wire.009",
+      "support": "Guard mounting band 1",
+      "material_intersection": true
+    },
+    {
+      "part": "Lower inspection guard longitudinal wire.010",
+      "support": "Guard mounting band 0",
+      "material_intersection": true
+    },
+    {
+      "part": "Lower inspection guard longitudinal wire.010",
+      "support": "Guard mounting band 1",
+      "material_intersection": true
+    },
+    {
+      "part": "Lower inspection guard longitudinal wire.011",
+      "support": "Guard mounting band 0",
+      "material_intersection": true
+    },
+    {
+      "part": "Lower inspection guard longitudinal wire.011",
+      "support": "Guard mounting band 1",
+      "material_intersection": true
+    },
+    {
+      "part": "Guard mounting band 0",
+      "support": "Revolver outer support ring",
+      "material_intersection": true
+    },
+    {
+      "part": "Guard clamp fastener 0_0",
+      "support": "Guard mounting band 0",
+      "material_intersection": true
+    },
+    {
+      "part": "Guard clamp fastener 0_0",
+      "support": "Revolver outer support ring",
+      "material_intersection": true
+    },
+    {
+      "part": "Guard clamp fastener 0_1",
+      "support": "Guard mounting band 0",
+      "material_intersection": true
+    },
+    {
+      "part": "Guard clamp fastener 0_1",
+      "support": "Revolver outer support ring",
+      "material_intersection": true
+    },
+    {
+      "part": "Guard clamp fastener 0_2",
+      "support": "Guard mounting band 0",
+      "material_intersection": true
+    },
+    {
+      "part": "Guard clamp fastener 0_2",
+      "support": "Revolver outer support ring",
+      "material_intersection": true
+    },
+    {
+      "part": "Guard clamp fastener 0_3",
+      "support": "Guard mounting band 0",
+      "material_intersection": true
+    },
+    {
+      "part": "Guard clamp fastener 0_3",
+      "support": "Revolver outer support ring",
+      "material_intersection": true
+    },
+    {
+      "part": "Guard clamp fastener 0_4",
+      "support": "Guard mounting band 0",
+      "material_intersection": true
+    },
+    {
+      "part": "Guard clamp fastener 0_4",
+      "support": "Revolver outer support ring",
+      "material_intersection": true
+    },
+    {
+      "part": "Guard mounting band 1",
+      "support": "Revolver outer support ring.001",
+      "material_intersection": true
+    },
+    {
+      "part": "Guard clamp fastener 1_0",
+      "support": "Guard mounting band 1",
+      "material_intersection": true
+    },
+    {
+      "part": "Guard clamp fastener 1_0",
+      "support": "Revolver outer support ring.001",
+      "material_intersection": true
+    },
+    {
+      "part": "Guard clamp fastener 1_1",
+      "support": "Guard mounting band 1",
+      "material_intersection": true
+    },
+    {
+      "part": "Guard clamp fastener 1_1",
+      "support": "Revolver outer support ring.001",
+      "material_intersection": true
+    },
+    {
+      "part": "Guard clamp fastener 1_2",
+      "support": "Guard mounting band 1",
+      "material_intersection": true
+    },
+    {
+      "part": "Guard clamp fastener 1_2",
+      "support": "Revolver outer support ring.001",
+      "material_intersection": true
+    },
+    {
+      "part": "Guard clamp fastener 1_3",
+      "support": "Guard mounting band 1",
+      "material_intersection": true
+    },
+    {
+      "part": "Guard clamp fastener 1_3",
+      "support": "Revolver outer support ring.001",
+      "material_intersection": true
+    },
+    {
+      "part": "Guard clamp fastener 1_4",
+      "support": "Guard mounting band 1",
+      "material_intersection": true
+    },
+    {
+      "part": "Guard clamp fastener 1_4",
+      "support": "Revolver outer support ring.001",
+      "material_intersection": true
+    },
+    {
+      "part": "Indexer lubrication return",
+      "support": "Outboard breech-index motor",
+      "material_intersection": true
+    },
+    {
+      "part": "Indexer lubrication return",
+      "support": "Indexer reduction coupling",
+      "material_intersection": true
+    },
+    {
+      "part": "Gate lower hinge knuckle",
+      "support": "Gate hinge structural lug",
+      "material_intersection": true
+    },
+    {
+      "part": "Gate hinge structural lug",
+      "support": "Rear reload gate ring",
+      "material_intersection": true
+    },
+    {
+      "part": "Gate hinge structural lug",
+      "support": "Gate lower hinge knuckle",
+      "material_intersection": true
+    },
+    {
+      "part": "Fixed gate hinge clevis",
+      "support": "Revolver outer support ring.001",
+      "material_intersection": true
+    },
+    {
+      "part": "Captive gate hinge pin retainer",
+      "support": "Fixed gate hinge clevis",
+      "material_intersection": true
+    },
+    {
+      "part": "Fixed gate hinge clevis.001",
+      "support": "Revolver outer support ring.001",
+      "material_intersection": true
+    },
+    {
+      "part": "Captive gate hinge pin retainer.001",
+      "support": "Fixed gate hinge clevis.001",
+      "material_intersection": true
+    },
+    {
+      "part": "Gate lower hinge knuckle.001",
+      "support": "Gate hinge structural lug.001",
+      "material_intersection": true
+    },
+    {
+      "part": "Gate hinge structural lug.001",
+      "support": "Rear reload gate ring",
+      "material_intersection": true
+    },
+    {
+      "part": "Gate hinge structural lug.001",
+      "support": "Gate lower hinge knuckle.001",
+      "material_intersection": true
+    },
+    {
+      "part": "Fixed gate hinge clevis.002",
+      "support": "Revolver outer support ring.001",
+      "material_intersection": true
+    },
+    {
+      "part": "Captive gate hinge pin retainer.002",
+      "support": "Fixed gate hinge clevis.002",
+      "material_intersection": true
+    },
+    {
+      "part": "Fixed gate hinge clevis.003",
+      "support": "Revolver outer support ring.001",
+      "material_intersection": true
+    },
+    {
+      "part": "Captive gate hinge pin retainer.003",
+      "support": "Fixed gate hinge clevis.003",
+      "material_intersection": true
+    }
+  ],
+  "bore_alignment": [
+    {
+      "tick": 0,
+      "active_shell": 0,
+      "x_error": 3.6739408886277486e-17,
+      "height_error": 1.043081283569336e-07,
+      "recoil_error": 0.0,
+      "firing_angle_degrees": 34.99999983559887
+    },
+    {
+      "tick": 90,
+      "active_shell": 1,
+      "x_error": 9.169946224574232e-08,
+      "height_error": 4.3213367462158203e-07,
+      "recoil_error": 0.0,
+      "firing_angle_degrees": 34.99999983559887
+    },
+    {
+      "tick": 180,
+      "active_shell": 2,
+      "x_error": 2.292486556143558e-08,
+      "height_error": 2.9802322387695312e-08,
+      "recoil_error": 0.0,
+      "firing_angle_degrees": 34.99999983559887
+    }
+  ],
+  "visible_round_samples": [
+    {
+      "tick": 0,
+      "loaded": 3
+    },
+    {
+      "tick": 1,
+      "loaded": 2
+    },
+    {
+      "tick": 90,
+      "loaded": 2
+    },
+    {
+      "tick": 91,
+      "loaded": 1
+    },
+    {
+      "tick": 180,
+      "loaded": 1
+    },
+    {
+      "tick": 181,
+      "loaded": 0
+    },
+    {
+      "tick": 499,
+      "loaded": 3
+    },
+    {
+      "tick": 500,
+      "loaded": 3
+    },
+    {
+      "tick": 600,
+      "loaded": 3
+    }
+  ],
+  "reload_angles_degrees": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "scope": "Full-frame chamber/guard, reload-gate, sliding-bushing/support and recoiling-assembly/mount intersections; centered trunnion, full-foot contact, elevated bore alignment, level reload, floor and recoil. Not continuous collision proof, exported-model validity or native gameplay acceptance"
+}
