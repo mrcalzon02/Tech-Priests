@@ -1,3 +1,16 @@
+## 2026-11-17 - Void Steam Engine contract and standard inlet repair
+
+The next machine is the actual platform-only2x2 generator/void-steam-engine,
+not the separately assigned emergency steam engine. Its ordinary inlet reported
+connection but passed no steam or power. A soleY0->0.5 port correction restores
+true native flow and accumulator charging. Native evidence confirms only two
+orientations, no burner/circuit/manual power-wire endpoint, and actual30 steam/s
+for300kW at165C with the existing0.5/tick,scale_fluid_usage=false behavior.
+The real recipe/unlock, footprint, cap, temperature and surface rules remain.
+Evidence: art/source-to-3d/void-steam-engine/v01/native-contract. This is a
+contract/interface checkpoint; model, animation, sprites, full state/reload
+verification and FMPL remain pending. Continue this machine, preserving Sterling.
+
 ## 2026-11-17 - Sterling Steam Catalyzer operational completion
 
 The actual platform-only Sterling boiler is operational and close enough.

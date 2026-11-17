@@ -1,0 +1,11 @@
+--- a/tech-priests_src/prototypes/compatibility/space-age.lua
++++ b/tech-priests_src/prototypes/compatibility/space-age.lua
+@@ -1022,7 +1022,7 @@
+   if engine.fluid_box then
+     engine.fluid_box.production_type = "input"
+     engine.fluid_box.pipe_connections = {
+-      { flow_direction = "input", direction = defines.direction.west, position = {-0.5, 0} }
++      { flow_direction = "input", direction = defines.direction.west, position = {-0.5, 0.5} }
+     }
+   end
+   engine.water_reflection = nil

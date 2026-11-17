@@ -5,6 +5,19 @@
 **Packaged baseline:** `0.1.672`  
 **Active development lane:** `0.1.674-dev`
 
+## 2026-11-17 - Void generator ordinary-grid steam inlet repaired
+
+Real platform testing found another half-axis inlet: ordinary pipes were
+reported connected, but the Void Steam Engine received no steam and charged no
+native accumulator. Moving only its inletY0->0.5 restores actual steam
+consumption and electrical output. The existing300kW cap,0.5-fluid/tick,
+scale_fluid_usage=false,165C limit,2x2 footprint, two native orientations,
+real recipe/unlock and platform restrictions are unchanged. Native measured
+full load is30 steam/s for300kW;200 steam yields2MJ. Source and raw A/B evidence
+are in art/source-to-3d/void-steam-engine/v01/native-contract. Art/model and
+full state/reload completion remain pending. Accepted Sterling and concurrent
+work are preserved; no new controller, economy change or release is claimed.
+
 ## 2026-11-17 - Sterling operational art and native delivery
 
 Finished the actual platform-only Sterling Steam Catalyzer with a textured,
