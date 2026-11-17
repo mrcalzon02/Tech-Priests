@@ -5,6 +5,22 @@
 **Packaged baseline:** `0.1.672`  
 **Active development lane:** `0.1.674-dev`
 
+## 2026-11-17 - Citadel continued enclosed-cathedral greeble refinement V09
+
+Continued the owner's requested extreme exterior detail while preserving the
+opaque cathedral and hidden manufacturing interior. Added supported roof
+arches/parallel signal lines, keyed plugs, tangent-clamped facade looms,
+rear cast services and dense seated crown relief/trace fields. Repaired the
+unsupported V06 arch landing, diagonal downleg/foot-stud interference and
+nominal-position harness clips. Indexed original FMPL maps and actual exported
+channels pass; 4329 meshes/625960 triangles,
+30 packed/embedded PBR images, eight matching poses.
+Source/runtime half-frame sweeps have zero foreign moving contacts. Fixed
+contact adjudication and native art integration/states/reload remain pending.
+Actual GLB detail/rear/clay views inspected. Source/evidence:
+art/source-to-3d/citadel-manufactoreo/v09. Machine completion is not claimed.
+All accepted assets and concurrent work/index remain untouched.
+
 ## 2026-11-17 - Citadel enclosed mechanical-cathedral model checkpoint V05
 
 Owner direction is explicit: preserve the closed space-manufacturing cathedral

@@ -1,0 +1,56 @@
+{
+  "review_kind": "delegated-refinement-review-not-owner-approval",
+  "source_sha256": "1871c10c9dff53ae557c44258c5cba551c7b61bbb2525b93113730ea3bb6fb77",
+  "runtime_sha256": "1d2c69548a71e3785ddb8a9e861a19d19cad03ed5f0ecc58e08f63642d496ce9",
+  "reference": {
+    "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\tanks-structure-production\\build\\tp-sterling-contract-main01\\mods\\tech-priests_0.1.687\\graphics\\entity\\citadel-manufactoreo\\citadel-manufactoreo-idle.png",
+    "sha256": "f0941a0bf379522ab4feaf997359fd27acf2e843842e43f262fe78c6c4ac9fcc",
+    "role": "current original enclosed gothic cathedral sprite"
+  },
+  "actually_viewed_render_sha256": {
+    "actual-glb-front.png": "a1365faa6bfa7501589955c8d8a5966d1cca5b4bd61e572f4d3805a28e8b8e39",
+    "actual-glb-detail.png": "9150e8b448ae2f081b796e921cebae703b072b8bf750866c96ca0875e6fd8e78",
+    "actual-glb-rear.png": "871c6a81b804eaec20c699a3cfe754344605f4892f18199b9854d3d65feb5de5",
+    "actual-glb-clay.png": "c5febbe2d5df282afeaeceaccf4b7873bbac6dc283394c3c6e2232ecdb81221e"
+  },
+  "score_scale": "0 unacceptable, 5 strong",
+  "scores": {
+    "enclosed_cathedral_identity": 5,
+    "exterior_detail_density": 4,
+    "visible_construction_and_support": 4,
+    "fmpl_material_identity": 4,
+    "fixed_gameplay_camera_readability": 4
+  },
+  "observations": [
+    "Opaque green blind glazing, thick closed doors and towers preserve the hidden factory premise.",
+    "Roof service arches land on actual capped cartridges. Vertical downlegs clear the foot studs in both source and actual GLB contact inventories.",
+    "Tangent-aligned loom clamps and seated cantilever saddles replace the earlier nominal-position clips.",
+    "Crown traces follow the real hip normals and frame the existing thermal cassettes.",
+    "Front/rear service bays and opaque panels preserve an enclosed manufacturing cathedral rather than expose extra processing functions.",
+    "Oblique detail/rear/clay views retain true world proportions; only the canonical front uses sprite square-ground calibration."
+  ],
+  "focused_clearance": [
+    {
+      "report": "clearance-raw.json",
+      "artifact_sha256": "1871c10c9dff53ae557c44258c5cba551c7b61bbb2525b93113730ea3bb6fb77",
+      "sampled_poses": 387,
+      "raw_contacts": 4968,
+      "foreign_moving_contacts": 0,
+      "arch_pipe_foot_stud_contacts": 0
+    },
+    {
+      "report": "clearance-runtime-raw.json",
+      "artifact_sha256": "1d2c69548a71e3785ddb8a9e861a19d19cad03ed5f0ecc58e08f63642d496ce9",
+      "sampled_poses": 385,
+      "raw_contacts": 4986,
+      "foreign_moving_contacts": 0,
+      "arch_pipe_foot_stud_contacts": 0
+    }
+  ],
+  "fmpl_export_channels_passed": true,
+  "full_fixed_contact_adjudication_pending": true,
+  "sprites_and_native_art_integration_pending": true,
+  "native_states_and_reload_pending": true,
+  "owner_visual_approved": false,
+  "machine_done": false
+}

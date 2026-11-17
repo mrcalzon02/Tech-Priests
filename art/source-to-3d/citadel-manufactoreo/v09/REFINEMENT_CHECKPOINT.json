@@ -1,0 +1,34 @@
+{
+  "status": "refined-candidate-native-integration-pending",
+  "source_sha256": "1871c10c9dff53ae557c44258c5cba551c7b61bbb2525b93113730ea3bb6fb77",
+  "runtime_sha256": "1d2c69548a71e3785ddb8a9e861a19d19cad03ed5f0ecc58e08f63642d496ce9",
+  "meshes": 4329,
+  "triangles": 625960,
+  "packed_and_embedded_pbr_images": 30,
+  "source_runtime_eight_pose_match": true,
+  "source_maps_and_exported_fmpl_channels_verified": true,
+  "native_fixed_north_5x5_contract": "../v01/native-contract",
+  "native_baseline_recipe_cases": 12,
+  "clearance_sweeps": [
+    {
+      "report": "clearance-raw.json",
+      "artifact_sha256": "1871c10c9dff53ae557c44258c5cba551c7b61bbb2525b93113730ea3bb6fb77",
+      "poses": 387,
+      "raw_contact_pairs": 4968,
+      "moving_meshes": 24,
+      "foreign_moving_contacts": 0
+    },
+    {
+      "report": "clearance-runtime-raw.json",
+      "artifact_sha256": "1d2c69548a71e3785ddb8a9e861a19d19cad03ed5f0ecc58e08f63642d496ce9",
+      "poses": 385,
+      "raw_contact_pairs": 4986,
+      "moving_meshes": 24,
+      "foreign_moving_contacts": 0
+    }
+  ],
+  "fixed_contact_review_pending": true,
+  "new_model_native_art_integration": false,
+  "owner_visual_approved": false,
+  "machine_done": false
+}
