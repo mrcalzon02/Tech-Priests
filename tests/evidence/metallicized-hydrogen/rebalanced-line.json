@@ -1,0 +1,324 @@
+{
+  "factorio_version": "2.1.24",
+  "mod": {
+    "name": "tech-priests",
+    "version": "0.1.683"
+  },
+  "game": "base game, normal quality, crafting speed 1, no modules or beacons",
+  "recipe_and_prototype_assertions": {
+    "gas_in_per_compressor_cycle": 500,
+    "liquid_out_per_compressor_cycle": 10,
+    "liquid_in_per_crucible_cycle": 20,
+    "pellets_out_per_crucible_cycle": 1,
+    "sealed_canister_fuel_MJ": 180,
+    "active_machine_draw_kW": {
+      "water_purifier": 50,
+      "electrolyzer": 200,
+      "compressor": 375,
+      "crucible": 2500,
+      "forge": 200,
+      "fabricator": 150,
+      "sealer": 125
+    }
+  },
+  "method": {
+    "feed": "Steel from one source chest, water supplied only to the water and shell inlets. Ordinary pipe connections between all machines. Unrestricted oxygen drainage. Five yellow inserters deliver steel, raw pellets, formed pellets, shells and sealed output. A single external source holds the grid at full power. Neither setup preloads intermediates or uses run-pacing logic.",
+    "measurement": "Two equal-inventory snapshots after startup with matched material flows. Exports already counted at the start of the interval are excluded. Export timestamps are polled every 15 ticks, 60 ticks per game second. Electrical draw is the difference between cumulative energy delivered by the dedicated power source divided by the number of exports. Native fluid statistics and measured intermediate-inventory changes distinguish processing from storage.",
+    "power_scope": "All attached machines and inserters, including powered idle drain. Excludes mining, steelmaking, water/oxygen infrastructure and reactor logistics. Gross fuel-equivalent power assumes adequate reactor load and generation capacity."
+  },
+  "profiles": [
+    {
+      "machines": {
+        "purifiers": 1,
+        "electrolyzers": 1,
+        "compressors": 1,
+        "crucibles": 1,
+        "forges": 1,
+        "fabricators": 1,
+        "sealers": 1,
+        "standard_inserters": 5
+      },
+      "start_and_end_ticks": [
+        72000,
+        288000
+      ],
+      "cold_start_first_export_seconds": 247.75,
+      "quantity_sealed": 18,
+      "elapsed_game_seconds": 3600.0,
+      "canisters_per_minute": 0.3,
+      "mean_seconds_per_canister": 200.0,
+      "interarrival_ticks": {
+        "12000": 17
+      },
+      "average_draw_MW": 0.5294945110953776,
+      "gross_fuel_equivalent_MW": 0.9,
+      "average_net_output_MW": 0.37050548890462237,
+      "net_canister_MJ": 74.10109778092448,
+      "MJ_per_canister_by_entity": {
+        "tp-mh7-review-purifier": 10.3333330078125,
+        "tp-mh7-review-electrolyzer": 41.33333203125,
+        "tp-mh7-review-compressor": 8.51250010043335,
+        "tp-mh7-review-crucible": 36.708333228271485,
+        "tp-mh7-review-forge": 2.936666653533935,
+        "tp-mh7-review-fabricator": 2.7999999700927733,
+        "tp-mh7-canister-assembler": 2.8333333666992186,
+        "inserter": 0.4414020856323244
+      },
+      "numerator_entities_products_finished": {
+        "purifier": 900,
+        "electrolyzer": 900,
+        "compressor": 36,
+        "crucible": 18,
+        "forge": 18,
+        "fabricator": 18,
+        "assembler": 18
+      },
+      "steel_plate_consumed": 36,
+      "water_inserted": 18360,
+      "oxygen_removed": 9000.0,
+      "native_fluid_production_stats": {
+        "water": {
+          "produced": 0,
+          "consumed": 18360
+        },
+        "tp-mh7-review-purified-water": {
+          "produced": 18000,
+          "consumed": 18000
+        },
+        "tp-mh7-review-hydrogen-gas": {
+          "produced": 18000,
+          "consumed": 18000
+        },
+        "tp-mh7-review-oxygen-gas": {
+          "produced": 9000,
+          "consumed": 0
+        },
+        "tp-mh7-review-compressed-hydrogen": {
+          "produced": 360,
+          "consumed": 360
+        }
+      },
+      "intermediate_fluid_inventory_delta": {
+        "purified": 0,
+        "hydrogen": 0,
+        "compressed": 0,
+        "oxygen": 0.0
+      },
+      "exported_item_delta": {
+        "tp-mh7-contained-metallicized-pellet": 18
+      },
+      "exported_item_health": {
+        "1.00": 18
+      },
+      "meter_MJ_per_canister": 105.89890221907552
+    },
+    {
+      "machines": {
+        "purifiers": 8,
+        "electrolyzers": 8,
+        "compressors": 1,
+        "crucibles": 1,
+        "forges": 1,
+        "fabricators": 1,
+        "sealers": 1,
+        "standard_inserters": 5
+      },
+      "start_and_end_ticks": [
+        10545,
+        118545
+      ],
+      "cold_start_first_export_seconds": 75.75,
+      "quantity_sealed": 72,
+      "elapsed_game_seconds": 1800.0,
+      "canisters_per_minute": 2.4,
+      "mean_seconds_per_canister": 25.0,
+      "interarrival_ticks": {
+        "1455": 18,
+        "1440": 18,
+        "1500": 18,
+        "1605": 18
+      },
+      "average_draw_MW": 3.4402894588411455,
+      "gross_fuel_equivalent_MW": 7.2,
+      "average_net_output_MW": 3.7597105411588543,
+      "net_canister_MJ": 93.99276352897135,
+      "MJ_per_canister_by_entity": {
+        "tp-mh7-review-purifier": 10.3333330078125,
+        "tp-mh7-review-electrolyzer": 41.33333203125,
+        "tp-mh7-review-compressor": 6.325000153839111,
+        "tp-mh7-review-crucible": 22.124999610107423,
+        "tp-mh7-review-forge": 1.7699999512634277,
+        "tp-mh7-review-fabricator": 1.9249999433898926,
+        "tp-mh7-canister-assembler": 2.1041667178344725,
+        "inserter": 0.09140209872976944
+      },
+      "numerator_entities_products_finished": {
+        "purifier": 3600,
+        "electrolyzer": 3600,
+        "compressor": 144,
+        "crucible": 72,
+        "forge": 72,
+        "fabricator": 72,
+        "assembler": 72
+      },
+      "steel_plate_consumed": 144,
+      "water_inserted": 73440,
+      "oxygen_removed": 36000.0,
+      "native_fluid_production_stats": {
+        "water": {
+          "produced": 0,
+          "consumed": 73440
+        },
+        "tp-mh7-review-purified-water": {
+          "produced": 72000,
+          "consumed": 72000
+        },
+        "tp-mh7-review-hydrogen-gas": {
+          "produced": 72000,
+          "consumed": 72000
+        },
+        "tp-mh7-review-oxygen-gas": {
+          "produced": 36000,
+          "consumed": 0
+        },
+        "tp-mh7-review-compressed-hydrogen": {
+          "produced": 1440,
+          "consumed": 1440
+        }
+      },
+      "intermediate_fluid_inventory_delta": {
+        "purified": 0,
+        "hydrogen": 0,
+        "compressed": 0,
+        "oxygen": 0.0
+      },
+      "exported_item_delta": {
+        "tp-mh7-contained-metallicized-pellet": 72
+      },
+      "exported_item_health": {
+        "1.00": 72
+      },
+      "meter_MJ_per_canister": 86.00723647102865
+    }
+  ],
+  "upgrade_checks": {
+    "native_682_fluid_save": {
+      "tank": {
+        "tp-mh7-review-compressed-hydrogen": 432
+      },
+      "crucible": {
+        "tp-mh7-review-compressed-hydrogen": 14
+      },
+      "compressor": {
+        "tp-mh7-review-hydrogen-gas": 35
+      },
+      "barrels": 2,
+      "old": "0.1.682"
+    },
+    "native_683_readback": {
+      "version": "0.1.683",
+      "tick": 0,
+      "tank": {
+        "tp-mh7-review-compressed-hydrogen": 432
+      },
+      "crucible": {
+        "tp-mh7-review-compressed-hydrogen": 14
+      },
+      "compressor": {
+        "tp-mh7-review-hydrogen-gas": 35
+      },
+      "barrels": 2,
+      "compressor_recipe": "tp-mh7-review-compress",
+      "crucible_recipe": "tp-mh7-review-metallize"
+    },
+    "jammed_682_save_recovery": {
+      "old_version": "0.1.682",
+      "save_tick": 18300,
+      "old_sample_tick": 18000,
+      "previous_seals": 0,
+      "shells_in_old_private_queue": 15,
+      "old_native_input": {
+        "2": {
+          "name": "tp-mh7-forged-metallicized-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 1,
+          "spoil_tick": 0,
+          "tags": {
+            "mh7_birth_tick": 16170,
+            "mh7_decay_phase": "tp-mh7-forged-metallicized-pellet",
+            "mh7_forged": true,
+            "mh7_initialized_tick": 16170,
+            "mh7_integrity_ceiling": 1,
+            "mh7_rolled_interval": 1336,
+            "mh7_spoil_tick": 17506
+          }
+        },
+        "6": {
+          "name": "tp-mh7-empty-pressure-shell",
+          "count": 6,
+          "quality": "normal",
+          "health": 1,
+          "spoil_tick": 0
+        }
+      },
+      "new_version": "0.1.683",
+      "first_export_after_reopen_tick": 19305,
+      "game_seconds_to_first_export": 16.75,
+      "private_shells_after_first_seal": 20,
+      "native_shells_after_first_seal": 0,
+      "conversion": {
+        "tick": 18513,
+        "station": 1,
+        "started": 18302,
+        "crafting_progress": 0.21979166666666622,
+        "before": {
+          "name": "tp-mh7-forged-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "normal",
+          "health": 0.75,
+          "spoil_tick": 20032,
+          "tags": {
+            "mh7_birth_tick": 18303,
+            "mh7_decay_phase": "tp-mh7-forged-metallicized-pellet-waning",
+            "mh7_forged": true,
+            "mh7_initialized_tick": 18303,
+            "mh7_integrity_ceiling": 0.75,
+            "mh7_rolled_interval": 1729,
+            "mh7_spoil_tick": 20032
+          }
+        },
+        "shell": {
+          "name": "tp-mh7-empty-pressure-shell",
+          "count": 1,
+          "quality": "normal",
+          "health": 1,
+          "spoil_tick": 0
+        },
+        "after": {
+          "name": "tp-mh7-contained-metallicized-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0.75,
+          "spoil_tick": 0,
+          "tags": {
+            "mh7_integrity": 0.75,
+            "mh7_raw_name": "tp-mh7-forged-metallicized-pellet-waning",
+            "mh7_remaining_ticks": 1519,
+            "mh7_shell_health": 1,
+            "mh7_shell_quality": "normal"
+          }
+        }
+      }
+    }
+  },
+  "sources": {
+    "hydrogen/balance.lua": "a1fea052d159596e2189a13afa7966587b718761235ab3b50d859cc5a41949dc",
+    "hydrogen/production.lua": "9ba6453eec5b070c3e6efeea84aae2114b9e48468d6e3c9a5e056411fc9ce4c6",
+    "hydrogen/assembler.lua": "4f8d70b624e125a456cad83ba8157f61cd8e529b20b1411235955933c9b789aa",
+    "hydrogen/machines/assembler-state.lua": "3af983fbed5dc6d05967351af8a3abca4f667c5b17b4400cc485c65547fb77e6",
+    "hydrogen/stock-access.lua": "a011c3962314b71ddafdabe792d1e16c8646a40041fe1bb10104186760a52fa6",
+    "hydrogen/forge.lua": "37536595bd189f5e13ca3d2a90c3e474236ee708c5cc45e71df3e2498a4aadb8",
+    "prototypes/plasma_reactor_family.lua": "f419a85baa24bead2d87c4e37bc26ed6822d5de2651843fa5ae4187d270c615f"
+  }
+}

@@ -6,6 +6,20 @@ end
 local ingredients={};for _,stage in ipairs(c.formed_stages) do ingredients[#ingredients+1]={type='item',name=stage.name,amount=3} end
 ingredients[#ingredients+1]={type='item',name=c.shell,amount=3};ingredients[#ingredients+1]={type='item',name=c.inert,amount=1};ingredients[#ingredients+1]={type='item',name='tp-mh7-assembler-accept-guard',amount=1}
 data:extend{{type='recipe',name='tp-mh7-assembler-accept',categories={'tp-mh7-review-assembly'},enabled=true,hidden=true,hidden_in_factoriopedia=true,auto_recycle=false,energy_required=16,ingredients=ingredients,results={{type='item',name='tp-mh7-assembler-cycle-result',amount=1,independent_probability=0}},preserve_products_in_machine_output=false}}
+-- Inserters respect the current recipe. Once one material has a full batch
+-- waiting, only admit its missing partner. The guard keeps intake noncrafting.
+for _,kind in ipairs{'pellets','shells'} do
+ local intake=table.deepcopy(data.raw.recipe['tp-mh7-assembler-accept'])
+ intake.name=intake.name..'-'..kind
+ intake.ingredients={}
+ for _,part in ipairs(ingredients) do
+  local shared=part.name==c.inert or part.name=='tp-mh7-assembler-accept-guard'
+  if shared or ((part.name==c.shell)==(kind=='shells')) then
+   intake.ingredients[#intake.ingredients+1]=table.deepcopy(part)
+  end
+ end
+ data:extend{intake}
+end
 local work=data.raw.recipe['tp-mh7-assembler-work'];work.hidden=true;work.allow_productivity=false
 for _,r in ipairs{{'contained',c.contained},{'inert',c.inert}} do data:extend{{type='recipe',name='tp-mh7-assembler-dispatch-'..r[1],categories={'tp-mh7-review-assembly'},enabled=true,hidden=true,hidden_in_factoriopedia=true,auto_recycle=false,energy_required=16,ingredients={{type='item',name='tp-mh7-assembler-accept-guard',amount=1}},results={{type='item',name=r[2],amount=1}},preserve_products_in_machine_output=false}} end
 local machine=data.raw['assembling-machine']['tp-mh7-canister-assembler'];machine.use_mirroring=false;machine.vector_to_place_result={0,-1.5};machine.show_recipe_icon=false;machine.show_recipe_icon_on_map=false

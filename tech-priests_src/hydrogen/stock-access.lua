@@ -16,8 +16,12 @@ function S.bind(controller,lookup,options)
   if not permitted(e,p) then return nil end
   local job=lookup(e);if not job then return nil end
   local slots={}
-  for _,i in ipairs(options.slots) do local row=snapshot(job.stock[i],options.touch)
-   row.slot=i;row.locked=options.locked(job,i);row.group=options.group(i);slots[#slots+1]=row
+  for i=1,#job.stock do
+   local group=options.group(i)
+   if group then
+    local row=snapshot(job.stock[i],options.touch)
+    row.slot=i;row.locked=options.locked(job,i);row.group=group;slots[#slots+1]=row
+   end
   end
   local output={};local inv=e.get_output_inventory()
   if inv then for i=1,#inv do local row=snapshot(inv[i],options.touch);row.slot=i;output[#output+1]=row end end

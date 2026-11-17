@@ -2,12 +2,11 @@
 local specs=require('hydrogen.specs');local build=require('hydrogen.machine');local mixes=require('hydrogen.audio')
 for _,spec in ipairs(specs) do build(spec) end
 require('hydrogen.machines.forge-state');require('hydrogen.machines.assembler-state')
-local usage={purifier='100kW',electrolyzer='1MW',compressor='750kW',crucible='5MW',forge='400kW',fabricator='300kW',assembler='250kW'}
 local effects={};local root='__tech-priests__/hydrogen/'
 for index,spec in ipairs(specs) do
  local e=data.raw['assembling-machine'][spec.entity];local item=data.raw.item[spec.entity]
  e.localised_name={'entity-name.'..spec.entity};e.tile_width=spec.selection_box[2][1]*2;e.tile_height=spec.selection_box[2][2]*2
- e.energy_source=table.deepcopy(data.raw['assembling-machine']['chemical-plant'].energy_source);e.energy_usage=usage[spec.key];e.use_mirroring=false
+ e.energy_source=table.deepcopy(data.raw['assembling-machine']['chemical-plant'].energy_source);e.use_mirroring=false
  e.icon=root..'icons/'..spec.key..'.png';e.icon_size=64;e.icons=nil
  item.icon=e.icon;item.icon_size=64;item.icons=nil;item.localised_name=e.localised_name;item.subgroup='production-machine';item.order='z[tech-priests-hydrogen]-'..index
  if spec.key~='forge' and spec.key~='assembler' and spec.key~='fabricator' then e.fixed_recipe=spec.recipe end

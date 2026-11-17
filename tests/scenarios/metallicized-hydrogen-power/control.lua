@@ -2,22 +2,68 @@
 local fuel = "tp-mh7-contained-metallicized-pellet"
 local tiers = {"minoris", "majoris", "maximus"}
 local keys = {"purifier", "electrolyzer", "compressor", "crucible", "forge", "fabricator", "assembler"}
+local machine_kw = {50, 200, 375, 2500, 200, 150, 125}
+local reactor_watts = {1e6, 2e6, 4e6}
+local shell = "tp-mh7-empty-pressure-shell"
+local formed = "tp-mh7-forged-metallicized-pellet"
+
+local function create_shell_first_line(surface, force)
+  local function place(name, x, y, direction)
+    return assert(surface.create_entity{
+      name = name, position = {x, y}, direction = direction or defines.direction.north,
+      force = force, raise_built = true,
+    })
+  end
+  local line = {}
+  line.sealer = place("tp-mh7-canister-assembler", 80, -20)
+  line.shells = place("steel-chest", 80.5, -23.5)
+  line.pellets = place("steel-chest", 76.5, -19.5)
+  line.output = place("steel-chest", 83.5, -19.5)
+  place("inserter", 80.5, -22.5, defines.direction.north)
+  place("inserter", 77.5, -19.5, defines.direction.west)
+  place("inserter", 82.5, -19.5, defines.direction.west)
+  place("substation", 84, -25)
+  local supply = place("electric-energy-interface", 86, -25)
+  supply.power_production = 1e6 / 60
+  supply.power_usage = 0
+  assert(line.shells.insert{name = shell, count = 40} == 40)
+  return line
+end
+
+local function check_process(force, recipe_name, input, input_amount, output, output_amount)
+  local recipe = assert(force.recipes[recipe_name])
+  assert(recipe.enabled and recipe.energy == 8, recipe_name .. " unlock or crafting time")
+  local ingredients, products = recipe.ingredients, recipe.products
+  assert(#ingredients == 1 and ingredients[1].name == input and ingredients[1].amount == input_amount,
+    recipe_name .. " input")
+  assert(products[1].name == output and products[1].amount == output_amount and products[1].independent_probability == 1,
+    recipe_name .. " output")
+end
 
 script.on_init(function()
   assert(not script.active_mods["tp-hydrogen-production"] and not script.active_mods["tp-mh7-pellet-decay"])
   local force = game.forces.player
   force.technologies["tp-metallicized-hydrogen-production"].researched = true
-  for _, key in ipairs(keys) do
+  assert(prototypes.item[fuel].fuel_value == 180e6, "sealed canister must supply 180 MJ")
+  for index, key in ipairs(keys) do
     local recipe = force.recipes["tp-hydrogen-build-" .. key]
     assert(recipe and recipe.enabled, key .. " construction recipe missing")
     local product = recipe.products[1]
     local machine = prototypes.item[product.name].place_result
     assert(machine and machine.type == "assembling-machine", key .. " cannot be placed")
+    assert(math.abs(machine.get_max_energy_usage("normal") * 60 - machine_kw[index] * 1000) < 1, key .. " power draw")
   end
 
   local surface = game.surfaces[1]
   surface.request_to_generate_chunks({75, 12}, 4)
   surface.force_generate_chunk_requests()
+  local gas, liquid = "tp-mh7-review-hydrogen-gas", "tp-mh7-review-compressed-hydrogen"
+  check_process(force, "tp-mh7-review-compress", gas, 500, liquid, 10)
+  check_process(force, "tp-mh7-review-metallize", liquid, 20, "tp-mh7-raw-metallicized-pellet", 1)
+  local compressor = assert(surface.create_entity{name = "tp-mh7-review-compressor", position = {70, 0}, force = force})
+  assert(compressor.insert_fluid{name = gas, amount = 500} == 500, "compressor cannot accept a full batch")
+  compressor.destroy()
+  storage.shell_first = create_shell_first_line(surface, force)
   storage.grids = {}
   for i, tier in ipairs(tiers) do
     local x = i * 50
@@ -39,7 +85,34 @@ script.on_init(function()
 end)
 
 script.on_event(defines.events.on_tick, function(event)
-  if event.tick ~= 7500 then return end
+  if event.tick == 3000 then
+    local line = storage.shell_first
+    local job = remote.call("tp-mh7-assembler", "inspect", line.sealer)
+    local queued = 0
+    for _, stack in ipairs(job.stock) do
+      if stack.name == shell then queued = queued + stack.count end
+    end
+    assert(queued == 3 and line.shells.get_item_count(shell) >= 36, "assembler overfilled with shells")
+    assert(line.output.get_item_count(fuel) == 0 and line.sealer.can_insert{name = formed, count = 1},
+      "shell queue blocked the first pellet")
+    assert(line.pellets.insert{name = formed, count = 1} == 1)
+  elseif event.tick == 4500 then
+    local line = storage.shell_first
+    assert(line.output.get_item_count(fuel) == 1, "first canister failed to reach the output chest")
+    local job = remote.call("tp-mh7-assembler", "inspect", line.sealer)
+    assert(job.completed == 1 and job.cycles == 1, "assembler failed to complete its powered cycle")
+  end
+  if event.tick == 600 or event.tick == 660 then
+    for i, grid in ipairs(storage.grids) do
+      local remaining = grid.reactor.burner.remaining_burning_fuel
+      if event.tick == 600 then
+        grid.last_fuel = remaining
+      else
+        assert(math.abs(grid.last_fuel - remaining - reactor_watts[i]) < 100, grid.reactor.name .. " full-load burn rate")
+      end
+    end
+  end
+  if event.tick ~= 11000 then return end
   for _, grid in ipairs(storage.grids) do
     local stats = grid.pole.electric_network_statistics
     local produced = stats.get_input_count(grid.reactor.name) + stats.get_output_count(grid.reactor.name)
