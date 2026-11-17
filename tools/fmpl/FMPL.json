@@ -1039,6 +1039,89 @@
         3
       ],
       "purpose": "Actual Tanks steam-condenser: wood5+steam200 -> stone10+industrialwaste1, categorySteam, chemical1kW/effectivity1, speed0.6, zero modules, normal58.333-second craft. Four actual native facings. Only the steam inlet is exposed for this recipe; no water product or fluid output invented. Actual Workbench building recipe uses crude-glass10+brick5 and real technology unlock. All ten original OBJ groups preserved as founded brick/clay treatment chamber, crude-glass inspection opening, wood rack, full-size steam collar/reducer and connected four-riser jacket, stone chute with separate waste collection, firebox and continuously founded hollow brick stack. Fitted steam piston, bored fork/pins, rigid0.50-tile connecting rod and distinct offset belt-transfer shaft keep the rod clear; two equal-ratio belts drive the contained rake. Reopened packed source and independently reimported actual GLB:324 meshes,75850 triangles,39 source and39 embedded PBR images, full UVs, six pose matches.385 source plus385 runtime mechanism/clearance samples,342 matching raw contacts,94 enumerated moving rigid-fit/running contacts; four cross-assembly belt/rim engagements and no unknown crossings. Interpolated pin-centre error about0.000015 tile fits inside0.002 radial bore clearance.132 genuine source captures, one idle plus32 work phases per facing, six verified atlases. Idle repeats explicit; native animation_progress1 gives8fps. Fixed inlet0.49 bore/0.68 collar/Z0.36 matches ordinary pipe-face projection below0.000001 tile in all directions, with genuine placed-pipe views. Native fixture24 target machines,20 ordinary machine pipe joints,40 pipe entities: exact200 steam165C supplied through two normal pipes per active machine, actual wood/fuel consumed and stone/waste produced in every completed case. Fuel/steam starvation-resupply, late full_output/progress1/zero-counter blocking and release, stop/restart, actual Workbench building/unlock and scripted consumed-item placement pass without gameplay/speed/power/module overrides. Actual operated-save reload preserves inventories, steam amount/type/temp/joints, remaining chemical fuel and buffer, recipe/progress/count, directions/disabled flags, Workbench output and crafted placement.60 real client PNGs include four pipe and four chimney closeups; smoke leaves actual stack, unused-output legacy cap art suppressed.32 distinct native geometry phases, paused/blocked geometry stationary in left-drive mask excluding smoke;32 real frames encode8fps GIF/MP4. Source/export front/rear/side/clay/close and native views inspected. Historical V1 barrel/water-output candidate remains held/unapproved/uninstalled as a condenser; its separate accepted compressor derivative preserved. Inspection cavity remains dark at game scale. Delegated operational close-enough review, no individual owner approval/full installed pack/Portal claim."
+    },
+    {
+      "id": "tech-priests-sterling-steam-catalyzer-v1",
+      "status": "game-sprites-installed-with-specific-native-checks",
+      "source": {
+        "repository": "mrcalzon02/Tech-Priests",
+        "ref": "b2ccd1bd91d7d489f6375e061e47103faddcd2fc",
+        "path": "art/source-to-3d/sterling-steam-catalyzer/v10/sterling-v10.blend",
+        "sha256": "ff0cd75f2083fa4270520f9dd937f4116b930c5642c93e95b0a645e9fa2f6af8"
+      },
+      "runtime": {
+        "repository": "mrcalzon02/Tech-Priests",
+        "ref": "b2ccd1bd91d7d489f6375e061e47103faddcd2fc",
+        "path": "art/source-to-3d/sterling-steam-catalyzer/v10/sterling-v10.glb",
+        "sha256": "409db745f841138f5b600afead2bd831df25e61ef7a7efb76dc4ec924fd33287"
+      },
+      "evidence": [
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "b2ccd1bd91d7d489f6375e061e47103faddcd2fc",
+          "path": "art/source-to-3d/sterling-steam-catalyzer/v10/FMPL_MODEL.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "b2ccd1bd91d7d489f6375e061e47103faddcd2fc",
+          "path": "art/source-to-3d/sterling-steam-catalyzer/v10/runtime-inspection.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "b2ccd1bd91d7d489f6375e061e47103faddcd2fc",
+          "path": "art/source-to-3d/sterling-steam-catalyzer/v10/mechanical-inspection.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "b2ccd1bd91d7d489f6375e061e47103faddcd2fc",
+          "path": "art/source-to-3d/sterling-steam-catalyzer/v10/clearance-review.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "b2ccd1bd91d7d489f6375e061e47103faddcd2fc",
+          "path": "art/source-to-3d/sterling-steam-catalyzer/v10/capture-manifest.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "b2ccd1bd91d7d489f6375e061e47103faddcd2fc",
+          "path": "art/source-to-3d/sterling-steam-catalyzer/v10/atlas-manifest.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "b2ccd1bd91d7d489f6375e061e47103faddcd2fc",
+          "path": "art/source-to-3d/sterling-steam-catalyzer/v10/visual-review.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "b2ccd1bd91d7d489f6375e061e47103faddcd2fc",
+          "path": "art/source-to-3d/sterling-steam-catalyzer/v10/native-evidence/contract.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "b2ccd1bd91d7d489f6375e061e47103faddcd2fc",
+          "path": "art/source-to-3d/sterling-steam-catalyzer/v10/native-evidence/native-runtime.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "b2ccd1bd91d7d489f6375e061e47103faddcd2fc",
+          "path": "art/source-to-3d/sterling-steam-catalyzer/v10/native-evidence/installed-source-binding.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "b2ccd1bd91d7d489f6375e061e47103faddcd2fc",
+          "path": "art/source-to-3d/sterling-steam-catalyzer/v10/native-evidence/verification.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "b2ccd1bd91d7d489f6375e061e47103faddcd2fc",
+          "path": "art/source-to-3d/sterling-steam-catalyzer/v10/native-evidence/operated-reload-receipt.json"
+        }
+      ],
+      "footprint": [
+        4,
+        2
+      ],
+      "purpose": "Actual platform-only Sterling chemical boiler,600kW/effectivity1/fuel-slot1: water2/s -> steam20/s165C at the native10:1 thermal volume ratio. Existing item,12s building recipe, hydrogen-thruster-propulsion unlock and surface restrictions retained; no invented assembler process or power generation. Two ordinary-grid port positions repaired and actual platform flow/full-output proven in all four facings. Original sprite recognition retained as supported horizontal pressure drum, seated bands/end flanges, continuous heated circulation circuit, full-bore sockets/reducers, founded furnace/exhaust, instrument and console. Owner-selected native connector seated on console; both circuit colors read real fuel. Packed editable source and independently inspected GLB:166 meshes,28320 triangles,27 packed/embedded PBR images, UV/finite/degenerate checks and six working pose matches. Clean0..4s exported working loop; idle0 stays in source and native sprites.195 source and193 runtime half-frame samples,157 exact adjudicated contacts, fitted bored needle shaft and rooted flames.68 genuine captures and four-direction16-frame4fps working clips. All final sprites/adapter byte-identical to native client/reload-tested files; fresh source idle RGBA equality explicitly checked.24 native boilers,48 normal pipe joints,96 pipes; actual recipe/unlock and consumed-crafted-item scripted placement, fuel/water starvation-resupply, natural full-output fuel stop/drain recovery, forced pause/restart and red/green fuel readings pass.122 real client PNGs include all eight pipe joins, four smoke and console views and64 motion frames. Actual operated save/reload preserves fuel, fluid, energy, directions, ordinary pipes, circuits, placement and unlock. Native hot forced-script pause retains burner graphics while production state holds; natural full-output and cold/starved states extinguish. No new runtime authority or balance change. Delegated operational close-enough delivery; individual owner approval, full user-pack install and Portal release not claimed."
     }
   ],
   "programs": [
