@@ -1,0 +1,28 @@
+{
+  "status": "candidate-not-integrated-not-approved",
+  "source_sha256": "ff0cd75f2083fa4270520f9dd937f4116b930c5642c93e95b0a645e9fa2f6af8",
+  "runtime_sha256": "409db745f841138f5b600afead2bd831df25e61ef7a7efb76dc4ec924fd33287",
+  "contract": "Actual platform-only 4x2 chemical600kW boiler; water2/s -> steam20/s165C; no assembler processing or invented power generation.",
+  "source_recovery": "Current committed art/tools named Sterling/Stirling paths contain sprite reference only; no original editable Sterling source located. Existing emergency boiler inspected as construction reference, not substituted.",
+  "source_reference": "../mods/tech-priests_0.1.687/graphics/entity/sterling-steam-catalyzer/sterling-steam-catalyzer.png",
+  "fixed_model_sockets": [
+    [
+      -2,
+      -0.5,
+      0.36
+    ],
+    [
+      2,
+      -0.5,
+      0.36
+    ]
+  ],
+  "surface_images": 27,
+  "owner_visual_approved": false,
+  "working_loop_source_frames": [
+    1,
+    97
+  ],
+  "source_idle_frame": 0,
+  "export_animation_starts_at_zero": true
+}

@@ -1,0 +1,20 @@
+from pathlib import Path
+import json,shutil,hashlib
+O=Path(__file__).resolve().parent;R=O.parent;M=R/'mods/tech-priests_0.1.687';a=json.loads((O/'atlas-manifest.json').read_text());m=json.loads((O/'mechanical-inspection.json').read_text());assert a['verified'] and m['passed']
+target=M/'graphics/entity/sterling-steam-catalyzer-v1';target.mkdir(exist_ok=True)
+for name,row in a['files'].items():
+ p=O/'sprites'/name;assert hashlib.sha256(p.read_bytes()).hexdigest()==row['sha256'];shutil.copy2(p,target/name)
+xy=lambda x:'{'+','.join(format(v,'.12g') for v in x)+'}'
+code=['-- Actual platform-only Sterling boiler. Art only; keep recipe, fuel, power, ports and footprint.','local target=data.raw.boiler["sterling-steam-catalyzer"]','if not target then return end','local prefix="__tech-priests__/graphics/entity/sterling-steam-catalyzer-v1/"','target.pictures={']
+for facing in ['north','east','south','west']:
+ shift=xy(m['sprite_shift']);code.append(' '+facing+'={structure={filename=prefix.."'+facing+'-idle.png",width=256,height=256,frame_count=1,scale=.675,shift='+shift+'},fire={filename=prefix.."'+facing+'-working.png",width=256,height=256,frame_count=16,line_length=8,animation_speed=4/60,scale=.675,shift='+shift+'}},')
+code+=['}','target.fire_flicker_enabled=false','target.water_reflection=nil','-- Coal smoke leaves the measured open stack in each actual facing.','for _,smoke in ipairs(target.energy_source.smoke or {}) do']
+for facing in ['north','east','south','west']:code.append(' smoke.'+facing+'_position='+xy(m['directions'][facing]['smoke_position']))
+code+=[' smoke.position=smoke.north_position',' smoke.deviation={.02,.02}','end','-- Seat inherited native circuit hardware on the authored console roof, as requested by the owner.','local registration={']
+for facing in ['north','east','south','west']:
+ row=m['directions'][facing];code.append(' {main='+xy(row['circuit_main_anchor'])+',shadow='+xy(row['circuit_shadow_anchor'])+'},')
+code+=['}','local function point(v) return v.x or v[1],v.y or v[2] end','local function remap(v,origin,destination)',' local x,y=point(v);local ox,oy=point(origin);return {destination[1]+(x-ox)*.65,destination[2]+(y-oy)*.65}','end','assert(target.circuit_connector and #target.circuit_connector==4,"Sterling inherited four-way circuit connector")','for i,r in ipairs(registration) do',' local connector=target.circuit_connector[i];local origin=table.deepcopy(connector.sprites.connector_main.shift or {0,0})',' for _,sprite in pairs(connector.sprites) do','  if type(sprite)=="table" and sprite.filename then sprite.shift=remap(sprite.shift or {0,0},origin,sprite.draw_as_shadow and r.shadow or r.main);sprite.scale=(sprite.scale or 1)*.65 end',' end',' for _,key in ipairs({"blue_led_light_offset","red_green_led_light_offset"}) do if connector.sprites[key] then connector.sprites[key]=remap(connector.sprites[key],origin,r.main) end end',' for kind,points in pairs(connector.points) do for color,p in pairs(points) do points[color]=remap(p,origin,kind=="shadow" and r.shadow or r.main) end end','end','local icon=prefix.."icon.png"','for _,kind in ipairs({"boiler","item","recipe"}) do local p=data.raw[kind] and data.raw[kind]["sterling-steam-catalyzer"];if p then p.icon=icon;p.icon_size=64;p.icons=nil end end','']
+p=M/'prototypes/generated_graphics/sterling-steam-catalyzer-v1.lua';p.write_text('\n'.join(code),encoding='utf-8');shutil.copy2(p,O/p.name)
+final=M/'data-final-fixes.lua';b=final.read_bytes();require=b'\nrequire("prototypes.generated_graphics.sterling-steam-catalyzer-v1")\n'
+if require not in b:final.write_bytes(b+require)
+(O/'integration-candidate.json').write_text(json.dumps({'status':'isolated-profile-only','production_main_unchanged':True,'source_sha256':a['source_sha256'],'runtime_sha256':a['runtime_sha256'],'graphics_adapter_sha256':hashlib.sha256(p.read_bytes()).hexdigest(),'sprites':a['files'],'sprite_shift':m['sprite_shift'],'native_engine_verification_pending':True},indent=2)+'\n',encoding='utf-8');print('STERLING_ISOLATED_ART_INTEGRATED')

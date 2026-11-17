@@ -627,3 +627,5 @@ require("prototypes.generated_graphics.thetazine-thruster-v04")
 
 -- V24: accepted four-way Cycles animation, calibrated against native pipe sprites.
 require("prototypes.generated_graphics.atmospheric-water-condenser-v24")
+
+require("prototypes.generated_graphics.sterling-steam-catalyzer-v1")

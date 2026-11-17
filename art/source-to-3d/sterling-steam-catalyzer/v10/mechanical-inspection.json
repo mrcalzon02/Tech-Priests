@@ -1,0 +1,205 @@
+{
+  "source": {
+    "artifact_sha256": "ff0cd75f2083fa4270520f9dd937f4116b930c5642c93e95b0a645e9fa2f6af8",
+    "poses": 195,
+    "idle_pose_in_artifact": true,
+    "metrics": {
+      "minimum_pin_radial_clearance": 0.0009997791173104627,
+      "minimum_pin_axial_engagement": 0.011000007390975952,
+      "minimum_needle_bearing_face_clearance": 0.0040000081062316895,
+      "maximum_pin_axis_error": 1.6858739404357614e-07,
+      "maximum_flame_root_penetration": 0.0,
+      "maximum_socket_motion": 0.0,
+      "idle_flame_width": 0.0011860000668093562,
+      "idle_flame_height": 0.00018998980522155762
+    },
+    "passed": true
+  },
+  "runtime": {
+    "artifact_sha256": "409db745f841138f5b600afead2bd831df25e61ef7a7efb76dc4ec924fd33287",
+    "poses": 193,
+    "idle_pose_in_artifact": false,
+    "metrics": {
+      "minimum_pin_radial_clearance": 0.0009997758944726327,
+      "minimum_pin_axial_engagement": 0.01100003719329834,
+      "minimum_needle_bearing_face_clearance": 0.003999978303909302,
+      "maximum_pin_axis_error": 2.862419592186592e-07,
+      "maximum_flame_root_penetration": 0.0,
+      "maximum_socket_motion": 0.0
+    },
+    "passed": true
+  },
+  "passed": true,
+  "directions": {
+    "north": {
+      "sockets": [
+        {
+          "role": "WATER",
+          "actual_sprite_mouth_position_tiles": [
+            -1.9999998807907104,
+            0.45312440395355225
+          ],
+          "native_grid_mouth_position_tiles": [
+            -2.0,
+            0.453125
+          ],
+          "projection_error_tiles": 6.07850493620966e-07
+        },
+        {
+          "role": "STEAM",
+          "actual_sprite_mouth_position_tiles": [
+            2.0,
+            0.45312440395355225
+          ],
+          "native_grid_mouth_position_tiles": [
+            2.0,
+            0.453125
+          ],
+          "projection_error_tiles": 5.960464477539062e-07
+        }
+      ],
+      "smoke_position": [
+        0.44999998807907104,
+        -1.8073270522865255
+      ],
+      "circuit_mount_source_object": "STERLING | armored cogitator console",
+      "circuit_main_anchor": [
+        0.47999998927116394,
+        0.09097511726625307
+      ],
+      "circuit_shadow_anchor": [
+        0.47999998927116394,
+        0.9076834293062281
+      ]
+    },
+    "east": {
+      "sockets": [
+        {
+          "role": "WATER",
+          "actual_sprite_mouth_position_tiles": [
+            -0.5,
+            -2.0468757152557373
+          ],
+          "native_grid_mouth_position_tiles": [
+            -0.5,
+            -2.046875
+          ],
+          "projection_error_tiles": 7.152557373046875e-07
+        },
+        {
+          "role": "STEAM",
+          "actual_sprite_mouth_position_tiles": [
+            -0.5,
+            1.9531244039535522
+          ],
+          "native_grid_mouth_position_tiles": [
+            -0.4999999701976776,
+            1.953125
+          ],
+          "projection_error_tiles": 5.967910407334801e-07
+        }
+      ],
+      "smoke_position": [
+        0.8199999928474426,
+        -0.5373270713600116
+      ],
+      "circuit_mount_source_object": "STERLING | armored cogitator console",
+      "circuit_main_anchor": [
+        -0.699999988079071,
+        -0.12902488154165404
+      ],
+      "circuit_shadow_anchor": [
+        -0.699999988079071,
+        0.687683430498321
+      ]
+    },
+    "south": {
+      "sockets": [
+        {
+          "role": "WATER",
+          "actual_sprite_mouth_position_tiles": [
+            2.0,
+            -0.5468756556510925
+          ],
+          "native_grid_mouth_position_tiles": [
+            2.0,
+            -0.5468751788139343
+          ],
+          "projection_error_tiles": 4.76837158203125e-07
+        },
+        {
+          "role": "STEAM",
+          "actual_sprite_mouth_position_tiles": [
+            -1.9999998807907104,
+            -0.5468752980232239
+          ],
+          "native_grid_mouth_position_tiles": [
+            -2.0,
+            -0.5468748211860657
+          ],
+          "projection_error_tiles": 4.915124923727108e-07
+        }
+      ],
+      "smoke_position": [
+        -0.44999992847442627,
+        -0.1673270069869952
+      ],
+      "circuit_mount_source_object": "STERLING | armored cogitator console",
+      "circuit_main_anchor": [
+        -0.4800000488758087,
+        -1.3090247992872441
+      ],
+      "circuit_shadow_anchor": [
+        -0.4800000488758087,
+        -0.4923164872472692
+      ]
+    },
+    "west": {
+      "sockets": [
+        {
+          "role": "WATER",
+          "actual_sprite_mouth_position_tiles": [
+            0.5,
+            1.9531244039535522
+          ],
+          "native_grid_mouth_position_tiles": [
+            0.5000000596046448,
+            1.953125
+          ],
+          "projection_error_tiles": 5.990192664337689e-07
+        },
+        {
+          "role": "STEAM",
+          "actual_sprite_mouth_position_tiles": [
+            0.5,
+            -2.0468757152557373
+          ],
+          "native_grid_mouth_position_tiles": [
+            0.49999991059303284,
+            -2.046875
+          ],
+          "projection_error_tiles": 7.208220137624636e-07
+        }
+      ],
+      "smoke_position": [
+        -0.8199999928474426,
+        -1.4373270177158313
+      ],
+      "circuit_mount_source_object": "STERLING | armored cogitator console",
+      "circuit_main_anchor": [
+        0.699999988079071,
+        -1.0890248898863042
+      ],
+      "circuit_shadow_anchor": [
+        0.699999988079071,
+        -0.27231657784632923
+      ]
+    }
+  },
+  "sprite_shift": [
+    0,
+    -0.3580019837220809
+  ],
+  "native_verified": false,
+  "owner_visual_approved": false
+}

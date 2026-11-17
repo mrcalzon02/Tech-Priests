@@ -1,0 +1,28 @@
+{
+  "passed": true,
+  "tested_production_baseline": "9b17b3c9bc2b4f71f16bc430fb4e594534ee02f6",
+  "tested_actual_mod_version": "0.1.687",
+  "final_source_and_runtime_sha256": [
+    "ff0cd75f2083fa4270520f9dd937f4116b930c5642c93e95b0a645e9fa2f6af8",
+    "409db745f841138f5b600afead2bd831df25e61ef7a7efb76dc4ec924fd33287"
+  ],
+  "exact_tested_file_hashes": {
+    "tech-priests_src/prototypes/generated_graphics/sterling-steam-catalyzer-v1.lua": "802a25beaa98e792f99f9cd1f98166a06360024439d9088e5b5f8d0430059a63",
+    "tech-priests_src/data-final-fixes.lua": "1d5ebff373dbef27cf82c029fcb6eeb1f2bfe3c7704fb5443dc92c14fefa2167",
+    "tech-priests_src/prototypes/compatibility/space-age.lua": "cda0c22f0488172e9503dc80605db2f59001f43bb36d9e755a1352ce95942a8f",
+    "tech-priests_src/info.json": "ad5b16a986535a7c20eb580bc4be4d193cf6c99a4f057d9487930f0846a05628",
+    "tech-priests_src/graphics/entity/sterling-steam-catalyzer-v1/east-idle.png": "d200fbade275c65504501ab418aabbc2de4388dc10febd6aa772575b87323e09",
+    "tech-priests_src/graphics/entity/sterling-steam-catalyzer-v1/east-working.png": "a497008d943c85fc91cf53d8c2bfec514f1a17158f9391dee91836cef93ae9ff",
+    "tech-priests_src/graphics/entity/sterling-steam-catalyzer-v1/icon.png": "da15874210998eaf52d889357e703dfd81ade17327e8effc0f140fea94e45e36",
+    "tech-priests_src/graphics/entity/sterling-steam-catalyzer-v1/north-idle.png": "837036992dcc985452e56961c20f551d915fb0959eed5b78961bedb556002978",
+    "tech-priests_src/graphics/entity/sterling-steam-catalyzer-v1/north-working.png": "b302bffe0420a233f4a4907b03607d5d5880c039b40d14a04a95a89e7db19e44",
+    "tech-priests_src/graphics/entity/sterling-steam-catalyzer-v1/south-idle.png": "7d6b7a67143119b3e6c2fae7c8ed1ec4104811b9b0d1b1c831f0ccec94c50019",
+    "tech-priests_src/graphics/entity/sterling-steam-catalyzer-v1/south-working.png": "2a8ae771c51c6ffa9b27d03139e6973455e6999ae06792a4de9a0a0036332333",
+    "tech-priests_src/graphics/entity/sterling-steam-catalyzer-v1/west-idle.png": "0a968665fabc669d7494777518571e495a2ea986ebc423bcf7be0776f4411345",
+    "tech-priests_src/graphics/entity/sterling-steam-catalyzer-v1/west-working.png": "cd1c18da3a3a1a6dab4a634d7d1b3a26728e181eecfdd4f0b36f9408a3431e5b"
+  },
+  "final_sprites_and_adapter_byte_identical_to_final_console_client_and_operated_reload": true,
+  "idle_render_metadata_note": "Final idle source captures have different PNG source metadata after the working-clip range correction. Their decoded RGBA is exactly equal to the retained, byte-identical native-tested idle sprites; pack_sprites.py asserts this. Working sprites and icon are byte-identical too.",
+  "production_prototype_overrides": false,
+  "full_user_mod_pack_installation": false
+}

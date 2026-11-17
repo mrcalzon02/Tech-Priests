@@ -5,6 +5,29 @@
 **Packaged baseline:** `0.1.672`  
 **Active development lane:** `0.1.674-dev`
 
+## 2026-11-17 - Sterling operational art and native delivery
+
+Finished the actual platform-only Sterling Steam Catalyzer with a textured,
+supported pressure vessel, full-bore ordinary-pipe fittings, furnace, instrument
+and genuine thermal animation. The owner-selected native circuit connector is
+seated on the console. The preceding two-port alignment repair is preserved;
+600kW chemical fuel,165C steam,4x2 footprint, real recipes/unlock and surface
+restrictions remain unchanged. Packed source, independently inspected clean
+four-second GLB,27 PBR images,68 source frames, four-direction sprites and exact
+contact/fit evidence are in art/source-to-3d/sterling-steam-catalyzer/v10.
+
+Factorio2.1.24 verifies24 real platform boilers,48 normal pipe joints, actual
+building recipe/unlock and consumed-item scripted placement, real fuel and
+water/steam, starvation/resupply, natural full-output fuel stop and drainage
+recovery, forced pause/restart and red/green fuel readings.122 genuine client
+images cover pipe/smoke/console views and native motion. Actual operated reload
+preserves fuel/energy/fluids, directions, ordinary pipes, circuits, placement
+and unlock. Native hot script pause retains burner graphics while production
+state holds; natural full output and cold/starved states extinguish. No new
+runtime poller/controller or balance change was introduced. Delivery is
+operational close enough, not individual owner art approval or a release/full
+user-pack claim. Preserve concurrent work; continue the Void Steam Engine.
+
 ## 2026-11-17 - Sterling native platform pipe repair and source checkpoint
 
 The existing platform-only Sterling Steam Catalyzer used half-axis pipe

@@ -1,3 +1,16 @@
+## 2026-11-17 - Sterling Steam Catalyzer operational completion
+
+The actual platform-only Sterling boiler is operational and close enough.
+[Final source/runtime/sprites and native evidence](../../art/source-to-3d/sterling-steam-catalyzer/v10/README.md)
+preserve600kW chemical fuel,165C steam,4x2 footprint and the existing recipe,
+technology and surface restrictions. Ordinary-pipe flow is repaired in all four
+facings; the owner-selected native connector is seated on the console. Packed
+source,27 PBR images, clean four-second GLB, four-direction animation,24-machine
+native operation, real recipe/unlock/placement and actual operated reload pass.
+No further cosmetic work is scheduled. Individual owner visual approval is not
+claimed. Source/FMPL publication receipts are being closed in DELIVERY_LEDGER.json.
+Continue the actual Void Steam Engine next; preserve concurrent/accepted work.
+
 ## 2026-11-15 seven-machine normal prototype and player controls verified; purifier closed
 
 The owner explicitly directed moving on from the completed purifier. Its accepted source, captures and fittings remain locked. The [normal chain/player-controls delivery](../../art/source-to-3d/metallic-hydrogen-chain/ordinary-integration/v01-player-controls/README.md) contains the seven electric, research-gated prototypes, original audio and real live-stock forge/assembler controls. Production addons and destructive fixtures are packaged separately. No real-mod installation was made automatically.

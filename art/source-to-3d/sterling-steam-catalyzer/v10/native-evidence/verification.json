@@ -1,0 +1,123 @@
+{
+  "passed": true,
+  "genuine_client_images": 122,
+  "native_cases": 24,
+  "native_directions": 4,
+  "source_gameplay_overrides": false,
+  "native_motion_frames_per_direction": 16,
+  "fps": 4,
+  "geometry_motion_measurement": {
+    "direction": "north",
+    "region_xywh": [
+      328,
+      420,
+      112,
+      35
+    ],
+    "excludes": "chimney smoke, native circuit LEDs, wires and floor",
+    "frame0_comparisons": [
+      {
+        "frame": 0,
+        "changed_pixels_over_0_05": 0
+      },
+      {
+        "frame": 1,
+        "changed_pixels_over_0_05": 47
+      },
+      {
+        "frame": 2,
+        "changed_pixels_over_0_05": 67
+      },
+      {
+        "frame": 3,
+        "changed_pixels_over_0_05": 98
+      },
+      {
+        "frame": 4,
+        "changed_pixels_over_0_05": 56
+      },
+      {
+        "frame": 5,
+        "changed_pixels_over_0_05": 102
+      },
+      {
+        "frame": 6,
+        "changed_pixels_over_0_05": 69
+      },
+      {
+        "frame": 7,
+        "changed_pixels_over_0_05": 49
+      },
+      {
+        "frame": 8,
+        "changed_pixels_over_0_05": 0
+      },
+      {
+        "frame": 9,
+        "changed_pixels_over_0_05": 62
+      },
+      {
+        "frame": 10,
+        "changed_pixels_over_0_05": 43
+      },
+      {
+        "frame": 11,
+        "changed_pixels_over_0_05": 47
+      },
+      {
+        "frame": 12,
+        "changed_pixels_over_0_05": 83
+      },
+      {
+        "frame": 13,
+        "changed_pixels_over_0_05": 93
+      },
+      {
+        "frame": 14,
+        "changed_pixels_over_0_05": 57
+      },
+      {
+        "frame": 15,
+        "changed_pixels_over_0_05": 73
+      }
+    ],
+    "best": {
+      "frame": 5,
+      "changed_pixels_over_0_05": 102
+    }
+  },
+  "native_state_visual_measurements": {
+    "script_stopped": {
+      "rgb_changed_pixels_over_0_005": 2352,
+      "maximum_rgb_difference": 0.02352941408753395,
+      "warm_flame_pixels": [
+        122,
+        125
+      ]
+    },
+    "natural_full_output": {
+      "rgb_changed_pixels_over_0_005": 1524,
+      "maximum_rgb_difference": 0.05098039656877518,
+      "warm_flame_pixels": [
+        0,
+        0
+      ]
+    }
+  },
+  "native_hot_script_pause_keeps_burner_graphics": true,
+  "native_pause_note": "The native boiler retains its hot-fire graphics when forced disabled_by_script; the engine test separately proves frozen fuel, energy and fluid state. Dry, unfueled, cold-disabled and naturally output-blocked units show the extinguished idle pose. No new production-status poller was introduced.",
+  "actual_operated_reload": {
+    "passed": true,
+    "exit_code": 0,
+    "actual_operated_save_sha256": "a704e083b3a350862b0cdbc9d7eb1fc5720e9b92ed235d6d4dd62d45aae3c270",
+    "reload_ticks": 300,
+    "checked": "All 24 actual operated/frozen boiler fuel, remaining fuel, fluid/pipe quantities and temperatures, energy, direction, disable flag; ordinary pipe connections; red/green native circuit networks; crafted-item placed entity and technology unlock",
+    "canonical_git_info_and_data_final_bytes_reloaded": true,
+    "metadata_normalization_note": "Initial info.json had an extra CR per line; decoded JSON fields were identical. Canonical Git bytes are retained, and the actual operated save was reloaded with them."
+  },
+  "owner_requested_console_connector_mount": true,
+  "owner_visual_approved": false,
+  "full_user_mod_pack_installation": false,
+  "visual_review_pending": false,
+  "visual_review_passed": true
+}

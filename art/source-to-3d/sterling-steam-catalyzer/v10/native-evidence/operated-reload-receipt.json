@@ -1,0 +1,9 @@
+{
+  "passed": true,
+  "exit_code": 0,
+  "actual_operated_save_sha256": "a704e083b3a350862b0cdbc9d7eb1fc5720e9b92ed235d6d4dd62d45aae3c270",
+  "reload_ticks": 300,
+  "checked": "All 24 actual operated/frozen boiler fuel, remaining fuel, fluid/pipe quantities and temperatures, energy, direction, disable flag; ordinary pipe connections; red/green native circuit networks; crafted-item placed entity and technology unlock",
+  "canonical_git_info_and_data_final_bytes_reloaded": true,
+  "metadata_normalization_note": "Initial info.json had an extra CR per line; decoded JSON fields were identical. Canonical Git bytes are retained, and the actual operated save was reloaded with them."
+}

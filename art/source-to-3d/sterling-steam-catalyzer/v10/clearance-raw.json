@@ -1,0 +1,1289 @@
+{
+  "artifact": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\tanks-structure-production\\build\\tp-sterling-contract-main01\\authored-v10\\sterling-v10.blend",
+  "sha256": "ff0cd75f2083fa4270520f9dd937f4116b930c5642c93e95b0a645e9fa2f6af8",
+  "sampled_poses": 195,
+  "authored_frames": 98,
+  "includes_half_frames": true,
+  "moving_meshes": [
+    "STERLING | coal fire tongue 0",
+    "STERLING | coal fire tongue 1",
+    "STERLING | coal fire tongue 2",
+    "STERLING | coal fire tongue 3",
+    "STERLING | coal fire tongue 4",
+    "STERLING | coal fire tongue 5",
+    "STERLING | coal fire tongue 6",
+    "STERLING | needle retained pivot",
+    "STERLING | visible pressure needle"
+  ],
+  "motion_owners": {
+    "STERLING | continuous bolted deck base": null,
+    "STERLING | layered armor deck": null,
+    "STERLING | anchor foot": null,
+    "STERLING | foundation retained bolt": null,
+    "STERLING | anchor foot.001": null,
+    "STERLING | foundation retained bolt.001": null,
+    "STERLING | anchor foot.002": null,
+    "STERLING | foundation retained bolt.002": null,
+    "STERLING | anchor foot.003": null,
+    "STERLING | foundation retained bolt.003": null,
+    "STERLING | vessel saddle foot": null,
+    "STERLING | front saddle upright": null,
+    "STERLING | rear saddle upright": null,
+    "STERLING | vessel saddle foot.001": null,
+    "STERLING | front saddle upright.001": null,
+    "STERLING | rear saddle upright.001": null,
+    "STERLING | horizontal pressure drum": null,
+    "STERLING | dished vessel end cover": null,
+    "STERLING | end pressure flange": null,
+    "STERLING | end flange captured fastener": null,
+    "STERLING | end flange captured fastener.001": null,
+    "STERLING | end flange captured fastener.002": null,
+    "STERLING | end flange captured fastener.003": null,
+    "STERLING | end flange captured fastener.004": null,
+    "STERLING | end flange captured fastener.005": null,
+    "STERLING | end flange captured fastener.006": null,
+    "STERLING | end flange captured fastener.007": null,
+    "STERLING | end flange captured fastener.008": null,
+    "STERLING | end flange captured fastener.009": null,
+    "STERLING | end flange captured fastener.010": null,
+    "STERLING | end flange captured fastener.011": null,
+    "STERLING | dished vessel end cover.001": null,
+    "STERLING | end pressure flange.001": null,
+    "STERLING | end flange captured fastener.012": null,
+    "STERLING | end flange captured fastener.013": null,
+    "STERLING | end flange captured fastener.014": null,
+    "STERLING | end flange captured fastener.015": null,
+    "STERLING | end flange captured fastener.016": null,
+    "STERLING | end flange captured fastener.017": null,
+    "STERLING | end flange captured fastener.018": null,
+    "STERLING | end flange captured fastener.019": null,
+    "STERLING | end flange captured fastener.020": null,
+    "STERLING | end flange captured fastener.021": null,
+    "STERLING | end flange captured fastener.022": null,
+    "STERLING | end flange captured fastener.023": null,
+    "STERLING | seated pressure band": null,
+    "STERLING | seated pressure band.001": null,
+    "STERLING | seated pressure band.002": null,
+    "STERLING | continuous circulation header": null,
+    "STERLING | header split coupling": null,
+    "STERLING | header split coupling.001": null,
+    "STERLING | continuous circulation header.001": null,
+    "STERLING | header split coupling.002": null,
+    "STERLING | header split coupling.003": null,
+    "STERLING | end jacket return": null,
+    "STERLING | valve casting": null,
+    "STERLING | valve casting.001": null,
+    "STERLING | bolted top access cap": null,
+    "STERLING | cap retaining bolt": null,
+    "STERLING | cap retaining bolt.001": null,
+    "STERLING | cap retaining bolt.002": null,
+    "STERLING | cap retaining bolt.003": null,
+    "STERLING | cap retaining bolt.004": null,
+    "STERLING | cap retaining bolt.005": null,
+    "STERLING | cap retaining bolt.006": null,
+    "STERLING | cap retaining bolt.007": null,
+    "STERLING | end jacket return.001": null,
+    "STERLING | valve casting.002": null,
+    "STERLING | valve casting.003": null,
+    "STERLING | bolted top access cap.001": null,
+    "STERLING | cap retaining bolt.008": null,
+    "STERLING | cap retaining bolt.009": null,
+    "STERLING | cap retaining bolt.010": null,
+    "STERLING | cap retaining bolt.011": null,
+    "STERLING | cap retaining bolt.012": null,
+    "STERLING | cap retaining bolt.013": null,
+    "STERLING | cap retaining bolt.014": null,
+    "STERLING | cap retaining bolt.015": null,
+    "STERLING | WATER full bore outer socket": null,
+    "STERLING | WATER seating collar": null,
+    "STERLING | WATER full-size tapered reducer": null,
+    "STERLING | WATER socket bolt": null,
+    "STERLING | WATER socket bolt.001": null,
+    "STERLING | WATER socket bolt.002": null,
+    "STERLING | WATER socket bolt.003": null,
+    "STERLING | WATER socket bolt.004": null,
+    "STERLING | WATER socket bolt.005": null,
+    "STERLING | WATER socket bolt.006": null,
+    "STERLING | WATER socket bolt.007": null,
+    "STERLING | WATER connection support": null,
+    "STERLING | STEAM full bore outer socket": null,
+    "STERLING | STEAM seating collar": null,
+    "STERLING | STEAM full-size tapered reducer": null,
+    "STERLING | STEAM socket bolt": null,
+    "STERLING | STEAM socket bolt.001": null,
+    "STERLING | STEAM socket bolt.002": null,
+    "STERLING | STEAM socket bolt.003": null,
+    "STERLING | STEAM socket bolt.004": null,
+    "STERLING | STEAM socket bolt.005": null,
+    "STERLING | STEAM socket bolt.006": null,
+    "STERLING | STEAM socket bolt.007": null,
+    "STERLING | STEAM connection support": null,
+    "STERLING | water jacket seated vessel branch": null,
+    "STERLING | steam collector seated vessel branch": null,
+    "STERLING | sensor pressure-shell feedthrough gland": null,
+    "STERLING | firebox refractory bed": null,
+    "STERLING | firebox back wall": null,
+    "STERLING | firebox left wall": null,
+    "STERLING | firebox right wall": null,
+    "STERLING | ash drawer": null,
+    "STERLING | firebox front lintel": null,
+    "STERLING | seated grate bar": null,
+    "STERLING | seated grate bar.001": null,
+    "STERLING | seated grate bar.002": null,
+    "STERLING | seated grate bar.003": null,
+    "STERLING | seated grate bar.004": null,
+    "STERLING | seated grate bar.005": null,
+    "STERLING | seated grate bar.006": null,
+    "STERLING | seated grate bar.007": null,
+    "STERLING | seated grate bar.008": null,
+    "STERLING | seated grate bar.009": null,
+    "STERLING | contained coal bed": null,
+    "STERLING | coal fire tongue 0": "STERLING | actual burner flame rig",
+    "STERLING | coal fire tongue 1": "STERLING | actual burner flame rig",
+    "STERLING | coal fire tongue 2": "STERLING | actual burner flame rig",
+    "STERLING | coal fire tongue 3": "STERLING | actual burner flame rig",
+    "STERLING | coal fire tongue 4": "STERLING | actual burner flame rig",
+    "STERLING | coal fire tongue 5": "STERLING | actual burner flame rig",
+    "STERLING | coal fire tongue 6": "STERLING | actual burner flame rig",
+    "STERLING | console bolted pressure-shell support": null,
+    "STERLING | console bolted pressure-shell support.001": null,
+    "STERLING | armored cogitator console": null,
+    "STERLING | recessed console face": null,
+    "STERLING | green status display": null,
+    "STERLING | recessed console control": null,
+    "STERLING | recessed console control.001": null,
+    "STERLING | recessed console control.002": null,
+    "STERLING | recessed console control.003": null,
+    "STERLING | console panel screw": null,
+    "STERLING | console panel screw.001": null,
+    "STERLING | console panel screw.002": null,
+    "STERLING | console panel screw.003": null,
+    "STERLING | pressure instrument impulse": null,
+    "STERLING | pressure instrument case": null,
+    "STERLING | pressure ceramic dial": null,
+    "STERLING | fixed bored pressure needle bearing": null,
+    "STERLING | visible pressure needle": "STERLING | seated pressure needle rig",
+    "STERLING | needle retained pivot": "STERLING | seated pressure needle rig",
+    "STERLING | dial calibration mark": null,
+    "STERLING | dial calibration mark.001": null,
+    "STERLING | dial calibration mark.002": null,
+    "STERLING | dial calibration mark.003": null,
+    "STERLING | dial calibration mark.004": null,
+    "STERLING | dial calibration mark.005": null,
+    "STERLING | dial calibration mark.006": null,
+    "STERLING | dial calibration mark.007": null,
+    "STERLING | dial calibration mark.008": null,
+    "STERLING | native circuit junction enclosure": null,
+    "STERLING | native circuit junction mounting lid": null,
+    "STERLING | circuit junction protected console lead": null,
+    "STERLING | removable Martian red inspection plate": null,
+    "STERLING | inspection plate bolt": null,
+    "STERLING | inspection plate bolt.001": null,
+    "STERLING | console protected sensor cable": null,
+    "STERLING | rear combustion exhaust": null,
+    "STERLING | stack founded support foot": null
+  },
+  "fixed_mesh_count": 157,
+  "pairs": {
+    "STERLING | continuous bolted deck base <> STERLING | layered armor deck": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 278,
+      "moving": false
+    },
+    "STERLING | WATER connection support <> STERLING | continuous bolted deck base": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 98,
+      "moving": false
+    },
+    "STERLING | STEAM connection support <> STERLING | continuous bolted deck base": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 97,
+      "moving": false
+    },
+    "STERLING | anchor foot <> STERLING | layered armor deck": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 58,
+      "moving": false
+    },
+    "STERLING | anchor foot.001 <> STERLING | layered armor deck": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 50,
+      "moving": false
+    },
+    "STERLING | anchor foot.002 <> STERLING | layered armor deck": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 56,
+      "moving": false
+    },
+    "STERLING | anchor foot.003 <> STERLING | layered armor deck": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 52,
+      "moving": false
+    },
+    "STERLING | layered armor deck <> STERLING | stack founded support foot": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 70,
+      "moving": false
+    },
+    "STERLING | anchor foot <> STERLING | foundation retained bolt": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "STERLING | anchor foot.001 <> STERLING | foundation retained bolt.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "STERLING | anchor foot.002 <> STERLING | foundation retained bolt.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "STERLING | anchor foot.003 <> STERLING | foundation retained bolt.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "STERLING | front saddle upright <> STERLING | vessel saddle foot": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 100,
+      "moving": false
+    },
+    "STERLING | rear saddle upright <> STERLING | vessel saddle foot": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 89,
+      "moving": false
+    },
+    "STERLING | seated pressure band <> STERLING | vessel saddle foot": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 132,
+      "moving": false
+    },
+    "STERLING | front saddle upright <> STERLING | seated pressure band": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 73,
+      "moving": false
+    },
+    "STERLING | rear saddle upright <> STERLING | seated pressure band": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 65,
+      "moving": false
+    },
+    "STERLING | front saddle upright.001 <> STERLING | vessel saddle foot.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 100,
+      "moving": false
+    },
+    "STERLING | rear saddle upright.001 <> STERLING | vessel saddle foot.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 88,
+      "moving": false
+    },
+    "STERLING | seated pressure band.002 <> STERLING | vessel saddle foot.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 132,
+      "moving": false
+    },
+    "STERLING | front saddle upright.001 <> STERLING | seated pressure band.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 69,
+      "moving": false
+    },
+    "STERLING | rear saddle upright.001 <> STERLING | seated pressure band.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 63,
+      "moving": false
+    },
+    "STERLING | dished vessel end cover <> STERLING | horizontal pressure drum": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 153,
+      "moving": false
+    },
+    "STERLING | end pressure flange <> STERLING | horizontal pressure drum": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 304,
+      "moving": false
+    },
+    "STERLING | dished vessel end cover.001 <> STERLING | horizontal pressure drum": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 149,
+      "moving": false
+    },
+    "STERLING | end pressure flange.001 <> STERLING | horizontal pressure drum": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 298,
+      "moving": false
+    },
+    "STERLING | horizontal pressure drum <> STERLING | seated pressure band": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 469,
+      "moving": false
+    },
+    "STERLING | horizontal pressure drum <> STERLING | seated pressure band.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 466,
+      "moving": false
+    },
+    "STERLING | horizontal pressure drum <> STERLING | seated pressure band.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 452,
+      "moving": false
+    },
+    "STERLING | horizontal pressure drum <> STERLING | water jacket seated vessel branch": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 50,
+      "moving": false
+    },
+    "STERLING | horizontal pressure drum <> STERLING | steam collector seated vessel branch": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 46,
+      "moving": false
+    },
+    "STERLING | horizontal pressure drum <> STERLING | sensor pressure-shell feedthrough gland": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 85,
+      "moving": false
+    },
+    "STERLING | console bolted pressure-shell support <> STERLING | horizontal pressure drum": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 44,
+      "moving": false
+    },
+    "STERLING | console bolted pressure-shell support.001 <> STERLING | horizontal pressure drum": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 44,
+      "moving": false
+    },
+    "STERLING | horizontal pressure drum <> STERLING | removable Martian red inspection plate": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 52,
+      "moving": false
+    },
+    "STERLING | console protected sensor cable <> STERLING | horizontal pressure drum": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 88,
+      "moving": false
+    },
+    "STERLING | firebox back wall <> STERLING | seated pressure band.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 79,
+      "moving": false
+    },
+    "STERLING | contained coal bed <> STERLING | seated pressure band.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 23,
+      "moving": false
+    },
+    "STERLING | continuous circulation header <> STERLING | end jacket return": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 60,
+      "moving": false
+    },
+    "STERLING | continuous circulation header <> STERLING | valve casting": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 64,
+      "moving": false
+    },
+    "STERLING | continuous circulation header <> STERLING | end jacket return.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 60,
+      "moving": false
+    },
+    "STERLING | continuous circulation header <> STERLING | valve casting.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 65,
+      "moving": false
+    },
+    "STERLING | continuous circulation header <> STERLING | steam collector seated vessel branch": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 68,
+      "moving": false
+    },
+    "STERLING | continuous circulation header <> STERLING | pressure instrument impulse": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 54,
+      "moving": false
+    },
+    "STERLING | continuous circulation header.001 <> STERLING | end jacket return": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 41,
+      "moving": false
+    },
+    "STERLING | continuous circulation header.001 <> STERLING | valve casting.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 64,
+      "moving": false
+    },
+    "STERLING | continuous circulation header.001 <> STERLING | end jacket return.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 38,
+      "moving": false
+    },
+    "STERLING | continuous circulation header.001 <> STERLING | valve casting.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 65,
+      "moving": false
+    },
+    "STERLING | continuous circulation header.001 <> STERLING | water jacket seated vessel branch": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 68,
+      "moving": false
+    },
+    "STERLING | continuous circulation header.001 <> STERLING | firebox refractory bed": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 44,
+      "moving": false
+    },
+    "STERLING | continuous circulation header.001 <> STERLING | firebox left wall": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 140,
+      "moving": false
+    },
+    "STERLING | continuous circulation header.001 <> STERLING | firebox right wall": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 140,
+      "moving": false
+    },
+    "STERLING | contained coal bed <> STERLING | continuous circulation header.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 80,
+      "moving": false
+    },
+    "STERLING | end jacket return <> STERLING | valve casting": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 87,
+      "moving": false
+    },
+    "STERLING | end jacket return <> STERLING | valve casting.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 64,
+      "moving": false
+    },
+    "STERLING | WATER full-size tapered reducer <> STERLING | end jacket return": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 152,
+      "moving": false
+    },
+    "STERLING | WATER full-size tapered reducer <> STERLING | valve casting.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 175,
+      "moving": false
+    },
+    "STERLING | bolted top access cap <> STERLING | cap retaining bolt": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "STERLING | bolted top access cap <> STERLING | cap retaining bolt.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "STERLING | bolted top access cap <> STERLING | cap retaining bolt.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 16,
+      "moving": false
+    },
+    "STERLING | bolted top access cap <> STERLING | cap retaining bolt.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "STERLING | bolted top access cap <> STERLING | cap retaining bolt.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 16,
+      "moving": false
+    },
+    "STERLING | bolted top access cap <> STERLING | cap retaining bolt.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "STERLING | bolted top access cap <> STERLING | cap retaining bolt.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "STERLING | bolted top access cap <> STERLING | cap retaining bolt.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "STERLING | end jacket return.001 <> STERLING | valve casting.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 88,
+      "moving": false
+    },
+    "STERLING | end jacket return.001 <> STERLING | valve casting.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 64,
+      "moving": false
+    },
+    "STERLING | STEAM full-size tapered reducer <> STERLING | end jacket return.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 151,
+      "moving": false
+    },
+    "STERLING | STEAM full-size tapered reducer <> STERLING | valve casting.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 177,
+      "moving": false
+    },
+    "STERLING | bolted top access cap.001 <> STERLING | cap retaining bolt.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "STERLING | bolted top access cap.001 <> STERLING | cap retaining bolt.009": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "STERLING | bolted top access cap.001 <> STERLING | cap retaining bolt.010": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 16,
+      "moving": false
+    },
+    "STERLING | bolted top access cap.001 <> STERLING | cap retaining bolt.011": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "STERLING | bolted top access cap.001 <> STERLING | cap retaining bolt.012": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 16,
+      "moving": false
+    },
+    "STERLING | bolted top access cap.001 <> STERLING | cap retaining bolt.013": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "STERLING | bolted top access cap.001 <> STERLING | cap retaining bolt.014": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "STERLING | bolted top access cap.001 <> STERLING | cap retaining bolt.015": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "STERLING | WATER full bore outer socket <> STERLING | WATER seating collar": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 213,
+      "moving": false
+    },
+    "STERLING | WATER full bore outer socket <> STERLING | WATER socket bolt": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "STERLING | WATER full bore outer socket <> STERLING | WATER socket bolt.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "STERLING | WATER full bore outer socket <> STERLING | WATER socket bolt.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "STERLING | WATER full bore outer socket <> STERLING | WATER socket bolt.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "STERLING | WATER full bore outer socket <> STERLING | WATER socket bolt.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "STERLING | WATER full bore outer socket <> STERLING | WATER socket bolt.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "STERLING | WATER full bore outer socket <> STERLING | WATER socket bolt.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "STERLING | WATER full bore outer socket <> STERLING | WATER socket bolt.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "STERLING | WATER seating collar <> STERLING | WATER socket bolt": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "STERLING | WATER seating collar <> STERLING | WATER socket bolt.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "STERLING | WATER seating collar <> STERLING | WATER socket bolt.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 16,
+      "moving": false
+    },
+    "STERLING | WATER seating collar <> STERLING | WATER socket bolt.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "STERLING | WATER seating collar <> STERLING | WATER socket bolt.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "STERLING | WATER seating collar <> STERLING | WATER socket bolt.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 16,
+      "moving": false
+    },
+    "STERLING | WATER seating collar <> STERLING | WATER socket bolt.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 16,
+      "moving": false
+    },
+    "STERLING | WATER seating collar <> STERLING | WATER socket bolt.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "STERLING | STEAM full bore outer socket <> STERLING | STEAM seating collar": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 213,
+      "moving": false
+    },
+    "STERLING | STEAM full bore outer socket <> STERLING | STEAM socket bolt": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "STERLING | STEAM full bore outer socket <> STERLING | STEAM socket bolt.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "STERLING | STEAM full bore outer socket <> STERLING | STEAM socket bolt.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "STERLING | STEAM full bore outer socket <> STERLING | STEAM socket bolt.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "STERLING | STEAM full bore outer socket <> STERLING | STEAM socket bolt.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "STERLING | STEAM full bore outer socket <> STERLING | STEAM socket bolt.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "STERLING | STEAM full bore outer socket <> STERLING | STEAM socket bolt.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "STERLING | STEAM full bore outer socket <> STERLING | STEAM socket bolt.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "STERLING | STEAM seating collar <> STERLING | STEAM socket bolt": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "STERLING | STEAM seating collar <> STERLING | STEAM socket bolt.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "STERLING | STEAM seating collar <> STERLING | STEAM socket bolt.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "STERLING | STEAM seating collar <> STERLING | STEAM socket bolt.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 16,
+      "moving": false
+    },
+    "STERLING | STEAM seating collar <> STERLING | STEAM socket bolt.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "STERLING | STEAM seating collar <> STERLING | STEAM socket bolt.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "STERLING | STEAM seating collar <> STERLING | STEAM socket bolt.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 16,
+      "moving": false
+    },
+    "STERLING | STEAM seating collar <> STERLING | STEAM socket bolt.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "STERLING | console protected sensor cable <> STERLING | sensor pressure-shell feedthrough gland": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 77,
+      "moving": false
+    },
+    "STERLING | firebox back wall <> STERLING | firebox refractory bed": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 66,
+      "moving": false
+    },
+    "STERLING | firebox left wall <> STERLING | firebox refractory bed": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 96,
+      "moving": false
+    },
+    "STERLING | firebox refractory bed <> STERLING | firebox right wall": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 95,
+      "moving": false
+    },
+    "STERLING | ash drawer <> STERLING | firebox refractory bed": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 55,
+      "moving": false
+    },
+    "STERLING | firebox refractory bed <> STERLING | seated grate bar": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 41,
+      "moving": false
+    },
+    "STERLING | firebox refractory bed <> STERLING | seated grate bar.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 41,
+      "moving": false
+    },
+    "STERLING | firebox refractory bed <> STERLING | seated grate bar.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 41,
+      "moving": false
+    },
+    "STERLING | firebox refractory bed <> STERLING | seated grate bar.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 41,
+      "moving": false
+    },
+    "STERLING | firebox refractory bed <> STERLING | seated grate bar.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 41,
+      "moving": false
+    },
+    "STERLING | firebox refractory bed <> STERLING | seated grate bar.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 41,
+      "moving": false
+    },
+    "STERLING | firebox refractory bed <> STERLING | seated grate bar.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 41,
+      "moving": false
+    },
+    "STERLING | firebox refractory bed <> STERLING | seated grate bar.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 43,
+      "moving": false
+    },
+    "STERLING | firebox refractory bed <> STERLING | seated grate bar.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 45,
+      "moving": false
+    },
+    "STERLING | firebox refractory bed <> STERLING | seated grate bar.009": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 45,
+      "moving": false
+    },
+    "STERLING | firebox back wall <> STERLING | firebox left wall": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 88,
+      "moving": false
+    },
+    "STERLING | firebox back wall <> STERLING | firebox right wall": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 87,
+      "moving": false
+    },
+    "STERLING | firebox back wall <> STERLING | rear combustion exhaust": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 96,
+      "moving": false
+    },
+    "STERLING | firebox front lintel <> STERLING | firebox left wall": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 52,
+      "moving": false
+    },
+    "STERLING | armored cogitator console <> STERLING | firebox left wall": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 49,
+      "moving": false
+    },
+    "STERLING | firebox front lintel <> STERLING | firebox right wall": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 53,
+      "moving": false
+    },
+    "STERLING | armored cogitator console <> STERLING | firebox right wall": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 49,
+      "moving": false
+    },
+    "STERLING | firebox front lintel <> STERLING | seated grate bar": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "STERLING | firebox front lintel <> STERLING | seated grate bar.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "STERLING | firebox front lintel <> STERLING | seated grate bar.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "STERLING | firebox front lintel <> STERLING | seated grate bar.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "STERLING | firebox front lintel <> STERLING | seated grate bar.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "STERLING | firebox front lintel <> STERLING | seated grate bar.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "STERLING | firebox front lintel <> STERLING | seated grate bar.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "STERLING | firebox front lintel <> STERLING | seated grate bar.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "STERLING | firebox front lintel <> STERLING | seated grate bar.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "STERLING | firebox front lintel <> STERLING | seated grate bar.009": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "STERLING | armored cogitator console <> STERLING | console bolted pressure-shell support": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "STERLING | armored cogitator console <> STERLING | console bolted pressure-shell support.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "STERLING | armored cogitator console <> STERLING | recessed console face": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 30,
+      "moving": false
+    },
+    "STERLING | armored cogitator console <> STERLING | circuit junction protected console lead": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 52,
+      "moving": false
+    },
+    "STERLING | armored cogitator console <> STERLING | console protected sensor cable": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 31,
+      "moving": false
+    },
+    "STERLING | green status display <> STERLING | recessed console face": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 30,
+      "moving": false
+    },
+    "STERLING | pressure instrument case <> STERLING | pressure instrument impulse": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 50,
+      "moving": false
+    },
+    "STERLING | pressure ceramic dial <> STERLING | pressure instrument case": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 297,
+      "moving": false
+    },
+    "STERLING | fixed bored pressure needle bearing <> STERLING | pressure instrument case": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 97,
+      "moving": false
+    },
+    "STERLING | native circuit junction enclosure <> STERLING | native circuit junction mounting lid": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "STERLING | circuit junction protected console lead <> STERLING | native circuit junction enclosure": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "STERLING | inspection plate bolt <> STERLING | removable Martian red inspection plate": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "STERLING | inspection plate bolt.001 <> STERLING | removable Martian red inspection plate": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "STERLING | needle retained pivot <> STERLING | visible pressure needle": {
+      "first_frame": 0.0,
+      "last_frame": 97.0,
+      "frames": 195,
+      "maximum_triangle_intersections": 52,
+      "moving": true
+    }
+  },
+  "note": "Raw triangle contacts include intentional fitted joints, tooth engagement and fasteners. Every pair requires adjudication; this inventory is not a clearance pass."
+}

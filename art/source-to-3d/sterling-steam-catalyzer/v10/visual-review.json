@@ -1,0 +1,35 @@
+{
+  "judgment": "operational_close_enough",
+  "reviewed_images": {
+    "actual-glb-front.png": "ac325fd9884adf117ac054598602f90f02693e3f49020406090152815d851152",
+    "actual-glb-detail.png": "e8fe7526c25c0f8601db85b3fe75dbf5a08a64867a98d74dfa8c34d2f3f6146c",
+    "actual-glb-rear.png": "d0564a7eb3aa888f42171a3f537b703558c1f2e09ccae7dde5779608719907e8",
+    "actual-glb-clay.png": "0d0ac8f5ed9ce0ee1ccf7447fcce43086d0155f1e3d12a7247718947d3055fa6",
+    "review-four-directions.png": "dea3bdb2fe2fffe863a7c0151bc25b55eeacd132f8e9f461254d99ba5ab06f18",
+    "native-evidence/north-console.png": "d76e06b74fead2305eb774ec58a0be56c839b2ed0398e5ebb6b820ced64d123e",
+    "native-evidence/east-console.png": "e49ae95c1b5a6fe822cadad957bf59768b6a4961c7e39b4881a0f139abe5b6c4",
+    "native-evidence/south-console.png": "8d18237091f98ed33f2a409ceb71248d91a3464acd719c9a3dedba07241cbaf8",
+    "native-evidence/west-console.png": "2b9ed571f8014495c5a94cf8ed3a328d79fa762f83f95dabe06071e97683f46a",
+    "native-evidence/pipe-review-north-east.png": "27334aaf24fd11314e379c90cff6c7dd2274a624051c3999964198eebdba8630",
+    "native-evidence/pipe-review-south-west.png": "c0a3c820f118cfb33e033598639906b30c13bd8ab2cbea5d80115fbb1e9a2ad5",
+    "native-evidence/smoke-review-four-directions.png": "9f26005d462a031837ef00c0af3938856abac2a8b89a254faba03c05470d10a4",
+    "native-evidence/north-working.png": "1e41d4d79b1cbb8510c289d63fb19b4d85e4f09f54e28ed3cdcef621aaf6beac",
+    "native-evidence/east-working.png": "7daa1f18039fe749043fe3fe4504172993da09503942e3aa7280c42f889e5de9",
+    "native-evidence/south-working.png": "3cd75e7e42f6836a17c41db6a63925b168e8a3c194b378b09a0dc6fe2cf36216",
+    "native-evidence/west-working.png": "42ae3fafa0e81c2c33685fa9588c0c4d9d9ea3f0137b48de78b566737cd0154e",
+    "native-evidence/north-full-output.png": "ee8b6734cc58f06e2ed39c055a646bc0818759029fccaa34f539bf9d79faa63b",
+    "native-evidence/north-no-fuel.png": "05c527fc810ec8410b2e3d234061998a85a7926194fde90999674c7cdd80d071",
+    "native-evidence/north-no-water.png": "b187383066e01429574d397613939d49244279cbef9102dd3cdd516710b022fd",
+    "native-evidence/north-disabled.png": "19b0b3e1f7723c67d24110944639ebb842edca741d555636d42a88dedf58caa5"
+  },
+  "source_sha256": "ff0cd75f2083fa4270520f9dd937f4116b930c5642c93e95b0a645e9fa2f6af8",
+  "runtime_sha256": "409db745f841138f5b600afead2bd831df25e61ef7a7efb76dc4ec924fd33287",
+  "owner_requested_console_connector_mount": true,
+  "owner_visual_approved": false,
+  "cosmetic_work_deferred": true,
+  "limitations": [
+    "Fixed construction contacts are explicitly adjudicated; sampled poses are not continuous rigid-body simulation.",
+    "Native forced hot script pause retains burner graphics while fuel/energy/fluid state holds; dry, cold and natural full-output states extinguish.",
+    "Private water/sink/power fixtures and seeded technology verify native operation; no full playthrough or user-mod-pack installation is claimed."
+  ]
+}

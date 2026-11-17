@@ -1,0 +1,69 @@
+{
+  "schema": "fmpl.model-delivery.v1",
+  "id": "tech-priests-sterling-steam-catalyzer-v1",
+  "status": "operational-native-integrated-delegated-review",
+  "source_repository": "mrcalzon02/Tech-Priests",
+  "prototype": {
+    "type": "boiler",
+    "name": "sterling-steam-catalyzer"
+  },
+  "source": {
+    "path": "art/source-to-3d/sterling-steam-catalyzer/v10/sterling-v10.blend",
+    "sha256": "ff0cd75f2083fa4270520f9dd937f4116b930c5642c93e95b0a645e9fa2f6af8"
+  },
+  "runtime": {
+    "path": "art/source-to-3d/sterling-steam-catalyzer/v10/sterling-v10.glb",
+    "sha256": "409db745f841138f5b600afead2bd831df25e61ef7a7efb76dc4ec924fd33287"
+  },
+  "footprint_tiles": [
+    4,
+    2
+  ],
+  "surface": "actual zero-gravity/pressure space-platform foundation",
+  "units_per_tile": 1,
+  "native_engine": "2.1.24",
+  "native_mod_version": "0.1.687",
+  "burner_watts": 600000,
+  "steam_temperature": 165,
+  "thermal_water_to_steam_volume_ratio": 10,
+  "nominal_water_per_second": 2,
+  "nominal_steam_per_second": 20,
+  "packed_pbr_images": 27,
+  "runtime_embedded_images": 27,
+  "meshes": 166,
+  "triangles": 28320,
+  "source_runtime_working_pose_checks": 6,
+  "source_clearance_poses": 195,
+  "runtime_clearance_poses": 193,
+  "explicitly_adjudicated_contact_pairs": 157,
+  "working_loop_source_frames": [
+    1,
+    97
+  ],
+  "runtime_working_loop_seconds": 4,
+  "runtime_working_loop_starts_at_zero": true,
+  "source_idle_frame": 0,
+  "idle_pose_export_scope": "Idle is retained in the editable source and genuine native sprites; the GLB contains the clean working loop only.",
+  "genuine_source_captures": 68,
+  "native_art_directions": 4,
+  "working_frames_per_direction": 16,
+  "native_fps": 4,
+  "native_test_boilers": 24,
+  "ordinary_machine_pipe_joints": 48,
+  "ordinary_pipe_entities": 96,
+  "native_client_captures": 122,
+  "native_red_green_fuel_read": true,
+  "actual_building_recipe_and_unlock": true,
+  "scripted_consumed_crafted_item_placement": true,
+  "fuel_and_water_resupply": true,
+  "natural_full_output_and_drain_recovery": true,
+  "script_pause_and_restart": true,
+  "actual_operated_save_reload": true,
+  "native_hot_script_pause_graphics_note": "The native boiler retains its hot-fire graphics when forced disabled_by_script; the engine test separately proves frozen fuel, energy and fluid state. Dry, unfueled, cold-disabled and naturally output-blocked units show the extinguished idle pose. No new production-status poller was introduced.",
+  "pipe_mouth_projection_error_max_tiles": 7.208220137624636e-07,
+  "owner_requested_console_mount": true,
+  "individual_owner_visual_approved": false,
+  "full_user_mod_pack_installation": false,
+  "portal_publication": false,
+  "next": "Preserve Sterling; continue actual Void Steam Engine contract, source recovery, animation and native delivery."
+}

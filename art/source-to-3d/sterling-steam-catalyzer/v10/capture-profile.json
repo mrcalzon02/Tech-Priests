@@ -1,0 +1,48 @@
+{
+  "camera_policy": "fmpl.factorio45.v1",
+  "capture_kind": "entity",
+  "orientation_policy": "rotatable",
+  "directions": [
+    0,
+    90,
+    180,
+    270
+  ],
+  "states": {
+    "idle": [
+      0
+    ],
+    "working": [
+      1,
+      7,
+      13,
+      19,
+      25,
+      31,
+      37,
+      43,
+      49,
+      55,
+      61,
+      67,
+      73,
+      79,
+      85,
+      91
+    ]
+  },
+  "source_size": 256,
+  "fps": 4,
+  "camera_override": {
+    "type": "ORTHO",
+    "elevation_deg": 45,
+    "azimuth_deg": 0,
+    "distance": 8.48528137423857,
+    "ortho_scale": 5.4,
+    "target": [
+      0,
+      0,
+      0.8
+    ]
+  }
+}
