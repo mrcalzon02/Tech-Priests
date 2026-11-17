@@ -1,0 +1,204 @@
+{
+  "source_sha256": "378b6420a4aba5ccff67015335fe57d08592d7a5865ada62ed96f5d9b6949b3c",
+  "export_sha256": "101727f232c7babb41d04f85dbb04c2277eccbc0bf322b80ddff59e20769aac0",
+  "results": [
+    {
+      "artifact": "source",
+      "joints": [
+        {
+          "joint": "shoulder",
+          "measured_axis": [
+            -0.3308962881565094,
+            -0.9436671137809753,
+            5.740139030763203e-08
+          ],
+          "axis_error_degrees": 0.0,
+          "maximum_axis_dot_arm": 7.775778954055568e-08,
+          "hub_axial_span": [
+            -0.12000004760921001,
+            0.12000004760921001
+          ],
+          "hub_bore_radius": 0.05799995988940011,
+          "pin_radial_clearance": 0.007999895546693142,
+          "hub_to_cheek_axial_gaps": [
+            0.01249992661178112,
+            0.01249992661178112
+          ],
+          "through_bore_probes": 48,
+          "blocked_through_bore_probes": 0,
+          "probe_hits": [],
+          "hub_excursions": [
+            {
+              "degrees": -15,
+              "hub_to_fixed_cheek_axial_gap": 0.01249991450458765
+            },
+            {
+              "degrees": -7.5,
+              "hub_to_fixed_cheek_axial_gap": 0.012499922420829535
+            },
+            {
+              "degrees": 0,
+              "hub_to_fixed_cheek_axial_gap": 0.01249992661178112
+            },
+            {
+              "degrees": 7.5,
+              "hub_to_fixed_cheek_axial_gap": 0.01249992847442627
+            },
+            {
+              "degrees": 15,
+              "hub_to_fixed_cheek_axial_gap": 0.012499915435910225
+            }
+          ],
+          "passed": true
+        },
+        {
+          "joint": "elbow",
+          "measured_axis": [
+            -0.3308962881565094,
+            -0.9436671137809753,
+            4.457057301010536e-08
+          ],
+          "axis_error_degrees": 0.0,
+          "maximum_axis_dot_arm": 6.703839972033165e-08,
+          "hub_axial_span": [
+            -0.120000044349581,
+            0.12000004388391972
+          ],
+          "hub_bore_radius": 0.04799994910715153,
+          "pin_radial_clearance": 0.007999884401676247,
+          "hub_to_cheek_axial_gaps": [
+            0.01249995967373252,
+            0.012499941047281027
+          ],
+          "through_bore_probes": 48,
+          "blocked_through_bore_probes": 0,
+          "probe_hits": [],
+          "hub_excursions": [
+            {
+              "degrees": -15,
+              "hub_to_fixed_cheek_axial_gap": 0.012499933131039143
+            },
+            {
+              "degrees": -7.5,
+              "hub_to_fixed_cheek_axial_gap": 0.012499943375587463
+            },
+            {
+              "degrees": 0,
+              "hub_to_fixed_cheek_axial_gap": 0.012499941047281027
+            },
+            {
+              "degrees": 7.5,
+              "hub_to_fixed_cheek_axial_gap": 0.012499938835389912
+            },
+            {
+              "degrees": 15,
+              "hub_to_fixed_cheek_axial_gap": 0.012499933131039143
+            }
+          ],
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "artifact": "export",
+      "joints": [
+        {
+          "joint": "shoulder",
+          "measured_axis": [
+            -0.3308962881565094,
+            -0.9436671137809753,
+            -1.1676932132331785e-07
+          ],
+          "axis_error_degrees": 0.0,
+          "maximum_axis_dot_arm": 6.775154304250464e-08,
+          "hub_axial_span": [
+            -0.12000003270804882,
+            0.12000004202127457
+          ],
+          "hub_bore_radius": 0.05799994182493832,
+          "pin_radial_clearance": 0.007999879519496898,
+          "hub_to_cheek_axial_gaps": [
+            0.012499933131039143,
+            0.012499935925006866
+          ],
+          "through_bore_probes": 48,
+          "blocked_through_bore_probes": 0,
+          "probe_hits": [],
+          "hub_excursions": [
+            {
+              "degrees": -15,
+              "hub_to_fixed_cheek_axial_gap": 0.012499925680458546
+            },
+            {
+              "degrees": -7.5,
+              "hub_to_fixed_cheek_axial_gap": 0.012499933131039143
+            },
+            {
+              "degrees": 0,
+              "hub_to_fixed_cheek_axial_gap": 0.012499933131039143
+            },
+            {
+              "degrees": 7.5,
+              "hub_to_fixed_cheek_axial_gap": 0.012499921955168247
+            },
+            {
+              "degrees": 15,
+              "hub_to_fixed_cheek_axial_gap": 0.012499918229877949
+            }
+          ],
+          "passed": true
+        },
+        {
+          "joint": "elbow",
+          "measured_axis": [
+            0.3308962881565094,
+            0.9436671137809753,
+            7.460638329348512e-08
+          ],
+          "axis_error_degrees": 0.0,
+          "maximum_axis_dot_arm": 3.2526898507967417e-08,
+          "hub_axial_span": [
+            -0.12000002281274647,
+            0.1200000368990004
+          ],
+          "hub_bore_radius": 0.04799994833029064,
+          "pin_radial_clearance": 0.007999867344875969,
+          "hub_to_cheek_axial_gaps": [
+            0.012499970849603415,
+            0.01249995967373252
+          ],
+          "through_bore_probes": 48,
+          "blocked_through_bore_probes": 0,
+          "probe_hits": [],
+          "hub_excursions": [
+            {
+              "degrees": -15,
+              "hub_to_fixed_cheek_axial_gap": 0.012499956414103508
+            },
+            {
+              "degrees": -7.5,
+              "hub_to_fixed_cheek_axial_gap": 0.01249996479600668
+            },
+            {
+              "degrees": 0,
+              "hub_to_fixed_cheek_axial_gap": 0.01249995967373252
+            },
+            {
+              "degrees": 7.5,
+              "hub_to_fixed_cheek_axial_gap": 0.012499967589974403
+            },
+            {
+              "degrees": 15,
+              "hub_to_fixed_cheek_axial_gap": 0.012499944306910038
+            }
+          ],
+          "passed": true
+        }
+      ],
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "scope": "Actual transformed source and independently imported GLB geometry. Pin PCA, arm perpendicularity, measured bore/pin radii, axial hub/fork gaps and continuous bore ray probes. Hub-only \u00b115degree clearance study; not full crane dynamic or structural simulation."
+}

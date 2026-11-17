@@ -1,0 +1,148 @@
+{
+  "passed": true,
+  "source_sha256": "378b6420a4aba5ccff67015335fe57d08592d7a5865ada62ed96f5d9b6949b3c",
+  "export_sha256": "101727f232c7babb41d04f85dbb04c2277eccbc0bf322b80ddff59e20769aac0",
+  "results": [
+    {
+      "kind": "source",
+      "tests": [
+        {
+          "route": "advanced-pump-0-0",
+          "terminal": "start",
+          "rays": 25,
+          "clear_radius": 0.0135,
+          "blocked": [],
+          "passed": true
+        },
+        {
+          "route": "advanced-pump-0-0",
+          "terminal": "end",
+          "rays": 25,
+          "clear_radius": 0.0135,
+          "blocked": [],
+          "passed": true
+        },
+        {
+          "route": "advanced-pump-0-1",
+          "terminal": "start",
+          "rays": 25,
+          "clear_radius": 0.0135,
+          "blocked": [],
+          "passed": true
+        },
+        {
+          "route": "advanced-pump-0-1",
+          "terminal": "end",
+          "rays": 25,
+          "clear_radius": 0.0135,
+          "blocked": [],
+          "passed": true
+        },
+        {
+          "route": "advanced-pump-1-0",
+          "terminal": "start",
+          "rays": 25,
+          "clear_radius": 0.0135,
+          "blocked": [],
+          "passed": true
+        },
+        {
+          "route": "advanced-pump-1-0",
+          "terminal": "end",
+          "rays": 25,
+          "clear_radius": 0.0135,
+          "blocked": [],
+          "passed": true
+        },
+        {
+          "route": "advanced-pump-1-1",
+          "terminal": "start",
+          "rays": 25,
+          "clear_radius": 0.0135,
+          "blocked": [],
+          "passed": true
+        },
+        {
+          "route": "advanced-pump-1-1",
+          "terminal": "end",
+          "rays": 25,
+          "clear_radius": 0.0135,
+          "blocked": [],
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "kind": "export",
+      "tests": [
+        {
+          "route": "advanced-pump-0-0",
+          "terminal": "start",
+          "rays": 25,
+          "clear_radius": 0.0135,
+          "blocked": [],
+          "passed": true
+        },
+        {
+          "route": "advanced-pump-0-0",
+          "terminal": "end",
+          "rays": 25,
+          "clear_radius": 0.0135,
+          "blocked": [],
+          "passed": true
+        },
+        {
+          "route": "advanced-pump-0-1",
+          "terminal": "start",
+          "rays": 25,
+          "clear_radius": 0.0135,
+          "blocked": [],
+          "passed": true
+        },
+        {
+          "route": "advanced-pump-0-1",
+          "terminal": "end",
+          "rays": 25,
+          "clear_radius": 0.0135,
+          "blocked": [],
+          "passed": true
+        },
+        {
+          "route": "advanced-pump-1-0",
+          "terminal": "start",
+          "rays": 25,
+          "clear_radius": 0.0135,
+          "blocked": [],
+          "passed": true
+        },
+        {
+          "route": "advanced-pump-1-0",
+          "terminal": "end",
+          "rays": 25,
+          "clear_radius": 0.0135,
+          "blocked": [],
+          "passed": true
+        },
+        {
+          "route": "advanced-pump-1-1",
+          "terminal": "start",
+          "rays": 25,
+          "clear_radius": 0.0135,
+          "blocked": [],
+          "passed": true
+        },
+        {
+          "route": "advanced-pump-1-1",
+          "terminal": "end",
+          "rays": 25,
+          "clear_radius": 0.0135,
+          "blocked": [],
+          "passed": true
+        }
+      ],
+      "passed": true
+    }
+  ],
+  "scope": "25axial rays at each of8real receiver entries, through all scene physical meshes into the reservoir/pump cavity, source and actual GLB. Visible route centerlines are true hollow Pipette meshes; not a pressure/flow simulation."
+}

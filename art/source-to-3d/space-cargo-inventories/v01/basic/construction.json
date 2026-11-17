@@ -1,0 +1,50 @@
+{
+  "grade": 0,
+  "underground_floor": -1.02,
+  "glass_top": -0.005,
+  "cargo_stock": [
+    "Cargo | sealed stock case 0 0",
+    "Cargo | sealed stock case 0 1",
+    "Cargo | sealed barrel 0",
+    "Cargo | sealed barrel 1",
+    "Cargo | sealed barrel 2",
+    "Cargo | tools tray base",
+    "Cargo | tool spanner shaft 0",
+    "Cargo | tool spanner shaft 1",
+    "Cargo | tool hammer timber handle",
+    "Cargo | tool driver handle 0",
+    "Cargo | tool driver handle 1"
+  ],
+  "cargo_variation": [
+    "Slatted timber crate and sealed metal case",
+    "Three rolled-hoop red barrels with bungs",
+    "Supported tool tray with open-jaw spanners, hammer and screwdrivers"
+  ],
+  "terminals": {
+    "red": [
+      0.45,
+      -1.075,
+      0.1825
+    ],
+    "green": [
+      0.59,
+      -1.075,
+      0.1825
+    ]
+  },
+  "status_led": [
+    0.73,
+    -1.075,
+    0.135
+  ],
+  "wall_structure": "Continuous upper/lower chords with fitted gussets and alternating diagonal braces along long walls, ends and partitions; no brace crosses a viewport",
+  "static": "Passive cargo compartment; Mixed crate/barrel/tool arrangement identifies cargo, not live inventory count; no loading mechanism or powered animation invented",
+  "occlusion": "Opaque sealed well/baffles plus render-only grade holdouts admit below-grade drawing only through the three green panes",
+  "native_contract": "Existing20-slot platform-only container; four native rotations requested by owner, unchanged recipe/research/collision/selection and standard inserters",
+  "source_reuse": "Supplied original skull/Bionic source assembly reused from authored cache master; no original editable cargo source found",
+  "advanced": "Build next after Basic export/integration/native wrap-up. Owner accepted this finish as the shared basis.",
+  "finish": "Accepted refined steel study: canonical FMPL machine steel/gunmetal/iron/brass/Martian red; baked FMPL cedar grain aligned to planks; packed green optical derivative with softened art-directed response",
+  "geometry_refinement": "Rounded deck/corner/tool edges, formed barrel shoulders and smooth barrel normals; truss seats, floor, openings and interfaces retained",
+  "environment": "Exact Boiler V08 neutral industrial workshop world/lights and Standard color transform; no boosted cache rig or invented well fill lamps",
+  "glass": "Green tinted viewing pane, roughness.26, low specular and effective thin-window IOR1.08; art-directed readability, not laboratory glass optics"
+}

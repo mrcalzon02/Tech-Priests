@@ -1,0 +1,35 @@
+{
+  "grade": 0,
+  "underground_floor": -1.2,
+  "glass_top": -0.004,
+  "terminals": {
+    "red": [
+      0.36000000000000004,
+      -2.328,
+      0.146
+    ],
+    "green": [
+      0.472,
+      -2.328,
+      0.146
+    ]
+  },
+  "status_led": [
+    0.584,
+    -2.328,
+    0.10800000000000001
+  ],
+  "registration": [
+    0,
+    -0.21213203435596423
+  ],
+  "native": "Existing Advanced5x5/50slot passive platform container,420health,18s recipe,void-cogitator unlock,wire reach9 preserved. Four native placement directions as requested for the family.",
+  "owner_rescope": "Preserve the Basic three-window assembly and add adjacent huge cargo door/subframe and a large overhanging crane; four-bay replacement rejected.",
+  "basis": "Complete accepted Basic module retained with unchanged meshes/UVs/materials; uniform0.8 fit into owner-corrected Advanced5x5 square contract, located atY-1.468. No component stretching or window-layout replacement.",
+  "crane_position": "Owner refinement: pedestal seated atY-.08 close to the lower cargo windows; raised elbowZ1.90 and jib tipZ2.05 reach over the central cargo doorway. Struts, cable and chain follow the moved journals.",
+  "geometry": "Aft steel platform, heavy two-leaf cargo door into an opaque underframe shaft, large founded overhanging articulated crane with actual journals/struts/chain/rounded hook",
+  "animation": "None: static closed cargo door and parked crane; actual prototype remains ordinary passive storage, not a new automatic loader",
+  "basis_source_sha256": "e8b0dbe39f95808792e10009ec940edf7a2d47b244d418911ae7b94dcad4d7cb",
+  "source_sheet": "Owner345hd7download.png: heavy closed double cargo door, large overhanging crane, perimeter retainers, cast skull reliefs, dark steel/cast brass services; within owner-corrected5x5 square footprint",
+  "source_recovery": "Original Advanced editable source unavailable; referencePNG retained; accepted Basic source reused without editing its mesh data"
+}

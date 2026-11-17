@@ -1,0 +1,3380 @@
+{
+  "source_stage": "Owner requested dense structural/service detail",
+  "added_meshes": 213,
+  "roles": [
+    {
+      "object": "Advanced | detail door -1 raised vertical lip -1",
+      "host": "Advanced | cargo door recessed panel -1",
+      "purpose": "raised protective edge carried by actual cargo door panel"
+    },
+    {
+      "object": "Advanced | detail door -1 raised vertical lip 1",
+      "host": "Advanced | cargo door recessed panel -1",
+      "purpose": "raised protective edge carried by actual cargo door panel"
+    },
+    {
+      "object": "Advanced | detail door -1 recessed inspection plate 0.06",
+      "host": "Advanced | cargo door recessed panel -1",
+      "purpose": "removable leaf inspection plate"
+    },
+    {
+      "object": "Advanced | detail inspection captive stud -1.38 0.06",
+      "host": "Advanced | detail door -1 recessed inspection plate 0.06",
+      "purpose": "captive fastener mounted on inspection plate"
+    },
+    {
+      "object": "Advanced | detail inspection captive stud -1.18 0.06",
+      "host": "Advanced | detail door -1 recessed inspection plate 0.06",
+      "purpose": "captive fastener mounted on inspection plate"
+    },
+    {
+      "object": "Advanced | detail door -1 recessed inspection plate 1.88",
+      "host": "Advanced | cargo door recessed panel -1",
+      "purpose": "removable leaf inspection plate"
+    },
+    {
+      "object": "Advanced | detail inspection captive stud -1.38 1.88",
+      "host": "Advanced | detail door -1 recessed inspection plate 1.88",
+      "purpose": "captive fastener mounted on inspection plate"
+    },
+    {
+      "object": "Advanced | detail inspection captive stud -1.18 1.88",
+      "host": "Advanced | detail door -1 recessed inspection plate 1.88",
+      "purpose": "captive fastener mounted on inspection plate"
+    },
+    {
+      "object": "Advanced | detail hinge load gusset -1 0.09 -0.11",
+      "host": "Advanced | cargo door recessed panel -1",
+      "purpose": "hinge root load gusset carried by leaf panel"
+    },
+    {
+      "object": "Advanced | detail hinge load gusset -1 0.09 0.11",
+      "host": "Advanced | cargo door recessed panel -1",
+      "purpose": "hinge root load gusset carried by leaf panel"
+    },
+    {
+      "object": "Advanced | detail hinge load gusset -1 0.97 -0.11",
+      "host": "Advanced | cargo door recessed panel -1",
+      "purpose": "hinge root load gusset carried by leaf panel"
+    },
+    {
+      "object": "Advanced | detail hinge load gusset -1 0.97 0.11",
+      "host": "Advanced | cargo door recessed panel -1",
+      "purpose": "hinge root load gusset carried by leaf panel"
+    },
+    {
+      "object": "Advanced | detail hinge load gusset -1 1.85 -0.11",
+      "host": "Advanced | cargo door recessed panel -1",
+      "purpose": "hinge root load gusset carried by leaf panel"
+    },
+    {
+      "object": "Advanced | detail hinge load gusset -1 1.85 0.11",
+      "host": "Advanced | cargo door recessed panel -1",
+      "purpose": "hinge root load gusset carried by leaf panel"
+    },
+    {
+      "object": "Advanced | detail door 1 raised vertical lip -1",
+      "host": "Advanced | cargo door recessed panel 1",
+      "purpose": "raised protective edge carried by actual cargo door panel"
+    },
+    {
+      "object": "Advanced | detail door 1 raised vertical lip 1",
+      "host": "Advanced | cargo door recessed panel 1",
+      "purpose": "raised protective edge carried by actual cargo door panel"
+    },
+    {
+      "object": "Advanced | detail door 1 recessed inspection plate 0.06",
+      "host": "Advanced | cargo door recessed panel 1",
+      "purpose": "removable leaf inspection plate"
+    },
+    {
+      "object": "Advanced | detail inspection captive stud 0.06 0.06",
+      "host": "Advanced | detail door 1 recessed inspection plate 0.06",
+      "purpose": "captive fastener mounted on inspection plate"
+    },
+    {
+      "object": "Advanced | detail inspection captive stud 0.26 0.06",
+      "host": "Advanced | detail door 1 recessed inspection plate 0.06",
+      "purpose": "captive fastener mounted on inspection plate"
+    },
+    {
+      "object": "Advanced | detail door 1 recessed inspection plate 1.88",
+      "host": "Advanced | cargo door recessed panel 1",
+      "purpose": "removable leaf inspection plate"
+    },
+    {
+      "object": "Advanced | detail inspection captive stud 0.06 1.88",
+      "host": "Advanced | detail door 1 recessed inspection plate 1.88",
+      "purpose": "captive fastener mounted on inspection plate"
+    },
+    {
+      "object": "Advanced | detail inspection captive stud 0.26 1.88",
+      "host": "Advanced | detail door 1 recessed inspection plate 1.88",
+      "purpose": "captive fastener mounted on inspection plate"
+    },
+    {
+      "object": "Advanced | detail hinge load gusset 1 0.09 -0.11",
+      "host": "Advanced | cargo door recessed panel 1",
+      "purpose": "hinge root load gusset carried by leaf panel"
+    },
+    {
+      "object": "Advanced | detail hinge load gusset 1 0.09 0.11",
+      "host": "Advanced | cargo door recessed panel 1",
+      "purpose": "hinge root load gusset carried by leaf panel"
+    },
+    {
+      "object": "Advanced | detail hinge load gusset 1 0.97 -0.11",
+      "host": "Advanced | cargo door recessed panel 1",
+      "purpose": "hinge root load gusset carried by leaf panel"
+    },
+    {
+      "object": "Advanced | detail hinge load gusset 1 0.97 0.11",
+      "host": "Advanced | cargo door recessed panel 1",
+      "purpose": "hinge root load gusset carried by leaf panel"
+    },
+    {
+      "object": "Advanced | detail hinge load gusset 1 1.85 -0.11",
+      "host": "Advanced | cargo door recessed panel 1",
+      "purpose": "hinge root load gusset carried by leaf panel"
+    },
+    {
+      "object": "Advanced | detail hinge load gusset 1 1.85 0.11",
+      "host": "Advanced | cargo door recessed panel 1",
+      "purpose": "hinge root load gusset carried by leaf panel"
+    },
+    {
+      "object": "Advanced | detail joining bridge raised rib -2.10",
+      "host": "Advanced | module joining bridge",
+      "purpose": "raised structural bridge rib seated on deck member"
+    },
+    {
+      "object": "Advanced | detail joining rib bolt -2.10",
+      "host": "Advanced | detail joining bridge raised rib -2.10",
+      "purpose": "structural rib captive bolt"
+    },
+    {
+      "object": "Advanced | detail joining bridge raised rib -1.50",
+      "host": "Advanced | module joining bridge",
+      "purpose": "raised structural bridge rib seated on deck member"
+    },
+    {
+      "object": "Advanced | detail joining rib bolt -1.50",
+      "host": "Advanced | detail joining bridge raised rib -1.50",
+      "purpose": "structural rib captive bolt"
+    },
+    {
+      "object": "Advanced | detail joining bridge raised rib -0.90",
+      "host": "Advanced | module joining bridge",
+      "purpose": "raised structural bridge rib seated on deck member"
+    },
+    {
+      "object": "Advanced | detail joining rib bolt -0.90",
+      "host": "Advanced | detail joining bridge raised rib -0.90",
+      "purpose": "structural rib captive bolt"
+    },
+    {
+      "object": "Advanced | detail joining bridge raised rib -0.30",
+      "host": "Advanced | module joining bridge",
+      "purpose": "raised structural bridge rib seated on deck member"
+    },
+    {
+      "object": "Advanced | detail joining rib bolt -0.30",
+      "host": "Advanced | detail joining bridge raised rib -0.30",
+      "purpose": "structural rib captive bolt"
+    },
+    {
+      "object": "Advanced | detail joining bridge raised rib 0.30",
+      "host": "Advanced | module joining bridge",
+      "purpose": "raised structural bridge rib seated on deck member"
+    },
+    {
+      "object": "Advanced | detail joining rib bolt 0.30",
+      "host": "Advanced | detail joining bridge raised rib 0.30",
+      "purpose": "structural rib captive bolt"
+    },
+    {
+      "object": "Advanced | detail joining bridge raised rib 0.90",
+      "host": "Advanced | module joining bridge",
+      "purpose": "raised structural bridge rib seated on deck member"
+    },
+    {
+      "object": "Advanced | detail joining rib bolt 0.90",
+      "host": "Advanced | detail joining bridge raised rib 0.90",
+      "purpose": "structural rib captive bolt"
+    },
+    {
+      "object": "Advanced | detail joining bridge raised rib 1.50",
+      "host": "Advanced | module joining bridge",
+      "purpose": "raised structural bridge rib seated on deck member"
+    },
+    {
+      "object": "Advanced | detail joining rib bolt 1.50",
+      "host": "Advanced | detail joining bridge raised rib 1.50",
+      "purpose": "structural rib captive bolt"
+    },
+    {
+      "object": "Advanced | detail joining bridge raised rib 2.10",
+      "host": "Advanced | module joining bridge",
+      "purpose": "raised structural bridge rib seated on deck member"
+    },
+    {
+      "object": "Advanced | detail joining rib bolt 2.10",
+      "host": "Advanced | detail joining bridge raised rib 2.10",
+      "purpose": "structural rib captive bolt"
+    },
+    {
+      "object": "Advanced | detail aft corner reinforcement -2.23 -0.25",
+      "host": "Advanced | aft left bolted cap rail",
+      "purpose": "reinforcement shoe overlies grounded frame cap"
+    },
+    {
+      "object": "Advanced | detail corner stud -2.32 -0.25",
+      "host": "Advanced | detail aft corner reinforcement -2.23 -0.25",
+      "purpose": "corner shoe fastening"
+    },
+    {
+      "object": "Advanced | detail corner stud -2.14 -0.25",
+      "host": "Advanced | detail aft corner reinforcement -2.23 -0.25",
+      "purpose": "corner shoe fastening"
+    },
+    {
+      "object": "Advanced | detail aft corner reinforcement -2.23 1.98",
+      "host": "Advanced | aft left bolted cap rail",
+      "purpose": "reinforcement shoe overlies grounded frame cap"
+    },
+    {
+      "object": "Advanced | detail corner stud -2.32 1.98",
+      "host": "Advanced | detail aft corner reinforcement -2.23 1.98",
+      "purpose": "corner shoe fastening"
+    },
+    {
+      "object": "Advanced | detail corner stud -2.14 1.98",
+      "host": "Advanced | detail aft corner reinforcement -2.23 1.98",
+      "purpose": "corner shoe fastening"
+    },
+    {
+      "object": "Advanced | detail aft corner reinforcement 2.23 -0.25",
+      "host": "Advanced | aft right bolted cap rail",
+      "purpose": "reinforcement shoe overlies grounded frame cap"
+    },
+    {
+      "object": "Advanced | detail corner stud 2.14 -0.25",
+      "host": "Advanced | detail aft corner reinforcement 2.23 -0.25",
+      "purpose": "corner shoe fastening"
+    },
+    {
+      "object": "Advanced | detail corner stud 2.32 -0.25",
+      "host": "Advanced | detail aft corner reinforcement 2.23 -0.25",
+      "purpose": "corner shoe fastening"
+    },
+    {
+      "object": "Advanced | detail aft corner reinforcement 2.23 1.98",
+      "host": "Advanced | aft right bolted cap rail",
+      "purpose": "reinforcement shoe overlies grounded frame cap"
+    },
+    {
+      "object": "Advanced | detail corner stud 2.14 1.98",
+      "host": "Advanced | detail aft corner reinforcement 2.23 1.98",
+      "purpose": "corner shoe fastening"
+    },
+    {
+      "object": "Advanced | detail corner stud 2.32 1.98",
+      "host": "Advanced | detail aft corner reinforcement 2.23 1.98",
+      "purpose": "corner shoe fastening"
+    },
+    {
+      "object": "Advanced | detail vent housing base",
+      "host": "Advanced | aft right bolted cap rail",
+      "purpose": "vent housing seated on solid right-frame cap"
+    },
+    {
+      "object": "Advanced | detail vent side wall -0.091",
+      "host": "Advanced | detail vent housing base",
+      "purpose": "vent wall rises from housing floor"
+    },
+    {
+      "object": "Advanced | detail vent side wall 0.091",
+      "host": "Advanced | detail vent housing base",
+      "purpose": "vent wall rises from housing floor"
+    },
+    {
+      "object": "Advanced | detail inclined vent louver 0",
+      "host": "Advanced | detail vent side wall -0.091",
+      "purpose": "louver blade carried by vent side walls, actual air gaps between blades"
+    },
+    {
+      "object": "Advanced | detail inclined vent louver 1",
+      "host": "Advanced | detail vent side wall -0.091",
+      "purpose": "louver blade carried by vent side walls, actual air gaps between blades"
+    },
+    {
+      "object": "Advanced | detail inclined vent louver 2",
+      "host": "Advanced | detail vent side wall -0.091",
+      "purpose": "louver blade carried by vent side walls, actual air gaps between blades"
+    },
+    {
+      "object": "Advanced | detail inclined vent louver 3",
+      "host": "Advanced | detail vent side wall -0.091",
+      "purpose": "louver blade carried by vent side walls, actual air gaps between blades"
+    },
+    {
+      "object": "Advanced | detail inclined vent louver 4",
+      "host": "Advanced | detail vent side wall -0.091",
+      "purpose": "louver blade carried by vent side walls, actual air gaps between blades"
+    },
+    {
+      "object": "Advanced | detail inclined vent louver 5",
+      "host": "Advanced | detail vent side wall -0.091",
+      "purpose": "louver blade carried by vent side walls, actual air gaps between blades"
+    },
+    {
+      "object": "Advanced | detail inclined vent louver 6",
+      "host": "Advanced | detail vent side wall -0.091",
+      "purpose": "louver blade carried by vent side walls, actual air gaps between blades"
+    },
+    {
+      "object": "Advanced | detail inclined vent louver 7",
+      "host": "Advanced | detail vent side wall -0.091",
+      "purpose": "louver blade carried by vent side walls, actual air gaps between blades"
+    },
+    {
+      "object": "Advanced | detail pump reservoir floor",
+      "host": "Advanced | crane service deck",
+      "purpose": "pump reservoir founded on service deck"
+    },
+    {
+      "object": "Advanced | detail reservoir left shell",
+      "host": "Advanced | detail pump reservoir floor",
+      "purpose": "hollow reservoir side meets real floor"
+    },
+    {
+      "object": "Advanced | detail reservoir right shell",
+      "host": "Advanced | detail pump reservoir floor",
+      "purpose": "hollow reservoir side meets real floor"
+    },
+    {
+      "object": "Advanced | detail reservoir front shell",
+      "host": "Advanced | detail pump reservoir floor",
+      "purpose": "closed reservoir end wall"
+    },
+    {
+      "object": "Advanced | detail reservoir rear shell",
+      "host": "Advanced | detail pump reservoir floor",
+      "purpose": "closed reservoir end wall"
+    },
+    {
+      "object": "Advanced | detail reservoir removable lid",
+      "host": "Advanced | detail reservoir left shell",
+      "purpose": "reservoir lid seats on actual shell"
+    },
+    {
+      "object": "Advanced | detail pump stack 0 bored shell",
+      "host": "Advanced | detail reservoir removable lid",
+      "purpose": "hollow pump/filter body carried by reservoir lid"
+    },
+    {
+      "object": "Advanced | detail pump 0 ribbed collar 0.40",
+      "host": "Advanced | detail pump stack 0 bored shell",
+      "purpose": "formed collar seats on pump shell"
+    },
+    {
+      "object": "Advanced | detail pump 0 ribbed collar 0.54",
+      "host": "Advanced | detail pump stack 0 bored shell",
+      "purpose": "formed collar seats on pump shell"
+    },
+    {
+      "object": "Advanced | detail pump 0 ribbed collar 0.61",
+      "host": "Advanced | detail pump stack 0 bored shell",
+      "purpose": "formed collar seats on pump shell"
+    },
+    {
+      "object": "Advanced | detail pump 0 ribbed collar 0.80",
+      "host": "Advanced | detail pump stack 0 bored shell",
+      "purpose": "formed collar seats on pump shell"
+    },
+    {
+      "object": "Advanced | detail pump 0 bolted end cap",
+      "host": "Advanced | detail pump stack 0 bored shell",
+      "purpose": "closed pump cap seated on shell mouth"
+    },
+    {
+      "object": "Advanced | detail pump 0 cap stud 0",
+      "host": "Advanced | detail pump 0 bolted end cap",
+      "purpose": "retained pump end-cap fastening"
+    },
+    {
+      "object": "Advanced | detail pump 0 cap stud 1",
+      "host": "Advanced | detail pump 0 bolted end cap",
+      "purpose": "retained pump end-cap fastening"
+    },
+    {
+      "object": "Advanced | detail pump 0 cap stud 2",
+      "host": "Advanced | detail pump 0 bolted end cap",
+      "purpose": "retained pump end-cap fastening"
+    },
+    {
+      "object": "Advanced | detail pump 0 cap stud 3",
+      "host": "Advanced | detail pump 0 bolted end cap",
+      "purpose": "retained pump end-cap fastening"
+    },
+    {
+      "object": "Advanced | detail pump 0 cap stud 4",
+      "host": "Advanced | detail pump 0 bolted end cap",
+      "purpose": "retained pump end-cap fastening"
+    },
+    {
+      "object": "Advanced | detail pump 0 cap stud 5",
+      "host": "Advanced | detail pump 0 bolted end cap",
+      "purpose": "retained pump end-cap fastening"
+    },
+    {
+      "object": "Advanced | detail pump 0 reservoir receiver 0",
+      "host": "Advanced | detail reservoir right shell",
+      "purpose": "bored receiving socket enters actual reservoir shell opening"
+    },
+    {
+      "object": "Advanced | detail pump 0 body receiver 0",
+      "host": "Advanced | detail pump stack 0 bored shell",
+      "purpose": "bored receiver meets real side opening into hollow pump body"
+    },
+    {
+      "object": "Advanced | detail pump 0 reservoir receiver 1",
+      "host": "Advanced | detail reservoir right shell",
+      "purpose": "bored receiving socket enters actual reservoir shell opening"
+    },
+    {
+      "object": "Advanced | detail pump 0 body receiver 1",
+      "host": "Advanced | detail pump stack 0 bored shell",
+      "purpose": "bored receiver meets real side opening into hollow pump body"
+    },
+    {
+      "object": "Advanced | detail pump stack 1 bored shell",
+      "host": "Advanced | detail reservoir removable lid",
+      "purpose": "hollow pump/filter body carried by reservoir lid"
+    },
+    {
+      "object": "Advanced | detail pump 1 ribbed collar 0.40",
+      "host": "Advanced | detail pump stack 1 bored shell",
+      "purpose": "formed collar seats on pump shell"
+    },
+    {
+      "object": "Advanced | detail pump 1 ribbed collar 0.54",
+      "host": "Advanced | detail pump stack 1 bored shell",
+      "purpose": "formed collar seats on pump shell"
+    },
+    {
+      "object": "Advanced | detail pump 1 ribbed collar 0.61",
+      "host": "Advanced | detail pump stack 1 bored shell",
+      "purpose": "formed collar seats on pump shell"
+    },
+    {
+      "object": "Advanced | detail pump 1 ribbed collar 0.80",
+      "host": "Advanced | detail pump stack 1 bored shell",
+      "purpose": "formed collar seats on pump shell"
+    },
+    {
+      "object": "Advanced | detail pump 1 bolted end cap",
+      "host": "Advanced | detail pump stack 1 bored shell",
+      "purpose": "closed pump cap seated on shell mouth"
+    },
+    {
+      "object": "Advanced | detail pump 1 cap stud 0",
+      "host": "Advanced | detail pump 1 bolted end cap",
+      "purpose": "retained pump end-cap fastening"
+    },
+    {
+      "object": "Advanced | detail pump 1 cap stud 1",
+      "host": "Advanced | detail pump 1 bolted end cap",
+      "purpose": "retained pump end-cap fastening"
+    },
+    {
+      "object": "Advanced | detail pump 1 cap stud 2",
+      "host": "Advanced | detail pump 1 bolted end cap",
+      "purpose": "retained pump end-cap fastening"
+    },
+    {
+      "object": "Advanced | detail pump 1 cap stud 3",
+      "host": "Advanced | detail pump 1 bolted end cap",
+      "purpose": "retained pump end-cap fastening"
+    },
+    {
+      "object": "Advanced | detail pump 1 cap stud 4",
+      "host": "Advanced | detail pump 1 bolted end cap",
+      "purpose": "retained pump end-cap fastening"
+    },
+    {
+      "object": "Advanced | detail pump 1 cap stud 5",
+      "host": "Advanced | detail pump 1 bolted end cap",
+      "purpose": "retained pump end-cap fastening"
+    },
+    {
+      "object": "Advanced | detail pump 1 reservoir receiver 0",
+      "host": "Advanced | detail reservoir right shell",
+      "purpose": "bored receiving socket enters actual reservoir shell opening"
+    },
+    {
+      "object": "Advanced | detail pump 1 body receiver 0",
+      "host": "Advanced | detail pump stack 1 bored shell",
+      "purpose": "bored receiver meets real side opening into hollow pump body"
+    },
+    {
+      "object": "Advanced | detail pump 1 reservoir receiver 1",
+      "host": "Advanced | detail reservoir right shell",
+      "purpose": "bored receiving socket enters actual reservoir shell opening"
+    },
+    {
+      "object": "Advanced | detail pump 1 body receiver 1",
+      "host": "Advanced | detail pump stack 1 bored shell",
+      "purpose": "bored receiver meets real side opening into hollow pump body"
+    },
+    {
+      "object": "Advanced | detail crane lower articulated boom transverse web 1",
+      "host": "Advanced | large crane lower articulated boom",
+      "purpose": "small stiffening web wraps actual boom section"
+    },
+    {
+      "object": "Advanced | detail crane lower articulated boom transverse web 2",
+      "host": "Advanced | large crane lower articulated boom",
+      "purpose": "small stiffening web wraps actual boom section"
+    },
+    {
+      "object": "Advanced | detail crane lower articulated boom transverse web 3",
+      "host": "Advanced | large crane lower articulated boom",
+      "purpose": "small stiffening web wraps actual boom section"
+    },
+    {
+      "object": "Advanced | detail crane lower articulated boom transverse web 4",
+      "host": "Advanced | large crane lower articulated boom",
+      "purpose": "small stiffening web wraps actual boom section"
+    },
+    {
+      "object": "Advanced | detail crane lower articulated boom transverse web 5",
+      "host": "Advanced | large crane lower articulated boom",
+      "purpose": "small stiffening web wraps actual boom section"
+    },
+    {
+      "object": "Advanced | detail crane lower articulated boom transverse web 6",
+      "host": "Advanced | large crane lower articulated boom",
+      "purpose": "small stiffening web wraps actual boom section"
+    },
+    {
+      "object": "Advanced | detail crane lower articulated boom transverse web 7",
+      "host": "Advanced | large crane lower articulated boom",
+      "purpose": "small stiffening web wraps actual boom section"
+    },
+    {
+      "object": "Advanced | detail crane lower articulated boom transverse web 8",
+      "host": "Advanced | large crane lower articulated boom",
+      "purpose": "small stiffening web wraps actual boom section"
+    },
+    {
+      "object": "Advanced | detail crane lower articulated boom transverse web 9",
+      "host": "Advanced | large crane lower articulated boom",
+      "purpose": "small stiffening web wraps actual boom section"
+    },
+    {
+      "object": "Advanced | detail crane lower articulated boom rear access tab 0.23",
+      "host": "Advanced | large crane lower articulated boom",
+      "purpose": "small rear access cover seated on boom housing"
+    },
+    {
+      "object": "Advanced | detail crane lower articulated boom rear access tab 0.53",
+      "host": "Advanced | large crane lower articulated boom",
+      "purpose": "small rear access cover seated on boom housing"
+    },
+    {
+      "object": "Advanced | detail crane lower articulated boom rear access tab 0.77",
+      "host": "Advanced | large crane lower articulated boom",
+      "purpose": "small rear access cover seated on boom housing"
+    },
+    {
+      "object": "Advanced | detail crane long overhanging jib transverse web 1",
+      "host": "Advanced | large crane long overhanging jib",
+      "purpose": "small stiffening web wraps actual boom section"
+    },
+    {
+      "object": "Advanced | detail crane long overhanging jib transverse web 2",
+      "host": "Advanced | large crane long overhanging jib",
+      "purpose": "small stiffening web wraps actual boom section"
+    },
+    {
+      "object": "Advanced | detail crane long overhanging jib transverse web 3",
+      "host": "Advanced | large crane long overhanging jib",
+      "purpose": "small stiffening web wraps actual boom section"
+    },
+    {
+      "object": "Advanced | detail crane long overhanging jib transverse web 4",
+      "host": "Advanced | large crane long overhanging jib",
+      "purpose": "small stiffening web wraps actual boom section"
+    },
+    {
+      "object": "Advanced | detail crane long overhanging jib transverse web 5",
+      "host": "Advanced | large crane long overhanging jib",
+      "purpose": "small stiffening web wraps actual boom section"
+    },
+    {
+      "object": "Advanced | detail crane long overhanging jib transverse web 6",
+      "host": "Advanced | large crane long overhanging jib",
+      "purpose": "small stiffening web wraps actual boom section"
+    },
+    {
+      "object": "Advanced | detail crane long overhanging jib transverse web 7",
+      "host": "Advanced | large crane long overhanging jib",
+      "purpose": "small stiffening web wraps actual boom section"
+    },
+    {
+      "object": "Advanced | detail crane long overhanging jib transverse web 8",
+      "host": "Advanced | large crane long overhanging jib",
+      "purpose": "small stiffening web wraps actual boom section"
+    },
+    {
+      "object": "Advanced | detail crane long overhanging jib transverse web 9",
+      "host": "Advanced | large crane long overhanging jib",
+      "purpose": "small stiffening web wraps actual boom section"
+    },
+    {
+      "object": "Advanced | detail crane long overhanging jib rear access tab 0.23",
+      "host": "Advanced | large crane long overhanging jib",
+      "purpose": "small rear access cover seated on boom housing"
+    },
+    {
+      "object": "Advanced | detail crane long overhanging jib rear access tab 0.53",
+      "host": "Advanced | large crane long overhanging jib",
+      "purpose": "small rear access cover seated on boom housing"
+    },
+    {
+      "object": "Advanced | detail crane long overhanging jib rear access tab 0.77",
+      "host": "Advanced | large crane long overhanging jib",
+      "purpose": "small rear access cover seated on boom housing"
+    },
+    {
+      "object": "Advanced | detail door seam armor -1 0",
+      "host": "Advanced | cargo door recessed panel -1",
+      "purpose": "raised seam armor carried by the leaf, with locking-bar access retained"
+    },
+    {
+      "object": "Advanced | detail seam armor captive stud -1 0 -0.01",
+      "host": "Advanced | detail door seam armor -1 0",
+      "purpose": "captive seam armor stud"
+    },
+    {
+      "object": "Advanced | detail seam armor captive stud -1 0 0.45",
+      "host": "Advanced | detail door seam armor -1 0",
+      "purpose": "captive seam armor stud"
+    },
+    {
+      "object": "Advanced | detail door seam armor -1 1",
+      "host": "Advanced | cargo door recessed panel -1",
+      "purpose": "raised seam armor carried by the leaf, with locking-bar access retained"
+    },
+    {
+      "object": "Advanced | detail seam armor captive stud -1 1 0.90",
+      "host": "Advanced | detail door seam armor -1 1",
+      "purpose": "captive seam armor stud"
+    },
+    {
+      "object": "Advanced | detail seam armor captive stud -1 1 1.04",
+      "host": "Advanced | detail door seam armor -1 1",
+      "purpose": "captive seam armor stud"
+    },
+    {
+      "object": "Advanced | detail door seam armor -1 2",
+      "host": "Advanced | cargo door recessed panel -1",
+      "purpose": "raised seam armor carried by the leaf, with locking-bar access retained"
+    },
+    {
+      "object": "Advanced | detail seam armor captive stud -1 2 1.50",
+      "host": "Advanced | detail door seam armor -1 2",
+      "purpose": "captive seam armor stud"
+    },
+    {
+      "object": "Advanced | detail seam armor captive stud -1 2 1.93",
+      "host": "Advanced | detail door seam armor -1 2",
+      "purpose": "captive seam armor stud"
+    },
+    {
+      "object": "Advanced | detail door seam armor 1 0",
+      "host": "Advanced | cargo door recessed panel 1",
+      "purpose": "raised seam armor carried by the leaf, with locking-bar access retained"
+    },
+    {
+      "object": "Advanced | detail seam armor captive stud 1 0 -0.01",
+      "host": "Advanced | detail door seam armor 1 0",
+      "purpose": "captive seam armor stud"
+    },
+    {
+      "object": "Advanced | detail seam armor captive stud 1 0 0.45",
+      "host": "Advanced | detail door seam armor 1 0",
+      "purpose": "captive seam armor stud"
+    },
+    {
+      "object": "Advanced | detail door seam armor 1 1",
+      "host": "Advanced | cargo door recessed panel 1",
+      "purpose": "raised seam armor carried by the leaf, with locking-bar access retained"
+    },
+    {
+      "object": "Advanced | detail seam armor captive stud 1 1 0.90",
+      "host": "Advanced | detail door seam armor 1 1",
+      "purpose": "captive seam armor stud"
+    },
+    {
+      "object": "Advanced | detail seam armor captive stud 1 1 1.04",
+      "host": "Advanced | detail door seam armor 1 1",
+      "purpose": "captive seam armor stud"
+    },
+    {
+      "object": "Advanced | detail door seam armor 1 2",
+      "host": "Advanced | cargo door recessed panel 1",
+      "purpose": "raised seam armor carried by the leaf, with locking-bar access retained"
+    },
+    {
+      "object": "Advanced | detail seam armor captive stud 1 2 1.50",
+      "host": "Advanced | detail door seam armor 1 2",
+      "purpose": "captive seam armor stud"
+    },
+    {
+      "object": "Advanced | detail seam armor captive stud 1 2 1.93",
+      "host": "Advanced | detail door seam armor 1 2",
+      "purpose": "captive seam armor stud"
+    },
+    {
+      "object": "Advanced | detail crane lower articulated boom longitudinal edging -1",
+      "host": "Advanced | large crane lower articulated boom",
+      "purpose": "longitudinal raised edge seated on the actual boom face"
+    },
+    {
+      "object": "Advanced | detail crane lower articulated boom edge fastener -1 0",
+      "host": "Advanced | detail crane lower articulated boom longitudinal edging -1",
+      "purpose": "retained fastener seated on raised boom edge"
+    },
+    {
+      "object": "Advanced | detail crane lower articulated boom edge fastener -1 1",
+      "host": "Advanced | detail crane lower articulated boom longitudinal edging -1",
+      "purpose": "retained fastener seated on raised boom edge"
+    },
+    {
+      "object": "Advanced | detail crane lower articulated boom edge fastener -1 2",
+      "host": "Advanced | detail crane lower articulated boom longitudinal edging -1",
+      "purpose": "retained fastener seated on raised boom edge"
+    },
+    {
+      "object": "Advanced | detail crane lower articulated boom edge fastener -1 3",
+      "host": "Advanced | detail crane lower articulated boom longitudinal edging -1",
+      "purpose": "retained fastener seated on raised boom edge"
+    },
+    {
+      "object": "Advanced | detail crane lower articulated boom edge fastener -1 4",
+      "host": "Advanced | detail crane lower articulated boom longitudinal edging -1",
+      "purpose": "retained fastener seated on raised boom edge"
+    },
+    {
+      "object": "Advanced | detail crane lower articulated boom edge fastener -1 5",
+      "host": "Advanced | detail crane lower articulated boom longitudinal edging -1",
+      "purpose": "retained fastener seated on raised boom edge"
+    },
+    {
+      "object": "Advanced | detail crane lower articulated boom longitudinal edging 1",
+      "host": "Advanced | large crane lower articulated boom",
+      "purpose": "longitudinal raised edge seated on the actual boom face"
+    },
+    {
+      "object": "Advanced | detail crane lower articulated boom edge fastener 1 0",
+      "host": "Advanced | detail crane lower articulated boom longitudinal edging 1",
+      "purpose": "retained fastener seated on raised boom edge"
+    },
+    {
+      "object": "Advanced | detail crane lower articulated boom edge fastener 1 1",
+      "host": "Advanced | detail crane lower articulated boom longitudinal edging 1",
+      "purpose": "retained fastener seated on raised boom edge"
+    },
+    {
+      "object": "Advanced | detail crane lower articulated boom edge fastener 1 2",
+      "host": "Advanced | detail crane lower articulated boom longitudinal edging 1",
+      "purpose": "retained fastener seated on raised boom edge"
+    },
+    {
+      "object": "Advanced | detail crane lower articulated boom edge fastener 1 3",
+      "host": "Advanced | detail crane lower articulated boom longitudinal edging 1",
+      "purpose": "retained fastener seated on raised boom edge"
+    },
+    {
+      "object": "Advanced | detail crane lower articulated boom edge fastener 1 4",
+      "host": "Advanced | detail crane lower articulated boom longitudinal edging 1",
+      "purpose": "retained fastener seated on raised boom edge"
+    },
+    {
+      "object": "Advanced | detail crane lower articulated boom edge fastener 1 5",
+      "host": "Advanced | detail crane lower articulated boom longitudinal edging 1",
+      "purpose": "retained fastener seated on raised boom edge"
+    },
+    {
+      "object": "Advanced | detail crane long overhanging jib longitudinal edging -1",
+      "host": "Advanced | large crane long overhanging jib",
+      "purpose": "longitudinal raised edge seated on the actual boom face"
+    },
+    {
+      "object": "Advanced | detail crane long overhanging jib edge fastener -1 0",
+      "host": "Advanced | detail crane long overhanging jib longitudinal edging -1",
+      "purpose": "retained fastener seated on raised boom edge"
+    },
+    {
+      "object": "Advanced | detail crane long overhanging jib edge fastener -1 1",
+      "host": "Advanced | detail crane long overhanging jib longitudinal edging -1",
+      "purpose": "retained fastener seated on raised boom edge"
+    },
+    {
+      "object": "Advanced | detail crane long overhanging jib edge fastener -1 2",
+      "host": "Advanced | detail crane long overhanging jib longitudinal edging -1",
+      "purpose": "retained fastener seated on raised boom edge"
+    },
+    {
+      "object": "Advanced | detail crane long overhanging jib edge fastener -1 3",
+      "host": "Advanced | detail crane long overhanging jib longitudinal edging -1",
+      "purpose": "retained fastener seated on raised boom edge"
+    },
+    {
+      "object": "Advanced | detail crane long overhanging jib edge fastener -1 4",
+      "host": "Advanced | detail crane long overhanging jib longitudinal edging -1",
+      "purpose": "retained fastener seated on raised boom edge"
+    },
+    {
+      "object": "Advanced | detail crane long overhanging jib edge fastener -1 5",
+      "host": "Advanced | detail crane long overhanging jib longitudinal edging -1",
+      "purpose": "retained fastener seated on raised boom edge"
+    },
+    {
+      "object": "Advanced | detail crane long overhanging jib longitudinal edging 1",
+      "host": "Advanced | large crane long overhanging jib",
+      "purpose": "longitudinal raised edge seated on the actual boom face"
+    },
+    {
+      "object": "Advanced | detail crane long overhanging jib edge fastener 1 0",
+      "host": "Advanced | detail crane long overhanging jib longitudinal edging 1",
+      "purpose": "retained fastener seated on raised boom edge"
+    },
+    {
+      "object": "Advanced | detail crane long overhanging jib edge fastener 1 1",
+      "host": "Advanced | detail crane long overhanging jib longitudinal edging 1",
+      "purpose": "retained fastener seated on raised boom edge"
+    },
+    {
+      "object": "Advanced | detail crane long overhanging jib edge fastener 1 2",
+      "host": "Advanced | detail crane long overhanging jib longitudinal edging 1",
+      "purpose": "retained fastener seated on raised boom edge"
+    },
+    {
+      "object": "Advanced | detail crane long overhanging jib edge fastener 1 3",
+      "host": "Advanced | detail crane long overhanging jib longitudinal edging 1",
+      "purpose": "retained fastener seated on raised boom edge"
+    },
+    {
+      "object": "Advanced | detail crane long overhanging jib edge fastener 1 4",
+      "host": "Advanced | detail crane long overhanging jib longitudinal edging 1",
+      "purpose": "retained fastener seated on raised boom edge"
+    },
+    {
+      "object": "Advanced | detail crane long overhanging jib edge fastener 1 5",
+      "host": "Advanced | detail crane long overhanging jib longitudinal edging 1",
+      "purpose": "retained fastener seated on raised boom edge"
+    },
+    {
+      "object": "Advanced | detail pump signal cabinet gland 0",
+      "host": "Advanced | service cabinet removable top",
+      "purpose": "signal receiving gland seated in cabinet lid"
+    },
+    {
+      "object": "Advanced | detail pump head signal gland 0",
+      "host": "Advanced | detail pump 0 bolted end cap",
+      "purpose": "signal receiver seated in closed pump head"
+    },
+    {
+      "object": "Advanced | detail pump signal cabinet gland 1",
+      "host": "Advanced | service cabinet removable top",
+      "purpose": "signal receiving gland seated in cabinet lid"
+    },
+    {
+      "object": "Advanced | detail pump head signal gland 1",
+      "host": "Advanced | detail pump 1 bolted end cap",
+      "purpose": "signal receiver seated in closed pump head"
+    }
+  ],
+  "hydraulic_routes": [
+    {
+      "request": {
+        "id": "advanced-pump-0-0",
+        "family": "rigid_pipe",
+        "payload": "fluid",
+        "material_id": "Advanced adjunct | structure",
+        "size": {
+          "outer_diameter": 0.035,
+          "wall_fraction": 0.16
+        },
+        "path": {
+          "kind": "waypoints",
+          "points": [
+            [
+              2.055000066757202,
+              0.9300000071525574,
+              0.1899999976158142
+            ],
+            [
+              2.06169056892395,
+              0.9300000667572021,
+              0.190195694565773
+            ],
+            [
+              2.068166732788086,
+              0.9300000071525574,
+              0.19077453017234802
+            ],
+            [
+              2.0744264125823975,
+              0.9299999475479126,
+              0.19172418117523193
+            ],
+            [
+              2.0804686546325684,
+              0.9300000071525574,
+              0.19303223490715027
+            ],
+            [
+              2.0862913131713867,
+              0.9300000071525574,
+              0.19468635320663452
+            ],
+            [
+              2.0918924808502197,
+              0.9299999475479126,
+              0.1966741979122162
+            ],
+            [
+              2.0972697734832764,
+              0.9299999475479126,
+              0.19898338615894318
+            ],
+            [
+              2.102421998977661,
+              0.9299999475479126,
+              0.2016015499830246
+            ],
+            [
+              2.107347011566162,
+              0.9300000071525574,
+              0.20451636612415314
+            ],
+            [
+              2.112043619155884,
+              0.9299999475479126,
+              0.2077154517173767
+            ],
+            [
+              2.116509199142456,
+              0.9299999475479126,
+              0.2111864537000656
+            ],
+            [
+              2.1207423210144043,
+              0.9299999475479126,
+              0.21491698920726776
+            ],
+            [
+              2.1247408390045166,
+              0.9300000071525574,
+              0.21889473497867584
+            ],
+            [
+              2.1285033226013184,
+              0.9300000071525574,
+              0.22310729324817657
+            ],
+            [
+              2.132028102874756,
+              0.9300000071525574,
+              0.22754234075546265
+            ],
+            [
+              2.135312557220459,
+              0.9300000071525574,
+              0.23218749463558197
+            ],
+            [
+              2.1383554935455322,
+              0.9299999475479126,
+              0.23703040182590485
+            ],
+            [
+              2.1411550045013428,
+              0.9300000071525574,
+              0.24205870926380157
+            ],
+            [
+              2.1437087059020996,
+              0.9300000071525574,
+              0.24726006388664246
+            ],
+            [
+              2.1460156440734863,
+              0.9299999475479126,
+              0.2526220679283142
+            ],
+            [
+              2.148073673248291,
+              0.9300000071525574,
+              0.2581323981285095
+            ],
+            [
+              2.1498806476593018,
+              0.9300000071525574,
+              0.2637786865234375
+            ],
+            [
+              2.1514346599578857,
+              0.9300000071525574,
+              0.26954856514930725
+            ],
+            [
+              2.1527342796325684,
+              0.9299999475479126,
+              0.27542969584465027
+            ],
+            [
+              2.153777837753296,
+              0.9300000071525574,
+              0.28140968084335327
+            ],
+            [
+              2.1545631885528564,
+              0.9300000667572021,
+              0.28747618198394775
+            ],
+            [
+              2.155088424682617,
+              0.9300000071525574,
+              0.2936168611049652
+            ],
+            [
+              2.1553516387939453,
+              0.9300000071525574,
+              0.29981935024261475
+            ],
+            [
+              2.155351161956787,
+              0.9300000071525574,
+              0.3060712218284607
+            ],
+            [
+              2.155085563659668,
+              0.9300000071525574,
+              0.3123602271080017
+            ],
+            [
+              2.154552459716797,
+              0.9299999475479126,
+              0.3186739385128021
+            ],
+            [
+              2.15375018119812,
+              0.9300000071525574,
+              0.32499998807907104
+            ],
+            [
+              2.152676820755005,
+              0.9299999475479126,
+              0.33132606744766235
+            ],
+            [
+              2.1513307094573975,
+              0.9299999475479126,
+              0.33763980865478516
+            ],
+            [
+              2.149709939956665,
+              0.9299999475479126,
+              0.3439287543296814
+            ],
+            [
+              2.147812604904175,
+              0.9299999475479126,
+              0.35018065571784973
+            ],
+            [
+              2.145637035369873,
+              0.9299999475479126,
+              0.35638314485549927
+            ],
+            [
+              2.143181085586548,
+              0.9299999475479126,
+              0.36252379417419434
+            ],
+            [
+              2.1404433250427246,
+              0.9300000071525574,
+              0.3685903251171112
+            ],
+            [
+              2.1374218463897705,
+              0.9300000071525574,
+              0.3745703101158142
+            ],
+            [
+              2.1341147422790527,
+              0.9300000071525574,
+              0.3804514408111572
+            ],
+            [
+              2.1305201053619385,
+              0.9300000071525574,
+              0.3862212896347046
+            ],
+            [
+              2.126636028289795,
+              0.9299999475479126,
+              0.39186757802963257
+            ],
+            [
+              2.1224608421325684,
+              0.9299999475479126,
+              0.39737793803215027
+            ],
+            [
+              2.117992877960205,
+              0.9300000071525574,
+              0.402739942073822
+            ],
+            [
+              2.113229990005493,
+              0.9300000071525574,
+              0.4079412817955017
+            ],
+            [
+              2.108170509338379,
+              0.9300000071525574,
+              0.41296958923339844
+            ],
+            [
+              2.1028125286102295,
+              0.9300000071525574,
+              0.4178124964237213
+            ],
+            [
+              2.097154378890991,
+              0.9299999475479126,
+              0.42245766520500183
+            ],
+            [
+              2.091193914413452,
+              0.9299999475479126,
+              0.4268926978111267
+            ],
+            [
+              2.0849297046661377,
+              0.9300000071525574,
+              0.43110528588294983
+            ],
+            [
+              2.078359603881836,
+              0.9300000071525574,
+              0.4350830018520355
+            ],
+            [
+              2.071481704711914,
+              0.9300000071525574,
+              0.43881356716156006
+            ],
+            [
+              2.0642943382263184,
+              0.9299999475479126,
+              0.4422845244407654
+            ],
+            [
+              2.056796073913574,
+              0.9300000071525574,
+              0.44548362493515015
+            ],
+            [
+              2.0489845275878906,
+              0.9299999475479126,
+              0.4483984112739563
+            ],
+            [
+              2.040858030319214,
+              0.9299999475479126,
+              0.4510166049003601
+            ],
+            [
+              2.032414674758911,
+              0.9299999475479126,
+              0.4533258080482483
+            ],
+            [
+              2.0236525535583496,
+              0.9300000071525574,
+              0.45531365275382996
+            ],
+            [
+              2.0145702362060547,
+              0.9300000071525574,
+              0.4569677710533142
+            ],
+            [
+              2.0051655769348145,
+              0.9300000071525574,
+              0.45827585458755493
+            ],
+            [
+              1.9954370260238647,
+              0.9300000071525574,
+              0.45922547578811646
+            ],
+            [
+              1.9853824377059937,
+              0.9300000667572021,
+              0.45980432629585266
+            ],
+            [
+              1.975000023841858,
+              0.9300000071525574,
+              0.46000000834465027
+            ]
+          ]
+        },
+        "start_socket": {
+          "id": "reservoir",
+          "xyz": [
+            2.055000066757202,
+            0.9300000071525574,
+            0.1899999976158142
+          ],
+          "normal": [
+            1,
+            0,
+            0
+          ],
+          "role": "source",
+          "payloads": [
+            "fluid"
+          ],
+          "parent_mesh": "Advanced | detail pump 0 reservoir receiver 0"
+        },
+        "end_socket": {
+          "id": "pump",
+          "xyz": [
+            1.975000023841858,
+            0.9300000071525574,
+            0.46000000834465027
+          ],
+          "normal": [
+            1,
+            0,
+            0
+          ],
+          "role": "sink",
+          "payloads": [
+            "fluid"
+          ],
+          "parent_mesh": "Advanced | detail pump 0 body receiver 0"
+        },
+        "fittings": {
+          "start": "compression",
+          "end": "compression"
+        },
+        "supports": {
+          "binding": "Short broad bends between bored hollow bodies; all equipment founded on service deck"
+        },
+        "behavior": {
+          "static_closed_crane_service_loop": true,
+          "no_new_native_fluid_port": true
+        },
+        "keep_outs": []
+      },
+      "objects": [
+        "FMPL | PIPETTE | advanced-pump-0-0 | continuous visible route",
+        "FMPL | PIPETTE | advanced-pump-0-0 | start compression sleeve",
+        "FMPL | PIPETTE | advanced-pump-0-0 | start compression retaining band",
+        "FMPL | PIPETTE | advanced-pump-0-0 | end compression sleeve",
+        "FMPL | PIPETTE | advanced-pump-0-0 | end compression retaining band"
+      ],
+      "reservoir_body": "Advanced | detail reservoir right shell",
+      "pump_body": "Advanced | detail pump stack 0 bored shell"
+    },
+    {
+      "request": {
+        "id": "advanced-pump-0-1",
+        "family": "rigid_pipe",
+        "payload": "fluid",
+        "material_id": "Advanced adjunct | structure",
+        "size": {
+          "outer_diameter": 0.035,
+          "wall_fraction": 0.16
+        },
+        "path": {
+          "kind": "waypoints",
+          "points": [
+            [
+              2.055000066757202,
+              0.9300000071525574,
+              0.28999999165534973
+            ],
+            [
+              2.0663392543792725,
+              0.9300000071525574,
+              0.28999999165534973
+            ],
+            [
+              2.0766520500183105,
+              0.9331481456756592,
+              0.2917708456516266
+            ],
+            [
+              2.086005926132202,
+              0.9368749260902405,
+              0.29386717081069946
+            ],
+            [
+              2.0944676399230957,
+              0.941851794719696,
+              0.2966666519641876
+            ],
+            [
+              2.102104902267456,
+              0.9479398131370544,
+              0.3000911474227905
+            ],
+            [
+              2.1089842319488525,
+              0.9549999833106995,
+              0.30406248569488525
+            ],
+            [
+              2.1151740550994873,
+              0.9628934860229492,
+              0.3085026144981384
+            ],
+            [
+              2.1207408905029297,
+              0.9714815020561218,
+              0.3133333623409271
+            ],
+            [
+              2.1257519721984863,
+              0.9806250333786011,
+              0.31847652792930603
+            ],
+            [
+              2.130274772644043,
+              0.9901851415634155,
+              0.32385414838790894
+            ],
+            [
+              2.1343770027160645,
+              1.0000232458114624,
+              0.3293880522251129
+            ],
+            [
+              2.138124942779541,
+              1.0099999904632568,
+              0.3349999785423279
+            ],
+            [
+              2.141587018966675,
+              1.0199768543243408,
+              0.34061199426651
+            ],
+            [
+              2.144829273223877,
+              1.0298147201538086,
+              0.3461458086967468
+            ],
+            [
+              2.1479198932647705,
+              1.0393749475479126,
+              0.3515234589576721
+            ],
+            [
+              2.150926113128662,
+              1.0485185384750366,
+              0.3566666841506958
+            ],
+            [
+              2.1539146900177,
+              1.0571064949035645,
+              0.3614973723888397
+            ],
+            [
+              2.1569530963897705,
+              1.065000057220459,
+              0.3659375011920929
+            ],
+            [
+              2.160109043121338,
+              1.0720601081848145,
+              0.36990886926651
+            ],
+            [
+              2.163449287414551,
+              1.0781481266021729,
+              0.3733333349227905
+            ],
+            [
+              2.167041301727295,
+              1.083125114440918,
+              0.3761328160762787
+            ],
+            [
+              2.170952081680298,
+              1.0868518352508545,
+              0.37822914123535156
+            ],
+            [
+              2.1752493381500244,
+              1.0891897678375244,
+              0.3795442581176758
+            ],
+            [
+              2.180000066757202,
+              1.090000033378601,
+              0.3799999952316284
+            ],
+            [
+              2.2087531089782715,
+              1.090000033378601,
+              0.3817216455936432
+            ],
+            [
+              2.2350234985351562,
+              1.0899999141693115,
+              0.38668981194496155
+            ],
+            [
+              2.2588281631469727,
+              1.0900001525878906,
+              0.39460936188697815
+            ],
+            [
+              2.2801852226257324,
+              1.0899999141693115,
+              0.40518519282341003
+            ],
+            [
+              2.299111843109131,
+              1.090000033378601,
+              0.4181220829486847
+            ],
+            [
+              2.3156251907348633,
+              1.0899999141693115,
+              0.43312498927116394
+            ],
+            [
+              2.329742670059204,
+              1.090000033378601,
+              0.44989871978759766
+            ],
+            [
+              2.3414816856384277,
+              1.090000033378601,
+              0.46814820170402527
+            ],
+            [
+              2.3508591651916504,
+              1.090000033378601,
+              0.4875781536102295
+            ],
+            [
+              2.357893466949463,
+              1.0899999141693115,
+              0.5078935027122498
+            ],
+            [
+              2.3626012802124023,
+              1.090000033378601,
+              0.5287992358207703
+            ],
+            [
+              2.365000009536743,
+              1.090000033378601,
+              0.550000011920929
+            ],
+            [
+              2.365107297897339,
+              1.090000033378601,
+              0.5712008476257324
+            ],
+            [
+              2.3629398345947266,
+              1.0899999141693115,
+              0.5921064615249634
+            ],
+            [
+              2.358515739440918,
+              1.0899999141693115,
+              0.6124218702316284
+            ],
+            [
+              2.3518519401550293,
+              1.090000033378601,
+              0.6318519115447998
+            ],
+            [
+              2.342965841293335,
+              1.090000033378601,
+              0.6501013040542603
+            ],
+            [
+              2.3318750858306885,
+              1.0899999141693115,
+              0.6668750047683716
+            ],
+            [
+              2.318596839904785,
+              1.0899999141693115,
+              0.6818779706954956
+            ],
+            [
+              2.303148031234741,
+              1.090000033378601,
+              0.6948148012161255
+            ],
+            [
+              2.2855467796325684,
+              1.090000033378601,
+              0.7053906321525574
+            ],
+            [
+              2.265810012817383,
+              1.090000033378601,
+              0.7133102416992188
+            ],
+            [
+              2.243955612182617,
+              1.090000033378601,
+              0.7182783484458923
+            ],
+            [
+              2.2200000286102295,
+              1.090000033378601,
+              0.7200000286102295
+            ],
+            [
+              2.2079033851623535,
+              1.0891897678375244,
+              0.7200000286102295
+            ],
+            [
+              2.1965596675872803,
+              1.0868518352508545,
+              0.7200000882148743
+            ],
+            [
+              2.1858885288238525,
+              1.0831249952316284,
+              0.7200000286102295
+            ],
+            [
+              2.1758100986480713,
+              1.0781481266021729,
+              0.7200000286102295
+            ],
+            [
+              2.1662437915802,
+              1.0720601081848145,
+              0.7200000286102295
+            ],
+            [
+              2.157109498977661,
+              1.065000057220459,
+              0.7200000286102295
+            ],
+            [
+              2.1483263969421387,
+              1.0571064949035645,
+              0.7199999690055847
+            ],
+            [
+              2.139814853668213,
+              1.0485185384750366,
+              0.7200000286102295
+            ],
+            [
+              2.1314938068389893,
+              1.0393749475479126,
+              0.7200000286102295
+            ],
+            [
+              2.123284101486206,
+              1.0298148393630981,
+              0.7200000286102295
+            ],
+            [
+              2.1151046752929688,
+              1.0199769735336304,
+              0.7200000882148743
+            ],
+            [
+              2.106874942779541,
+              1.0099999904632568,
+              0.7200000286102295
+            ],
+            [
+              2.098515510559082,
+              1.0000232458114624,
+              0.7200000286102295
+            ],
+            [
+              2.089944839477539,
+              0.9901851415634155,
+              0.7200000286102295
+            ],
+            [
+              2.0810840129852295,
+              0.9806249737739563,
+              0.7200000286102295
+            ],
+            [
+              2.0718517303466797,
+              0.9714815020561218,
+              0.7200000286102295
+            ],
+            [
+              2.0621681213378906,
+              0.9628934860229492,
+              0.7200000286102295
+            ],
+            [
+              2.051953077316284,
+              0.9550000429153442,
+              0.7200000286102295
+            ],
+            [
+              2.041125774383545,
+              0.9479397535324097,
+              0.7200000286102295
+            ],
+            [
+              2.029606342315674,
+              0.941851794719696,
+              0.7200000286102295
+            ],
+            [
+              2.0173144340515137,
+              0.9368749856948853,
+              0.7200000286102295
+            ],
+            [
+              2.004169464111328,
+              0.9331481456756592,
+              0.7200000286102295
+            ],
+            [
+              1.9900915622711182,
+              0.9300000071525574,
+              0.7200000286102295
+            ],
+            [
+              1.975000023841858,
+              0.9300000071525574,
+              0.7200000286102295
+            ]
+          ]
+        },
+        "start_socket": {
+          "id": "reservoir",
+          "xyz": [
+            2.055000066757202,
+            0.9300000071525574,
+            0.28999999165534973
+          ],
+          "normal": [
+            1,
+            0,
+            0
+          ],
+          "role": "source",
+          "payloads": [
+            "fluid"
+          ],
+          "parent_mesh": "Advanced | detail pump 0 reservoir receiver 1"
+        },
+        "end_socket": {
+          "id": "pump",
+          "xyz": [
+            1.975000023841858,
+            0.9300000071525574,
+            0.7200000286102295
+          ],
+          "normal": [
+            1,
+            0,
+            0
+          ],
+          "role": "sink",
+          "payloads": [
+            "fluid"
+          ],
+          "parent_mesh": "Advanced | detail pump 0 body receiver 1"
+        },
+        "fittings": {
+          "start": "compression",
+          "end": "compression"
+        },
+        "supports": {
+          "binding": "Short broad bends between bored hollow bodies; all equipment founded on service deck"
+        },
+        "behavior": {
+          "static_closed_crane_service_loop": true,
+          "no_new_native_fluid_port": true
+        },
+        "keep_outs": []
+      },
+      "objects": [
+        "FMPL | PIPETTE | advanced-pump-0-1 | continuous visible route",
+        "FMPL | PIPETTE | advanced-pump-0-1 | start compression sleeve",
+        "FMPL | PIPETTE | advanced-pump-0-1 | start compression retaining band",
+        "FMPL | PIPETTE | advanced-pump-0-1 | end compression sleeve",
+        "FMPL | PIPETTE | advanced-pump-0-1 | end compression retaining band"
+      ],
+      "reservoir_body": "Advanced | detail reservoir right shell",
+      "pump_body": "Advanced | detail pump stack 0 bored shell"
+    },
+    {
+      "request": {
+        "id": "advanced-pump-1-0",
+        "family": "rigid_pipe",
+        "payload": "fluid",
+        "material_id": "Advanced adjunct | structure",
+        "size": {
+          "outer_diameter": 0.035,
+          "wall_fraction": 0.16
+        },
+        "path": {
+          "kind": "waypoints",
+          "points": [
+            [
+              2.055000066757202,
+              1.5499999523162842,
+              0.1899999976158142
+            ],
+            [
+              2.06169056892395,
+              1.5499999523162842,
+              0.190195694565773
+            ],
+            [
+              2.068166732788086,
+              1.5499998331069946,
+              0.19077453017234802
+            ],
+            [
+              2.0744264125823975,
+              1.5499998331069946,
+              0.19172418117523193
+            ],
+            [
+              2.0804686546325684,
+              1.5499999523162842,
+              0.19303223490715027
+            ],
+            [
+              2.0862913131713867,
+              1.5499999523162842,
+              0.19468635320663452
+            ],
+            [
+              2.0918924808502197,
+              1.5499999523162842,
+              0.1966741979122162
+            ],
+            [
+              2.0972697734832764,
+              1.5499999523162842,
+              0.19898338615894318
+            ],
+            [
+              2.102421998977661,
+              1.5499998331069946,
+              0.2016015499830246
+            ],
+            [
+              2.107347011566162,
+              1.5499998331069946,
+              0.20451636612415314
+            ],
+            [
+              2.112043619155884,
+              1.5499999523162842,
+              0.2077154517173767
+            ],
+            [
+              2.116509199142456,
+              1.5499999523162842,
+              0.2111864537000656
+            ],
+            [
+              2.1207423210144043,
+              1.5499998331069946,
+              0.21491698920726776
+            ],
+            [
+              2.1247408390045166,
+              1.5499999523162842,
+              0.21889473497867584
+            ],
+            [
+              2.1285033226013184,
+              1.5499999523162842,
+              0.22310729324817657
+            ],
+            [
+              2.132028102874756,
+              1.5499999523162842,
+              0.22754234075546265
+            ],
+            [
+              2.135312557220459,
+              1.5499999523162842,
+              0.23218749463558197
+            ],
+            [
+              2.1383554935455322,
+              1.5499998331069946,
+              0.23703040182590485
+            ],
+            [
+              2.1411550045013428,
+              1.5499999523162842,
+              0.24205870926380157
+            ],
+            [
+              2.1437087059020996,
+              1.5499999523162842,
+              0.24726006388664246
+            ],
+            [
+              2.1460156440734863,
+              1.5499999523162842,
+              0.2526220679283142
+            ],
+            [
+              2.148073673248291,
+              1.5499999523162842,
+              0.2581323981285095
+            ],
+            [
+              2.1498806476593018,
+              1.5499999523162842,
+              0.2637786865234375
+            ],
+            [
+              2.1514346599578857,
+              1.5499999523162842,
+              0.26954856514930725
+            ],
+            [
+              2.1527342796325684,
+              1.5499999523162842,
+              0.27542969584465027
+            ],
+            [
+              2.153777837753296,
+              1.5499999523162842,
+              0.28140968084335327
+            ],
+            [
+              2.1545631885528564,
+              1.5499999523162842,
+              0.28747618198394775
+            ],
+            [
+              2.155088424682617,
+              1.5499999523162842,
+              0.2936168611049652
+            ],
+            [
+              2.1553516387939453,
+              1.5499998331069946,
+              0.29981935024261475
+            ],
+            [
+              2.155351161956787,
+              1.5499998331069946,
+              0.3060712218284607
+            ],
+            [
+              2.155085563659668,
+              1.5499999523162842,
+              0.3123602271080017
+            ],
+            [
+              2.154552459716797,
+              1.5499999523162842,
+              0.3186739385128021
+            ],
+            [
+              2.15375018119812,
+              1.5499999523162842,
+              0.32499998807907104
+            ],
+            [
+              2.152676820755005,
+              1.5499998331069946,
+              0.33132606744766235
+            ],
+            [
+              2.1513307094573975,
+              1.5499998331069946,
+              0.33763980865478516
+            ],
+            [
+              2.149709939956665,
+              1.5499999523162842,
+              0.3439287543296814
+            ],
+            [
+              2.147812604904175,
+              1.5499999523162842,
+              0.35018065571784973
+            ],
+            [
+              2.145637035369873,
+              1.5499999523162842,
+              0.35638314485549927
+            ],
+            [
+              2.143181085586548,
+              1.5499998331069946,
+              0.36252379417419434
+            ],
+            [
+              2.1404433250427246,
+              1.5499999523162842,
+              0.3685903251171112
+            ],
+            [
+              2.1374218463897705,
+              1.5499999523162842,
+              0.3745703101158142
+            ],
+            [
+              2.1341147422790527,
+              1.5499999523162842,
+              0.3804514408111572
+            ],
+            [
+              2.1305201053619385,
+              1.5499999523162842,
+              0.3862212896347046
+            ],
+            [
+              2.126636028289795,
+              1.5499999523162842,
+              0.39186757802963257
+            ],
+            [
+              2.1224608421325684,
+              1.5499999523162842,
+              0.39737793803215027
+            ],
+            [
+              2.117992877960205,
+              1.5499999523162842,
+              0.402739942073822
+            ],
+            [
+              2.113229990005493,
+              1.5499999523162842,
+              0.4079412817955017
+            ],
+            [
+              2.108170509338379,
+              1.5499999523162842,
+              0.41296958923339844
+            ],
+            [
+              2.1028125286102295,
+              1.5499999523162842,
+              0.4178124964237213
+            ],
+            [
+              2.097154378890991,
+              1.5499998331069946,
+              0.42245766520500183
+            ],
+            [
+              2.091193914413452,
+              1.5499998331069946,
+              0.4268926978111267
+            ],
+            [
+              2.0849297046661377,
+              1.5499999523162842,
+              0.43110528588294983
+            ],
+            [
+              2.078359603881836,
+              1.5499999523162842,
+              0.4350830018520355
+            ],
+            [
+              2.071481704711914,
+              1.5499999523162842,
+              0.43881356716156006
+            ],
+            [
+              2.0642943382263184,
+              1.5499999523162842,
+              0.4422845244407654
+            ],
+            [
+              2.056796073913574,
+              1.5499999523162842,
+              0.44548362493515015
+            ],
+            [
+              2.0489845275878906,
+              1.5499999523162842,
+              0.4483984112739563
+            ],
+            [
+              2.040858030319214,
+              1.5499999523162842,
+              0.4510166049003601
+            ],
+            [
+              2.032414674758911,
+              1.5499999523162842,
+              0.4533258080482483
+            ],
+            [
+              2.0236525535583496,
+              1.5499999523162842,
+              0.45531365275382996
+            ],
+            [
+              2.0145702362060547,
+              1.5499999523162842,
+              0.4569677710533142
+            ],
+            [
+              2.0051655769348145,
+              1.5499999523162842,
+              0.45827585458755493
+            ],
+            [
+              1.9954370260238647,
+              1.5499999523162842,
+              0.45922547578811646
+            ],
+            [
+              1.9853824377059937,
+              1.5499999523162842,
+              0.45980432629585266
+            ],
+            [
+              1.975000023841858,
+              1.5499999523162842,
+              0.46000000834465027
+            ]
+          ]
+        },
+        "start_socket": {
+          "id": "reservoir",
+          "xyz": [
+            2.055000066757202,
+            1.5499999523162842,
+            0.1899999976158142
+          ],
+          "normal": [
+            1,
+            0,
+            0
+          ],
+          "role": "source",
+          "payloads": [
+            "fluid"
+          ],
+          "parent_mesh": "Advanced | detail pump 1 reservoir receiver 0"
+        },
+        "end_socket": {
+          "id": "pump",
+          "xyz": [
+            1.975000023841858,
+            1.5499999523162842,
+            0.46000000834465027
+          ],
+          "normal": [
+            1,
+            0,
+            0
+          ],
+          "role": "sink",
+          "payloads": [
+            "fluid"
+          ],
+          "parent_mesh": "Advanced | detail pump 1 body receiver 0"
+        },
+        "fittings": {
+          "start": "compression",
+          "end": "compression"
+        },
+        "supports": {
+          "binding": "Short broad bends between bored hollow bodies; all equipment founded on service deck"
+        },
+        "behavior": {
+          "static_closed_crane_service_loop": true,
+          "no_new_native_fluid_port": true
+        },
+        "keep_outs": []
+      },
+      "objects": [
+        "FMPL | PIPETTE | advanced-pump-1-0 | continuous visible route",
+        "FMPL | PIPETTE | advanced-pump-1-0 | start compression sleeve",
+        "FMPL | PIPETTE | advanced-pump-1-0 | start compression retaining band",
+        "FMPL | PIPETTE | advanced-pump-1-0 | end compression sleeve",
+        "FMPL | PIPETTE | advanced-pump-1-0 | end compression retaining band"
+      ],
+      "reservoir_body": "Advanced | detail reservoir right shell",
+      "pump_body": "Advanced | detail pump stack 1 bored shell"
+    },
+    {
+      "request": {
+        "id": "advanced-pump-1-1",
+        "family": "rigid_pipe",
+        "payload": "fluid",
+        "material_id": "Advanced adjunct | structure",
+        "size": {
+          "outer_diameter": 0.035,
+          "wall_fraction": 0.16
+        },
+        "path": {
+          "kind": "waypoints",
+          "points": [
+            [
+              2.055000066757202,
+              1.5499999523162842,
+              0.28999999165534973
+            ],
+            [
+              2.0663392543792725,
+              1.5499999523162842,
+              0.28999999165534973
+            ],
+            [
+              2.0766520500183105,
+              1.5531481504440308,
+              0.2917708456516266
+            ],
+            [
+              2.086005926132202,
+              1.5568748712539673,
+              0.29386717081069946
+            ],
+            [
+              2.0944676399230957,
+              1.5618518590927124,
+              0.2966666519641876
+            ],
+            [
+              2.102104902267456,
+              1.5679397583007812,
+              0.3000911474227905
+            ],
+            [
+              2.1089842319488525,
+              1.5749999284744263,
+              0.30406248569488525
+            ],
+            [
+              2.1151740550994873,
+              1.5828933715820312,
+              0.3085026144981384
+            ],
+            [
+              2.1207408905029297,
+              1.5914814472198486,
+              0.3133333623409271
+            ],
+            [
+              2.1257519721984863,
+              1.600624918937683,
+              0.31847652792930603
+            ],
+            [
+              2.130274772644043,
+              1.610185146331787,
+              0.32385414838790894
+            ],
+            [
+              2.1343770027160645,
+              1.620023250579834,
+              0.3293880522251129
+            ],
+            [
+              2.138124942779541,
+              1.6299999952316284,
+              0.3349999785423279
+            ],
+            [
+              2.141587018966675,
+              1.639976978302002,
+              0.34061199426651
+            ],
+            [
+              2.144829273223877,
+              1.6498147249221802,
+              0.3461458086967468
+            ],
+            [
+              2.1479198932647705,
+              1.6593750715255737,
+              0.3515234589576721
+            ],
+            [
+              2.150926113128662,
+              1.6685186624526978,
+              0.3566666841506958
+            ],
+            [
+              2.1539146900177,
+              1.677106499671936,
+              0.3614973723888397
+            ],
+            [
+              2.1569530963897705,
+              1.6850000619888306,
+              0.3659375011920929
+            ],
+            [
+              2.160109043121338,
+              1.6920602321624756,
+              0.36990886926651
+            ],
+            [
+              2.163449287414551,
+              1.6981481313705444,
+              0.3733333349227905
+            ],
+            [
+              2.167041301727295,
+              1.703125,
+              0.3761328160762787
+            ],
+            [
+              2.170952081680298,
+              1.7068519592285156,
+              0.37822914123535156
+            ],
+            [
+              2.1752493381500244,
+              1.7091898918151855,
+              0.3795442581176758
+            ],
+            [
+              2.180000066757202,
+              1.7100000381469727,
+              0.3799999952316284
+            ],
+            [
+              2.2087531089782715,
+              1.7100001573562622,
+              0.3817216455936432
+            ],
+            [
+              2.2350234985351562,
+              1.709999918937683,
+              0.38668981194496155
+            ],
+            [
+              2.2588281631469727,
+              1.7100000381469727,
+              0.39460936188697815
+            ],
+            [
+              2.2801852226257324,
+              1.7100000381469727,
+              0.40518519282341003
+            ],
+            [
+              2.299111843109131,
+              1.7100001573562622,
+              0.4181220829486847
+            ],
+            [
+              2.3156251907348633,
+              1.7100000381469727,
+              0.43312498927116394
+            ],
+            [
+              2.329742670059204,
+              1.7099997997283936,
+              0.44989871978759766
+            ],
+            [
+              2.3414816856384277,
+              1.7100000381469727,
+              0.46814820170402527
+            ],
+            [
+              2.3508591651916504,
+              1.709999918937683,
+              0.4875781536102295
+            ],
+            [
+              2.357893466949463,
+              1.7100000381469727,
+              0.5078935027122498
+            ],
+            [
+              2.3626012802124023,
+              1.7100002765655518,
+              0.5287992358207703
+            ],
+            [
+              2.365000009536743,
+              1.7100000381469727,
+              0.550000011920929
+            ],
+            [
+              2.365107297897339,
+              1.7100000381469727,
+              0.5712008476257324
+            ],
+            [
+              2.3629398345947266,
+              1.709999918937683,
+              0.5921064615249634
+            ],
+            [
+              2.358515739440918,
+              1.7100000381469727,
+              0.6124218702316284
+            ],
+            [
+              2.3518519401550293,
+              1.7100000381469727,
+              0.6318519115447998
+            ],
+            [
+              2.342965841293335,
+              1.7100000381469727,
+              0.6501013040542603
+            ],
+            [
+              2.3318750858306885,
+              1.7100000381469727,
+              0.6668750047683716
+            ],
+            [
+              2.318596839904785,
+              1.7100000381469727,
+              0.6818779706954956
+            ],
+            [
+              2.303148031234741,
+              1.7100000381469727,
+              0.6948148012161255
+            ],
+            [
+              2.2855467796325684,
+              1.7100000381469727,
+              0.7053906321525574
+            ],
+            [
+              2.265810012817383,
+              1.7100000381469727,
+              0.7133102416992188
+            ],
+            [
+              2.243955612182617,
+              1.7100000381469727,
+              0.7182783484458923
+            ],
+            [
+              2.2200000286102295,
+              1.7100000381469727,
+              0.7200000286102295
+            ],
+            [
+              2.2079033851623535,
+              1.709190011024475,
+              0.7200000286102295
+            ],
+            [
+              2.1965596675872803,
+              1.7068519592285156,
+              0.7200000882148743
+            ],
+            [
+              2.1858885288238525,
+              1.703125,
+              0.7200000286102295
+            ],
+            [
+              2.1758100986480713,
+              1.6981481313705444,
+              0.7200000286102295
+            ],
+            [
+              2.1662437915802,
+              1.6920602321624756,
+              0.7200000286102295
+            ],
+            [
+              2.157109498977661,
+              1.6850000619888306,
+              0.7200000286102295
+            ],
+            [
+              2.1483263969421387,
+              1.677106261253357,
+              0.7199999690055847
+            ],
+            [
+              2.139814853668213,
+              1.6685185432434082,
+              0.7200000286102295
+            ],
+            [
+              2.1314938068389893,
+              1.6593749523162842,
+              0.7200000286102295
+            ],
+            [
+              2.123284101486206,
+              1.6498148441314697,
+              0.7200000286102295
+            ],
+            [
+              2.1151046752929688,
+              1.6399768590927124,
+              0.7200000882148743
+            ],
+            [
+              2.106874942779541,
+              1.6299999952316284,
+              0.7200000286102295
+            ],
+            [
+              2.098515510559082,
+              1.6200231313705444,
+              0.7200000286102295
+            ],
+            [
+              2.089944839477539,
+              1.6101850271224976,
+              0.7200000286102295
+            ],
+            [
+              2.0810840129852295,
+              1.6006250381469727,
+              0.7200000286102295
+            ],
+            [
+              2.0718517303466797,
+              1.5914814472198486,
+              0.7200000286102295
+            ],
+            [
+              2.0621681213378906,
+              1.5828933715820312,
+              0.7200000286102295
+            ],
+            [
+              2.051953077316284,
+              1.5749999284744263,
+              0.7200000286102295
+            ],
+            [
+              2.041125774383545,
+              1.5679397583007812,
+              0.7200000286102295
+            ],
+            [
+              2.029606342315674,
+              1.5618517398834229,
+              0.7200000286102295
+            ],
+            [
+              2.0173144340515137,
+              1.5568748712539673,
+              0.7200000286102295
+            ],
+            [
+              2.004169464111328,
+              1.5531481504440308,
+              0.7200000286102295
+            ],
+            [
+              1.9900915622711182,
+              1.5499999523162842,
+              0.7200000286102295
+            ],
+            [
+              1.975000023841858,
+              1.5499999523162842,
+              0.7200000286102295
+            ]
+          ]
+        },
+        "start_socket": {
+          "id": "reservoir",
+          "xyz": [
+            2.055000066757202,
+            1.5499999523162842,
+            0.28999999165534973
+          ],
+          "normal": [
+            1,
+            0,
+            0
+          ],
+          "role": "source",
+          "payloads": [
+            "fluid"
+          ],
+          "parent_mesh": "Advanced | detail pump 1 reservoir receiver 1"
+        },
+        "end_socket": {
+          "id": "pump",
+          "xyz": [
+            1.975000023841858,
+            1.5499999523162842,
+            0.7200000286102295
+          ],
+          "normal": [
+            1,
+            0,
+            0
+          ],
+          "role": "sink",
+          "payloads": [
+            "fluid"
+          ],
+          "parent_mesh": "Advanced | detail pump 1 body receiver 1"
+        },
+        "fittings": {
+          "start": "compression",
+          "end": "compression"
+        },
+        "supports": {
+          "binding": "Short broad bends between bored hollow bodies; all equipment founded on service deck"
+        },
+        "behavior": {
+          "static_closed_crane_service_loop": true,
+          "no_new_native_fluid_port": true
+        },
+        "keep_outs": []
+      },
+      "objects": [
+        "FMPL | PIPETTE | advanced-pump-1-1 | continuous visible route",
+        "FMPL | PIPETTE | advanced-pump-1-1 | start compression sleeve",
+        "FMPL | PIPETTE | advanced-pump-1-1 | start compression retaining band",
+        "FMPL | PIPETTE | advanced-pump-1-1 | end compression sleeve",
+        "FMPL | PIPETTE | advanced-pump-1-1 | end compression retaining band"
+      ],
+      "reservoir_body": "Advanced | detail reservoir right shell",
+      "pump_body": "Advanced | detail pump stack 1 bored shell"
+    }
+  ],
+  "signal_routes": [
+    {
+      "request": {
+        "id": "advanced-pump-signal-0",
+        "family": "single_wire",
+        "payload": "signal",
+        "material_id": "Advanced | dark insulated pump signal",
+        "size": {
+          "outer_diameter": 0.018,
+          "wall_fraction": 0
+        },
+        "path": {
+          "kind": "waypoints",
+          "points": [
+            [
+              1.440000057220459,
+              2.130000114440918,
+              0.3799999952316284
+            ],
+            [
+              1.440000057220459,
+              2.130000114440918,
+              0.3927849233150482
+            ],
+            [
+              1.4410327672958374,
+              2.1265578269958496,
+              0.40581467747688293
+            ],
+            [
+              1.4422988891601562,
+              2.1223371028900146,
+              0.4190703332424164
+            ],
+            [
+              1.4440429210662842,
+              2.116523504257202,
+              0.4325329661369324
+            ],
+            [
+              1.4462485313415527,
+              2.1091718673706055,
+              0.4461837410926819
+            ],
+            [
+              1.4488989114761353,
+              2.100337028503418,
+              0.4600037932395935
+            ],
+            [
+              1.4519778490066528,
+              2.090074062347412,
+              0.47397422790527344
+            ],
+            [
+              1.455468773841858,
+              2.0784378051757812,
+              0.4880761504173279
+            ],
+            [
+              1.4593552350997925,
+              2.0654830932617188,
+              0.5022907257080078
+            ],
+            [
+              1.463620662689209,
+              2.051264762878418,
+              0.5165989398956299
+            ],
+            [
+              1.4682486057281494,
+              2.0358381271362305,
+              0.5309820771217346
+            ],
+            [
+              1.4732226133346558,
+              2.0192580223083496,
+              0.5454211831092834
+            ],
+            [
+              1.4785263538360596,
+              2.0015790462493896,
+              0.559897243976593
+            ],
+            [
+              1.4841430187225342,
+              1.9828563928604126,
+              0.5743916034698486
+            ],
+            [
+              1.4900565147399902,
+              1.9631452560424805,
+              0.5888852477073669
+            ],
+            [
+              1.496250033378601,
+              1.942500114440918,
+              0.6033593416213989
+            ],
+            [
+              1.5027072429656982,
+              1.9209760427474976,
+              0.6177949905395508
+            ],
+            [
+              1.5094115734100342,
+              1.8986279964447021,
+              0.6321732401847839
+            ],
+            [
+              1.5163466930389404,
+              1.8755110502243042,
+              0.6464753746986389
+            ],
+            [
+              1.523496150970459,
+              1.851679801940918,
+              0.6606823801994324
+            ],
+            [
+              1.5308432579040527,
+              1.8271894454956055,
+              0.6747753620147705
+            ],
+            [
+              1.5383715629577637,
+              1.80209481716156,
+              0.6887354850769043
+            ],
+            [
+              1.5460647344589233,
+              1.7764508724212646,
+              0.7025439143180847
+            ],
+            [
+              1.5539062023162842,
+              1.7503125667572021,
+              0.7161816358566284
+            ],
+            [
+              1.5618796348571777,
+              1.7237348556518555,
+              0.7296298742294312
+            ],
+            [
+              1.5699682235717773,
+              1.696772575378418,
+              0.7428697347640991
+            ],
+            [
+              1.578155755996704,
+              1.669480562210083,
+              0.7558822631835938
+            ],
+            [
+              1.58642578125,
+              1.6419141292572021,
+              0.7686487436294556
+            ],
+            [
+              1.594761610031128,
+              1.6141279935836792,
+              0.7811500430107117
+            ],
+            [
+              1.603147029876709,
+              1.5861767530441284,
+              0.7933675050735474
+            ],
+            [
+              1.611565113067627,
+              1.5581159591674805,
+              0.8052821755409241
+            ],
+            [
+              1.6200000047683716,
+              1.53000009059906,
+              0.8168749809265137
+            ],
+            [
+              1.6284347772598267,
+              1.5018843412399292,
+              0.8281273245811462
+            ],
+            [
+              1.6368529796600342,
+              1.4738233089447021,
+              0.8390202522277832
+            ],
+            [
+              1.6452382802963257,
+              1.445872187614441,
+              0.849534809589386
+            ],
+            [
+              1.6535742282867432,
+              1.418086051940918,
+              0.8596521615982056
+            ],
+            [
+              1.6618441343307495,
+              1.390519380569458,
+              0.8693533539772034
+            ],
+            [
+              1.6700316667556763,
+              1.3632276058197021,
+              0.8786195516586304
+            ],
+            [
+              1.6781203746795654,
+              1.3362653255462646,
+              0.8874318599700928
+            ],
+            [
+              1.6860936880111694,
+              1.309687614440918,
+              0.8957715034484863
+            ],
+            [
+              1.6939351558685303,
+              1.283549189567566,
+              0.9036194086074829
+            ],
+            [
+              1.7016284465789795,
+              1.25790536403656,
+              0.9109569191932678
+            ],
+            [
+              1.7091567516326904,
+              1.2328107357025146,
+              0.9177649021148682
+            ],
+            [
+              1.7165038585662842,
+              1.2083203792572021,
+              0.9240246415138245
+            ],
+            [
+              1.7236531972885132,
+              1.184489130973816,
+              0.9297172427177429
+            ],
+            [
+              1.730588436126709,
+              1.161372184753418,
+              0.934823751449585
+            ],
+            [
+              1.737292766571045,
+              1.139024019241333,
+              0.9393253326416016
+            ],
+            [
+              1.743749976158142,
+              1.1175000667572021,
+              0.9432030916213989
+            ],
+            [
+              1.7499433755874634,
+              1.09685480594635,
+              0.9464382529258728
+            ],
+            [
+              1.7558567523956299,
+              1.0771435499191284,
+              0.9490117430686951
+            ],
+            [
+              1.7614736557006836,
+              1.058421015739441,
+              0.9509047269821167
+            ],
+            [
+              1.7667772769927979,
+              1.0407421588897705,
+              0.9520983695983887
+            ],
+            [
+              1.7717512845993042,
+              1.0241620540618896,
+              0.9525738954544067
+            ],
+            [
+              1.7763793468475342,
+              1.0087354183197021,
+              0.952312171459198
+            ],
+            [
+              1.7806448936462402,
+              0.9945172071456909,
+              0.951294481754303
+            ],
+            [
+              1.7845311164855957,
+              0.9815624952316284,
+              0.9495019316673279
+            ],
+            [
+              1.7880221605300903,
+              0.969926118850708,
+              0.9469156265258789
+            ],
+            [
+              1.7911009788513184,
+              0.9596630334854126,
+              0.943516731262207
+            ],
+            [
+              1.7937514781951904,
+              0.9508282542228699,
+              0.9392861723899841
+            ],
+            [
+              1.7959569692611694,
+              0.9434765577316284,
+              0.9342053532600403
+            ],
+            [
+              1.7977010011672974,
+              0.9376629590988159,
+              0.9282550811767578
+            ],
+            [
+              1.7989671230316162,
+              0.9334424138069153,
+              0.9214167594909668
+            ],
+            [
+              1.7999999523162842,
+              0.9300000071525574,
+              0.9136713743209839
+            ],
+            [
+              1.7999999523162842,
+              0.9300000071525574,
+              0.9049999713897705
+            ]
+          ]
+        },
+        "start_socket": {
+          "id": "cabinet-roof",
+          "xyz": [
+            1.440000057220459,
+            2.130000114440918,
+            0.3799999952316284
+          ],
+          "normal": [
+            0,
+            0,
+            1
+          ],
+          "role": "source",
+          "payloads": [
+            "signal"
+          ],
+          "parent_mesh": "Advanced | detail pump signal cabinet gland 0"
+        },
+        "end_socket": {
+          "id": "pump-head",
+          "xyz": [
+            1.7999999523162842,
+            0.9300000071525574,
+            0.9049999713897705
+          ],
+          "normal": [
+            0,
+            0,
+            1
+          ],
+          "role": "sink",
+          "payloads": [
+            "signal"
+          ],
+          "parent_mesh": "Advanced | detail pump head signal gland 0"
+        },
+        "fittings": {
+          "start": "cable_gland",
+          "end": "cable_gland"
+        },
+        "supports": {
+          "binding": "Short flexible service arch between two actual receiving glands; no unsupported hard elbow"
+        },
+        "behavior": {
+          "static_local_signal_lead": true,
+          "no_new_gameplay_port": true
+        },
+        "keep_outs": []
+      },
+      "objects": [
+        "FMPL | PIPETTE | advanced-pump-signal-0 | continuous visible route",
+        "FMPL | PIPETTE | advanced-pump-signal-0 | start cable_gland sleeve",
+        "FMPL | PIPETTE | advanced-pump-signal-0 | start cable_gland retaining band",
+        "FMPL | PIPETTE | advanced-pump-signal-0 | start cable_gland outer stop",
+        "FMPL | PIPETTE | advanced-pump-signal-0 | end cable_gland sleeve",
+        "FMPL | PIPETTE | advanced-pump-signal-0 | end cable_gland retaining band",
+        "FMPL | PIPETTE | advanced-pump-signal-0 | end cable_gland outer stop"
+      ]
+    },
+    {
+      "request": {
+        "id": "advanced-pump-signal-1",
+        "family": "single_wire",
+        "payload": "signal",
+        "material_id": "Advanced | restrained red insulated service",
+        "size": {
+          "outer_diameter": 0.018,
+          "wall_fraction": 0
+        },
+        "path": {
+          "kind": "waypoints",
+          "points": [
+            [
+              1.659999966621399,
+              2.130000114440918,
+              0.3799999952316284
+            ],
+            [
+              1.659999966621399,
+              2.130000114440918,
+              0.3927849233150482
+            ],
+            [
+              1.6604015827178955,
+              2.128336191177368,
+              0.40581467747688293
+            ],
+            [
+              1.6608939170837402,
+              2.1262965202331543,
+              0.4190703332424164
+            ],
+            [
+              1.6615722179412842,
+              2.1234865188598633,
+              0.4325329661369324
+            ],
+            [
+              1.662429928779602,
+              2.1199331283569336,
+              0.4461837410926819
+            ],
+            [
+              1.6634607315063477,
+              2.1156630516052246,
+              0.4600037932395935
+            ],
+            [
+              1.6646579504013062,
+              2.1107022762298584,
+              0.47397422790527344
+            ],
+            [
+              1.666015625,
+              2.1050784587860107,
+              0.4880761504173279
+            ],
+            [
+              1.6675269603729248,
+              2.0988168716430664,
+              0.5022907257080078
+            ],
+            [
+              1.669185757637024,
+              2.091944694519043,
+              0.5165989398956299
+            ],
+            [
+              1.6709855794906616,
+              2.0844886302948,
+              0.5309820771217346
+            ],
+            [
+              1.6729198694229126,
+              2.076474666595459,
+              0.5454211831092834
+            ],
+            [
+              1.6749824285507202,
+              2.067930221557617,
+              0.559897243976593
+            ],
+            [
+              1.6771667003631592,
+              2.058880567550659,
+              0.5743916034698486
+            ],
+            [
+              1.6794664859771729,
+              2.04935359954834,
+              0.5888852477073669
+            ],
+            [
+              1.6818749904632568,
+              2.039375066757202,
+              0.6033593416213989
+            ],
+            [
+              1.684386134147644,
+              2.0289716720581055,
+              0.6177949905395508
+            ],
+            [
+              1.6869933605194092,
+              2.0181703567504883,
+              0.6321732401847839
+            ],
+            [
+              1.689690351486206,
+              2.0069971084594727,
+              0.6464753746986389
+            ],
+            [
+              1.6924707889556885,
+              1.995478630065918,
+              0.6606823801994324
+            ],
+            [
+              1.6953279972076416,
+              1.9836416244506836,
+              0.6747753620147705
+            ],
+            [
+              1.6982555389404297,
+              1.9715125560760498,
+              0.6887354850769043
+            ],
+            [
+              1.7012473344802856,
+              1.9591178894042969,
+              0.7025439143180847
+            ],
+            [
+              1.7042968273162842,
+              1.9464843273162842,
+              0.7161816358566284
+            ],
+            [
+              1.7073975801467896,
+              1.933638572692871,
+              0.7296298742294312
+            ],
+            [
+              1.710543155670166,
+              1.9206067323684692,
+              0.7428697347640991
+            ],
+            [
+              1.7137272357940674,
+              1.9074156284332275,
+              0.7558822631835938
+            ],
+            [
+              1.716943383216858,
+              1.8940918445587158,
+              0.7686487436294556
+            ],
+            [
+              1.7201850414276123,
+              1.8806617259979248,
+              0.7811500430107117
+            ],
+            [
+              1.7234458923339844,
+              1.8671519756317139,
+              0.7933675050735474
+            ],
+            [
+              1.726719856262207,
+              1.8535892963409424,
+              0.8052821755409241
+            ],
+            [
+              1.7299998998641968,
+              1.840000033378601,
+              0.8168749809265137
+            ],
+            [
+              1.733280062675476,
+              1.8264107704162598,
+              0.8281273245811462
+            ],
+            [
+              1.7365539073944092,
+              1.8128478527069092,
+              0.8390202522277832
+            ],
+            [
+              1.7398148775100708,
+              1.7993382215499878,
+              0.849534809589386
+            ],
+            [
+              1.7430565357208252,
+              1.7859082221984863,
+              0.8596521615982056
+            ],
+            [
+              1.7462726831436157,
+              1.772584319114685,
+              0.8693533539772034
+            ],
+            [
+              1.749456763267517,
+              1.759393334388733,
+              0.8786195516586304
+            ],
+            [
+              1.7526023387908936,
+              1.746361494064331,
+              0.8874318599700928
+            ],
+            [
+              1.755703091621399,
+              1.7335156202316284,
+              0.8957715034484863
+            ],
+            [
+              1.7587525844573975,
+              1.7208821773529053,
+              0.9036194086074829
+            ],
+            [
+              1.7617442607879639,
+              1.708487629890442,
+              0.9109569191932678
+            ],
+            [
+              1.764672040939331,
+              1.696358561515808,
+              0.9177649021148682
+            ],
+            [
+              1.7675292491912842,
+              1.6845214366912842,
+              0.9240246415138245
+            ],
+            [
+              1.770309567451477,
+              1.673003077507019,
+              0.9297172427177429
+            ],
+            [
+              1.7730064392089844,
+              1.661829948425293,
+              0.934823751449585
+            ],
+            [
+              1.775613784790039,
+              1.6510281562805176,
+              0.9393253326416016
+            ],
+            [
+              1.7781249284744263,
+              1.640625,
+              0.9432030916213989
+            ],
+            [
+              1.7805334329605103,
+              1.6306463479995728,
+              0.9464382529258728
+            ],
+            [
+              1.7828330993652344,
+              1.6211192607879639,
+              0.9490117430686951
+            ],
+            [
+              1.785017490386963,
+              1.612070083618164,
+              0.9509047269821167
+            ],
+            [
+              1.7870800495147705,
+              1.6035254001617432,
+              0.9520983695983887
+            ],
+            [
+              1.7890143394470215,
+              1.595511555671692,
+              0.9525738954544067
+            ],
+            [
+              1.7908141613006592,
+              1.5880553722381592,
+              0.952312171459198
+            ],
+            [
+              1.7924730777740479,
+              1.5811831951141357,
+              0.951294481754303
+            ],
+            [
+              1.7939841747283936,
+              1.5749218463897705,
+              0.9495019316673279
+            ],
+            [
+              1.795341968536377,
+              1.5692975521087646,
+              0.9469156265258789
+            ],
+            [
+              1.796539306640625,
+              1.564337134361267,
+              0.943516731262207
+            ],
+            [
+              1.797569990158081,
+              1.5600669384002686,
+              0.9392861723899841
+            ],
+            [
+              1.798427700996399,
+              1.5565136671066284,
+              0.9342053532600403
+            ],
+            [
+              1.7991058826446533,
+              1.5537036657333374,
+              0.9282550811767578
+            ],
+            [
+              1.7995983362197876,
+              1.5516637563705444,
+              0.9214167594909668
+            ],
+            [
+              1.7999999523162842,
+              1.5499999523162842,
+              0.9136713743209839
+            ],
+            [
+              1.7999999523162842,
+              1.5499999523162842,
+              0.9049999713897705
+            ]
+          ]
+        },
+        "start_socket": {
+          "id": "cabinet-roof",
+          "xyz": [
+            1.659999966621399,
+            2.130000114440918,
+            0.3799999952316284
+          ],
+          "normal": [
+            0,
+            0,
+            1
+          ],
+          "role": "source",
+          "payloads": [
+            "signal"
+          ],
+          "parent_mesh": "Advanced | detail pump signal cabinet gland 1"
+        },
+        "end_socket": {
+          "id": "pump-head",
+          "xyz": [
+            1.7999999523162842,
+            1.5499999523162842,
+            0.9049999713897705
+          ],
+          "normal": [
+            0,
+            0,
+            1
+          ],
+          "role": "sink",
+          "payloads": [
+            "signal"
+          ],
+          "parent_mesh": "Advanced | detail pump head signal gland 1"
+        },
+        "fittings": {
+          "start": "cable_gland",
+          "end": "cable_gland"
+        },
+        "supports": {
+          "binding": "Short flexible service arch between two actual receiving glands; no unsupported hard elbow"
+        },
+        "behavior": {
+          "static_local_signal_lead": true,
+          "no_new_gameplay_port": true
+        },
+        "keep_outs": []
+      },
+      "objects": [
+        "FMPL | PIPETTE | advanced-pump-signal-1 | continuous visible route",
+        "FMPL | PIPETTE | advanced-pump-signal-1 | start cable_gland sleeve",
+        "FMPL | PIPETTE | advanced-pump-signal-1 | start cable_gland retaining band",
+        "FMPL | PIPETTE | advanced-pump-signal-1 | start cable_gland outer stop",
+        "FMPL | PIPETTE | advanced-pump-signal-1 | end cable_gland sleeve",
+        "FMPL | PIPETTE | advanced-pump-signal-1 | end cable_gland retaining band",
+        "FMPL | PIPETTE | advanced-pump-signal-1 | end cable_gland outer stop"
+      ]
+    }
+  ],
+  "scope": "Static crane service equipment only. No new native fluid/electrical port, production recipe or operating animation. Original Basic mesh data and5x5 footprint retained."
+}

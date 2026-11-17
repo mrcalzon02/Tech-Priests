@@ -1,0 +1,10 @@
+{
+  "model_visual_approved": true,
+  "source_sha256": "e8b0dbe39f95808792e10009ec940edf7a2d47b244d418911ae7b94dcad4d7cb",
+  "export_sha256": "33257eefc64739e3cffec01890dd42a3c44b172b902cacdff5f7c19de8690efa",
+  "accepted_study": "art/source-to-3d/space-cargo-inventories/v01/basic/studies/material-environment/refined-v03-green/d-refined-steel",
+  "owner_date": "2026-11-17",
+  "owner_instruction": "Done enough We now use that as the basis for creating the expanded advanced version!",
+  "followup": "After we export and wrap up the basic first of course.",
+  "scope": "Acceptance of the shown refined steel/green source as family basis; complete Basic applicable export/native gates before Advanced. Final native screenshot approval not separately inferred."
+}

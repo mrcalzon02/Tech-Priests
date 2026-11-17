@@ -1,0 +1,106 @@
+{
+  "schema": "authored-3d.visual-review.v1",
+  "reviewer": "implementation agent",
+  "owner_approval": "Accepted by owner2026-11-17; visual gate complete. Final integration/publication authorized.",
+  "source_sha256": "378b6420a4aba5ccff67015335fe57d08592d7a5865ada62ed96f5d9b6949b3c",
+  "export_sha256": "101727f232c7babb41d04f85dbb04c2277eccbc0bf322b80ddff59e20769aac0",
+  "reference_sha256": {
+    "owner_sheet_sha256": "29d135a9f811d3842ad584f570eaa6a8bd2bc496f1834072f27fdc9cfcc7db5e",
+    "retained_original_sha256": "29d135a9f811d3842ad584f570eaa6a8bd2bc496f1834072f27fdc9cfcc7db5e"
+  },
+  "render_sha256": {
+    "source-front.png": "aa37b5d639ecf67455b1fb082cc1e7165e0d71d05373af63c5bfcdce6d599308",
+    "inspection/top-square.png": "daf20da3695124bde56b780dce523a590c89dc999501e258693aff85bb36ef80",
+    "inspection/clay-cutaway.png": "9a5a00ae5352b1d9fba44062799b6b9d64120007ecfa41b99e71ff6ec854b747",
+    "inspection/export-d0.png": "4d1b48c08fd230b272a59da213ce3729ec38a5eb0301e16d06ee7a7bc2aef0eb",
+    "inspection/export-d1.png": "0dc074b855dabef509f0e0b3666e30a3ae78a28b4bf23b914039ae6b379111d9",
+    "inspection/export-d2.png": "0c300a1eca23d8030766a6a56a57de4fd73656a3a8877017c40beaa809d4a2f7",
+    "inspection/export-d3.png": "6774b3a09330ce31c5dd639a536251c84ff8aeeb2fbb88229fc7fa80c484ad11",
+    "native-evidence/native-platform.png": "49a56d2e0999f2f9a89ec8afcd1429afe8e03a9c8055865f3e46beffa8fb29d8",
+    "native-evidence/native-four-directions.png": "74907fd9072957b2cbaf24a10695f608e7b47c8741cead5e1f773315a0c90b9e",
+    "inspection/crane-bearing-closeup.png": "394a8fe5cef89d3f9d5d7d9a71cffb2c590adedba6e1085333726d4ad2954253",
+    "inspection/crane-rear-construction.png": "369c4a7989ea0242c1404139780f37261f4ae88f7c5f03cda85f429cceb30fd5"
+  },
+  "scores_out_of_5": {
+    "construction_and_load_paths": 4,
+    "structural_detail": 4,
+    "material_identity": 4,
+    "contact_and_receivers": 4,
+    "pipe_bores_and_clearance": 5,
+    "square_native_registration": 5,
+    "viewport_readability": 4
+  },
+  "observations": [
+    "All new detail is modeled geometry using accepted FMPL materials; the Basic mesh/UV/material audit still passes.",
+    "Raised edges, panel armor, gussets and retaining hardware have recorded contact seats; original square bounds and crane placement retained.",
+    "Pump shells and reservoir walls have actual Boolean bores.400source/GLB entry probes pass. Conservative full3D supply/return separation exceeds the fixed.002clearance threshold; fitting envelopes included.",
+    "Real louver gaps and separate dark/red signal leads have actual receiving glands. All routes and fittings are editable in source.",
+    "Updated four-way sprites/icon byte-match native-tested files; operated-save reload preserves square5x5 placement,50slots,rotations,contents and circuits. No new native fluid or power port or operating animation added.",
+    "Chamfered heel/neck transitions retain the loaded central box girder and its mounted rails; annular cheeks seat on the actual transverse journals.",
+    "Stepped octagonal pedestal and four triangular cast gussets connect the slewing column to the deck frame. Round bored guide sleeves retain polished rods with .0045 radial clearance; the forged hook tapers toward its tip and has a spring latch and swivel.",
+    "Independent front and rear GLB closeups reviewed for cast base seating, journal faces, guide alignment, hose routing and inherited surface identity.",
+    "Chamfered heel/neck transitions retain the loaded central box girder and its mounted rails; annular cheeks seat on the actual transverse journals.",
+    "Stepped octagonal pedestal and four triangular cast gussets connect the slewing column to the deck frame. Round bored guide sleeves retain polished rods with .0045 radial clearance; the forged hook tapers toward its tip and has a spring latch and swivel.",
+    "Independent front and rear GLB closeups reviewed for cast base seating, journal faces, guide alignment, hose routing and inherited surface identity.",
+    "Owner-rejected world-Y journals superseded: arms now share one vertical articulation plane; actual axes are perpendicular to both arms. Bored hubs, fixed fork cheeks, transverse pins and strut clevises replace camera-oriented hinge construction. Main hub/fork axial and radial gaps measured in reopened source and GLB."
+  ],
+  "limitations": [
+    "Technical and agent visual gates do not establish owner visual approval.",
+    "Static crane and closed door do not add powered loader behavior or invented operating animations.",
+    "Green glass uses the accepted art-directed thin-window optical approximation.",
+    "Contact checks are recorded bounding-box seats plus rendered review; no complete arbitrary collision or structural-force simulation is claimed."
+  ],
+  "passed_agent_review": true,
+  "dense_detail_pass": {
+    "added_meshes": 213,
+    "features": [
+      "raised door lips and seam armor",
+      "hinge gussets and corner shoes",
+      "bridge and boom ribs/edging",
+      "captive bolting",
+      "real louver vent",
+      "paired hollow pump stacks",
+      "four hollow supply/return pipes with bored receivers",
+      "two additional gland-ended signal leads"
+    ],
+    "receiver_probes": 400,
+    "minimum_pipe_pair_clearance": 0.008653193245058484,
+    "repair": "Initial coplanar pipe crossing retained as rejected study; final separated-depth return routing passes conservative tube/fitting-envelope clearance."
+  },
+  "crane_refinement": {
+    "scope": "Shaped box girders, annular journal cheeks, stepped octagonal foundation, triangular load gussets, bored round strut guides and tapered forged hook with safety latch",
+    "modified": [
+      "Advanced | large crane lower articulated boom",
+      "Advanced | large crane long overhanging jib",
+      "Advanced | large crane founded pedestal",
+      "Advanced | crane load strut sleeve -0.17",
+      "Advanced | crane load strut captive rod -0.17",
+      "Advanced | crane load strut sleeve 0.17",
+      "Advanced | crane load strut captive rod 0.17",
+      "Advanced | large crane rounded load hook"
+    ],
+    "placement_preserved": true,
+    "basic_module_untouched": true,
+    "native_function": "Parked static cargo crane; no invented loader behavior",
+    "rod_radius": 0.0325,
+    "guide_bore_radius": 0.037,
+    "radial_running_clearance": 0.0045,
+    "source_sha256": "378b6420a4aba5ccff67015335fe57d08592d7a5865ada62ed96f5d9b6949b3c",
+    "export_sha256": "101727f232c7babb41d04f85dbb04c2277eccbc0bf322b80ddff59e20769aac0",
+    "additional_meshes": 47,
+    "reworked_meshes": 8,
+    "independent_export_views": [
+      "inspection/crane-bearing-closeup.png",
+      "inspection/crane-rear-construction.png"
+    ],
+    "solid_winding": "Edited closed meshes recalculate outward faces; all8 edited solids have positive signed volume and zero nonmanifold edges in source and actual GLB (coincident UV seam vertices welded only for this audit).",
+    "contact_correction": "Cheek plates are seated on the closed transverse journals; the annular retainers do not claim contact with a remote jib web.",
+    "technical_passed": true,
+    "owner_approval": "Final Advanced owner review remains open."
+  },
+  "crane_axis_correction": {
+    "evidence": "crane-axis-audit.json",
+    "passed": true,
+    "scope": "Actual transformed source and independently imported GLB geometry. Pin PCA, arm perpendicularity, measured bore/pin radii, axial hub/fork gaps and continuous bore ray probes. Hub-only \u00b115degree clearance study; not full crane dynamic or structural simulation."
+  }
+}

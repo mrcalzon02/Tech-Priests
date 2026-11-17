@@ -1,0 +1,114 @@
+{
+  "structure": {
+    "name": "Advanced Space Cargo Inventory",
+    "id": "tech-priests-advanced-space-cargo-inventory",
+    "state": "Done: owner accepted, source/export verified, production sprites integrated and native functionality verified",
+    "source": "art/source-to-3d/space-cargo-inventories/v01/advanced/advanced-space-cargo-v01.blend",
+    "model": "Complete accepted Basic3pane module retained; square4.92x4.92 base, huge braced cargo door/subframe shaft, large window-side crane lofted over door,213new structural/service details, paired bored pump stacks, louver vent and source-sheet hardware. Independent source/GLB/reuse/contact/occlusion checks pass. Crane shaped girders/journal cheeks, cast octagonal pedestal/gussets, bored round guides and forged latched hook refined;Mounted joint hardware and8 mesh reworks. Corrected common articulation plane, transverse pitch axes, bored hubs/forks and clevis pins pass actual source/GLB axis and clearance audit.",
+    "sprites": "Four native square-tile projected bodies/shadows and matching icon integrated; contacts rotate correctly.",
+    "functional": "Actual5x5 platform placement,50slots,16ordinary inserter sides,capacity/recovery,circuits/reach,loadedRquarter-turns,research,mining/reload pass. Owner-required square placement is the only gameplay-bound change.",
+    "owner_approval": "Accepted2026-11-17; no animation or further rotation development required.",
+    "evidence": [
+      "art/source-to-3d/space-cargo-inventories/v01/advanced/contract.json",
+      "art/source-to-3d/space-cargo-inventories/v01/advanced/construction.json",
+      "art/source-to-3d/space-cargo-inventories/v01/advanced/basic-reuse-audit.json",
+      "art/source-to-3d/space-cargo-inventories/v01/advanced/square-footprint.json",
+      "art/source-to-3d/space-cargo-inventories/v01/advanced/inspection.json",
+      "art/source-to-3d/space-cargo-inventories/v01/advanced/integration.json",
+      "art/source-to-3d/space-cargo-inventories/v01/advanced/dense-detail-manifest.json",
+      "art/source-to-3d/space-cargo-inventories/v01/advanced/pump-bore-audit.json",
+      "art/source-to-3d/space-cargo-inventories/v01/advanced/native-evidence/review.json",
+      "art/source-to-3d/space-cargo-inventories/v01/advanced/crane-refinement.json",
+      "art/source-to-3d/space-cargo-inventories/v01/advanced/owner-approval.json",
+      "art/source-to-3d/space-cargo-inventories/v01/advanced/crane-axis-audit.json",
+      "art/source-to-3d/space-cargo-inventories/v01/advanced/crane-joint-contract.json"
+    ],
+    "next": "Done. Reconcile remaining queue against current main and other-chat assignments.",
+    "historical_runtime": {
+      "type": "container",
+      "name": "tech-priests-advanced-space-cargo-inventory",
+      "collision_box": [
+        [
+          -2.2,
+          -1.9
+        ],
+        [
+          2.2,
+          1.9
+        ]
+      ],
+      "selection_box": [
+        [
+          -2.5,
+          -2.2
+        ],
+        [
+          2.5,
+          2.2
+        ]
+      ],
+      "tile_width": null,
+      "tile_height": null,
+      "fluid_box": null,
+      "fluid_boxes": null,
+      "energy_source": null,
+      "flags": [
+        "placeable-neutral",
+        "player-creation"
+      ],
+      "own_entity_visual_paths": [
+        "__tech-priests__/graphics/entity/stone-cache/tech-priests-advanced-space-cargo-inventory-shadow.png",
+        "__tech-priests__/graphics/entity/stone-cache/tech-priests-advanced-space-cargo-inventory.png"
+      ],
+      "visual_schema": {
+        "picture": {
+          "layers": [
+            {
+              "filename": "__tech-priests__/graphics/entity/stone-cache/tech-priests-advanced-space-cargo-inventory-shadow.png",
+              "width": 1315,
+              "height": 1196,
+              "frame_count": 1,
+              "line_length": 1,
+              "shift": [
+                0.08,
+                0.08
+              ],
+              "scale": 0.12
+            },
+            {
+              "filename": "__tech-priests__/graphics/entity/stone-cache/tech-priests-advanced-space-cargo-inventory.png",
+              "width": 1315,
+              "height": 1196,
+              "frame_count": 1,
+              "line_length": 1,
+              "shift": [
+                0,
+                0
+              ],
+              "scale": 0.12
+            }
+          ]
+        }
+      },
+      "named_source_matches": [],
+      "source_match_scope": "Tracked art model/package filenames only; a missing named match means unlocated identity, not proven absence. Any match still requires source/export/visual review."
+    }
+  },
+  "owner_approval": {
+    "approved": true,
+    "date": "2026-11-17",
+    "owner_instruction": "visual acceptance pass done ... it does not need any animations ... it is done label it done ... integrate put it in the code get it published get it done",
+    "scope": "Owner explicitly closed Advanced cargo visual review and authorized final integration/publication. No animation or further rotation development required.",
+    "source_sha256": "378b6420a4aba5ccff67015335fe57d08592d7a5865ada62ed96f5d9b6949b3c",
+    "export_sha256": "101727f232c7babb41d04f85dbb04c2277eccbc0bf322b80ddff59e20769aac0"
+  },
+  "source_sha256": "378b6420a4aba5ccff67015335fe57d08592d7a5865ada62ed96f5d9b6949b3c",
+  "export_sha256": "101727f232c7babb41d04f85dbb04c2277eccbc0bf322b80ddff59e20769aac0",
+  "model_completion": true,
+  "sprite_integration": true,
+  "functional_verification": true,
+  "visual_acceptance": true,
+  "animation": "Not required; static container crane.",
+  "publication": "Delivered with the accompanying focused main commit; packed source, runtime graphics, prototype integration and evidence included.",
+  "queue_complete": false
+}

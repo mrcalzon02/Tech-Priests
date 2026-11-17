@@ -1,0 +1,14 @@
+{
+  "basis_source_sha256": "e8b0dbe39f95808792e10009ec940edf7a2d47b244d418911ae7b94dcad4d7cb",
+  "source_sha256": "378b6420a4aba5ccff67015335fe57d08592d7a5865ada62ed96f5d9b6949b3c",
+  "basis": "Accepted Basic source retained:242 meshes, exact topology/UV/material binding audit. Uniform0.8 assembly fit only; no component stretching.",
+  "environment": "Unchanged Boiler V08 workshop lights/world and Standard color transform inherited from accepted Basic.",
+  "roles": {
+    "basic": "Exact accepted steel/green-glass/cedar/cargo kit",
+    "door": "Dark iron/cast frame, machined retaining ribs, bronze captive pins and physically modeled chevrons; source-scale grime and wear",
+    "crane": "Dark structural steel with bolted machined covers, actual retained journals, supported struts, chain/hook and sealed service cabinet",
+    "cast_badges": "Supplied DGordillo mesh and original sculpt normals; bronze skull, oxide mechanical half and dark cog",
+    "services": "Actual Pipette sampled service sweeps, tangent-aligned receiving glands, supported rear conduit and cable saddles. Continuous physical-scale UVs on generated routes."
+  },
+  "glass": "Accepted green tint and soft art-directed highlight retained; no hard specular patch reinstated."
+}

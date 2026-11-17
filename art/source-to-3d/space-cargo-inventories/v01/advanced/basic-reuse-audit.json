@@ -1,0 +1,1461 @@
+{
+  "passed": true,
+  "source_sha256": "378b6420a4aba5ccff67015335fe57d08592d7a5865ada62ed96f5d9b6949b3c",
+  "basis_sha256": "e8b0dbe39f95808792e10009ec940edf7a2d47b244d418911ae7b94dcad4d7cb",
+  "meshes": 242,
+  "records": [
+    {
+      "name": "Cache centered emblem | Supplied DGordillo low-poly skull 0",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cache centered emblem | Mars emblem | twenty tooth cog surround",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cache centered emblem | Mars emblem | surface seated ocular receiving flange",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cache centered emblem | Mars emblem | red bionic eye lens",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cache centered emblem | Mars emblem | plate retaining stud 3",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cache centered emblem | Mars emblem | plate retaining stud 2",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cache centered emblem | Mars emblem | plate retaining stud 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cache centered emblem | Mars emblem | plate retaining stud 0",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cache centered emblem | Mars emblem | plate retaining boss 3",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cache centered emblem | Mars emblem | plate retaining boss 2",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cache centered emblem | Mars emblem | plate retaining boss 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cache centered emblem | Mars emblem | plate retaining boss 0",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cache centered emblem | Mars emblem | ocular captive screw 07",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cache centered emblem | Mars emblem | ocular captive screw 06",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cache centered emblem | Mars emblem | ocular captive screw 05",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cache centered emblem | Mars emblem | ocular captive screw 04",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cache centered emblem | Mars emblem | ocular captive screw 03",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cache centered emblem | Mars emblem | ocular captive screw 02",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cache centered emblem | Mars emblem | ocular captive screw 01",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cache centered emblem | Mars emblem | ocular captive screw 00",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cache centered emblem | Mars emblem | jaw strut seated anchor 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cache centered emblem | Mars emblem | jaw strut seated anchor 0",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cache centered emblem | Mars emblem | inset optical barrel",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cache centered emblem | Mars emblem | fixed mandibular strut housing",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cache centered emblem | Mars emblem | fitted orbital and cheek",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cache centered emblem | Mars emblem | fitted mandibular half",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cache centered emblem | Mars emblem | fitted cranial vault",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cache centered emblem | Mars emblem | captured mandibular strut rod",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | front grade-bearing deck rail",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | rear grade-bearing deck rail",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | left grade-bearing end rail",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | right grade-bearing end rail",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | pane mullion 0",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | pane mullion 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | sealed suspended well floor",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | front opaque well baffle",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | rear opaque well baffle",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | opaque compartment wall 0",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | opaque compartment wall 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | opaque compartment wall 2",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | opaque compartment wall 3",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss -1 0 lower chord",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss -1 0 upper chord",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss -1 0 gusset 0",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss -1 0 gusset 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss -1 0 gusset 2",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss -1 0 gusset 3",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss -1 0 diagonal 0",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss -1 0 diagonal 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss -1 0 diagonal 2",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss -1 1 lower chord",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss -1 1 upper chord",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss -1 1 gusset 0",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss -1 1 gusset 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss -1 1 gusset 2",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss -1 1 gusset 3",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss -1 1 diagonal 0",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss -1 1 diagonal 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss -1 1 diagonal 2",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss -1 2 lower chord",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss -1 2 upper chord",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss -1 2 gusset 0",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss -1 2 gusset 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss -1 2 gusset 2",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss -1 2 gusset 3",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss -1 2 diagonal 0",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss -1 2 diagonal 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss -1 2 diagonal 2",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss 1 0 lower chord",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss 1 0 upper chord",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss 1 0 gusset 0",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss 1 0 gusset 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss 1 0 gusset 2",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss 1 0 gusset 3",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss 1 0 diagonal 0",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss 1 0 diagonal 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss 1 0 diagonal 2",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss 1 1 lower chord",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss 1 1 upper chord",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss 1 1 gusset 0",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss 1 1 gusset 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss 1 1 gusset 2",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss 1 1 gusset 3",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss 1 1 diagonal 0",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss 1 1 diagonal 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss 1 1 diagonal 2",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss 1 2 lower chord",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss 1 2 upper chord",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss 1 2 gusset 0",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss 1 2 gusset 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss 1 2 gusset 2",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss 1 2 gusset 3",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss 1 2 diagonal 0",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss 1 2 diagonal 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wall truss 1 2 diagonal 2",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | end truss 0 lower chord",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | end truss 0 upper chord",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | end truss 0 diagonal 0",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | end truss 0 diagonal 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | end truss 0 diagonal 2",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | end truss 1 lower chord",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | end truss 1 upper chord",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | end truss 1 diagonal 0",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | end truss 1 diagonal 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | end truss 1 diagonal 2",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | end truss 2 lower chord",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | end truss 2 upper chord",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | end truss 2 diagonal 0",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | end truss 2 diagonal 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | end truss 2 diagonal 2",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | end truss 3 lower chord",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | end truss 3 upper chord",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | end truss 3 diagonal 0",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | end truss 3 diagonal 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | end truss 3 diagonal 2",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | green transmitting viewport 0",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | viewport 0 receiving ledge 0",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | viewport 0 receiving ledge 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | viewport 0 receiving ledge 2",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | viewport 0 receiving ledge 3",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | sealed stock case 0 0",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | stock case lid 0 0",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | case hoop 0 0 -1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | case hoop 0 0 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | case lid band 0 0 -1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | case lid band 0 0 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | case latch 0 0",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wooden crate lid plank 0",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wooden crate lid plank 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wooden crate lid plank 2",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wooden crate lid plank 3",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wooden crate lid plank 4",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wooden crate face plank -1 0",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wooden crate face plank -1 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wooden crate face plank -1 2",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wooden crate face plank -1 3",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wooden crate face plank 1 0",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wooden crate face plank 1 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wooden crate face plank 1 2",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | wooden crate face plank 1 3",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | sealed stock case 0 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | stock case lid 0 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | case hoop 0 1 -1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | case hoop 0 1 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | case lid band 0 1 -1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | case lid band 0 1 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | case latch 0 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | green transmitting viewport 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | viewport 1 receiving ledge 0",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | viewport 1 receiving ledge 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | viewport 1 receiving ledge 2",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | viewport 1 receiving ledge 3",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | sealed barrel 0",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | barrel rolled hoop 0 0",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | barrel rolled hoop 0 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | barrel rolled hoop 0 2",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | barrel rolled hoop 0 3",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | barrel lid 0",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | barrel bung 0",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | sealed barrel 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | barrel rolled hoop 1 0",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | barrel rolled hoop 1 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | barrel rolled hoop 1 2",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | barrel rolled hoop 1 3",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | barrel lid 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | barrel bung 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | sealed barrel 2",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | barrel rolled hoop 2 0",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | barrel rolled hoop 2 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | barrel rolled hoop 2 2",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | barrel rolled hoop 2 3",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | barrel lid 2",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | barrel bung 2",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | green transmitting viewport 2",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | viewport 2 receiving ledge 0",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | viewport 2 receiving ledge 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | viewport 2 receiving ledge 2",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | viewport 2 receiving ledge 3",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | tools tray base",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | tools tray load runner -1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | tools tray load runner 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | tools tray side -1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | tools tray end -1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | tools tray side 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | tools tray end 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | tool spanner shaft 0",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | tool spanner neck 0 -1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | tool open spanner jaw 0 -1 -1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | tool open spanner jaw 0 -1 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | tool spanner neck 0 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | tool open spanner jaw 0 1 -1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | tool open spanner jaw 0 1 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | tool spanner shaft 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | tool spanner neck 1 -1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | tool open spanner jaw 1 -1 -1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | tool open spanner jaw 1 -1 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | tool spanner neck 1 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | tool open spanner jaw 1 1 -1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | tool open spanner jaw 1 1 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | tool hammer timber handle",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | tool hammer forged head",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | tool driver handle 0",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | tool driver steel shank 0",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | tool driver handle 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | tool driver steel shank 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | deck captive fastener -2.76 -1.07",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | deck captive fastener -2.15 -1.07",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | deck captive fastener -1.54 -1.07",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | deck captive fastener -0.93 -1.07",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | deck captive fastener -0.32 -1.07",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | deck captive fastener 0.32 -1.07",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | deck captive fastener 0.93 -1.07",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | deck captive fastener 1.54 -1.07",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | deck captive fastener 2.15 -1.07",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | deck captive fastener 2.76 -1.07",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | deck captive fastener -2.76 1.07",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | deck captive fastener -2.15 1.07",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | deck captive fastener -1.54 1.07",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | deck captive fastener -0.93 1.07",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | deck captive fastener -0.32 1.07",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | deck captive fastener 0.32 1.07",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | deck captive fastener 0.93 1.07",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | deck captive fastener 1.54 1.07",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | deck captive fastener 2.15 1.07",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | deck captive fastener 2.76 1.07",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | corner locking housing 0",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | corner latch pivot 0",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | parked corner latch 0",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | corner locking housing 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | corner latch pivot 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | parked corner latch 1",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | corner locking housing 2",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | corner latch pivot 2",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | parked corner latch 2",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | corner locking housing 3",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | corner latch pivot 3",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | parked corner latch 3",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | red circuit receiving shoulder",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | red circuit contact",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | green circuit receiving shoulder",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | green circuit contact",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Cargo | native status LED bezel",
+      "mesh_uv_materials_unchanged": true,
+      "uniform_assembly_transform_error": 0.0,
+      "passed": true
+    }
+  ],
+  "scope": "Complete Basic mesh topology, UVs and material bindings unchanged; one uniform0.8 assembly fit andY-1.468 translation within owner-corrected square Advanced5x5 footprint. No window replacement or component stretching."
+}

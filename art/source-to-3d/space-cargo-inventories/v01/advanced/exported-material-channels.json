@@ -1,0 +1,8 @@
+{
+  "source_sha256": "378b6420a4aba5ccff67015335fe57d08592d7a5865ada62ed96f5d9b6949b3c",
+  "export_sha256": "101727f232c7babb41d04f85dbb04c2277eccbc0bf322b80ddff59e20769aac0",
+  "materials": 71,
+  "embedded_images": 41,
+  "normal_mapped": 70,
+  "scope": "Actual current GLB channels; inherited accepted FMPL role textures and packed source."
+}

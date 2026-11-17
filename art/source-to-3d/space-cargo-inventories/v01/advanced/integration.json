@@ -1,0 +1,165 @@
+{
+  "source_sha256": "378b6420a4aba5ccff67015335fe57d08592d7a5865ada62ed96f5d9b6949b3c",
+  "export_sha256": "101727f232c7babb41d04f85dbb04c2277eccbc0bf322b80ddff59e20769aac0",
+  "prototype_sha256": "39479248ceb0644c34e398092ce91e5e57e5ccadabd905b4886d23fe8784ee71",
+  "runtime_art": {
+    "body-d0.png": "f09f36cf03eb69c154bf8dc15333beca95270bbbd66eba7aae49998ddf3910a2",
+    "body-d1.png": "bc743186e92699f2332f7c1672c09192b52b414f7a89258ba6ab719d77fb6d95",
+    "body-d2.png": "4bda870a0e10600a88c75c5e1977737725df22664b7ad459a62de9ea4a368d11",
+    "body-d3.png": "ec3c9acf97aa9ea153ae34a08098fb7b1e9f7b1d8dd7f2827ebd5a63b2f788bd",
+    "icon.png": "a8a663613bada281d4e886c02ea1533ef4fa4c384d4ab6ed37f3a9e6f8cdefee",
+    "shadow-d0.png": "77d3f4c10839a52f9a5d9cb283e60b6a923c0cea4f84360eb60e4a01e18a0dbc",
+    "shadow-d1.png": "9083c910bb13a95724f7c09378372f3cf753e06b0751fb4f0ff3c23a28744385",
+    "shadow-d2.png": "e69efe6b34cd2fc04ec0eaecd40bc03537f0473a821912d6e0e052165ae7330c",
+    "shadow-d3.png": "00e26dec06d538e928ca9fe335b5aba4862c94d7998d364c09682c0deffdf456"
+  },
+  "directional_contacts": [
+    {
+      "direction": 0,
+      "source_yaw": 0,
+      "points": {
+        "red": [
+          0.36000000000000004,
+          2.2247624099467638
+        ],
+        "green": [
+          0.472,
+          2.2247624099467638
+        ]
+      },
+      "led_target": [
+        0.584,
+        2.2516324676318527
+      ],
+      "led_shifts": {
+        "led_blue": [
+          0.5730019392498955,
+          1.97554482267782
+        ],
+        "led_blue_off": [
+          0.5730530493951613,
+          1.975548798277014
+        ],
+        "led_green": [
+          0.5731124986799028,
+          2.082872896927449
+        ],
+        "led_red": [
+          0.5731124986799028,
+          2.082872896927449
+        ]
+      }
+    },
+    {
+      "direction": 4,
+      "source_yaw": -90,
+      "points": {
+        "red": [
+          -2.328,
+          0.2567624099467643
+        ],
+        "green": [
+          -2.328,
+          0.36876240994676424
+        ]
+      },
+      "led_target": [
+        -2.328,
+        0.5076324676318529
+      ],
+      "led_shifts": {
+        "led_blue": [
+          -2.338998060750104,
+          0.23154482267782028
+        ],
+        "led_blue_off": [
+          -2.3389469506048384,
+          0.23154879827701413
+        ],
+        "led_green": [
+          -2.338887501320097,
+          0.33887289692744904
+        ],
+        "led_red": [
+          -2.338887501320097,
+          0.33887289692744904
+        ]
+      }
+    },
+    {
+      "direction": 8,
+      "source_yaw": -180,
+      "points": {
+        "red": [
+          -0.3600000000000003,
+          -2.431237590053236
+        ],
+        "green": [
+          -0.47200000000000025,
+          -2.431237590053236
+        ]
+      },
+      "led_target": [
+        -0.5840000000000003,
+        -2.404367532368147
+      ],
+      "led_shifts": {
+        "led_blue": [
+          -0.5949980607501048,
+          -2.6804551773221794
+        ],
+        "led_blue_off": [
+          -0.594946950604839,
+          -2.6804512017229856
+        ],
+        "led_green": [
+          -0.5948875013200974,
+          -2.573127103072551
+        ],
+        "led_red": [
+          -0.5948875013200974,
+          -2.573127103072551
+        ]
+      }
+    },
+    {
+      "direction": 12,
+      "source_yaw": -270,
+      "points": {
+        "red": [
+          2.328,
+          -0.4632375900532364
+        ],
+        "green": [
+          2.328,
+          -0.5752375900532364
+        ]
+      },
+      "led_target": [
+        2.328,
+        -0.6603675323681475
+      ],
+      "led_shifts": {
+        "led_blue": [
+          2.3170019392498955,
+          -0.9364551773221801
+        ],
+        "led_blue_off": [
+          2.3170530493951613,
+          -0.9364512017229862
+        ],
+        "led_green": [
+          2.3171124986799025,
+          -0.8291271030725513
+        ],
+        "led_red": [
+          2.3171124986799025,
+          -0.8291271030725513
+        ]
+      }
+    }
+  ],
+  "scope": "Owner-authorized four native directions, directional pictures and matching graphical connector/LED points; inventory/recipes/research/reach/surface conditions unchanged",
+  "footprint_change": "Owner explicitly corrected reference footprint to SQUARE. Advanced alone becomes5x5: selection\u00b12.5/collision\u00b12.2 on both axes;50slots/recipe/research/health unchanged.",
+  "native": "pending current four-direction verification"
+}

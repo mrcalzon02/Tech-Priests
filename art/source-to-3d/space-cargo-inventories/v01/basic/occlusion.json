@@ -1,0 +1,50 @@
+{
+  "schema": "fmpl.below-grade-aperture.v1",
+  "grade_z": 0,
+  "model_bounds": [
+    [
+      -2.95,
+      -1.25,
+      -1.02
+    ],
+    [
+      2.95,
+      1.25,
+      0.27
+    ]
+  ],
+  "bearing_objects": [
+    "Cargo | front grade-bearing deck rail",
+    "Cargo | rear grade-bearing deck rail",
+    "Cargo | left grade-bearing end rail",
+    "Cargo | right grade-bearing end rail",
+    "Cargo | pane mullion 0",
+    "Cargo | pane mullion 1"
+  ],
+  "apertures": [
+    {
+      "id": "pane-0",
+      "xmin": -2.55,
+      "xmax": -0.9299999999999999,
+      "ymin": -0.9,
+      "ymax": 0.9
+    },
+    {
+      "id": "pane-1",
+      "xmin": -0.81,
+      "xmax": 0.81,
+      "ymin": -0.9,
+      "ymax": 0.9
+    },
+    {
+      "id": "pane-2",
+      "xmin": 0.9299999999999999,
+      "xmax": 2.55,
+      "ymin": -0.9,
+      "ymax": 0.9
+    }
+  ],
+  "environment_half_extent": 40,
+  "mask_edge_allowance_pixels": 1,
+  "scope": "Below-grade objects may draw only through glass apertures; above-grade details can project normally. Render-only holdouts excluded from GLB; manifest required for independent render."
+}

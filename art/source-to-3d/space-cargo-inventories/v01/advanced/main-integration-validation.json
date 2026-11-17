@@ -1,0 +1,8 @@
+{
+  "passed": true,
+  "main_parent": "83ee782fdc9c959550b0cfe29ef670069c925814",
+  "source_sha256": "378b6420a4aba5ccff67015335fe57d08592d7a5865ada62ed96f5d9b6949b3c",
+  "prototype_sha256": "fc0179cc551f1e3e474b1418629fa9c3e71fd1e46ae3f606f61c44766c1e9891",
+  "scope": "Advanced-only patch applied to current main prototype. Staged Advanced container,item and recipe exactly match the already captured/approved native definition. Fresh native functionality test passes with the exact staged prototype. Other chats local prototype edits are excluded.",
+  "native_passed": true
+}

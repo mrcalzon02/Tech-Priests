@@ -1,0 +1,21 @@
+{
+  "passed": true,
+  "width": 4.920000076293945,
+  "depth": 4.920000076293945,
+  "bounds": [
+    [
+      -2.4600000381469727,
+      -2.4600000381469727,
+      -1.1999999284744263
+    ],
+    [
+      2.4600000381469727,
+      2.4600000381469727,
+      2.180000066757202
+    ]
+  ],
+  "native_placement": "5x5 square; collision/selection correction queued for owner footprint instruction",
+  "source_sha256": "378b6420a4aba5ccff67015335fe57d08592d7a5865ada62ed96f5d9b6949b3c",
+  "scope": "Actual world-space mesh bounds, plus unsaved diagnostic orthographic top render. Production source retains its single canonical45degree camera.",
+  "native_verification": "Current four-facing art loaded in the operated genuine-platform save;5x5 placement and reload pass."
+}

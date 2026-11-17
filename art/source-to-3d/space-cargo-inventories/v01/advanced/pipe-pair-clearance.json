@@ -1,0 +1,43 @@
+{
+  "passed": true,
+  "source_sha256": "378b6420a4aba5ccff67015335fe57d08592d7a5865ada62ed96f5d9b6949b3c",
+  "pairs": [
+    {
+      "a": "advanced-pump-0-1",
+      "b": "advanced-pump-0-0",
+      "minimum_conservative_clearance": 0.008653193245058484,
+      "passed": true
+    },
+    {
+      "a": "advanced-pump-1-0",
+      "b": "advanced-pump-0-0",
+      "minimum_conservative_clearance": 0.5599998259283858,
+      "passed": true
+    },
+    {
+      "a": "advanced-pump-1-0",
+      "b": "advanced-pump-0-1",
+      "minimum_conservative_clearance": 0.42680111395704384,
+      "passed": true
+    },
+    {
+      "a": "advanced-pump-1-1",
+      "b": "advanced-pump-0-0",
+      "minimum_conservative_clearance": 0.5673087396654288,
+      "passed": true
+    },
+    {
+      "a": "advanced-pump-1-1",
+      "b": "advanced-pump-0-1",
+      "minimum_conservative_clearance": 0.4343979229282659,
+      "passed": true
+    },
+    {
+      "a": "advanced-pump-1-1",
+      "b": "advanced-pump-1-0",
+      "minimum_conservative_clearance": 0.008653219145155745,
+      "passed": true
+    }
+  ],
+  "scope": "True3Dpolyline segment separation, conservative outer tube radii and enlarged terminal fitting envelope. Blender units only; no engineering gauge/pressure certification."
+}

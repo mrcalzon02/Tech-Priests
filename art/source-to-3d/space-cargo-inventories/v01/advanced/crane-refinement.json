@@ -1,0 +1,31 @@
+{
+  "scope": "Shaped box girders, annular journal cheeks, stepped octagonal foundation, triangular load gussets, bored round strut guides and tapered forged hook with safety latch; corrected coplanar arms, transverse pitch axes, bored hubs and fixed forks, actual strut clevises at both ends.",
+  "modified": [
+    "Advanced | large crane lower articulated boom",
+    "Advanced | large crane long overhanging jib",
+    "Advanced | large crane founded pedestal",
+    "Advanced | crane load strut sleeve -0.17",
+    "Advanced | crane load strut captive rod -0.17",
+    "Advanced | crane load strut sleeve 0.17",
+    "Advanced | crane load strut captive rod 0.17",
+    "Advanced | large crane rounded load hook"
+  ],
+  "placement_preserved": true,
+  "basic_module_untouched": true,
+  "native_function": "Parked static cargo crane; no invented loader behavior",
+  "rod_radius": 0.0325,
+  "guide_bore_radius": 0.037,
+  "radial_running_clearance": 0.0045,
+  "source_sha256": "378b6420a4aba5ccff67015335fe57d08592d7a5865ada62ed96f5d9b6949b3c",
+  "export_sha256": "101727f232c7babb41d04f85dbb04c2277eccbc0bf322b80ddff59e20769aac0",
+  "additional_meshes": 47,
+  "reworked_meshes": 8,
+  "independent_export_views": [
+    "inspection/crane-bearing-closeup.png",
+    "inspection/crane-rear-construction.png"
+  ],
+  "solid_winding": "Edited closed meshes recalculate outward faces; all8 edited solids have positive signed volume and zero nonmanifold edges in source and actual GLB (coincident UV seam vertices welded only for this audit).",
+  "contact_correction": "Cheek plates are seated on the closed transverse journals; the annular retainers do not claim contact with a remote jib web.",
+  "technical_passed": true,
+  "owner_approval": "Accepted by owner2026-11-17; visual gate complete. Final integration/publication authorized."
+}

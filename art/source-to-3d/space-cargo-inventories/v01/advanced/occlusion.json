@@ -1,0 +1,64 @@
+{
+  "schema": "fmpl.below-grade-aperture.v1",
+  "grade_z": 0,
+  "model_bounds": [
+    [
+      -2.46,
+      -2.46,
+      -1.2
+    ],
+    [
+      2.46,
+      2.46,
+      2.25
+    ]
+  ],
+  "bearing_objects": [
+    "Cargo | front grade-bearing deck rail",
+    "Cargo | rear grade-bearing deck rail",
+    "Cargo | left grade-bearing end rail",
+    "Cargo | right grade-bearing end rail",
+    "Cargo | pane mullion 0",
+    "Cargo | pane mullion 1",
+    "Advanced | aft left bearing rail",
+    "Advanced | aft right bearing rail",
+    "Advanced | aft rear bearing rail",
+    "Advanced | module joining bridge",
+    "Advanced | square footprint front-side girder -1",
+    "Advanced | square footprint front-side girder 1",
+    "Advanced | square footprint front perimeter",
+    "Advanced | crane service deck"
+  ],
+  "apertures": [
+    {
+      "id": "pane-0",
+      "xmin": -2.04,
+      "xmax": -0.744,
+      "ymin": -2.188,
+      "ymax": -0.7479999999999999
+    },
+    {
+      "id": "pane-1",
+      "xmin": -0.6480000000000001,
+      "xmax": 0.6480000000000001,
+      "ymin": -2.188,
+      "ymax": -0.7479999999999999
+    },
+    {
+      "id": "pane-2",
+      "xmin": 0.744,
+      "xmax": 2.04,
+      "ymin": -2.188,
+      "ymax": -0.7479999999999999
+    },
+    {
+      "id": "cargo-door-shaft",
+      "xmin": -2.0,
+      "xmax": 0.88,
+      "ymin": -0.19,
+      "ymax": 2.13
+    }
+  ],
+  "environment_half_extent": 40,
+  "mask_edge_allowance_pixels": 1
+}

@@ -1,0 +1,87 @@
+{
+  "source_sha256": "378b6420a4aba5ccff67015335fe57d08592d7a5865ada62ed96f5d9b6949b3c",
+  "entity_profile": {
+    "camera_policy": "fmpl.factorio45.v1",
+    "capture_kind": "entity",
+    "orientation_policy": "rotatable",
+    "directions": [
+      0,
+      90,
+      180,
+      270
+    ],
+    "source_size": 1024,
+    "states": {
+      "idle": [
+        1
+      ]
+    },
+    "camera_override": {
+      "type": "ORTHO",
+      "elevation_deg": 45,
+      "azimuth_deg": 0,
+      "distance": 11.313708498984761,
+      "target": [
+        0,
+        0,
+        0.3
+      ],
+      "ortho_scale": 6.5,
+      "shift_x": 0,
+      "shift_y": 0
+    }
+  },
+  "item_profile": {
+    "camera_policy": "fmpl.factorio45.v1",
+    "capture_kind": "item",
+    "orientation_policy": "rotatable",
+    "directions": [
+      0
+    ],
+    "source_size": 64,
+    "states": {
+      "icon": [
+        1
+      ]
+    },
+    "camera_override": {
+      "type": "ORTHO",
+      "elevation_deg": 45,
+      "azimuth_deg": 0,
+      "distance": 11.313708498984761,
+      "target": [
+        0,
+        0,
+        0.3
+      ],
+      "ortho_scale": 6.0,
+      "shift_x": 0,
+      "shift_y": 0
+    }
+  },
+  "ground_projection": "Sprite-only worldYsqrt2 after facing rotation matches square native tiles. Packed source and physical GLB remain square and undeformed.",
+  "native_directions": {
+    "0": {
+      "body": "body-d0.png",
+      "shadow": "shadow-d0.png",
+      "source_yaw": 0
+    },
+    "4": {
+      "body": "body-d1.png",
+      "shadow": "shadow-d1.png",
+      "source_yaw": -90
+    },
+    "8": {
+      "body": "body-d2.png",
+      "shadow": "shadow-d2.png",
+      "source_yaw": -180
+    },
+    "12": {
+      "body": "body-d3.png",
+      "shadow": "shadow-d3.png",
+      "source_yaw": -270
+    }
+  },
+  "shadow": "Only above-grade hardware casts onto platform catcher with actual viewport holes; underground geometry excluded from platform shadows",
+  "working_layers": "None: passive four-direction container"
+}

@@ -1,0 +1,114 @@
+{
+  "source_sha256": "378b6420a4aba5ccff67015335fe57d08592d7a5865ada62ed96f5d9b6949b3c",
+  "results": [
+    {
+      "artifact": "source",
+      "objects": [
+        {
+          "object": "Advanced | large crane lower articulated boom",
+          "signed_volume": 0.08554350722590415,
+          "nonmanifold_edges": 0,
+          "passed": true
+        },
+        {
+          "object": "Advanced | large crane long overhanging jib",
+          "signed_volume": 0.13740222339761668,
+          "nonmanifold_edges": 0,
+          "passed": true
+        },
+        {
+          "object": "Advanced | large crane founded pedestal",
+          "signed_volume": 0.10701459881735895,
+          "nonmanifold_edges": 0,
+          "passed": true
+        },
+        {
+          "object": "Advanced | crane load strut sleeve -0.17",
+          "signed_volume": 0.00849808501272103,
+          "nonmanifold_edges": 0,
+          "passed": true
+        },
+        {
+          "object": "Advanced | crane load strut captive rod -0.17",
+          "signed_volume": 0.0018583205882569697,
+          "nonmanifold_edges": 0,
+          "passed": true
+        },
+        {
+          "object": "Advanced | crane load strut sleeve 0.17",
+          "signed_volume": 0.00849808501272103,
+          "nonmanifold_edges": 0,
+          "passed": true
+        },
+        {
+          "object": "Advanced | crane load strut captive rod 0.17",
+          "signed_volume": 0.0018583209194984612,
+          "nonmanifold_edges": 0,
+          "passed": true
+        },
+        {
+          "object": "Advanced | large crane rounded load hook",
+          "signed_volume": 0.0012428796834558972,
+          "nonmanifold_edges": 0,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "artifact": "export",
+      "objects": [
+        {
+          "object": "Advanced | large crane lower articulated boom",
+          "signed_volume": 0.08554350722590412,
+          "nonmanifold_edges": 0,
+          "passed": true
+        },
+        {
+          "object": "Advanced | large crane long overhanging jib",
+          "signed_volume": 0.13740222231507346,
+          "nonmanifold_edges": 0,
+          "passed": true
+        },
+        {
+          "object": "Advanced | large crane founded pedestal",
+          "signed_volume": 0.10701459837083231,
+          "nonmanifold_edges": 0,
+          "passed": true
+        },
+        {
+          "object": "Advanced | crane load strut sleeve -0.17",
+          "signed_volume": 0.008498085012721028,
+          "nonmanifold_edges": 0,
+          "passed": true
+        },
+        {
+          "object": "Advanced | crane load strut captive rod -0.17",
+          "signed_volume": 0.0018583205882561837,
+          "nonmanifold_edges": 0,
+          "passed": true
+        },
+        {
+          "object": "Advanced | crane load strut sleeve 0.17",
+          "signed_volume": 0.008498085012721028,
+          "nonmanifold_edges": 0,
+          "passed": true
+        },
+        {
+          "object": "Advanced | crane load strut captive rod 0.17",
+          "signed_volume": 0.0018583209194976784,
+          "nonmanifold_edges": 0,
+          "passed": true
+        },
+        {
+          "object": "Advanced | large crane rounded load hook",
+          "signed_volume": 0.001242879683495967,
+          "nonmanifold_edges": 0,
+          "passed": true
+        }
+      ],
+      "passed": true
+    }
+  ],
+  "passed": true
+}

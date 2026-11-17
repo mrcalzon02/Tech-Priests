@@ -1,0 +1,7 @@
+import bpy,json,hashlib
+from pathlib import Path
+from mathutils import Vector
+R=Path(__file__).resolve().parents[3];O=R/'art/source-to-3d/space-cargo-inventories/v01/advanced';bpy.ops.wm.open_mainfile(filepath=str(O/'advanced-space-cargo-v01.blend'));s=bpy.context.scene;bpy.context.view_layer.update();objects=[o for o in s.objects if o.type=='MESH' and not o.get('fmpl_render_only')];points=[o.matrix_world@v.co for o in objects for v in o.data.vertices];lo=[min(v[k] for v in points) for k in range(3)];hi=[max(v[k] for v in points) for k in range(3)];width=hi[0]-lo[0];depth=hi[1]-lo[1];assert abs(width-depth)<1e-5,(width,depth)
+V=O/'inspection';V.mkdir(exist_ok=True);s.camera.location=(0,0,8);s.camera.rotation_euler=(0,0,0);s.camera.data.ortho_scale=5.8;s.render.resolution_x=s.render.resolution_y=1024;s.cycles.samples=64;s.render.filepath=str(V/'top-square.png');bpy.ops.render.render(write_still=True)
+r=dict(passed=True,width=width,depth=depth,bounds=[lo,hi],native_placement='5x5 square; collision/selection correction queued for owner footprint instruction',source_sha256=hashlib.sha256((O/'advanced-space-cargo-v01.blend').read_bytes()).hexdigest(),scope='Actual world-space mesh bounds, plus unsaved diagnostic orthographic top render. Production source retains its single canonical45degree camera.')
+(O/'square-footprint.json').write_text(json.dumps(r,indent=2));print('ACTUAL_SQUARE_SOURCE_FOOTPRINT',width,depth)

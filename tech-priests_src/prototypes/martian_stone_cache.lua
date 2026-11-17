@@ -13,8 +13,8 @@ local TWO_BY_TWO_SELECTION_BOX = {{-1.0, -1.0}, {1.0, 1.0}}
 local TWO_BY_TWO_COLLISION_BOX = {{-0.90, -0.90}, {0.90, 0.90}}
 local BASIC_SPACE_CARGO_SELECTION_BOX = {{-3.0, -1.30}, {3.0, 1.30}}
 local BASIC_SPACE_CARGO_COLLISION_BOX = {{-2.70, -1.10}, {2.70, 1.10}}
-local ADV_SPACE_CARGO_SELECTION_BOX = {{-2.50, -2.20}, {2.50, 2.20}}
-local ADV_SPACE_CARGO_COLLISION_BOX = {{-2.20, -1.90}, {2.20, 1.90}}
+local ADV_SPACE_CARGO_SELECTION_BOX = {{-2.50, -2.50}, {2.50, 2.50}}
+local ADV_SPACE_CARGO_COLLISION_BOX = {{-2.20, -2.20}, {2.20, 2.20}}
 
 local SPACE_PLATFORM_ONLY_SURFACE_CONDITIONS = {
   { property = "gravity", min = -0.01, max = 0.10 },
@@ -54,6 +54,7 @@ local asset_dims = {
 }
 
 local function icon_path(name)
+  if name == "tech-priests-advanced-space-cargo-inventory" then return "__tech-priests__/graphics/entity/advanced-space-cargo-v01/icon.png" end
   return STONE_CACHE_ICON_PATH .. name .. ".png"
 end
 
@@ -66,6 +67,24 @@ local function shadow_path(name)
 end
 
 local function picture_for(name, scale, shift)
+  if name == "tech-priests-advanced-space-cargo-inventory" then return {
+    north={layers={
+      {filename="__tech-priests__/graphics/entity/advanced-space-cargo-v01/shadow-d0.png",width=1024,height=1024,scale=6.5*32/1024,shift={0,-0.21213203435596423},draw_as_shadow=true},
+      {filename="__tech-priests__/graphics/entity/advanced-space-cargo-v01/body-d0.png",width=1024,height=1024,scale=6.5*32/1024,shift={0,-0.21213203435596423}},
+    }},
+    east={layers={
+      {filename="__tech-priests__/graphics/entity/advanced-space-cargo-v01/shadow-d1.png",width=1024,height=1024,scale=6.5*32/1024,shift={0,-0.21213203435596423},draw_as_shadow=true},
+      {filename="__tech-priests__/graphics/entity/advanced-space-cargo-v01/body-d1.png",width=1024,height=1024,scale=6.5*32/1024,shift={0,-0.21213203435596423}},
+    }},
+    south={layers={
+      {filename="__tech-priests__/graphics/entity/advanced-space-cargo-v01/shadow-d2.png",width=1024,height=1024,scale=6.5*32/1024,shift={0,-0.21213203435596423},draw_as_shadow=true},
+      {filename="__tech-priests__/graphics/entity/advanced-space-cargo-v01/body-d2.png",width=1024,height=1024,scale=6.5*32/1024,shift={0,-0.21213203435596423}},
+    }},
+    west={layers={
+      {filename="__tech-priests__/graphics/entity/advanced-space-cargo-v01/shadow-d3.png",width=1024,height=1024,scale=6.5*32/1024,shift={0,-0.21213203435596423},draw_as_shadow=true},
+      {filename="__tech-priests__/graphics/entity/advanced-space-cargo-v01/body-d3.png",width=1024,height=1024,scale=6.5*32/1024,shift={0,-0.21213203435596423}},
+    }},
+  } end
   local dims = asset_dims[name] or {1024, 1024}
   return {
     layers = {
@@ -174,6 +193,32 @@ local function make_container(spec)
   chest.collision_box = table.deepcopy(spec.collision_box or TWO_BY_TWO_COLLISION_BOX)
   chest.selection_box = table.deepcopy(spec.selection_box or TWO_BY_TWO_SELECTION_BOX)
   chest.picture = picture_for(spec.name, spec.scale or 0.055, spec.shift)
+  -- Authored Advanced cargo contact registration. Owner requested native rotation.
+  -- Four-way sprites/contacts rotate with the owner-corrected square footprint;
+  -- inventory, research, recipe, platform restrictions and wire reach are unchanged.
+  if spec.name == "tech-priests-advanced-space-cargo-inventory" then
+    chest.direction_count = 4
+    local original = table.deepcopy(chest.circuit_connector[1])
+    chest.circuit_connector = {}
+    local draw = {
+      {red={0.36000000000000004,2.2247624099467638},green={0.472,2.2247624099467638},led={0.584,2.2516324676318527},shifts={led_blue={0.5730019392498955,1.97554482267782},led_blue_off={0.5730530493951613,1.975548798277014},led_green={0.5731124986799028,2.082872896927449},led_red={0.5731124986799028,2.082872896927449}}},
+      {red={-2.328,0.2567624099467643},green={-2.328,0.36876240994676424},led={-2.328,0.5076324676318529},shifts={led_blue={-2.338998060750104,0.23154482267782028},led_blue_off={-2.3389469506048384,0.23154879827701413},led_green={-2.338887501320097,0.33887289692744904},led_red={-2.338887501320097,0.33887289692744904}}},
+      {red={-0.3600000000000003,-2.431237590053236},green={-0.47200000000000025,-2.431237590053236},led={-0.5840000000000003,-2.404367532368147},shifts={led_blue={-0.5949980607501048,-2.6804551773221794},led_blue_off={-0.594946950604839,-2.6804512017229856},led_green={-0.5948875013200974,-2.573127103072551},led_red={-0.5948875013200974,-2.573127103072551}}},
+      {red={2.328,-0.4632375900532364},green={2.328,-0.5752375900532364},led={2.328,-0.6603675323681475},shifts={led_blue={2.3170019392498955,-0.9364551773221801},led_blue_off={2.3170530493951613,-0.9364512017229862},led_green={2.3171124986799025,-0.8291271030725513},led_red={2.3171124986799025,-0.8291271030725513}}},
+    }
+    for i = 1,4 do
+      local c = table.deepcopy(original)
+      c.points.wire.red = draw[i].red
+      c.points.wire.green = draw[i].green
+      c.points.shadow.red = {draw[i].red[1]+0.05,draw[i].red[2]+0.05}
+      c.points.shadow.green = {draw[i].green[1]+0.05,draw[i].green[2]+0.05}
+      for _, key in ipairs({"connector_main","connector_shadow","wire_pins","wire_pins_shadow"}) do c.sprites[key]=util.empty_sprite() end
+      for key, shift in pairs(draw[i].shifts) do c.sprites[key].shift=shift end
+      c.sprites.blue_led_light_offset=draw[i].led
+      c.sprites.red_green_led_light_offset=draw[i].led
+      chest.circuit_connector[i]=c
+    end
+  end
   if spec.space_platform_only then
     apply_space_platform_only_buildability(chest)
   end

@@ -1,0 +1,85 @@
+{
+  "articulation_plane": {
+    "shoulder": [
+      1.649999976158142,
+      -0.07999999821186066,
+      0.6100000143051147
+    ],
+    "elbow": [
+      0.8492000102996826,
+      0.20080000162124634,
+      1.899999976158142
+    ],
+    "tip": [
+      -1.4299999475479126,
+      1.0,
+      2.049999952316284
+    ],
+    "horizontal": [
+      -0.9436671733856201,
+      0.3308963179588318,
+      0.0
+    ],
+    "normal": [
+      0.3308963179588318,
+      0.9436671733856201,
+      -0.0
+    ]
+  },
+  "joints": [
+    {
+      "label": "shoulder",
+      "center": [
+        1.649999976158142,
+        -0.07999999821186066,
+        0.6100000143051147
+      ],
+      "axis": [
+        0.3308963179588318,
+        0.9436671733856201,
+        -0.0
+      ],
+      "hub": "Advanced | large crane shoulder closed journal",
+      "cheeks": [
+        "Advanced | detail crane lower articulated boom heel bearing cheek -1",
+        "Advanced | detail crane lower articulated boom heel bearing cheek 1"
+      ],
+      "shaft": "Advanced | crane shoulder continuous transverse pivot pin",
+      "hub_depth": 0.24,
+      "cheek_centers": 0.165,
+      "cheek_depth": 0.065,
+      "bore_radius": 0.058,
+      "shaft_radius": 0.05,
+      "minimum_axial_clearance": 0.0125,
+      "minimum_radial_clearance": 0.008
+    },
+    {
+      "label": "elbow",
+      "center": [
+        0.8492000102996826,
+        0.20080000162124634,
+        1.899999976158142
+      ],
+      "axis": [
+        0.3308963179588318,
+        0.9436671733856201,
+        -0.0
+      ],
+      "hub": "Advanced | large crane elbow closed journal",
+      "cheeks": [
+        "Advanced | detail crane long overhanging jib heel bearing cheek -1",
+        "Advanced | detail crane long overhanging jib heel bearing cheek 1"
+      ],
+      "shaft": "Advanced | crane elbow continuous transverse pivot pin",
+      "hub_depth": 0.24,
+      "cheek_centers": 0.165,
+      "cheek_depth": 0.065,
+      "bore_radius": 0.048,
+      "shaft_radius": 0.04,
+      "minimum_axial_clearance": 0.0125,
+      "minimum_radial_clearance": 0.008
+    }
+  ],
+  "struts": "Two parallel offset articulation planes. Bored rod eyes and double-shear clevises at both ends; cylinder/rod ends stop short of pin bores.",
+  "scope": "Static parked container crane. Mechanical construction/clearance check only; no new operating animation or loader behavior."
+}
