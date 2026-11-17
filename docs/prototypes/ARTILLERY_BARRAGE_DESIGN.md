@@ -1,6 +1,8 @@
 # Bunker artillery: revolving-breech barrage
 
-Current stage: completed prototype, Tech Priests 0.1.683. All 64 directional
+Current stage: completed prototype, Tech Priests 0.1.684.
+The capture and full-main review used 0.1.683; final publication incorporates
+the concurrent hydrogen balance delivery without changing artillery assets. All 64 directional
 body, per-round and moving-shadow captures are packed and promoted. Full-main
 acceptance passes 20 combat/recipe/save-resume sites and 64 runtime headings,
 including the graphical inventory preview and native diagonal launch origins.
