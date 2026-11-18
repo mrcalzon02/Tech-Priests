@@ -31,6 +31,13 @@ end
 local function has_runtime_entities_fallback()
   local tp = storage and storage.tech_priests
   if type(tp) ~= "table" then return false end
+  for _, record in pairs(tp.void_fusion_thrusters or {}) do
+    if type(record) == "table" and valid(record.thruster)
+        and (record.thruster.name == "void-fusion-thruster"
+          or record.thruster.name == "large-void-fusion-thruster") then
+      return true
+    end
+  end
   local maps = { "pairs_by_station", "pairs_by_priest", "stations_by_unit", "priests_by_unit", "conclave_centers", "stone_caches", "consecration_targets" }
   for _, key in ipairs(maps) do
     local t = tp[key]

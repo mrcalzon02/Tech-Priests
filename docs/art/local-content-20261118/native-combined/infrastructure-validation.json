@@ -1,0 +1,67 @@
+{
+  "passed": true,
+  "scope": "Combined local-only runtime including final broker/timing corrections",
+  "source": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\local-only-merge\\main\\tech-priests_src",
+  "date": "2026-11-18",
+  "factorio": "2.1.24",
+  "mod_version": "0.1.687",
+  "native_behavior": "PASS",
+  "native_create": "PASS",
+  "native_reload": "PASS",
+  "runtime_files_bound": 5843,
+  "combined_source_equals_tested_profile": true,
+  "source_binding_sha256": "ece0da4b6ea9fbb859b0dd2d2b7260331a9934e7d015e52422e0ae81ebc878a1",
+  "runtime_owners_preserved": true,
+  "orbital_visuals_preserved": true,
+  "infrastructure_owner": "martian_infrastructure",
+  "tick_polling_added": false,
+  "isolated_handler_failures": false,
+  "checks": [
+    "hitpoints_recipes_unlocks",
+    "unpowered_before",
+    "rotation_graphics_configured",
+    "powered",
+    "unpowered_after",
+    "native_radar_scan_stops_without_power",
+    "clone_ghost_mining_destroy",
+    "death_cleanup",
+    "component_recovery",
+    "restored",
+    "after_checkpoint"
+  ],
+  "bound_key_modules": {
+    "control.lua": "4236bcc409df9fca078eb8fade1e131bba1c215be8f49e253a9e0187fc423c6a",
+    "data.lua": "0a97bbf9beb9e9908b36acb6fc7e52864de157f211bde3524c88e80636ab81f6",
+    "prototypes/martian_infrastructure.lua": "a5a684cc98725456996a66d489fc0903a7245987149141ce220bfdfbac4b755b",
+    "prototypes/martian_stone_cache.lua": "39479248ceb0644c34e398092ce91e5e57e5ccadabd905b4886d23fe8784ee71",
+    "scripts/core/character_visuals.lua": "fe6d4083569b3007564b862cda16a3b3dba8aa34a5ed053438e80d827d438a82",
+    "scripts/core/efficiency_economy_0595.lua": "e072e06fa892fa5b9a40b2653573a73873c962a034ce6750af44264f44630a35",
+    "scripts/core/runtime_event_registry.lua": "8fe48638690d1b746bdd6a47236201bb7aaf68415f9087b65125d4815ec7f66e",
+    "scripts/core/runtime_tick_broker.lua": "eb67d6e182f27f8cc0068b1a0ec05e666e785ee67dd40805bcf52cf26e99d8d8",
+    "scripts/martian_infrastructure.lua": "9e6d0fc985aa9db11526c2a2171f9f04e8bf6f27796fabcf6447ff6fabfc039c",
+    "scripts/orbital_trader_visuals.lua": "80ba0677370c30881cb161c13b10e62fbe15c2298c188f4760037fa3186951a2"
+  },
+  "runtime_corrections": [
+    {
+      "path": "tech-priests_src/scripts/core/character_visuals.lua",
+      "sha256": "fe6d4083569b3007564b862cda16a3b3dba8aa34a5ed053438e80d827d438a82"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/runtime_tick_broker.lua",
+      "sha256": "eb67d6e182f27f8cc0068b1a0ec05e666e785ee67dd40805bcf52cf26e99d8d8"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/efficiency_economy_0595.lua",
+      "sha256": "e072e06fa892fa5b9a40b2653573a73873c962a034ce6750af44264f44630a35"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/runtime_event_registry.lua",
+      "sha256": "8fe48638690d1b746bdd6a47236201bb7aaf68415f9087b65125d4815ec7f66e"
+    }
+  ],
+  "serialization": "New-save initialized pole/radar records and native wires serialized at tick zero, then behavior scenario run after --test-save reload",
+  "limitations": [
+    "Headless behavior, lifecycle and reload proof for the six power/Vox families; graphical asset review is separate.",
+    "Reload serializes initialized records at tick zero and executes the scenario after loading, rather than continuing an active mid-scenario state."
+  ]
+}

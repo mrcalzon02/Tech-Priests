@@ -53,8 +53,29 @@ local asset_dims = {
   ["tech-priests-advanced-space-cargo-inventory"] = {1315, 1196}
 }
 
+local AUTHORED_FILTERED_CACHE_KEYS = {
+  ["tech-priests-stone-cache-coal"]="coal",
+  ["tech-priests-stone-cache-copper-ore"]="copper-ore",
+  ["tech-priests-stone-cache-copper-plate"]="copper-plate",
+  ["tech-priests-stone-cache-copper-cable"]="copper-cable",
+  ["tech-priests-stone-cache-iron-gear-wheel"]="iron-gear-wheel",
+  ["tech-priests-stone-cache-iron-ore"]="iron-ore",
+  ["tech-priests-stone-cache-iron-plate"]="iron-plate",
+  ["tech-priests-stone-cache-iron-stick"]="iron-stick",
+  ["tech-priests-stone-cache-stone"]="stone",
+  ["tech-priests-stone-cache-wood"]="wood",
+}
+
 local function icon_path(name)
   if name == "tech-priests-advanced-space-cargo-inventory" then return "__tech-priests__/graphics/entity/advanced-space-cargo-v01/icon.png" end
+  if name == "tech-priests-basic-space-cargo-inventory" then return "__tech-priests__/graphics/entity/basic-space-cargo-v01/icon.png" end
+  if AUTHORED_FILTERED_CACHE_KEYS[name] then return "__tech-priests__/graphics/entity/filtered-stone-caches-v01/" .. AUTHORED_FILTERED_CACHE_KEYS[name] .. "-icon.png" end
+  if name == "tech-priests-stone-cache-pressurized-fluid-vault" then return "__tech-priests__/graphics/entity/pressurized-fluid-vault-v01/icon.png" end
+  if name == "tech-priests-stone-cache-primitive-acclimator-battery-bank" then return "__tech-priests__/graphics/entity/primitive-battery-bank-v01/icon.png" end
+  if name == "tech-priests-stone-cache-item-vault" then return "__tech-priests__/graphics/entity/item-vault-v01/icon.png" end
+  if name == "tech-priests-martian-stone-cache" then
+    return "__tech-priests__/graphics/entity/martian-stone-cache-v01/icon.png"
+  end
   return STONE_CACHE_ICON_PATH .. name .. ".png"
 end
 
@@ -85,6 +106,60 @@ local function picture_for(name, scale, shift)
       {filename="__tech-priests__/graphics/entity/advanced-space-cargo-v01/body-d3.png",width=1024,height=1024,scale=6.5*32/1024,shift={0,-0.21213203435596423}},
     }},
   } end
+  if name == "tech-priests-basic-space-cargo-inventory" then return {
+    north={layers={
+      {filename="__tech-priests__/graphics/entity/basic-space-cargo-v01/shadow-d0.png",width=1024,height=1024,scale=7*32/1024,shift={0,0},draw_as_shadow=true},
+      {filename="__tech-priests__/graphics/entity/basic-space-cargo-v01/body-d0.png",width=1024,height=1024,scale=7*32/1024,shift={0,0}},
+    }},
+    east={layers={
+      {filename="__tech-priests__/graphics/entity/basic-space-cargo-v01/shadow-d1.png",width=1024,height=1024,scale=7*32/1024,shift={0,0},draw_as_shadow=true},
+      {filename="__tech-priests__/graphics/entity/basic-space-cargo-v01/body-d1.png",width=1024,height=1024,scale=7*32/1024,shift={0,0}},
+    }},
+    south={layers={
+      {filename="__tech-priests__/graphics/entity/basic-space-cargo-v01/shadow-d2.png",width=1024,height=1024,scale=7*32/1024,shift={0,0},draw_as_shadow=true},
+      {filename="__tech-priests__/graphics/entity/basic-space-cargo-v01/body-d2.png",width=1024,height=1024,scale=7*32/1024,shift={0,0}},
+    }},
+    west={layers={
+      {filename="__tech-priests__/graphics/entity/basic-space-cargo-v01/shadow-d3.png",width=1024,height=1024,scale=7*32/1024,shift={0,0},draw_as_shadow=true},
+      {filename="__tech-priests__/graphics/entity/basic-space-cargo-v01/body-d3.png",width=1024,height=1024,scale=7*32/1024,shift={0,0}},
+    }},
+  } end
+  if AUTHORED_FILTERED_CACHE_KEYS[name] then
+    local root = "__tech-priests__/graphics/entity/filtered-stone-caches-v01/" .. AUTHORED_FILTERED_CACHE_KEYS[name]
+    local registration = {0,-0.08713203435596423}
+    return {layers={
+      {filename=root .. "-shadow.png",width=512,height=512,scale=3*32/512,shift=registration,draw_as_shadow=true},
+      {filename=root .. "-body.png",width=512,height=512,scale=3*32/512,shift=registration}
+    }}
+  end
+  -- Authored primitive accumulator: native capacity, rates and ports unchanged.
+  if name == "tech-priests-stone-cache-primitive-acclimator-battery-bank" then
+    local registration = {0, -0.01213203435596423}
+    return {layers = {
+      {filename="__tech-priests__/graphics/entity/primitive-battery-bank-v01/shadow.png", priority="high", width=512, height=512, scale=3.0*32/512, shift=registration, draw_as_shadow=true},
+      {filename="__tech-priests__/graphics/entity/primitive-battery-bank-v01/body.png", priority="high", width=512, height=512, scale=3.0*32/512, shift=registration}
+    }}
+  end
+  -- Authored Item Vault: fixed-facing native ten-slot container unchanged.
+  if name == "tech-priests-stone-cache-item-vault" then
+    local registration = {0, -0.08713203435596423}
+    return {layers = {
+      {filename="__tech-priests__/graphics/entity/item-vault-v01/shadow.png", priority="high", width=512, height=512, scale=3.0*32/512, shift=registration, draw_as_shadow=true},
+      {filename="__tech-priests__/graphics/entity/item-vault-v01/body.png", priority="high", width=512, height=512, scale=3.0*32/512, shift=registration}
+    }}
+  end
+  -- Authored base cache only. All inventories, circuits and variants retain
+  -- their original definitions; fixed-north orientation is unchanged.
+  if name == "tech-priests-martian-stone-cache" then
+    local root = "__tech-priests__/graphics/entity/martian-stone-cache-v01/"
+    local registration = {0, -0.08713203435596423}
+    return {layers = {
+      {filename=root .. "shadow.png", priority="high", width=512, height=512,
+        scale=3.0*32/512, shift=registration, draw_as_shadow=true},
+      {filename=root .. "body.png", priority="high", width=512, height=512,
+        scale=3.0*32/512, shift=registration}
+    }}
+  end
   local dims = asset_dims[name] or {1024, 1024}
   return {
     layers = {
@@ -193,6 +268,42 @@ local function make_container(spec)
   chest.collision_box = table.deepcopy(spec.collision_box or TWO_BY_TWO_COLLISION_BOX)
   chest.selection_box = table.deepcopy(spec.selection_box or TWO_BY_TWO_SELECTION_BOX)
   chest.picture = picture_for(spec.name, spec.scale or 0.055, spec.shift)
+  -- Centered Martian relief keeps its own backing; native pins/LEDs and all
+  -- connector points/reach remain unchanged. Avoid a steel-chest board over it.
+  if spec.name == "tech-priests-martian-stone-cache" or spec.name == "tech-priests-stone-cache-item-vault" or AUTHORED_FILTERED_CACHE_KEYS[spec.name] then
+    for _, connector in ipairs(chest.circuit_connector or {}) do
+      if connector.sprites then
+        connector.sprites.connector_main = util.empty_sprite()
+        connector.sprites.connector_shadow = util.empty_sprite()
+      end
+    end
+  end
+  -- Authored Basic cargo contact registration. Owner requested native rotation.
+  -- Four-way sprites/contacts rotate with the original rectangular footprint;
+  -- inventory, research, recipe, platform restrictions and wire reach are unchanged.
+  if spec.name == "tech-priests-basic-space-cargo-inventory" then
+    chest.direction_count = 4
+    local original = table.deepcopy(chest.circuit_connector[1])
+    chest.circuit_connector = {}
+    local draw = {
+      {red={0.45,0.6310928022089936},green={0.59,0.6310928022089936},led={0.73,0.6646803743153545},shifts={led_blue={0.7190019392498955,0.38859272936132194},led_blue_off={0.7190530493951612,0.3885967049605158},led_green={0.7191124986799029,0.4959208036109507},led_red={0.7191124986799029,0.4959208036109507}}},
+      {red={-1.075,0.1891510639674015},green={-1.075,0.28814601333351814},led={-1.075,0.4207285348059958},shifts={led_blue={-1.0859980607501045,0.14464088985196322},led_blue_off={-1.0859469506048387,0.14464486545115707},led_green={-1.085887501320097,0.251968964101592},led_red={-1.085887501320097,0.251968964101592}}},
+      {red={-0.4500000000000001,-0.8891867773420833},green={-0.5900000000000001,-0.8891867773420833},led={-0.7300000000000001,-0.8555992052357224},shifts={led_blue={-0.7409980607501045,-1.131686850189755},led_blue_off={-0.7409469506048387,-1.1316828745905612},led_green={-0.7408875013200973,-1.0243587759401263},led_red={-0.7408875013200973,-1.0243587759401263}}},
+      {red={1.075,-0.44724503910049146},green={1.075,-0.546239988466608},led={1.0749999999999997,-0.6116473657263637},shifts={led_blue={1.0640019392498954,-0.8877350106803963},led_blue_off={1.064053049395161,-0.8877310350812024},led_green={1.0641124986799027,-0.7804069364307675},led_red={1.0641124986799027,-0.7804069364307675}}},
+    }
+    for i = 1,4 do
+      local c = table.deepcopy(original)
+      c.points.wire.red = draw[i].red
+      c.points.wire.green = draw[i].green
+      c.points.shadow.red = {draw[i].red[1]+0.05,draw[i].red[2]+0.05}
+      c.points.shadow.green = {draw[i].green[1]+0.05,draw[i].green[2]+0.05}
+      for _, key in ipairs({"connector_main","connector_shadow","wire_pins","wire_pins_shadow"}) do c.sprites[key]=util.empty_sprite() end
+      for key, shift in pairs(draw[i].shifts) do c.sprites[key].shift=shift end
+      c.sprites.blue_led_light_offset=draw[i].led
+      c.sprites.red_green_led_light_offset=draw[i].led
+      chest.circuit_connector[i]=c
+    end
+  end
   -- Authored Advanced cargo contact registration. Owner requested native rotation.
   -- Four-way sprites/contacts rotate with the owner-corrected square footprint;
   -- inventory, research, recipe, platform restrictions and wire reach are unchanged.
@@ -389,6 +500,19 @@ for _, spec in pairs(cache_specs) do
   end
 end
 
+local function bank_state_animation(state)
+  local root = "__tech-priests__/graphics/entity/primitive-battery-bank-v01/"
+  local registration = {0, -0.01213203435596423}
+  return {layers = {
+    {filename=root .. "shadow.png", priority="high", width=512, height=512,
+      repeat_count=8, animation_speed=0.20, scale=3.0*32/512, shift=registration, draw_as_shadow=true},
+    {filename=root .. "body.png", priority="high", width=512, height=512,
+      repeat_count=8, animation_speed=0.20, scale=3.0*32/512, shift=registration},
+    {filename=root .. state .. ".png", priority="high", width=512, height=512,
+      frame_count=8, line_length=8, animation_speed=0.20, scale=3.0*32/512, shift=registration, draw_as_glow=true}
+  }}
+end
+
 local function make_battery_bank()
   -- 0.1.549: this is an accumulator mechanically, but it must use the
   -- Primitive Acclimator Battery Bank stone-cache artwork, not the vanilla
@@ -414,13 +538,31 @@ local function make_battery_bank()
   bank.discharge_cooldown = nil
   bank.chargable_graphics = {
     picture = picture_for(name, 0.068),
-    charge_animation = animation_for(name, 0.068),
+    charge_animation = bank_state_animation("charge"),
     charge_cooldown = 30,
-    discharge_animation = animation_for(name, 0.068),
+    discharge_animation = bank_state_animation("discharge"),
     discharge_cooldown = 30
   }
   bank.charge_light = nil
   bank.discharge_light = nil
+  -- Authored cabinet provides the connector backing; original wire pins,
+  -- native LED states, points, signal and wire reach remain unchanged.
+  if bank.circuit_connector and bank.circuit_connector.sprites then
+    bank.circuit_connector.sprites.connector_main = util.empty_sprite()
+    bank.circuit_connector.sprites.connector_shadow = util.empty_sprite()
+    -- Seat inherited LED pixels on the authored cabinet, preserving native states.
+    local sprites = bank.circuit_connector.sprites
+    local dx, dy = 0.18087693924989555, -0.1448376449540326
+    for _, key in ipairs({"led_blue", "led_blue_off", "led_green", "led_red"}) do
+      if sprites[key] then
+        local shift = sprites[key].shift or {0,0}
+        sprites[key].shift = {(shift[1] or 0)+dx, (shift[2] or 0)+dy}
+      end
+    end
+    for _, key in ipairs({"blue_led_light_offset", "red_green_led_light_offset"}) do
+      if sprites[key] then sprites[key] = {sprites[key][1]+dx, sprites[key][2]+dy} end
+    end
+  end
   bank.water_reflection = nil
   bank.integration_patch = nil
   if bank.energy_source then
@@ -430,6 +572,15 @@ local function make_battery_bank()
     bank.energy_source.render_no_network_icon = true
   end
   return bank
+end
+
+local function authored_fluid_vault_picture(facing)
+  local root = "__tech-priests__/graphics/entity/pressurized-fluid-vault-v01/"
+  local registration = {0, 0.05211994936611669}
+  return {layers = {
+    {filename=root .. facing .. "-shadow.png", width=512, height=512, scale=0.25, shift=registration, draw_as_shadow=true},
+    {filename=root .. facing .. ".png", width=512, height=512, scale=0.25, shift=registration}
+  }}
 end
 
 local function make_fluid_vault()
@@ -468,9 +619,33 @@ local function make_fluid_vault()
   -- pictures.picture.  The inherited fluid/window/flow overlays from the vanilla
   -- tank were still being drawn on top of/below the custom vault sprite and
   -- created the stray gray-beige fluid-window nub visible under the base.
-  tank.pictures = {
-    picture = picture_for(name, 0.068)
+  tank.pictures = {picture = {
+    north=authored_fluid_vault_picture("north"), east=authored_fluid_vault_picture("east"),
+    south=authored_fluid_vault_picture("north"), west=authored_fluid_vault_picture("east")
+  }}
+  -- Authored fluid-vault contact draw registration: original large-tank pixel
+  -- anchors do not fit this compact vessel. Only graphics/points change; native
+  -- amount/temperature controls, wire reach, fluid ports and capacity stay fixed.
+  local contact_draw = {
+    {red={0.625,0.608916847198287}, green={0.715,0.7079117965644037}, blue_light={0.585,0.6831985931288072}, red_green_light={0.585,0.6195589828220178}, leds={led_blue={0.4524682233647529,0.4509685160079845},led_blue_off={0.4524163098783817,0.4509080899022001},led_green={0.45460472685241515,0.49606654152745644},led_red={0.45460472685241515,0.49606654152745644}}},
+    {red={-0.776,0.45791684719828696}, green={-0.776,0.6469117965644036}, blue_light={-0.7725,0.49569859312880715}, red_green_light={-0.7725,0.4320589828220179}, leds={led_blue={-0.6504446386273037,0.24473540201435806},led_blue_off={-0.6504170590081606,0.24469027548913358},led_green={-0.6526843847710133,0.2898572094788752},led_red={-0.6526843847710133,0.2898572094788752}}},
+    {red={0.625,0.608916847198287}, green={0.715,0.7079117965644037}, blue_light={0.585,0.6831985931288072}, red_green_light={0.585,0.6195589828220178}, leds={led_blue={0.4524682233647529,0.4509685160079845},led_blue_off={0.4524163098783817,0.4509080899022001},led_green={0.45460472685241515,0.49606654152745644},led_red={0.45460472685241515,0.49606654152745644}}},
+    {red={-0.776,0.45791684719828696}, green={-0.776,0.6469117965644036}, blue_light={-0.7725,0.49569859312880715}, red_green_light={-0.7725,0.4320589828220179}, leds={led_blue={-0.6504446386273037,0.24473540201435806},led_blue_off={-0.6504170590081606,0.24469027548913358},led_green={-0.6526843847710133,0.2898572094788752},led_red={-0.6526843847710133,0.2898572094788752}}},
   }
+  for i, connector in ipairs(tank.circuit_connector or {}) do
+    local draw = contact_draw[i]
+    if draw then
+      connector.points.wire.red = draw.red
+      connector.points.wire.green = draw.green
+      connector.points.shadow.red = {draw.red[1]+0.08,draw.red[2]+0.08}
+      connector.points.shadow.green = {draw.green[1]+0.08,draw.green[2]+0.08}
+      local sprites = connector.sprites
+      for _, key in ipairs({"connector_main","connector_shadow","wire_pins","wire_pins_shadow"}) do sprites[key]=util.empty_sprite() end
+      for key, shift in pairs(draw.leds) do sprites[key].shift = shift end
+      sprites.blue_led_light_offset=draw.blue_light
+      sprites.red_green_led_light_offset=draw.red_green_light
+    end
+  end
   tank.water_reflection = nil
   return tank
 end

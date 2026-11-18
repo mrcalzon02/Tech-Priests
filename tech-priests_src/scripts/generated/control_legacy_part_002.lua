@@ -1,5 +1,6 @@
 local LegacyStock=require("scripts.core.legacy_station_stock_guard_0846")
 local ColonyOptions=require("scripts.core.enemy_colony_options")
+local VoidFusionVisuals=require("scripts.core.void_fusion_visuals")
 -- Auto-split control.lua fragment 002 for Tech Priests 0.1.438.
 -- Generated mechanically from 0.1.437 monolithic control.lua.
 -- Purpose: reduce Lua main-chunk local/register pressure without deleting behavior.
@@ -356,6 +357,7 @@ function is_void_fusion_thruster_power_sink(entity)
 end
 
 function destroy_void_fusion_thruster_sink(record)
+  VoidFusionVisuals.clear(record)
   if record and record.sink and record.sink.valid then
     record.sink.destroy({ raise_destroy = false })
   end
@@ -391,10 +393,11 @@ function register_void_fusion_thruster(thruster)
     old.thruster = thruster
     return
   end
-  storage.tech_priests.void_fusion_thrusters[unit] = {
-    thruster = thruster,
-    sink = create_void_fusion_thruster_power_sink(thruster)
-  }
+  -- Preserve the operating phase when a missing hidden sink is rebuilt.
+  local record = old or {}
+  record.thruster = thruster
+  record.sink = create_void_fusion_thruster_power_sink(thruster)
+  storage.tech_priests.void_fusion_thrusters[unit] = record
 end
 
 function unregister_void_fusion_thruster(entity)
@@ -432,14 +435,15 @@ function scan_existing_void_fusion_thrusters()
   end
 end
 
-function fill_void_fusion_thruster_fluidbox(thruster, index, fluid_name)
+function fill_void_fusion_thruster_fluidbox(thruster, index, fluid_name, amount)
   if not (thruster and thruster.valid and type(index)=="number"
       and index>=1 and type(fluid_name)=="string" and fluid_name~="") then
     return false
   end
-  local fluid={
-    name=fluid_name,amount=VOID_FUSION_THRUSTER_FILL_AMOUNT,temperature=15
-  }
+  amount = amount or VOID_FUSION_THRUSTER_FILL_AMOUNT
+  if type(amount) ~= "number" or amount ~= amount or amount <= 0
+      or amount == math.huge then return false end
+  local fluid={name=fluid_name,amount=amount,temperature=15}
   -- Factorio 2.1 removed LuaEntity.fluidbox. Its set_fluid(index, fluid)
   -- method returns the actual amount accepted by the native engine.
   local api_ok,accepted=pcall(function()
@@ -456,6 +460,33 @@ function fill_void_fusion_thruster_fluidbox(thruster, index, fluid_name)
     return true
   end)
   return ok and filled==true
+end
+
+local VoidFusionOperation = require("scripts.core.void_fusion_operation")
+local void_fusion_visual_families = {}
+
+local function void_fusion_visual_family(thruster)
+  local name = thruster.name
+  local family = void_fusion_visual_families[name]
+  if family ~= nil then return family or nil end
+  local prefix = "tp-" .. name
+  local energy = prefix .. "-energy-v01"
+  local plume = prefix .. "-plume-v01"
+  -- Animation prototypes are optional until the authored graphics are imported.
+  -- The installed API exposes this predicate rather than prototypes.animation.
+  local available = helpers and helpers.is_valid_animation_path
+    and helpers.is_valid_animation_path(energy)
+    and helpers.is_valid_animation_path(plume)
+  family = available and {
+    energy_animation = energy,
+    plume_animation = plume,
+    animation_speed = 32 / 60,
+    frame_count = 64,
+    energy_render_layer = "higher-object-above",
+    plume_render_layer = "higher-object-above",
+  } or false
+  void_fusion_visual_families[name] = family
+  return family or nil
 end
 
 function service_void_fusion_thrusters()
@@ -481,14 +512,27 @@ function service_void_fusion_thrusters()
           pcall(function() if sink.force ~= thruster.force then sink.force = thruster.force end end)
         end
       end
-      local powered = sink and sink.valid and ((sink.energy or 0) >= VOID_FUSION_THRUSTER_MIN_BUFFER)
+      local _, power_watts, fluid_amount = VoidFusionOperation.sample(record,
+        game.tick, thruster.unit_number)
+      -- ElectricEnergyInterface power_usage is joules per tick, not watts.
+      -- Both real native working-fluid stores follow the same substantial cycle.
+      if sink and sink.valid then sink.power_usage = power_watts / 60 end
+      local powered = sink and sink.valid and ((sink.energy or 0)
+        >= math.max(VOID_FUSION_THRUSTER_MIN_BUFFER, power_watts / 60))
       if powered then
         -- ThrusterPrototype is fluid-driven; the hidden electric interface is
         -- the actual electric load, while these hidden fluids act as the engine
         -- side's runtime proxy for an electric drive field.
-        fill_void_fusion_thruster_fluidbox(thruster, 1, VOID_FUSION_THRUSTER_CHARGE_FLUID)
-        fill_void_fusion_thruster_fluidbox(thruster, 2, VOID_FUSION_THRUSTER_REACTION_FLUID)
+        fill_void_fusion_thruster_fluidbox(thruster, 1, VOID_FUSION_THRUSTER_CHARGE_FLUID, fluid_amount)
+        fill_void_fusion_thruster_fluidbox(thruster, 2, VOID_FUSION_THRUSTER_REACTION_FLUID, fluid_amount)
       end
+      -- Use this exact real load/working-fluid sample for the visual envelope.
+      -- Fast crackles and particles animate inside normalized peak sprites.
+      VoidFusionVisuals.update(record, {
+        tick = game.tick,
+        powered = powered == true,
+        family = void_fusion_visual_family(thruster),
+      })
     end
   end
 end

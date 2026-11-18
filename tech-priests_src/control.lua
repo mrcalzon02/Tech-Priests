@@ -1243,3 +1243,10 @@ require("hydrogen.runtime")
 
 -- Orbital arrival visuals reuse the existing native cargo pod and canonical dispatcher.
 assert(require("scripts.orbital_trader_visuals").install_main(require("scripts.core.runtime_event_registry")))
+
+-- Martian infrastructure shares the canonical lifecycle event owner.
+assert(require("scripts.martian_infrastructure").install_main(require("scripts.core.runtime_event_registry")))
+
+-- Presentation only; existing worker owners retain behavior and inventory.
+assert(require("scripts.core.character_skin_picker").install(),
+ "[Tech-Priests] character appearance owner unavailable")

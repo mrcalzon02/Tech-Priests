@@ -21,6 +21,7 @@ require("prototypes.bunker_bullet_weapons").register("tech-priests")
 require("prototypes.bunker_twin_cannon").register("tech-priests")
 require("prototypes.bunker_rocket_salvo").register("tech-priests")
 require("prototypes.bunker_artillery").register("tech-priests")
+require("prototypes.martian_infrastructure")
 
 if mods["space-age"] then
   require("prototypes.compatibility.space-age")
@@ -150,3 +151,7 @@ data:extend({
 -- Upgraders may still have the prototype add-ons enabled with a live factory.
 if not mods["tp-mh7-pellet-decay"] then require("hydrogen.pellets") end
 if not mods["tp-hydrogen-production"] then require("hydrogen.production") end
+
+-- Independent authored faction factories and the existing armory slice.
+require("prototypes.faction_factories").register()
+require("prototypes.combat_armory").register()

@@ -1,0 +1,258 @@
+{
+  "status": "PASS_COMBINED_MAIN_FOUR_DRIVE_SOURCE_AND_EXACT_SAVE_RELOAD",
+  "iteration": "broker-correction-final",
+  "prior_iteration": {
+    "evidence_directory": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\local-only-merge\\propulsion\\prior-native\\before-broker-correction-4a81d4309afd",
+    "source_binding_sha256": "4a81d4309afd4b7b6b5f4d87551ee860c1f3db78782a65fbbefb4d4b0213a3a8",
+    "scope": "Earlier combined-source proof retained unchanged; superseded by this iteration"
+  },
+  "baseline_main": "65df59078652022e71df89931772a89158dd2ad5",
+  "tested_source": "build/local-only-merge/main/tech-priests_src",
+  "engine": "Factorio 2.1.24 build 87808 Steam win64",
+  "bound_source_files": 5843,
+  "all_current_combined_source_hashes_match_tested_snapshot": true,
+  "exact_uninterrupted_reload_match": true,
+  "saved_tick": 1500,
+  "compared_tick": 1560,
+  "native_rows": [
+    {
+      "name": "hydrogen-thruster",
+      "placement_legal": true,
+      "movement": true,
+      "passed": true,
+      "platform_weight_kg": 84800,
+      "native_consumption": true,
+      "connected_ports": true,
+      "working_sample": {
+        "tick": 600,
+        "platform_speed": 0.4429696896147096,
+        "platform_distance": 0.01765121508819354,
+        "connection": "nauvis-vulcanus",
+        "fluid1": {
+          "name": "liquid-hydrogen",
+          "amount": 217.55651342868805,
+          "temperature": -253
+        },
+        "fluid2": {
+          "name": "liquid-oxygen",
+          "amount": 217.55651342868805,
+          "temperature": -183
+        }
+      }
+    },
+    {
+      "name": "thetazine-thruster",
+      "placement_legal": true,
+      "movement": true,
+      "passed": true,
+      "platform_weight_kg": 84800,
+      "native_consumption": true,
+      "connected_ports": true,
+      "working_sample": {
+        "tick": 600,
+        "platform_speed": 11.373511909097004,
+        "platform_distance": 0.5820963002220382,
+        "connection": "nauvis-vulcanus",
+        "fluid1": {
+          "name": "thetazine-fuel",
+          "amount": 217.55651342868805,
+          "temperature": 15
+        },
+        "fluid2": {
+          "name": "water",
+          "amount": 217.55651342868805,
+          "temperature": 15
+        }
+      }
+    },
+    {
+      "name": "void-fusion-thruster",
+      "placement_legal": true,
+      "movement": true,
+      "passed": true,
+      "platform_weight_kg": 20800,
+      "unpowered_refusal": true,
+      "powered_service": true,
+      "no_visible_ports": true,
+      "power_cut_refusal": true,
+      "power_recovery": true,
+      "sink_replaced": true,
+      "native_cycle": true,
+      "power_bounds": true,
+      "significant_variation": true,
+      "minimum_power_watts": 6171157.411455284,
+      "maximum_power_watts": 17681295.032367375,
+      "minimum_fluid": 301.97778725624084,
+      "maximum_fluid": 864.0647515654564,
+      "first_recorded_departure": {
+        "tick": 140,
+        "platform_speed": 0.008610868390574332,
+        "platform_distance": 5.0481901972805315e-06,
+        "connection": "nauvis-vulcanus"
+      },
+      "cycle_samples": 150,
+      "initial_native_sink_power_watts": 12000000
+    },
+    {
+      "name": "large-void-fusion-thruster",
+      "placement_legal": true,
+      "movement": true,
+      "passed": true,
+      "platform_weight_kg": 86600,
+      "unpowered_refusal": true,
+      "powered_service": true,
+      "no_visible_ports": true,
+      "power_cut_refusal": true,
+      "power_recovery": true,
+      "sink_replaced": true,
+      "native_cycle": true,
+      "power_bounds": true,
+      "significant_variation": true,
+      "minimum_power_watts": 6981558.400953378,
+      "maximum_power_watts": 16721559.3196775,
+      "minimum_fluid": 341.41134387254715,
+      "maximum_fluid": 805.7005037069321,
+      "first_recorded_departure": {
+        "tick": 140,
+        "platform_speed": 0.041156434121079395,
+        "platform_distance": 1.5354846116550497e-05,
+        "connection": "nauvis-vulcanus"
+      },
+      "cycle_samples": 150,
+      "initial_native_sink_power_watts": 12000000
+    }
+  ],
+  "runtime_source_hashes": {
+    "control.lua": "4236bcc409df9fca078eb8fade1e131bba1c215be8f49e253a9e0187fc423c6a",
+    "data.lua": "0a97bbf9beb9e9908b36acb6fc7e52864de157f211bde3524c88e80636ab81f6",
+    "data-final-fixes.lua": "61f03458df6f8c7e86da36c485e5586b1039827e5f2bfe334706716beb6b7dee",
+    "settings.lua": "c4f5582952d38642c130f1465ad0b1dbebed84e1b1b43c35536fbb2026296b2e",
+    "prototypes/compatibility/space-age.lua": "5c9a190a15e5f14f566cf81aa7d73fc0414d706603df5637c6885f5a0b1b7fd6",
+    "prototypes/generated_graphics/void-fusion-thrusters-v01.lua": "6369e78d8f67085f6ab12dd94c741e032063c8a208278c842c3f7b14fe7584b8",
+    "prototypes/generated_graphics/thetazine-thruster-v04.lua": "70a4f3b75dba021f38741e3c29e3103a0258a55484732eb143aac64a0fb78186",
+    "scripts/generated/control_legacy_part_001.lua": "c4dff7ef793a2e23a9dd12ce2572bc842daea813e5769914e6d7cd7659d91eef",
+    "scripts/generated/control_legacy_part_002.lua": "746d5f243bd66476db36b35e43d9ec66b867cfbd21d691ca55641bf7dfe365ee",
+    "scripts/generated/control_legacy_part_004.lua": "d136888473986355a7dad0a86e08a967421b3acafe8a2fb4c7c95f270d9cbdfe",
+    "scripts/core/efficiency_economy_0595.lua": "e072e06fa892fa5b9a40b2653573a73873c962a034ce6750af44264f44630a35",
+    "scripts/core/efficiency_economy_0596.lua": "99ae124f87d7796e4a18dd4f9d1f4d502561bf2434084ca9f2f8882a941fcce1",
+    "scripts/core/void_fusion_operation.lua": "493741097327ef5b16aacb6541928251cc08c2629b02872bda4bce859b9f7f12",
+    "scripts/core/void_fusion_visuals.lua": "85655201cad15acf802d0d360ec3f948415244d17da148b132c63351067bfe1e",
+    "scripts/core/character_visuals.lua": "fe6d4083569b3007564b862cda16a3b3dba8aa34a5ed053438e80d827d438a82",
+    "scripts/core/runtime_tick_broker.lua": "eb67d6e182f27f8cc0068b1a0ec05e666e785ee67dd40805bcf52cf26e99d8d8",
+    "scripts/core/runtime_event_registry.lua": "8fe48638690d1b746bdd6a47236201bb7aaf68415f9087b65125d4815ec7f66e"
+  },
+  "runtime_pngs": [
+    {
+      "file": "graphics/entity/void-fusion-thrusters-v01/void-fusion-thruster/cold_body.png",
+      "sha256": "8713018714c1083413040d60a0f2f598f3425474167d4dd6cc9b13fdb094f30a"
+    },
+    {
+      "file": "graphics/entity/void-fusion-thrusters-v01/void-fusion-thruster/deck_shadow.png",
+      "sha256": "fe14627dce69b97908274b6866bd96cc7d59c0c856c603876d2bfd88c4e505d6"
+    },
+    {
+      "file": "graphics/entity/void-fusion-thrusters-v01/void-fusion-thruster/service_underlay.png",
+      "sha256": "a07db5e4b47cc77fadb0082f47d2c6aee2efeb39591fb3ae6f9b6d25e17955d8"
+    },
+    {
+      "file": "graphics/entity/void-fusion-thrusters-v01/void-fusion-thruster/working_light-1.png",
+      "sha256": "9bc16269af151731961dfcf9f9b02dbee90672e181bc159f078956109fe27b77"
+    },
+    {
+      "file": "graphics/entity/void-fusion-thrusters-v01/void-fusion-thruster/working_light-2.png",
+      "sha256": "176ee0f145168face26d3093c92f427401aa81e3da784716a7e0096d951a5e71"
+    },
+    {
+      "file": "graphics/entity/void-fusion-thrusters-v01/void-fusion-thruster/field_candidate-1.png",
+      "sha256": "08b233a50e6fab0e6308c04870bf30875ae4bde53a9adb54d2aec4d93de3045f"
+    },
+    {
+      "file": "graphics/entity/void-fusion-thrusters-v01/void-fusion-thruster/field_candidate-2.png",
+      "sha256": "59a16589e6793bb10e58c07864de5e62761b3bfc68c0edf9a6522c0357dd19b7"
+    },
+    {
+      "file": "graphics/entity/void-fusion-thrusters-v01/large-void-fusion-thruster/cold_body.png",
+      "sha256": "efdf8b95ced8aca53a5a8834c314fb0af84373d0373cf49de5141aaea6a541fc"
+    },
+    {
+      "file": "graphics/entity/void-fusion-thrusters-v01/large-void-fusion-thruster/deck_shadow.png",
+      "sha256": "9606b302d2733518f9d6d349b9e3a1df9d0db61cf81d890e33b95fd7666fc350"
+    },
+    {
+      "file": "graphics/entity/void-fusion-thrusters-v01/large-void-fusion-thruster/service_underlay.png",
+      "sha256": "7814ba07dd1abe432697bb37a0ebd39e79cb51368c53ba49fd73e12f197d8c97"
+    },
+    {
+      "file": "graphics/entity/void-fusion-thrusters-v01/large-void-fusion-thruster/working_light-1.png",
+      "sha256": "aabcbad89a895a59662d273bb9f726318e4f2c73cd925e46ad86eb30543c793d"
+    },
+    {
+      "file": "graphics/entity/void-fusion-thrusters-v01/large-void-fusion-thruster/working_light-2.png",
+      "sha256": "0742ff8fd5acaad4e3f6a3a4cdb312db893212d6aa1fe00e92ea273521f8f338"
+    },
+    {
+      "file": "graphics/entity/void-fusion-thrusters-v01/large-void-fusion-thruster/field_candidate-1.png",
+      "sha256": "66753746464981111253680995a789bdb5e0af287e34e89cbfff6a8cdf810496"
+    },
+    {
+      "file": "graphics/entity/void-fusion-thrusters-v01/large-void-fusion-thruster/field_candidate-2.png",
+      "sha256": "0b5e645a30a09b87fc8f146cbc2629765ba0c667e58e981f03c001245774bc3e"
+    }
+  ],
+  "active_thetazine_art": "V04; V06 remains source-only WIP",
+  "actual_save": {
+    "retained_at": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\_merge-proof\\drive-broker\\user-data\\saves\\_autosave-thruster-resume-complete.zip",
+    "sha256": "7617a7742f4364d4a7ae2cbd5761b60fab5e8aa7616ced02e52bbb890052f9af"
+  },
+  "scope_limits": [
+    "Fresh merged native functional/load/state/save proof; not a new owner artistic approval or final pixel review",
+    "Unchanged final64 FX hashes checked separately against current integration receipt",
+    "Final gameplay balance and optional third-party compatibility remain separate"
+  ],
+  "evidence": {
+    "broker-review.md": {
+      "sha256": "d998312fb18432450c574d92adf5cc2486c9d21a7a660d92f49b1a2c7ec0a3b7",
+      "bytes": 1680
+    },
+    "continuous-results.json": {
+      "sha256": "5ff8196baf9bfd77d598a7e4ff499230f36a23dafdcced6b6879a36e6c5c6999",
+      "bytes": 263842
+    },
+    "create.log": {
+      "sha256": "05ef383fb1c363ef1f6f88f6df18cce504606ee9ff6c20dbc32945ded9543c9a",
+      "bytes": 54044
+    },
+    "native-results.json": {
+      "sha256": "51cab4fb41afaca1f450cbd0509eee5355baf86cdf906f220d5cae4ddc50c4a3",
+      "bytes": 265997
+    },
+    "README.md": {
+      "sha256": "299ad84c3e66c1538c5e8ab0bef685c741a17edced963c157d4e887dd3936983",
+      "bytes": 1735
+    },
+    "reload-results.json": {
+      "sha256": "5ff8196baf9bfd77d598a7e4ff499230f36a23dafdcced6b6879a36e6c5c6999",
+      "bytes": 263842
+    },
+    "reload.log": {
+      "sha256": "eac27f14ec1687bbe576c37e50451154e0cc19c3f0339d29491fd28b355e8865",
+      "bytes": 54081
+    },
+    "server.log": {
+      "sha256": "1a0dffcbde97a6f303a4fd06a261e8532136c473486832fd1ff1976a48b65f01",
+      "bytes": 55089
+    },
+    "source-binding.json": {
+      "sha256": "c8150545658645f858cc568413c387feb3f71fad9bed59114a2308eb906ec49e",
+      "bytes": 768141
+    },
+    "test.log": {
+      "sha256": "1bd63dfb9ff9ea854510e174f4116a3735a2c579ae00a2d62f68ff324a4314aa",
+      "bytes": 54474
+    },
+    "validation-summary.json": {
+      "sha256": "cf8dcedec111bad616c051d4593eb0dd663d9f506807392485ba9359336b6cef",
+      "bytes": 7249
+    }
+  }
+}

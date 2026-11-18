@@ -625,6 +625,9 @@ require("prototypes.generated_graphics.hydrogen-thruster-v01")
 -- Thetazine V04: authored machinery, separate thermal and projected-shadow layers.
 require("prototypes.generated_graphics.thetazine-thruster-v04")
 
+-- Authored sealed fusion bodies; crackle and ejecta follow each engine's actual load.
+require("prototypes.generated_graphics.void-fusion-thrusters-v01")
+
 -- V24: accepted four-way Cycles animation, calibrated against native pipe sprites.
 require("prototypes.generated_graphics.atmospheric-water-condenser-v24")
 
@@ -643,3 +646,8 @@ require("prototypes.generated_graphics.emergency-smelter-v1")
 require("prototypes.generated_graphics.emergency-laboratorium-v1")
 
 require("prototypes.generated_graphics.emergency-power-grid-v1")
+
+-- Synced native character appearance and canonical item artwork.
+require("prototypes.character_skins").register()
+require("prototypes.generated_graphics.unit-arsenal-icons-v02")
+require("prototypes.generated_graphics.material-icons-v01")

@@ -38,7 +38,8 @@ end
 
 local function looks_like_tp_name(name)
   name = tostring(name or "")
-  return name:find("tech%-priests", 1, false)
+  return name == "void-fusion-thruster" or name == "large-void-fusion-thruster"
+    or name:find("tech%-priests", 1, false)
     or name:find("cogitator", 1, false)
     or name:find("tech%-priest", 1, false)
     or name:find("conclave", 1, false)
@@ -59,6 +60,16 @@ end
 local function has_known_runtime_entities()
   local tp = storage and storage.tech_priests
   if type(tp) ~= "table" then return false end
+
+  -- Sealed electric thrusters require the ten-tick fluid service even when
+  -- the platform has no Cogitator or priest. Their registry stores .thruster.
+  for _, record in pairs(tp.void_fusion_thrusters or {}) do
+    if type(record) == "table" and valid(record.thruster)
+        and (record.thruster.name == "void-fusion-thruster"
+          or record.thruster.name == "large-void-fusion-thruster") then
+      return true
+    end
+  end
 
   -- Cheap known root checks first. These are intentionally broad enough to
   -- catch existing saves without doing a surface scan every pulse.
@@ -143,6 +154,19 @@ function M.should_run_nth_tick(tick, route, event)
   local r = root()
   if r.dormant_enabled == false then return true end
   if M.runtime_active("nth-tick-" .. tostring(tick or "?")) then return true end
+
+  -- The canonical broker may serve an explicitly opted-in presentation
+  -- callback while all ordinary runtime services remain asleep. Raw legacy
+  -- handlers pass no routes and must never receive this exception.
+  for _,entry in ipairs(type(route)=="table" and route or {}) do
+    if entry.id=="runtime_tick_broker_0600:central-pulse" then
+      local broker=rawget(_G,"TechPriestsRuntimeTickBroker0600")
+      if broker and type(broker.has_dormant_work)=="function"
+        and broker.has_dormant_work(event) then
+        return true,"dormant-broker-only"
+      end
+    end
+  end
 
   -- Let ultra-rare probes through so long-running dormant saves can self-heal
   -- if an older module failed to mark activity. This keeps the mod quiet while

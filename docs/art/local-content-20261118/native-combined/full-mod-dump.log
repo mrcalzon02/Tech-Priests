@@ -1,0 +1,41 @@
+   0.002 2026-11-18 00:49:26; Factorio 2.1.24 (build 87808, win64, steam, space-age)
+   0.002 Operating system: Windows 11 (build 26200) 
+   0.002 Program arguments: "C:\Program Files (x86)\Steam\steamapps\common\Factorio\bin\x64\Factorio.exe" "--config" "C:\Users\Admin\Documents\ChatGPT\Tech priests\_merge-proof\combined\config.ini" "--mod-directory" "C:\Users\Admin\Documents\ChatGPT\Tech priests\_merge-proof\combined\mods" "--disable-migration-window" "--dump-data" 
+   0.002 Config path: C:/Users/Admin/Documents/ChatGPT/Tech priests/_merge-proof/combined/config.ini
+   0.002 Read data path: C:/Program Files (x86)/Steam/steamapps/common/Factorio/data
+   0.003 Write data path: C:/Users/Admin/Documents/ChatGPT/Tech priests/_merge-proof/combined/user-data [136996/1906722MB]
+   0.003 Binaries path: C:/Program Files (x86)/Steam/steamapps/common/Factorio/bin
+   0.009 System info: [CPU: Intel(R) Core(TM) i7-14700K, 28 cores, RAM: 22165/32526 MB, page: 35353/43790 MB, virtual: 4275/134217727 MB, extended virtual: 0 MB]
+   0.047 Running in headless mode
+   0.047 Audio is disabled
+   0.049 Info ModManager.cpp:455: FeatureFlag: expansion, expansion-shaders, freezing, quality, rail-bridges, segmented-units, space-travel, spoiling
+   0.051 Loading mod settings tech-priests 0.1.687 (settings.lua)
+   0.054 Loading mod settings tech-priests 0.1.687 (settings-updates.lua)
+   0.055 Loading mod settings tech-priests 0.1.687 (settings-final-fixes.lua)
+   0.061 Loading mod core 0.0.0 (data.lua)
+   0.076 Loading mod base 2.1.24 (data.lua)
+   0.341 Loading mod elevated-rails 2.1.24 (data.lua)
+   0.378 Loading mod recycler 2.1.24 (data.lua)
+   0.393 Loading mod quality 2.1.24 (data.lua)
+   0.401 Loading mod space-age 2.1.24 (data.lua)
+   1.009 Loading mod tech-priests 0.1.687 (data.lua)
+   1.080 Loading mod base 2.1.24 (data-updates.lua)
+   1.092 Loading mod recycler 2.1.24 (data-updates.lua)
+   1.122 Loading mod quality 2.1.24 (data-updates.lua)
+   1.131 Loading mod space-age 2.1.24 (data-updates.lua)
+   1.141 Loading mod tech-priests 0.1.687 (data-updates.lua)
+   1.156 Loading mod tech-priests 0.1.687 (data-final-fixes.lua)
+   1.161 Script @__tech-priests__/prototypes/bunker_family.lua:189: [BUNKER-FAMILY] GRENADE_TYPES cluster-grenade,grenade,sacred-incense-grenade
+   1.257 Checksum for core: 3668028660
+   1.257 Checksum of base: 3864816957
+   1.257 Checksum of elevated-rails: 1429039930
+   1.257 Checksum of recycler: 3293728126
+   1.257 Checksum of quality: 4220722184
+   1.257 Checksum of space-age: 3636981730
+   1.257 Checksum of tech-priests: 3035004752
+   1.637 Prototype list checksum: 865220192
+   3.255 Info PlayerData.cpp:566: Cloud player-data.json unavailable
+   3.255 Info PlayerData.cpp:582: Local player-data.json unavailable
+   3.258 Info GlobalContext.cpp:1347: Resetting config.
+   3.258 Factorio initialised
+   3.326 Goodbye

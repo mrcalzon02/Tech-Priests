@@ -703,6 +703,50 @@ local function destroy(player)
   if f and f.valid then f.destroy() end
 end
 
+-- Keep content inside the screen instead of relying on scroll bars to hide
+-- oversized child controls. Widths are GUI units, so account for UI scaling.
+local function conclave_screen_budget(player)
+  local resolution = player.display_resolution
+  local scale = player.display_scale
+  local width = math.min(1000, math.floor(resolution.width / scale) - 48)
+  local height = math.min(760, math.floor(resolution.height / scale) - 64)
+  return width, height
+end
+
+local function fit_conclave_table(element, width, weights)
+  local columns = #weights
+  -- Reserve both table cell padding and spacing, plus the pane's scroll gutter.
+  local available = width - 32 - columns * 8 - (columns - 1) * 6
+  element.style.horizontally_stretchable = false
+  for index, child in ipairs(element.children) do
+    local column = ((index - 1) % columns) + 1
+    local cell_width = math.floor(available * weights[column])
+    child.style.width = cell_width
+    if child.type == "label" then
+      child.style.single_line = false
+      child.tooltip = child.caption
+    end
+  end
+end
+
+local function fit_conclave_pane(pane, width, height)
+  pane.horizontal_scroll_policy = "never"
+  pane.vertical_scroll_policy = "auto"
+  pane.style.width = width
+  pane.style.height = height
+  -- Long notes and timer labels must wrap too, not just the data tables.
+  for _, child in ipairs(pane.children) do
+    if child.type == "label" then
+      set_wrap(child, width - 32)
+    elseif child.type == "flow" then
+      child.style.width = width - 32
+      for _, entry in ipairs(child.children) do
+        if entry.type == "label" then set_wrap(entry, width - 104) end
+      end
+    end
+  end
+end
+
 local function build_gui(player)
   if not (player and player.valid) then return end
   destroy(player)
@@ -713,16 +757,20 @@ local function build_gui(player)
 
   local frame = player.gui.screen.add({ type = "frame", name = FRAME, direction = "vertical", caption = {"gui.tech-priests-conclave-title"} })
   frame.auto_center = true
-  frame.style.width = 860
-  frame.style.height = 620
+  local panel_width, panel_height = conclave_screen_budget(player)
+  frame.style.width = panel_width
+  frame.style.height = panel_height
 
-  local top = frame.add({ type = "flow", direction = "horizontal" })
+  local top = frame.add({ type = "flow", direction = "vertical" })
   top.style.horizontally_stretchable = true
   local status = top.add({ type = "label", name = "tech_priests_conclave_status_0559", caption = green("NOOSPHERIC SYNOD ANCHORS: " .. count_centers(force) .. "  // PRIEST SIGNALS: " .. total .. "  // NEXT CONCLAVE CHIME: " .. fmt_ticks((state.vote_ends_tick or state.next_conclave_tick or now) - now)) })
-  status.style.horizontally_stretchable = true
-  set_wrap(status, 560)
-  top.add({ type = "button", name = OPEN_OVERVIEW, caption = {"gui.tech-priests-conclave-open-overview"} })
-  top.add({ type = "button", name = CLOSE, caption = {"gui.tech-priests-conclave-close"} })
+  set_wrap(status, panel_width - 32)
+  local actions = top.add({ type = "flow", direction = "horizontal" })
+  actions.style.width = panel_width - 32
+  actions.add({ type = "button", name = OPEN_OVERVIEW, caption = {"gui.tech-priests-conclave-open-overview"} })
+  local spacer = actions.add({ type = "empty-widget" })
+  spacer.style.horizontally_stretchable = true
+  actions.add({ type = "button", name = CLOSE, caption = {"gui.tech-priests-conclave-close"} })
 
   local tabs = frame.add({ type = "tabbed-pane", name = "tech_priests_conclave_tabs_0558" })
   apply_style_0564(tabs, "tech_priests_cogitator_tabbed_pane_0532")
@@ -761,8 +809,10 @@ local function build_gui(player)
   vote.style.height = 500
   local timer_row = vote.add({ type = "flow", name = "tech_priests_conclave_timer_row_0559", direction = "horizontal" })
   local spinner = timer_row.add({ type = "sprite", name = "tech_priests_conclave_timer_spinner_0559", sprite = boot_spinner_sprite_0559(now) })
-  pcall(function() spinner.style.width = 56 end)
-  pcall(function() spinner.style.height = 56 end)
+  spinner.resize_to_sprite = false
+  spinner.style.stretch_image_to_widget_size = true
+  spinner.style.width = 32
+  spinner.style.height = 32
   local timer_text = timer_row.add({ type = "label", name = "tech_priests_conclave_timer_text_0559", caption = green("CONCLAVE CHRONO-LITANY // phase=" .. tostring(state.phase or "waiting") .. " // threshold=" .. VOTE_THRESHOLD .. "+ priest-signals // remaining=" .. fmt_ticks((state.vote_ends_tick or state.next_conclave_tick or now) - now)) })
   set_wrap(timer_text, 650)
   local table2 = vote.add({ type = "table", column_count = 4 })
@@ -893,6 +943,27 @@ local function build_gui(player)
     table3.add({ type = "label", caption = green(loyalty <= 0 and "ROGUE THRESHOLD REACHED" or (loyalty < 25 and "DANGEROUS UNREST" or "obedient within tolerances")) })
   end
   tabs.add_tab(unrest_tab, unrest)
+
+  local pane_width = panel_width - 48
+  local pane_height = panel_height - 180
+  for _, pane in ipairs({ladder, vote, webpane, history, unrest}) do
+    fit_conclave_pane(pane, pane_width, pane_height)
+  end
+  fit_conclave_table(table1, pane_width, {0.19, 0.11, 0.34, 0.24, 0.12})
+  fit_conclave_table(table2, pane_width, {0.24, 0.14, 0.25, 0.37})
+  fit_conclave_table(family_table, pane_width, {0.18, 0.09, 0.24, 0.20, 0.29})
+  fit_conclave_table(tech_table, pane_width, {0.30, 0.18, 0.13, 0.39})
+  fit_conclave_table(tableh, pane_width, {0.24, 0.16, 0.15, 0.15, 0.15, 0.15})
+  fit_conclave_table(table3, pane_width, {0.26, 0.14, 0.22, 0.38})
+end
+
+local function resize_open_conclave_gui(event)
+  local player = game.get_player(event.player_index)
+  local frame = player and player.gui.screen[FRAME]
+  if not (frame and frame.valid) then return end
+  local selected = frame.tech_priests_conclave_tabs_0558.selected_tab_index
+  build_gui(player)
+  if selected then player.gui.screen[FRAME].tech_priests_conclave_tabs_0558.selected_tab_index = selected end
 end
 
 local function cast_player_vote(player, family)
@@ -1470,6 +1541,7 @@ function M.install()
         build_gui(player)
       end
     end)
+    TechPriestsRuntimeEventRegistry.on_event({ defines.events.on_player_display_resolution_changed, defines.events.on_player_display_scale_changed }, resize_open_conclave_gui)
     TechPriestsRuntimeEventRegistry.on_event(defines.events.on_research_finished, on_research_finished)
     if TechPriestsRuntimeEventRegistry.on_nth_tick then
       TechPriestsRuntimeEventRegistry.on_nth_tick(607, conclave_tick, { owner = "conclave_center_0558", category = "governance" })

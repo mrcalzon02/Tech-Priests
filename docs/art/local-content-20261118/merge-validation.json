@@ -1,0 +1,109 @@
+{
+  "status": "PASS",
+  "base": "65df59078652022e71df89931772a89158dd2ad5",
+  "engine": "Factorio 2.1.24 build 87808",
+  "runtime_files_bound": 5843,
+  "full_mod_load": "PASS",
+  "full_mod_data_dump": "PASS",
+  "infrastructure_behavior_create_reload": "PASS",
+  "native_skins_render_preservation_reload": "PASS",
+  "factories_power_items_fluids_render_reload": "PASS",
+  "four_drive_native_flight_dynamic_power_reload_equality": "PASS",
+  "original_armory_equivalence_prototypes": 99,
+  "original_armory_equivalence_differences": 0,
+  "character_presentation_owner": "canonical runtime tick broker; named five-tick bounded dormant service",
+  "shared_main_preservation": [
+    "Emergency Assembler V07",
+    "Miner V25",
+    "Condenser V24",
+    "orbital arrival visuals",
+    "canonical lifecycle registry"
+  ],
+  "source_only": [
+    "Thetazine V06: V04 runtime retained",
+    "Original unfinished combat actors and AAI behavior: unenabled WIP"
+  ],
+  "limitations": [
+    "Specific technical native checks; final owner visual acceptance is separate.",
+    "No packaged release, version bump or multiplayer claim.",
+    "Existing main text was staged using normal Windows checkout line endings; selected hash-bound inputs are preserved as raw Git bytes."
+  ],
+  "evidence": [
+    {
+      "path": "docs/art/local-content-20261118/native-combined/full-mod-load.json",
+      "sha256": "0be3141bdb6d22e8d18e56da067e64b966078e57cfa24b0ac7246d9fb3202b24"
+    },
+    {
+      "path": "docs/art/local-content-20261118/native-combined/infrastructure-validation.json",
+      "sha256": "dbc7d3b3dc89ca309597bbd6bba9ab82cc18a1299e9ffca4dc5745b140c57346"
+    },
+    {
+      "path": "docs/art/local-content-20261118/native-combined/infrastructure-new-save-proof.json",
+      "sha256": "524817386cf1071dd82c464e406bb0e6aa290bae46799e96f587da31f45da302"
+    },
+    {
+      "path": "docs/art/local-content-20261118/native-combined/infrastructure-reload-proof.json",
+      "sha256": "95b0e5f334f45dbb12788cebe2367e5be5bfd12618a5d4485f154fba081cc7f5"
+    },
+    {
+      "path": "docs/art/local-content-20261118/native-combined/infrastructure-source-binding.json",
+      "sha256": "ece0da4b6ea9fbb859b0dd2d2b7260331a9934e7d015e52422e0ae81ebc878a1"
+    },
+    {
+      "path": "docs/art/local-content-20261118/native-combined/drives/combined-source-verification.json",
+      "sha256": "9433fd7403457a9f258effd78838b8afa7872c7a40840b3c9687f42f73949461"
+    },
+    {
+      "path": "docs/art/local-content-20261118/native-combined/drives/continuous-results.json",
+      "sha256": "5ff8196baf9bfd77d598a7e4ff499230f36a23dafdcced6b6879a36e6c5c6999"
+    },
+    {
+      "path": "docs/art/local-content-20261118/native-combined/drives/native-results.json",
+      "sha256": "51cab4fb41afaca1f450cbd0509eee5355baf86cdf906f220d5cae4ddc50c4a3"
+    },
+    {
+      "path": "docs/art/local-content-20261118/native-combined/drives/reload-results.json",
+      "sha256": "5ff8196baf9bfd77d598a7e4ff499230f36a23dafdcced6b6879a36e6c5c6999"
+    },
+    {
+      "path": "docs/art/local-content-20261118/native-combined/drives/source-binding.json",
+      "sha256": "c8150545658645f858cc568413c387feb3f71fad9bed59114a2308eb906ec49e"
+    },
+    {
+      "path": "docs/art/local-content-20261118/native-combined/drives/validation-summary.json",
+      "sha256": "cf8dcedec111bad616c051d4593eb0dd663d9f506807392485ba9359336b6cef"
+    },
+    {
+      "path": "docs/art/local-content-20261118/native-combined/skins-result.json",
+      "sha256": "ad0a7c52adc5d89686ce9eae0d144849a9dbf24247c471b039c9e9e80faa87f4"
+    },
+    {
+      "path": "docs/art/local-content-20261118/native-combined/factories-result.json",
+      "sha256": "49c3d906f4617e3ce959df914b3b63a323fd9f38c967d9eb3d5c1bc25e00a659"
+    },
+    {
+      "path": "docs/art/local-content-20261118/native-combined/factories-animation-proof.json",
+      "sha256": "c40087157ec8b35fcbe2a1e999621014db2a33163dfdda6ae252b78812cf4ee2"
+    },
+    {
+      "path": "docs/art/local-content-20261118/native-combined/skins-restricted-result.json",
+      "sha256": "593d474d2721dfca6a1834b161f8b27eaa4440bc0f1ab8b01fb1a32d6a904ce6"
+    },
+    {
+      "path": "docs/art/local-content-20261118/native-combined/skins-disabled-result.json",
+      "sha256": "237a532e7b70977d384704b1edf87a37c5056ef818be605903ac3a697f3407b7"
+    },
+    {
+      "path": "docs/art/local-content-20261118/native-combined/broker-gating.json",
+      "sha256": "af72056b7d772852d613dfd296e21892c9f751b7e6e8b80abef4565eaa050089"
+    },
+    {
+      "path": "docs/art/local-content-20261118/native-combined/result.json",
+      "sha256": "174354dfdf7c9c9ef12581a0e7b9f48e158937e2ed667e992e03a0e9a203ace0"
+    },
+    {
+      "path": "docs/art/local-content-20261118/selected-files.json",
+      "sha256": "7ede3491585205c1e9d7d84b3a7db0fe190e3fffad7d4a1ca4e51fb49b7ba9fa"
+    }
+  ]
+}

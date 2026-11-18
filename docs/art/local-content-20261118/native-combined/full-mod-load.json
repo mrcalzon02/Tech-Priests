@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "scope": "Full staged production mod native data stage and new-save creation; not a behavior or packaged-release pass",
+  "results": [
+    {
+      "phase": "create",
+      "exit_code": 0,
+      "log": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\_merge-proof\\combined\\create.log",
+      "sha256": "8d0653ab38d18705b1b1f8f216ba1625ceec9fd9799d7d4bd9f08b36a741f5b4"
+    },
+    {
+      "phase": "dump",
+      "exit_code": 0,
+      "log": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\_merge-proof\\combined\\dump.log",
+      "sha256": "9e585b51a6b678de3001d4eb31dbba76268a41b52b3675ec200f6f0b308b3b26"
+    }
+  ]
+}

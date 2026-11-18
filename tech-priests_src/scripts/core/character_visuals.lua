@@ -2,6 +2,7 @@
 local Catalog=require("shared.character_skin_catalog")
 local Combat=require("shared.combat_roster_catalog")
 local Registry=require("scripts.core.runtime_event_registry")
+local Broker=require("scripts.core.runtime_tick_broker")
 local M={host_name="tech-priests-custom-character",corpse_name="tech-priests-custom-character-corpse",budget=128}
 local installed=false
 local pending_processor=nil
@@ -151,7 +152,15 @@ function M.update(rec)
   rec.position={x=entity.position.x,y=entity.position.y}
   return true
 end
-function M.tick(event)
+function M.needs_dormant_tick()
+  local tp=storage and storage.tech_priests
+  if not tp then return false end
+  local visuals=tp.character_visuals
+  local picker=tp.character_skin_picker
+  return (visuals and visuals.actors and next(visuals.actors)~=nil)
+    or (picker and picker.pending and next(picker.pending)~=nil) or false
+end
+function M.tick(event,budget)
   if event.tick%5~=0 then return end
   if pending_processor and event.tick%30==0 then pending_processor() end
   local tp=storage.tech_priests
@@ -181,7 +190,7 @@ function M.tick(event)
   local cursor=r.actor_cursor
   if cursor and not actors[cursor] then cursor=nil end
   local processed=0
-  for _=1,M.budget do
+  for _=1,math.max(1,math.min(M.budget,tonumber(budget) or M.budget)) do
     local rec
     local previous_cursor=cursor
     cursor,rec=next(actors,cursor)
@@ -199,6 +208,7 @@ function M.tick(event)
   end
   r.actor_cursor=cursor
   r.stats.last_processed=processed
+  return {processed=processed,acted=processed,detail="bounded-character-presentation"}
 end
 function M.on_death(event)
   local entity=event.entity
@@ -236,12 +246,17 @@ function M.post_death(event)
 end
 function M.install()
   if installed then return true end
-  installed=true
-  assert(Registry.on_event(defines.events.on_tick,M.tick,nil,{owner="character_visuals",route="presentation",category="visual",note="bounded presentation only; player appearance runs before first station"}))
+  if not Broker.installed then assert(Broker.install(),"character presentation broker unavailable") end
+  assert(Broker.register_service{
+    name="character_visuals_presentation",category="visuals",interval=5,priority=90,
+    budget=M.budget,dynamic_budget=false,fn=M.tick,run_while_dormant=true,
+    dormant_active=M.needs_dormant_tick,
+    note="bounded presentation only; player appearance runs before first station"})
   assert(Registry.on_event(defines.events.on_entity_died,M.on_death,nil,{owner="character_visuals",route="capture-death",category="visual"}))
   if defines.events.on_post_entity_died then
     assert(Registry.on_event(defines.events.on_post_entity_died,M.post_death,nil,{owner="character_visuals",route="corpse-presentation",category="visual"}))
   end
+  installed=true
   return true
 end
 return M

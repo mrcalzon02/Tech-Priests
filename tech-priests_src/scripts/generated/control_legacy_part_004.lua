@@ -297,12 +297,18 @@ TechPriestsRuntimeEventRegistry.on_nth_tick(10, function()
   enable_tech_priest_emergency_micro_industry_for_all_forces()
   process_priest_deployment_queue(PRIEST_DEPLOYMENT_QUEUE_PROCESS_LIMIT)
   process_active_sacred_incense_clouds()
-  service_void_fusion_thrusters()
   update_all_consecration_targets()
   for _, pair in pairs(storage.tech_priests.pairs_by_station) do
     tick_pair(pair)
   end
 end)
+
+-- Electric sealed drives need a stable owner route even on priest-free platforms.
+TechPriestsRuntimeEventRegistry.on_nth_tick(10, service_void_fusion_thrusters, {
+  owner = "void-fusion-thrusters",
+  route = "electric-drive-service",
+  category = "safety",
+})
 
 TechPriestsRuntimeEventRegistry.on_nth_tick(257, function()
   ensure_storage()

@@ -1,0 +1,191 @@
+{
+  "status": "PASS_FOUR_NATIVE_DRIVES_DYNAMIC_FUSION_AND_EXACT_SAVE_RELOAD",
+  "verified_at_utc": "2026-11-18T09:52:33.917879+00:00",
+  "engine": "Factorio 2.1.24 build 87808, Steam win64, base/Space Age/Quality/Elevated Rails",
+  "seed": 17112026,
+  "native_rows": [
+    {
+      "name": "hydrogen-thruster",
+      "placement_legal": true,
+      "movement": true,
+      "passed": true,
+      "platform_weight_kg": 84800,
+      "native_consumption": true,
+      "connected_ports": true,
+      "working_sample": {
+        "tick": 600,
+        "platform_speed": 0.4429696896147096,
+        "platform_distance": 0.01765121508819354,
+        "connection": "nauvis-vulcanus",
+        "fluid1": {
+          "name": "liquid-hydrogen",
+          "amount": 217.55651342868805,
+          "temperature": -253
+        },
+        "fluid2": {
+          "name": "liquid-oxygen",
+          "amount": 217.55651342868805,
+          "temperature": -183
+        }
+      }
+    },
+    {
+      "name": "thetazine-thruster",
+      "placement_legal": true,
+      "movement": true,
+      "passed": true,
+      "platform_weight_kg": 84800,
+      "native_consumption": true,
+      "connected_ports": true,
+      "working_sample": {
+        "tick": 600,
+        "platform_speed": 11.373511909097004,
+        "platform_distance": 0.5820963002220382,
+        "connection": "nauvis-vulcanus",
+        "fluid1": {
+          "name": "thetazine-fuel",
+          "amount": 217.55651342868805,
+          "temperature": 15
+        },
+        "fluid2": {
+          "name": "water",
+          "amount": 217.55651342868805,
+          "temperature": 15
+        }
+      }
+    },
+    {
+      "name": "void-fusion-thruster",
+      "placement_legal": true,
+      "movement": true,
+      "passed": true,
+      "platform_weight_kg": 20800,
+      "unpowered_refusal": true,
+      "powered_service": true,
+      "no_visible_ports": true,
+      "power_cut_refusal": true,
+      "power_recovery": true,
+      "sink_replaced": true,
+      "native_cycle": true,
+      "power_bounds": true,
+      "significant_variation": true,
+      "minimum_power_watts": 6171157.411455284,
+      "maximum_power_watts": 17681295.032367375,
+      "minimum_fluid": 301.97778725624084,
+      "maximum_fluid": 864.0647515654564,
+      "first_recorded_departure": {
+        "tick": 140,
+        "platform_speed": 0.008610868390574332,
+        "platform_distance": 5.0481901972805315e-06,
+        "connection": "nauvis-vulcanus"
+      },
+      "cycle_samples": 150,
+      "initial_native_sink_power_watts": 12000000
+    },
+    {
+      "name": "large-void-fusion-thruster",
+      "placement_legal": true,
+      "movement": true,
+      "passed": true,
+      "platform_weight_kg": 86600,
+      "unpowered_refusal": true,
+      "powered_service": true,
+      "no_visible_ports": true,
+      "power_cut_refusal": true,
+      "power_recovery": true,
+      "sink_replaced": true,
+      "native_cycle": true,
+      "power_bounds": true,
+      "significant_variation": true,
+      "minimum_power_watts": 6981558.400953378,
+      "maximum_power_watts": 16721559.3196775,
+      "minimum_fluid": 341.41134387254715,
+      "maximum_fluid": 805.7005037069321,
+      "first_recorded_departure": {
+        "tick": 140,
+        "platform_speed": 0.041156434121079395,
+        "platform_distance": 1.5354846116550497e-05,
+        "connection": "nauvis-vulcanus"
+      },
+      "cycle_samples": 150,
+      "initial_native_sink_power_watts": 12000000
+    }
+  ],
+  "independent_fusion_phase": true,
+  "saved_tick": 1500,
+  "compared_tick": 1560,
+  "exact_uninterrupted_reload_match": true,
+  "source_snapshot": {
+    "original_file_count": 5843,
+    "final_updated_files": {},
+    "source_binding": "source-binding.json",
+    "dynamic_binding": "dynamic-source-binding.json"
+  },
+  "native_interpretation": [
+    "Read actual LuaEntity power_usage times60, actual native fluid stores and real platform connection/distance; nonzero speed alone does not prove departure.",
+    "Narrow precision-drive flight uses a20.8-ton hub/corridor/spine platform; other bodies use84.8\u201386.6-ton disposable platforms. These are functional checks, not comparative balance measurements.",
+    "The eight-second operating cycle runs throughout the powered and unpowered periods;150 ten-tick native samples span more than three complete periods.",
+    "A newly rebuilt electrical sink needs one service interval to recharge. Its power phase is checked immediately; fluid-target tolerance resumes after that interval.",
+    "Power-cut no-refill proof waits for the real30MJ sink to drain, clears residual hidden working fluid, and observes60ticks with no native refill before recovery.",
+    "The test electrical source is a private native100MW electric-energy-interface on each fusion platform; ordinary thruster prototypes and runtime services are exercised."
+  ],
+  "limits": [
+    "No ordinary personal save/profile or installed mod was changed.",
+    "No owner visual acceptance or final authored fusion-model completion is inferred.",
+    "Optional third-party compatibility and final balance/energy economy remain separate."
+  ],
+  "evidence": {
+    "user-data/script-output/thruster-resume/continuous-results.json": {
+      "sha256": "5ff8196baf9bfd77d598a7e4ff499230f36a23dafdcced6b6879a36e6c5c6999",
+      "bytes": 263842
+    },
+    "user-data/script-output/thruster-resume/native-results.json": {
+      "sha256": "51cab4fb41afaca1f450cbd0509eee5355baf86cdf906f220d5cae4ddc50c4a3",
+      "bytes": 265997
+    },
+    "user-data/script-output/thruster-resume/reload-results.json": {
+      "sha256": "5ff8196baf9bfd77d598a7e4ff499230f36a23dafdcced6b6879a36e6c5c6999",
+      "bytes": 263842
+    },
+    "user-data/saves/_autosave-thruster-resume-complete.zip": {
+      "sha256": "7617a7742f4364d4a7ae2cbd5761b60fab5e8aa7616ced02e52bbb890052f9af",
+      "bytes": 840315
+    },
+    "create.log": {
+      "sha256": "05ef383fb1c363ef1f6f88f6df18cce504606ee9ff6c20dbc32945ded9543c9a",
+      "bytes": 54044
+    },
+    "test.log": {
+      "sha256": "1bd63dfb9ff9ea854510e174f4116a3735a2c579ae00a2d62f68ff324a4314aa",
+      "bytes": 54474
+    },
+    "server.log": {
+      "sha256": "1a0dffcbde97a6f303a4fd06a261e8532136c473486832fd1ff1976a48b65f01",
+      "bytes": 55089
+    },
+    "reload.log": {
+      "sha256": "eac27f14ec1687bbe576c37e50451154e0cc19c3f0339d29491fd28b355e8865",
+      "bytes": 54081
+    },
+    "source-binding.json": {
+      "sha256": "c8150545658645f858cc568413c387feb3f71fad9bed59114a2308eb906ec49e",
+      "bytes": 768141
+    },
+    "run.py": {
+      "sha256": "ca7208e0470971efcf42f1500df56c556c5d953c1d34cdaa139b2ad6881c2471",
+      "bytes": 5528
+    },
+    "control.lua": {
+      "sha256": "67853db244c645c1f05bda94295d2b6e16ea8ff6258a70fa3c748c8e0d8f64e5",
+      "bytes": 10071
+    },
+    "data.lua": {
+      "sha256": "7713a331cb6696734b607b1e2d9e01007aba53def483c9834e75dd2c97a04569",
+      "bytes": 579
+    },
+    "verify.py": {
+      "sha256": "eb1cc62443fac8e7bfdc1799909be5c06c0217b3770aa7190f43ae97740a81c2",
+      "bytes": 5726
+    }
+  }
+}

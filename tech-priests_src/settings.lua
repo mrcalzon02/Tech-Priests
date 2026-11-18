@@ -597,3 +597,7 @@ data:extend({
     order="d[rail]-a[original-native-boarding]"
   }
 })
+
+-- Synced local character appearance and existing armory restrictions.
+require("prototypes.character_skin_settings")
+require("prototypes.combat_armory_settings")

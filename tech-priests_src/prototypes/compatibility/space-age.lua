@@ -1036,6 +1036,7 @@ local function make_hydrogen_propellant_fluids()
     table.insert(fluids, {
       type = "fluid",
       name = LIQUID_HYDROGEN,
+      fuel_value = "50kJ",
       localised_name = { "fluid-name.liquid-hydrogen" },
       localised_description = { "fluid-description.liquid-hydrogen" },
       icon = "__tech-priests__/graphics/icons/liquid-hydrogen.png",
@@ -1052,6 +1053,7 @@ local function make_hydrogen_propellant_fluids()
     table.insert(fluids, {
       type = "fluid",
       name = LIQUID_OXYGEN,
+      fuel_value = "50kJ",
       localised_name = { "fluid-name.liquid-oxygen" },
       localised_description = { "fluid-description.liquid-oxygen" },
       icon = "__tech-priests__/graphics/icons/liquid-oxygen.png",
@@ -1165,6 +1167,7 @@ local function make_void_fusion_thruster_items_and_fluids()
     table.insert(prototypes, {
       type = "fluid",
       name = VOID_FUSION_THRUSTER_CHARGE,
+      fuel_value = "50kJ",
       localised_name = { "fluid-name.void-fusion-thruster-charge" },
       localised_description = { "fluid-description.void-fusion-thruster-charge" },
       icon = "__tech-priests__/graphics/icons/void-fusion-thruster.png",
@@ -1183,6 +1186,7 @@ local function make_void_fusion_thruster_items_and_fluids()
     table.insert(prototypes, {
       type = "fluid",
       name = VOID_FUSION_THRUSTER_REACTION_MASS,
+      fuel_value = "50kJ",
       localised_name = { "fluid-name.void-fusion-thruster-reaction-mass" },
       localised_description = { "fluid-description.void-fusion-thruster-reaction-mass" },
       icon = "__tech-priests__/graphics/icons/void-fusion-thruster.png",

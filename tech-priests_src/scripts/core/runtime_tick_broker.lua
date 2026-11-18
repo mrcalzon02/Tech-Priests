@@ -8,6 +8,7 @@ local M = {
   storage_key = "runtime_tick_broker_0600",
   base_interval = 5,
   services = {},
+  dormant_services = {},
   installed = false,
   install_state = { complete = false, reason = "not-installed" },
 }
@@ -320,6 +321,8 @@ local function normalize_service(spec, previous)
       or 0,
     note = tostring(spec.note or ""),
     dynamic_budget = spec.dynamic_budget ~= false,
+    run_while_dormant = spec.run_while_dormant == true,
+    dormant_active = type(spec.dormant_active) == "function" and spec.dormant_active or nil,
   }
 end
 function M.register_service(spec)
@@ -340,6 +343,7 @@ function M.register_service(spec)
     if a.priority == b.priority then return a.name < b.name end
     return a.priority < b.priority
   end)
+  M.dormant_services[service.name] = service.run_while_dormant and service or nil
   service_stat(service.name, index and "replaced" or "registered")
   return service
 end
@@ -396,6 +400,35 @@ function M.stagger_first_station_wake_1407(pair)
   return true,"nonessential-first-wake-work-staggered"
 end
 
+-- Only explicit, bounded player presentation may run before runtime assets
+-- exist. This list does not awaken discovery/planning or other broker services.
+local function dormant_active(service,event)
+  if service.enabled==false or not service.run_while_dormant then return false end
+  if not service.dormant_active then return false end
+  local ok,active=pcall(service.dormant_active,event)
+  return ok and active==true
+end
+function M.has_dormant_work(event)
+  for _,service in pairs(M.dormant_services) do
+    if dormant_active(service,event) then return true end
+  end
+  return false
+end
+local function services_for_pulse(event)
+  local active=rawget(_G,"tech_priests_runtime_active_0595")
+  if type(active)~="function" then return M.services end
+  local ok,allowed=pcall(active,"broker-pulse")
+  if not ok or allowed~=false then return M.services end
+  local services={}
+  for _,service in pairs(M.dormant_services) do
+    if dormant_active(service,event) then services[#services+1]=service end
+  end
+  table.sort(services,function(a,b)
+    if a.priority==b.priority then return a.name<b.name end
+    return a.priority<b.priority
+  end)
+  return services
+end
 function M.service_count() return #M.services end
 
 local function record_result(service, result, offered)
@@ -468,7 +501,7 @@ function M.pulse(event)
   -- 32nd-call sampling would otherwise miss.
   local cold=rawget(_G,"TechPriestsFirstStationColdProfile1406")
   stat("pulses")
-  for _, service in ipairs(M.services) do
+  for _, service in ipairs(services_for_pulse(event)) do
     if service.enabled == false then
       stat("skipped_disabled")
     elseif tick < (tonumber(service.next_due_tick) or 0) then

@@ -163,7 +163,9 @@ VOID_FUSION_THRUSTER_POWER_SINK_NAME = "void-fusion-thruster-power-sink"
 VOID_FUSION_THRUSTER_CHARGE_FLUID = "void-fusion-thruster-charge"
 VOID_FUSION_THRUSTER_REACTION_FLUID = "void-fusion-thruster-reaction-mass"
 VOID_FUSION_THRUSTER_MIN_BUFFER = 250000
-VOID_FUSION_THRUSTER_FILL_AMOUNT = 100
+-- Nominal internal charge; operation varies this by 50--150% (300--900).
+-- The old 100-unit fill sat at the native 10% operating boundary.
+VOID_FUSION_THRUSTER_FILL_AMOUNT = 600
 
 
 FOOTSTEP_SOUND_PATH = "tech-priest-metal-footstep"

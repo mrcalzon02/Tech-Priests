@@ -93,8 +93,12 @@ local function dispatch_event(key,event)
  if token then pcall(profile.stop_event,token)end
 end
 local function dispatch_tick(key,event)
- if _G and type(_G.tech_priests_should_run_nth_tick_0595)=="function"then local ok,a=pcall(_G.tech_priests_should_run_nth_tick_0595,tonumber(key)or key,Registry.nth_tick_routes[key],event);if ok and a==false then return end end
- for _,entry in ipairs(Registry.nth_tick_routes[key]or{})do local run=true;if _G and type(_G.tech_priests_route_budget_0598)=="function"then local ok,a=pcall(_G.tech_priests_route_budget_0598,entry,event,tonumber(key)or key);if ok and a==false then run=false end end;if run then local handled=call(entry,event);if handled and entry.stop_on_truthy then return end end end
+ local dormant_only=false
+ if _G and type(_G.tech_priests_should_run_nth_tick_0595)=="function"then local ok,a,scope=pcall(_G.tech_priests_should_run_nth_tick_0595,tonumber(key)or key,Registry.nth_tick_routes[key],event);if ok and a==false then return end;dormant_only=ok and scope=="dormant-broker-only" end
+ for _,entry in ipairs(Registry.nth_tick_routes[key]or{})do local run=true
+  -- A broker-only exception must not wake another route sharing interval 5.
+  if dormant_only then local ok,a=pcall(_G.tech_priests_should_run_nth_tick_0595,tonumber(key)or key,{entry},event);if ok and a==false then run=false end end
+  if run and _G and type(_G.tech_priests_route_budget_0598)=="function"then local ok,a=pcall(_G.tech_priests_route_budget_0598,entry,event,tonumber(key)or key);if ok and a==false then run=false end end;if run then local handled=call(entry,event);if handled and entry.stop_on_truthy then return end end end
 end
 local function install_event(id)
  local key=event_key(id)
@@ -109,7 +113,12 @@ local function install_tick(tick)
  local key=event_key(tick)
  if Registry.installed_nth_ticks[key] then return true end
  if not(script and type(script.on_nth_tick)=="function") then return false end
- local ok,err=pcall(function()script.on_nth_tick(tick,function(event)
+ -- 0596 gates legacy raw registrations. Canonical routes already pass the
+ -- 0595 dormant and 0598 route-budget guards inside dispatch_tick; register
+ -- that dispatcher through the saved native function to avoid a second,
+ -- route-blind legacy gate hiding the broker's presentation-only exception.
+ local register=rawget(_G,"tech_priests_original_on_nth_tick_0596") or script.on_nth_tick
+ local ok,err=pcall(function()register(tick,function(event)
   -- 1195: measure the *entire canonical nth-tick dispatcher*, not merely
   -- the broker pulse. This remains registry-scoped, NOT whole-script time:
   -- raw handlers and other event types are outside this sample.
