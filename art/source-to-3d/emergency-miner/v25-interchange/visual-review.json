@@ -1,0 +1,32 @@
+{
+  "source_sha256": "1b23b1280a872d8a0b5b6a60fd16c7a9806a7d5d9b62619e8e39b01705db3354",
+  "runtime_sha256": "0724914638323f9b9758e7a3957156ec6aabf38b0b00072df21edaf486ad0920",
+  "approved_reference_source_sha256": "479c6364e57092377aa736240d78cbe8d1cbcaba27e07db7d09a2f1cff326244",
+  "render_sha256": {
+    "actual-glb-front.png": "e57b55ab3a47ad422cb7fb77c3975785ddd38160695f0835bee13f55198f9f1d",
+    "actual-glb-rear.png": "5156f542a4dd689f29ff359c16f403f428c86af976573f3dfa73f8fbf5e9bad7",
+    "actual-glb-clay.png": "4ad0cb54310cbf4732e2665b2d63f51b4d329d4bafd7d1dd79cfbc335d4d2f2b"
+  },
+  "native_image_sha256": {
+    "idle-close.png": "d73d4ea8071f1952b60d6adf7df70fc13c6d616e5452ae74fa05171bd5c318a9",
+    "working-08.png": "f3dc86e3eb22ed6ee32cd5e4ddaa7dda3b6696b452089e7ca705a1e8c27a98c6",
+    "working-gallery.png": "97a7e1d822945446c016987fce346ff27e8fed6c68aa6779b52df5007e7fb635"
+  },
+  "scored_review_out_of_five": {
+    "approved_source_fidelity": 5,
+    "model_specific_image_surfaces": 4,
+    "physical_animation_interchange": 4,
+    "native_operation": 5
+  },
+  "reasoning": "Existing owner-approved face-down photocopier/ablator geometry and sprites preserved. Atlas image maps bake the recovered authored procedural metal/patina, cable, control and display regions in their original coordinates. Actual export front/rear/clay renders retain supported layered chassis, horizontal capacitor ends, three vents, four knife-switch lanes, LCD/status controls and seated perimeter hoses. Physical export retains three synchronized subtle motion rigs as one two-second clip; shader/light/steam effects remain in the exact approved original and actual installed sprites. All nine real zero-input recovery recipes run at full native duration and deliver via ordinary inserters, with full-output stall/release, stop/restart, power independence, actual craft/place/mine, red/green signal control and actual reload.",
+  "owner_visual_approved_for_new_interchange": false,
+  "original_v25_geometry_and_installed_sprites_owner_approved": true,
+  "limits": [
+    "GLB is physical geometry/TRS/PBR interchange; it does not reproduce animated shader/light/steam effects.",
+    "No new sprites generated or substituted.",
+    "Source archive was generated in Blender5.2.3; original bytes preserved. Image derivative reopened in local5.0 and independently matches nine poses.",
+    "Native screenshots medium graphics, normal quality.",
+    "Full user mod pack and portal release not verified.",
+    "No new exhaustive static overlap adjudication of owner-approved geometry."
+  ]
+}

@@ -1,0 +1,6 @@
+import bpy,json,hashlib,struct
+from pathlib import Path
+R=Path(__file__).resolve().parent;A=R/'interchange-v01';p=A/'miner-v25-image-materials.blend';bpy.ops.wm.open_mainfile(filepath=str(p));imgs=[i for i in bpy.data.images if i.type=='IMAGE'];assert len(imgs)==3 and all(i.packed_file and i.size[:]==(2048,2048)for i in imgs)
+b=(A/'miner-v25-physical.glb').read_bytes();n=struct.unpack_from('<I',b,12)[0];j=json.loads(b[20:20+n]);assert len(j['animations'])==1;times=[j['accessors'][v['input']]for v in j['animations'][0]['samplers']];assert all(abs(v['min'][0])<1e-7 and abs(v['max'][0]-2)<1e-7 for v in times)
+ref=json.loads((A/'source-pose-reference.json').read_text());delta=max(abs(a-b)for name,v in ref['poses']['1'].items()for row1,row2 in zip(v,ref['poses']['97'][name])for a,b in zip(row1,row2));assert delta<2e-7,delta
+(A/'packaged-source-check.json').write_text(json.dumps({'passed':True,'source_sha256':hashlib.sha256(p.read_bytes()).hexdigest(),'actual_source_reopened':True,'packed_loaded_images':[{'name':i.name,'size':list(i.size),'packed':True}for i in imgs],'actual_glb_animation_clips':1,'clip_seconds':2,'clip_zero_origin':True,'all_three_rigs_synchronized':True,'loop_max_bounds_delta':delta},indent=2));print('PACKED_IMAGE_SOURCE_AND_SINGLE_TWO_SECOND_LOOP_PASS')

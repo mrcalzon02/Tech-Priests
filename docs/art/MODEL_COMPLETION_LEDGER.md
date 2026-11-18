@@ -1,3 +1,16 @@
+## 2026-11-17 - Approved Emergency Miner V25 source and operational closeout
+
+Exact approved V25 originals recovered and preserved. Game sprites unchanged.
+Model-specific image albedo/ORM/tangent-normal derivative and inspected physical
+GLB with one synchronized2second clip. Nine source/runtime pose checks, packed
+source reopen and actual exported PBR channels pass; export degenerates cleaned.
+Blender shader/light/steam FX stay in approved source and installed sprites.
+Actual nine full-duration recipes, normal inserters, full-output/release,
+script/circuit stop-restart, void-power independence, craft/place/mine and
+operated-save reload pass.19genuine native PNGs. Current1x1 fixednorth uses
+void1W, not historical90kW chemical burner. No fuel/fluids/ore patch invented.
+Evidence:art/source-to-3d/emergency-miner/v25-interchange/FMPL_MODEL.json.
+
 ## 2026-11-17 - Emergency Power Grid operational delivery
 
 Passive1x1 timber/ceramic three-terminal distribution pole.7x7 supply and

@@ -1,0 +1,1716 @@
+{
+  "asset_id": "tech-priests-emergency-miner-v25",
+  "asset_status": "game-sprites-installed-with-specific-native-checks",
+  "operational_complete": true,
+  "source_and_export_receipts_complete": true,
+  "original_geometry_and_installed_sprites_owner_approved": true,
+  "new_interchange_owner_visual_approved": false,
+  "approved_sprites_unchanged": true,
+  "source_sha256": "1b23b1280a872d8a0b5b6a60fd16c7a9806a7d5d9b62619e8e39b01705db3354",
+  "runtime_sha256": "0724914638323f9b9758e7a3957156ec6aabf38b0b00072df21edaf486ad0920",
+  "approved_original_source_sha256": "479c6364e57092377aa736240d78cbe8d1cbcaba27e07db7d09a2f1cff326244",
+  "approved_original_source_path": "art/source-to-3d/emergency-miner/v25-recovered/editable/miner_motion_A.blend",
+  "original_archive_digest_verified": true,
+  "footprint": [
+    1,
+    1
+  ],
+  "native_directions": [
+    0
+  ],
+  "preserved_authored_views": 4,
+  "energy_source": "void1W",
+  "burner": false,
+  "ore_patch_required": false,
+  "native_fluid_ports": 0,
+  "processing_recipes": [
+    "tech-priests-emergency-mine-calcite",
+    "tech-priests-emergency-mine-coal",
+    "tech-priests-emergency-mine-copper-ore",
+    "tech-priests-emergency-mine-iron-ore",
+    "tech-priests-emergency-mine-scrap",
+    "tech-priests-emergency-mine-stone",
+    "tech-priests-emergency-mine-tungsten-ore",
+    "tech-priests-emergency-mine-uranium-ore",
+    "tech-priests-emergency-mine-wood"
+  ],
+  "building_recipe": "1stone+1iron-plate/2s, initially enabled, no research unlock",
+  "actual_nine_full_duration_recipes_normal_output_and_block_release": true,
+  "actual_script_and_circuit_stop_restart": true,
+  "native_void_power_independence": true,
+  "actual_building_craft_place_mine": true,
+  "actual_operated_save_and_separate_process_reload": true,
+  "actual_source_reopen_packed2048_image_maps": true,
+  "actual_export_pbr_channel_pixel_checks": true,
+  "actual_export_zero_degenerate_geometry_and_uv": true,
+  "actual_export_nine_pose_checks_max_error": 1.4901161193847656e-07,
+  "physical_working_clip_seconds": 2,
+  "physical_clip_count": 1,
+  "shader_light_steam_animation_runtime": "Exact approved original editable source plus unchanged installed sprites; no equivalent GLB effects claimed.",
+  "genuine_native_pngs": 19,
+  "idle_state": "disabled_by_script status66; is_crafting may remain true in native API. Working state status1 across16 actual captured frames.",
+  "native_supported_direction_captures": [
+    0
+  ],
+  "all_other_approved_views_preserved": true,
+  "tested_source_binding": [
+    {
+      "path": "tech-priests_src/control.lua",
+      "tested_sha256": "9d186c0f11fe05b459853ccb0a40a5e1b36740057803821c25a9aed48101d188"
+    },
+    {
+      "path": "tech-priests_src/data-final-fixes.lua",
+      "tested_sha256": "f00ab8abdcff764dd50abdb81e184a520975fe48471c70fa355a0148320ef206"
+    },
+    {
+      "path": "tech-priests_src/data-updates.lua",
+      "tested_sha256": "424a22bf4d9ab4e3edb24bd578519908d4c256b8f74c5cd94905f214ae534436"
+    },
+    {
+      "path": "tech-priests_src/data.lua",
+      "tested_sha256": "64213637d9cab82ec641bb6419ea3b0ae10e5bb7dde7669b5be82aa4292e57de"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-artillery/artillery_barrage_geometry.lua",
+      "tested_sha256": "80fa5811f3c2a2b616a8ca7648e7e45d750bdcc59c549872b97ec9e0743cd181"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-artillery/artillery_barrage_visuals.lua",
+      "tested_sha256": "dacb05b10a2ffe1a51dbd2cd0036d19d502687bbac8edff7f06307a8344f2d11"
+    },
+    {
+      "path": "tech-priests_src/hydrogen/assembler.lua",
+      "tested_sha256": "348d7b255a40ff5e4a94e8c122caf4000075cd7cd8935449263a53beebd90973"
+    },
+    {
+      "path": "tech-priests_src/hydrogen/audio.lua",
+      "tested_sha256": "2fbf4745ddb5a83cd0d52fbc6ecb641d88324b4e666f9dd13bc18144acea3374"
+    },
+    {
+      "path": "tech-priests_src/hydrogen/balance.lua",
+      "tested_sha256": "ae7575cd28724308e2e098259fd493333b75aec9882fb7935812493dd2bef935"
+    },
+    {
+      "path": "tech-priests_src/hydrogen/clock.lua",
+      "tested_sha256": "c3543bb018c7ec1a90a331d5f343b85c69094051950933987bd1cca0acfccca4"
+    },
+    {
+      "path": "tech-priests_src/hydrogen/config.lua",
+      "tested_sha256": "ad731491f2d061003fa1ee09c5a4379f1d04e95f6bc3171f0e4100c89d52d8fe"
+    },
+    {
+      "path": "tech-priests_src/hydrogen/decay.lua",
+      "tested_sha256": "3e9db0509a5ad795d99d902362efb0ea0638bd410640f83ffff47afc4c312148"
+    },
+    {
+      "path": "tech-priests_src/hydrogen/forge.lua",
+      "tested_sha256": "786700285de3d38a96303a6f85ad2b5768b6a714984c83ea4a5bd757cac1bd66"
+    },
+    {
+      "path": "tech-priests_src/hydrogen/machine.lua",
+      "tested_sha256": "efeb2741b25073d3bfcdeb1684a8a7777a87e4f39567da9e55421531bf1d0c53"
+    },
+    {
+      "path": "tech-priests_src/hydrogen/machines/assembler-state.lua",
+      "tested_sha256": "257dc6c98269b9b8d23c4181a731c0d954d54cd4e9df676f96902df113d58ce7"
+    },
+    {
+      "path": "tech-priests_src/hydrogen/machines/forge-state.lua",
+      "tested_sha256": "b452a714b1a6d0f62bdbad5c2f78738081dbe36dd0909e28c84fc4324fbee9ba"
+    },
+    {
+      "path": "tech-priests_src/hydrogen/pellets.lua",
+      "tested_sha256": "7c962485c159a9fd2fb45bca9b2c0c23dc0b7d93fb9181adda7f463494b7d543"
+    },
+    {
+      "path": "tech-priests_src/hydrogen/player-controls.lua",
+      "tested_sha256": "50fabfda309f61a2529d2366a0e80b50fbf41cdb013bfa760109cdb486263111"
+    },
+    {
+      "path": "tech-priests_src/hydrogen/production.lua",
+      "tested_sha256": "f5a610e7163e2c71c3812ecf76c7c3c20c66e67d301e2e0df659a75b9cc7f5ac"
+    },
+    {
+      "path": "tech-priests_src/hydrogen/resource-icons.lua",
+      "tested_sha256": "c3d14571d048e06b6e4edfd62d76006ed44ab46c712efddcf7a24a128f96f7dd"
+    },
+    {
+      "path": "tech-priests_src/hydrogen/runtime.lua",
+      "tested_sha256": "af941bde968c5dc228e5ec32649541aadafa5be40b28900a12477cfb149374e2"
+    },
+    {
+      "path": "tech-priests_src/hydrogen/specs.lua",
+      "tested_sha256": "627bc0e97fd7619579f3d25884551ed08547cc13a4da5618ad9babac000549e3"
+    },
+    {
+      "path": "tech-priests_src/hydrogen/stock-access.lua",
+      "tested_sha256": "2c58f4938732a84fe4f753e5a7915e8821494aa478f3fefbb40106bafeb8ffb1"
+    },
+    {
+      "path": "tech-priests_src/info.json",
+      "tested_sha256": "ad5b16a986535a7c20eb580bc4be4d193cf6c99a4f057d9487930f0846a05628"
+    },
+    {
+      "path": "tech-priests_src/locale/en/info.json",
+      "tested_sha256": "5d72e0a29f34ddb87b025fee58966cad7b0afc23f100505554cfd7daf2c2854c"
+    },
+    {
+      "path": "tech-priests_src/prototypes/bunker_artillery.lua",
+      "tested_sha256": "080a74d260ac0499e8d0460e406063c36171f3e6a91802af9c7aea76cc317daa"
+    },
+    {
+      "path": "tech-priests_src/prototypes/bunker_autocannon.lua",
+      "tested_sha256": "d98266db70d0d7ff1d574ae24bb4c5da6a05aa9b8b2d0a7f2c916bd134ed4f39"
+    },
+    {
+      "path": "tech-priests_src/prototypes/bunker_autocannon_graphics.lua",
+      "tested_sha256": "4bc27a359d85312ff7ec46251de070af88bc0fe65eb457ff3623b8e591df0e3d"
+    },
+    {
+      "path": "tech-priests_src/prototypes/bunker_bullet_weapons.lua",
+      "tested_sha256": "a693df45e12fe68dc58490c6cc437e318156321f430c2adba21dc119ebf35e1c"
+    },
+    {
+      "path": "tech-priests_src/prototypes/bunker_family.lua",
+      "tested_sha256": "f01f5cc9751e24f8a0876d0227bf5430c3102b921703b414b93ca946909c9034"
+    },
+    {
+      "path": "tech-priests_src/prototypes/bunker_rocket_salvo.lua",
+      "tested_sha256": "9cc192685a1c7445184b9daa8b90518c0613344cc5334c5ef92ca14debbc7577"
+    },
+    {
+      "path": "tech-priests_src/prototypes/bunker_twin_cannon.lua",
+      "tested_sha256": "88da18b734b10b10654f1aeb536efbfd4525899a3811e62ebb34de3d554649b6"
+    },
+    {
+      "path": "tech-priests_src/prototypes/categories/item-group.lua",
+      "tested_sha256": "3ddaa81a5809b19eb35b12f3d517558cea0522902df5b60039a3b6bd8ef1cadc"
+    },
+    {
+      "path": "tech-priests_src/prototypes/categories/recipe-category.lua",
+      "tested_sha256": "9c509111eb14da5d1880d74ab17bc285a061ccd0262eced958e15b63599cc468"
+    },
+    {
+      "path": "tech-priests_src/prototypes/compatibility/factoryplanner.lua",
+      "tested_sha256": "11ac67188a5d75b907b30730a4a4cc1dc99d52906f6b971d087ed297f7040683"
+    },
+    {
+      "path": "tech-priests_src/prototypes/compatibility/informatron.lua",
+      "tested_sha256": "253da748cac8e8313c1d1d464777812000bae1260fc71b0e756c1ca4f8b02f0f"
+    },
+    {
+      "path": "tech-priests_src/prototypes/compatibility/mechanicus-reborn.lua",
+      "tested_sha256": "0535d3d196d34bf7c61520d47562699cd7c14738cbc678bc87e82cd9e1a7dd3b"
+    },
+    {
+      "path": "tech-priests_src/prototypes/compatibility/native_crafting_categories_1275.lua",
+      "tested_sha256": "d4cabcff41762bfb60a4031519c3432ee13ac2efd78072dbf494792ee27ec83f"
+    },
+    {
+      "path": "tech-priests_src/prototypes/compatibility/native_fuel_categories_1272.lua",
+      "tested_sha256": "4d19a14b8a2c3c6f6478dacba1335b57ce4d6156b42f8131410cfbe561bb9021"
+    },
+    {
+      "path": "tech-priests_src/prototypes/compatibility/native_recipe_schema_1274.lua",
+      "tested_sha256": "d11fcb84520ecf974ff28e1960eaf9f5b5dd285113af73e3839f27f13a066445"
+    },
+    {
+      "path": "tech-priests_src/prototypes/compatibility/native_robot_door_1273.lua",
+      "tested_sha256": "472c360c3b4cbbd0eb5f51465244b9db9379801b2cc619c7616480d9748b8744"
+    },
+    {
+      "path": "tech-priests_src/prototypes/compatibility/quality.lua",
+      "tested_sha256": "32c0f7136ea4f2c9565954606c89c6ceed290c8df2635abcd77a2a834cd5ca99"
+    },
+    {
+      "path": "tech-priests_src/prototypes/compatibility/space-age.lua",
+      "tested_sha256": "9eb344f5b4a8c17f84578bb514b5ec71c24e862d3b2c91f96b354b47f72641ec"
+    },
+    {
+      "path": "tech-priests_src/prototypes/compatibility/thruster-mounting-visuals.lua",
+      "tested_sha256": "ea003dd26698d6628dd6c173264029c4fc638e264566991a7b2f2de8f41f170d"
+    },
+    {
+      "path": "tech-priests_src/prototypes/conclave_center_0558.lua",
+      "tested_sha256": "dc4b107c92e4587860291a1b33503c5becbe45f8af031fb43316132d1a413f5e"
+    },
+    {
+      "path": "tech-priests_src/prototypes/emergency_miner_no_fuel_0641.lua",
+      "tested_sha256": "0c8fba2575f7997caf9e4f987f96f065e15c13bcb42691895c191a9c4130c143"
+    },
+    {
+      "path": "tech-priests_src/prototypes/entity.lua",
+      "tested_sha256": "cb51b135bc4c115f5f98ba9bb1a7c85db7376b6c059725e46c924970654b4ec3"
+    },
+    {
+      "path": "tech-priests_src/prototypes/equipment.lua",
+      "tested_sha256": "03f667f7606557d9602f1175b77a8e5349ae045734400b44045a9d168670207e"
+    },
+    {
+      "path": "tech-priests_src/prototypes/generated_graphics/atmospheric-water-condenser-v22c.lua",
+      "tested_sha256": "e01d800e51334ba4ee93ed8ea694882f10902a753351b6b40b482158f034e051"
+    },
+    {
+      "path": "tech-priests_src/prototypes/generated_graphics/atmospheric-water-condenser-v24.lua",
+      "tested_sha256": "97ac369e992b6acf8c82829a57a92f41883371069f115fa82f3b75c43faef083"
+    },
+    {
+      "path": "tech-priests_src/prototypes/generated_graphics/citadel-manufactoreo-v1.lua",
+      "tested_sha256": "f1bcc34f70d57df24600a33eb4bf0807eee768072bf292e16aababdb4681e278"
+    },
+    {
+      "path": "tech-priests_src/prototypes/generated_graphics/emergency-boiler-v08.lua",
+      "tested_sha256": "d717ba9afb4efc916552d65546461d98a3d057736c49ae4d4aeba8e10090ea7b"
+    },
+    {
+      "path": "tech-priests_src/prototypes/generated_graphics/emergency-laboratorium-v1.lua",
+      "tested_sha256": "1bfc36b06e5bf835b5f1839c2f449ff1d7c47171985a3343eb2c4a65a20d1ebf"
+    },
+    {
+      "path": "tech-priests_src/prototypes/generated_graphics/emergency-miner-v25.lua",
+      "tested_sha256": "d97613d42d1695dceeeaf3c0c5d9a29495fc3de4604b254ca6aca0e053ee2d82"
+    },
+    {
+      "path": "tech-priests_src/prototypes/generated_graphics/emergency-smelter-v1.lua",
+      "tested_sha256": "0d4c589266a53c9a5488dc39416a3d0dd95e8bb7673cf8ce1b74d1793421e8ed"
+    },
+    {
+      "path": "tech-priests_src/prototypes/generated_graphics/entropic-extractor-v1.lua",
+      "tested_sha256": "a6564b6be224fedbd2ec2116036cc1d445aba26046726f1d53f2edd02709494b"
+    },
+    {
+      "path": "tech-priests_src/prototypes/generated_graphics/hydrogen-thruster-v01.lua",
+      "tested_sha256": "f4dc9cf8ca5cf9e15aceafbdbd3b2f9a5aad6273bdc14256b9f582cc92b49811"
+    },
+    {
+      "path": "tech-priests_src/prototypes/generated_graphics/orbital-trader-v1.lua",
+      "tested_sha256": "64fbee45674ec0a551751d191ca637183c1f5d978ac2ae1677d53d580d4e79b1"
+    },
+    {
+      "path": "tech-priests_src/prototypes/generated_graphics/plasma_reactor_regions.lua",
+      "tested_sha256": "f9c0843bec5033334c812b98c09cc3d2c3d9ce37ae6925f29bdd545117a66b48"
+    },
+    {
+      "path": "tech-priests_src/prototypes/generated_graphics/sterling-steam-catalyzer-v1.lua",
+      "tested_sha256": "802a25beaa98e792f99f9cd1f98166a06360024439d9088e5b5f8d0430059a63"
+    },
+    {
+      "path": "tech-priests_src/prototypes/generated_graphics/thetazine-thruster-v04.lua",
+      "tested_sha256": "70a4f3b75dba021f38741e3c29e3103a0258a55484732eb143aac64a0fb78186"
+    },
+    {
+      "path": "tech-priests_src/prototypes/generated_graphics/void-steam-engine-v1.lua",
+      "tested_sha256": "e208d3a6f56166bf1dcdced1f9f2c591db689d7d543e276eecb77092236398d4"
+    },
+    {
+      "path": "tech-priests_src/prototypes/gui_inner_styles_0635.lua",
+      "tested_sha256": "455cacdec4995cc29d9e51ea6dff4da87eb172adb9657f8d34d577b5bef97f6a"
+    },
+    {
+      "path": "tech-priests_src/prototypes/gui_sprites.lua",
+      "tested_sha256": "aefa7ca2231cfb4a1dfaeaadb0b44c9a18c9ac83fbe38cfc687e0a66040fa970"
+    },
+    {
+      "path": "tech-priests_src/prototypes/item.lua",
+      "tested_sha256": "1a5779b6e5015e3c7e7826ba79cf5f23f22224043b1264f960d8eba91730b7d5"
+    },
+    {
+      "path": "tech-priests_src/prototypes/lean_graphics_0586.lua",
+      "tested_sha256": "1fe31108b49de39edbb3932e98bc6d30951e7e3419b8f94146af234a5dad7424"
+    },
+    {
+      "path": "tech-priests_src/prototypes/martian_stone_cache.lua",
+      "tested_sha256": "fc0179cc551f1e3e474b1418629fa9c3e71fd1e46ae3f606f61c44766c1e9891"
+    },
+    {
+      "path": "tech-priests_src/prototypes/plasma_reactor_family.lua",
+      "tested_sha256": "23e919e8957f0260bae893e4f388df385e32474179a533100b027d504780630d"
+    },
+    {
+      "path": "tech-priests_src/prototypes/portrait_cells_0520.lua",
+      "tested_sha256": "d46d41237e2178d0cdad66d19fd1f18e422a90a36cb2ae34626fd035630c7ed9"
+    },
+    {
+      "path": "tech-priests_src/prototypes/proxy_ammo_capacity_0739.lua",
+      "tested_sha256": "19230da9f68a798b29b23244a324a829d9ad709cbd199e86298733037716838e"
+    },
+    {
+      "path": "tech-priests_src/prototypes/recipe.lua",
+      "tested_sha256": "9a04613a73e25b289bb58fffa17c4f16f670663a6911e224c7840dcb900d3cf0"
+    },
+    {
+      "path": "tech-priests_src/prototypes/sound.lua",
+      "tested_sha256": "caa8ee0e62fa2550192e6c1129f8680caac6747d825351b9db97cdbf6fbfba1f"
+    },
+    {
+      "path": "tech-priests_src/prototypes/technology.lua",
+      "tested_sha256": "ccab3057f2737039a482218a51ce610ac54099e4abd9b370ae86a8a9ed4f8491"
+    },
+    {
+      "path": "tech-priests_src/prototypes/workbench_graphics.lua",
+      "tested_sha256": "79c679b80e58237790a9c867709bd8dec9054119fffdd00a41f11e7367904a28"
+    },
+    {
+      "path": "tech-priests_src/scripts/annoyatron.lua",
+      "tested_sha256": "0a20d2c1fd11f6f3a28b9a158f77b4aa6306f0ea45bd1bea82b5b7f6c1e60006"
+    },
+    {
+      "path": "tech-priests_src/scripts/artillery_barrage_controller.lua",
+      "tested_sha256": "bf3167147c38a1d55b92a2ed0b65ce7dfff359efafb9643c4a8c153b0acaef9d"
+    },
+    {
+      "path": "tech-priests_src/scripts/artillery_barrage_geometry.lua",
+      "tested_sha256": "80fa5811f3c2a2b616a8ca7648e7e45d750bdcc59c549872b97ec9e0743cd181"
+    },
+    {
+      "path": "tech-priests_src/scripts/artillery_barrage_visuals.lua",
+      "tested_sha256": "dacb05b10a2ffe1a51dbd2cd0036d19d502687bbac8edff7f06307a8344f2d11"
+    },
+    {
+      "path": "tech-priests_src/scripts/bullet_turret_controller.lua",
+      "tested_sha256": "a080ff98bd829119bf2c58e961322d5bdbf29f6220a18719a8923524862ea0e0"
+    },
+    {
+      "path": "tech-priests_src/scripts/bunker_cannon_integration.lua",
+      "tested_sha256": "dddbbc6dceaccd29ab9f08d0497e03f4498fbe837f12dae758e507654ac2a2de"
+    },
+    {
+      "path": "tech-priests_src/scripts/bunker_family_visuals.lua",
+      "tested_sha256": "be474628fe796022fd3bbcb914f41df876d8b07cde12eb311c796fffe6a24bb6"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/acquisition_executor.lua",
+      "tested_sha256": "1df9918a8681e017c7d3f00227720b4588f6d0b776ab07af59ecf57900764094"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/acquisition_repair.lua",
+      "tested_sha256": "064f4a7ac92b3590361905407ccc5979d3886b440756798abe16b43af743541f"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/acquisition_unstick.lua",
+      "tested_sha256": "8e2ec9213c20094c06918a08ef22f53c053a6a1dd14f8927a622c5fd254f7a12"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/action_stack_contract_0507.lua",
+      "tested_sha256": "3edc353041eb88320ee42d37ce43b9ab6051c452ecd3e359776355d4f7a723d6"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/action_state_arbiter_0488.lua",
+      "tested_sha256": "40d511c3623221b8e2a2b96826d7a7fbf8fa0938e0e67e2e5ae574f48cebe310"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/active_leaf_task_truth_0655.lua",
+      "tested_sha256": "7bad0bd6ab14d1d3527f441fd3c57da9b1c51f4a788048806718b31283f72d25"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/alt_resource_field_overlay_0679.lua",
+      "tested_sha256": "0337fbf1e7b44d2d9f9dc252f89ba860172218cdac24a4b56d7981b125220c43"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/alt_writ_visual_stability_0474.lua",
+      "tested_sha256": "76f3a540535119f518209fb4e79f18ec18e858e552ce928054a6a1e641b24b32"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/arterial_planner.lua",
+      "tested_sha256": "b8212051a08c2960cd0ecdcd5c7ecb39f64f8f7e7963da50fc83914326aea697"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/artillery_logistics_0713.lua",
+      "tested_sha256": "45861f7d8e14dd3560555dfae246b3503f2730cd29b6766af181cc4d85416a63"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/artillery_readiness_0712.lua",
+      "tested_sha256": "d48087b0199642cd8a8fcc6dea88a7b2dd4cf64675780d080c4e5f7188ac8790"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/artillery_train_validity_guard_0724.lua",
+      "tested_sha256": "171569e65077f29ae98d5ff000f268e2d145c1c90b701d7d209388a4a87d5fa5"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/authority_corridor_logistics_0573.lua",
+      "tested_sha256": "f4cb3841b24a9d212f05a97e9f47af56d2d4993f91fe490707bbe414779dc3fa"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/authority_corridor_pathing_0574.lua",
+      "tested_sha256": "1327675ead58d652eee1c21535e6d48d273d9d6a21847c84e65b8325c58de9dc"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/autonomous_rebuild_policy.lua",
+      "tested_sha256": "f3037f455f8c7d6b86592fd18bb5fae39d3b6289f622fda889a891feb32f63af"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/behavior_contracts_0479.lua",
+      "tested_sha256": "a77592f32a8c4ca2fe0f71ca27fcd39602af6be13b526188b2b02a2e4ee1bf1a"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/behavior_execution_doctrine_0505.lua",
+      "tested_sha256": "fb4043a31507200e6996d3d45a7e40fe42f56f9f02398086fd99b2aac4508d39"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/behavior_mutex_0466.lua",
+      "tested_sha256": "1fcbc1f5c1afb7e6d17af5393667a978534ff8997a7be89cd57336179811c67d"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/behavior_stack_cleanup_0509.lua",
+      "tested_sha256": "cdc2433e064701f92436a3f283e564e7ac91cebbd9a1cdb372a2744147dcdb47"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/behavior_tree_monitor_0642.lua",
+      "tested_sha256": "7da9ca87197bb1a4899710b2fbbaaf4caab1dcad527e55517a6d65550959d0bc"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/belt_logistics_contract_1266.lua",
+      "tested_sha256": "d3b66a932f096585fdbf0dcd997ef887c2224605e661a2800af5a783b65ab757"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/belt_route_preflight_1267.lua",
+      "tested_sha256": "29cde73ec305275dcaa18d03cb6e5d52bb66f03aec8d357982d9884fc5730cd0"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/bootstrap_research_exit_1224.lua",
+      "tested_sha256": "fb485b496150ca0363f4eb3490d2b29e8a5a1833204eee3f498aaabfc3d048a5"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/bootstrap_resource_governor_0637.lua",
+      "tested_sha256": "d7107f9aec7d17aa542157700ee27cd8d458a9445f44776f57d9eee82c20816f"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/bootstrap_runtime.lua",
+      "tested_sha256": "e2e89ea1291285cdbe028a9d9d9fcc74ba81205c7bf851da6e7745a7841f7e98"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/broker_registry_integrity_0725.lua",
+      "tested_sha256": "8397d310ce9ec652247726c7bbacb753ae66ce831f532d6008728d18ca48ea6e"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/chatter.lua",
+      "tested_sha256": "cda3e81d2955dbaef26cd2a3a7e23244907f37ce8df38428b3430c77d415e4f3"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/combat_defense_reaction_0816.lua",
+      "tested_sha256": "889f30267237b5ab7a87ba611415cee4ac881f614103a98080ed82ddee860e2e"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/combat_magos_movement_authority_0472.lua",
+      "tested_sha256": "3d49850af31e05bc09125548efcd669dd49437bebd2e1387270060855e3bd357"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/combat_movement_leftovers.lua",
+      "tested_sha256": "b6a96d70d2949f076e68c94970aedaabc7107a9770d78996082862f436e08b63"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/combat_repair_doctrine_0517.lua",
+      "tested_sha256": "e827304982fa8b30c6a2a7d9b096440e11535d386e1145864e3e740a22233088"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/combat_repair_integrity_0676.lua",
+      "tested_sha256": "ede2d642560264575bf40ef546c7c06441589cb6679913fa22eccacd265326a6"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/combat_repair_terminal_cleanup_0677.lua",
+      "tested_sha256": "027d3b111fb7693fa4a6777bde2bfa99ff2944b96933800d7c9308e6c7c7bf50"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/combat_safety.lua",
+      "tested_sha256": "10fea771002b0a745b88501bb7b2880d2d4df53ad4e72343bb50717944716f1b"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/command_hierarchy_0480.lua",
+      "tested_sha256": "c08dfc06f6c986a0c67b976ec8e3e6f7f4dfea55f119e110f6dc29cc9b6568c3"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/common/debug_utils.lua",
+      "tested_sha256": "8083865325a01e72a7467f9301ca7bbf7d8f7c5c59f40771dd1aabfa841240c1"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/common/entity_utils.lua",
+      "tested_sha256": "fb20b0815a3550ff717ba44b51dcca386335bff42d198c79e5023c8e3c58bef6"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/common/math_utils.lua",
+      "tested_sha256": "ed11c44d965ed909f83c0ca01977853ece59d4b8f7d007fc640cd4afd9f1bab4"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/common/pair_utils.lua",
+      "tested_sha256": "9943e0cb373767ee7404a7bcfc45768d577e0b8e9a12dc8067f2394ce8a15c4f"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/common/storage_utils.lua",
+      "tested_sha256": "1f71345516d4d485d591c94497dc8886e54f3122f9ed5a2911efc0ff14ccd435"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/conclave_center_0558.lua",
+      "tested_sha256": "7b6bcf6e9280c8df0b08be3249af17fafe78e584356e2f1754749a5519b544d3"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/consecration/api.lua",
+      "tested_sha256": "a0d947d1c99ca320cf56165d1006dcdf1692973514fe3a9b804e600b1a61d888"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/consecration/audit.lua",
+      "tested_sha256": "10cf4ff9286c1e7089ab65f2dd047c864890350ef4b70468e09235038b15d0d8"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/consecration/decay.lua",
+      "tested_sha256": "5a5d1527000eb70eaff2d49371ca36b4e9ab58baca02564fe0c9660b6b3b2006"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/consecration/detritus.lua",
+      "tested_sha256": "b8a740b19a0e1b90be6881d001daf4c3537a328d2c9e8461f09cc8ec948fc058"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/consecration/diagnostics.lua",
+      "tested_sha256": "9dd216ec55eb1da299989abfa3059dedde472c0b89c1a28160a367854618e2a7"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/consecration/effects.lua",
+      "tested_sha256": "01d1f6f813feb130a3864368123c01be1d3dc459d549518e296b8a27586b862c"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/consecration/history_gui.lua",
+      "tested_sha256": "122d086bdaf1b851579cc3b488dbc4da429e3bdbf9f41a7bd311f0b69ffda427"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/consecration/incense.lua",
+      "tested_sha256": "229a79ef02b8a3c95752773fa82a437f56dbf998e60af4e8a7505568224f439f"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/consecration/init.lua",
+      "tested_sha256": "83e1da5926ea07e3d4b9b768bbc9ee845a907760b4ca1e2f8476c12fb873c402"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/consecration/machine_trait_taxonomy_0524.lua",
+      "tested_sha256": "d68d43fd53c7b0c59f66d86100f6bfd6c864157412b8a19e66898af7633891c7"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/consecration/machine_traits_0523.lua",
+      "tested_sha256": "273ae64380b72cb4c5c60143d511879a2d05b36a190f6881386c5b876452d63f"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/consecration/mining_sensor_0495.lua",
+      "tested_sha256": "2d88b25568fc6ace109795f2bbf517b15e7f9fca7578737cf2b900a3271b3f00"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/consecration/overlays.lua",
+      "tested_sha256": "6b8ebccaadf43aacfd1b490e89cdc3067becd9129752df3dfcc2b145da48149f"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/consecration/registry.lua",
+      "tested_sha256": "e834bb36fe66590bb53bb295798c88002ca7aa9a1786c49ba025628c3720e0c8"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/consecration/runtime_bridge.lua",
+      "tested_sha256": "27d24d58a08f4a639e6df2b3bc5ff3f94d74286e7172a20780d9a93ece7a0085"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/consecration_executor_0515.lua",
+      "tested_sha256": "14a0c2e705cb5ceeb81b1578274924237a0fd408c64ae4b7b4cbf111606bc18e"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/construction_bootstrap_ghost_planner_0645.lua",
+      "tested_sha256": "008986fe0c7b892c8cb64936bd04739f4df11bdddce7a7cddc502bf922f6e100"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/construction_placement_authority_0656.lua",
+      "tested_sha256": "f07e1024f7c05dc69a9f7d57bdf1124f00c240a350efbcdffdd7fa6921bb08ea"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/construction_planner.lua",
+      "tested_sha256": "534dd8984c87fbfeb4a602c982f9a2b2ec0bb95a37e866862eab3485dfa84d9e"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/construction_site_planner.lua",
+      "tested_sha256": "e8da6f3473031325a5a637fd7b1ca529eb9cee0933508654f7fe68a213224cfa"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/conversation_audit.lua",
+      "tested_sha256": "a82820d58aef9ece0f5a4534463e193b58ec1e3140c846812b6c8e7a6322ffba"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/conversation_voice_0530.lua",
+      "tested_sha256": "0e511b2dd95e0ead24201849be3a111193181f615f9c4a20ea9591e456ea9e61"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/cooperative_labor_allocator_0690.lua",
+      "tested_sha256": "2cad1d0a01522e308d199743e385925ed825ebaed362cd95f3390251ea95c0b0"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/crafting_executor.lua",
+      "tested_sha256": "4aa406d5f477b932d8127400b2a166f096ebaea3e6a1de4bd8ece23c9b0251ab"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/debug/debug_command_registry.lua",
+      "tested_sha256": "4f3168d9998ddd804099e553b658f781b7709c8e8fa061dfd1f63aa277de8cf4"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/debug/pair_dump_0457.lua",
+      "tested_sha256": "3b949fdbf0af04eaad29d59250b2919ef496fe50ed0ceb464ce126bf0d1747ae"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/defense_layer_audit_1091.lua",
+      "tested_sha256": "99a91afa3d497a0d54a35b398d6b14371a0d7478cab770b7730d16e803e21e52"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/development_integration_audit_0721.lua",
+      "tested_sha256": "2d01239b6966d3539a68e267f551df783f5efad976a2cc1e0becb3297caf01c6"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/development_lifecycle_checkpoint_0733.lua",
+      "tested_sha256": "d2858886f2703b9a5c8185605aed79385d8ca958c1c4f4d3b256939ea1a15178"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/diagnostics_behavior_authority_0468.lua",
+      "tested_sha256": "2cbfd0d67e7f2e8570677d35b2812db9225b71c1775c86290975adfeecb97670"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/direct_acquisition_executor_0513.lua",
+      "tested_sha256": "a726e145f421ce84a4fcc02d3efbb0bbc953917029ac5473ae04ae9dae614a60"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/direct_acquisition_movement_lock_0650.lua",
+      "tested_sha256": "62a2362204ec677e3deb5c0c46541631dd1aa33436cf0d8c68a806fe172ccedd"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/direct_acquisition_physical_guard_0649.lua",
+      "tested_sha256": "7d40d224ea142b48d74b5a04affc2bcc3ff3f0512397f4e67c0c499d0c3df0ed"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/direct_acquisition_pulse_0631.lua",
+      "tested_sha256": "60d991162915264cfeccc9d81baeb8b2f83852e33b474d556075843b6381ff25"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/direct_acquisition_recall_guard_0632.lua",
+      "tested_sha256": "6f317bca7fef49840309a71addf4ebca38be4db073a74128d37493eaed6dcc47"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/direct_mining_safety_0490.lua",
+      "tested_sha256": "ac231e16a76b3996f2d48e2733997ce22a0bcfd8b4ed0bdb636424ea167cc99a"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/doctrinal_route_comparison_1269.lua",
+      "tested_sha256": "9c051c9344f9f12c355551cc2a9ecc247d93a209d1a08597c707f15d439f9d95"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/doctrine_argument.lua",
+      "tested_sha256": "8bdaae432886c7a60a6d37631da0d0acca9fffd41d8cf094dc5788376f91d930"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/doctrine_chatter.lua",
+      "tested_sha256": "a847cfc7d50187eaeed2613ecd7fe52fe95ebf0830b5bfca10d823fc6345d983"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/doctrine_map.lua",
+      "tested_sha256": "77580fb1050a53dafb5e34cfa8d386a09922263354066f4cdf5735b82df4cc50"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/doctrine_visual_styles.lua",
+      "tested_sha256": "0651d682744700bd7cfdea8210bd1598dad5e3bd3a6a85727f0b2a5d5249001d"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/duplicate_behavior_family_guard.lua",
+      "tested_sha256": "5cc58b2d8c10ebdd3ea46be958d339cdddcebfe381885681aea492edb213282e"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/efficiency_economy_0556.lua",
+      "tested_sha256": "7381f10f8efa1c4aa5dffc168fd9be7e0f46b74c61c6b45045eae173c99d9798"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/efficiency_economy_0557.lua",
+      "tested_sha256": "9a194a14162311879183171bdf24b9c34637cea6b137706977512ac54dd0dfbf"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/efficiency_economy_0568.lua",
+      "tested_sha256": "5d8858b61635b059ddd50f45bc73a2f54310465ab7fd54c7bb98170087ffe6e2"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/efficiency_economy_0569.lua",
+      "tested_sha256": "24b8ccb0b9c4a3ca4557c14dbe5c0018417cc033a9f516952774dff4cdead0fe"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/efficiency_economy_0570.lua",
+      "tested_sha256": "e8075d9550a6aa010840876fdc6bed964d8ea633149a7a6fc6b046cfb5ae6f59"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/efficiency_economy_0571.lua",
+      "tested_sha256": "872673b1ca1a1b32cfb18fc692981af74151aad9919c9df52c6152e42e5d827a"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/efficiency_economy_0572.lua",
+      "tested_sha256": "09918328425260b782814892dde3ef77c8b8e3f41aef44d40eb85682d9c156ff"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/efficiency_economy_0575.lua",
+      "tested_sha256": "e98020e70dc376c1cdc6edb34b8ffea1c785d2a04858fd3b0f594e6a3addf0e6"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/efficiency_economy_0576.lua",
+      "tested_sha256": "0b32cd3414881dcfec2dcaafd1818cae3fe7396965e45ea6eb230b413d9dc865"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/efficiency_economy_0577.lua",
+      "tested_sha256": "6cf11f7f78763b2f37a1313f03a137c942b88515083f9eec416620234270d9d5"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/efficiency_economy_0578.lua",
+      "tested_sha256": "90220a4c7e68071ec193c46e67b377fe78ed9adf3c5b259fa998ef8d44056af0"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/efficiency_economy_0579.lua",
+      "tested_sha256": "315c757d5e94f57bee253a0f5bf7cfb05335036fe9efee64933bbb5a6a7d3209"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/efficiency_economy_0580.lua",
+      "tested_sha256": "5bf3eec55b6f0ce06f32bee11e26e436fd15191246faf3adf79e3375956a7939"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/efficiency_economy_0581.lua",
+      "tested_sha256": "3b461a515c696ad944c6c870e8cc93d331ec5d7c4f1d524368ffde12d45cc17f"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/efficiency_economy_0582.lua",
+      "tested_sha256": "738ccd8b59b6f323f638d2f4adafb44d87a30513192aba683bb1b9b40a4df630"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/efficiency_economy_0583.lua",
+      "tested_sha256": "62869c60469ff77fba5023b6e1e02294ce274bdb9517f45023be209304e2af04"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/efficiency_economy_0585.lua",
+      "tested_sha256": "8e7623ae888eb026e3acda6033b06da1dbaa51cd876fb2797fa0d5688fe5e842"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/efficiency_economy_0587.lua",
+      "tested_sha256": "98d935acdbb9b160d6b3b49d067968dfe5b9d3c4178a597a06c5ccc52f4ee9c4"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/efficiency_economy_0593.lua",
+      "tested_sha256": "8e1a950fdafdcd86795ac043fd1cd63edcbbd6b76b0130ee5e05b7e3e38c90ee"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/efficiency_economy_0594.lua",
+      "tested_sha256": "7e276f6279898f6715c9567a4a97f73cf100d0b79f5d8b7b697e37fa009a3cc1"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/efficiency_economy_0595.lua",
+      "tested_sha256": "564ee0b27359768642eaf60e23f810d28210680ac4029f7905e2d2f4af546d26"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/efficiency_economy_0596.lua",
+      "tested_sha256": "453581ff35f37669ba57aae3d6d1897fc67201e8d9520e4669d5eac842a57f33"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/efficiency_economy_0598.lua",
+      "tested_sha256": "f0ad454dcfc01fcec1134be14a9fee0226e44a0b75acb2939c04e99957292650"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/efficiency_economy_0599.lua",
+      "tested_sha256": "3628458386ade1c5f2ee0a606cc738ba650465c16cd7e8535687c58066905723"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/emergency_cascade.lua",
+      "tested_sha256": "d4ff94e7dbeb0c8eff5f7806b6f2088e4a73d3a350171ad209968953d9b67a3e"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/emergency_facility_doctrine.lua",
+      "tested_sha256": "a778322dddc8c5008f56f51f15033d7b1397eea0da1fab565d9130cab4cede99"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/emergency_facility_placement_bridge_0643.lua",
+      "tested_sha256": "1be3990ded7ea6ad31c044f9c820ac9c066b9ff1a7eae70be3bae3cdc6502bbb"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/emergency_production_executor_0514.lua",
+      "tested_sha256": "97c21f9188ae736667e0273aebabb66ded66c0ba3450552a4700e71ecb477454"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/emergency_supply_reserve_0497.lua",
+      "tested_sha256": "70bb211f9eccaa9a016d99264f8b3c836e3f388cf3b7fb81d232a977ab7ffa60"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/enemy_colony.lua",
+      "tested_sha256": "502eded881e63a96f25cac8ff597cd4905464890760e568515b76c0a0bf9ad1f"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/enemy_colony_options.lua",
+      "tested_sha256": "fd08bfd0dafd8b4002691b8f374c17c210cf3dbcc1a0e18892018184dbcd9b70"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/enemy_planetary_seeding.lua",
+      "tested_sha256": "bfc4896776de92985574a31f40051828ed18a19bf7f71c6dacf4b172ebfbeda7"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/enemy_research_announcements.lua",
+      "tested_sha256": "9ba94a8086be75eea6b2e2e5e5340cea0a0e12fb1586e156a37dbd13dbca04d1"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/energy_automation_guard_install_assertion_0726.lua",
+      "tested_sha256": "d5a06122d074fa47f39ebcec6ce89d95ada3c38b3afcd3588f7efc8f655d129f"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/energy_family_logistics_0707.lua",
+      "tested_sha256": "b13481e88096f4850d8386f54f2158b43ac7699d86d3124327d0a59bd3c95c1a"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/energy_family_readiness_0705.lua",
+      "tested_sha256": "89b180b745b392e6eb841cda97f10d20385042dea4923dc407efb930736d0548"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/energy_item_automation_guard_0722.lua",
+      "tested_sha256": "6b88536bb8f66cd70257c90b94af10a8cfd70bbc07851ac83854e71deada50b7"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/energy_readiness_diagnostics_0711.lua",
+      "tested_sha256": "975d9e7b9e5c2cdc55b8ffec90ebe78e87041948ffce2fffc3c30fe19158d216"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/event_driven_work_feeder_0608.lua",
+      "tested_sha256": "5795ce01b9bd54c11643fc37de5061d52b10fc451bdfac4b32d02c4f31809247"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/factory_doctrine_organization_1268.lua",
+      "tested_sha256": "a34c1d539df0c13e07b16a4dac9aa24da505f685ee61059d19d80f2b3cb64a68"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/first_station_cold_profile_1406.lua",
+      "tested_sha256": "385c55b06a040ba659722ef802d6c58e2eb5753b5bbb877555043a459ef31093"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/fluid_connection_execution_guard_0692.lua",
+      "tested_sha256": "41f9d7a50eb2b3f78ada5a0a0959a1eb415c695a444bbb6c38c57e0ff4eb3fe5"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/fluid_connection_planner_0691.lua",
+      "tested_sha256": "0b84f629f276219d888af53c745f4cdb10b0ec69befcd22c3c29ae9116f7ff91"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/fluid_network_doctrine_0689.lua",
+      "tested_sha256": "4eac01b5d8790816049537c75edd94e212993e11f650f7d0c32c7bbbcda2c73d"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/fluid_output_connection_planner_0696.lua",
+      "tested_sha256": "6d79d513350227b34fa717c32df62ac86a333d15c1ebe42c7696a11d4c158d45"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/fluid_output_sink_doctrine_0694.lua",
+      "tested_sha256": "3735bd038e4f5b41eb89af1f38fff78b41e60cad699d1b3be6488f755a229aad"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/fluid_port_collision_validator_0699.lua",
+      "tested_sha256": "46ba836caf8490ca19d6d30f427c82e7498681fefd6ab78d882a7693d8f59992"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/fluid_port_context_guard_0700.lua",
+      "tested_sha256": "18cda8c327a9e8372f2b2a17e920e883500f810ca418cd5cada4f8461169f7be"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/fluid_turret_connection_planner_0719.lua",
+      "tested_sha256": "b19906e43f68b8861e01face85e44aeecf3b69441578304c354c38e75e5d2437"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/fluid_turret_connection_proposals_0717.lua",
+      "tested_sha256": "5561ee1f3e1a6862eecb4899a0f29a2e2d2563f0ce56edeabd9dcce17153fe85"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/fluid_turret_internal_buffer_guard_0731.lua",
+      "tested_sha256": "18c5e7ee227eaf634dcf2f1e6d82716a83d2322adee40ca57927ccb1cae6914e"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/fluid_turret_planner_integrity_0730.lua",
+      "tested_sha256": "165cf34a158eee3bc6dbbf205e57a1fc2cfa8d9d830d9fe563ca903888c0a1b6"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/fluid_turret_proposal_integrity_0718.lua",
+      "tested_sha256": "6f0981c9d1b98082d5b028cf09b70e995251863d33ac21df319c7f3de812c8e2"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/fluid_turret_readiness_0716.lua",
+      "tested_sha256": "73af9d0853e95a7c277127e93ebbb9b8c955029fd506622caabd1d644c1d448c"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/fusion_reactor_readiness_guard_0727.lua",
+      "tested_sha256": "6384698c8a184781e5d1afe0bcd08b2082d50c2c49c105fa5231682ce8d39ae2"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/glow_boost.lua",
+      "tested_sha256": "17aed86c9b8c8d456d137076648599d3a99e70c00d69a0d0e75bfdddb58be9ff"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/ground_item_hoover_0529.lua",
+      "tested_sha256": "c78be60b280c21c0f1d75c964bc59934b7a74fd3571a0ba1b753efedf5049b0c"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/ground_route_authority_0633.lua",
+      "tested_sha256": "fb79c9d5e2f80bb19ca9952ff7ce5b78984f788cd1eb30e721256d5372044f21"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/gui_asset_framework_0482.lua",
+      "tested_sha256": "c4dab5c2db54d2c63e02f8b811336652bd2ed08db7b81c8a984aba817fdd9fde"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/gui_bus.lua",
+      "tested_sha256": "09764932ce8ad4b4b5a62cb3766a21b7e0c80d15131016b4b70c77eb8476222c"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/gui_nested_frame_repair_0635.lua",
+      "tested_sha256": "3498c76220695fc5ed435bc4ebe8a6ea8ff8a498a4e5b5834ad11a47f03dd943"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/hardener_installation_audit_0723.lua",
+      "tested_sha256": "ecf7e47c238f7545b554c17596de553d8ddabff9c20492f6b0ef08a576778d49"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/hidden_support_alignment.lua",
+      "tested_sha256": "3daea576d0667a62db820016e3c8af77cb92ba0b01c788deed40ff8de5a9ce86"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/hover_movement_stability.lua",
+      "tested_sha256": "183c456759569ea67a5f2172e173739189fc5eeb944a185defa68e599f707397"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/infrastructure_first_governor_0640.lua",
+      "tested_sha256": "75b033115349446c88319c46bf7f3cd65bf5171215acef4baee57418f6bae04e"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/inventory_deposit_safety_0638.lua",
+      "tested_sha256": "4c7fda390892abc6d74e22e29af88f67a43e9a4ecabf0519c2b671fa116df1a6"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/inventory_steward.lua",
+      "tested_sha256": "be8e7fbf372946236e556482ef15f0dc42f71fe60014cd8981c0831d201e9edd"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/inventory_target_safety.lua",
+      "tested_sha256": "49b344ac09074a07d372bbd537b9815d0ec476320f2265af14ebd8a022984e89"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/inventory_transfer_integrity_0687.lua",
+      "tested_sha256": "497686142bdb665051baaf0a5fd4578d3b4a66062a1f983a67230f983f21a834"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/item_family_integrity_0703.lua",
+      "tested_sha256": "b64fd4c0823743d7a378b153d6ae72cc7793191863f4743a35b145dff472dce1"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/item_family_logistics_0702.lua",
+      "tested_sha256": "43511496712d3c1d3afefd0ef323e9ee6afe7c7cbd436c6fb7e36f9d9dbbdf74"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/legacy_station_stock_guard_0846.lua",
+      "tested_sha256": "2e431ead1e21d8c9194779bbd23cccea58ebdde2b7b14c6deaa2c26074b29aba"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/logistics_construction_contract_0519.lua",
+      "tested_sha256": "6498486b843f7cdae6e030a5f1eb4d38e36c5bca607371c57775833544958b0f"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/logistics_fetch_executor_0526.lua",
+      "tested_sha256": "bcd1ed39fd72439699928ea4cb14b7ba55750f3f5f5c05df86ec2c06729e1ab4"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/logistics_fetch_executor_0527.lua",
+      "tested_sha256": "5cc363918a391b3de21e44879646426186cac8e1f4a94944756f2a28cb09d03d"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/logistics_machine_fulfillment_0528.lua",
+      "tested_sha256": "507d4412ebe09fbf0ebdd7518c57a9fac9d593827d400d99f44d51d2cec8380e"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/logistics_mineable_source_bridge_0657.lua",
+      "tested_sha256": "8765ba9fef09648702bbd603568499ec9b84997e57ed789bec5319bab727753c"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/machine_logistics_candidate_recovery_0683.lua",
+      "tested_sha256": "3f3c3a0d0af697651ec039e2476b6445ad3b9a30d144d7a302292d2563b8d366"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/machine_logistics_final_authority_0684.lua",
+      "tested_sha256": "c5fc1618d794bdc58b758a90a4d6463955fcfdcc622111f97466f73efc40467c"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/machine_logistics_integrity_0682.lua",
+      "tested_sha256": "6feaea9565867f3dfe4ff7cc9567b145019b4f58b151e878d3182a36801c2fed"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/machine_spirit_ledger_gui_clamp_0634.lua",
+      "tested_sha256": "1cc372d707ca0b0c4911291f48d6b692676d043fbe26a63caa763939fd32b98d"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/magos_planning_queue_0471.lua",
+      "tested_sha256": "7c1c9ce34646792d94b38598ecc238e3bf3604dce88531f134c6af563a12a312"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/master_infrastructure_plan_0644.lua",
+      "tested_sha256": "77686a5aa2ade5c910fb3558a1c45cb82f500408ed5efe92e7cc4712a6a0526f"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/migration_lifecycle_assertion_0735.lua",
+      "tested_sha256": "d69f790184e3fc22987f83ec07861085f37b8e27104d6fd35312ae1517249889"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/migration_pair_integrity_0734.lua",
+      "tested_sha256": "04955630d91eb2c73c48aa17d865d79e77730bda1e0a518a9de64276bdae1b88"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/mobility_recovery_contract_0506.lua",
+      "tested_sha256": "14da5a18b0125a35de39d54427e8e94b6739065de7b7c209ec4aea539584d0a1"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/movement_authority_audit.lua",
+      "tested_sha256": "fea0d352c12935a886b6179a45a2f144fb023be04531840562d7d23fc9086e5d"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/movement_bounds_contract_0511.lua",
+      "tested_sha256": "72d2a0017e5b7e5fa1df5bfdb487772c220504689ff218f7587d80e2786817fc"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/movement_cadence_contract_0518.lua",
+      "tested_sha256": "7f24782b12bbe287fc4dadda7bf3dcdea589ab2009ba5c9af0424a022b50d124"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/movement_controller.lua",
+      "tested_sha256": "289159d49dc37ae86fa02010a34d3bb0cb110185a8aff8db8c621d8389da595e"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/movement_enforcement_0566.lua",
+      "tested_sha256": "da9a8f2195b851ac1e586c8fc830784e882d7eac0fe569be2d7725df90597384"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/movement_intent_authority_0654.lua",
+      "tested_sha256": "c2064ba081d3467aaf7b9175b856bb5824130d54548e114392569d8f53f595eb"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/movement_recovery_authority_0508.lua",
+      "tested_sha256": "de7a7b24a510d000867d336203cb2493c10e951edf09096e5dfc1242dea72c81"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/movement_target_reconciler_0652.lua",
+      "tested_sha256": "bdb09ec83b95edbe7388692d7dc6d5f9546b49fc78da66a83a6fc419d879d62b"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/movement_vector_enforcer_0651.lua",
+      "tested_sha256": "08c725a0aac105f0ea7c72b5bc1ddc4f92be0ea43c1c3a7fa8ee178883eb185b"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/native_crafter_inventory_1277.lua",
+      "tested_sha256": "58917cd8202d60122efaf6f6a59ad082cfb0efebd9ba5f458374b7db74282e02"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/native_electric_authority_1263.lua",
+      "tested_sha256": "38047a10ff2db7cfb2bdf59424196ccac30cd9b01689d30dcf5effbcb1f60a69"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/native_fluidbox_1279.lua",
+      "tested_sha256": "39d3ead663d897ec4d6494b59ef88bc1da692c9c006bbad7eb653227e3bb9d8a"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/network_visuals.lua",
+      "tested_sha256": "3c4d40640c38f7e790a72586452920dbe6d0d7f3ac8bc176ffaa55ad5554d697"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/obstacle_attack_guard_0584.lua",
+      "tested_sha256": "231aaf252112853bf0c06e8a8a52c3b6296c7cd20a5403ce194178c8acdfd280"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/operational_sounds_0531.lua",
+      "tested_sha256": "29fd02da6fea961d4173e74194c6b4b4bb68b08b828a51e6ac57d6d928204427"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/order_orchestrator_0597.lua",
+      "tested_sha256": "a2aa5e30b4eac8f842603e636dc8504296ce2f6413630ae3709c32558b5d10fb"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/order_queue_0469.lua",
+      "tested_sha256": "e70ecc0a1aeebf1b4370d10373e1c76940a9822951ec087b979a9d1643188380"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/overhead_status_governor_0471.lua",
+      "tested_sha256": "9eade8fc655d0a14292bf1a36a3f06aa78bd0f0464c13d4db54d814fceb833e7"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/overhead_text_authority_0473.lua",
+      "tested_sha256": "00d25e8d7a03db8cbcb325ed837993a4ae16e105ab8a2acb7bb8ae02b93ea8ec"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/pair_bucket_registry.lua",
+      "tested_sha256": "86972b690c06198bb49e32983e9cdfa316fcdad82577f2e4e58afad387ff9216"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/pair_death_and_respawn.lua",
+      "tested_sha256": "44e7db37ae3d9fc6f70e85fc3a5db4382dde2c99efb3b430423d69c76bc10827"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/pair_lifecycle.lua",
+      "tested_sha256": "7b97055272d040fa534773ff6e66b69565d0c363b70076036467ec1bc1419105"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/pair_link_hardening_0495.lua",
+      "tested_sha256": "07069152a9900377bd90dbee788f629da0aa7ee59ae0529430d00af647dc4e57"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/pair_naming.lua",
+      "tested_sha256": "2030a9fb0375f55276fae84c72a3236ad2f137ff520a2b1a1fb61299a9c20121"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/pair_spawn_positions.lua",
+      "tested_sha256": "4e69c14611c2fdd68617731a7c582308cc9cc091f7417c62bc4a7653991272ff"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/placeholder_audio_0533.lua",
+      "tested_sha256": "a920369642cd5c2fc2e6e3c7829c1f6b88ae48db6f27085c186c5e4af794c2b3"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/planning_constraints_0646.lua",
+      "tested_sha256": "697187679c3190d9063e1f1bb9bc1cf1e754957a892bc20f6e43daf89a68b803"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/platform_movement_authority.lua",
+      "tested_sha256": "b5ee9596ee62cb7d7576d1a9f4eea6e349fa7fdbe0d13ac6e8b0761d694a4335"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/portrait_assignment_0520.lua",
+      "tested_sha256": "37b9727b429a2d32cb9318b874830596c1f3f729e65905d46080dea04e33f9ba"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/portrait_registry_0484.lua",
+      "tested_sha256": "fadaadf78fa1b8b62580bc073326c6ff0bed8e2c78ff3b34dbcf16985b196613"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/portrait_registry_0486.lua",
+      "tested_sha256": "43c521e5494917370aab2980f22e98198e33f0a41d816dda1ace6b9032681ef7"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/power_setup_1252.lua",
+      "tested_sha256": "f68da43c297ddf6a145a077ccdfbe56edfd6493f2194f3f4d3b2f9f8be7172ad"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/priest_factory_doctrine_1410.lua",
+      "tested_sha256": "87cb6a37f741c3ce11aa453312219fa522f2fd54bfffe9aca3e99a8337e77e7a"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/priest_identity_background_0525.lua",
+      "tested_sha256": "08668494c5c9e4d2b34618f3419de1b27aaf525d2944d43091618d4bbe700f40"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/priest_lifecycle_authority_0499.lua",
+      "tested_sha256": "f511630ca8ef75d6b2474d38bb2e9b11c1e45622a5d46bfee27aaddaef7e7dbd"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/priest_lifecycle_seal_0500.lua",
+      "tested_sha256": "5a11b338299febffc30051e85bf51de300d5af18acd1240ef925a9ae1fe46615"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/priest_recovery_safety_0503.lua",
+      "tested_sha256": "b076ee1e407ad44e814eded3e4cc0a60ae101565a1ef946eb1e267f5d58422ca"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/priest_vanish_guard_0501.lua",
+      "tested_sha256": "7468744845e88d7701433c10e2cd28ca4536fb0f6fba699b115f5b9416f7ca8b"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/priest_vanish_guard_0502.lua",
+      "tested_sha256": "3234239969d65d33804c425d75486234d59705dcb623a5712c29271bab9db7c3"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/prototype_compat.lua",
+      "tested_sha256": "8c83c648c17833e7a9d4e8e7309a75d6062546fdb5ce6b9d0991291e6340c36a"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/proxy_ammo_hardener_0649.lua",
+      "tested_sha256": "6bc367b7d0a60d15ed3cfe730fd2f808e89eeb5e10dddc98e4bcdc8a45bdfbfe"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/proxy_turret_alignment.lua",
+      "tested_sha256": "36bd3205563933e26dde732217c716cccdf4ce9e56cd71c0eb2489dab53d8b29"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/radar_afterglow.lua",
+      "tested_sha256": "080cc01995f2fb910e2fb1843747336e6628d3784be6af356abd1f8d9264796b"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/rail_outpost_just_in_time_1405.lua",
+      "tested_sha256": "c3e52e2456775e04881d68d90b7a5becc95c12e82f864f8b33162f2dd1853014"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/rail_outpost_layout_1404.lua",
+      "tested_sha256": "33863e03308023cc9de61ab7ddde79102c42b75c1f4da0bf4aeb23e4021844d7"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/rail_route_choice_1403.lua",
+      "tested_sha256": "33ac447e0de998da7562d6c9dabce59edaaafe46f6b9d36de191885b5c279f99"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/rail_track_frontier_0836.lua",
+      "tested_sha256": "83a8b6f781a9212c08d54d0a4eeccaa1094bc09635bf4afb97285d78c77cf328"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/remote_machine_drill_1011.lua",
+      "tested_sha256": "add90dbfd1e90c564c92ba4a30085409b2674772be05833c6031fe8e46b31c83"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/remote_rail_outpost_0835.lua",
+      "tested_sha256": "d7949150a9ece076fd48f6ed7f86f25ef0177b5c54bc3b3133d9e42e28d5173f"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/repair_executor_0516.lua",
+      "tested_sha256": "57f774f26299c8a994d9d3a1407185a61a64c2c3aa7ff2c742d53e815fc861b4"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/repair_executor_integrity_0673.lua",
+      "tested_sha256": "7bf36d263866766ae6331464c41bdf996dfaffe685883dd4fc4374f4c057ab31"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/reservation_position_scope_0697.lua",
+      "tested_sha256": "83a74e94233b8ddd62d931c21fa335c1dfdcb7cf4fa6d7d383974bfcdb1c5a77"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/resource_doctrine.lua",
+      "tested_sha256": "fdafdbea7ca893315c7472a01a379d8010b91d1ecd9d9c5404dbec068b72a5b0"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/resource_return_courier_0837.lua",
+      "tested_sha256": "218871797c45dccf4f970e149ea937244c068e38789ed71f2b0de289d025d0bb"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/resource_return_movement_0953.lua",
+      "tested_sha256": "63b6f0df9384c817925dfd348628502732fc54e8e41c569d649a6abf094c4587"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/resource_station_chain_0820.lua",
+      "tested_sha256": "61628a72ec19048b8dbba51bafdd97036f24816cba9fc879d172d2d2fd98d1cd"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/roboport_expansion_frontier_1076.lua",
+      "tested_sha256": "599dc9f15571578323ca9322ef7b42bf1226c694de44d9dfbe7b33ab722d5bc1"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/roboport_readiness_0714.lua",
+      "tested_sha256": "a66c20fd9df060969b4a4651850fd262afe4f13f703fb1bb8e9ccfb143ad0034"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/roboport_repair_pack_logistics_0715.lua",
+      "tested_sha256": "ca4e5b8c4f081231d9677214d0181d907145c0807aac23c867040b30eb81aa96"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/rocket_silo_live_ownership_guard_0728.lua",
+      "tested_sha256": "4046d48afe1307f2c8dafe080eeece93bdf57f592bb5aeb37244fdc690c3670c"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/rocket_silo_logistics_0710.lua",
+      "tested_sha256": "b32a7fc044181f9354a4c7064d3905b7550be9e45454f43d46e30f17f85f19b2"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/rocket_silo_readiness_0709.lua",
+      "tested_sha256": "58237c6489767938e6fc4344ce549b3ebe03337d6fee0ccd57a2b7d165998da4"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/runtime_command_cleanup_0720.lua",
+      "tested_sha256": "fcd2aa4cb2a6d5c9d0ec2b62a4aadd9157dc7828abfae007d37dd9a21e1bc76f"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/runtime_config_0626.lua",
+      "tested_sha256": "94bb64010a862d7d56b183863b4fbf453cf920abe0be5d254129e35e8027f887"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/runtime_event_registry.lua",
+      "tested_sha256": "eb25aa72d2523cd11ccd18da3f94065fc1c822d32768e7a00a42c0509b367ce4"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/runtime_tick_broker.lua",
+      "tested_sha256": "086970b5d644d6de2c29e5901a78aba20699feeedd65ac97d3130b19516c251f"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/safe_floating_text.lua",
+      "tested_sha256": "e78c44079b8c50b28fdf048a6a46682afe6528c2278fba9a2851a218e387d6b7"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/sanctioned_order_history_0561.lua",
+      "tested_sha256": "1618f327377c79414ebb4781b828a9e3130054ce0dc947a36c9352cb201ef7ab"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/scan_beam_controller_0529.lua",
+      "tested_sha256": "9edcac84d0f9a183ec335960c30c9891c52f734be92abc8d505f2199281eb92c"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/scan_routing_0610.lua",
+      "tested_sha256": "b9b788ea480735ec8105770529460175446594f13e04c13fc2bca0e3b5b56786"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/scheduler_behavior_tree.lua",
+      "tested_sha256": "d5a26c85a62d8cdc8d79ca7844ad05d72a9bc9b1de864068c8cf7deb0dd1d843"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/scheduler_contract_0512.lua",
+      "tested_sha256": "36e124bb262736a293d940d6811b6de450c0944c9b23ccef54c79b6d3a32eb5a"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/self_station_scan_visual_authority_0489.lua",
+      "tested_sha256": "7a3d274a295a1c44993451f6b4cc8e72ccad87a8032a64b0458ad9e30fb9f640"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/single_dispatcher_0510.lua",
+      "tested_sha256": "a55ba712503b1dd2a21d6178188de831c885aa71e52d1cbce0c36edc38625172"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/sound_manager_0475.lua",
+      "tested_sha256": "4badc8b5eaa2499ad5f86431dc2ef32af41943cc47a5d27e148733de9b236f7f"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/spatial_interest_0609.lua",
+      "tested_sha256": "ad49e27c0f16ebabadb3a9731903be433db210fcf1edfc3be7c82b23e7d34542"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/startup_catalog_authority_0467.lua",
+      "tested_sha256": "cdc6f7d87298fd1cff994a5a0c289082ff02c8b2941a3005ad8b78444b9373f6"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/startup_provisioning.lua",
+      "tested_sha256": "4cf3136bc1c1f48f4d12117368357bb5f455697919f81950edd001480d930593"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/station_area_change_invalidator_0634.lua",
+      "tested_sha256": "d61cac44452697c2a4779ad7f474aad329ed81500da2028cfc0fd23db41f07b8"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/station_cargo_0824.lua",
+      "tested_sha256": "dc750f3651eaddc4f02ab3b40f834c7e61508289aafe0ae89f3169d5bf454737"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/station_catalog.lua",
+      "tested_sha256": "45ce81daa2d19dcc044bde276deb1a639b63848eb368e8f4979af76139152af3"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/station_inventory_evacuation_1048.lua",
+      "tested_sha256": "b330c07050a3a93646b3e0a2acca69bcb0e8a56274b8b840024e3d550453a4f5"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/station_network_overlay.lua",
+      "tested_sha256": "b48acb0556cf8c204be4a592bb396309fd22e6ce987fdb61644973df73d6be7c"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/station_pair_recovery.lua",
+      "tested_sha256": "b405d1ccdfd9702530f11c162f56f1e0f0beddc324bcb1d1b4d49cfbc7ceaa60"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/station_pair_state.lua",
+      "tested_sha256": "86f665746f4ed5de7627185a060c864607150fd9e7b3157dad784dd318185f70"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/station_range_authority_0680.lua",
+      "tested_sha256": "0cdd6937a555719ef4c904443892b3e0a5cbca90cba87265f78da8a3094e69da"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/station_recycling_0822.lua",
+      "tested_sha256": "4e5801e603ff8285fdfcb8e487348fdccdcdbf9edb479db69bfacee10ad1d161"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/station_relocation_0823.lua",
+      "tested_sha256": "d45d62aa51010c6272f9eaccc4c0a5161926a29c424c8059070dc80616b996c1"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/station_starvation_ancestor_0853.lua",
+      "tested_sha256": "b885583000c70aa194b9796cb8b6d0b9c06fce91e3d95f23b96096f033b0378b"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/station_starvation_depot_0852.lua",
+      "tested_sha256": "30894e5950b3bd1e57264e56dc45fd7248aad5f3ea76684a0afc72ae00efd480"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/station_starvation_intermediate_0854.lua",
+      "tested_sha256": "cad45a79a14d5c9801f071ec1bded131eebc7869bc0bef2a12de163a714ec124"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/station_starvation_intermediate_0911.lua",
+      "tested_sha256": "b65c45c2bbba1a21cbcca540f3895ac5b408c9663c889f442759c2200b807e0e"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/station_starvation_junior_0919.lua",
+      "tested_sha256": "7d41633aa9be30a145306d49f1a3259b9512ddb34e4e3d0c18a6df43bd863afa"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/station_starvation_junior_dispatch_0921.lua",
+      "tested_sha256": "2ed8a477b84d1d66898536c811da921bff644ba09260cd4732b49b6c1f5c3cb4"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/station_starvation_outbound_0895.lua",
+      "tested_sha256": "e10ac90eba9aa505cd7997e1099614f4d049a9d297f88626ceabe02d8cf07e38"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/station_starvation_rebuild_0867.lua",
+      "tested_sha256": "67cf5daf3a5aa32edb5eec8a6509e61a386670a2ae2a84fd48c20e7e1eb495b9"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/station_starvation_reversal_0850.lua",
+      "tested_sha256": "975344136bb04125ed71de08b0b26de7fe2a93437621fbc85132397bfd18b35f"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/station_starvation_second_junior_0943.lua",
+      "tested_sha256": "7a537eeef88abee484fb99c0a5dc2f769f0c2c61cce754904295a863b2261ba6"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/station_starvation_second_junior_build_0948.lua",
+      "tested_sha256": "6529e2fad97d861434384d3fa16b9aede3acc113612b6b364e10a1357bfbdb50"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/station_starvation_senior_0855.lua",
+      "tested_sha256": "9a93c4d9d535f77cecedf29705a058e41dae0b93d5e2aa104946a5dd06961449"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/station_starvation_snap_geometry_0929.lua",
+      "tested_sha256": "589c0e617557bd93c880adac2608c8c5423dae4d61ffb4d5da1bea7b9fd1526b"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/station_supply_satisfaction_0639.lua",
+      "tested_sha256": "3ec5de6fe8090db04a4db8ea4b73cc2e6c25ac9c4a0e39c1d21b6515a1776141"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/station_surplus_resupply_1208.lua",
+      "tested_sha256": "840a66dc2242d7a3ab5c15acf446f723c35b3cc9d2b1e04dc4c87476c431678e"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/station_work_inventory.lua",
+      "tested_sha256": "9f6da59e2ff192a7493ed9cfcfd5794f70a8fc76f8f5644df13c94a131aa3e3d"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/status_churn_damper_0532.lua",
+      "tested_sha256": "1bedb19761a3381bf4de2c7f51bb86e364b77104ff3de3ca8672aa4b68ff6ef7"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/status_display_authority_0459.lua",
+      "tested_sha256": "d28c5cc70a1f019e4b9818ec0a9755f5c97b78db7b4e45d0a8f9db3c06519aab"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/status_state_sanity.lua",
+      "tested_sha256": "6d2e553c802598c80ae76935d088570e61a7cf844a0fa7507d67bd0f213db429"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/stone_cache_filter_0534.lua",
+      "tested_sha256": "e274d9fd39dcd1a7544d489b87b5caae825173c5d0227b5d223b29e020880a33"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/storage_role_authority_0686.lua",
+      "tested_sha256": "35f4d03e719b154589077d4390716efa61524c514dc53c10271265c1b011f559"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/subordinate_scheduler.lua",
+      "tested_sha256": "da7b36f5b639d6cf0c19cff6dfb64e312066cfe51a25c7f5b0ceee63e36f46ad"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/supply_resolver.lua",
+      "tested_sha256": "6f2eac741dd484ed87826f794518b3e12abf7f5c7e69a66f85c5e2ba4cd06fff"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/task_auspex_0622.lua",
+      "tested_sha256": "d5b65e603f0ed0e494e78322ddd3e68f0e7a2776993ab60119c85c457093c771"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/task_execution_sound_governor_0477.lua",
+      "tested_sha256": "6637bd48be633fcb120f9fe9161a08e909795e75d311d716022f9d8da426d582"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/task_lifecycle_authority_0478.lua",
+      "tested_sha256": "567824dea4362af3f94616c39048c1d4587a846cbad113c8a047e60d31d9f62f"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/task_pair_audit_0498.lua",
+      "tested_sha256": "8cda2a7966057fbafac404623c889ce8ca75ee28e9eb410c610f4fe9f0ea09fc"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/task_retention_visual_lease_0476.lua",
+      "tested_sha256": "1ba81643c814b9637b79b9a57d23743becabceb220d51af83d8feaf7ad95211e"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/task_scheduler.lua",
+      "tested_sha256": "8767c41c66e6642d92f024e4796231d0823f7ebce803aedcc2c3df5daf1cfc61"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/task_transition_governor.lua",
+      "tested_sha256": "9126bbd88e74ce27e1b565a952d7db500f972bdca3a0bc0d1041db31169ce7bb"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/visual_intent_line_authority_0657.lua",
+      "tested_sha256": "a9764f0de0190e5f093f962e761be51fbf80a3b4dd92e1c536bd5a225569452c"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/visual_lease_cleanup_0487.lua",
+      "tested_sha256": "343fc941d12106ec358474c469e13203fdf849d8997432975cc7569609766730"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/void_movement_authority_0630.lua",
+      "tested_sha256": "fda7f9e57d8bbaa92efd3be00233d86345aca2c195fd5abc0ca2fcdb67a614c4"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/work_queue_authority.lua",
+      "tested_sha256": "c17b10e38c4bc32c43b6872e3c047ca616e962dd0a6d6179b61764f606ba2a64"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/work_reservations.lua",
+      "tested_sha256": "1b7e7649623efe921dd1a9aaf9486ea67b734e2699165c376d5e8ed2b0204c07"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/work_visuals.lua",
+      "tested_sha256": "21b393dff0f1c8eed91a1a9856f3f29e2877a1f9301c50924ea4946b6de9fd17"
+    },
+    {
+      "path": "tech-priests_src/scripts/core/workstate_gui_radar_recovery_0465.lua",
+      "tested_sha256": "923f967d655b5af1c688cbfc3013bd6b935326267468a6af9fd4c4e9dbf213c6"
+    },
+    {
+      "path": "tech-priests_src/scripts/defense_perimeter.lua",
+      "tested_sha256": "63d4475a2b731512d06fd0a5dc7a07d33cdae472fcdbe030d80e77ea3139a534"
+    },
+    {
+      "path": "tech-priests_src/scripts/generated/control_legacy_part_001.lua",
+      "tested_sha256": "6d7b77b46de6ff5e95cb912fb6a055096b2d143e292d6dab22e2ecf2369d0fab"
+    },
+    {
+      "path": "tech-priests_src/scripts/generated/control_legacy_part_002.lua",
+      "tested_sha256": "da6df2d73d014df5d60fceeea24460ba0a345db1eab746812435b79a51eeb96b"
+    },
+    {
+      "path": "tech-priests_src/scripts/generated/control_legacy_part_003.lua",
+      "tested_sha256": "d0d79c9eb0587bf7e31dcbddf56b6cc0cfbd3286c358349ce57fd16e988c84f2"
+    },
+    {
+      "path": "tech-priests_src/scripts/generated/control_legacy_part_004.lua",
+      "tested_sha256": "43a904b29e2ba96347b63ac98b23b9cfcd7b88ad595ed8834fe807081a8b877f"
+    },
+    {
+      "path": "tech-priests_src/scripts/generated/control_legacy_part_005.lua",
+      "tested_sha256": "d4e0f822da56e899305aee2a6fe467d1a47059bafed98b6a2c305cd1b176985d"
+    },
+    {
+      "path": "tech-priests_src/scripts/generated/control_legacy_part_006.lua",
+      "tested_sha256": "51f373ad9e34953d117d8c6be4053602909d62a7c0252f41e3b541446799653b"
+    },
+    {
+      "path": "tech-priests_src/scripts/generated/control_legacy_part_007.lua",
+      "tested_sha256": "7fa56cbcc2929f635e6f5e57c055f2cc260709a2e8d3f50428cc21afe24493e3"
+    },
+    {
+      "path": "tech-priests_src/scripts/generated/control_legacy_part_008.lua",
+      "tested_sha256": "8d1a6f86fa7e60e749aae75dbf278f1fc7f8e9e10c6b21d47781405052ddce76"
+    },
+    {
+      "path": "tech-priests_src/scripts/generated/control_legacy_part_009.lua",
+      "tested_sha256": "52a431ff8697504bfeb19da165cdbe712e2d52e703907df8a09988ecd0eaac70"
+    },
+    {
+      "path": "tech-priests_src/scripts/generated/control_legacy_part_010.lua",
+      "tested_sha256": "ce3267b4089a5555642c64ccba3be291a3572b1f7935e84ed6eee2be602bc7eb"
+    },
+    {
+      "path": "tech-priests_src/scripts/generated/control_legacy_part_011.lua",
+      "tested_sha256": "5435e2148748e686d37a5eec173673557b685e34615dcc6539a3ff7423c39dfc"
+    },
+    {
+      "path": "tech-priests_src/scripts/generated/control_legacy_part_012.lua",
+      "tested_sha256": "b517f0d46d0357c6cda67473ec3ca3910cee6a8c507bb5a357d01f7c11ffe4b9"
+    },
+    {
+      "path": "tech-priests_src/scripts/generated/control_legacy_part_013.lua",
+      "tested_sha256": "dc7b3d521b5a024b5cef332a3abd974368cb8b4ccc840c08a62964df4e27b673"
+    },
+    {
+      "path": "tech-priests_src/scripts/generated/control_legacy_part_014.lua",
+      "tested_sha256": "196ab921631e85f8fde2e6f74215989f19a0cc8b9d8188e2101e218ae0a7fd41"
+    },
+    {
+      "path": "tech-priests_src/scripts/generated/control_legacy_part_015.lua",
+      "tested_sha256": "9edc4bd6d95742f0c9e5f3a00abbead4a1e161e1506ebf42efcb1f40790e2dc5"
+    },
+    {
+      "path": "tech-priests_src/scripts/generated/control_legacy_part_016.lua",
+      "tested_sha256": "ab3ee6eb22af93a77f4bdc1b563f83a20f698affb2d9dc39fdb8d21297a4127a"
+    },
+    {
+      "path": "tech-priests_src/scripts/generated/control_legacy_part_017.lua",
+      "tested_sha256": "c9730a3c32c46d7147592bd9f8cce87a28d00e8f0df830f1ab557bca59b421ac"
+    },
+    {
+      "path": "tech-priests_src/scripts/generated/control_legacy_part_018.lua",
+      "tested_sha256": "13fc8bba658938c03c1b9469f6137aa5784ec8f120901da6114331c02510bda0"
+    },
+    {
+      "path": "tech-priests_src/scripts/generated/control_legacy_part_019.lua",
+      "tested_sha256": "c1d11406abed7d79210e61f964ceb8244a2b6a7844d4cab0b3a5b4dd7e4bf839"
+    },
+    {
+      "path": "tech-priests_src/scripts/generated/control_legacy_part_020.lua",
+      "tested_sha256": "334e1c5c304b10d079ac81f8abf5c639526baaf94046137a32fc4f80144bc7cb"
+    },
+    {
+      "path": "tech-priests_src/scripts/generated/control_legacy_part_021.lua",
+      "tested_sha256": "c30442d95150202104262f5114c0be7f9be612958ae4f3f2e33b960e2c1cfb60"
+    },
+    {
+      "path": "tech-priests_src/scripts/generated/control_legacy_part_022.lua",
+      "tested_sha256": "7806d25746fa8244ecb52e130fbce56db188d3f0003547b1c6130d887d6cbb7a"
+    },
+    {
+      "path": "tech-priests_src/scripts/gui/gui_router.lua",
+      "tested_sha256": "f01e0f9cf99717ee591cf48e64e552cf349a1baf2e7afd5c6ad99ca8bc76bac2"
+    },
+    {
+      "path": "tech-priests_src/scripts/idle_player_conversations.lua",
+      "tested_sha256": "821309d992f1263b4b754d51e0377086b5293676e9219a8aaed8532303c9a5b3"
+    },
+    {
+      "path": "tech-priests_src/scripts/idle_priest_conversations.lua",
+      "tested_sha256": "ec4c47923a78f3f29c27a6690587fd47d0f5a420eeb31f2adc28d73c17534ec8"
+    },
+    {
+      "path": "tech-priests_src/scripts/magos_ratio_planning.lua",
+      "tested_sha256": "9cd1b5cd78e5107c34abc4927b175bc463294909ea6f7579c15e31a0c6ba6e25"
+    },
+    {
+      "path": "tech-priests_src/scripts/magos_station_expansion.lua",
+      "tested_sha256": "7a279fee79409976b74d3c73e8cb98dee1cc01ab2b9e2721509e378ba33602cc"
+    },
+    {
+      "path": "tech-priests_src/scripts/orbital_trader_visuals.lua",
+      "tested_sha256": "80ba0677370c30881cb161c13b10e62fbe15c2298c188f4760037fa3186951a2"
+    },
+    {
+      "path": "tech-priests_src/scripts/placement_safety_and_detritus.lua",
+      "tested_sha256": "2d5811a374db310defee055197c487b81db961aefbb618c0ecda1392751417eb"
+    },
+    {
+      "path": "tech-priests_src/scripts/planetary-magos-special-names.lua",
+      "tested_sha256": "22562d9f3ed4b08220d44b5bb68601b4482d960694352d4dbbfbc7e2054b0867"
+    },
+    {
+      "path": "tech-priests_src/scripts/resource_expansion.lua",
+      "tested_sha256": "942f0c984820a38662a52d18c8812e911318af168569e33cc20770ec8b678bd3"
+    },
+    {
+      "path": "tech-priests_src/scripts/rocket_salvo_controller.lua",
+      "tested_sha256": "0b2c0b8c62833e017b64043fb4d02829567a21a049f0652898e07cc9dd42cf63"
+    },
+    {
+      "path": "tech-priests_src/scripts/rocket_salvo_geometry.lua",
+      "tested_sha256": "71ae43f34f5775a2453f71c0532c3af252bec3d2c25c2bb6b056e0380c469464"
+    },
+    {
+      "path": "tech-priests_src/scripts/twin_cannon_controller.lua",
+      "tested_sha256": "24d0e5daa41974af052455ff8c0c32e5d9c97fbd95f32d9051c57e936f5d0192"
+    },
+    {
+      "path": "tech-priests_src/settings-final-fixes.lua",
+      "tested_sha256": "5dca28aeeb5586a2a07f1433541fe02ce16ca35d6000fd50214baae8da3c1c54"
+    },
+    {
+      "path": "tech-priests_src/settings-updates.lua",
+      "tested_sha256": "fd9181d569b51873c1bc27b508656a67695199115fceb113beab71320946de73"
+    },
+    {
+      "path": "tech-priests_src/settings.lua",
+      "tested_sha256": "ba6d546cfd2f36ec3564f33b39f0553dcbb14576ec6c817416e936b592e71045"
+    }
+  ],
+  "no_gameplay_changes": true,
+  "normal_quality_verification_scope": true,
+  "full_user_mod_pack_verified": false,
+  "portal_release": false,
+  "remaining_required_work": [],
+  "scope": "Supersedes pending recovery flags with verified physical interchange and focused native evidence. Original approval applies to V25 source geometry and existing game sprites. New image/interchange copy assessed under delegated operational close-enough authority."
+}

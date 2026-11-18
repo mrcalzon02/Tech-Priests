@@ -1,0 +1,36 @@
+{
+  "passed": true,
+  "source_sha256": "1b23b1280a872d8a0b5b6a60fd16c7a9806a7d5d9b62619e8e39b01705db3354",
+  "actual_source_reopened": true,
+  "packed_loaded_images": [
+    {
+      "name": "MinerV25_albedo",
+      "size": [
+        2048,
+        2048
+      ],
+      "packed": true
+    },
+    {
+      "name": "MinerV25_normal",
+      "size": [
+        2048,
+        2048
+      ],
+      "packed": true
+    },
+    {
+      "name": "MinerV25_orm",
+      "size": [
+        2048,
+        2048
+      ],
+      "packed": true
+    }
+  ],
+  "actual_glb_animation_clips": 1,
+  "clip_seconds": 2,
+  "clip_zero_origin": true,
+  "all_three_rigs_synchronized": true,
+  "loop_max_bounds_delta": 0.0
+}

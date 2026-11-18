@@ -1,0 +1,575 @@
+{
+  "source_export_sha256": "07453e0a6fc2cb248f5e9bb8f810c15cc24680d12f7f206b878315cd365102f8",
+  "cleaned_export_sha256": "0724914638323f9b9758e7a3957156ec6aabf38b0b00072df21edaf486ad0920",
+  "removed_triangles": 134,
+  "vertex_transform_rig_material_and_image_data_unchanged": true,
+  "only_zero_geometry_or_zero_uv_sub_nanounit_slivers_removed": true,
+  "rows": [
+    {
+      "mesh": "Cylinder.006",
+      "removed": [
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        }
+      ]
+    },
+    {
+      "mesh": "Cylinder.007",
+      "removed": [
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        }
+      ]
+    },
+    {
+      "mesh": "Cube.034",
+      "removed": [
+        {
+          "area": 1.726471578058285e-11,
+          "uv_area": 0.0
+        },
+        {
+          "area": 1.215306401942163e-10,
+          "uv_area": 0.0
+        },
+        {
+          "area": 1.2090002876409605e-10,
+          "uv_area": 0.0
+        },
+        {
+          "area": 1.7264662154855575e-11,
+          "uv_area": 0.0
+        },
+        {
+          "area": 8.381477595298392e-10,
+          "uv_area": 0.0
+        },
+        {
+          "area": 8.381477595298392e-10,
+          "uv_area": 0.0
+        }
+      ]
+    },
+    {
+      "mesh": "Cube.010",
+      "removed": [
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        }
+      ]
+    },
+    {
+      "mesh": "Cube.013",
+      "removed": [
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        }
+      ]
+    },
+    {
+      "mesh": "Cube.016",
+      "removed": [
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        },
+        {
+          "area": 0.0,
+          "uv_area": 0.0
+        }
+      ]
+    }
+  ]
+}

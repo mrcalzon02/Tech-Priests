@@ -1,0 +1,197 @@
+{
+  "genuine_native_capture": true,
+  "separate_task_desktop": true,
+  "default_desktop_untouched": true,
+  "capture": {
+    "passed": true,
+    "frames": [
+      {
+        "file": "idle-close.png",
+        "status": 66,
+        "working": true
+      },
+      {
+        "file": "working-00.png",
+        "status": 1,
+        "working": true,
+        "progress": 0.5564814814824642
+      },
+      {
+        "file": "working-01.png",
+        "status": 1,
+        "working": true,
+        "progress": 0.563888888889872
+      },
+      {
+        "file": "working-02.png",
+        "status": 1,
+        "working": true,
+        "progress": 0.5712962962972798
+      },
+      {
+        "file": "working-03.png",
+        "status": 1,
+        "working": true,
+        "progress": 0.5787037037046876
+      },
+      {
+        "file": "working-04.png",
+        "status": 1,
+        "working": true,
+        "progress": 0.5861111111120954
+      },
+      {
+        "file": "working-05.png",
+        "status": 1,
+        "working": true,
+        "progress": 0.5935185185195031
+      },
+      {
+        "file": "working-06.png",
+        "status": 1,
+        "working": true,
+        "progress": 0.6009259259269109
+      },
+      {
+        "file": "working-07.png",
+        "status": 1,
+        "working": true,
+        "progress": 0.6083333333343187
+      },
+      {
+        "file": "working-08.png",
+        "status": 1,
+        "working": true,
+        "progress": 0.6157407407417265
+      },
+      {
+        "file": "working-09.png",
+        "status": 1,
+        "working": true,
+        "progress": 0.6231481481491342
+      },
+      {
+        "file": "working-10.png",
+        "status": 1,
+        "working": true,
+        "progress": 0.630555555556542
+      },
+      {
+        "file": "working-11.png",
+        "status": 1,
+        "working": true,
+        "progress": 0.6379629629639498
+      },
+      {
+        "file": "working-12.png",
+        "status": 1,
+        "working": true,
+        "progress": 0.6453703703713576
+      },
+      {
+        "file": "working-13.png",
+        "status": 1,
+        "working": true,
+        "progress": 0.6527777777787653
+      },
+      {
+        "file": "working-14.png",
+        "status": 1,
+        "working": true,
+        "progress": 0.6601851851861731
+      },
+      {
+        "file": "working-15.png",
+        "status": 1,
+        "working": true,
+        "progress": 0.6675925925935808
+      }
+    ],
+    "wide": [
+      "idle-gallery.png",
+      "working-gallery.png"
+    ],
+    "actual_native_direction": 0,
+    "sprites_replaced": false,
+    "screenshots": [
+      {
+        "file": "idle-close.png",
+        "sha256": "d73d4ea8071f1952b60d6adf7df70fc13c6d616e5452ae74fa05171bd5c318a9"
+      },
+      {
+        "file": "working-00.png",
+        "sha256": "e3fd5ac5ada3c0f0949bddf3bc9e80e1901166721cf3f3532d2a4c63e67d2e67"
+      },
+      {
+        "file": "working-01.png",
+        "sha256": "f0e3d9fa12a655a80cf0d7246efef288e77138092fa4da2daf328e21e3beb5c8"
+      },
+      {
+        "file": "working-02.png",
+        "sha256": "ce5919f638d27c4baa5c09633431027441185acc4bf69a925aa0959db18e3d7f"
+      },
+      {
+        "file": "working-03.png",
+        "sha256": "f327196b90319e1827a33d8838d3ca3df9397d287956851bfe91f8748c7117e4"
+      },
+      {
+        "file": "working-04.png",
+        "sha256": "10e4a2f67bd07a6afe92bf7b4d0a7c5aabd32749cdf10b32d9afdc460f8bcd69"
+      },
+      {
+        "file": "working-05.png",
+        "sha256": "aba9059270dd2b2d92bac622801d9aed4c71774468e61cc46d27669e123430c3"
+      },
+      {
+        "file": "working-06.png",
+        "sha256": "5622371b1e791fa6a7b5a872cd8af7332d800dadfc2076666c9401e3f03e3e7e"
+      },
+      {
+        "file": "working-07.png",
+        "sha256": "40e4c4044b603f71223d00c5627883d9430acedadfd96a0391025a6c89816193"
+      },
+      {
+        "file": "working-08.png",
+        "sha256": "f3dc86e3eb22ed6ee32cd5e4ddaa7dda3b6696b452089e7ca705a1e8c27a98c6"
+      },
+      {
+        "file": "working-09.png",
+        "sha256": "ab771d0b99119b2ccf54fd677e9c3a7c8d6b90aec06c6152de9e96dc5486a51c"
+      },
+      {
+        "file": "working-10.png",
+        "sha256": "1dcaa5b2ef50143753efabf655fd8757a0da37f0a22358c3c4fbe44b2ab1f3be"
+      },
+      {
+        "file": "working-11.png",
+        "sha256": "c376bb97b5771e389c9e74ddd5834f290cab6c6bc05945470d726d1bfb47ebd4"
+      },
+      {
+        "file": "working-12.png",
+        "sha256": "b3fe5ccb49dd9c15944d1fc040597ad7ae0cc501a1b5c1c0c2b82b50a50acd72"
+      },
+      {
+        "file": "working-13.png",
+        "sha256": "4953b6f25a9cb4c57e41e6125daa2236c73a4eaf30f5ac139b8b371fc4c6be7a"
+      },
+      {
+        "file": "working-14.png",
+        "sha256": "395485de71bdf2baf62883bc93e37f495892f660b5b68a00e647d164c653b1ed"
+      },
+      {
+        "file": "working-15.png",
+        "sha256": "3a79e34a5bc304306634b3a1dc3e9c7a0e5485acdf3eb8ea38576d46f989cb1d"
+      },
+      {
+        "file": "idle-gallery.png",
+        "sha256": "57987ece20b6c8fac2b8a8d86aa8c6ccf4f84b5fd18d087223cc0cd52a25df80"
+      },
+      {
+        "file": "working-gallery.png",
+        "sha256": "97a7e1d822945446c016987fce346ff27e8fed6c68aa6779b52df5007e7fb635"
+      }
+    ]
+  },
+  "engine_graphics_quality": "medium",
+  "owner_visual_approved": false
+}

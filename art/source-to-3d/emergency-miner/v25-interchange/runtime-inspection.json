@@ -1,0 +1,571 @@
+{
+  "source_sha256": "1b23b1280a872d8a0b5b6a60fd16c7a9806a7d5d9b62619e8e39b01705db3354",
+  "runtime_sha256": "0724914638323f9b9758e7a3957156ec6aabf38b0b00072df21edaf486ad0920",
+  "meshes": 206,
+  "nine_source_runtime_pose_checks": true,
+  "max_transformed_bounds_error": 1.4901161193847656e-07,
+  "pose_errors": [],
+  "geometry": {
+    "triangles": 70602,
+    "nonfinite_vertices": 0,
+    "zero_area_triangles": 0,
+    "nonfinite_uv": 0,
+    "zero_area_uv_triangles": 0,
+    "missing_uv_meshes": []
+  },
+  "actual_export_pbr_pixel_checks": [
+    {
+      "material": "MinerV25_amber_light",
+      "channels": {
+        "base": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "albedo"
+          ]
+        },
+        "roughness": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "orm"
+          ]
+        },
+        "metallic": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "orm"
+          ]
+        },
+        "normal": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "normal"
+          ]
+        }
+      }
+    },
+    {
+      "material": "MinerV25_black_steel",
+      "channels": {
+        "base": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "albedo"
+          ]
+        },
+        "roughness": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "orm"
+          ]
+        },
+        "metallic": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "orm"
+          ]
+        },
+        "normal": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "normal"
+          ]
+        }
+      }
+    },
+    {
+      "material": "MinerV25_black_wire",
+      "channels": {
+        "base": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "albedo"
+          ]
+        },
+        "roughness": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "orm"
+          ]
+        },
+        "metallic": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "orm"
+          ]
+        },
+        "normal": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "normal"
+          ]
+        }
+      }
+    },
+    {
+      "material": "MinerV25_brass",
+      "channels": {
+        "base": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "albedo"
+          ]
+        },
+        "roughness": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "orm"
+          ]
+        },
+        "metallic": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "orm"
+          ]
+        },
+        "normal": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "normal"
+          ]
+        }
+      }
+    },
+    {
+      "material": "MinerV25_bright_green",
+      "channels": {
+        "base": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "albedo"
+          ]
+        },
+        "roughness": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "orm"
+          ]
+        },
+        "metallic": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "orm"
+          ]
+        },
+        "normal": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "normal"
+          ]
+        }
+      }
+    },
+    {
+      "material": "MinerV25_copper",
+      "channels": {
+        "base": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "albedo"
+          ]
+        },
+        "roughness": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "orm"
+          ]
+        },
+        "metallic": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "orm"
+          ]
+        },
+        "normal": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "normal"
+          ]
+        }
+      }
+    },
+    {
+      "material": "MinerV25_crevice",
+      "channels": {
+        "base": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "albedo"
+          ]
+        },
+        "roughness": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "orm"
+          ]
+        },
+        "metallic": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "orm"
+          ]
+        },
+        "normal": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "normal"
+          ]
+        }
+      }
+    },
+    {
+      "material": "MinerV25_dim_green",
+      "channels": {
+        "base": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "albedo"
+          ]
+        },
+        "roughness": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "orm"
+          ]
+        },
+        "metallic": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "orm"
+          ]
+        },
+        "normal": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "normal"
+          ]
+        }
+      }
+    },
+    {
+      "material": "MinerV25_edge_steel",
+      "channels": {
+        "base": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "albedo"
+          ]
+        },
+        "roughness": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "orm"
+          ]
+        },
+        "metallic": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "orm"
+          ]
+        },
+        "normal": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "normal"
+          ]
+        }
+      }
+    },
+    {
+      "material": "MinerV25_FX ONLY | diagnostic lamp 0",
+      "channels": {
+        "base": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "albedo"
+          ]
+        },
+        "roughness": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "orm"
+          ]
+        },
+        "metallic": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "orm"
+          ]
+        },
+        "normal": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "normal"
+          ]
+        }
+      }
+    },
+    {
+      "material": "MinerV25_FX ONLY | diagnostic lamp 1",
+      "channels": {
+        "base": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "albedo"
+          ]
+        },
+        "roughness": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "orm"
+          ]
+        },
+        "metallic": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "orm"
+          ]
+        },
+        "normal": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "normal"
+          ]
+        }
+      }
+    },
+    {
+      "material": "MinerV25_FX ONLY | diagnostic lamp 2",
+      "channels": {
+        "base": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "albedo"
+          ]
+        },
+        "roughness": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "orm"
+          ]
+        },
+        "metallic": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "orm"
+          ]
+        },
+        "normal": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "normal"
+          ]
+        }
+      }
+    },
+    {
+      "material": "MinerV25_FX ONLY | diagnostic lamp 3",
+      "channels": {
+        "base": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "albedo"
+          ]
+        },
+        "roughness": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "orm"
+          ]
+        },
+        "metallic": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "orm"
+          ]
+        },
+        "normal": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "normal"
+          ]
+        }
+      }
+    },
+    {
+      "material": "MinerV25_FX ONLY | independently flickering LCD",
+      "channels": {
+        "base": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "albedo"
+          ]
+        },
+        "roughness": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "orm"
+          ]
+        },
+        "metallic": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "orm"
+          ]
+        },
+        "normal": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "normal"
+          ]
+        }
+      }
+    },
+    {
+      "material": "MinerV25_green_wire",
+      "channels": {
+        "base": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "albedo"
+          ]
+        },
+        "roughness": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "orm"
+          ]
+        },
+        "metallic": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "orm"
+          ]
+        },
+        "normal": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "normal"
+          ]
+        }
+      }
+    },
+    {
+      "material": "MinerV25_iron",
+      "channels": {
+        "base": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "albedo"
+          ]
+        },
+        "roughness": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "orm"
+          ]
+        },
+        "metallic": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "orm"
+          ]
+        },
+        "normal": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "normal"
+          ]
+        }
+      }
+    },
+    {
+      "material": "MinerV25_old_gold",
+      "channels": {
+        "base": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "albedo"
+          ]
+        },
+        "roughness": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "orm"
+          ]
+        },
+        "metallic": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "orm"
+          ]
+        },
+        "normal": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "normal"
+          ]
+        }
+      }
+    },
+    {
+      "material": "MinerV25_red_wire",
+      "channels": {
+        "base": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "albedo"
+          ]
+        },
+        "roughness": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "orm"
+          ]
+        },
+        "metallic": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "orm"
+          ]
+        },
+        "normal": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "normal"
+          ]
+        }
+      }
+    },
+    {
+      "material": "MinerV25_worn_steel",
+      "channels": {
+        "base": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "albedo"
+          ]
+        },
+        "roughness": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "orm"
+          ]
+        },
+        "metallic": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "orm"
+          ]
+        },
+        "normal": {
+          "max_pixel_error": 0.0,
+          "images": [
+            "normal"
+          ]
+        }
+      }
+    }
+  ],
+  "technical_checks_passed": true,
+  "scope": "Physical geometry and baked image/TRS interchange. Shader/light/steam animation remains in exact approved original and unchanged native sprites. Zero-area counts are disclosed, not silently treated as clean geometry."
+}
