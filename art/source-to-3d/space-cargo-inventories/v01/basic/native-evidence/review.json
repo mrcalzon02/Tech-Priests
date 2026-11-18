@@ -1,0 +1,245 @@
+{
+  "passed": true,
+  "source_sha256": "e8b0dbe39f95808792e10009ec940edf7a2d47b244d418911ae7b94dcad4d7cb",
+  "export_sha256": "33257eefc64739e3cffec01890dd42a3c44b172b902cacdff5f7c19de8690efa",
+  "native": {
+    "genuine_platform": true,
+    "inventory": true,
+    "inputs": [
+      true,
+      true,
+      true,
+      true
+    ],
+    "outputs": [
+      true,
+      true,
+      true,
+      true
+    ],
+    "recipe_initially_disabled": true,
+    "tile_width": 6,
+    "tile_height": 3,
+    "platform_place": true,
+    "no_foundation_reject": true,
+    "nauvis_reject": true,
+    "research_unlock": true,
+    "wires": [
+      true,
+      true
+    ],
+    "far_reject": true,
+    "mixed_items": true,
+    "rotations": [
+      {
+        "inputs": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "outputs": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "grid": true,
+        "signals": true,
+        "rotated_bounds": true,
+        "passed": true
+      },
+      {
+        "inputs": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "outputs": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "grid": true,
+        "signals": true,
+        "rotated_bounds": true,
+        "passed": true
+      },
+      {
+        "inputs": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "outputs": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "grid": true,
+        "signals": true,
+        "rotated_bounds": true,
+        "passed": true
+      },
+      {
+        "inputs": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "outputs": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "grid": true,
+        "signals": true,
+        "rotated_bounds": true,
+        "passed": true
+      }
+    ],
+    "rotate_steps": [
+      {
+        "previous": 0,
+        "current": 8,
+        "rotated": true,
+        "position": {
+          "y": 0.5,
+          "x": 125
+        },
+        "contents": 13
+      },
+      {
+        "previous": 8,
+        "current": 0,
+        "rotated": true,
+        "position": {
+          "y": 0.5,
+          "x": 125
+        },
+        "contents": 13
+      },
+      {
+        "previous": 0,
+        "current": 8,
+        "rotated": true,
+        "position": {
+          "y": 0.5,
+          "x": 125
+        },
+        "contents": 13
+      },
+      {
+        "previous": 8,
+        "current": 0,
+        "rotated": true,
+        "position": {
+          "y": 0.5,
+          "x": 125
+        },
+        "contents": 13
+      }
+    ],
+    "normal_rotate": true,
+    "placed_rotation_behavior": "Native6x3 mixed-parity grid: placed R flips180; quarter-turn uses3x6 placement grid. Four placement orientations verified.",
+    "blocked": true,
+    "recovered": true,
+    "signals": true,
+    "mining": true,
+    "rotations_passed": true,
+    "passed": true
+  },
+  "reload": {
+    "passed": true,
+    "four_directions_preserved": true
+  },
+  "prototype_changes": {
+    "prototype": [
+      "/circuit_connector",
+      "/direction_count",
+      "/picture/layers",
+      "/picture/south",
+      "/picture/east",
+      "/picture/west",
+      "/picture/north",
+      "/icon"
+    ],
+    "item": [
+      "/icon"
+    ],
+    "recipe": [
+      "/icon"
+    ]
+  },
+  "unchanged_other_family_definitions": [
+    "container/tech-priests-martian-stone-cache",
+    "container/tech-priests-stone-cache-item-vault",
+    "container/tech-priests-stone-cache-coal",
+    "container/tech-priests-stone-cache-stone",
+    "container/tech-priests-stone-cache-wood",
+    "container/tech-priests-stone-cache-iron-ore",
+    "container/tech-priests-stone-cache-copper-ore",
+    "container/tech-priests-stone-cache-iron-plate",
+    "container/tech-priests-stone-cache-copper-plate",
+    "container/tech-priests-stone-cache-copper-cable",
+    "container/tech-priests-stone-cache-iron-gear-wheel",
+    "container/tech-priests-stone-cache-iron-stick",
+    "container/tech-priests-advanced-space-cargo-inventory",
+    "accumulator/tech-priests-stone-cache-primitive-acclimator-battery-bank",
+    "storage-tank/tech-priests-stone-cache-pressurized-fluid-vault",
+    "item/tech-priests-martian-stone-cache",
+    "item/tech-priests-stone-cache-item-vault",
+    "item/tech-priests-stone-cache-coal",
+    "item/tech-priests-stone-cache-stone",
+    "item/tech-priests-stone-cache-wood",
+    "item/tech-priests-stone-cache-iron-ore",
+    "item/tech-priests-stone-cache-copper-ore",
+    "item/tech-priests-stone-cache-iron-plate",
+    "item/tech-priests-stone-cache-copper-plate",
+    "item/tech-priests-stone-cache-copper-cable",
+    "item/tech-priests-stone-cache-iron-gear-wheel",
+    "item/tech-priests-stone-cache-iron-stick",
+    "item/tech-priests-advanced-space-cargo-inventory",
+    "item/tech-priests-stone-cache-primitive-acclimator-battery-bank",
+    "item/tech-priests-stone-cache-pressurized-fluid-vault",
+    "recipe/tech-priests-martian-stone-cache",
+    "recipe/tech-priests-stone-cache-item-vault",
+    "recipe/tech-priests-stone-cache-coal",
+    "recipe/tech-priests-stone-cache-stone",
+    "recipe/tech-priests-stone-cache-wood",
+    "recipe/tech-priests-stone-cache-iron-ore",
+    "recipe/tech-priests-stone-cache-copper-ore",
+    "recipe/tech-priests-stone-cache-iron-plate",
+    "recipe/tech-priests-stone-cache-copper-plate",
+    "recipe/tech-priests-stone-cache-copper-cable",
+    "recipe/tech-priests-stone-cache-iron-gear-wheel",
+    "recipe/tech-priests-stone-cache-iron-stick",
+    "recipe/tech-priests-advanced-space-cargo-inventory",
+    "recipe/tech-priests-stone-cache-primitive-acclimator-battery-bank",
+    "recipe/tech-priests-stone-cache-pressurized-fluid-vault",
+    "recipe/tech-priests-stone-cache-item-vault-recycling",
+    "recipe/tech-priests-stone-cache-coal-recycling",
+    "recipe/tech-priests-stone-cache-stone-recycling",
+    "recipe/tech-priests-stone-cache-wood-recycling",
+    "recipe/tech-priests-stone-cache-iron-ore-recycling",
+    "recipe/tech-priests-stone-cache-copper-ore-recycling",
+    "recipe/tech-priests-stone-cache-iron-plate-recycling",
+    "recipe/tech-priests-stone-cache-copper-plate-recycling",
+    "recipe/tech-priests-stone-cache-copper-cable-recycling",
+    "recipe/tech-priests-stone-cache-iron-gear-wheel-recycling",
+    "recipe/tech-priests-stone-cache-iron-stick-recycling",
+    "recipe/tech-priests-stone-cache-primitive-acclimator-battery-bank-recycling",
+    "recipe/tech-priests-stone-cache-pressurized-fluid-vault-recycling"
+  ],
+  "private_fixture": "Unmodified production mod plus private electric-energy-interface source feeding normal poles and ordinary inserters. Real LuaSpacePlatform, applied starter pack and foundation tiles. No test helper ships.",
+  "cargo_revision": "Owner requested varied cargo: slatted timber crate, metal case, three chime/hoop/bung barrels, supported tray with two open-jaw spanners, hammer and two screwdrivers; previous repeated-case study retained",
+  "rotation_revision": "Owner requested wall trusses and alternate rotations: continuous chords/diagonal braces/gussets plus four native pictures and registered contacts. Normal placed R flips180 on original6x3 grid; all four placement grids pass.",
+  "visual_review": "Native deck registration, bounded three green windows and varied cargo/circuit hardware inspected; clay/open/empty well plus four GLB views inspected separately.",
+  "owner_approval": "Owner accepted refined steel/green source as Advanced basis; final native screenshot approval not separately inferred"
+}

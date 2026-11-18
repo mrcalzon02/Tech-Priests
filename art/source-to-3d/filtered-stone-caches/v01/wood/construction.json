@@ -1,0 +1,18 @@
+{
+  "shared_wall_and_tablet": "Unchanged from inspected cache master",
+  "fill": "wood",
+  "objects": [
+    "Stock | cross-cut log 0 0",
+    "Stock | cross-cut log 0 1",
+    "Stock | cross-cut log 0 2",
+    "Stock | cross-cut log 0 3",
+    "Stock | cross-cut log 1 0",
+    "Stock | cross-cut log 1 1",
+    "Stock | cross-cut log 1 2",
+    "Stock | cross-cut log 2 0",
+    "Stock | cross-cut log 2 1"
+  ],
+  "stock_bed": "Stock | timber dunnage",
+  "state": "Static stock identity; no inventory-volume animation, power or fluid mechanism invented",
+  "native": "Six-slot named filtered cache; existing runtime steward and ordinary inserter access preserved"
+}

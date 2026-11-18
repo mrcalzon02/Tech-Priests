@@ -1,0 +1,378 @@
+{
+  "id": "tech-priests-martian-stone-cache",
+  "scope": "Base cache only; no variants started",
+  "prototype": {
+    "type": "container",
+    "name": "tech-priests-martian-stone-cache",
+    "icon": "__tech-priests__/graphics/icons/stone-cache/tech-priests-martian-stone-cache.png",
+    "flags": [
+      "placeable-neutral",
+      "player-creation"
+    ],
+    "minable": {
+      "mining_time": 0.35,
+      "result": "tech-priests-martian-stone-cache"
+    },
+    "max_health": 180,
+    "corpse": "small-remnants",
+    "dying_explosion": "medium-explosion",
+    "open_sound": {
+      "filename": "__base__/sound/metallic-chest-open.ogg",
+      "volume": 0.35
+    },
+    "close_sound": {
+      "filename": "__base__/sound/metallic-chest-close.ogg",
+      "volume": 0.35
+    },
+    "resistances": [
+      {
+        "type": "fire",
+        "percent": 90
+      },
+      {
+        "type": "impact",
+        "percent": 60
+      }
+    ],
+    "collision_box": [
+      [
+        -0.9,
+        -0.9
+      ],
+      [
+        0.9,
+        0.9
+      ]
+    ],
+    "selection_box": [
+      [
+        -1,
+        -1
+      ],
+      [
+        1,
+        1
+      ]
+    ],
+    "damaged_trigger_effect": {
+      "type": "create-entity",
+      "entity_name": "spark-explosion",
+      "offset_deviation": [
+        [
+          -0.5,
+          -0.5
+        ],
+        [
+          0.5,
+          0.5
+        ]
+      ],
+      "offsets": [
+        [
+          0,
+          1
+        ]
+      ],
+      "damage_type_filters": "fire"
+    },
+    "fast_replaceable_group": "container",
+    "inventory_size": 4,
+    "impact_category": "metal",
+    "icon_draw_specification": {
+      "scale": 0.7
+    },
+    "picture": {
+      "layers": [
+        {
+          "filename": "__tech-priests__/graphics/entity/stone-cache/tech-priests-martian-stone-cache-shadow.png",
+          "priority": "high",
+          "width": 1254,
+          "height": 1254,
+          "frame_count": 1,
+          "line_length": 1,
+          "draw_as_shadow": true,
+          "shift": [
+            0.08,
+            0.08
+          ],
+          "scale": 0.055
+        },
+        {
+          "filename": "__tech-priests__/graphics/entity/stone-cache/tech-priests-martian-stone-cache.png",
+          "priority": "high",
+          "width": 1254,
+          "height": 1254,
+          "frame_count": 1,
+          "line_length": 1,
+          "shift": [
+            0,
+            0
+          ],
+          "scale": 0.055
+        }
+      ]
+    },
+    "circuit_connector": [
+      {
+        "sprites": {
+          "connector_main": {
+            "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04a-base-sequence.png",
+            "priority": "low",
+            "width": 52,
+            "height": 50,
+            "scale": 0.5,
+            "x": 104,
+            "y": 150,
+            "shift": [
+              0.09375,
+              0.203125
+            ]
+          },
+          "connector_shadow": {
+            "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04b-base-shadow-sequence.png",
+            "priority": "low",
+            "draw_as_shadow": true,
+            "width": 60,
+            "height": 46,
+            "scale": 0.5,
+            "x": 120,
+            "y": 138,
+            "shift": [
+              0.3125,
+              0.3125
+            ]
+          },
+          "wire_pins": {
+            "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04c-wire-sequence.png",
+            "priority": "low",
+            "width": 62,
+            "height": 58,
+            "scale": 0.5,
+            "x": 124,
+            "y": 174,
+            "shift": [
+              0.09375,
+              0.203125
+            ]
+          },
+          "wire_pins_shadow": {
+            "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04d-wire-shadow-sequence.png",
+            "priority": "low",
+            "draw_as_shadow": true,
+            "width": 68,
+            "height": 54,
+            "scale": 0.5,
+            "x": 136,
+            "y": 162,
+            "shift": [
+              0.390625,
+              0.34375
+            ]
+          },
+          "led_blue": {
+            "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04e-blue-LED-on-sequence.png",
+            "priority": "low",
+            "draw_as_glow": true,
+            "width": 60,
+            "height": 60,
+            "scale": 0.5,
+            "x": 120,
+            "y": 180,
+            "shift": [
+              0.09375,
+              0.171875
+            ]
+          },
+          "led_blue_off": {
+            "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04f-blue-LED-off-sequence.png",
+            "priority": "low",
+            "width": 46,
+            "height": 44,
+            "scale": 0.5,
+            "x": 92,
+            "y": 132,
+            "shift": [
+              0.09375,
+              0.171875
+            ]
+          },
+          "led_green": {
+            "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04h-green-LED-sequence.png",
+            "priority": "low",
+            "draw_as_glow": true,
+            "width": 48,
+            "height": 46,
+            "scale": 0.5,
+            "x": 96,
+            "y": 138,
+            "shift": [
+              0.09375,
+              0.171875
+            ]
+          },
+          "led_red": {
+            "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04i-red-LED-sequence.png",
+            "priority": "low",
+            "draw_as_glow": true,
+            "width": 48,
+            "height": 46,
+            "scale": 0.5,
+            "x": 96,
+            "y": 138,
+            "shift": [
+              0.09375,
+              0.171875
+            ]
+          },
+          "led_light": {
+            "intensity": 0,
+            "size": 0.9
+          },
+          "blue_led_light_offset": [
+            0.09375,
+            0.453125
+          ],
+          "red_green_led_light_offset": [
+            0.09375,
+            0.359375
+          ]
+        },
+        "points": {
+          "wire": {
+            "red": [
+              0.34375,
+              0.203125
+            ],
+            "green": [
+              0.40625,
+              0.421875
+            ]
+          },
+          "shadow": {
+            "red": [
+              0.859375,
+              0.546875
+            ],
+            "green": [
+              0.671875,
+              0.546875
+            ]
+          }
+        }
+      }
+    ],
+    "circuit_wire_max_distance": 9,
+    "default_empty_slots_signal": {
+      "type": "virtual",
+      "name": "signal-E"
+    },
+    "water_reflection": {
+      "pictures": {
+        "filename": "__base__/graphics/entity/wooden-chest/chest-reflection.png",
+        "width": 13,
+        "height": 20,
+        "scale": 5
+      },
+      "rotate": false
+    },
+    "surface_conditions": [
+      {
+        "property": "gravity",
+        "min": 0.1
+      }
+    ],
+    "localised_name": [
+      "entity-name.tech-priests-martian-stone-cache"
+    ],
+    "localised_description": [
+      "entity-description.tech-priests-martian-stone-cache"
+    ],
+    "icon_size": 64,
+    "order": "z[stone-cache]-a[basic]"
+  },
+  "item": {
+    "type": "item",
+    "name": "tech-priests-martian-stone-cache",
+    "localised_name": [
+      "item-name.tech-priests-martian-stone-cache"
+    ],
+    "localised_description": [
+      "item-description.tech-priests-martian-stone-cache"
+    ],
+    "icon": "__tech-priests__/graphics/icons/stone-cache/tech-priests-martian-stone-cache.png",
+    "icon_size": 64,
+    "subgroup": "tech-priest-emergency-industry",
+    "order": "z[stone-cache]-a[basic]",
+    "place_result": "tech-priests-martian-stone-cache",
+    "stack_size": 50
+  },
+  "recipe": {
+    "type": "recipe",
+    "name": "tech-priests-martian-stone-cache",
+    "localised_name": [
+      "recipe-name.tech-priests-martian-stone-cache"
+    ],
+    "localised_description": [
+      "recipe-description.tech-priests-martian-stone-cache"
+    ],
+    "icon": "__tech-priests__/graphics/icons/stone-cache/tech-priests-martian-stone-cache.png",
+    "icon_size": 64,
+    "subgroup": "tech-priest-emergency-industry",
+    "order": "z[stone-cache]-a[basic]",
+    "enabled": true,
+    "energy_required": 6,
+    "ingredients": [
+      {
+        "type": "item",
+        "name": "stone",
+        "amount": 32
+      }
+    ],
+    "results": [
+      {
+        "type": "item",
+        "name": "tech-priests-martian-stone-cache",
+        "amount": 1
+      },
+      {
+        "type": "item",
+        "name": "mechanical-detritus",
+        "amount": 1,
+        "ignored_by_stats": 1,
+        "ignored_by_productivity": 1,
+        "independent_probability": 0
+      }
+    ],
+    "main_product": "tech-priests-martian-stone-cache",
+    "categories": [
+      "crafting"
+    ]
+  },
+  "recipe_unlocks": [],
+  "behavior": {
+    "storage": "Four-slot general emergency station stash; no base-cache item filter",
+    "runtime_authorities": [
+      "scripts/core/storage_role_authority_0686.lua",
+      "scripts/core/master_infrastructure_plan_0644.lua"
+    ],
+    "filtered_cache_steward_applies": false,
+    "fluids": false,
+    "electric_power": false,
+    "circuit": "Inherited steel chest connectors, read-contents control and wire reach9 preserved exactly",
+    "directions": "Native fixed north; four source rotations for review, no new rotatable behavior",
+    "animation": "Static cloth-covered container; no native open/working animation and none invented",
+    "access": "Ordinary Factorio inserters on normal player grid; no precision alignment"
+  },
+  "source_recovery": {
+    "result": "Original body/shadow/icon recovered; no editable cache source found in model ledger, shared inventory or workspace source searches",
+    "limitation": "Independent reconstruction guided by actual original sprite; not claimed recovered Blender source",
+    "protected": "Tanks source/assets, emergency steam engine, accepted Conclave, hydrogen/reactors and shared in-flight FMPL adapter unchanged"
+  },
+  "baseline": {
+    "native_dump_sha256": "70ea73092c016f9c0092e2515c6a8a3fd05e73b0a9e7728b5ad2a4c398d4e085",
+    "prototype_sha256": "9a2a8d2b5533b4ac4e303a9c0c3f90dae83f76c4d2bf1e8e958d4c48bd78fd82",
+    "reference_sha256": "c2d0143aa5047b6a9f6a425aa7b1ab5e34b284f2f9760a01ce66a0f78aa323b5",
+    "main_verified": "8c8ddbd5a4f5937190fd6cc801328ef1648f0f37; latest diff registers Tanks Shaler, no cache change",
+    "local_checkpoint": "991d558ea52ef34d75c29103b232e929f351ded4"
+  }
+}

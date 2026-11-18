@@ -1,0 +1,6 @@
+Low Poly Skull (Craneo) by DGordillo
+Source: https://blendswap.com/blend/2499
+License: Creative Commons Attribution 3.0 Unported (CC BY 3.0)
+https://creativecommons.org/licenses/by/3.0/
+Adaptations for Tech Priests: resized; depth reshaped for cast cog seals; recolored with FMPL metallic surfaces; repositioned on station housings; original sculpt normal detail retained and rebaked into station atlases.
+DGordillo is the creator of the skull mesh and original texture/sculpt detail. No endorsement is implied.

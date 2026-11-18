@@ -1,0 +1,41 @@
+{
+  "id": "tech-priests-conclave-center",
+  "type": "container",
+  "footprint": [
+    2,
+    2
+  ],
+  "collision_box": [
+    [
+      -0.9,
+      -0.9
+    ],
+    [
+      0.9,
+      0.9
+    ]
+  ],
+  "selection_box": [
+    [
+      -1,
+      -1
+    ],
+    [
+      1,
+      1
+    ]
+  ],
+  "inventory_size": 1,
+  "max_health": 450,
+  "ground_z": 0,
+  "interfaces": {
+    "fluid": [],
+    "electrical": [],
+    "circuit": []
+  },
+  "rotation": "Native plain container is fixed-facing; four source rotations supplied for inspection only. Do not alter native gameplay to force rotation.",
+  "animation": "Static governance console; native prototype has no working state.",
+  "standard_inserter_access": true,
+  "model_reconstruction": "emm13.png reference; original Conclave 3D source unlocated",
+  "no_owner_approval_inferred": true
+}

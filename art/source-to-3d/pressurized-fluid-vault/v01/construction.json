@@ -1,0 +1,107 @@
+{
+  "ports": [
+    {
+      "name": "north",
+      "source_mouth": [
+        0.0,
+        1.5,
+        0.4399999976158142
+      ],
+      "normal": [
+        0,
+        1,
+        0
+      ],
+      "inner": [
+        0.0,
+        0.5350000262260437,
+        0.4399999976158142
+      ],
+      "throat": "Fluid | north continuous open throat",
+      "collar": "Fluid | north full-size mouth collar",
+      "bore": 0.56,
+      "collar_od": 0.84,
+      "native_position": [
+        0,
+        -1
+      ],
+      "adjacent_pipe": [
+        0,
+        -2
+      ]
+    },
+    {
+      "name": "south",
+      "source_mouth": [
+        0.0,
+        -1.5,
+        0.4399999976158142
+      ],
+      "normal": [
+        0,
+        -1,
+        0
+      ],
+      "inner": [
+        0.0,
+        -0.5350000262260437,
+        0.4399999976158142
+      ],
+      "throat": "Fluid | south continuous open throat",
+      "collar": "Fluid | south full-size mouth collar",
+      "bore": 0.56,
+      "collar_od": 0.84,
+      "native_position": [
+        0,
+        1
+      ],
+      "adjacent_pipe": [
+        0,
+        2
+      ]
+    }
+  ],
+  "terminals": {
+    "red": [
+      0.625,
+      -0.776,
+      0.61
+    ],
+    "green": [
+      0.715,
+      -0.776,
+      0.47
+    ]
+  },
+  "leds": {
+    "blue": [
+      0.585,
+      -0.7725,
+      0.5
+    ],
+    "red-green": [
+      0.585,
+      -0.7725,
+      0.59
+    ]
+  },
+  "pressure_volume": "Closed iron liner and floor under gasketed rectangular hatch; both sleeves open into the shared cavity",
+  "gauge": "Mounted case and continuous pressure tap; static nominal needle only",
+  "shared_sources": [
+    "art/source-to-3d/item-vault/v01/item-vault-v01.blend",
+    "art/source-to-3d/martian-stone-cache/v01/martian-stone-enclosure-kit.blend"
+  ],
+  "rotation": "Native 0/4 states only. Source review 180/90 views are aliases, not new gameplay facings.",
+  "registration": {
+    "ortho_scale": 4,
+    "scale": 0.25,
+    "ground_y_scale": 1.4142135623730951,
+    "shift": [
+      0,
+      0.05211994936611669
+    ],
+    "basis": "Sprite-only square-ground projection, as established in native-verified Tanks pipe captures; editable source/GLB geometry remains unchanged"
+  },
+  "circuit_registration_justification": "Original tank graphic anchors are outside this compact vessel; remap only drawing points to real mounted posts and LED bezels. Keep wire reach, fluid/temperature signals and controls unchanged.",
+  "owner_approval": false
+}

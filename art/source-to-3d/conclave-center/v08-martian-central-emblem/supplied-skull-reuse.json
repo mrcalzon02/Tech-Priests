@@ -1,0 +1,54 @@
+{
+  "source": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\art\\source-to-3d\\conclave-center\\v02-supplied-skull\\supplied-skull\\craneo.v2.packed.blend",
+  "sha256": "5e085c30cb3f623b31beee05992ce04d3c9f630b4ec81f474a2cc40b24d811fa",
+  "owner_archive": "C:/Users/Admin/Downloads/Low Poly Skull.zip",
+  "owner_archive_sha256": "596947f9304c0b7c28847260d18ab064d9450d443f1242c8001e5f0f97b06bac",
+  "instances": [
+    {
+      "name": "Supplied DGordillo low-poly skull 0",
+      "source_mesh": "Craneo",
+      "vertices": 1192,
+      "triangles": 2380,
+      "uniform_scale": 0.6053576608397203,
+      "location": [
+        0.0,
+        0.1739668995141983,
+        1.659999966621399
+      ],
+      "original_uv_preserved": true,
+      "original_normal_preserved": true,
+      "no_subdivision_or_remesh": true
+    },
+    {
+      "name": "Supplied DGordillo low-poly skull 1",
+      "source_mesh": "Craneo",
+      "vertices": 1192,
+      "triangles": 2380,
+      "uniform_scale": 0.3951640286037063,
+      "location": [
+        -0.47999998927116394,
+        0.2600894868373871,
+        1.4800000190734863
+      ],
+      "original_uv_preserved": true,
+      "original_normal_preserved": true,
+      "no_subdivision_or_remesh": true
+    },
+    {
+      "name": "Supplied DGordillo low-poly skull 2",
+      "source_mesh": "Craneo",
+      "vertices": 1192,
+      "triangles": 2380,
+      "uniform_scale": 0.3951640286037063,
+      "location": [
+        0.47999998927116394,
+        0.2600894868373871,
+        1.4800000190734863
+      ],
+      "original_uv_preserved": true,
+      "original_normal_preserved": true,
+      "no_subdivision_or_remesh": true
+    }
+  ],
+  "owner_archive_source_exact_match": true
+}

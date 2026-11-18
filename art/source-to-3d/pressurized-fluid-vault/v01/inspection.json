@@ -1,0 +1,1902 @@
+{
+  "passed": true,
+  "source": {
+    "label": "independently reopened packed source",
+    "meshes": 193,
+    "triangles": 66142,
+    "bounds": [
+      [
+        -0.9849118590354919,
+        -1.559999942779541,
+        0.0
+      ],
+      [
+        0.974468469619751,
+        1.559999942779541,
+        1.0589998960494995
+      ]
+    ],
+    "finite": true,
+    "degenerate": [],
+    "missing_uv": [],
+    "missing_images": [],
+    "within_footprint": true,
+    "ground_contact": true,
+    "passed": true,
+    "packed_images": [
+      {
+        "name": "aged-bronze-albedo.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "aged-bronze-normal.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "aged-bronze-orm.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "aged-original-skull-orm.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "cache-bone-ivory-albedo.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "clay-albedo.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "clay-normal.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "clay-orm.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "control-keys-albedo.png",
+        "packed": true,
+        "size": [
+          512,
+          512
+        ]
+      },
+      {
+        "name": "control-keys-normal.png",
+        "packed": true,
+        "size": [
+          512,
+          512
+        ]
+      },
+      {
+        "name": "control-keys-orm.png",
+        "packed": true,
+        "size": [
+          512,
+          512
+        ]
+      },
+      {
+        "name": "dgordillo-sculpt-normal.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "dressed-stone-albedo.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "dressed-stone-normal.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "dressed-stone-orm.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "edge-trim-albedo.png.001",
+        "packed": true,
+        "size": [
+          512,
+          512
+        ]
+      },
+      {
+        "name": "edge-trim-normal.png",
+        "packed": true,
+        "size": [
+          512,
+          512
+        ]
+      },
+      {
+        "name": "edge-trim-orm.png",
+        "packed": true,
+        "size": [
+          512,
+          512
+        ]
+      },
+      {
+        "name": "forged-iron-albedo.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "forged-iron-normal.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "forged-iron-orm.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "gasket-albedo.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "gasket-normal.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "gasket-orm.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "gauge-ivory-albedo.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "gauge-ivory-normal.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "gauge-ivory-orm.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "ground-stone-albedo.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "ground-stone-normal.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "ground-stone-orm.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "martian_red_albedo.png",
+        "packed": true,
+        "size": [
+          512,
+          512
+        ]
+      },
+      {
+        "name": "martian_red_normal.png",
+        "packed": true,
+        "size": [
+          512,
+          512
+        ]
+      },
+      {
+        "name": "martian_red_orm.png",
+        "packed": true,
+        "size": [
+          512,
+          512
+        ]
+      },
+      {
+        "name": "oxide-albedo.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "oxide-normal.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "oxide-orm.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "pressure-dial-albedo.png",
+        "packed": true,
+        "size": [
+          512,
+          512
+        ]
+      },
+      {
+        "name": "pressure-iron-albedo.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "pressure-iron-normal.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "pressure-iron-orm.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "rubbed-iron-albedo.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "rubbed-iron-normal.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "rubbed-iron-orm.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "steel-albedo.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "steel-normal.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "steel-orm.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "stone-albedo.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "stone-normal.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "stone-orm.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      }
+    ],
+    "all_used_images_packed": true,
+    "contacts": [
+      {
+        "a": "Hand-laid course 0 stone 00.0",
+        "b": "Continuous grounded rubble footing",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 0 stone 01.0",
+        "b": "Continuous grounded rubble footing",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 0 stone 02.0",
+        "b": "Continuous grounded rubble footing",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 0 stone 03.0",
+        "b": "Fluid | north load-bearing wall sleeve",
+        "why": "Bored masonry edges bear on installed wall sleeve arch instead of removed central stone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 0 stone 04.0",
+        "b": "Fluid | north load-bearing wall sleeve",
+        "why": "Bored masonry edges bear on installed wall sleeve arch instead of removed central stone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 0 stone 05.0",
+        "b": "Fluid | north load-bearing wall sleeve",
+        "why": "Bored masonry edges bear on installed wall sleeve arch instead of removed central stone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 0 stone 06.0",
+        "b": "Continuous grounded rubble footing",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 0 stone 07.0",
+        "b": "Continuous grounded rubble footing",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 0 stone 08.0",
+        "b": "Continuous grounded rubble footing",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 0 stone 09.0",
+        "b": "Continuous grounded rubble footing",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 0 stone 10.0",
+        "b": "Continuous grounded rubble footing",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 0 stone 11.0",
+        "b": "Continuous grounded rubble footing",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 0 stone 12.0",
+        "b": "Continuous grounded rubble footing",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 0 stone 14.1",
+        "b": "Continuous grounded rubble footing",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 0 stone 15.0",
+        "b": "Continuous grounded rubble footing",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 0 stone 16.0",
+        "b": "Continuous grounded rubble footing",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 0 stone 17.0",
+        "b": "Continuous grounded rubble footing",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 1 stone 00.0",
+        "b": "Hand-laid course 0 stone 00.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 1 stone 01.0",
+        "b": "Hand-laid course 0 stone 01.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 1 stone 02.0",
+        "b": "Fluid | north load-bearing wall sleeve",
+        "why": "Bored masonry edges bear on installed wall sleeve arch instead of removed central stone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 1 stone 03.0",
+        "b": "Fluid | north load-bearing wall sleeve",
+        "why": "Bored masonry edges bear on installed wall sleeve arch instead of removed central stone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 1 stone 04.0",
+        "b": "Fluid | north load-bearing wall sleeve",
+        "why": "Bored masonry edges bear on installed wall sleeve arch instead of removed central stone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 1 stone 05.0",
+        "b": "Fluid | north load-bearing wall sleeve",
+        "why": "Bored masonry edges bear on installed wall sleeve arch instead of removed central stone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 1 stone 06.0",
+        "b": "Hand-laid course 0 stone 06.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 1 stone 07.0",
+        "b": "Hand-laid course 0 stone 07.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 1 stone 08.0",
+        "b": "Hand-laid course 0 stone 08.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 1 stone 09.0",
+        "b": "Hand-laid course 0 stone 10.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 1 stone 10.0",
+        "b": "Hand-laid course 0 stone 11.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 1 stone 11.0",
+        "b": "Hand-laid course 0 stone 12.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 1 stone 14.1",
+        "b": "Hand-laid course 0 stone 14.1",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 1 stone 15.0",
+        "b": "Hand-laid course 0 stone 16.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 1 stone 16.0",
+        "b": "Hand-laid course 0 stone 16.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 1 stone 17.0",
+        "b": "Hand-laid course 0 stone 17.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 2 stone 00.0",
+        "b": "Hand-laid course 1 stone 00.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 2 stone 01.0",
+        "b": "Hand-laid course 1 stone 00.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 2 stone 02.0",
+        "b": "Hand-laid course 1 stone 01.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 2 stone 03.0",
+        "b": "Fluid | north load-bearing wall sleeve",
+        "why": "Bored masonry edges bear on installed wall sleeve arch instead of removed central stone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 2 stone 05.0",
+        "b": "Fluid | north load-bearing wall sleeve",
+        "why": "Bored masonry edges bear on installed wall sleeve arch instead of removed central stone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 2 stone 06.0",
+        "b": "Hand-laid course 1 stone 06.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 2 stone 07.0",
+        "b": "Hand-laid course 1 stone 06.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 2 stone 08.0",
+        "b": "Hand-laid course 1 stone 08.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 2 stone 09.0",
+        "b": "Hand-laid course 1 stone 08.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 2 stone 10.0",
+        "b": "Hand-laid course 1 stone 09.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 2 stone 11.0",
+        "b": "Hand-laid course 1 stone 11.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 2 stone 12.0",
+        "b": "Hand-laid course 1 stone 11.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 2 stone 14.1",
+        "b": "Hand-laid course 1 stone 14.1",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 2 stone 15.0",
+        "b": "Hand-laid course 1 stone 14.1",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 2 stone 16.0",
+        "b": "Hand-laid course 1 stone 15.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 2 stone 17.0",
+        "b": "Hand-laid course 1 stone 16.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 3 stone 00.0",
+        "b": "Hand-laid course 2 stone 00.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 3 stone 01.0",
+        "b": "Hand-laid course 2 stone 01.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 3 stone 02.0",
+        "b": "Fluid | north load-bearing wall sleeve",
+        "why": "Bored masonry edges bear on installed wall sleeve arch instead of removed central stone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 3 stone 03.0",
+        "b": "Fluid | north load-bearing wall sleeve",
+        "why": "Bored masonry edges bear on installed wall sleeve arch instead of removed central stone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 3 stone 05.0",
+        "b": "Fluid | north load-bearing wall sleeve",
+        "why": "Bored masonry edges bear on installed wall sleeve arch instead of removed central stone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 3 stone 06.0",
+        "b": "Hand-laid course 2 stone 06.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 3 stone 07.0",
+        "b": "Hand-laid course 2 stone 07.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 3 stone 08.0",
+        "b": "Hand-laid course 2 stone 08.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 3 stone 09.0",
+        "b": "Hand-laid course 2 stone 10.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 3 stone 10.0",
+        "b": "Hand-laid course 2 stone 11.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 3 stone 11.0",
+        "b": "Hand-laid course 2 stone 12.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 3 stone 14.1",
+        "b": "Hand-laid course 2 stone 14.1",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 3 stone 15.0",
+        "b": "Hand-laid course 2 stone 16.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 3 stone 16.0",
+        "b": "Hand-laid course 2 stone 16.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 3 stone 17.0",
+        "b": "Hand-laid course 2 stone 17.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Grounded carved circuit receiving tablet",
+        "b": "Continuous grounded rubble footing",
+        "why": "curved keystone replaces the whole wall section, with full-depth inner and outer faces and ground bearing",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Supplied DGordillo low-poly skull 0",
+        "b": "Vault | rectangular reinforced door leaf",
+        "why": "Shared relief remounted on centered front portion of pressure hatch, clear of pipe bore",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | twenty tooth cog surround",
+        "b": "Vault | rectangular reinforced door leaf",
+        "why": "Shared relief remounted on centered front portion of pressure hatch, clear of pipe bore",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | fitted cranial vault",
+        "b": "Cache centered emblem | Supplied DGordillo low-poly skull 0",
+        "why": "Preserved fitted relief relationship: fitted augmetic plate over actual supplied anatomy, integral return walls",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | fitted orbital and cheek",
+        "b": "Cache centered emblem | Supplied DGordillo low-poly skull 0",
+        "why": "Preserved fitted relief relationship: fitted augmetic plate over actual supplied anatomy, integral return walls",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | fitted mandibular half",
+        "b": "Cache centered emblem | Supplied DGordillo low-poly skull 0",
+        "why": "Preserved fitted relief relationship: fitted augmetic plate over actual supplied anatomy, integral return walls",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | surface seated ocular receiving flange",
+        "b": "Cache centered emblem | Mars emblem | fitted orbital and cheek",
+        "why": "Preserved fitted relief relationship: ocular flange rear follows actual socket surround raycast, front has a machined annular seat",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | inset optical barrel",
+        "b": "Cache centered emblem | Mars emblem | surface seated ocular receiving flange",
+        "why": "Preserved fitted relief relationship: optical barrel recessed into open receiving flange",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | red bionic eye lens",
+        "b": "Cache centered emblem | Mars emblem | inset optical barrel",
+        "why": "Preserved fitted relief relationship: lens captured inside recessed optical barrel",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | ocular captive screw 00",
+        "b": "Cache centered emblem | Mars emblem | surface seated ocular receiving flange",
+        "why": "Preserved fitted relief relationship: captive screw bears on real annular front seat",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | ocular captive screw 01",
+        "b": "Cache centered emblem | Mars emblem | surface seated ocular receiving flange",
+        "why": "Preserved fitted relief relationship: captive screw bears on real annular front seat",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | ocular captive screw 02",
+        "b": "Cache centered emblem | Mars emblem | surface seated ocular receiving flange",
+        "why": "Preserved fitted relief relationship: captive screw bears on real annular front seat",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | ocular captive screw 03",
+        "b": "Cache centered emblem | Mars emblem | surface seated ocular receiving flange",
+        "why": "Preserved fitted relief relationship: captive screw bears on real annular front seat",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | ocular captive screw 04",
+        "b": "Cache centered emblem | Mars emblem | surface seated ocular receiving flange",
+        "why": "Preserved fitted relief relationship: captive screw bears on real annular front seat",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | ocular captive screw 05",
+        "b": "Cache centered emblem | Mars emblem | surface seated ocular receiving flange",
+        "why": "Preserved fitted relief relationship: captive screw bears on real annular front seat",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | ocular captive screw 06",
+        "b": "Cache centered emblem | Mars emblem | surface seated ocular receiving flange",
+        "why": "Preserved fitted relief relationship: captive screw bears on real annular front seat",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | ocular captive screw 07",
+        "b": "Cache centered emblem | Mars emblem | surface seated ocular receiving flange",
+        "why": "Preserved fitted relief relationship: captive screw bears on real annular front seat",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | plate retaining boss 0",
+        "b": "Cache centered emblem | Supplied DGordillo low-poly skull 0",
+        "why": "Preserved fitted relief relationship: retaining boss seated on actual donor surface normal",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | plate retaining stud 0",
+        "b": "Cache centered emblem | Mars emblem | plate retaining boss 0",
+        "why": "Preserved fitted relief relationship: stud retained in fitted plate boss",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | plate retaining boss 1",
+        "b": "Cache centered emblem | Supplied DGordillo low-poly skull 0",
+        "why": "Preserved fitted relief relationship: retaining boss seated on actual donor surface normal",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | plate retaining stud 1",
+        "b": "Cache centered emblem | Mars emblem | plate retaining boss 1",
+        "why": "Preserved fitted relief relationship: stud retained in fitted plate boss",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | plate retaining boss 2",
+        "b": "Cache centered emblem | Supplied DGordillo low-poly skull 0",
+        "why": "Preserved fitted relief relationship: retaining boss seated on actual donor surface normal",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | plate retaining stud 2",
+        "b": "Cache centered emblem | Mars emblem | plate retaining boss 2",
+        "why": "Preserved fitted relief relationship: stud retained in fitted plate boss",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | plate retaining boss 3",
+        "b": "Cache centered emblem | Supplied DGordillo low-poly skull 0",
+        "why": "Preserved fitted relief relationship: retaining boss seated on actual donor surface normal",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | plate retaining stud 3",
+        "b": "Cache centered emblem | Mars emblem | plate retaining boss 3",
+        "why": "Preserved fitted relief relationship: stud retained in fitted plate boss",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | jaw strut seated anchor 0",
+        "b": "Cache centered emblem | Supplied DGordillo low-poly skull 0",
+        "why": "Preserved fitted relief relationship: jaw strut socket root seats on actual donor surface normal",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | jaw strut seated anchor 1",
+        "b": "Cache centered emblem | Supplied DGordillo low-poly skull 0",
+        "why": "Preserved fitted relief relationship: jaw strut socket root seats on actual donor surface normal",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | fixed mandibular strut housing",
+        "b": "Cache centered emblem | Mars emblem | jaw strut seated anchor 0",
+        "why": "Preserved fitted relief relationship: strut housing retained in upper actual surface anchor",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | captured mandibular strut rod",
+        "b": "Cache centered emblem | Mars emblem | fixed mandibular strut housing",
+        "why": "Preserved fitted relief relationship: male strut rod overlaps real housing bore region",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | captured mandibular strut rod",
+        "b": "Cache centered emblem | Mars emblem | jaw strut seated anchor 1",
+        "why": "Preserved fitted relief relationship: rod captured in lower surface anchor; emblem hardware is static",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | continuous metal infill panel",
+        "b": "Grounded carved circuit receiving tablet",
+        "why": "circumferential collar bears on inner wall masonry",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | rectangular door gasket",
+        "b": "Vault | continuous metal infill panel",
+        "why": "rectangular gasket bears on metal around actual aperture",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | rectangular reinforced door leaf",
+        "b": "Vault | rectangular door gasket",
+        "why": "thick rectangular door bears on its perimeter gasket",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | door perimeter flange 0",
+        "b": "Vault | rectangular reinforced door leaf",
+        "why": "perimeter reinforcement follows rectangular door edges",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | door perimeter flange 1",
+        "b": "Vault | rectangular reinforced door leaf",
+        "why": "perimeter reinforcement follows rectangular door edges",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | door perimeter flange 2",
+        "b": "Vault | rectangular reinforced door leaf",
+        "why": "perimeter reinforcement follows rectangular door edges",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | door perimeter flange 3",
+        "b": "Vault | rectangular reinforced door leaf",
+        "why": "perimeter reinforcement follows rectangular door edges",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | hatch captive rivet -0.46 -0.28",
+        "b": "Vault | door perimeter flange 0",
+        "why": "visible rivet crown embeds in perimeter flange",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | hatch captive rivet -0.46 0.00",
+        "b": "Vault | door perimeter flange 0",
+        "why": "visible rivet crown embeds in perimeter flange",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | hatch captive rivet -0.46 0.28",
+        "b": "Vault | door perimeter flange 0",
+        "why": "visible rivet crown embeds in perimeter flange",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | hatch captive rivet 0.46 -0.28",
+        "b": "Vault | door perimeter flange 1",
+        "why": "visible rivet crown embeds in perimeter flange",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | hatch captive rivet 0.46 0.00",
+        "b": "Vault | door perimeter flange 1",
+        "why": "visible rivet crown embeds in perimeter flange",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | hatch captive rivet 0.46 0.28",
+        "b": "Vault | door perimeter flange 1",
+        "why": "visible rivet crown embeds in perimeter flange",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | hatch captive rivet -0.28 -0.41",
+        "b": "Vault | door perimeter flange 2",
+        "why": "visible rivet crown embeds in perimeter flange",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | hatch captive rivet 0.00 -0.41",
+        "b": "Vault | door perimeter flange 2",
+        "why": "visible rivet crown embeds in perimeter flange",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | hatch captive rivet 0.28 -0.41",
+        "b": "Vault | door perimeter flange 2",
+        "why": "visible rivet crown embeds in perimeter flange",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | hatch captive rivet -0.28 0.41",
+        "b": "Vault | door perimeter flange 3",
+        "why": "visible rivet crown embeds in perimeter flange",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | hatch captive rivet 0.00 0.41",
+        "b": "Vault | door perimeter flange 3",
+        "why": "visible rivet crown embeds in perimeter flange",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | hatch captive rivet 0.28 0.41",
+        "b": "Vault | door perimeter flange 3",
+        "why": "visible rivet crown embeds in perimeter flange",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | hinge fixed saddle 0",
+        "b": "Vault | continuous metal infill panel",
+        "why": "fixed hinge saddle bolted to continuous surrounding panel",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | hinge leaf strap 0",
+        "b": "Vault | rectangular reinforced door leaf",
+        "why": "hinge strap bolted on rectangular door surface",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | hinge barrel 0",
+        "b": "Vault | hinge fixed saddle 0",
+        "why": "hinge barrel embeds in fixed saddle",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | hinge barrel 0",
+        "b": "Vault | hinge leaf strap 0",
+        "why": "hinge strap reaches common hinge axis",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | captive hinge pin 0",
+        "b": "Vault | hinge barrel 0",
+        "why": "full pin runs through barrel bore",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | hinge pin head 0 -1",
+        "b": "Vault | captive hinge pin 0",
+        "why": "pin head captures barrel end",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | hinge pin head 0 1",
+        "b": "Vault | captive hinge pin 0",
+        "why": "pin head captures barrel end",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | hinge saddle bolt 0 -0.03",
+        "b": "Vault | hinge fixed saddle 0",
+        "why": "saddle bolt rooted in fixed hinge mounting plate",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | hinge saddle bolt 0 0.03",
+        "b": "Vault | hinge fixed saddle 0",
+        "why": "saddle bolt rooted in fixed hinge mounting plate",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | hinge fixed saddle 1",
+        "b": "Vault | continuous metal infill panel",
+        "why": "fixed hinge saddle bolted to continuous surrounding panel",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | hinge leaf strap 1",
+        "b": "Vault | rectangular reinforced door leaf",
+        "why": "hinge strap bolted on rectangular door surface",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | hinge barrel 1",
+        "b": "Vault | hinge fixed saddle 1",
+        "why": "hinge barrel embeds in fixed saddle",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | hinge barrel 1",
+        "b": "Vault | hinge leaf strap 1",
+        "why": "hinge strap reaches common hinge axis",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | captive hinge pin 1",
+        "b": "Vault | hinge barrel 1",
+        "why": "full pin runs through barrel bore",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | hinge pin head 1 -1",
+        "b": "Vault | captive hinge pin 1",
+        "why": "pin head captures barrel end",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | hinge pin head 1 1",
+        "b": "Vault | captive hinge pin 1",
+        "why": "pin head captures barrel end",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | hinge saddle bolt 1 -0.03",
+        "b": "Vault | hinge fixed saddle 1",
+        "why": "saddle bolt rooted in fixed hinge mounting plate",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | hinge saddle bolt 1 0.03",
+        "b": "Vault | hinge fixed saddle 1",
+        "why": "saddle bolt rooted in fixed hinge mounting plate",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | manual lock gearbox",
+        "b": "Vault | rectangular reinforced door leaf",
+        "why": "manual gearbox foot bolted directly to hatch",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | lock keeper 0",
+        "b": "Vault | continuous metal infill panel",
+        "why": "keeper mounted on surrounding metal panel",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | sliding bar guide 0",
+        "b": "Vault | rectangular reinforced door leaf",
+        "why": "bar guide feet embedded slightly in hatch",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | captured locking bolt 0",
+        "b": "Vault | manual lock gearbox",
+        "why": "bolt inner end enters gearbox guide",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | captured locking bolt 0",
+        "b": "Vault | sliding bar guide 0",
+        "why": "bolt runs through captured guide",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | captured locking bolt 0",
+        "b": "Vault | lock keeper 0",
+        "why": "bolt outer end seats inside keeper",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | lock keeper 1",
+        "b": "Vault | continuous metal infill panel",
+        "why": "keeper mounted on surrounding metal panel",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | sliding bar guide 1",
+        "b": "Vault | rectangular reinforced door leaf",
+        "why": "bar guide feet embedded slightly in hatch",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | captured locking bolt 1",
+        "b": "Vault | manual lock gearbox",
+        "why": "bolt inner end enters gearbox guide",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | captured locking bolt 1",
+        "b": "Vault | sliding bar guide 1",
+        "why": "bolt runs through captured guide",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | captured locking bolt 1",
+        "b": "Vault | lock keeper 1",
+        "why": "bolt outer end seats inside keeper",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | handwheel bearing spindle",
+        "b": "Vault | manual lock gearbox",
+        "why": "continuous spindle penetrates gearbox bearing",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | spindle receiving boss",
+        "b": "Vault | manual lock gearbox",
+        "why": "receiving boss mounted in upper gearbox casing",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | spindle receiving boss",
+        "b": "Vault | handwheel bearing spindle",
+        "why": "boss surrounds spindle",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | keyed handwheel hub",
+        "b": "Vault | handwheel bearing spindle",
+        "why": "hub keyed to continuous spindle",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | rigid handwheel spoke 0",
+        "b": "Vault | keyed handwheel hub",
+        "why": "spoke roots overlap keyed hub",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | rigid handwheel spoke 0",
+        "b": "Vault | forged handwheel rim",
+        "why": "spoke ends embed in handwheel ring",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | rigid handwheel spoke 1",
+        "b": "Vault | keyed handwheel hub",
+        "why": "spoke roots overlap keyed hub",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | rigid handwheel spoke 1",
+        "b": "Vault | forged handwheel rim",
+        "why": "spoke ends embed in handwheel ring",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | rigid handwheel spoke 2",
+        "b": "Vault | keyed handwheel hub",
+        "why": "spoke roots overlap keyed hub",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | rigid handwheel spoke 2",
+        "b": "Vault | forged handwheel rim",
+        "why": "spoke ends embed in handwheel ring",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | rigid handwheel spoke 3",
+        "b": "Vault | keyed handwheel hub",
+        "why": "spoke roots overlap keyed hub",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | rigid handwheel spoke 3",
+        "b": "Vault | forged handwheel rim",
+        "why": "spoke ends embed in handwheel ring",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Vault | spindle captive crown nut",
+        "b": "Vault | keyed handwheel hub",
+        "why": "crown nut captures handwheel hub on spindle",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Fluid | continuous pressure liner",
+        "b": "Vault | continuous metal infill panel",
+        "why": "raised pressure deck gives full inlet-bore clearance above fluid cavity",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Fluid | sealed dished floor backing",
+        "b": "Fluid | continuous pressure liner",
+        "why": "continuous welded floor closes bottom of pressure vessel",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Fluid | liner ground support 0",
+        "b": "Fluid | sealed dished floor backing",
+        "why": "floor supported on actual grounded feet",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Fluid | liner ground support 1",
+        "b": "Fluid | sealed dished floor backing",
+        "why": "floor supported on actual grounded feet",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Fluid | liner ground support 2",
+        "b": "Fluid | sealed dished floor backing",
+        "why": "floor supported on actual grounded feet",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Fluid | liner ground support 3",
+        "b": "Fluid | sealed dished floor backing",
+        "why": "floor supported on actual grounded feet",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Fluid | north continuous open throat",
+        "b": "Fluid | continuous pressure liner",
+        "why": "hollow sleeve penetrates bored liner and communicates with vessel",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Fluid | north full-size mouth collar",
+        "b": "Fluid | north continuous open throat",
+        "why": "collar and throat share one continuous 0.56 bore",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Fluid | north grounded pipe saddle",
+        "b": "Fluid | north continuous open throat",
+        "why": "actual concave saddle supports outer pipe without obstructing bore",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Fluid | north liner sealing collar",
+        "b": "Fluid | continuous pressure liner",
+        "why": "sealing collar bridges curved liner to sleeve with an open continuous bore",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Fluid | north liner sealing collar",
+        "b": "Fluid | north continuous open throat",
+        "why": "continuous sealing annulus overlaps sleeve around bore",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Fluid | north load-bearing wall sleeve",
+        "b": "Continuous grounded rubble footing",
+        "why": "wall sleeve arch bears into existing foundation and supports bored masonry",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Fluid | north load-bearing wall sleeve",
+        "b": "Fluid | north continuous open throat",
+        "why": "wall sleeve shares continuous open bore with throat",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Fluid | north flange bolt 0",
+        "b": "Fluid | north full-size mouth collar",
+        "why": "flange bolts embed in collar annulus clear of open bore",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Fluid | north flange bolt 1",
+        "b": "Fluid | north full-size mouth collar",
+        "why": "flange bolts embed in collar annulus clear of open bore",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Fluid | north flange bolt 2",
+        "b": "Fluid | north full-size mouth collar",
+        "why": "flange bolts embed in collar annulus clear of open bore",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Fluid | north flange bolt 3",
+        "b": "Fluid | north full-size mouth collar",
+        "why": "flange bolts embed in collar annulus clear of open bore",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Fluid | north flange bolt 4",
+        "b": "Fluid | north full-size mouth collar",
+        "why": "flange bolts embed in collar annulus clear of open bore",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Fluid | north flange bolt 5",
+        "b": "Fluid | north full-size mouth collar",
+        "why": "flange bolts embed in collar annulus clear of open bore",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Fluid | north flange bolt 6",
+        "b": "Fluid | north full-size mouth collar",
+        "why": "flange bolts embed in collar annulus clear of open bore",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Fluid | north flange bolt 7",
+        "b": "Fluid | north full-size mouth collar",
+        "why": "flange bolts embed in collar annulus clear of open bore",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Fluid | south continuous open throat",
+        "b": "Fluid | continuous pressure liner",
+        "why": "hollow sleeve penetrates bored liner and communicates with vessel",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Fluid | south full-size mouth collar",
+        "b": "Fluid | south continuous open throat",
+        "why": "collar and throat share one continuous 0.56 bore",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Fluid | south grounded pipe saddle",
+        "b": "Fluid | south continuous open throat",
+        "why": "actual concave saddle supports outer pipe without obstructing bore",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Fluid | south liner sealing collar",
+        "b": "Fluid | continuous pressure liner",
+        "why": "sealing collar bridges curved liner to sleeve with an open continuous bore",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Fluid | south liner sealing collar",
+        "b": "Fluid | south continuous open throat",
+        "why": "continuous sealing annulus overlaps sleeve around bore",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Fluid | south load-bearing wall sleeve",
+        "b": "Continuous grounded rubble footing",
+        "why": "wall sleeve arch bears into existing foundation and supports bored masonry",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Fluid | south load-bearing wall sleeve",
+        "b": "Fluid | south continuous open throat",
+        "why": "wall sleeve shares continuous open bore with throat",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Fluid | south flange bolt 0",
+        "b": "Fluid | south full-size mouth collar",
+        "why": "flange bolts embed in collar annulus clear of open bore",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Fluid | south flange bolt 1",
+        "b": "Fluid | south full-size mouth collar",
+        "why": "flange bolts embed in collar annulus clear of open bore",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Fluid | south flange bolt 2",
+        "b": "Fluid | south full-size mouth collar",
+        "why": "flange bolts embed in collar annulus clear of open bore",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Fluid | south flange bolt 3",
+        "b": "Fluid | south full-size mouth collar",
+        "why": "flange bolts embed in collar annulus clear of open bore",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Fluid | south flange bolt 4",
+        "b": "Fluid | south full-size mouth collar",
+        "why": "flange bolts embed in collar annulus clear of open bore",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Fluid | south flange bolt 5",
+        "b": "Fluid | south full-size mouth collar",
+        "why": "flange bolts embed in collar annulus clear of open bore",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Fluid | south flange bolt 6",
+        "b": "Fluid | south full-size mouth collar",
+        "why": "flange bolts embed in collar annulus clear of open bore",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Fluid | south flange bolt 7",
+        "b": "Fluid | south full-size mouth collar",
+        "why": "flange bolts embed in collar annulus clear of open bore",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Fluid | gauge pressure tap",
+        "b": "Vault | rectangular reinforced door leaf",
+        "why": "pressure tap seats through actual hatch leaf",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Fluid | pressure gauge case",
+        "b": "Fluid | gauge pressure tap",
+        "why": "case receives continuous pressure tap",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Fluid | aged pressure dial",
+        "b": "Fluid | pressure gauge case",
+        "why": "dial captured in gauge rim",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Fluid | static gauge needle",
+        "b": "Fluid | aged pressure dial",
+        "why": "static needle seated on gauge face, no native pressure animation claimed",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Fluid | gauge needle pivot",
+        "b": "Fluid | aged pressure dial",
+        "why": "pivot seated in pressure dial",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Fluid | mounted circuit terminal plate",
+        "b": "Fluid | circuit plate masonry tie 0",
+        "why": "plate bears on two ties mounted into actual neighboring masonry",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Fluid | red receiving insulator",
+        "b": "Fluid | mounted circuit terminal plate",
+        "why": "ceramic receiving shoulder seats on circuit mounting plate",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Fluid | red native contact post",
+        "b": "Fluid | red receiving insulator",
+        "why": "native wire contact fits ceramic receptacle",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Fluid | green receiving insulator",
+        "b": "Fluid | mounted circuit terminal plate",
+        "why": "ceramic receiving shoulder seats on circuit mounting plate",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Fluid | green native contact post",
+        "b": "Fluid | green receiving insulator",
+        "why": "native wire contact fits ceramic receptacle",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Fluid | blue status LED bezel",
+        "b": "Fluid | mounted circuit terminal plate",
+        "why": "native state LED seated in mounting plate",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Fluid | red-green status LED bezel",
+        "b": "Fluid | mounted circuit terminal plate",
+        "why": "native state LED seated in mounting plate",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Fluid | circuit plate masonry tie 0",
+        "b": "Fluid | mounted circuit terminal plate",
+        "why": "tie reaches rear of terminal plate",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Fluid | circuit plate masonry tie 0",
+        "b": "Hand-laid course 1 stone 15.0",
+        "why": "plate rear tie enters actual nearest masonry course",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Fluid | circuit plate masonry tie 1",
+        "b": "Fluid | mounted circuit terminal plate",
+        "why": "tie reaches rear of terminal plate",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Fluid | circuit plate masonry tie 1",
+        "b": "Hand-laid course 2 stone 16.0",
+        "why": "plate rear tie enters actual nearest masonry course",
+        "aabb_gap": 0.0,
+        "passed": true
+      }
+    ],
+    "contact_limit": "AABB support-seat checks catch separation; not a full mesh intersection proof."
+  },
+  "export": {
+    "label": "independent GLB import",
+    "meshes": 193,
+    "triangles": 66142,
+    "bounds": [
+      [
+        -0.9849118590354919,
+        -1.559999942779541,
+        0.0
+      ],
+      [
+        0.974468469619751,
+        1.559999942779541,
+        1.0589998960494995
+      ]
+    ],
+    "finite": true,
+    "degenerate": [],
+    "missing_uv": [],
+    "missing_images": [],
+    "within_footprint": true,
+    "ground_contact": true,
+    "passed": true,
+    "bounds_match_source": true
+  },
+  "source_sha256": "8594eba97100ac8ed558d88317200d6102576da6538d6af73e05957a06a8513a",
+  "export_sha256": "3c7f49f18b337eb7d649482ec2ec9eefb6763a06989dd0b13d500342f82a826d",
+  "visual_review": "Pending actual image viewing; file presence is not visual acceptance."
+}

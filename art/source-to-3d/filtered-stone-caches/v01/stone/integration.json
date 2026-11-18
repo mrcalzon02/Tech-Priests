@@ -1,0 +1,12 @@
+{
+  "key": "stone",
+  "source_sha256": "cc9c98ffcd8d4bd0e8fdbc956762530ec4082e26595b7c02cf80696d092b48c5",
+  "export_sha256": "0809ae8e64581e854a72f2a2d155156195e6f8fd82d7a1770f12ee7df7f6295a",
+  "prototype_sha256": "f8e0d08480306b4e929ee8d44d7f94183d8cabdc1bba64c688ddd7c6a29011af",
+  "runtime_art": {
+    "stone-body.png": "e117bd1767ff7816c1cf46f30f308cd53f089c3c46217c365d2560a87b5f2c46",
+    "stone-icon.png": "6ec231bed29a4f57b83067b1b691c5134a8e7603c06c73ecd90c8bff225c45cc",
+    "stone-shadow.png": "32c6b6a703ceec94bb0b2ccfb713b29ce4412b6264cca2892cef738f70133ca5"
+  },
+  "scope": "Only this filtered cache picture/icon/backing art; inventory6, recipes, filter steward, circuits, fixed direction and ordinary inserters unchanged"
+}

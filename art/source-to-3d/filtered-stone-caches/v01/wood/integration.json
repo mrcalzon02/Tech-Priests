@@ -1,0 +1,12 @@
+{
+  "key": "wood",
+  "source_sha256": "ab403f443f6671b3640b57f08b1d92b7cf71af60d237f6b10fd932d4a1c88e77",
+  "export_sha256": "f652573cf6b249ccfdced9c85d9129b525befd9dcb8085f8623995f39612b475",
+  "prototype_sha256": "f8e0d08480306b4e929ee8d44d7f94183d8cabdc1bba64c688ddd7c6a29011af",
+  "runtime_art": {
+    "wood-body.png": "79f4c241dd84cfbdfc8a30ffc54ae2bf8c5262935eae623a40446d6d9046b895",
+    "wood-icon.png": "9dc58bd0a11b6b2f2f88d1a5754b55db99f02e4fce0e56e53e30e5fff2e08c56",
+    "wood-shadow.png": "919208824cc83d908ebde383d59af9b8a96735326bdf09a5d0705cd27d2b4fc5"
+  },
+  "scope": "Only this filtered cache picture/icon/backing art; inventory6, recipes, filter steward, circuits, fixed direction and ordinary inserters unchanged"
+}

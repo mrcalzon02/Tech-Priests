@@ -1,0 +1,31 @@
+{
+  "schema": "fmpl.local-model-record.v1",
+  "id": "tech-priests-stone-cache-stone-v01",
+  "status": "static-game-sprites-installed-specific-native-filter-checks-passed",
+  "publication": "Local working-tree candidate; no remote publication claimed",
+  "source": {
+    "path": "art\\source-to-3d\\filtered-stone-caches\\v01\\stone\\filtered-cache-stone-v01.blend",
+    "sha256": "cc9c98ffcd8d4bd0e8fdbc956762530ec4082e26595b7c02cf80696d092b48c5"
+  },
+  "runtime": {
+    "path": "art\\source-to-3d\\filtered-stone-caches\\v01\\stone\\filtered-cache-stone-v01.glb",
+    "sha256": "0809ae8e64581e854a72f2a2d155156195e6f8fd82d7a1770f12ee7df7f6295a"
+  },
+  "camera_policy": "fmpl.factorio45.v1",
+  "native_directions": [
+    0
+  ],
+  "footprint": [
+    2,
+    2
+  ],
+  "purpose": "Six-slot stone cache. Shared stone wall and centered tablet; distinct static stock filling. Existing physical filter steward and ordinary inserters preserved.",
+  "evidence": [
+    "contract.json",
+    "inspection.json",
+    "construction.json",
+    "integration.json",
+    "visual-review.json",
+    "native-evidence/review.json"
+  ]
+}

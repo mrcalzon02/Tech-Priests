@@ -1,0 +1,8 @@
+{
+  "power-1":{"health":250,"technology":"electronics","seconds":2,"ingredients":[["iron-plate",4],["copper-cable",8],["stone-brick",4]]},
+  "power-2":{"health":500,"technology":"electric-energy-distribution-1","seconds":4,"ingredients":[["tech-priests-martian-power-1",1],["steel-plate",8],["copper-cable",16],["stone-brick",8]]},
+  "power-3":{"health":1000,"technology":"electric-energy-distribution-2","seconds":8,"ingredients":[["tech-priests-martian-power-2",1],["steel-plate",16],["copper-cable",32],["concrete",12]]},
+  "comms-1":{"health":300,"technology":"radar","seconds":4,"ingredients":[["tech-priests-martian-power-1",1],["electronic-circuit",10],["iron-gear-wheel",4],["copper-cable",12]]},
+  "comms-2":{"health":600,"technology":"advanced-circuit","seconds":8,"ingredients":[["tech-priests-martian-comms-1",1],["tech-priests-martian-power-2",1],["advanced-circuit",8],["steel-plate",8]]},
+  "comms-3":{"health":1200,"technology":"processing-unit","seconds":12,"ingredients":[["tech-priests-martian-comms-2",1],["tech-priests-martian-power-3",1],["processing-unit",8],["advanced-circuit",16]]}
+}

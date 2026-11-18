@@ -1,0 +1,31 @@
+{
+  "schema": "fmpl.local-model-record.v1",
+  "id": "tech-priests-stone-cache-wood-v01",
+  "status": "static-game-sprites-installed-specific-native-filter-checks-passed",
+  "publication": "Local working-tree candidate; no remote publication claimed",
+  "source": {
+    "path": "art\\source-to-3d\\filtered-stone-caches\\v01\\wood\\filtered-cache-wood-v01.blend",
+    "sha256": "ab403f443f6671b3640b57f08b1d92b7cf71af60d237f6b10fd932d4a1c88e77"
+  },
+  "runtime": {
+    "path": "art\\source-to-3d\\filtered-stone-caches\\v01\\wood\\filtered-cache-wood-v01.glb",
+    "sha256": "f652573cf6b249ccfdced9c85d9129b525befd9dcb8085f8623995f39612b475"
+  },
+  "camera_policy": "fmpl.factorio45.v1",
+  "native_directions": [
+    0
+  ],
+  "footprint": [
+    2,
+    2
+  ],
+  "purpose": "Six-slot wood cache. Shared stone wall and centered tablet; distinct static stock filling. Existing physical filter steward and ordinary inserters preserved.",
+  "evidence": [
+    "contract.json",
+    "inspection.json",
+    "construction.json",
+    "integration.json",
+    "visual-review.json",
+    "native-evidence/review.json"
+  ]
+}

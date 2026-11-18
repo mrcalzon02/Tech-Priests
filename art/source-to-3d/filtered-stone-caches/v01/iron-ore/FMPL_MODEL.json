@@ -1,0 +1,31 @@
+{
+  "schema": "fmpl.local-model-record.v1",
+  "id": "tech-priests-stone-cache-iron-ore-v01",
+  "status": "static-game-sprites-installed-specific-native-filter-checks-passed",
+  "publication": "Local working-tree candidate; no remote publication claimed",
+  "source": {
+    "path": "art\\source-to-3d\\filtered-stone-caches\\v01\\iron-ore\\filtered-cache-iron-ore-v01.blend",
+    "sha256": "db1a9b9ff52a6a4b69fad2156fc3ef37c0a86d27dfcc199f70654e47fc6ecfbc"
+  },
+  "runtime": {
+    "path": "art\\source-to-3d\\filtered-stone-caches\\v01\\iron-ore\\filtered-cache-iron-ore-v01.glb",
+    "sha256": "d007dad89fbdd874371206f8e1190ccbe2dbde5ad93b3272dfb480eec50a5aa3"
+  },
+  "camera_policy": "fmpl.factorio45.v1",
+  "native_directions": [
+    0
+  ],
+  "footprint": [
+    2,
+    2
+  ],
+  "purpose": "Six-slot iron-ore cache. Shared stone wall and centered tablet; distinct static stock filling. Existing physical filter steward and ordinary inserters preserved.",
+  "evidence": [
+    "contract.json",
+    "inspection.json",
+    "construction.json",
+    "integration.json",
+    "visual-review.json",
+    "native-evidence/review.json"
+  ]
+}

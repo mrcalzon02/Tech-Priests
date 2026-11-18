@@ -1,0 +1,28 @@
+{
+  "state": "Technical source/export/sprite/native gates passed; owner visual approval separate",
+  "source_sha256": "cc9c98ffcd8d4bd0e8fdbc956762530ec4082e26595b7c02cf80696d092b48c5",
+  "export_sha256": "0809ae8e64581e854a72f2a2d155156195e6f8fd82d7a1770f12ee7df7f6295a",
+  "reference_sha256": "b5a48cdd493fc062825aa8eea1071a56d5c1ff127bbb45c9aedac65142843ed7",
+  "render_hashes": {
+    "inspection/export-d0.png": "0ab58431dddd61dee35bffc8775ed4893df04aca56dec8aeab0d1377391117a7",
+    "inspection/export-d2.png": "25195d9c968187919dcb1b324c0f4caca059e8e5c12f21e9e4be088c679e7e86",
+    "inspection/export-clay.png": "018fd265030cec126fc76e68cd914a42fc5de26594808ee2b2df0dfd0d3d877e",
+    "native-evidence/native.png": "201e127630faedba3f08de0bf5a894cef67b84fdf168682872a2c060c45f784d"
+  },
+  "scores_out_of_10": {
+    "construction": {
+      "score": 8,
+      "reason": "User-requested simple shared wall/tablet; distinct supported physical stock filling, no invented mechanism. Exact shared-geometry audit and independent source/export/contact checks pass."
+    },
+    "identity": {
+      "score": 9,
+      "reason": "Stock form and surface identify stone; actual filter contract and fixed container behavior preserved."
+    },
+    "surfaces": {
+      "score": 8,
+      "reason": "Packed physically scaled stock PBR surfaces, retained aged source skull UV, restrained common quarry finish; wood includes lengthwise bark and cross-cut grain. Final owner finish judgment remains separate."
+    }
+  },
+  "observations": "Viewed actual GLB front/rear/clay batch boards and real ten-cache native gallery. Each variant is visibly distinct inside an identical stone enclosure.",
+  "owner_approval": false
+}

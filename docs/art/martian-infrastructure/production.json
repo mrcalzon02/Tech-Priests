@@ -1,0 +1,330 @@
+{
+  "mod": "tech-priests",
+  "version": "0.1.682",
+  "owner_visual_approval": "accepted in chat 2026-11-15",
+  "independent_addon": false,
+  "balance": {
+    "power-1": {
+      "health": 250,
+      "technology": "electronics",
+      "seconds": 2,
+      "ingredients": [
+        [
+          "iron-plate",
+          4
+        ],
+        [
+          "copper-cable",
+          8
+        ],
+        [
+          "stone-brick",
+          4
+        ]
+      ]
+    },
+    "power-2": {
+      "health": 500,
+      "technology": "electric-energy-distribution-1",
+      "seconds": 4,
+      "ingredients": [
+        [
+          "tech-priests-martian-power-1",
+          1
+        ],
+        [
+          "steel-plate",
+          8
+        ],
+        [
+          "copper-cable",
+          16
+        ],
+        [
+          "stone-brick",
+          8
+        ]
+      ]
+    },
+    "power-3": {
+      "health": 1000,
+      "technology": "electric-energy-distribution-2",
+      "seconds": 8,
+      "ingredients": [
+        [
+          "tech-priests-martian-power-2",
+          1
+        ],
+        [
+          "steel-plate",
+          16
+        ],
+        [
+          "copper-cable",
+          32
+        ],
+        [
+          "concrete",
+          12
+        ]
+      ]
+    },
+    "comms-1": {
+      "health": 300,
+      "technology": "radar",
+      "seconds": 4,
+      "ingredients": [
+        [
+          "tech-priests-martian-power-1",
+          1
+        ],
+        [
+          "electronic-circuit",
+          10
+        ],
+        [
+          "iron-gear-wheel",
+          4
+        ],
+        [
+          "copper-cable",
+          12
+        ]
+      ]
+    },
+    "comms-2": {
+      "health": 600,
+      "technology": "advanced-circuit",
+      "seconds": 8,
+      "ingredients": [
+        [
+          "tech-priests-martian-comms-1",
+          1
+        ],
+        [
+          "tech-priests-martian-power-2",
+          1
+        ],
+        [
+          "advanced-circuit",
+          8
+        ],
+        [
+          "steel-plate",
+          8
+        ]
+      ]
+    },
+    "comms-3": {
+      "health": 1200,
+      "technology": "processing-unit",
+      "seconds": 12,
+      "ingredients": [
+        [
+          "tech-priests-martian-comms-2",
+          1
+        ],
+        [
+          "tech-priests-martian-power-3",
+          1
+        ],
+        [
+          "processing-unit",
+          8
+        ],
+        [
+          "advanced-circuit",
+          16
+        ]
+      ]
+    }
+  },
+  "runtime_owner": "scripts.martian_infrastructure via scripts.core.runtime_event_registry",
+  "polling_tick_handlers_added": 0,
+  "graphics": {
+    "comms-1-icon.png": "e044477688df4fda98849df3521bda5a8def829592e15736c7a183c3047335c4",
+    "comms-1-shadow.png": "62f36849b4ab200893b398d5530fcb80dacc1eeef276ffaf54f0b1756d6c436b",
+    "comms-1.png": "4b9df3a46ef1a00d411ed61e279a36106d15715104bfb52da3080304a63ec4a1",
+    "comms-2-dish-beauty.png": "fe83e5bd5e40301d0cf584f689285a73d1d63dddd1f3cc8124684c93b9ab61a3",
+    "comms-2-dish-shadow.png": "e74aad3a1f2f0add4c7b6f1d11934333ff76fed2479c8db449e618e48302b3f3",
+    "comms-2-icon.png": "5f1abfe15adfbdf9259ba163bbfbd57ba88109bbcefedfe0268501bb90274d4e",
+    "comms-2-shadow.png": "ceea6acd347439473ba29a628a735bd20bcb51fc62ee716dc1464ec13e209bb7",
+    "comms-2.png": "10657c2c3e3ba18a6c55f254d62bca59b94fd582f20b83a9fe2bf37f4a01d68d",
+    "comms-3-dish-beauty.png": "c2206c91a635e3ebbd52bdfc8c722ba45e303019d95a78ddb8fa8a8c96401159",
+    "comms-3-dish-shadow.png": "60cbc1ba82a7d94931c1a53e49501e94f2404f2c60670b6263cd48687efc6471",
+    "comms-3-icon.png": "b168205020d3d33c90958aa0e8c4487af3c73941cde6dbc875b28f393b895a71",
+    "comms-3-shadow.png": "5712d85f2ef8a2d17cd742e9e32d2a0ffd57415a58c2bd3560e231019aafb864",
+    "comms-3.png": "33debdd45230ffe2f2de706c5f2d95d2f876e40da56efc585d85836763ea72f6",
+    "power-1-icon.png": "47a014782e06496ec154fbe83fa01cb2f29409d542b60d6c2e41c8718ee7e960",
+    "power-1-shadow.png": "6086e93f07257047c13484bfc7618ee32b0ca6915ef979da25b00dd9ef065bce",
+    "power-1.png": "9b8d736132cacb9baeed3878fe6efb6adbfd20c22c50cf97bc289e77c57c43e0",
+    "power-2-icon.png": "c56fbc255775d85b1f5576de7a7ec23d0f19d994cb069d8390409ba4a6d148c2",
+    "power-2-shadow.png": "84d412f5af7b5a04ea1d79c2d9509d6b8d92ee0d51cef814993da5cab7b3b192",
+    "power-2.png": "6d0a82589666835b997de66a9b1ef97dabe4c85ccda19d0b14d96208691c8c2c",
+    "power-3-icon.png": "23eaf7b7a08fbbe983ba57910c2a7c5c0ff8af49497de1fcbe7c816868993d63",
+    "power-3-shadow.png": "d641139b71070d429a71fbcd1808e32815ecc762504a68e4f18e9aa370cfecf1",
+    "power-3.png": "4e317932175def83e40e06ced1dc5b2b78fab35d86d53260ecc2a30beee75dfd"
+  },
+  "integration_test_status": "PASS_IN_ACTUAL_TECH_PRIESTS_MOD_AND_ZIP",
+  "package_sha256": "78b727ed6be32068ad9f4d01c8c468a2b7863f7d95c3d42755f7b5b360fecefc",
+  "package_version": "0.1.682",
+  "native_event_routes_preserved": true,
+  "models": {
+    "power-1": {
+      "technical_pass": true,
+      "source_sha256": "097abee7e913afcb5970736800af5bb6ab336d6d1a5dd0d7432d4b485448ca9c",
+      "glb_sha256": "a1a5bfdc0800f023c001d2d37748679317a06680bcf91e8a71d8b83191e55429",
+      "packed_source_reopened": true,
+      "owner_approval": "accepted",
+      "render_sha256": {
+        "export-clay.png": "82df50952a877caad56ca5b650d866dd5bd11f48875e52ff6a4a3aa0276bb07a",
+        "export-front.png": "a1e1ae827099d5e64d49b31b2b525e4d3b38a0d2bb2a3c1b8db7973647604980",
+        "export-rear.png": "79b77b71322f8342921f7d832b1061510c5df5b7c258304464427e8d04cdcca3",
+        "export-side.png": "63363f0d125f8051625e27ef6ca7412faed6b3930dba65d533eef2f33f0fdc93"
+      },
+      "agent_visual_review_out_of_10": {
+        "silhouette": 8,
+        "functional_construction": 8,
+        "materials": 8,
+        "native_scale_readability": 8
+      },
+      "review_reason": "Distinct electrical/radio role at native scale; physically mounted insulators, aerials and controller routes; no floating external wire endpoints. Larger dish heads use real yaw bearings and remain clear of fixed antennas through all 64 inspected poses."
+    },
+    "power-2": {
+      "technical_pass": true,
+      "source_sha256": "a6c601ad81612e8058747d763b8d5ec32691b9f010c1b3b1c9d4996887a2140e",
+      "glb_sha256": "a51a80b248418e94e0843e3b2dbac9143cb19041b120c449a04d8d306de72eb7",
+      "packed_source_reopened": true,
+      "owner_approval": "accepted",
+      "render_sha256": {
+        "export-clay.png": "18da503cec67fbe40990ae56b1a7458825da7b70b79309eb496d4f79ce87ddcb",
+        "export-front.png": "1d8ade7d2157c63014239da07b0a676297015f69ada4f47809ff49cd8ab9d63a",
+        "export-rear.png": "af2521b6174a8a18b281ff2fe63a53b19cea36d467e4b84bfbf12706f8d09a48",
+        "export-side.png": "508ad92ad668f0e0e3832ddd246468c5595e48989dead4d281d6d567d27ffc92"
+      },
+      "agent_visual_review_out_of_10": {
+        "silhouette": 8,
+        "functional_construction": 8,
+        "materials": 8,
+        "native_scale_readability": 8
+      },
+      "review_reason": "Distinct electrical/radio role at native scale; physically mounted insulators, aerials and controller routes; no floating external wire endpoints. Larger dish heads use real yaw bearings and remain clear of fixed antennas through all 64 inspected poses."
+    },
+    "power-3": {
+      "technical_pass": true,
+      "source_sha256": "f1181a79ef5dff78adcff702712d173ee994b75cbc4348c2e160e7151218e25a",
+      "glb_sha256": "77c0f091783aeb60548f7c132517e0bbadd5160bbc82841e0449fafaecce9c7a",
+      "packed_source_reopened": true,
+      "owner_approval": "accepted",
+      "render_sha256": {
+        "export-clay.png": "4e9b2dc52d93194edc75bece5a7f497447d49f73af8d71e6e550d085e285fa6a",
+        "export-front.png": "ccda480a85dea248aed0cac84ce3666341bc8c43779506d076e1d683ae3b28fb",
+        "export-rear.png": "82ac13a96823f50ba749cfd01b0bbcb9042d5c00061feeb2cc441ac60466488a",
+        "export-side.png": "70b3a689aefb65c822711c72b23f7ca940858f5fe63499c9c7b28da94ef0f09b"
+      },
+      "agent_visual_review_out_of_10": {
+        "silhouette": 8,
+        "functional_construction": 8,
+        "materials": 8,
+        "native_scale_readability": 8
+      },
+      "review_reason": "Distinct electrical/radio role at native scale; physically mounted insulators, aerials and controller routes; no floating external wire endpoints. Larger dish heads use real yaw bearings and remain clear of fixed antennas through all 64 inspected poses."
+    },
+    "comms-1": {
+      "technical_pass": true,
+      "source_sha256": "cef435471f77c4b0933fe2f25158b3a7b8365e4a19dc5c7badf1e2a067f7597b",
+      "glb_sha256": "b6fcf1eb62b5e06629c48f1d539c89c71d6553f6510b86aeba6a8e1c093f4448",
+      "packed_source_reopened": true,
+      "owner_approval": "accepted",
+      "render_sha256": {
+        "export-clay.png": "66ea951320d5fadf5c1db9fd2b0477e23d9e91dd4c2b862cead0fe056e5172e9",
+        "export-front.png": "32287278a4d5710ca4463ec27ecd52d8b59778b4abced959187e5324c753ccac",
+        "export-rear.png": "46a5e1a4d2dd915b790d275ef805afb7eea6957f35f5544f317d1854c10f980f",
+        "export-side.png": "b63fc61f95d5e9ed90be4b1d900aabf16bc552ca4c0f99554d2adbf52d8d6d7e"
+      },
+      "agent_visual_review_out_of_10": {
+        "silhouette": 8,
+        "functional_construction": 8,
+        "materials": 8,
+        "native_scale_readability": 8
+      },
+      "review_reason": "Distinct electrical/radio role at native scale; physically mounted insulators, aerials and controller routes; no floating external wire endpoints. Larger dish heads use real yaw bearings and remain clear of fixed antennas through all 64 inspected poses."
+    },
+    "comms-2": {
+      "technical_pass": true,
+      "source_sha256": "08fdd9ff55831098fb334135a560f645ff4c7fcb934dcc5ab397ad405acf7512",
+      "glb_sha256": "3b8fb09663e998c7409301a27a380691b8c1ef1d0dd1f5211ac6a5124795814e",
+      "packed_source_reopened": true,
+      "owner_approval": "accepted",
+      "render_sha256": {
+        "export-clay.png": "7fc28e5787b63deaf255d736e042c4b23807a09f10525b79a1fc0a4bda738ad7",
+        "export-front.png": "98b8aa815a2641b90bd4b85369053ef01365944515d11c20e2739e3d6608ad3d",
+        "export-rear.png": "8bc0e1a3782733998a65edf8b1a854c0fc761f36385fc47bcbb2d48490321939",
+        "export-side.png": "02463c5b816df3a48c83533f89bef3645360404c13a3db79aef96f7a25c02140"
+      },
+      "agent_visual_review_out_of_10": {
+        "silhouette": 8,
+        "functional_construction": 8,
+        "materials": 8,
+        "native_scale_readability": 8
+      },
+      "review_reason": "Distinct electrical/radio role at native scale; physically mounted insulators, aerials and controller routes; no floating external wire endpoints. Larger dish heads use real yaw bearings and remain clear of fixed antennas through all 64 inspected poses.",
+      "motion": {
+        "source_sha256": "08fdd9ff55831098fb334135a560f645ff4c7fcb934dcc5ab397ad405acf7512",
+        "glb_sha256": "3b8fb09663e998c7409301a27a380691b8c1ef1d0dd1f5211ac6a5124795814e",
+        "packed_source_images_reopened": 21,
+        "source_reopen_pass": true,
+        "rotating_dish": true,
+        "animated_export_seconds": 10.0,
+        "quarter_turn_feed_displacement_tiles": 0.8738977949312159,
+        "full_sweep_fixed_aerial_collision_check": true,
+        "tested_headings": 64,
+        "collision_headings": []
+      }
+    },
+    "comms-3": {
+      "technical_pass": true,
+      "source_sha256": "55dd6661a5f13e33e39420aa59d1efefb29f6c4f43d9867efba7c36a955fe078",
+      "glb_sha256": "49fa3025efbb6fc543c3067af34bd473f0d960330aa7e4ccfb2c29e81a57d19b",
+      "packed_source_reopened": true,
+      "owner_approval": "accepted",
+      "render_sha256": {
+        "export-clay.png": "931b0aac0cec9f592f76033257a092e6fe255992e2b118d5d94cdbbb571ac63b",
+        "export-front.png": "eb1d09fa08b0f7b3ac62223e2889d4aa419a86ad4e1559cd79495925a17aa9ff",
+        "export-rear.png": "427e7b8ccfb9d6673b8f76a441817f0b9a0450bd99ba38bfca2ba5ef57727dd0",
+        "export-side.png": "e0482843ac08256412ea2ed9a039069fd32c6f1f6b8ec4ef44c10ba182d1985f"
+      },
+      "agent_visual_review_out_of_10": {
+        "silhouette": 8,
+        "functional_construction": 8,
+        "materials": 8,
+        "native_scale_readability": 8
+      },
+      "review_reason": "Distinct electrical/radio role at native scale; physically mounted insulators, aerials and controller routes; no floating external wire endpoints. Larger dish heads use real yaw bearings and remain clear of fixed antennas through all 64 inspected poses.",
+      "motion": {
+        "source_sha256": "55dd6661a5f13e33e39420aa59d1efefb29f6c4f43d9867efba7c36a955fe078",
+        "glb_sha256": "49fa3025efbb6fc543c3067af34bd473f0d960330aa7e4ccfb2c29e81a57d19b",
+        "packed_source_images_reopened": 21,
+        "source_reopen_pass": true,
+        "rotating_dish": true,
+        "animated_export_seconds": 10.0,
+        "quarter_turn_feed_displacement_tiles": 1.227142755573287,
+        "full_sweep_fixed_aerial_collision_check": true,
+        "tested_headings": 64,
+        "collision_headings": []
+      }
+    }
+  },
+  "event_flow": [
+    "data.lua -> prototypes.martian_infrastructure -> poles, helper radars, items, recipes, stock technology unlocks",
+    "control.lua -> scripts.martian_infrastructure.install_main -> existing runtime_event_registry lifecycle routes",
+    "Native pole owns copper/red/green networks; linked native radar owns scan energy and spinning dish graphics; destruction registry removes companions"
+  ],
+  "native_rotation_images": {
+    "rotation-460.png": "a47c4abf6db03e944470af44c6c69f00f06e7327272b2692b97c82d928606674",
+    "rotation-540.png": "6e6eb6ed8201294e9435ef63b238b006ee78ff3b7b3901aa4ad9cb69fc1cca5b",
+    "rotation-780.png": "60ec8ee5e11a81a6486557e41bdbc327a9a1c50548591a5c58a46bd4c154b380",
+    "rotation-920.png": "60ec8ee5e11a81a6486557e41bdbc327a9a1c50548591a5c58a46bd4c154b380"
+  },
+  "native_rotation_visual_review": "Medium dish visibly changed heading between powered ticks 460/540; unpowered captures at 780/920 are byte-identical. Headless radar orientation API also returns zero for vanilla radar, so no orientation-getter claim is used. Both array sizes have distinct 64-heading body/shadow atlases and verified animated GLB sweeps."
+}

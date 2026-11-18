@@ -1,0 +1,29 @@
+{
+  "state": "Technical candidate integrated and verified; owner review pending",
+  "source_sha256": "84ac195d708b4fbea5d5306acec9eaaa7d1d2682a22c96665ab14aef6843b407",
+  "export_sha256": "8e68144d0caeeacf612f6d890096f7f92441903c8e837c5f728c6cc756e9204b",
+  "reference_sha256": "4ba973a3e6ed53e0acbb350a4a1be4827fb0de00a801b65f4f066d21cfa9003b",
+  "render_hashes": {
+    "inspection/export-d0.png": "77bbcbb78b0e65ae16f14c1492c07e2f70b9f371ca2db3a2698b7ddebc074fe4",
+    "inspection/export-d2.png": "5c70449d5f11a3fdb7989bd804fdd5d7a69735d0617f8165bd58f9434b0f59f9",
+    "inspection/export-clay.png": "d1b72d49251392e802d27737fd090c974459721145f14008b140d838dcca03cc",
+    "native-evidence/native-charge.png": "19c5e92e6871e223f01315a8429ace4f75cb727ff3025565f8e9fd61a69db7d4",
+    "native-evidence/native-discharge.png": "c7eaf9b043fcfeb4d5ff5d54611021981ee3016cbdee89db3995accf2f6d5cce"
+  },
+  "scores_out_of_10": {
+    "construction": {
+      "score": 8,
+      "reason": "Grounded tray, eight seated cells, insulated bolted busbars and removable guard. Broad fitted cable routes and exact native contacts independently measured in source and actual export."
+    },
+    "identity": {
+      "score": 9,
+      "reason": "Distinct cell bank and protective grate match accumulator purpose and original battery reference, retaining shared stone-ring faction identity; no inventory or fluid mechanism invented."
+    },
+    "surfaces": {
+      "score": 8,
+      "reason": "Model-specific aged ceramic, oxidized iron/copper and matte red/black cable PBR images are packed; original skull UV and aging retained. Close finish judgment remains for owner."
+    }
+  },
+  "native_observations": "Viewed charge/discharge native captures; green and amber working lenses differ by supported state; native circuit LED is seated on cabinet instead of terrain. Body, shadow and contacts retain registration.",
+  "owner_approval": false
+}

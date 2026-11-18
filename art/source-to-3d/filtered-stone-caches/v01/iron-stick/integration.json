@@ -1,0 +1,12 @@
+{
+  "key": "iron-stick",
+  "source_sha256": "5d7fc7793ac256d34b71d23c1b933714d8f9eb17775723a2900c5ab8b6e8ea16",
+  "export_sha256": "2978e5918dcab5437114728668ecc95338460bc910b6bcd1868e7d55329d477f",
+  "prototype_sha256": "f8e0d08480306b4e929ee8d44d7f94183d8cabdc1bba64c688ddd7c6a29011af",
+  "runtime_art": {
+    "iron-stick-body.png": "7f3c6ffc84f8ee7fc9e6efa49fa3b648082fc67148e925285240d890478dce98",
+    "iron-stick-icon.png": "ddb8a521924145f5564204b19fca348d19578fb47e58557baf880600114cdd80",
+    "iron-stick-shadow.png": "079c0f391059a58ecf12de11e079e0dd2d23df46b86b11e8cbe0bee7b52b50a6"
+  },
+  "scope": "Only this filtered cache picture/icon/backing art; inventory6, recipes, filter steward, circuits, fixed direction and ordinary inserters unchanged"
+}

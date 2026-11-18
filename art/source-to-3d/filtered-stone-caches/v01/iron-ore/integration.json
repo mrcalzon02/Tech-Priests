@@ -1,0 +1,12 @@
+{
+  "key": "iron-ore",
+  "source_sha256": "db1a9b9ff52a6a4b69fad2156fc3ef37c0a86d27dfcc199f70654e47fc6ecfbc",
+  "export_sha256": "d007dad89fbdd874371206f8e1190ccbe2dbde5ad93b3272dfb480eec50a5aa3",
+  "prototype_sha256": "f8e0d08480306b4e929ee8d44d7f94183d8cabdc1bba64c688ddd7c6a29011af",
+  "runtime_art": {
+    "iron-ore-body.png": "551b5b7ae7224516595e7def5919ef2c8a5da95e53d37c66cb63cbee18722c8c",
+    "iron-ore-icon.png": "23aaf4c34dc591a33645f102acebbba8ef273d9e9c2ba4e67fb67ca7fd116ebe",
+    "iron-ore-shadow.png": "89892cffecbc6950e5db55fd26bd8d7df4ed4ea1819af9295b78e7706526631c"
+  },
+  "scope": "Only this filtered cache picture/icon/backing art; inventory6, recipes, filter steward, circuits, fixed direction and ordinary inserters unchanged"
+}

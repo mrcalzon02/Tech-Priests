@@ -1,0 +1,1153 @@
+{
+  "passed": true,
+  "source": {
+    "label": "independently reopened packed source",
+    "meshes": 109,
+    "triangles": 39126,
+    "bounds": [
+      [
+        -0.9849118590354919,
+        -0.9649999737739563,
+        0.0
+      ],
+      [
+        0.974468469619751,
+        0.9825168251991272,
+        0.8294879198074341
+      ]
+    ],
+    "finite": true,
+    "degenerate": [],
+    "missing_uv": [],
+    "missing_images": [],
+    "within_footprint": true,
+    "ground_contact": true,
+    "passed": true,
+    "packed_images": [
+      {
+        "name": "aged-original-skull-orm.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "cache-bone-ivory-albedo.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "clay-albedo.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "clay-normal.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "clay-orm.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "control-keys-albedo.png",
+        "packed": true,
+        "size": [
+          512,
+          512
+        ]
+      },
+      {
+        "name": "control-keys-normal.png",
+        "packed": true,
+        "size": [
+          512,
+          512
+        ]
+      },
+      {
+        "name": "control-keys-orm.png",
+        "packed": true,
+        "size": [
+          512,
+          512
+        ]
+      },
+      {
+        "name": "dgordillo-sculpt-normal.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "dressed-stone-albedo.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "dressed-stone-normal.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "dressed-stone-orm.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "edge-trim-albedo.png.001",
+        "packed": true,
+        "size": [
+          512,
+          512
+        ]
+      },
+      {
+        "name": "edge-trim-normal.png",
+        "packed": true,
+        "size": [
+          512,
+          512
+        ]
+      },
+      {
+        "name": "edge-trim-orm.png",
+        "packed": true,
+        "size": [
+          512,
+          512
+        ]
+      },
+      {
+        "name": "ground-stone-albedo.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "ground-stone-normal.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "ground-stone-orm.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "hemp-albedo.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "hemp-normal.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "hemp-orm.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "hide-albedo.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "hide-normal.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "hide-orm.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "martian_red_albedo.png",
+        "packed": true,
+        "size": [
+          512,
+          512
+        ]
+      },
+      {
+        "name": "martian_red_normal.png",
+        "packed": true,
+        "size": [
+          512,
+          512
+        ]
+      },
+      {
+        "name": "martian_red_orm.png",
+        "packed": true,
+        "size": [
+          512,
+          512
+        ]
+      },
+      {
+        "name": "oxide-albedo.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "oxide-normal.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "oxide-orm.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "steel-albedo.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "steel-normal.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "steel-orm.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "stone-albedo.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "stone-normal.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "stone-orm.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "wood-albedo.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "wood-end-albedo.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "wood-end-normal.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "wood-end-orm.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "wood-normal.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "wood-orm.png",
+        "packed": true,
+        "size": [
+          1024,
+          1024
+        ]
+      }
+    ],
+    "all_used_images_packed": true,
+    "contacts": [
+      {
+        "a": "Hand-laid course 0 stone 00.0",
+        "b": "Continuous grounded rubble footing",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 0 stone 01.0",
+        "b": "Continuous grounded rubble footing",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 0 stone 02.0",
+        "b": "Continuous grounded rubble footing",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 0 stone 03.0",
+        "b": "Continuous grounded rubble footing",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 0 stone 04.0",
+        "b": "Continuous grounded rubble footing",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 0 stone 05.0",
+        "b": "Continuous grounded rubble footing",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 0 stone 06.0",
+        "b": "Continuous grounded rubble footing",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 0 stone 07.0",
+        "b": "Continuous grounded rubble footing",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 0 stone 08.0",
+        "b": "Continuous grounded rubble footing",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 0 stone 09.0",
+        "b": "Continuous grounded rubble footing",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 0 stone 10.0",
+        "b": "Continuous grounded rubble footing",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 0 stone 11.0",
+        "b": "Continuous grounded rubble footing",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 0 stone 12.0",
+        "b": "Continuous grounded rubble footing",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 0 stone 14.1",
+        "b": "Continuous grounded rubble footing",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 0 stone 15.0",
+        "b": "Continuous grounded rubble footing",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 0 stone 16.0",
+        "b": "Continuous grounded rubble footing",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 0 stone 17.0",
+        "b": "Continuous grounded rubble footing",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 1 stone 00.0",
+        "b": "Hand-laid course 0 stone 00.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 1 stone 01.0",
+        "b": "Hand-laid course 0 stone 01.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 1 stone 02.0",
+        "b": "Hand-laid course 0 stone 03.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 1 stone 03.0",
+        "b": "Hand-laid course 0 stone 03.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 1 stone 04.0",
+        "b": "Hand-laid course 0 stone 04.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 1 stone 05.0",
+        "b": "Hand-laid course 0 stone 05.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 1 stone 06.0",
+        "b": "Hand-laid course 0 stone 06.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 1 stone 07.0",
+        "b": "Hand-laid course 0 stone 07.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 1 stone 08.0",
+        "b": "Hand-laid course 0 stone 08.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 1 stone 09.0",
+        "b": "Hand-laid course 0 stone 10.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 1 stone 10.0",
+        "b": "Hand-laid course 0 stone 11.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 1 stone 11.0",
+        "b": "Hand-laid course 0 stone 12.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 1 stone 14.1",
+        "b": "Hand-laid course 0 stone 14.1",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 1 stone 15.0",
+        "b": "Hand-laid course 0 stone 16.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 1 stone 16.0",
+        "b": "Hand-laid course 0 stone 16.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 1 stone 17.0",
+        "b": "Hand-laid course 0 stone 17.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 2 stone 00.0",
+        "b": "Hand-laid course 1 stone 00.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 2 stone 01.0",
+        "b": "Hand-laid course 1 stone 00.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 2 stone 02.0",
+        "b": "Hand-laid course 1 stone 01.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 2 stone 03.0",
+        "b": "Hand-laid course 1 stone 02.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 2 stone 04.0",
+        "b": "Hand-laid course 1 stone 04.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 2 stone 05.0",
+        "b": "Hand-laid course 1 stone 05.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 2 stone 06.0",
+        "b": "Hand-laid course 1 stone 06.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 2 stone 07.0",
+        "b": "Hand-laid course 1 stone 06.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 2 stone 08.0",
+        "b": "Hand-laid course 1 stone 08.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 2 stone 09.0",
+        "b": "Hand-laid course 1 stone 08.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 2 stone 10.0",
+        "b": "Hand-laid course 1 stone 09.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 2 stone 11.0",
+        "b": "Hand-laid course 1 stone 11.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 2 stone 12.0",
+        "b": "Hand-laid course 1 stone 11.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 2 stone 14.1",
+        "b": "Hand-laid course 1 stone 14.1",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 2 stone 15.0",
+        "b": "Hand-laid course 1 stone 14.1",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 2 stone 16.0",
+        "b": "Hand-laid course 1 stone 15.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 2 stone 17.0",
+        "b": "Hand-laid course 1 stone 16.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 3 stone 00.0",
+        "b": "Hand-laid course 2 stone 00.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 3 stone 01.0",
+        "b": "Hand-laid course 2 stone 01.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 3 stone 02.0",
+        "b": "Hand-laid course 2 stone 03.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 3 stone 03.0",
+        "b": "Hand-laid course 2 stone 03.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 3 stone 04.0",
+        "b": "Hand-laid course 2 stone 04.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 3 stone 05.0",
+        "b": "Hand-laid course 2 stone 05.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 3 stone 06.0",
+        "b": "Hand-laid course 2 stone 06.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 3 stone 07.0",
+        "b": "Hand-laid course 2 stone 07.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 3 stone 08.0",
+        "b": "Hand-laid course 2 stone 08.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 3 stone 09.0",
+        "b": "Hand-laid course 2 stone 10.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 3 stone 10.0",
+        "b": "Hand-laid course 2 stone 11.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 3 stone 11.0",
+        "b": "Hand-laid course 2 stone 12.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 3 stone 14.1",
+        "b": "Hand-laid course 2 stone 14.1",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 3 stone 15.0",
+        "b": "Hand-laid course 2 stone 16.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 3 stone 16.0",
+        "b": "Hand-laid course 2 stone 16.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Hand-laid course 3 stone 17.0",
+        "b": "Hand-laid course 2 stone 17.0",
+        "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Grounded carved circuit receiving tablet",
+        "b": "Continuous grounded rubble footing",
+        "why": "curved keystone replaces the whole wall section, with full-depth inner and outer faces and ground bearing",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Supplied DGordillo low-poly skull 0",
+        "b": "Grounded carved circuit receiving tablet",
+        "why": "supplied original skull adapted as shallow curved relief; back embeds in stone",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | twenty tooth cog surround",
+        "b": "Grounded carved circuit receiving tablet",
+        "why": "red cog back follows outer curve and embeds in wall face",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | fitted cranial vault",
+        "b": "Cache centered emblem | Supplied DGordillo low-poly skull 0",
+        "why": "Preserved fitted relief relationship: fitted augmetic plate over actual supplied anatomy, integral return walls",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | fitted orbital and cheek",
+        "b": "Cache centered emblem | Supplied DGordillo low-poly skull 0",
+        "why": "Preserved fitted relief relationship: fitted augmetic plate over actual supplied anatomy, integral return walls",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | fitted mandibular half",
+        "b": "Cache centered emblem | Supplied DGordillo low-poly skull 0",
+        "why": "Preserved fitted relief relationship: fitted augmetic plate over actual supplied anatomy, integral return walls",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | surface seated ocular receiving flange",
+        "b": "Cache centered emblem | Mars emblem | fitted orbital and cheek",
+        "why": "Preserved fitted relief relationship: ocular flange rear follows actual socket surround raycast, front has a machined annular seat",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | inset optical barrel",
+        "b": "Cache centered emblem | Mars emblem | surface seated ocular receiving flange",
+        "why": "Preserved fitted relief relationship: optical barrel recessed into open receiving flange",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | red bionic eye lens",
+        "b": "Cache centered emblem | Mars emblem | inset optical barrel",
+        "why": "Preserved fitted relief relationship: lens captured inside recessed optical barrel",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | ocular captive screw 00",
+        "b": "Cache centered emblem | Mars emblem | surface seated ocular receiving flange",
+        "why": "Preserved fitted relief relationship: captive screw bears on real annular front seat",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | ocular captive screw 01",
+        "b": "Cache centered emblem | Mars emblem | surface seated ocular receiving flange",
+        "why": "Preserved fitted relief relationship: captive screw bears on real annular front seat",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | ocular captive screw 02",
+        "b": "Cache centered emblem | Mars emblem | surface seated ocular receiving flange",
+        "why": "Preserved fitted relief relationship: captive screw bears on real annular front seat",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | ocular captive screw 03",
+        "b": "Cache centered emblem | Mars emblem | surface seated ocular receiving flange",
+        "why": "Preserved fitted relief relationship: captive screw bears on real annular front seat",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | ocular captive screw 04",
+        "b": "Cache centered emblem | Mars emblem | surface seated ocular receiving flange",
+        "why": "Preserved fitted relief relationship: captive screw bears on real annular front seat",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | ocular captive screw 05",
+        "b": "Cache centered emblem | Mars emblem | surface seated ocular receiving flange",
+        "why": "Preserved fitted relief relationship: captive screw bears on real annular front seat",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | ocular captive screw 06",
+        "b": "Cache centered emblem | Mars emblem | surface seated ocular receiving flange",
+        "why": "Preserved fitted relief relationship: captive screw bears on real annular front seat",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | ocular captive screw 07",
+        "b": "Cache centered emblem | Mars emblem | surface seated ocular receiving flange",
+        "why": "Preserved fitted relief relationship: captive screw bears on real annular front seat",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | plate retaining boss 0",
+        "b": "Cache centered emblem | Supplied DGordillo low-poly skull 0",
+        "why": "Preserved fitted relief relationship: retaining boss seated on actual donor surface normal",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | plate retaining stud 0",
+        "b": "Cache centered emblem | Mars emblem | plate retaining boss 0",
+        "why": "Preserved fitted relief relationship: stud retained in fitted plate boss",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | plate retaining boss 1",
+        "b": "Cache centered emblem | Supplied DGordillo low-poly skull 0",
+        "why": "Preserved fitted relief relationship: retaining boss seated on actual donor surface normal",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | plate retaining stud 1",
+        "b": "Cache centered emblem | Mars emblem | plate retaining boss 1",
+        "why": "Preserved fitted relief relationship: stud retained in fitted plate boss",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | plate retaining boss 2",
+        "b": "Cache centered emblem | Supplied DGordillo low-poly skull 0",
+        "why": "Preserved fitted relief relationship: retaining boss seated on actual donor surface normal",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | plate retaining stud 2",
+        "b": "Cache centered emblem | Mars emblem | plate retaining boss 2",
+        "why": "Preserved fitted relief relationship: stud retained in fitted plate boss",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | plate retaining boss 3",
+        "b": "Cache centered emblem | Supplied DGordillo low-poly skull 0",
+        "why": "Preserved fitted relief relationship: retaining boss seated on actual donor surface normal",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | plate retaining stud 3",
+        "b": "Cache centered emblem | Mars emblem | plate retaining boss 3",
+        "why": "Preserved fitted relief relationship: stud retained in fitted plate boss",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | jaw strut seated anchor 0",
+        "b": "Cache centered emblem | Supplied DGordillo low-poly skull 0",
+        "why": "Preserved fitted relief relationship: jaw strut socket root seats on actual donor surface normal",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | jaw strut seated anchor 1",
+        "b": "Cache centered emblem | Supplied DGordillo low-poly skull 0",
+        "why": "Preserved fitted relief relationship: jaw strut socket root seats on actual donor surface normal",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | fixed mandibular strut housing",
+        "b": "Cache centered emblem | Mars emblem | jaw strut seated anchor 0",
+        "why": "Preserved fitted relief relationship: strut housing retained in upper actual surface anchor",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | captured mandibular strut rod",
+        "b": "Cache centered emblem | Mars emblem | fixed mandibular strut housing",
+        "why": "Preserved fitted relief relationship: male strut rod overlaps real housing bore region",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Cache centered emblem | Mars emblem | captured mandibular strut rod",
+        "b": "Cache centered emblem | Mars emblem | jaw strut seated anchor 1",
+        "why": "Preserved fitted relief relationship: rod captured in lower surface anchor; emblem hardware is static",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Native red circuit contact seat",
+        "b": "Grounded carved circuit receiving tablet",
+        "why": "contact stud root seats on actual curved wall normal; cap projects to unchanged native wire point",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Native green circuit contact seat",
+        "b": "Grounded carved circuit receiving tablet",
+        "why": "contact stud root seats on actual curved wall normal; cap projects to unchanged native wire point",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Stock | timber dunnage",
+        "b": "Compacted earth cavity floor",
+        "why": "stock dunnage bears on actual cavity floor",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Stock | cross-cut log 0 0",
+        "b": "Stock | timber dunnage",
+        "why": "roundwood stack rests on dunnage/underlying logs",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Stock | cross-cut log 0 1",
+        "b": "Stock | timber dunnage",
+        "why": "roundwood stack rests on dunnage/underlying logs",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Stock | cross-cut log 0 2",
+        "b": "Stock | timber dunnage",
+        "why": "roundwood stack rests on dunnage/underlying logs",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Stock | cross-cut log 0 3",
+        "b": "Stock | timber dunnage",
+        "why": "roundwood stack rests on dunnage/underlying logs",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Stock | cross-cut log 1 0",
+        "b": "Stock | cross-cut log 0 0",
+        "why": "roundwood stack rests on dunnage/underlying logs",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Stock | cross-cut log 1 1",
+        "b": "Stock | cross-cut log 0 1",
+        "why": "roundwood stack rests on dunnage/underlying logs",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Stock | cross-cut log 1 2",
+        "b": "Stock | cross-cut log 0 2",
+        "why": "roundwood stack rests on dunnage/underlying logs",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Stock | cross-cut log 2 0",
+        "b": "Stock | cross-cut log 1 0",
+        "why": "roundwood stack rests on dunnage/underlying logs",
+        "aabb_gap": 0.0,
+        "passed": true
+      },
+      {
+        "a": "Stock | cross-cut log 2 1",
+        "b": "Stock | cross-cut log 1 1",
+        "why": "roundwood stack rests on dunnage/underlying logs",
+        "aabb_gap": 0.0,
+        "passed": true
+      }
+    ],
+    "contact_limit": "AABB support-seat checks catch separation; not a full mesh intersection proof."
+  },
+  "export": {
+    "label": "independent GLB import",
+    "meshes": 109,
+    "triangles": 39126,
+    "bounds": [
+      [
+        -0.9849118590354919,
+        -0.9649999737739563,
+        0.0
+      ],
+      [
+        0.974468469619751,
+        0.9825168251991272,
+        0.8294879198074341
+      ]
+    ],
+    "finite": true,
+    "degenerate": [],
+    "missing_uv": [],
+    "missing_images": [],
+    "within_footprint": true,
+    "ground_contact": true,
+    "passed": true,
+    "bounds_match_source": true
+  },
+  "source_sha256": "ab403f443f6671b3640b57f08b1d92b7cf71af60d237f6b10fd932d4a1c88e77",
+  "export_sha256": "f652573cf6b249ccfdced9c85d9129b525befd9dcb8085f8623995f39612b475",
+  "visual_review": "Pending actual image viewing; file presence is not visual acceptance."
+}

@@ -1,0 +1,31 @@
+{
+  "schema": "fmpl.local-model-record.v1",
+  "id": "tech-priests-stone-cache-copper-plate-v01",
+  "status": "static-game-sprites-installed-specific-native-filter-checks-passed",
+  "publication": "Local working-tree candidate; no remote publication claimed",
+  "source": {
+    "path": "art\\source-to-3d\\filtered-stone-caches\\v01\\copper-plate\\filtered-cache-copper-plate-v01.blend",
+    "sha256": "69d11e982f2ac1035fd8d009cda8bc07326d8c8b71ceabb038719df55ee9e3de"
+  },
+  "runtime": {
+    "path": "art\\source-to-3d\\filtered-stone-caches\\v01\\copper-plate\\filtered-cache-copper-plate-v01.glb",
+    "sha256": "c9d9cfec35f4764393b29a2bf95b72e84aed508426a065ba812dce9faf33a7fc"
+  },
+  "camera_policy": "fmpl.factorio45.v1",
+  "native_directions": [
+    0
+  ],
+  "footprint": [
+    2,
+    2
+  ],
+  "purpose": "Six-slot copper-plate cache. Shared stone wall and centered tablet; distinct static stock filling. Existing physical filter steward and ordinary inserters preserved.",
+  "evidence": [
+    "contract.json",
+    "inspection.json",
+    "construction.json",
+    "integration.json",
+    "visual-review.json",
+    "native-evidence/review.json"
+  ]
+}

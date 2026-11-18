@@ -1,0 +1,53 @@
+{
+  "regions": {
+    "wall": "Reused cache quarry surfaces, provisional owner finish state retained",
+    "hatch": "Forged iron, seam grime at actual hatch reinforcement and edge wear at octagonal door boundary; wear ring follows handwheel XY placement",
+    "hardware": "Rubbed iron at handle, hub, hinges and bolt crowns, subdued bronze oxidation rather than polished chrome",
+    "gasket": "Dark fibrous gasket under hatch, high roughness and no metal"
+  },
+  "uv": "Hatch maps registered in world XY over 1.4 units; hardware uses physical-scale planar/cylindrical UV; original supplied skull UV/sculpt normal retained",
+  "maps": {
+    "forged-iron": {
+      "albedo": {
+        "path": "art/source-to-3d/item-vault/v01/textures/forged-iron-albedo.png",
+        "sha256": "629352d214475334b29e65dfd2bba80187bb9773095f9bb8dbf21c92b6532760"
+      },
+      "orm": {
+        "path": "art/source-to-3d/item-vault/v01/textures/forged-iron-orm.png",
+        "sha256": "6b951248826213b811543418460a67342d3256fa8dc71aec227a79c61345b22e"
+      },
+      "normal": {
+        "path": "art/source-to-3d/item-vault/v01/textures/forged-iron-normal.png",
+        "sha256": "bc1ae5769a1d062ae13f6ff9d306ee68a9f64d9b05c298039f3e7fc97597ae3a"
+      }
+    },
+    "rubbed-iron": {
+      "albedo": {
+        "path": "art/source-to-3d/item-vault/v01/textures/rubbed-iron-albedo.png",
+        "sha256": "6273852e64c1834f8c8310bdc3fc104f6045087b4c01cb0b935df849ea223a30"
+      },
+      "orm": {
+        "path": "art/source-to-3d/item-vault/v01/textures/rubbed-iron-orm.png",
+        "sha256": "0f5fd8df9104d277fdd6417ec6455ef832e134827c78b30f97e2166f56c6e2d3"
+      },
+      "normal": {
+        "path": "art/source-to-3d/item-vault/v01/textures/rubbed-iron-normal.png",
+        "sha256": "bc1ae5769a1d062ae13f6ff9d306ee68a9f64d9b05c298039f3e7fc97597ae3a"
+      }
+    },
+    "gasket": {
+      "albedo": {
+        "path": "art/source-to-3d/item-vault/v01/textures/gasket-albedo.png",
+        "sha256": "11c1969117bc91fd7e35392f0abad5d6b1e2cb3e9d36676e041ac800b39dee31"
+      },
+      "orm": {
+        "path": "art/source-to-3d/item-vault/v01/textures/gasket-orm.png",
+        "sha256": "90393db44127b0d8e425f18ca5b071c3ee5e9ec1636096122c6dc7240f49d88f"
+      },
+      "normal": {
+        "path": "art/source-to-3d/item-vault/v01/textures/gasket-normal.png",
+        "sha256": "dd891f0aa167a98044cbf1aa40c5784f87f9a433340b22b5999737ac0e12cccd"
+      }
+    }
+  }
+}

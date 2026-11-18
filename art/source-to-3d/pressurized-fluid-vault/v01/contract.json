@@ -1,0 +1,812 @@
+{
+  "id": "tech-priests-stone-cache-pressurized-fluid-vault",
+  "prototype": {
+    "type": "storage-tank",
+    "name": "tech-priests-stone-cache-pressurized-fluid-vault",
+    "icon": "__tech-priests__/graphics/icons/stone-cache/tech-priests-stone-cache-pressurized-fluid-vault.png",
+    "flags": [
+      "placeable-player",
+      "player-creation"
+    ],
+    "minable": {
+      "mining_time": 0.45,
+      "result": "tech-priests-stone-cache-pressurized-fluid-vault"
+    },
+    "max_health": 500,
+    "corpse": "storage-tank-remnants",
+    "dying_explosion": "storage-tank-explosion",
+    "collision_box": [
+      [
+        -1.1,
+        -1.1
+      ],
+      [
+        1.1,
+        1.1
+      ]
+    ],
+    "selection_box": [
+      [
+        -1.15,
+        -1.15
+      ],
+      [
+        1.15,
+        1.15
+      ]
+    ],
+    "fast_replaceable_group": "storage-tank",
+    "damaged_trigger_effect": {
+      "type": "create-entity",
+      "entity_name": "spark-explosion",
+      "offset_deviation": [
+        [
+          -0.5,
+          -0.5
+        ],
+        [
+          0.5,
+          0.5
+        ]
+      ],
+      "offsets": [
+        [
+          0,
+          1
+        ]
+      ],
+      "damage_type_filters": "fire"
+    },
+    "icon_draw_specification": {
+      "scale": 1.5,
+      "shift": [
+        0,
+        -0.3
+      ]
+    },
+    "fluid_box": {
+      "volume": 1000,
+      "pipe_connections": [
+        {
+          "flow_direction": "input-output",
+          "direction": 0,
+          "position": [
+            0,
+            -1
+          ]
+        },
+        {
+          "flow_direction": "input-output",
+          "direction": 8,
+          "position": [
+            0,
+            1
+          ]
+        }
+      ],
+      "pipe_covers_frozen": {
+        "north": {
+          "filename": "__space-age__/graphics/entity/frozen/pipe-covers/pipe-cover-north.png",
+          "priority": "extra-high",
+          "width": 128,
+          "height": 128,
+          "scale": 0.5
+        },
+        "east": {
+          "filename": "__space-age__/graphics/entity/frozen/pipe-covers/pipe-cover-east.png",
+          "priority": "extra-high",
+          "width": 128,
+          "height": 128,
+          "scale": 0.5
+        },
+        "south": {
+          "filename": "__space-age__/graphics/entity/frozen/pipe-covers/pipe-cover-south.png",
+          "priority": "extra-high",
+          "width": 128,
+          "height": 128,
+          "scale": 0.5
+        },
+        "west": {
+          "filename": "__space-age__/graphics/entity/frozen/pipe-covers/pipe-cover-west.png",
+          "priority": "extra-high",
+          "width": 128,
+          "height": 128,
+          "scale": 0.5
+        }
+      }
+    },
+    "two_direction_only": true,
+    "window_bounding_box": [
+      [
+        -0.125,
+        0.6875
+      ],
+      [
+        0.1875,
+        1.1875
+      ]
+    ],
+    "pictures": {
+      "picture": {
+        "layers": [
+          {
+            "filename": "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-pressurized-fluid-vault-shadow.png",
+            "priority": "high",
+            "width": 1024,
+            "height": 1024,
+            "frame_count": 1,
+            "line_length": 1,
+            "draw_as_shadow": true,
+            "shift": [
+              0.08,
+              0.08
+            ],
+            "scale": 0.068
+          },
+          {
+            "filename": "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-pressurized-fluid-vault.png",
+            "priority": "high",
+            "width": 1024,
+            "height": 1024,
+            "frame_count": 1,
+            "line_length": 1,
+            "shift": [
+              0,
+              0
+            ],
+            "scale": 0.068
+          }
+        ]
+      }
+    },
+    "flow_length_in_ticks": 360,
+    "impact_category": "metal-large",
+    "open_sound": {
+      "filename": "__base__/sound/open-close/metal-large-open.ogg",
+      "volume": 0.8
+    },
+    "close_sound": {
+      "filename": "__base__/sound/open-close/metal-large-close.ogg",
+      "volume": 0.7
+    },
+    "working_sound": {
+      "sound": {
+        "filename": "__base__/sound/storage-tank.ogg",
+        "volume": 0.6,
+        "audible_distance_modifier": 0.5
+      },
+      "match_volume_to_activity": true,
+      "max_sounds_per_prototype": 3
+    },
+    "circuit_connector": [
+      {
+        "sprites": {
+          "connector_main": {
+            "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04a-base-sequence.png",
+            "priority": "low",
+            "width": 52,
+            "height": 50,
+            "scale": 0.5,
+            "x": 156,
+            "y": 150,
+            "shift": [
+              1.046875,
+              0.609375
+            ]
+          },
+          "wire_pins": {
+            "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04c-wire-sequence.png",
+            "priority": "low",
+            "width": 62,
+            "height": 58,
+            "scale": 0.5,
+            "x": 186,
+            "y": 174,
+            "shift": [
+              1.046875,
+              0.609375
+            ]
+          },
+          "led_blue": {
+            "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04e-blue-LED-on-sequence.png",
+            "priority": "low",
+            "draw_as_glow": true,
+            "width": 60,
+            "height": 60,
+            "scale": 0.5,
+            "x": 180,
+            "y": 180,
+            "shift": [
+              1.046875,
+              0.578125
+            ]
+          },
+          "led_blue_off": {
+            "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04f-blue-LED-off-sequence.png",
+            "priority": "low",
+            "width": 46,
+            "height": 44,
+            "scale": 0.5,
+            "x": 138,
+            "y": 132,
+            "shift": [
+              1.046875,
+              0.578125
+            ]
+          },
+          "led_green": {
+            "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04h-green-LED-sequence.png",
+            "priority": "low",
+            "draw_as_glow": true,
+            "width": 48,
+            "height": 46,
+            "scale": 0.5,
+            "x": 144,
+            "y": 138,
+            "shift": [
+              1.046875,
+              0.578125
+            ]
+          },
+          "led_red": {
+            "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04i-red-LED-sequence.png",
+            "priority": "low",
+            "draw_as_glow": true,
+            "width": 48,
+            "height": 46,
+            "scale": 0.5,
+            "x": 144,
+            "y": 138,
+            "shift": [
+              1.046875,
+              0.578125
+            ]
+          },
+          "led_light": {
+            "intensity": 0,
+            "size": 0.9
+          },
+          "blue_led_light_offset": [
+            1.171875,
+            0.796875
+          ],
+          "red_green_led_light_offset": [
+            1.203125,
+            0.703125
+          ]
+        },
+        "points": {
+          "wire": {
+            "red": [
+              1.296875,
+              0.484375
+            ],
+            "green": [
+              1.359375,
+              0.671875
+            ]
+          },
+          "shadow": {
+            "red": [
+              1.640625,
+              0.703125
+            ],
+            "green": [
+              1.515625,
+              0.765625
+            ]
+          }
+        }
+      },
+      {
+        "sprites": {
+          "connector_main": {
+            "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04a-base-sequence.png",
+            "priority": "low",
+            "width": 52,
+            "height": 50,
+            "scale": 0.5,
+            "x": 52,
+            "y": 150,
+            "shift": [
+              -1.046875,
+              0.640625
+            ]
+          },
+          "wire_pins": {
+            "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04c-wire-sequence.png",
+            "priority": "low",
+            "width": 62,
+            "height": 58,
+            "scale": 0.5,
+            "x": 62,
+            "y": 174,
+            "shift": [
+              -1.046875,
+              0.640625
+            ]
+          },
+          "led_blue": {
+            "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04e-blue-LED-on-sequence.png",
+            "priority": "low",
+            "draw_as_glow": true,
+            "width": 60,
+            "height": 60,
+            "scale": 0.5,
+            "x": 60,
+            "y": 180,
+            "shift": [
+              -1.046875,
+              0.609375
+            ]
+          },
+          "led_blue_off": {
+            "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04f-blue-LED-off-sequence.png",
+            "priority": "low",
+            "width": 46,
+            "height": 44,
+            "scale": 0.5,
+            "x": 46,
+            "y": 132,
+            "shift": [
+              -1.046875,
+              0.609375
+            ]
+          },
+          "led_green": {
+            "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04h-green-LED-sequence.png",
+            "priority": "low",
+            "draw_as_glow": true,
+            "width": 48,
+            "height": 46,
+            "scale": 0.5,
+            "x": 48,
+            "y": 138,
+            "shift": [
+              -1.046875,
+              0.609375
+            ]
+          },
+          "led_red": {
+            "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04i-red-LED-sequence.png",
+            "priority": "low",
+            "draw_as_glow": true,
+            "width": 48,
+            "height": 46,
+            "scale": 0.5,
+            "x": 48,
+            "y": 138,
+            "shift": [
+              -1.046875,
+              0.609375
+            ]
+          },
+          "led_light": {
+            "intensity": 0,
+            "size": 0.9
+          },
+          "blue_led_light_offset": [
+            -1.140625,
+            0.859375
+          ],
+          "red_green_led_light_offset": [
+            -1.171875,
+            0.765625
+          ]
+        },
+        "points": {
+          "wire": {
+            "red": [
+              -0.921875,
+              0.796875
+            ],
+            "green": [
+              -0.984375,
+              0.984375
+            ]
+          },
+          "shadow": {
+            "red": [
+              -0.609375,
+              1.046875
+            ],
+            "green": [
+              -0.859375,
+              1.078125
+            ]
+          }
+        }
+      },
+      {
+        "sprites": {
+          "connector_main": {
+            "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04a-base-sequence.png",
+            "priority": "low",
+            "width": 52,
+            "height": 50,
+            "scale": 0.5,
+            "x": 156,
+            "y": 150,
+            "shift": [
+              1.046875,
+              0.609375
+            ]
+          },
+          "wire_pins": {
+            "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04c-wire-sequence.png",
+            "priority": "low",
+            "width": 62,
+            "height": 58,
+            "scale": 0.5,
+            "x": 186,
+            "y": 174,
+            "shift": [
+              1.046875,
+              0.609375
+            ]
+          },
+          "led_blue": {
+            "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04e-blue-LED-on-sequence.png",
+            "priority": "low",
+            "draw_as_glow": true,
+            "width": 60,
+            "height": 60,
+            "scale": 0.5,
+            "x": 180,
+            "y": 180,
+            "shift": [
+              1.046875,
+              0.578125
+            ]
+          },
+          "led_blue_off": {
+            "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04f-blue-LED-off-sequence.png",
+            "priority": "low",
+            "width": 46,
+            "height": 44,
+            "scale": 0.5,
+            "x": 138,
+            "y": 132,
+            "shift": [
+              1.046875,
+              0.578125
+            ]
+          },
+          "led_green": {
+            "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04h-green-LED-sequence.png",
+            "priority": "low",
+            "draw_as_glow": true,
+            "width": 48,
+            "height": 46,
+            "scale": 0.5,
+            "x": 144,
+            "y": 138,
+            "shift": [
+              1.046875,
+              0.578125
+            ]
+          },
+          "led_red": {
+            "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04i-red-LED-sequence.png",
+            "priority": "low",
+            "draw_as_glow": true,
+            "width": 48,
+            "height": 46,
+            "scale": 0.5,
+            "x": 144,
+            "y": 138,
+            "shift": [
+              1.046875,
+              0.578125
+            ]
+          },
+          "led_light": {
+            "intensity": 0,
+            "size": 0.9
+          },
+          "blue_led_light_offset": [
+            1.171875,
+            0.796875
+          ],
+          "red_green_led_light_offset": [
+            1.203125,
+            0.703125
+          ]
+        },
+        "points": {
+          "wire": {
+            "red": [
+              1.296875,
+              0.484375
+            ],
+            "green": [
+              1.359375,
+              0.671875
+            ]
+          },
+          "shadow": {
+            "red": [
+              1.640625,
+              0.703125
+            ],
+            "green": [
+              1.515625,
+              0.765625
+            ]
+          }
+        }
+      },
+      {
+        "sprites": {
+          "connector_main": {
+            "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04a-base-sequence.png",
+            "priority": "low",
+            "width": 52,
+            "height": 50,
+            "scale": 0.5,
+            "x": 52,
+            "y": 150,
+            "shift": [
+              -1.046875,
+              0.640625
+            ]
+          },
+          "wire_pins": {
+            "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04c-wire-sequence.png",
+            "priority": "low",
+            "width": 62,
+            "height": 58,
+            "scale": 0.5,
+            "x": 62,
+            "y": 174,
+            "shift": [
+              -1.046875,
+              0.640625
+            ]
+          },
+          "led_blue": {
+            "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04e-blue-LED-on-sequence.png",
+            "priority": "low",
+            "draw_as_glow": true,
+            "width": 60,
+            "height": 60,
+            "scale": 0.5,
+            "x": 60,
+            "y": 180,
+            "shift": [
+              -1.046875,
+              0.609375
+            ]
+          },
+          "led_blue_off": {
+            "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04f-blue-LED-off-sequence.png",
+            "priority": "low",
+            "width": 46,
+            "height": 44,
+            "scale": 0.5,
+            "x": 46,
+            "y": 132,
+            "shift": [
+              -1.046875,
+              0.609375
+            ]
+          },
+          "led_green": {
+            "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04h-green-LED-sequence.png",
+            "priority": "low",
+            "draw_as_glow": true,
+            "width": 48,
+            "height": 46,
+            "scale": 0.5,
+            "x": 48,
+            "y": 138,
+            "shift": [
+              -1.046875,
+              0.609375
+            ]
+          },
+          "led_red": {
+            "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04i-red-LED-sequence.png",
+            "priority": "low",
+            "draw_as_glow": true,
+            "width": 48,
+            "height": 46,
+            "scale": 0.5,
+            "x": 48,
+            "y": 138,
+            "shift": [
+              -1.046875,
+              0.609375
+            ]
+          },
+          "led_light": {
+            "intensity": 0,
+            "size": 0.9
+          },
+          "blue_led_light_offset": [
+            -1.140625,
+            0.859375
+          ],
+          "red_green_led_light_offset": [
+            -1.171875,
+            0.765625
+          ]
+        },
+        "points": {
+          "wire": {
+            "red": [
+              -0.921875,
+              0.796875
+            ],
+            "green": [
+              -0.984375,
+              0.984375
+            ]
+          },
+          "shadow": {
+            "red": [
+              -0.609375,
+              1.046875
+            ],
+            "green": [
+              -0.859375,
+              1.078125
+            ]
+          }
+        }
+      }
+    ],
+    "circuit_wire_max_distance": 9,
+    "default_fluid_temperature_signal": {
+      "type": "virtual",
+      "name": "signal-T"
+    },
+    "heating_energy": "100kW",
+    "localised_name": [
+      "entity-name.tech-priests-stone-cache-pressurized-fluid-vault"
+    ],
+    "localised_description": [
+      "entity-description.tech-priests-stone-cache-pressurized-fluid-vault"
+    ],
+    "icon_size": 64,
+    "placeable_by": {
+      "item": "tech-priests-stone-cache-pressurized-fluid-vault",
+      "count": 1
+    }
+  },
+  "item": {
+    "type": "item",
+    "name": "tech-priests-stone-cache-pressurized-fluid-vault",
+    "localised_name": [
+      "item-name.tech-priests-stone-cache-pressurized-fluid-vault"
+    ],
+    "localised_description": [
+      "item-description.tech-priests-stone-cache-pressurized-fluid-vault"
+    ],
+    "icon": "__tech-priests__/graphics/icons/stone-cache/tech-priests-stone-cache-pressurized-fluid-vault.png",
+    "icon_size": 64,
+    "subgroup": "tech-priest-emergency-industry",
+    "order": "z[stone-cache]-p[fluid-vault]",
+    "place_result": "tech-priests-stone-cache-pressurized-fluid-vault",
+    "stack_size": 20
+  },
+  "recipe": {
+    "type": "recipe",
+    "name": "tech-priests-stone-cache-pressurized-fluid-vault",
+    "localised_name": [
+      "recipe-name.tech-priests-stone-cache-pressurized-fluid-vault"
+    ],
+    "localised_description": [
+      "recipe-description.tech-priests-stone-cache-pressurized-fluid-vault"
+    ],
+    "icon": "__tech-priests__/graphics/icons/stone-cache/tech-priests-stone-cache-pressurized-fluid-vault.png",
+    "icon_size": 64,
+    "subgroup": "tech-priest-emergency-industry",
+    "order": "z[stone-cache]-p[fluid-vault]",
+    "enabled": false,
+    "energy_required": 10,
+    "ingredients": [
+      {
+        "type": "item",
+        "name": "stone",
+        "amount": 40
+      },
+      {
+        "type": "item",
+        "name": "pipe",
+        "amount": 8
+      },
+      {
+        "type": "item",
+        "name": "iron-plate",
+        "amount": 8
+      }
+    ],
+    "results": [
+      {
+        "type": "item",
+        "name": "tech-priests-stone-cache-pressurized-fluid-vault",
+        "amount": 1
+      },
+      {
+        "type": "item",
+        "name": "mechanical-detritus",
+        "amount": 1,
+        "ignored_by_stats": 1,
+        "ignored_by_productivity": 1,
+        "independent_probability": 0
+      }
+    ],
+    "main_product": "tech-priests-stone-cache-pressurized-fluid-vault",
+    "categories": [
+      "crafting"
+    ]
+  },
+  "recipe_unlocks": [
+    "fluid-handling"
+  ],
+  "behavior": {
+    "volume": 1000,
+    "collision": [
+      [
+        -1.1,
+        -1.1
+      ],
+      [
+        1.1,
+        1.1
+      ]
+    ],
+    "selection": [
+      [
+        -1.15,
+        -1.15
+      ],
+      [
+        1.15,
+        1.15
+      ]
+    ],
+    "actual_tile_placement": [
+      3,
+      3
+    ],
+    "normal_center": "half-tile grid, e.g. (0.5,0.5)",
+    "directions": "Only 0 and4 are supported native orientations; 8 normalizes to0,12 to4, normal R alternates0/4",
+    "ports": "Two opposed input-output ports at local native (0,-1)/(0,1); ordinary pipe centers at (0,+/-2) or (+/-2,0) relative to tank",
+    "power": "No electrical input. Inherited heating_energy100kW preserved.",
+    "inventory": false,
+    "animation": "Static storage vessel. No invented pumping mechanism or pressure animation.",
+    "circuits": "Inherited fluid amount/temperature readout and wire reach9; native gameplay unchanged"
+  },
+  "source_recovery": "Original sprite/shadow/icon recovered, no original editable fluid-vault source found. Reuse authored stone and rectangular pressure hatch, add a real hollow liner and through-wall ports.",
+  "baseline": {
+    "dump_sha256": "5df979a98216eaacd777ff0575ccd8e0f4c520eaf33cf16da61723380700149c",
+    "main": "9b17b3c9bc2b4f71f16bc430fb4e594534ee02f6",
+    "main_scope": "Sterling Steam Catalyzer V03 source/pipe alignment is assigned elsewhere; no fluid-vault source conflict"
+  },
+  "pipe_geometry": {
+    "mouth_planes": [
+      1.5,
+      -1.5
+    ],
+    "axis_z": 0.44,
+    "barrel_od": 0.6,
+    "bore": 0.56,
+    "collar_od": 0.84,
+    "collar_depth": 0.075,
+    "basis": "Full-size native-verified pipe proportions from accepted Calcifier V2; raise axis to0.44 to keep 0.84 collar above z0",
+    "native_axis_screen_y": -0.046875
+  },
+  "registration": {
+    "ortho_scale": 4,
+    "scale": 0.25,
+    "ground_y_scale": 1.4142135623730951,
+    "shift": [
+      0,
+      0.05211994936611669
+    ],
+    "basis": "Sprite-only square-ground projection, as established in native-verified Tanks pipe captures; editable source/GLB geometry remains unchanged"
+  },
+  "owner_approval": false
+}

@@ -1,0 +1,123 @@
+{
+  "regions": {
+    "coal": "Black nonmetallic fractured lumps with restrained cleavage sheen",
+    "ores": "Angular mineral lumps with copper exposures or iron oxide, distinct from coal and stone",
+    "metals": "Actual stacked plate, coiled wire, bored gear and rod geometry; copper oxidation and subdued iron highlights",
+    "stone": "Warm coarse rubble stock distinct from shared dressed ring wall",
+    "wood": "Longitudinal bark grain and actual circular cross-cut end-grain UV; no invented mechanisms"
+  },
+  "maps": {
+    "coal": {
+      "albedo": {
+        "path": "art/source-to-3d/filtered-stone-caches/v01/textures/coal-albedo.png",
+        "sha256": "42aa09b5c2b2c1611e86d4acb3a0096c505a61ed1ffd064c4e8761c5d0804ac5"
+      },
+      "orm": {
+        "path": "art/source-to-3d/filtered-stone-caches/v01/textures/coal-orm.png",
+        "sha256": "d7792b48e060b03fbe7e9499b5df22395e3ce1f1f1f57cfbcd3d8e9203cdbbf9"
+      },
+      "normal": {
+        "path": "art/source-to-3d/filtered-stone-caches/v01/textures/coal-normal.png",
+        "sha256": "d54fa6cda9848fc1bc6cfb9f2d1073c765b90d5ccc02364294eecb87d83a2108"
+      }
+    },
+    "copper-ore": {
+      "albedo": {
+        "path": "art/source-to-3d/filtered-stone-caches/v01/textures/copper-ore-albedo.png",
+        "sha256": "a3f03797716a0d0ac9e235da9fae7b70f1170aed1876717155d275e2bcefcda7"
+      },
+      "orm": {
+        "path": "art/source-to-3d/filtered-stone-caches/v01/textures/copper-ore-orm.png",
+        "sha256": "4a29593f31194fc99fd471811a368a66ee92fc4d1fb1753655c9419541c163d5"
+      },
+      "normal": {
+        "path": "art/source-to-3d/filtered-stone-caches/v01/textures/copper-ore-normal.png",
+        "sha256": "0415009777c944eea861bde8759e846a0b39f6aef5b8a0dd46b0c83037d263f3"
+      }
+    },
+    "copper": {
+      "albedo": {
+        "path": "art/source-to-3d/filtered-stone-caches/v01/textures/copper-albedo.png",
+        "sha256": "5545e69d223900ab94fd3ae2dc111d3187e463a809b3a820bfd646af9906251a"
+      },
+      "orm": {
+        "path": "art/source-to-3d/filtered-stone-caches/v01/textures/copper-orm.png",
+        "sha256": "4d60d8cccf029033e07b731a28d3e14268e60f348ddf6fd2f1e17383bc365a1f"
+      },
+      "normal": {
+        "path": "art/source-to-3d/filtered-stone-caches/v01/textures/copper-normal.png",
+        "sha256": "0415009777c944eea861bde8759e846a0b39f6aef5b8a0dd46b0c83037d263f3"
+      }
+    },
+    "iron": {
+      "albedo": {
+        "path": "art/source-to-3d/filtered-stone-caches/v01/textures/iron-albedo.png",
+        "sha256": "34ef3c6a4c5acbb53686e889c85cd474530671d1c584f0fcccc04dd25eaf3a8a"
+      },
+      "orm": {
+        "path": "art/source-to-3d/filtered-stone-caches/v01/textures/iron-orm.png",
+        "sha256": "cba0db1b7cc7b6953f1e0770ad72e620f2bb98362c87b0ea70ead2e89f4b6bfb"
+      },
+      "normal": {
+        "path": "art/source-to-3d/filtered-stone-caches/v01/textures/iron-normal.png",
+        "sha256": "0415009777c944eea861bde8759e846a0b39f6aef5b8a0dd46b0c83037d263f3"
+      }
+    },
+    "iron-ore": {
+      "albedo": {
+        "path": "art/source-to-3d/filtered-stone-caches/v01/textures/iron-ore-albedo.png",
+        "sha256": "4874777f464f3794f3f017766e1b491ff2f3e711c3edf11ff994f663a8075fc7"
+      },
+      "orm": {
+        "path": "art/source-to-3d/filtered-stone-caches/v01/textures/iron-ore-orm.png",
+        "sha256": "3d4dca49f156e423c582baa1fccaf7d23c95682b44ed44812f166488ac73cd30"
+      },
+      "normal": {
+        "path": "art/source-to-3d/filtered-stone-caches/v01/textures/iron-ore-normal.png",
+        "sha256": "0415009777c944eea861bde8759e846a0b39f6aef5b8a0dd46b0c83037d263f3"
+      }
+    },
+    "stone": {
+      "albedo": {
+        "path": "art/source-to-3d/filtered-stone-caches/v01/textures/stone-albedo.png",
+        "sha256": "a63ecd4f9f41c5b6ae49408b0dfc13fa54e855588ff3ebd243f011eb128dc4c3"
+      },
+      "orm": {
+        "path": "art/source-to-3d/filtered-stone-caches/v01/textures/stone-orm.png",
+        "sha256": "cb06fc4ef00c9d27cd7366b7e83a0f6fe29decc9a43a4372802dcaee1705ca62"
+      },
+      "normal": {
+        "path": "art/source-to-3d/filtered-stone-caches/v01/textures/stone-normal.png",
+        "sha256": "0415009777c944eea861bde8759e846a0b39f6aef5b8a0dd46b0c83037d263f3"
+      }
+    },
+    "wood": {
+      "albedo": {
+        "path": "art/source-to-3d/filtered-stone-caches/v01/textures/wood-albedo.png",
+        "sha256": "c8080379df279e716846b81ad6b763f93bcb26002fbf97e7f459df8f0b63fcc6"
+      },
+      "orm": {
+        "path": "art/source-to-3d/filtered-stone-caches/v01/textures/wood-orm.png",
+        "sha256": "2b8047a5965b0e7163e5e4be733994400eaba416ca568c30eb504b2c5a507fd6"
+      },
+      "normal": {
+        "path": "art/source-to-3d/filtered-stone-caches/v01/textures/wood-normal.png",
+        "sha256": "6e516ab89fdb198a5e564ec2d9530c6d1e30d6deb06d796146d68eba0e637f30"
+      }
+    },
+    "wood-end": {
+      "albedo": {
+        "path": "art/source-to-3d/filtered-stone-caches/v01/textures/wood-end-albedo.png",
+        "sha256": "0152e1e4423769182136d70d30e2d82ec966a84f76aea362dea88045a8f52803"
+      },
+      "orm": {
+        "path": "art/source-to-3d/filtered-stone-caches/v01/textures/wood-end-orm.png",
+        "sha256": "2b8047a5965b0e7163e5e4be733994400eaba416ca568c30eb504b2c5a507fd6"
+      },
+      "normal": {
+        "path": "art/source-to-3d/filtered-stone-caches/v01/textures/wood-end-normal.png",
+        "sha256": "5ec57d1cf4255605feedaf92442a51bbe2729da05b19a60e89025988ece680fb"
+      }
+    }
+  }
+}

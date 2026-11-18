@@ -1,0 +1,9 @@
+{
+  "runtime_source_sha256": "55bc15641274c5e78781f7f0e7ee4767079b446078b011f2e91c5526999dc84e",
+  "resolution": [
+    1280,
+    800
+  ],
+  "ui_scale": 0.75,
+  "visual_review": "Viewed all five actual native tab images. Header, action buttons, data columns and timer fit; long doctrine-web content scrolls vertically."
+}

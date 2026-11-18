@@ -1,0 +1,59 @@
+{
+  "source": "art\\source-to-3d\\conclave-center\\v08-martian-central-emblem\\conclave-center-v08.blend",
+  "source_sha256": "39c74555ccc30ea25683985a14dc743c848563a32f3ad5b52795e283bcab3436",
+  "original_skull": "User-supplied DGordillo Craneo mesh, 1192 vertices /2380 triangles, original UV and sculpt normal retained",
+  "adaptation": "Near-flush curved bas-relief, X/Z scale0.8, fore-aft scale0.0256, back embedded in stone; source anatomy reused, not claimed geometrically unchanged",
+  "center": [
+    0,
+    0.47
+  ],
+  "front_angle": -1.5707963267948966,
+  "red_cog_material_source": {
+    "albedo": {
+      "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/martian_red_albedo.png",
+      "git_blob_sha": "c8d06b4677401a1e880872a5b01eac3ee14ba859",
+      "size_bytes": 360315
+    },
+    "orm": {
+      "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/martian_red_orm.png",
+      "git_blob_sha": "14d866dbdacfed2992334f8b79c29b00378e624e",
+      "size_bytes": 254431
+    },
+    "normal": {
+      "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/martian_red_normal.png",
+      "git_blob_sha": "b3fd5a4b6a364dd89872993ba7053017bf180867",
+      "size_bytes": 396416
+    }
+  },
+  "objects": {
+    "Supplied DGordillo low-poly skull 0": "Cache centered emblem | Supplied DGordillo low-poly skull 0",
+    "Mars emblem | twenty tooth cog surround": "Cache centered emblem | Mars emblem | twenty tooth cog surround",
+    "Mars emblem | surface seated ocular receiving flange": "Cache centered emblem | Mars emblem | surface seated ocular receiving flange",
+    "Mars emblem | red bionic eye lens": "Cache centered emblem | Mars emblem | red bionic eye lens",
+    "Mars emblem | plate retaining stud 3": "Cache centered emblem | Mars emblem | plate retaining stud 3",
+    "Mars emblem | plate retaining stud 2": "Cache centered emblem | Mars emblem | plate retaining stud 2",
+    "Mars emblem | plate retaining stud 1": "Cache centered emblem | Mars emblem | plate retaining stud 1",
+    "Mars emblem | plate retaining stud 0": "Cache centered emblem | Mars emblem | plate retaining stud 0",
+    "Mars emblem | plate retaining boss 3": "Cache centered emblem | Mars emblem | plate retaining boss 3",
+    "Mars emblem | plate retaining boss 2": "Cache centered emblem | Mars emblem | plate retaining boss 2",
+    "Mars emblem | plate retaining boss 1": "Cache centered emblem | Mars emblem | plate retaining boss 1",
+    "Mars emblem | plate retaining boss 0": "Cache centered emblem | Mars emblem | plate retaining boss 0",
+    "Mars emblem | ocular captive screw 07": "Cache centered emblem | Mars emblem | ocular captive screw 07",
+    "Mars emblem | ocular captive screw 06": "Cache centered emblem | Mars emblem | ocular captive screw 06",
+    "Mars emblem | ocular captive screw 05": "Cache centered emblem | Mars emblem | ocular captive screw 05",
+    "Mars emblem | ocular captive screw 04": "Cache centered emblem | Mars emblem | ocular captive screw 04",
+    "Mars emblem | ocular captive screw 03": "Cache centered emblem | Mars emblem | ocular captive screw 03",
+    "Mars emblem | ocular captive screw 02": "Cache centered emblem | Mars emblem | ocular captive screw 02",
+    "Mars emblem | ocular captive screw 01": "Cache centered emblem | Mars emblem | ocular captive screw 01",
+    "Mars emblem | ocular captive screw 00": "Cache centered emblem | Mars emblem | ocular captive screw 00",
+    "Mars emblem | jaw strut seated anchor 1": "Cache centered emblem | Mars emblem | jaw strut seated anchor 1",
+    "Mars emblem | jaw strut seated anchor 0": "Cache centered emblem | Mars emblem | jaw strut seated anchor 0",
+    "Mars emblem | inset optical barrel": "Cache centered emblem | Mars emblem | inset optical barrel",
+    "Mars emblem | fixed mandibular strut housing": "Cache centered emblem | Mars emblem | fixed mandibular strut housing",
+    "Mars emblem | fitted orbital and cheek": "Cache centered emblem | Mars emblem | fitted orbital and cheek",
+    "Mars emblem | fitted mandibular half": "Cache centered emblem | Mars emblem | fitted mandibular half",
+    "Mars emblem | fitted cranial vault": "Cache centered emblem | Mars emblem | fitted cranial vault",
+    "Mars emblem | captured mandibular strut rod": "Cache centered emblem | Mars emblem | captured mandibular strut rod"
+  },
+  "native_circuits": "Wire points/reach preserved; base connector artwork suppressed so it cannot obscure the centered insignia; wire pins and native LED states retained."
+}

@@ -1,0 +1,120 @@
+{
+  "passed": true,
+  "source_sha256": "66655f50c8f16ceb0bd71c8f5bfb07abaa74daf029a1b948e1c3425fd1c1968e",
+  "export_sha256": "bbd711c07bfbb8517e91d1d46a00683c430c099b316cbd7ec7c45efc9055ab0d",
+  "prototype_changes": {
+    "prototype": [
+      "/icon",
+      "/circuit_connector/0/sprites/connector_shadow/scale",
+      "/circuit_connector/0/sprites/connector_shadow/shift",
+      "/circuit_connector/0/sprites/connector_shadow/height",
+      "/circuit_connector/0/sprites/connector_shadow/y",
+      "/circuit_connector/0/sprites/connector_shadow/draw_as_shadow",
+      "/circuit_connector/0/sprites/connector_shadow/filename",
+      "/circuit_connector/0/sprites/connector_shadow/priority",
+      "/circuit_connector/0/sprites/connector_shadow/width",
+      "/circuit_connector/0/sprites/connector_shadow/x",
+      "/circuit_connector/0/sprites/connector_main/scale",
+      "/circuit_connector/0/sprites/connector_main/shift",
+      "/circuit_connector/0/sprites/connector_main/height",
+      "/circuit_connector/0/sprites/connector_main/y",
+      "/circuit_connector/0/sprites/connector_main/filename",
+      "/circuit_connector/0/sprites/connector_main/priority",
+      "/circuit_connector/0/sprites/connector_main/width",
+      "/circuit_connector/0/sprites/connector_main/x",
+      "/picture/layers/0/scale",
+      "/picture/layers/0/shift/0",
+      "/picture/layers/0/shift/1",
+      "/picture/layers/0/height",
+      "/picture/layers/0/frame_count",
+      "/picture/layers/0/filename",
+      "/picture/layers/0/width",
+      "/picture/layers/0/line_length",
+      "/picture/layers/1/scale",
+      "/picture/layers/1/shift/1",
+      "/picture/layers/1/height",
+      "/picture/layers/1/frame_count",
+      "/picture/layers/1/filename",
+      "/picture/layers/1/width",
+      "/picture/layers/1/line_length"
+    ],
+    "item": [
+      "/icon"
+    ],
+    "recipe": [
+      "/icon"
+    ]
+  },
+  "native": {
+    "inventory_size": true,
+    "recipe_enabled": true,
+    "ingredients": {
+      "stone": 32
+    },
+    "unfiltered_mixed_storage": true,
+    "wire_connections": [
+      true,
+      true
+    ],
+    "far_wire_rejected": true,
+    "blocked_capacity": 200,
+    "inserter_input": [
+      true,
+      true,
+      true,
+      true
+    ],
+    "full_inventory_blocks_inserter": true,
+    "inserter_output": [
+      true,
+      true,
+      true,
+      true
+    ],
+    "unblocked_inserter": true,
+    "circuit_signals": true,
+    "mixed_contents_persist": true,
+    "mining_preserves_contents": true,
+    "passed": true
+  },
+  "reload": {
+    "inventory_size": true,
+    "recipe_enabled": true,
+    "ingredients": {
+      "stone": 32
+    },
+    "unfiltered_mixed_storage": true,
+    "wire_connections": [
+      true,
+      true
+    ],
+    "far_wire_rejected": true,
+    "blocked_capacity": 200,
+    "inserter_input": [
+      true,
+      true,
+      true,
+      true
+    ],
+    "full_inventory_blocks_inserter": true,
+    "inserter_output": [
+      true,
+      true,
+      true,
+      true
+    ],
+    "unblocked_inserter": true,
+    "circuit_signals": true,
+    "mixed_contents_persist": true,
+    "mining_preserves_contents": true,
+    "passed": true,
+    "reloaded": true,
+    "reload_preserved": true
+  },
+  "art_hashes": {
+    "body.png": "6f5b204dbe4a1902ee735146e74ad6bdf9208a438cdfdc4838f4b8ef9c96014f",
+    "icon.png": "c9613c063db09f516abe2fe63a6471156826007c0ebad992242001a5b4fbbe83",
+    "shadow.png": "6727e2701c7e7a862d793c0f3888786e3cc09a6cbdba5586c506af949d07f4b0"
+  },
+  "owner_approval": "Pending materials and revised model review; technical pass is not owner acceptance"
+}

@@ -1,0 +1,21 @@
+{
+  "shared_wall_and_tablet": "Unchanged from inspected cache master",
+  "fill": "iron-gear-wheel",
+  "objects": [
+    "Stock | stacked gear 0 0",
+    "Stock | stacked gear 0 1",
+    "Stock | stacked gear 0 2",
+    "Stock | stacked gear 0 3",
+    "Stock | stacked gear 1 0",
+    "Stock | stacked gear 1 1",
+    "Stock | stacked gear 1 2",
+    "Stock | stacked gear 1 3",
+    "Stock | stacked gear 2 0",
+    "Stock | stacked gear 2 1",
+    "Stock | stacked gear 2 2",
+    "Stock | stacked gear 2 3"
+  ],
+  "stock_bed": "Stock | timber dunnage",
+  "state": "Static stock identity; no inventory-volume animation, power or fluid mechanism invented",
+  "native": "Six-slot named filtered cache; existing runtime steward and ordinary inserter access preserved"
+}

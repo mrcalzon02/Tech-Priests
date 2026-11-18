@@ -1,0 +1,34 @@
+{
+  "schema": "fmpl.local-model-record.v1",
+  "id": "tech-priests-primitive-battery-bank-v01",
+  "status": "game-sprites-installed-with-specific-native-checks-owner-review-pending",
+  "publication": "Local working tree candidate; no remote publication claimed",
+  "source": {
+    "path": "art\\source-to-3d\\primitive-battery-bank\\v01\\primitive-battery-bank-v01.blend",
+    "sha256": "84ac195d708b4fbea5d5306acec9eaaa7d1d2682a22c96665ab14aef6843b407"
+  },
+  "runtime": {
+    "path": "art\\source-to-3d\\primitive-battery-bank\\v01\\primitive-battery-bank-v01.glb",
+    "sha256": "8e68144d0caeeacf612f6d890096f7f92441903c8e837c5f728c6cc756e9204b"
+  },
+  "camera_policy": "fmpl.factorio45.v1",
+  "footprint": [
+    2,
+    2
+  ],
+  "pipette_routes": [
+    "battery-positive",
+    "battery-negative"
+  ],
+  "purpose": "Actual 1MJ/500kW tertiary accumulator, eight ceramic cells, static mechanical assembly and native charge/discharge lens frames; preserves native circuits and research.",
+  "evidence": [
+    "contract.json",
+    "surface-plan.json",
+    "inspection.json",
+    "route-audit.json",
+    "state-capture.json",
+    "integration.json",
+    "visual-review.json",
+    "native-evidence/review.json"
+  ]
+}

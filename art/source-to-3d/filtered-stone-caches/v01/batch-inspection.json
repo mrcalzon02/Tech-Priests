@@ -1,0 +1,45 @@
+{
+  "passed": true,
+  "results": [
+    {
+      "key": "coal",
+      "passed": true
+    },
+    {
+      "key": "copper-ore",
+      "passed": true
+    },
+    {
+      "key": "copper-plate",
+      "passed": true
+    },
+    {
+      "key": "copper-cable",
+      "passed": true
+    },
+    {
+      "key": "iron-gear-wheel",
+      "passed": true
+    },
+    {
+      "key": "iron-ore",
+      "passed": true
+    },
+    {
+      "key": "iron-plate",
+      "passed": true
+    },
+    {
+      "key": "iron-stick",
+      "passed": true
+    },
+    {
+      "key": "stone",
+      "passed": true
+    },
+    {
+      "key": "wood",
+      "passed": true
+    }
+  ]
+}

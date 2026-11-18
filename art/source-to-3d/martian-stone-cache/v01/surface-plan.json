@@ -1,0 +1,98 @@
+{
+  "regions": {
+    "stone": "Warm weathered rubble: broad mineral variation, subdued small pores; chipped edges remain actual geometry.",
+    "hide": "Red patchwork hide, radial hem dust and grime on the actual X/Y cross-seams; stitches and folded panel thickness modeled.",
+    "hemp": "Dry hemp thread and tie cords, no metallic channels or pretend fluid pipes.",
+    "clay": "Dark earth/mud in recessed joints and on cavity floor.",
+    "dressed-stone": "Carved front wall section: same quarry family, smoother dressed face and lower roughness; near-flush original skull remains separate."
+  },
+  "maps": {
+    "stone": {
+      "albedo": {
+        "path": "art/source-to-3d/martian-stone-cache/v01/textures/stone-albedo.png",
+        "sha256": "3e9fc94f9382825e0938e495f4432532299edd65bab24c13dfe595e112f4ad62"
+      },
+      "normal": {
+        "path": "art/source-to-3d/martian-stone-cache/v01/textures/stone-normal.png",
+        "sha256": "4d6ae9c19f421144319de651e93a046f0e22f0b0fb2b8aec94c66ea4d8ef1569"
+      },
+      "orm": {
+        "path": "art/source-to-3d/martian-stone-cache/v01/textures/stone-orm.png",
+        "sha256": "54915120b6be9098bdb62a3449d57c1e016c7d174d293576ec2768db4afb2320"
+      }
+    },
+    "ground-stone": {
+      "albedo": {
+        "path": "art/source-to-3d/martian-stone-cache/v01/textures/ground-stone-albedo.png",
+        "sha256": "2c320294cc6cd05081810e5818b0b1a7e07be6a2d41991c81541c554103fd8d6"
+      },
+      "normal": {
+        "path": "art/source-to-3d/martian-stone-cache/v01/textures/ground-stone-normal.png",
+        "sha256": "4d6ae9c19f421144319de651e93a046f0e22f0b0fb2b8aec94c66ea4d8ef1569"
+      },
+      "orm": {
+        "path": "art/source-to-3d/martian-stone-cache/v01/textures/ground-stone-orm.png",
+        "sha256": "54915120b6be9098bdb62a3449d57c1e016c7d174d293576ec2768db4afb2320"
+      }
+    },
+    "hide": {
+      "albedo": {
+        "path": "art/source-to-3d/martian-stone-cache/v01/textures/hide-albedo.png",
+        "sha256": "988af76cdd57310e108ddde34d2ac4f57642f514d61a1d68c90785a209c3f4f2"
+      },
+      "normal": {
+        "path": "art/source-to-3d/martian-stone-cache/v01/textures/hide-normal.png",
+        "sha256": "bd4841275cd608a55747218267efc603d8fa38020e5755e30d248251224cebee"
+      },
+      "orm": {
+        "path": "art/source-to-3d/martian-stone-cache/v01/textures/hide-orm.png",
+        "sha256": "af29992e32351b77d78ca047b22732b8ce36d8ec223bc0b1330634e97b142fd5"
+      }
+    },
+    "hemp": {
+      "albedo": {
+        "path": "art/source-to-3d/martian-stone-cache/v01/textures/hemp-albedo.png",
+        "sha256": "c1b5d0556da08247873d1aa3f13d9b5f8db55814b3fbfe7ea16f19ad6bdec467"
+      },
+      "normal": {
+        "path": "art/source-to-3d/martian-stone-cache/v01/textures/hemp-normal.png",
+        "sha256": "17fda822575d81d2bc00b96a423ade8f396e92daf3a240cb98389140c3850cf2"
+      },
+      "orm": {
+        "path": "art/source-to-3d/martian-stone-cache/v01/textures/hemp-orm.png",
+        "sha256": "b560b44bff07bad61cf643d30998ca5a3010004f18a2ffdf8c9baf2df09e8dab"
+      }
+    },
+    "clay": {
+      "albedo": {
+        "path": "art/source-to-3d/martian-stone-cache/v01/textures/clay-albedo.png",
+        "sha256": "9bb83c9256974ca08133d99bfdb516f4303dad4f2909bf4d05a3caafe4c1c530"
+      },
+      "normal": {
+        "path": "art/source-to-3d/martian-stone-cache/v01/textures/clay-normal.png",
+        "sha256": "c7457a59c2ebee4d0281398bb2973cff030207d2f7b1aa6ceccfcd862d629042"
+      },
+      "orm": {
+        "path": "art/source-to-3d/martian-stone-cache/v01/textures/clay-orm.png",
+        "sha256": "81844015277390e1de151ddf0a1c9189b4855c9ca130533e5d67ac3782e34c74"
+      }
+    },
+    "dressed-stone": {
+      "albedo": {
+        "path": "art/source-to-3d/martian-stone-cache/v01/textures/dressed-stone-albedo.png",
+        "sha256": "3e9fc94f9382825e0938e495f4432532299edd65bab24c13dfe595e112f4ad62"
+      },
+      "normal": {
+        "path": "art/source-to-3d/martian-stone-cache/v01/textures/dressed-stone-normal.png",
+        "sha256": "4d6ae9c19f421144319de651e93a046f0e22f0b0fb2b8aec94c66ea4d8ef1569"
+      },
+      "orm": {
+        "path": "art/source-to-3d/martian-stone-cache/v01/textures/dressed-stone-orm.png",
+        "sha256": "f40f8f1d0975efe45a0063771618d71e65dd7bdb97f8b830b14082e955247698"
+      }
+    }
+  },
+  "uv": "Stone at shared physical texel scale; hide UVs registered to whole-cover XY so seam dirt follows actual seams; dense parts do not receive a full wall atlas allocation.",
+  "reference": "Original stone ring, red stitched cover and front carved tablet retained as identity.",
+  "revision": "Stone material pass 2: restrained pores, broad mineral mottle, separate dressed front stone; geometry unchanged"
+}

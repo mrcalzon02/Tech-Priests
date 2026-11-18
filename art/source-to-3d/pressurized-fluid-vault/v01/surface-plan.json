@@ -1,0 +1,53 @@
+{
+  "regions": {
+    "shell": "Sealed iron liner, continuous bottom, reinforced rectangular pressure hatch with actual gasket and rivets",
+    "ports": "Open bronze/iron full-size throats, bolted collars and seated through-stone sleeves",
+    "gauge": "Aged ivory dial, readable etched ticks, modeled needle and continuous pressure-tap bore; no native pressure simulation claimed",
+    "stone": "Shared authored quarry finish, provisional owner review status retained"
+  },
+  "maps": {
+    "pressure-iron": {
+      "albedo": {
+        "path": "art/source-to-3d/pressurized-fluid-vault/v01/textures/pressure-iron-albedo.png",
+        "sha256": "6a54227c87a8f431fd26bcc92dd7c0c6d144413684692c3c06fb69342b76a7ba"
+      },
+      "orm": {
+        "path": "art/source-to-3d/pressurized-fluid-vault/v01/textures/pressure-iron-orm.png",
+        "sha256": "a9a05ead4ecd45ca888e3f7a346565e20d2e5bcc6b2b5b8a70729b73fe54aaf5"
+      },
+      "normal": {
+        "path": "art/source-to-3d/pressurized-fluid-vault/v01/textures/pressure-iron-normal.png",
+        "sha256": "e3d2f77e1ad553821f4acc2dd705305ef86bd22c16d709744d62c1953bbbb330"
+      }
+    },
+    "aged-bronze": {
+      "albedo": {
+        "path": "art/source-to-3d/pressurized-fluid-vault/v01/textures/aged-bronze-albedo.png",
+        "sha256": "dbf03590fa668baa6d5f1e89501533583c6325ad8d5e8e686e3f1fd613fc3ca0"
+      },
+      "orm": {
+        "path": "art/source-to-3d/pressurized-fluid-vault/v01/textures/aged-bronze-orm.png",
+        "sha256": "2674171a7945b2753cb7054473cf7b1637e7e69526c9b470571bb3346c89f2b8"
+      },
+      "normal": {
+        "path": "art/source-to-3d/pressurized-fluid-vault/v01/textures/aged-bronze-normal.png",
+        "sha256": "e3d2f77e1ad553821f4acc2dd705305ef86bd22c16d709744d62c1953bbbb330"
+      }
+    },
+    "gauge-ivory": {
+      "albedo": {
+        "path": "art/source-to-3d/pressurized-fluid-vault/v01/textures/gauge-ivory-albedo.png",
+        "sha256": "b4935766c8c690f9da25c6b96ff3ed07b9b89e6bd7e71b6b072f623f2d709f65"
+      },
+      "orm": {
+        "path": "art/source-to-3d/pressurized-fluid-vault/v01/textures/gauge-ivory-orm.png",
+        "sha256": "49258881947204a625731d8b010841b98e0d9b560520845ad4069baa23069d1d"
+      },
+      "normal": {
+        "path": "art/source-to-3d/pressurized-fluid-vault/v01/textures/gauge-ivory-normal.png",
+        "sha256": "e3d2f77e1ad553821f4acc2dd705305ef86bd22c16d709744d62c1953bbbb330"
+      }
+    }
+  },
+  "uv": "Physical-scale triplanar-derived mesh UV on hardware, cylindrical UV on liner, circular gauge face UV; original skull UV retained on repositioned hatch emblem"
+}

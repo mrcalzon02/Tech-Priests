@@ -1,0 +1,62 @@
+{
+  "schema": "authored-3d.visual-review.v1",
+  "reviewer": "agent",
+  "owner_approval": "Source look accepted by owner as Advanced basis; final native screenshot approval not separately inferred",
+  "source_sha256": "e8b0dbe39f95808792e10009ec940edf7a2d47b244d418911ae7b94dcad4d7cb",
+  "export_sha256": "33257eefc64739e3cffec01890dd42a3c44b172b902cacdff5f7c19de8690efa",
+  "environment": "Exact Boiler V08 workshop world/lights, Standard transform; canonical45degree camera; no previous boosted cache lighting",
+  "material_provenance": {
+    "source_sha256": "e8b0dbe39f95808792e10009ec940edf7a2d47b244d418911ae7b94dcad4d7cb",
+    "canonical_fmpl_catalog": "art/source-to-3d/shared-parts/industrial-asset-library/catalog.json",
+    "catalog_sha256": "f170ab606eb7a1e85ef1cc4f545cc4a58c4c057ce9b5d8ed2974ba1566adc031",
+    "material_study": "art/source-to-3d/space-cargo-inventories/v01/basic/studies/material-environment/refined-v03-green/d-refined-steel",
+    "environment_audit": "art/source-to-3d/space-cargo-inventories/v01/basic/studies/material-environment/environment-audit.json",
+    "regions": {
+      "deck": "Machined industrial steel with canonical physical-scale weathering and radiused edges",
+      "structure": "Dark gunmetal truss chords, diagonal braces, housings and barrel hoops",
+      "cargo": "Iron case and weathered Martian-red barrels with formed shoulders",
+      "wood": "Actual FMPL cedar shader baked to albedo/normal; grain follows plank/handle long axis",
+      "tools": "Machined bright steel, wooden hammer and red driver grips",
+      "glass": "Explicit green optical derivative; soft low-energy specular, roughness.26; art-directed effective interface IOR1.08 for readable baked cutaway",
+      "hardware": "Dull brass captured hardware",
+      "well": "Oiled dark enclosed liner"
+    },
+    "production": "All relevant image maps packed; actual GLB reimport and source inspection passed. Initial generic-noise and hard-specular studies retained as superseded."
+  },
+  "render_sha256": {
+    "source-front.png": "9315444a1206841fc38ccd9adf4eba940b6e57bbcd2befe88f80e8b8f53d1a4a",
+    "inspection/open-well.png": "d109b23eb0a8bc86d2e5b66f35e04485e027bdacf60ad1a46924e5113106c426",
+    "inspection/clay-cutaway.png": "fbf4eb32d843c01d21f3415fe423f488895fcc642242c9b4e689ee99c4a5a701",
+    "inspection/export-d0.png": "7e92ec703c6eb2faa6078a4dbba8499ee6566a4da2ddf4dd0d152b587f0b3663",
+    "inspection/export-d1.png": "3ef588031a7bd908fff7b357f9f9b1a91ef33714400fc76fd36d7cf454df9651",
+    "inspection/export-d2.png": "365429bd49937f1efcab75b1fd6afa005118fe61471a39a093b0d06fe13dfe40",
+    "inspection/export-d3.png": "147a7a4e3fa14b8efde0c360be59f259931957b490b2c5d8638b9a883e18e80e",
+    "native-evidence/native-four-directions.png": "11cc08298c3e9c56788b7cd9b07363bf2b81dce238292366b95cec353a9e1368",
+    "native-evidence/native-direction-0.png": "1012a98fd9fcc64c3938a58fbdbd92f4899cb98808c6f4e1b72aa2aa8cf5d316",
+    "native-evidence/native-direction-12.png": "bb93f82b9e616d8db191ab6b0d4478e621188c18e9999291fab56c78abe28e21",
+    "native-evidence/native-direction-4.png": "1d6ed7ba0627c323dd62360f1216fc0e58e1d1f24acffd7274adc05d70e54383",
+    "native-evidence/native-direction-8.png": "d33fc902dd66ce65c3249e66b96511a228f26df558de95153b7217d3ff1225cb"
+  },
+  "scores_out_of_5": {
+    "construction": 4,
+    "edge_and_normal_finish": 4,
+    "region_material_identity": 4,
+    "green_glass_readability": 4,
+    "contact": 4,
+    "occlusion": 5,
+    "native_registration": 4
+  },
+  "observed": [
+    "Real radiused deck/housing/tool edges and formed smooth drum shoulders replace hard pilot forms; structural contacts and native bounds pass unchanged footprint checks.",
+    "Canonical FMPL steel/gunmetal/brass/red maps plus actual baked cedar color/normal; wood UVs follow plank/handle length. All textures packed and actual GLB inspected independently.",
+    "Explicit green optical derivative retains readable cargo; broad hard white glare rejected and preserved in earlier studies. Low specular, roughness.26, effectiveIOR1.08 are an art-directed thin-window approximation.",
+    "All four source/GLB occlusion views report0outside-aperture pixels, with one-pixelAA allowance; stressobject1531pixels unclipped/0clipped.",
+    "Actual current-production native screenshots checked at normal and quarter-turn placement, including wires seated on the rotated fittings. All16inserter sides, circuits, capacity/recovery, research, mining and save/reload pass."
+  ],
+  "limitations": [
+    "Native mixed-parity6x3 footprint uses180degree rotation after placement; four normal placement orientations are available.",
+    "Static cargo identifies storage; contents are not a live inventory visualization.",
+    "No claim of physically measured glass optics or final owner approval of native screenshots."
+  ],
+  "passed_agent_review": true
+}

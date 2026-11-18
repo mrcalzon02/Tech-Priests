@@ -1,0 +1,12 @@
+{
+  "key": "copper-plate",
+  "source_sha256": "69d11e982f2ac1035fd8d009cda8bc07326d8c8b71ceabb038719df55ee9e3de",
+  "export_sha256": "c9d9cfec35f4764393b29a2bf95b72e84aed508426a065ba812dce9faf33a7fc",
+  "prototype_sha256": "f8e0d08480306b4e929ee8d44d7f94183d8cabdc1bba64c688ddd7c6a29011af",
+  "runtime_art": {
+    "copper-plate-body.png": "133fced40a7e8c25d7768a31d2fc72f881057df1bf3e597210a4aaa20cd406f0",
+    "copper-plate-icon.png": "ba2f4e000698fd7f57d78e6dd7d2d04871dc961907aacc7038836c094b8a4ea3",
+    "copper-plate-shadow.png": "c583dfe9ebc07f5a98be98456f5ebbb4b466876bd8f6f1287d4a5d2b148635b9"
+  },
+  "scope": "Only this filtered cache picture/icon/backing art; inventory6, recipes, filter steward, circuits, fixed direction and ordinary inserters unchanged"
+}

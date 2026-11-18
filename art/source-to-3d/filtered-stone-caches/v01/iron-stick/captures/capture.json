@@ -1,0 +1,61 @@
+{
+  "source_sha256": "5d7fc7793ac256d34b71d23c1b933714d8f9eb17775723a2900c5ab8b6e8ea16",
+  "entity_profile": {
+    "camera_policy": "fmpl.factorio45.v1",
+    "capture_kind": "entity",
+    "orientation_policy": "fixed",
+    "directions": [
+      0
+    ],
+    "source_size": 512,
+    "states": {
+      "idle": [
+        1
+      ]
+    },
+    "camera_override": {
+      "type": "ORTHO",
+      "elevation_deg": 45,
+      "azimuth_deg": 0,
+      "distance": 11.313708498984761,
+      "target": [
+        0,
+        0,
+        0.3
+      ],
+      "ortho_scale": 3.0,
+      "shift_x": 0,
+      "shift_y": 0
+    }
+  },
+  "item_profile": {
+    "camera_policy": "fmpl.factorio45.v1",
+    "capture_kind": "item",
+    "orientation_policy": "fixed",
+    "directions": [
+      0
+    ],
+    "source_size": 64,
+    "states": {
+      "icon": [
+        1
+      ]
+    },
+    "camera_override": {
+      "type": "ORTHO",
+      "elevation_deg": 45,
+      "azimuth_deg": 0,
+      "distance": 11.313708498984761,
+      "target": [
+        0,
+        0,
+        0.3
+      ],
+      "ortho_scale": 2.3,
+      "shift_x": 0,
+      "shift_y": 0
+    }
+  },
+  "native_facing": "Fixed north only, matching actual prototype; source/export inspection retains four review views.",
+  "working_layers": "None: static filtered cache, no invented machinery. Source tablet provides backing; native wire points/pins/LED states stay unchanged."
+}

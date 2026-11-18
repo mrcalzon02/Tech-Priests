@@ -1,0 +1,39 @@
+{
+  "passed": true,
+  "date": "2026-11-18",
+  "factorio": "2.1.24",
+  "base": "65df59078652022e71df89931772a89158dd2ad5",
+  "scope": "Isolated canonical main plus only the explicit 22-family structures overlay; not the subsequent combined local-only release.",
+  "actual_mod_version": "0.1.687",
+  "native_new_save": "PASS",
+  "native_reload": "PASS",
+  "behavior_completion_tick": 1400,
+  "reload_completion_tick": 1400,
+  "serialization": "New-save initialized pole/radar records and native wires serialized at tick zero, then behavior scenario run after --test-save reload",
+  "shared_modules": {
+    "tech-priests_src/control.lua": "ec5495c62153759980346acefdda80afaec621d235260c92d58652907dd23d3d",
+    "tech-priests_src/data.lua": "9f855951cc31524c4c04f9f9bdd561d5e72f7c291efc2ff5ad1b581d212017d9",
+    "tech-priests_src/prototypes/conclave_center_0558.lua": "2228cdcc4073d69dbf7bf6c1607fb5d7f463c0b9c0320e206801a3ad47b2cb7e",
+    "tech-priests_src/prototypes/martian_stone_cache.lua": "39479248ceb0644c34e398092ce91e5e57e5ccadabd905b4886d23fe8784ee71",
+    "tech-priests_src/scripts/core/conclave_center_0558.lua": "55bc15641274c5e78781f7f0e7ee4767079b446078b011f2e91c5526999dc84e"
+  },
+  "source_binding_sha256": "eafdc7687c5492e026ada93bf91d05168adc23013217fcc5e8989430639934c1",
+  "checks": [
+    "hitpoints_recipes_unlocks",
+    "unpowered_before",
+    "rotation_graphics_configured",
+    "powered",
+    "unpowered_after",
+    "native_radar_scan_stops_without_power",
+    "clone_ghost_mining_destroy",
+    "death_cleanup",
+    "component_recovery",
+    "restored",
+    "after_checkpoint"
+  ],
+  "limitations": [
+    "Reload serializes initialized tick-zero records and native wires, then executes the scenario after load; no mid-scenario active-state continuation is claimed.",
+    "Headless native behavior proof for the six pylons/Vox families; retained independent model, GLB, authored sprite and graphical rotation evidence is separate.",
+    "The same run loaded data-stage definitions for the remaining 16 structure families; their detailed inventory/fluid/energy/governance behavior gates remain the retained source-bound proofs."
+  ]
+}

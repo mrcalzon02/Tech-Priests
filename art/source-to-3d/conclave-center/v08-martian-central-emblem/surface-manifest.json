@@ -1,0 +1,203 @@
+{
+  "cast-frame": {
+    "fmpl_material_id": "gunmetal_dark",
+    "source_commit": "8eaf8f95765c45af54627a2ec1894be394284898",
+    "maps": {
+      "albedo": {
+        "path": "art/source-to-3d/conclave-center/v03-authored-housings/textures/cast-frame-albedo.png",
+        "sha256": "b151febd362f6181cb8534f75c9ddc3febc36f38fd2e135e7d68e69e89e71d24",
+        "source_sha256": "209761d9c30d3ff2e93fb7e397196e1ac2ebdeb6d2fcc9cc9b5f99207d82cf6b"
+      },
+      "orm": {
+        "path": "art/source-to-3d/conclave-center/v01/textures/cast-frame-orm.png",
+        "sha256": "158f0ca9699c65e091154e90706dfe639f7c39a3c44fd0ecf3941acd53a8d173",
+        "source_sha256": "b1c09130ac1eb75a586f9e7ab8192459c363529e3f9912db891907edd874cb75"
+      },
+      "normal": {
+        "path": "art/source-to-3d/conclave-center/v01/textures/cast-frame-normal.png",
+        "sha256": "eae7281ba072484cb7f04f51094083f423523c385d9a5f45c9437de8c28149d1",
+        "source_sha256": "7bcb8e13d81fccc5ee051fd0edf256e2a50114f255869bfd0ab840d2ae3e848f"
+      }
+    },
+    "surface_plan": "dark cast back shell and structural supports; edge wear on exposed rims",
+    "refinement": "Dedicated subdued patina derivative; compressed color variation avoids giant mottled patches. Physical lips/retainers carry edge highlights."
+  },
+  "console-panels": {
+    "fmpl_material_id": "martian_red",
+    "source_commit": "8eaf8f95765c45af54627a2ec1894be394284898",
+    "maps": {
+      "albedo": {
+        "path": "art/source-to-3d/conclave-center/v03-authored-housings/textures/console-panels-albedo.png",
+        "sha256": "ce9a7d879ede2fd24187ee6c5d34084b07138fc6f9253691a9b33440664e67b4",
+        "source_sha256": "2f2df118e10d2d56bf8f895e1d2ce112319e77b9328f29e7b41333a9d74d5262"
+      },
+      "orm": {
+        "path": "art/source-to-3d/conclave-center/v01/textures/console-panels-orm.png",
+        "sha256": "34c4ca527c6c3cb5efc83e56c488ed54a969c66c5294fb636a4df27df30adac4",
+        "source_sha256": "5487550eb57282b8a5c8aaa404ff0d8fa5ffc4bfea6e2433e8dd419e3b867fa6"
+      },
+      "normal": {
+        "path": "art/source-to-3d/conclave-center/v01/textures/console-panels-normal.png",
+        "sha256": "0f1e4f2289d5f029b2d2579208abbedc54f842b35c502beebaa4e5bf365b0c34",
+        "source_sha256": "dd85cc702e0242f62186dd3217699485e4d77fbb411e2975d6a91187f52404a2"
+      }
+    },
+    "surface_plan": "oxide red service panels, localized edge chips and corner stains",
+    "refinement": "Dedicated subdued patina derivative; compressed color variation avoids giant mottled patches. Physical lips/retainers carry edge highlights."
+  },
+  "edge-trim": {
+    "fmpl_material_id": "brass",
+    "source_commit": "8eaf8f95765c45af54627a2ec1894be394284898",
+    "maps": {
+      "albedo": {
+        "path": "art/source-to-3d/conclave-center/v03-authored-housings/textures/edge-trim-albedo.png",
+        "sha256": "14870da71957b5cc232b3424682f533b22a8c2968362834b72a37f1eeddb96f8",
+        "source_sha256": "57034a31f8c7859a6b3661f57c67e60139bb8dbfc7273cd45be7b98904e35038"
+      },
+      "orm": {
+        "path": "art/source-to-3d/conclave-center/v01/textures/edge-trim-orm.png",
+        "sha256": "8dcc9d0b8e6e981266c6c427f180ef1010c02aa3774a4207e0b2434a24d74c9c",
+        "source_sha256": "acc155e0e7406452e674e70673dcb149cd3d42fa9b0a0e0a069f61b6d91dc1e0"
+      },
+      "normal": {
+        "path": "art/source-to-3d/conclave-center/v01/textures/edge-trim-normal.png",
+        "sha256": "69918caac5c55477ac72ae381b596c52541fb7dbb858d5cc2524100fdf007ff2",
+        "source_sha256": "8b48a33b75fd08e7cfa0e405c921b48a43682dafd33f49b582482e188f5eb674"
+      }
+    },
+    "surface_plan": "dull brass bezels and retaining bands",
+    "refinement": "Dedicated subdued patina derivative; compressed color variation avoids giant mottled patches. Physical lips/retainers carry edge highlights."
+  },
+  "control-keys": {
+    "fmpl_material_id": "iron",
+    "source_commit": "8eaf8f95765c45af54627a2ec1894be394284898",
+    "maps": {
+      "albedo": {
+        "path": "art/source-to-3d/conclave-center/v01/textures/control-keys-albedo.png",
+        "sha256": "48e13c877d1c0ed96d9b9478c4d3e9df7be7c70c133287ddedcfdaed7a1ded90",
+        "source_sha256": "cbd2e4fd0e9368d69a4b6d255e7440443414155f4cd8c8434c149063fd65cbb7"
+      },
+      "orm": {
+        "path": "art/source-to-3d/conclave-center/v01/textures/control-keys-orm.png",
+        "sha256": "5fbab4f330a79c26230c2bb184f9825a083e8752f43fda295fada22916ca62d0",
+        "source_sha256": "1c9011a45f77e6f0d5f35cbfbb3e4e0d8f8ed5f8d62a6afd33a04d8477c3a617"
+      },
+      "normal": {
+        "path": "art/source-to-3d/conclave-center/v01/textures/control-keys-normal.png",
+        "sha256": "4f898616a6bc19ca7d6dc09d2e31bbc0902eae23729695bd51b92390d48868b1",
+        "source_sha256": "f26a49e578f648a434e460e5d0484bec4f0440cf4170895aeda380975e282997"
+      }
+    },
+    "surface_plan": "oiled iron keys with separate physical faces"
+  },
+  "skull-cast": {
+    "fmpl_material_id": "parchment",
+    "source_commit": "8eaf8f95765c45af54627a2ec1894be394284898",
+    "maps": {
+      "albedo": {
+        "path": "art/source-to-3d/conclave-center/v01/textures/skull-cast-albedo.png",
+        "sha256": "4468b45ae248f5114f273d8a4e6d73fe21c5977cebc6bbc8f1a06080552c63a0",
+        "source_sha256": "82901b93cdd5822f5cab19c2409068787b3bbc781e259550d7ff4f007b3d7d0b"
+      },
+      "orm": {
+        "path": "art/source-to-3d/conclave-center/v01/textures/skull-cast-orm.png",
+        "sha256": "7e386f373a547185b2d9fe7f47fe154ef947482c77b570564e46557cc41f8081",
+        "source_sha256": "37c12006350c52976c6ef8ba5fdbc64640aaa7b8562b2697647628005bd5ab2c"
+      },
+      "normal": {
+        "path": "art/source-to-3d/conclave-center/v01/textures/skull-cast-normal.png",
+        "sha256": "649b95dff5dc446d3bce24c0219bd8704da3a36ca69540020b81943d099d3090",
+        "source_sha256": "8bf767f654daced007ff569c35dc5d09568e5de7050adf274bf9b0f0f3c52be9"
+      }
+    },
+    "surface_plan": "warm ivory cast relief, no metal striping"
+  },
+  "floor-tread": {
+    "fmpl_material_id": "machine_steel",
+    "source_commit": "8eaf8f95765c45af54627a2ec1894be394284898",
+    "maps": {
+      "albedo": {
+        "path": "art/source-to-3d/conclave-center/v01/textures/floor-tread-albedo.png",
+        "sha256": "e23d1229aaea9d219def54d169a8dcddab8c8cb6b452888c854a7be8ce344dec",
+        "source_sha256": "55e9cb3d4079baeafe2b9ac0e34924afabc93e7a128d95cd755878b7bb29354a"
+      },
+      "orm": {
+        "path": "art/source-to-3d/conclave-center/v01/textures/floor-tread-orm.png",
+        "sha256": "5cd4a8f107e556071d1fb9e3ba5fbd957a2e81dae0a69cff72b554e3613e6add",
+        "source_sha256": "a89ad9e908dd1e53ec461e8617bb2f6add873af9389031d98d28839e3c082684"
+      },
+      "normal": {
+        "path": "art/source-to-3d/conclave-center/v01/textures/floor-tread-normal.png",
+        "sha256": "671528993c8e4c6dba529ede80fca567ec20e8b892808b0cc1e0cb4a33680d3b",
+        "source_sha256": "518e4d4d9359646d11984692d452e1faab751bbb53d873f94f7d7df4bf514015"
+      }
+    },
+    "surface_plan": "steel access tread with directional raised pattern"
+  },
+  "cable-jacket": {
+    "fmpl_material_id": "dark_recess",
+    "source_commit": "8eaf8f95765c45af54627a2ec1894be394284898",
+    "maps": {
+      "albedo": {
+        "path": "art/source-to-3d/conclave-center/v01/textures/cable-jacket-albedo.png",
+        "sha256": "624192f61cdbf50c02c9c50cbf29f67275d305a701a3efcf96fca6e433187bcc",
+        "source_sha256": "f693afb6909d4004bd587c4217782f7b28d3d30ff123790a6b25770a54ed2986"
+      },
+      "orm": {
+        "path": "art/source-to-3d/conclave-center/v01/textures/cable-jacket-orm.png",
+        "sha256": "dcfe69f094e06aced8e0cec3fa6a50b52f973dfd33f697471884aca436a395c9",
+        "source_sha256": "075e6de0ac5cd008ba3ddccceaee889a3e2b3ce379be5b0627964e1fe8e23b14"
+      },
+      "normal": {
+        "path": "art/source-to-3d/conclave-center/v01/textures/cable-jacket-normal.png",
+        "sha256": "ac1acd02676c53a8b580fd009115e72cede594acff397ff03e21fc19f9b56417",
+        "source_sha256": "d53ed45790b0785e20367a001cb2cee60840bd81ef0ab7b26c0581a59b3d3aca"
+      }
+    },
+    "surface_plan": "dark flexible internal signal service"
+  },
+  "roof-panel": {
+    "fmpl_material_id": "machine_steel",
+    "source_commit": "8eaf8f95765c45af54627a2ec1894be394284898",
+    "surface_plan": "Panel-local contact staining at measured captive-stud/handle/rib roots; exposed-rim scuffs; restrained directional base metal, increased local roughness and reduced metallic response under grime.",
+    "maps": {
+      "albedo": {
+        "path": "art/source-to-3d/conclave-center/v05-panels-and-buttresses/textures/roof-panel-albedo.png",
+        "sha256": "d254462cf2ff3edd3ca0c7c6756b163f912accacafa60316f4c3fbdddf66b5fe",
+        "source_sha256": "55e9cb3d4079baeafe2b9ac0e34924afabc93e7a128d95cd755878b7bb29354a"
+      },
+      "orm": {
+        "path": "art/source-to-3d/conclave-center/v05-panels-and-buttresses/textures/roof-panel-orm.png",
+        "sha256": "88660ade6f1d13dcbc84ebc2dcf80ea97598627ff2afa092a0f1beabacf164f3",
+        "source_sha256": "a89ad9e908dd1e53ec461e8617bb2f6add873af9389031d98d28839e3c082684"
+      },
+      "normal": {
+        "path": "art/source-to-3d/conclave-center/v05-panels-and-buttresses/textures/roof-panel-normal.png",
+        "sha256": "671528993c8e4c6dba529ede80fca567ec20e8b892808b0cc1e0cb4a33680d3b",
+        "source_sha256": "518e4d4d9359646d11984692d452e1faab751bbb53d873f94f7d7df4bf514015"
+      }
+    }
+  },
+  "rear-hatch": {
+    "fmpl_material_id": "brass",
+    "source_commit": "8eaf8f95765c45af54627a2ec1894be394284898",
+    "surface_plan": "Panel-local contact staining at measured captive-stud/handle/rib roots; exposed-rim scuffs; restrained directional base metal, increased local roughness and reduced metallic response under grime.",
+    "maps": {
+      "albedo": {
+        "path": "art/source-to-3d/conclave-center/v05-panels-and-buttresses/textures/rear-hatch-albedo.png",
+        "sha256": "d3b762fd07c94284418120d5dba65e16e0d106b306a7887505fb4dbfea191880",
+        "source_sha256": "57034a31f8c7859a6b3661f57c67e60139bb8dbfc7273cd45be7b98904e35038"
+      },
+      "orm": {
+        "path": "art/source-to-3d/conclave-center/v05-panels-and-buttresses/textures/rear-hatch-orm.png",
+        "sha256": "43721a7caf17ca5aa1b487a55e21d50d06c161a957a585ca16f65ba4a15a50b6",
+        "source_sha256": "acc155e0e7406452e674e70673dcb149cd3d42fa9b0a0e0a069f61b6d91dc1e0"
+      },
+      "normal": {
+        "path": "art/source-to-3d/conclave-center/v05-panels-and-buttresses/textures/rear-hatch-normal.png",
+        "sha256": "69918caac5c55477ac72ae381b596c52541fb7dbb858d5cc2524100fdf007ff2",
+        "source_sha256": "8b48a33b75fd08e7cfa0e405c921b48a43682dafd33f49b582482e188f5eb674"
+      }
+    }
+  }
+}

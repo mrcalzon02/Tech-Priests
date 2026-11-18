@@ -1,0 +1,64 @@
+{
+  "source_sha256": "66655f50c8f16ceb0bd71c8f5bfb07abaa74daf029a1b948e1c3425fd1c1968e",
+  "entity_profile": {
+    "camera_policy": "fmpl.factorio45.v1",
+    "capture_kind": "entity",
+    "orientation_policy": "rotatable",
+    "directions": [
+      0,
+      90,
+      180,
+      270
+    ],
+    "source_size": 512,
+    "states": {
+      "idle": [
+        1
+      ]
+    },
+    "camera_override": {
+      "type": "ORTHO",
+      "elevation_deg": 45,
+      "azimuth_deg": 0,
+      "distance": 11.313708498984761,
+      "target": [
+        0,
+        0,
+        0.3
+      ],
+      "ortho_scale": 3.0,
+      "shift_x": 0,
+      "shift_y": 0
+    }
+  },
+  "item_profile": {
+    "camera_policy": "fmpl.factorio45.v1",
+    "capture_kind": "item",
+    "orientation_policy": "rotatable",
+    "directions": [
+      0
+    ],
+    "source_size": 64,
+    "states": {
+      "icon": [
+        1
+      ]
+    },
+    "camera_override": {
+      "type": "ORTHO",
+      "elevation_deg": 45,
+      "azimuth_deg": 0,
+      "distance": 11.313708498984761,
+      "target": [
+        0,
+        0,
+        0.3
+      ],
+      "ortho_scale": 2.3,
+      "shift_x": 0,
+      "shift_y": 0
+    }
+  },
+  "native_facing": "Fixed north, preserved. Other facings review only.",
+  "working_layers": "None: static general container. Existing native circuit connector sprites/LED layers retained untouched."
+}

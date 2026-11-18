@@ -1,0 +1,2 @@
+data:extend{{type='electric-energy-interface',name='martian-review-source',flags={'not-on-map'},collision_mask={layers={}},collision_box={{0,0},{0,0}},selection_box={{0,0},{0,0}},energy_source={type='electric',buffer_capacity='100kJ',usage_priority='primary-output',output_flow_limit='100MW',input_flow_limit='0W'},energy_production='0W',energy_usage='0W',picture={filename='__core__/graphics/empty.png',width=1,height=1}}}
+local r=table.deepcopy(data.raw.radar.radar);r.name='martian-diagnostic-radar';data:extend{r}

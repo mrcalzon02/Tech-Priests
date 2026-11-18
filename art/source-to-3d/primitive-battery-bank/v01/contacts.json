@@ -1,0 +1,1272 @@
+[
+  {
+    "a": "Hand-laid course 0 stone 00.0",
+    "b": "Continuous grounded rubble footing",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 0 stone 01.0",
+    "b": "Continuous grounded rubble footing",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 0 stone 02.0",
+    "b": "Continuous grounded rubble footing",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 0 stone 03.0",
+    "b": "Continuous grounded rubble footing",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 0 stone 04.0",
+    "b": "Continuous grounded rubble footing",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 0 stone 05.0",
+    "b": "Continuous grounded rubble footing",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 0 stone 06.0",
+    "b": "Continuous grounded rubble footing",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 0 stone 07.0",
+    "b": "Continuous grounded rubble footing",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 0 stone 08.0",
+    "b": "Continuous grounded rubble footing",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 0 stone 09.0",
+    "b": "Continuous grounded rubble footing",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 0 stone 10.0",
+    "b": "Continuous grounded rubble footing",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 0 stone 11.0",
+    "b": "Continuous grounded rubble footing",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 0 stone 12.0",
+    "b": "Continuous grounded rubble footing",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 0 stone 14.1",
+    "b": "Continuous grounded rubble footing",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 0 stone 15.0",
+    "b": "Continuous grounded rubble footing",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 0 stone 16.0",
+    "b": "Continuous grounded rubble footing",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 0 stone 17.0",
+    "b": "Continuous grounded rubble footing",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 1 stone 00.0",
+    "b": "Hand-laid course 0 stone 00.0",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 1 stone 01.0",
+    "b": "Hand-laid course 0 stone 01.0",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 1 stone 02.0",
+    "b": "Hand-laid course 0 stone 03.0",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 1 stone 03.0",
+    "b": "Hand-laid course 0 stone 03.0",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 1 stone 04.0",
+    "b": "Hand-laid course 0 stone 04.0",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 1 stone 05.0",
+    "b": "Hand-laid course 0 stone 05.0",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 1 stone 06.0",
+    "b": "Hand-laid course 0 stone 06.0",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 1 stone 07.0",
+    "b": "Hand-laid course 0 stone 07.0",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 1 stone 08.0",
+    "b": "Hand-laid course 0 stone 08.0",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 1 stone 09.0",
+    "b": "Hand-laid course 0 stone 10.0",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 1 stone 10.0",
+    "b": "Hand-laid course 0 stone 11.0",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 1 stone 11.0",
+    "b": "Hand-laid course 0 stone 12.0",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 1 stone 14.1",
+    "b": "Hand-laid course 0 stone 14.1",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 1 stone 15.0",
+    "b": "Hand-laid course 0 stone 16.0",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 1 stone 16.0",
+    "b": "Hand-laid course 0 stone 16.0",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 1 stone 17.0",
+    "b": "Hand-laid course 0 stone 17.0",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 2 stone 00.0",
+    "b": "Hand-laid course 1 stone 00.0",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 2 stone 01.0",
+    "b": "Hand-laid course 1 stone 00.0",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 2 stone 02.0",
+    "b": "Hand-laid course 1 stone 01.0",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 2 stone 03.0",
+    "b": "Hand-laid course 1 stone 02.0",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 2 stone 04.0",
+    "b": "Hand-laid course 1 stone 04.0",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 2 stone 05.0",
+    "b": "Hand-laid course 1 stone 05.0",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 2 stone 06.0",
+    "b": "Hand-laid course 1 stone 06.0",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 2 stone 07.0",
+    "b": "Hand-laid course 1 stone 06.0",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 2 stone 08.0",
+    "b": "Hand-laid course 1 stone 08.0",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 2 stone 09.0",
+    "b": "Hand-laid course 1 stone 08.0",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 2 stone 10.0",
+    "b": "Hand-laid course 1 stone 09.0",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 2 stone 11.0",
+    "b": "Hand-laid course 1 stone 11.0",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 2 stone 12.0",
+    "b": "Hand-laid course 1 stone 11.0",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 2 stone 14.1",
+    "b": "Hand-laid course 1 stone 14.1",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 2 stone 15.0",
+    "b": "Hand-laid course 1 stone 14.1",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 2 stone 16.0",
+    "b": "Hand-laid course 1 stone 15.0",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 2 stone 17.0",
+    "b": "Hand-laid course 1 stone 16.0",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 3 stone 00.0",
+    "b": "Hand-laid course 2 stone 00.0",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 3 stone 01.0",
+    "b": "Hand-laid course 2 stone 01.0",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 3 stone 02.0",
+    "b": "Hand-laid course 2 stone 03.0",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 3 stone 03.0",
+    "b": "Hand-laid course 2 stone 03.0",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 3 stone 04.0",
+    "b": "Hand-laid course 2 stone 04.0",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 3 stone 05.0",
+    "b": "Hand-laid course 2 stone 05.0",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 3 stone 06.0",
+    "b": "Hand-laid course 2 stone 06.0",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 3 stone 07.0",
+    "b": "Hand-laid course 2 stone 07.0",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 3 stone 08.0",
+    "b": "Hand-laid course 2 stone 08.0",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 3 stone 09.0",
+    "b": "Hand-laid course 2 stone 10.0",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 3 stone 10.0",
+    "b": "Hand-laid course 2 stone 11.0",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 3 stone 11.0",
+    "b": "Hand-laid course 2 stone 12.0",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 3 stone 14.1",
+    "b": "Hand-laid course 2 stone 14.1",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 3 stone 15.0",
+    "b": "Hand-laid course 2 stone 16.0",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 3 stone 16.0",
+    "b": "Hand-laid course 2 stone 16.0",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Hand-laid course 3 stone 17.0",
+    "b": "Hand-laid course 2 stone 17.0",
+    "why": "staggered bearing course with actual vertical overlap; front ends cut to the full-depth curved keystone"
+  },
+  {
+    "a": "Grounded carved circuit receiving tablet",
+    "b": "Continuous grounded rubble footing",
+    "why": "curved keystone replaces the whole wall section, with full-depth inner and outer faces and ground bearing"
+  },
+  {
+    "a": "Cache centered emblem | Supplied DGordillo low-poly skull 0",
+    "b": "Grounded carved circuit receiving tablet",
+    "why": "supplied original skull adapted as shallow curved relief; back embeds in stone"
+  },
+  {
+    "a": "Cache centered emblem | Mars emblem | twenty tooth cog surround",
+    "b": "Grounded carved circuit receiving tablet",
+    "why": "red cog back follows outer curve and embeds in wall face"
+  },
+  {
+    "a": "Cache centered emblem | Mars emblem | fitted cranial vault",
+    "b": "Cache centered emblem | Supplied DGordillo low-poly skull 0",
+    "why": "Preserved fitted relief relationship: fitted augmetic plate over actual supplied anatomy, integral return walls"
+  },
+  {
+    "a": "Cache centered emblem | Mars emblem | fitted orbital and cheek",
+    "b": "Cache centered emblem | Supplied DGordillo low-poly skull 0",
+    "why": "Preserved fitted relief relationship: fitted augmetic plate over actual supplied anatomy, integral return walls"
+  },
+  {
+    "a": "Cache centered emblem | Mars emblem | fitted mandibular half",
+    "b": "Cache centered emblem | Supplied DGordillo low-poly skull 0",
+    "why": "Preserved fitted relief relationship: fitted augmetic plate over actual supplied anatomy, integral return walls"
+  },
+  {
+    "a": "Cache centered emblem | Mars emblem | surface seated ocular receiving flange",
+    "b": "Cache centered emblem | Mars emblem | fitted orbital and cheek",
+    "why": "Preserved fitted relief relationship: ocular flange rear follows actual socket surround raycast, front has a machined annular seat"
+  },
+  {
+    "a": "Cache centered emblem | Mars emblem | inset optical barrel",
+    "b": "Cache centered emblem | Mars emblem | surface seated ocular receiving flange",
+    "why": "Preserved fitted relief relationship: optical barrel recessed into open receiving flange"
+  },
+  {
+    "a": "Cache centered emblem | Mars emblem | red bionic eye lens",
+    "b": "Cache centered emblem | Mars emblem | inset optical barrel",
+    "why": "Preserved fitted relief relationship: lens captured inside recessed optical barrel"
+  },
+  {
+    "a": "Cache centered emblem | Mars emblem | ocular captive screw 00",
+    "b": "Cache centered emblem | Mars emblem | surface seated ocular receiving flange",
+    "why": "Preserved fitted relief relationship: captive screw bears on real annular front seat"
+  },
+  {
+    "a": "Cache centered emblem | Mars emblem | ocular captive screw 01",
+    "b": "Cache centered emblem | Mars emblem | surface seated ocular receiving flange",
+    "why": "Preserved fitted relief relationship: captive screw bears on real annular front seat"
+  },
+  {
+    "a": "Cache centered emblem | Mars emblem | ocular captive screw 02",
+    "b": "Cache centered emblem | Mars emblem | surface seated ocular receiving flange",
+    "why": "Preserved fitted relief relationship: captive screw bears on real annular front seat"
+  },
+  {
+    "a": "Cache centered emblem | Mars emblem | ocular captive screw 03",
+    "b": "Cache centered emblem | Mars emblem | surface seated ocular receiving flange",
+    "why": "Preserved fitted relief relationship: captive screw bears on real annular front seat"
+  },
+  {
+    "a": "Cache centered emblem | Mars emblem | ocular captive screw 04",
+    "b": "Cache centered emblem | Mars emblem | surface seated ocular receiving flange",
+    "why": "Preserved fitted relief relationship: captive screw bears on real annular front seat"
+  },
+  {
+    "a": "Cache centered emblem | Mars emblem | ocular captive screw 05",
+    "b": "Cache centered emblem | Mars emblem | surface seated ocular receiving flange",
+    "why": "Preserved fitted relief relationship: captive screw bears on real annular front seat"
+  },
+  {
+    "a": "Cache centered emblem | Mars emblem | ocular captive screw 06",
+    "b": "Cache centered emblem | Mars emblem | surface seated ocular receiving flange",
+    "why": "Preserved fitted relief relationship: captive screw bears on real annular front seat"
+  },
+  {
+    "a": "Cache centered emblem | Mars emblem | ocular captive screw 07",
+    "b": "Cache centered emblem | Mars emblem | surface seated ocular receiving flange",
+    "why": "Preserved fitted relief relationship: captive screw bears on real annular front seat"
+  },
+  {
+    "a": "Cache centered emblem | Mars emblem | plate retaining boss 0",
+    "b": "Cache centered emblem | Supplied DGordillo low-poly skull 0",
+    "why": "Preserved fitted relief relationship: retaining boss seated on actual donor surface normal"
+  },
+  {
+    "a": "Cache centered emblem | Mars emblem | plate retaining stud 0",
+    "b": "Cache centered emblem | Mars emblem | plate retaining boss 0",
+    "why": "Preserved fitted relief relationship: stud retained in fitted plate boss"
+  },
+  {
+    "a": "Cache centered emblem | Mars emblem | plate retaining boss 1",
+    "b": "Cache centered emblem | Supplied DGordillo low-poly skull 0",
+    "why": "Preserved fitted relief relationship: retaining boss seated on actual donor surface normal"
+  },
+  {
+    "a": "Cache centered emblem | Mars emblem | plate retaining stud 1",
+    "b": "Cache centered emblem | Mars emblem | plate retaining boss 1",
+    "why": "Preserved fitted relief relationship: stud retained in fitted plate boss"
+  },
+  {
+    "a": "Cache centered emblem | Mars emblem | plate retaining boss 2",
+    "b": "Cache centered emblem | Supplied DGordillo low-poly skull 0",
+    "why": "Preserved fitted relief relationship: retaining boss seated on actual donor surface normal"
+  },
+  {
+    "a": "Cache centered emblem | Mars emblem | plate retaining stud 2",
+    "b": "Cache centered emblem | Mars emblem | plate retaining boss 2",
+    "why": "Preserved fitted relief relationship: stud retained in fitted plate boss"
+  },
+  {
+    "a": "Cache centered emblem | Mars emblem | plate retaining boss 3",
+    "b": "Cache centered emblem | Supplied DGordillo low-poly skull 0",
+    "why": "Preserved fitted relief relationship: retaining boss seated on actual donor surface normal"
+  },
+  {
+    "a": "Cache centered emblem | Mars emblem | plate retaining stud 3",
+    "b": "Cache centered emblem | Mars emblem | plate retaining boss 3",
+    "why": "Preserved fitted relief relationship: stud retained in fitted plate boss"
+  },
+  {
+    "a": "Cache centered emblem | Mars emblem | jaw strut seated anchor 0",
+    "b": "Cache centered emblem | Supplied DGordillo low-poly skull 0",
+    "why": "Preserved fitted relief relationship: jaw strut socket root seats on actual donor surface normal"
+  },
+  {
+    "a": "Cache centered emblem | Mars emblem | jaw strut seated anchor 1",
+    "b": "Cache centered emblem | Supplied DGordillo low-poly skull 0",
+    "why": "Preserved fitted relief relationship: jaw strut socket root seats on actual donor surface normal"
+  },
+  {
+    "a": "Cache centered emblem | Mars emblem | fixed mandibular strut housing",
+    "b": "Cache centered emblem | Mars emblem | jaw strut seated anchor 0",
+    "why": "Preserved fitted relief relationship: strut housing retained in upper actual surface anchor"
+  },
+  {
+    "a": "Cache centered emblem | Mars emblem | captured mandibular strut rod",
+    "b": "Cache centered emblem | Mars emblem | fixed mandibular strut housing",
+    "why": "Preserved fitted relief relationship: male strut rod overlaps real housing bore region"
+  },
+  {
+    "a": "Cache centered emblem | Mars emblem | captured mandibular strut rod",
+    "b": "Cache centered emblem | Mars emblem | jaw strut seated anchor 1",
+    "why": "Preserved fitted relief relationship: rod captured in lower surface anchor; emblem hardware is static"
+  },
+  {
+    "a": "Bank | grounded tray foot 0",
+    "b": "Compacted earth cavity floor",
+    "why": "foot bears on actual cavity floor"
+  },
+  {
+    "a": "Bank | grounded tray foot 1",
+    "b": "Compacted earth cavity floor",
+    "why": "foot bears on actual cavity floor"
+  },
+  {
+    "a": "Bank | grounded tray foot 2",
+    "b": "Compacted earth cavity floor",
+    "why": "foot bears on actual cavity floor"
+  },
+  {
+    "a": "Bank | grounded tray foot 3",
+    "b": "Compacted earth cavity floor",
+    "why": "foot bears on actual cavity floor"
+  },
+  {
+    "a": "Bank | continuous iron cell tray",
+    "b": "Bank | grounded tray foot 0",
+    "why": "tray directly bears on its four legs"
+  },
+  {
+    "a": "Bank | raised tray retaining rail -0.52",
+    "b": "Bank | continuous iron cell tray",
+    "why": "raised tray lip captures cell feet"
+  },
+  {
+    "a": "Bank | raised tray retaining rail 0.52",
+    "b": "Bank | continuous iron cell tray",
+    "why": "raised tray lip captures cell feet"
+  },
+  {
+    "a": "Bank | ceramic cell 0 0",
+    "b": "Bank | continuous iron cell tray",
+    "why": "ceramic cell foot rests on iron tray"
+  },
+  {
+    "a": "Bank | seated cell lid 0 0",
+    "b": "Bank | ceramic cell 0 0",
+    "why": "closed lid seats on cell rim"
+  },
+  {
+    "a": "Bank | ceramic terminal shoulder 0 0 positive",
+    "b": "Bank | seated cell lid 0 0",
+    "why": "terminal insulator shoulder receives post"
+  },
+  {
+    "a": "Bank | terminal post 0 0 positive",
+    "b": "Bank | ceramic terminal shoulder 0 0 positive",
+    "why": "post passes through insulating shoulder"
+  },
+  {
+    "a": "Bank | ceramic terminal shoulder 0 0 negative",
+    "b": "Bank | seated cell lid 0 0",
+    "why": "terminal insulator shoulder receives post"
+  },
+  {
+    "a": "Bank | terminal post 0 0 negative",
+    "b": "Bank | ceramic terminal shoulder 0 0 negative",
+    "why": "post passes through insulating shoulder"
+  },
+  {
+    "a": "Bank | cell retaining strap 0 0 -1",
+    "b": "Bank | ceramic cell 0 0",
+    "why": "separate retaining strap fits ceramic cell sides"
+  },
+  {
+    "a": "Bank | cell retaining strap 0 0 -1",
+    "b": "Bank | continuous iron cell tray",
+    "why": "retainer bottom bears on tray"
+  },
+  {
+    "a": "Bank | cell retaining strap 0 0 1",
+    "b": "Bank | ceramic cell 0 0",
+    "why": "separate retaining strap fits ceramic cell sides"
+  },
+  {
+    "a": "Bank | cell retaining strap 0 0 1",
+    "b": "Bank | continuous iron cell tray",
+    "why": "retainer bottom bears on tray"
+  },
+  {
+    "a": "Bank | ceramic cell 0 1",
+    "b": "Bank | continuous iron cell tray",
+    "why": "ceramic cell foot rests on iron tray"
+  },
+  {
+    "a": "Bank | seated cell lid 0 1",
+    "b": "Bank | ceramic cell 0 1",
+    "why": "closed lid seats on cell rim"
+  },
+  {
+    "a": "Bank | ceramic terminal shoulder 0 1 positive",
+    "b": "Bank | seated cell lid 0 1",
+    "why": "terminal insulator shoulder receives post"
+  },
+  {
+    "a": "Bank | terminal post 0 1 positive",
+    "b": "Bank | ceramic terminal shoulder 0 1 positive",
+    "why": "post passes through insulating shoulder"
+  },
+  {
+    "a": "Bank | ceramic terminal shoulder 0 1 negative",
+    "b": "Bank | seated cell lid 0 1",
+    "why": "terminal insulator shoulder receives post"
+  },
+  {
+    "a": "Bank | terminal post 0 1 negative",
+    "b": "Bank | ceramic terminal shoulder 0 1 negative",
+    "why": "post passes through insulating shoulder"
+  },
+  {
+    "a": "Bank | cell retaining strap 0 1 -1",
+    "b": "Bank | ceramic cell 0 1",
+    "why": "separate retaining strap fits ceramic cell sides"
+  },
+  {
+    "a": "Bank | cell retaining strap 0 1 -1",
+    "b": "Bank | continuous iron cell tray",
+    "why": "retainer bottom bears on tray"
+  },
+  {
+    "a": "Bank | cell retaining strap 0 1 1",
+    "b": "Bank | ceramic cell 0 1",
+    "why": "separate retaining strap fits ceramic cell sides"
+  },
+  {
+    "a": "Bank | cell retaining strap 0 1 1",
+    "b": "Bank | continuous iron cell tray",
+    "why": "retainer bottom bears on tray"
+  },
+  {
+    "a": "Bank | ceramic cell 0 2",
+    "b": "Bank | continuous iron cell tray",
+    "why": "ceramic cell foot rests on iron tray"
+  },
+  {
+    "a": "Bank | seated cell lid 0 2",
+    "b": "Bank | ceramic cell 0 2",
+    "why": "closed lid seats on cell rim"
+  },
+  {
+    "a": "Bank | ceramic terminal shoulder 0 2 positive",
+    "b": "Bank | seated cell lid 0 2",
+    "why": "terminal insulator shoulder receives post"
+  },
+  {
+    "a": "Bank | terminal post 0 2 positive",
+    "b": "Bank | ceramic terminal shoulder 0 2 positive",
+    "why": "post passes through insulating shoulder"
+  },
+  {
+    "a": "Bank | ceramic terminal shoulder 0 2 negative",
+    "b": "Bank | seated cell lid 0 2",
+    "why": "terminal insulator shoulder receives post"
+  },
+  {
+    "a": "Bank | terminal post 0 2 negative",
+    "b": "Bank | ceramic terminal shoulder 0 2 negative",
+    "why": "post passes through insulating shoulder"
+  },
+  {
+    "a": "Bank | cell retaining strap 0 2 -1",
+    "b": "Bank | ceramic cell 0 2",
+    "why": "separate retaining strap fits ceramic cell sides"
+  },
+  {
+    "a": "Bank | cell retaining strap 0 2 -1",
+    "b": "Bank | continuous iron cell tray",
+    "why": "retainer bottom bears on tray"
+  },
+  {
+    "a": "Bank | cell retaining strap 0 2 1",
+    "b": "Bank | ceramic cell 0 2",
+    "why": "separate retaining strap fits ceramic cell sides"
+  },
+  {
+    "a": "Bank | cell retaining strap 0 2 1",
+    "b": "Bank | continuous iron cell tray",
+    "why": "retainer bottom bears on tray"
+  },
+  {
+    "a": "Bank | ceramic cell 0 3",
+    "b": "Bank | continuous iron cell tray",
+    "why": "ceramic cell foot rests on iron tray"
+  },
+  {
+    "a": "Bank | seated cell lid 0 3",
+    "b": "Bank | ceramic cell 0 3",
+    "why": "closed lid seats on cell rim"
+  },
+  {
+    "a": "Bank | ceramic terminal shoulder 0 3 positive",
+    "b": "Bank | seated cell lid 0 3",
+    "why": "terminal insulator shoulder receives post"
+  },
+  {
+    "a": "Bank | terminal post 0 3 positive",
+    "b": "Bank | ceramic terminal shoulder 0 3 positive",
+    "why": "post passes through insulating shoulder"
+  },
+  {
+    "a": "Bank | ceramic terminal shoulder 0 3 negative",
+    "b": "Bank | seated cell lid 0 3",
+    "why": "terminal insulator shoulder receives post"
+  },
+  {
+    "a": "Bank | terminal post 0 3 negative",
+    "b": "Bank | ceramic terminal shoulder 0 3 negative",
+    "why": "post passes through insulating shoulder"
+  },
+  {
+    "a": "Bank | cell retaining strap 0 3 -1",
+    "b": "Bank | ceramic cell 0 3",
+    "why": "separate retaining strap fits ceramic cell sides"
+  },
+  {
+    "a": "Bank | cell retaining strap 0 3 -1",
+    "b": "Bank | continuous iron cell tray",
+    "why": "retainer bottom bears on tray"
+  },
+  {
+    "a": "Bank | cell retaining strap 0 3 1",
+    "b": "Bank | ceramic cell 0 3",
+    "why": "separate retaining strap fits ceramic cell sides"
+  },
+  {
+    "a": "Bank | cell retaining strap 0 3 1",
+    "b": "Bank | continuous iron cell tray",
+    "why": "retainer bottom bears on tray"
+  },
+  {
+    "a": "Bank | ceramic cell 1 0",
+    "b": "Bank | continuous iron cell tray",
+    "why": "ceramic cell foot rests on iron tray"
+  },
+  {
+    "a": "Bank | seated cell lid 1 0",
+    "b": "Bank | ceramic cell 1 0",
+    "why": "closed lid seats on cell rim"
+  },
+  {
+    "a": "Bank | ceramic terminal shoulder 1 0 positive",
+    "b": "Bank | seated cell lid 1 0",
+    "why": "terminal insulator shoulder receives post"
+  },
+  {
+    "a": "Bank | terminal post 1 0 positive",
+    "b": "Bank | ceramic terminal shoulder 1 0 positive",
+    "why": "post passes through insulating shoulder"
+  },
+  {
+    "a": "Bank | ceramic terminal shoulder 1 0 negative",
+    "b": "Bank | seated cell lid 1 0",
+    "why": "terminal insulator shoulder receives post"
+  },
+  {
+    "a": "Bank | terminal post 1 0 negative",
+    "b": "Bank | ceramic terminal shoulder 1 0 negative",
+    "why": "post passes through insulating shoulder"
+  },
+  {
+    "a": "Bank | cell retaining strap 1 0 -1",
+    "b": "Bank | ceramic cell 1 0",
+    "why": "separate retaining strap fits ceramic cell sides"
+  },
+  {
+    "a": "Bank | cell retaining strap 1 0 -1",
+    "b": "Bank | continuous iron cell tray",
+    "why": "retainer bottom bears on tray"
+  },
+  {
+    "a": "Bank | cell retaining strap 1 0 1",
+    "b": "Bank | ceramic cell 1 0",
+    "why": "separate retaining strap fits ceramic cell sides"
+  },
+  {
+    "a": "Bank | cell retaining strap 1 0 1",
+    "b": "Bank | continuous iron cell tray",
+    "why": "retainer bottom bears on tray"
+  },
+  {
+    "a": "Bank | ceramic cell 1 1",
+    "b": "Bank | continuous iron cell tray",
+    "why": "ceramic cell foot rests on iron tray"
+  },
+  {
+    "a": "Bank | seated cell lid 1 1",
+    "b": "Bank | ceramic cell 1 1",
+    "why": "closed lid seats on cell rim"
+  },
+  {
+    "a": "Bank | ceramic terminal shoulder 1 1 positive",
+    "b": "Bank | seated cell lid 1 1",
+    "why": "terminal insulator shoulder receives post"
+  },
+  {
+    "a": "Bank | terminal post 1 1 positive",
+    "b": "Bank | ceramic terminal shoulder 1 1 positive",
+    "why": "post passes through insulating shoulder"
+  },
+  {
+    "a": "Bank | ceramic terminal shoulder 1 1 negative",
+    "b": "Bank | seated cell lid 1 1",
+    "why": "terminal insulator shoulder receives post"
+  },
+  {
+    "a": "Bank | terminal post 1 1 negative",
+    "b": "Bank | ceramic terminal shoulder 1 1 negative",
+    "why": "post passes through insulating shoulder"
+  },
+  {
+    "a": "Bank | cell retaining strap 1 1 -1",
+    "b": "Bank | ceramic cell 1 1",
+    "why": "separate retaining strap fits ceramic cell sides"
+  },
+  {
+    "a": "Bank | cell retaining strap 1 1 -1",
+    "b": "Bank | continuous iron cell tray",
+    "why": "retainer bottom bears on tray"
+  },
+  {
+    "a": "Bank | cell retaining strap 1 1 1",
+    "b": "Bank | ceramic cell 1 1",
+    "why": "separate retaining strap fits ceramic cell sides"
+  },
+  {
+    "a": "Bank | cell retaining strap 1 1 1",
+    "b": "Bank | continuous iron cell tray",
+    "why": "retainer bottom bears on tray"
+  },
+  {
+    "a": "Bank | ceramic cell 1 2",
+    "b": "Bank | continuous iron cell tray",
+    "why": "ceramic cell foot rests on iron tray"
+  },
+  {
+    "a": "Bank | seated cell lid 1 2",
+    "b": "Bank | ceramic cell 1 2",
+    "why": "closed lid seats on cell rim"
+  },
+  {
+    "a": "Bank | ceramic terminal shoulder 1 2 positive",
+    "b": "Bank | seated cell lid 1 2",
+    "why": "terminal insulator shoulder receives post"
+  },
+  {
+    "a": "Bank | terminal post 1 2 positive",
+    "b": "Bank | ceramic terminal shoulder 1 2 positive",
+    "why": "post passes through insulating shoulder"
+  },
+  {
+    "a": "Bank | ceramic terminal shoulder 1 2 negative",
+    "b": "Bank | seated cell lid 1 2",
+    "why": "terminal insulator shoulder receives post"
+  },
+  {
+    "a": "Bank | terminal post 1 2 negative",
+    "b": "Bank | ceramic terminal shoulder 1 2 negative",
+    "why": "post passes through insulating shoulder"
+  },
+  {
+    "a": "Bank | cell retaining strap 1 2 -1",
+    "b": "Bank | ceramic cell 1 2",
+    "why": "separate retaining strap fits ceramic cell sides"
+  },
+  {
+    "a": "Bank | cell retaining strap 1 2 -1",
+    "b": "Bank | continuous iron cell tray",
+    "why": "retainer bottom bears on tray"
+  },
+  {
+    "a": "Bank | cell retaining strap 1 2 1",
+    "b": "Bank | ceramic cell 1 2",
+    "why": "separate retaining strap fits ceramic cell sides"
+  },
+  {
+    "a": "Bank | cell retaining strap 1 2 1",
+    "b": "Bank | continuous iron cell tray",
+    "why": "retainer bottom bears on tray"
+  },
+  {
+    "a": "Bank | ceramic cell 1 3",
+    "b": "Bank | continuous iron cell tray",
+    "why": "ceramic cell foot rests on iron tray"
+  },
+  {
+    "a": "Bank | seated cell lid 1 3",
+    "b": "Bank | ceramic cell 1 3",
+    "why": "closed lid seats on cell rim"
+  },
+  {
+    "a": "Bank | ceramic terminal shoulder 1 3 positive",
+    "b": "Bank | seated cell lid 1 3",
+    "why": "terminal insulator shoulder receives post"
+  },
+  {
+    "a": "Bank | terminal post 1 3 positive",
+    "b": "Bank | ceramic terminal shoulder 1 3 positive",
+    "why": "post passes through insulating shoulder"
+  },
+  {
+    "a": "Bank | ceramic terminal shoulder 1 3 negative",
+    "b": "Bank | seated cell lid 1 3",
+    "why": "terminal insulator shoulder receives post"
+  },
+  {
+    "a": "Bank | terminal post 1 3 negative",
+    "b": "Bank | ceramic terminal shoulder 1 3 negative",
+    "why": "post passes through insulating shoulder"
+  },
+  {
+    "a": "Bank | cell retaining strap 1 3 -1",
+    "b": "Bank | ceramic cell 1 3",
+    "why": "separate retaining strap fits ceramic cell sides"
+  },
+  {
+    "a": "Bank | cell retaining strap 1 3 -1",
+    "b": "Bank | continuous iron cell tray",
+    "why": "retainer bottom bears on tray"
+  },
+  {
+    "a": "Bank | cell retaining strap 1 3 1",
+    "b": "Bank | ceramic cell 1 3",
+    "why": "separate retaining strap fits ceramic cell sides"
+  },
+  {
+    "a": "Bank | cell retaining strap 1 3 1",
+    "b": "Bank | continuous iron cell tray",
+    "why": "retainer bottom bears on tray"
+  },
+  {
+    "a": "Bank | series busbar 0 0",
+    "b": "Bank | terminal post 0 0 negative",
+    "why": "busbar overlaps negative stud"
+  },
+  {
+    "a": "Bank | series busbar 0 0",
+    "b": "Bank | terminal post 0 1 positive",
+    "why": "next positive stud receives busbar"
+  },
+  {
+    "a": "Bank | series busbar 0 1",
+    "b": "Bank | terminal post 0 1 negative",
+    "why": "busbar overlaps negative stud"
+  },
+  {
+    "a": "Bank | series busbar 0 1",
+    "b": "Bank | terminal post 0 2 positive",
+    "why": "next positive stud receives busbar"
+  },
+  {
+    "a": "Bank | series busbar 0 2",
+    "b": "Bank | terminal post 0 2 negative",
+    "why": "busbar overlaps negative stud"
+  },
+  {
+    "a": "Bank | series busbar 0 2",
+    "b": "Bank | terminal post 0 3 positive",
+    "why": "next positive stud receives busbar"
+  },
+  {
+    "a": "Bank | series busbar 1 0",
+    "b": "Bank | terminal post 1 0 negative",
+    "why": "busbar overlaps negative stud"
+  },
+  {
+    "a": "Bank | series busbar 1 0",
+    "b": "Bank | terminal post 1 1 positive",
+    "why": "next positive stud receives busbar"
+  },
+  {
+    "a": "Bank | series busbar 1 1",
+    "b": "Bank | terminal post 1 1 negative",
+    "why": "busbar overlaps negative stud"
+  },
+  {
+    "a": "Bank | series busbar 1 1",
+    "b": "Bank | terminal post 1 2 positive",
+    "why": "next positive stud receives busbar"
+  },
+  {
+    "a": "Bank | series busbar 1 2",
+    "b": "Bank | terminal post 1 2 negative",
+    "why": "busbar overlaps negative stud"
+  },
+  {
+    "a": "Bank | series busbar 1 2",
+    "b": "Bank | terminal post 1 3 positive",
+    "why": "next positive stud receives busbar"
+  },
+  {
+    "a": "Bank | parallel positive collector",
+    "b": "Bank | terminal post 0 0 positive",
+    "why": "collector directly overlaps cell string post"
+  },
+  {
+    "a": "Bank | parallel positive collector",
+    "b": "Bank | terminal post 1 0 positive",
+    "why": "collector directly overlaps cell string post"
+  },
+  {
+    "a": "Bank | parallel negative collector",
+    "b": "Bank | terminal post 0 3 negative",
+    "why": "collector directly overlaps cell string post"
+  },
+  {
+    "a": "Bank | parallel negative collector",
+    "b": "Bank | terminal post 1 3 negative",
+    "why": "collector directly overlaps cell string post"
+  },
+  {
+    "a": "Bank | captive terminal nut 0 0 positive",
+    "b": "Bank | terminal post 0 0 positive",
+    "why": "nut captures cell busbar to threaded post"
+  },
+  {
+    "a": "Bank | captive terminal nut 0 0 negative",
+    "b": "Bank | terminal post 0 0 negative",
+    "why": "nut captures cell busbar to threaded post"
+  },
+  {
+    "a": "Bank | captive terminal nut 0 1 positive",
+    "b": "Bank | terminal post 0 1 positive",
+    "why": "nut captures cell busbar to threaded post"
+  },
+  {
+    "a": "Bank | captive terminal nut 0 1 negative",
+    "b": "Bank | terminal post 0 1 negative",
+    "why": "nut captures cell busbar to threaded post"
+  },
+  {
+    "a": "Bank | captive terminal nut 0 2 positive",
+    "b": "Bank | terminal post 0 2 positive",
+    "why": "nut captures cell busbar to threaded post"
+  },
+  {
+    "a": "Bank | captive terminal nut 0 2 negative",
+    "b": "Bank | terminal post 0 2 negative",
+    "why": "nut captures cell busbar to threaded post"
+  },
+  {
+    "a": "Bank | captive terminal nut 0 3 positive",
+    "b": "Bank | terminal post 0 3 positive",
+    "why": "nut captures cell busbar to threaded post"
+  },
+  {
+    "a": "Bank | captive terminal nut 0 3 negative",
+    "b": "Bank | terminal post 0 3 negative",
+    "why": "nut captures cell busbar to threaded post"
+  },
+  {
+    "a": "Bank | captive terminal nut 1 0 positive",
+    "b": "Bank | terminal post 1 0 positive",
+    "why": "nut captures cell busbar to threaded post"
+  },
+  {
+    "a": "Bank | captive terminal nut 1 0 negative",
+    "b": "Bank | terminal post 1 0 negative",
+    "why": "nut captures cell busbar to threaded post"
+  },
+  {
+    "a": "Bank | captive terminal nut 1 1 positive",
+    "b": "Bank | terminal post 1 1 positive",
+    "why": "nut captures cell busbar to threaded post"
+  },
+  {
+    "a": "Bank | captive terminal nut 1 1 negative",
+    "b": "Bank | terminal post 1 1 negative",
+    "why": "nut captures cell busbar to threaded post"
+  },
+  {
+    "a": "Bank | captive terminal nut 1 2 positive",
+    "b": "Bank | terminal post 1 2 positive",
+    "why": "nut captures cell busbar to threaded post"
+  },
+  {
+    "a": "Bank | captive terminal nut 1 2 negative",
+    "b": "Bank | terminal post 1 2 negative",
+    "why": "nut captures cell busbar to threaded post"
+  },
+  {
+    "a": "Bank | captive terminal nut 1 3 positive",
+    "b": "Bank | terminal post 1 3 positive",
+    "why": "nut captures cell busbar to threaded post"
+  },
+  {
+    "a": "Bank | captive terminal nut 1 3 negative",
+    "b": "Bank | terminal post 1 3 negative",
+    "why": "nut captures cell busbar to threaded post"
+  },
+  {
+    "a": "Bank | guard support 0",
+    "b": "Bank | continuous iron cell tray",
+    "why": "guard support rooted in tray edge"
+  },
+  {
+    "a": "Bank | guard support 1",
+    "b": "Bank | continuous iron cell tray",
+    "why": "guard support rooted in tray edge"
+  },
+  {
+    "a": "Bank | guard support 2",
+    "b": "Bank | continuous iron cell tray",
+    "why": "guard support rooted in tray edge"
+  },
+  {
+    "a": "Bank | guard support 3",
+    "b": "Bank | continuous iron cell tray",
+    "why": "guard support rooted in tray edge"
+  },
+  {
+    "a": "Bank | guard longitudinal carrier 0",
+    "b": "Bank | guard support 0",
+    "why": "longitudinal carrier bears on front upright"
+  },
+  {
+    "a": "Bank | guard longitudinal carrier 0",
+    "b": "Bank | guard support 2",
+    "why": "longitudinal carrier bears on rear upright"
+  },
+  {
+    "a": "Bank | guard longitudinal carrier 1",
+    "b": "Bank | guard support 1",
+    "why": "longitudinal carrier bears on front upright"
+  },
+  {
+    "a": "Bank | guard longitudinal carrier 1",
+    "b": "Bank | guard support 3",
+    "why": "longitudinal carrier bears on rear upright"
+  },
+  {
+    "a": "Bank | guard cross rail -0.56",
+    "b": "Bank | guard longitudinal carrier 0",
+    "why": "cross rail ends seated on longitudinal carriers"
+  },
+  {
+    "a": "Bank | guard cross rail -0.56",
+    "b": "Bank | guard longitudinal carrier 1",
+    "why": "cross rail ends seated on longitudinal carriers"
+  },
+  {
+    "a": "Bank | guard cross rail 0.56",
+    "b": "Bank | guard longitudinal carrier 0",
+    "why": "cross rail ends seated on longitudinal carriers"
+  },
+  {
+    "a": "Bank | guard cross rail 0.56",
+    "b": "Bank | guard longitudinal carrier 1",
+    "why": "cross rail ends seated on longitudinal carriers"
+  },
+  {
+    "a": "Bank | removable guard bar -0.56",
+    "b": "Bank | guard cross rail -0.56",
+    "why": "grate bar seated on front cross rail"
+  },
+  {
+    "a": "Bank | removable guard bar -0.56",
+    "b": "Bank | guard cross rail 0.56",
+    "why": "grate bar seated on rear cross rail"
+  },
+  {
+    "a": "Bank | removable guard bar -0.28",
+    "b": "Bank | guard cross rail -0.56",
+    "why": "grate bar seated on front cross rail"
+  },
+  {
+    "a": "Bank | removable guard bar -0.28",
+    "b": "Bank | guard cross rail 0.56",
+    "why": "grate bar seated on rear cross rail"
+  },
+  {
+    "a": "Bank | removable guard bar 0.00",
+    "b": "Bank | guard cross rail -0.56",
+    "why": "grate bar seated on front cross rail"
+  },
+  {
+    "a": "Bank | removable guard bar 0.00",
+    "b": "Bank | guard cross rail 0.56",
+    "why": "grate bar seated on rear cross rail"
+  },
+  {
+    "a": "Bank | removable guard bar 0.28",
+    "b": "Bank | guard cross rail -0.56",
+    "why": "grate bar seated on front cross rail"
+  },
+  {
+    "a": "Bank | removable guard bar 0.28",
+    "b": "Bank | guard cross rail 0.56",
+    "why": "grate bar seated on rear cross rail"
+  },
+  {
+    "a": "Bank | removable guard bar 0.56",
+    "b": "Bank | guard cross rail -0.56",
+    "why": "grate bar seated on front cross rail"
+  },
+  {
+    "a": "Bank | removable guard bar 0.56",
+    "b": "Bank | guard cross rail 0.56",
+    "why": "grate bar seated on rear cross rail"
+  },
+  {
+    "a": "Bank | grounded isolated terminal pedestal",
+    "b": "Bank | terminal pedestal footing",
+    "why": "cabinet bears continuously on ground plinth"
+  },
+  {
+    "a": "Bank | masonry cabinet tie 0",
+    "b": "Bank | grounded isolated terminal pedestal",
+    "why": "cabinet tie enters rear of grounded enclosure"
+  },
+  {
+    "a": "Bank | masonry cabinet tie 0",
+    "b": "Hand-laid course 0 stone 16.0",
+    "why": "rear tie embeds into actual nearest masonry course"
+  },
+  {
+    "a": "Bank | masonry cabinet tie 1",
+    "b": "Bank | grounded isolated terminal pedestal",
+    "why": "cabinet tie enters rear of grounded enclosure"
+  },
+  {
+    "a": "Bank | masonry cabinet tie 1",
+    "b": "Hand-laid course 1 stone 15.0",
+    "why": "rear tie embeds into actual nearest masonry course"
+  },
+  {
+    "a": "Bank | native red insulating receptacle",
+    "b": "Bank | grounded isolated terminal pedestal",
+    "why": "insulating receptacle seated on cabinet front"
+  },
+  {
+    "a": "Bank | native red circuit mouth",
+    "b": "Bank | native red insulating receptacle",
+    "why": "contact pin centered in receiving ceramic"
+  },
+  {
+    "a": "Bank | native green insulating receptacle",
+    "b": "Bank | grounded isolated terminal pedestal",
+    "why": "insulating receptacle seated on cabinet front"
+  },
+  {
+    "a": "Bank | native green circuit mouth",
+    "b": "Bank | native green insulating receptacle",
+    "why": "contact pin centered in receiving ceramic"
+  },
+  {
+    "a": "Bank | seated native blue LED bezel",
+    "b": "Bank | grounded isolated terminal pedestal",
+    "why": "native LED bezel mounted in cabinet front with measured atlas centroid alignment"
+  },
+  {
+    "a": "Bank | seated native red-green LED bezel",
+    "b": "Bank | grounded isolated terminal pedestal",
+    "why": "native LED bezel mounted in cabinet front with measured atlas centroid alignment"
+  },
+  {
+    "a": "Bank | charge lamp socket",
+    "b": "Bank | grounded isolated terminal pedestal",
+    "why": "lamp bezel mounted on top of service cabinet"
+  },
+  {
+    "a": "Bank | charge lamp lens",
+    "b": "Bank | charge lamp socket",
+    "why": "glass lens captured by lamp socket"
+  },
+  {
+    "a": "Bank | discharge lamp socket",
+    "b": "Bank | grounded isolated terminal pedestal",
+    "why": "lamp bezel mounted on top of service cabinet"
+  },
+  {
+    "a": "Bank | discharge lamp lens",
+    "b": "Bank | discharge lamp socket",
+    "why": "glass lens captured by lamp socket"
+  },
+  {
+    "a": "Bank | positive cable receiving boss",
+    "b": "Bank | grounded isolated terminal pedestal",
+    "why": "gland receiving boss seated in cabinet roof"
+  },
+  {
+    "a": "Bank | negative cable receiving boss",
+    "b": "Bank | grounded isolated terminal pedestal",
+    "why": "gland receiving boss seated in cabinet roof"
+  }
+]

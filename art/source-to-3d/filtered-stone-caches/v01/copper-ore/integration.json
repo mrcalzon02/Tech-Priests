@@ -1,0 +1,12 @@
+{
+  "key": "copper-ore",
+  "source_sha256": "a49e88451a24eebe7685991cd9ad4dbe15effe9cbf8a220230104e0c8e0e0b7a",
+  "export_sha256": "ceffb462b3ddfa43feba71f0590b9e921ce5845c9b8d3c9a786094ac67b33444",
+  "prototype_sha256": "f8e0d08480306b4e929ee8d44d7f94183d8cabdc1bba64c688ddd7c6a29011af",
+  "runtime_art": {
+    "copper-ore-body.png": "d47a30a7ad1c2bc2bf1eeca21297089095e87971ded5172ebce9ed4d0f84dbfd",
+    "copper-ore-icon.png": "af34b5dcd4a23303fb88d9696efd050c4585692a1f096bfdbbacbf8217704101",
+    "copper-ore-shadow.png": "2e6754345f2292856f7ce91fc74bbbd64168814c4ac567c6f50c6227d55193a9"
+  },
+  "scope": "Only this filtered cache picture/icon/backing art; inventory6, recipes, filter steward, circuits, fixed direction and ordinary inserters unchanged"
+}

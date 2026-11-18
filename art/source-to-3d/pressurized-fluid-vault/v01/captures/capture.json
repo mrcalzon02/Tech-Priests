@@ -1,0 +1,80 @@
+{
+  "source_sha256": "8594eba97100ac8ed558d88317200d6102576da6538d6af73e05957a06a8513a",
+  "entity_profile": {
+    "camera_policy": "fmpl.factorio45.v1",
+    "capture_kind": "entity",
+    "orientation_policy": "rotatable",
+    "directions": [
+      0,
+      90,
+      180,
+      270
+    ],
+    "source_size": 512,
+    "states": {
+      "idle": [
+        1
+      ]
+    },
+    "camera_override": {
+      "type": "ORTHO",
+      "elevation_deg": 45,
+      "azimuth_deg": 0,
+      "distance": 11.313708498984761,
+      "target": [
+        0,
+        0,
+        0.3
+      ],
+      "ortho_scale": 4,
+      "shift_x": 0,
+      "shift_y": 0
+    }
+  },
+  "item_profile": {
+    "camera_policy": "fmpl.factorio45.v1",
+    "capture_kind": "item",
+    "orientation_policy": "rotatable",
+    "directions": [
+      0
+    ],
+    "source_size": 64,
+    "states": {
+      "icon": [
+        1
+      ]
+    },
+    "camera_override": {
+      "type": "ORTHO",
+      "elevation_deg": 45,
+      "azimuth_deg": 0,
+      "distance": 11.313708498984761,
+      "target": [
+        0,
+        0,
+        0.3
+      ],
+      "ortho_scale": 3.7,
+      "shift_x": 0,
+      "shift_y": 0
+    }
+  },
+  "native_facing": "Native north/east states; south/west normalize to these. d0/d1 are production; d2/d3 review only.",
+  "working_layers": "None: static storage tank. Native circuit states preserved; contact drawing registered to source-mounted posts and LED bezels.",
+  "sprite_projection": {
+    "ground_y_scale": 1.4142135623730951,
+    "source_geometry_changed": false
+  },
+  "actual_source_yaws": [
+    0,
+    270,
+    180,
+    90
+  ],
+  "native_picture_usage": {
+    "north": "body-d0/shadow-d0",
+    "east": "body-d1/shadow-d1",
+    "south": "alias north, native direction normalizes0",
+    "west": "alias east, native direction normalizes4"
+  }
+}

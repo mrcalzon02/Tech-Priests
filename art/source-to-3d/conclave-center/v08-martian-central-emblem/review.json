@@ -1,0 +1,52 @@
+{
+  "stage": "Integrated and technically validated visual review candidate; owner approval pending",
+  "reviewer": "implementation agent; actual source/export front/side/rear/clay, source motion samples and native day/night/ghost images viewed",
+  "owner_approval": false,
+  "technical_passed": true,
+  "source_sha256": "39c74555ccc30ea25683985a14dc743c848563a32f3ad5b52795e283bcab3436",
+  "export_sha256": "d09646f59b3982ea4fbf1d3fbbad4818c317aed4bdd537b0efc96870fcf9d3d6",
+  "reference_sha256": "6d1aff73df4300dfa624fced3014449ff7cab38252e3ec32e91b6e0ad780c0be",
+  "supplied_skull_source_sha256": "5e085c30cb3f623b31beee05992ce04d3c9f630b4ec81f474a2cc40b24d811fa",
+  "renders": {
+    "inspection/export-clay.png": "23287f05fe5fb7b8a3f9741d72fa1354ed6b895dcc2664f60d5af79cac9a03b8",
+    "inspection/export-d0.png": "983f583cd403269e0befc6bdeed3741c64ec2bb72ed76bc025262acd62e0aa1c",
+    "inspection/export-d1.png": "00e1e3090c91776ae845481a7fe15dfe85c761342f6a5797dd1981fe8d988311",
+    "inspection/export-d2.png": "f6a76d101c3428fd2c3f51e16b9c9f59d692966a44dd5dba19fef376e9b2bad9",
+    "inspection/export-d3.png": "e98a5d0794214d0b62cb1297b5eac961aeaf7031fed8a97a54c6290ea2ec5cb2",
+    "native-evidence/native-night.png": "5e63f2db08b1b3f0691348d7470beaa9b8e0610942f249904c9d84ebd94b0ff9",
+    "native-evidence/native-ghost.png": "b00c1cf005775d13bfd990f6762456574ec09daeaa2313c2a2e76ce21ff36dcf",
+    "native-evidence/native-motion.gif": "c47169329af827f5e80b48b62b8b2ab6fe69ea70777d4f2f715b9c2ed93690ad",
+    "ambient-preview.gif": "0effc2e873358b32735d43bee3eed74763147dd40e3212bede29897e15a0b38e"
+  },
+  "scores_out_of_5": {
+    "central_symbol_identity": 4,
+    "mechanical_construction": 4,
+    "service_bends_and_receivers": 4,
+    "region_materials_and_aging": 4,
+    "ambient_motion_and_lighting": 4,
+    "gameplay_preservation": 5
+  },
+  "observed": [
+    "Central source skull remains the supplied low-poly mesh under three real fitted half-mask plates; two side skulls retain original mesh, UV and sculpt normal.",
+    "Thick two-tone 20-tooth cog, recessed red bionic eye and actual surface-conforming ocular receiving flange establish the requested central emblem.",
+    "Actual source/export shows panel seams and mounted jaw strut. New augmetic hardware is static emblem construction, not invented container machinery.",
+    "Actual cavity bake on original skull UVs drives warm raised bone, brown recess accumulation and dry roughness.",
+    "Nine candles still follow the real curved arch and each has independent flame motion/flicker and faint rising smoke.",
+    "Source/export geometry motion and matching loop endpoint pass independent numerical inspection for all 36 effects. Shader scroll/emission/light are evaluated in source for sprites, not falsely claimed as GLB material animation.",
+    "Actual source-rendered local illumination is baked into a separate native additive light pass. Native night view keeps warm flame tips and green spill on the keys while the body remains dark.",
+    "Static body fixes the placement ghost; native day/ghost screenshot shows both complete and correctly registered.",
+    "Native prototype comparison permits only icon/picture/stateless visualisation changes; recipe unchanged. Four ordinary inserter input and output checks and saved-game reload pass."
+  ],
+  "native_night_viewed": true,
+  "native_ghost_viewed": true,
+  "failed_studies_and_repairs": [
+    "One orbital plate bevel residue produced a degenerate triangle; dissolved actual zero-area residue, independently re-exported/reopened and re-rendered final full sequence.",
+    "Initial GLB reimport clipped negative waver shape weights; replaced them with four nonnegative directional morph tracks, preserving source motion and passing independent parity.",
+    "First native full-body-only ambient pass disappeared in placement ghosts and was too dim at night. Retained failed evidence, added real static placement body, composed replacement effects without doubling body alpha, and baked actual local illumination into a separate native light pass."
+  ],
+  "remaining": [
+    "Owner visual approval of this V08 candidate and any further requested refinement.",
+    "Physical governance-screen interaction remains unverified; automated GUI presence was not treated as physical input.",
+    "Remaining queue stays open. Start Martian Stone Cache after closing Conclave applicable gates."
+  ]
+}

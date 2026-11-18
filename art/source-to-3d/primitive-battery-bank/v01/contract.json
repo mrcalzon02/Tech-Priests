@@ -1,0 +1,487 @@
+{
+  "id": "tech-priests-stone-cache-primitive-acclimator-battery-bank",
+  "prototype": {
+    "type": "accumulator",
+    "name": "tech-priests-stone-cache-primitive-acclimator-battery-bank",
+    "icon": "__tech-priests__/graphics/icons/stone-cache/tech-priests-stone-cache-primitive-acclimator-battery-bank.png",
+    "flags": [
+      "placeable-neutral",
+      "player-creation"
+    ],
+    "minable": {
+      "mining_time": 0.45,
+      "result": "tech-priests-stone-cache-primitive-acclimator-battery-bank"
+    },
+    "fast_replaceable_group": "accumulator",
+    "max_health": 220,
+    "corpse": "accumulator-remnants",
+    "dying_explosion": "accumulator-explosion",
+    "collision_box": [
+      [
+        -0.9,
+        -0.9
+      ],
+      [
+        0.9,
+        0.9
+      ]
+    ],
+    "selection_box": [
+      [
+        -1,
+        -1
+      ],
+      [
+        1,
+        1
+      ]
+    ],
+    "damaged_trigger_effect": {
+      "type": "create-entity",
+      "entity_name": "spark-explosion",
+      "offset_deviation": [
+        [
+          -0.5,
+          -0.5
+        ],
+        [
+          0.5,
+          0.5
+        ]
+      ],
+      "offsets": [
+        [
+          0,
+          1
+        ]
+      ],
+      "damage_type_filters": "fire"
+    },
+    "drawing_box_vertical_extension": 0.5,
+    "energy_source": {
+      "type": "electric",
+      "buffer_capacity": "1MJ",
+      "usage_priority": "tertiary",
+      "input_flow_limit": "500kW",
+      "output_flow_limit": "500kW",
+      "render_no_network_icon": true
+    },
+    "chargable_graphics": {
+      "picture": {
+        "layers": [
+          {
+            "filename": "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-primitive-acclimator-battery-bank-shadow.png",
+            "priority": "high",
+            "width": 1024,
+            "height": 1024,
+            "frame_count": 1,
+            "line_length": 1,
+            "draw_as_shadow": true,
+            "shift": [
+              0.08,
+              0.08
+            ],
+            "scale": 0.068
+          },
+          {
+            "filename": "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-primitive-acclimator-battery-bank.png",
+            "priority": "high",
+            "width": 1024,
+            "height": 1024,
+            "frame_count": 1,
+            "line_length": 1,
+            "shift": [
+              0,
+              0
+            ],
+            "scale": 0.068
+          }
+        ]
+      },
+      "charge_animation": {
+        "layers": [
+          {
+            "filename": "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-primitive-acclimator-battery-bank-shadow.png",
+            "priority": "high",
+            "width": 1024,
+            "height": 1024,
+            "frame_count": 1,
+            "line_length": 1,
+            "draw_as_shadow": true,
+            "shift": [
+              0.08,
+              0.08
+            ],
+            "scale": 0.068
+          },
+          {
+            "filename": "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-primitive-acclimator-battery-bank.png",
+            "priority": "high",
+            "width": 1024,
+            "height": 1024,
+            "frame_count": 1,
+            "line_length": 1,
+            "shift": [
+              0,
+              0
+            ],
+            "scale": 0.068
+          }
+        ]
+      },
+      "charge_cooldown": 30,
+      "discharge_animation": {
+        "layers": [
+          {
+            "filename": "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-primitive-acclimator-battery-bank-shadow.png",
+            "priority": "high",
+            "width": 1024,
+            "height": 1024,
+            "frame_count": 1,
+            "line_length": 1,
+            "draw_as_shadow": true,
+            "shift": [
+              0.08,
+              0.08
+            ],
+            "scale": 0.068
+          },
+          {
+            "filename": "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-primitive-acclimator-battery-bank.png",
+            "priority": "high",
+            "width": 1024,
+            "height": 1024,
+            "frame_count": 1,
+            "line_length": 1,
+            "shift": [
+              0,
+              0
+            ],
+            "scale": 0.068
+          }
+        ]
+      },
+      "discharge_cooldown": 30
+    },
+    "impact_category": "metal",
+    "open_sound": {
+      "filename": "__base__/sound/open-close/electric-large-open.ogg",
+      "volume": 0.6
+    },
+    "close_sound": {
+      "filename": "__base__/sound/open-close/electric-large-close.ogg",
+      "volume": 0.6
+    },
+    "working_sound": {
+      "main_sounds": [
+        {
+          "sound": {
+            "filename": "__base__/sound/accumulator-working.ogg",
+            "volume": 0.4,
+            "modifiers": {
+              "type": "main-menu",
+              "volume_multiplier": 1.44
+            },
+            "audible_distance_modifier": 0.5
+          },
+          "match_volume_to_activity": true,
+          "activity_to_volume_modifiers": {
+            "offset": 2,
+            "inverted": true
+          },
+          "fade_in_ticks": 4,
+          "fade_out_ticks": 20
+        },
+        {
+          "sound": {
+            "filename": "__base__/sound/accumulator-discharging.ogg",
+            "volume": 0.4,
+            "modifiers": {
+              "type": "main-menu",
+              "volume_multiplier": 1.44
+            },
+            "audible_distance_modifier": 0.5
+          },
+          "match_volume_to_activity": true,
+          "activity_to_volume_modifiers": {
+            "offset": 1
+          },
+          "fade_in_ticks": 4,
+          "fade_out_ticks": 20
+        }
+      ],
+      "idle_sound": {
+        "filename": "__base__/sound/accumulator-idle.ogg",
+        "volume": 0.35,
+        "audible_distance_modifier": 0.5
+      },
+      "max_sounds_per_prototype": 3
+    },
+    "circuit_connector": {
+      "sprites": {
+        "connector_main": {
+          "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04a-base-sequence.png",
+          "priority": "low",
+          "width": 52,
+          "height": 50,
+          "scale": 0.5,
+          "x": 104,
+          "y": 150,
+          "shift": [
+            0.578125,
+            0.625
+          ]
+        },
+        "connector_shadow": {
+          "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04b-base-shadow-sequence.png",
+          "priority": "low",
+          "draw_as_shadow": true,
+          "width": 60,
+          "height": 46,
+          "scale": 0.5,
+          "x": 120,
+          "y": 138,
+          "shift": [
+            0.71875,
+            0.875
+          ]
+        },
+        "wire_pins": {
+          "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04c-wire-sequence.png",
+          "priority": "low",
+          "width": 62,
+          "height": 58,
+          "scale": 0.5,
+          "x": 124,
+          "y": 174,
+          "shift": [
+            0.578125,
+            0.625
+          ]
+        },
+        "wire_pins_shadow": {
+          "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04d-wire-shadow-sequence.png",
+          "priority": "low",
+          "draw_as_shadow": true,
+          "width": 68,
+          "height": 54,
+          "scale": 0.5,
+          "x": 136,
+          "y": 162,
+          "shift": [
+            0.796875,
+            0.90625
+          ]
+        },
+        "led_blue": {
+          "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04e-blue-LED-on-sequence.png",
+          "priority": "low",
+          "draw_as_glow": true,
+          "width": 60,
+          "height": 60,
+          "scale": 0.5,
+          "x": 120,
+          "y": 180,
+          "shift": [
+            0.578125,
+            0.59375
+          ]
+        },
+        "led_blue_off": {
+          "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04f-blue-LED-off-sequence.png",
+          "priority": "low",
+          "width": 46,
+          "height": 44,
+          "scale": 0.5,
+          "x": 92,
+          "y": 132,
+          "shift": [
+            0.578125,
+            0.59375
+          ]
+        },
+        "led_green": {
+          "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04h-green-LED-sequence.png",
+          "priority": "low",
+          "draw_as_glow": true,
+          "width": 48,
+          "height": 46,
+          "scale": 0.5,
+          "x": 96,
+          "y": 138,
+          "shift": [
+            0.578125,
+            0.59375
+          ]
+        },
+        "led_red": {
+          "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04i-red-LED-sequence.png",
+          "priority": "low",
+          "draw_as_glow": true,
+          "width": 48,
+          "height": 46,
+          "scale": 0.5,
+          "x": 96,
+          "y": 138,
+          "shift": [
+            0.578125,
+            0.59375
+          ]
+        },
+        "led_light": {
+          "intensity": 0,
+          "size": 0.9
+        },
+        "blue_led_light_offset": [
+          0.578125,
+          0.875
+        ],
+        "red_green_led_light_offset": [
+          0.578125,
+          0.78125
+        ]
+      },
+      "points": {
+        "wire": {
+          "red": [
+            0.828125,
+            0.625
+          ],
+          "green": [
+            0.890625,
+            0.84375
+          ]
+        },
+        "shadow": {
+          "red": [
+            1.265625,
+            1.109375
+          ],
+          "green": [
+            1.078125,
+            1.109375
+          ]
+        }
+      }
+    },
+    "circuit_wire_max_distance": 9,
+    "default_output_signal": {
+      "type": "virtual",
+      "name": "signal-A"
+    },
+    "localised_name": [
+      "entity-name.tech-priests-stone-cache-primitive-acclimator-battery-bank"
+    ],
+    "localised_description": [
+      "entity-description.tech-priests-stone-cache-primitive-acclimator-battery-bank"
+    ],
+    "icon_size": 64
+  },
+  "item": {
+    "type": "item",
+    "name": "tech-priests-stone-cache-primitive-acclimator-battery-bank",
+    "localised_name": [
+      "item-name.tech-priests-stone-cache-primitive-acclimator-battery-bank"
+    ],
+    "localised_description": [
+      "item-description.tech-priests-stone-cache-primitive-acclimator-battery-bank"
+    ],
+    "icon": "__tech-priests__/graphics/icons/stone-cache/tech-priests-stone-cache-primitive-acclimator-battery-bank.png",
+    "icon_size": 64,
+    "subgroup": "tech-priest-emergency-industry",
+    "order": "z[stone-cache]-o[battery-bank]",
+    "place_result": "tech-priests-stone-cache-primitive-acclimator-battery-bank",
+    "stack_size": 20
+  },
+  "recipe": {
+    "type": "recipe",
+    "name": "tech-priests-stone-cache-primitive-acclimator-battery-bank",
+    "localised_name": [
+      "recipe-name.tech-priests-stone-cache-primitive-acclimator-battery-bank"
+    ],
+    "localised_description": [
+      "recipe-description.tech-priests-stone-cache-primitive-acclimator-battery-bank"
+    ],
+    "icon": "__tech-priests__/graphics/icons/stone-cache/tech-priests-stone-cache-primitive-acclimator-battery-bank.png",
+    "icon_size": 64,
+    "subgroup": "tech-priest-emergency-industry",
+    "order": "z[stone-cache]-o[battery-bank]",
+    "enabled": false,
+    "energy_required": 10,
+    "ingredients": [
+      {
+        "type": "item",
+        "name": "stone",
+        "amount": 40
+      },
+      {
+        "type": "item",
+        "name": "battery",
+        "amount": 8
+      },
+      {
+        "type": "item",
+        "name": "copper-cable",
+        "amount": 12
+      },
+      {
+        "type": "item",
+        "name": "iron-plate",
+        "amount": 6
+      }
+    ],
+    "results": [
+      {
+        "type": "item",
+        "name": "tech-priests-stone-cache-primitive-acclimator-battery-bank",
+        "amount": 1
+      },
+      {
+        "type": "item",
+        "name": "mechanical-detritus",
+        "amount": 1,
+        "ignored_by_stats": 1,
+        "ignored_by_productivity": 1,
+        "independent_probability": 0
+      }
+    ],
+    "main_product": "tech-priests-stone-cache-primitive-acclimator-battery-bank",
+    "categories": [
+      "crafting"
+    ]
+  },
+  "recipe_unlocks": [
+    "electric-energy-accumulators"
+  ],
+  "behavior": {
+    "type": "Actual accumulator, no chest or item storage",
+    "capacity_joules": 1000000,
+    "input_watts": 500000,
+    "output_watts": 500000,
+    "priority": "tertiary",
+    "footprint": "2x2 selection, +/-0.9 collision, z0 ground",
+    "directions": "Fixed north; review rotations only",
+    "power": "Ordinary electric-pole coverage; no new external power socket gameplay",
+    "circuit": "Existing red/green points and reach9, native signal-A charge percentage, preserved",
+    "fluid": false,
+    "animation": "No invented machinery; native charge/discharge support status lamps"
+  },
+  "source_recovery": {
+    "result": "Original body/shadow/icon recovered; no original editable battery source found",
+    "approach": "Independent eight-cell primitive bank, actual supports and fitted electrical cables; reuse provisional authored stone enclosure; Tanks/Conclave/reactors unchanged"
+  },
+  "baseline": {
+    "dump_sha256": "70c9f69514adb3bc4251ab0e9b608a62dea8eb6fff8b302d56425b9b9b5a5104",
+    "main": "372ee9db56ac05b0bb2134a2c02d0a287d1351a0, Tanks Calcifier registration only",
+    "prototype_sha256": "f8af9550b768751b7cfa686b30fd8de0ed2a560e972a5aa5bdba6719ecaf9600"
+  },
+  "registration": {
+    "scale": 0.1875,
+    "shift": [
+      0,
+      -0.01213203435596423
+    ],
+    "vertical_offset": 0.2,
+    "reason": "Preserve original accumulator circuit points on a grounded front-right terminal pedestal; 2.4 native pixels lower than the other stone containers"
+  }
+}

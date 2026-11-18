@@ -1,0 +1,97 @@
+{
+  "regions": {
+    "cells": "Eight dark ceramic electrochemical cells, lid/terminal seams and vertical lower-body grime",
+    "iron": "Restrained oxidation on tray, retaining hoops and removable guard; load-bearing geometry supplies edges",
+    "copper": "Fitted busbars, bolts and gland hardware; low-frequency oxidation with green residue in exposed copper",
+    "insulators": "Warm aged ceramic receiving bosses",
+    "cables": "Dry matte red/black electrical insulation, broad bends and actual seated lugs/glands"
+  },
+  "uv": "Physical-scale planar UV for metal and terminal hardware; cell side UV uses actual z for grime; donor skull retains original UV and sculpt normal",
+  "maps": {
+    "cell-ceramic": {
+      "albedo": {
+        "path": "art/source-to-3d/primitive-battery-bank/v01/textures/cell-ceramic-albedo.png",
+        "sha256": "8eb7ccd6f5a12d365ca4b3e1810e0fcf179455fed9f7911fedbb83db28f84d24"
+      },
+      "orm": {
+        "path": "art/source-to-3d/primitive-battery-bank/v01/textures/cell-ceramic-orm.png",
+        "sha256": "aed8c608dae7ca80d28162fdb6520f2801dcccd423f4c69634995a6fa4c1bf26"
+      },
+      "normal": {
+        "path": "art/source-to-3d/primitive-battery-bank/v01/textures/cell-ceramic-normal.png",
+        "sha256": "4b386596d0761b5ba08bb6f6665dd78289249de63feb808971e8f551911a588e"
+      }
+    },
+    "oxide-iron": {
+      "albedo": {
+        "path": "art/source-to-3d/primitive-battery-bank/v01/textures/oxide-iron-albedo.png",
+        "sha256": "2211c487f3f2ca3b2f11191548fc1361dad8284d64466224b2d2895d7aa37204"
+      },
+      "orm": {
+        "path": "art/source-to-3d/primitive-battery-bank/v01/textures/oxide-iron-orm.png",
+        "sha256": "954b07748b7ccfb4208caed7e01394074b958d2c9f16ab696d123d24a2b14844"
+      },
+      "normal": {
+        "path": "art/source-to-3d/primitive-battery-bank/v01/textures/oxide-iron-normal.png",
+        "sha256": "4b386596d0761b5ba08bb6f6665dd78289249de63feb808971e8f551911a588e"
+      }
+    },
+    "aged-copper": {
+      "albedo": {
+        "path": "art/source-to-3d/primitive-battery-bank/v01/textures/aged-copper-albedo.png",
+        "sha256": "647b6111b53cc2b4d6928c51c68d2c3c718bf1b4366a09b368a0b7f366d7c15d"
+      },
+      "orm": {
+        "path": "art/source-to-3d/primitive-battery-bank/v01/textures/aged-copper-orm.png",
+        "sha256": "ee09cbd902e242a1541ba2f97728967c3abb1cd2dee25ad7927b15d513379791"
+      },
+      "normal": {
+        "path": "art/source-to-3d/primitive-battery-bank/v01/textures/aged-copper-normal.png",
+        "sha256": "4b386596d0761b5ba08bb6f6665dd78289249de63feb808971e8f551911a588e"
+      }
+    },
+    "insulator": {
+      "albedo": {
+        "path": "art/source-to-3d/primitive-battery-bank/v01/textures/insulator-albedo.png",
+        "sha256": "acfc3c27430c0c1c737c613bbb9d0f0b8a4d6da5469e80254bb4bd62c60474c8"
+      },
+      "orm": {
+        "path": "art/source-to-3d/primitive-battery-bank/v01/textures/insulator-orm.png",
+        "sha256": "84bf6f307503c36b8fd4544adbbfccc15f3e2c262ffda2c1941ab650a00de93d"
+      },
+      "normal": {
+        "path": "art/source-to-3d/primitive-battery-bank/v01/textures/insulator-normal.png",
+        "sha256": "4b386596d0761b5ba08bb6f6665dd78289249de63feb808971e8f551911a588e"
+      }
+    },
+    "red-cable": {
+      "albedo": {
+        "path": "art/source-to-3d/primitive-battery-bank/v01/textures/red-cable-albedo.png",
+        "sha256": "8aa8e109acd883f706fafb9ab00a51e683b3331e3b491daefd113d854225fb69"
+      },
+      "orm": {
+        "path": "art/source-to-3d/primitive-battery-bank/v01/textures/red-cable-orm.png",
+        "sha256": "77473171de655f1b49bcba15a8c85e177df97c838ea5236c2a5f232ff32a65da"
+      },
+      "normal": {
+        "path": "art/source-to-3d/primitive-battery-bank/v01/textures/red-cable-normal.png",
+        "sha256": "4b386596d0761b5ba08bb6f6665dd78289249de63feb808971e8f551911a588e"
+      }
+    },
+    "black-cable": {
+      "albedo": {
+        "path": "art/source-to-3d/primitive-battery-bank/v01/textures/black-cable-albedo.png",
+        "sha256": "b0e07ee41b18bcc6daa9c512bad54b12857f5febd9cb01c1788fe5a829048846"
+      },
+      "orm": {
+        "path": "art/source-to-3d/primitive-battery-bank/v01/textures/black-cable-orm.png",
+        "sha256": "c792730d3d83fbdfcd0b2d47d40f3e79c2f554bdb7d50773aa04e06b77ab1a91"
+      },
+      "normal": {
+        "path": "art/source-to-3d/primitive-battery-bank/v01/textures/black-cable-normal.png",
+        "sha256": "4b386596d0761b5ba08bb6f6665dd78289249de63feb808971e8f551911a588e"
+      }
+    }
+  },
+  "owner_approval": false
+}

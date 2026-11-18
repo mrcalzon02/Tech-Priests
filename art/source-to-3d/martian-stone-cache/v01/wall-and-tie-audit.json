@@ -1,0 +1,888 @@
+{
+  "passed": true,
+  "source": {
+    "label": "reopened packed source",
+    "wall_samples": [
+      {
+        "z": 0.12,
+        "angle": 4.29238898038469,
+        "inner_radius": 0.6999158420433246,
+        "outer_radius": 0.9442197063814295,
+        "radial_thickness": 0.24430386235925253,
+        "passed": true
+      },
+      {
+        "z": 0.12,
+        "angle": 4.46238898038469,
+        "inner_radius": 0.7000001175284459,
+        "outer_radius": 0.9443333312625355,
+        "radial_thickness": 0.24433321175629086,
+        "passed": true
+      },
+      {
+        "z": 0.12,
+        "angle": 4.71238898038469,
+        "inner_radius": 0.6999999284744263,
+        "outer_radius": 0.9443333148956299,
+        "radial_thickness": 0.24433338947629435,
+        "passed": true
+      },
+      {
+        "z": 0.12,
+        "angle": 4.96238898038469,
+        "inner_radius": 0.700000056090159,
+        "outer_radius": 0.9443333312625355,
+        "radial_thickness": 0.24433327655502024,
+        "passed": true
+      },
+      {
+        "z": 0.12,
+        "angle": 5.13238898038469,
+        "inner_radius": 0.6999157088902237,
+        "outer_radius": 0.9442197608057716,
+        "radial_thickness": 0.2443040529665975,
+        "passed": true
+      },
+      {
+        "z": 0.3,
+        "angle": 4.29238898038469,
+        "inner_radius": 0.6999157754667742,
+        "outer_radius": 0.9411688062738426,
+        "radial_thickness": 0.2412530325633515,
+        "passed": true
+      },
+      {
+        "z": 0.3,
+        "angle": 4.46238898038469,
+        "inner_radius": 0.700000056090159,
+        "outer_radius": 0.9412820266734291,
+        "radial_thickness": 0.2412819728810228,
+        "passed": true
+      },
+      {
+        "z": 0.3,
+        "angle": 4.71238898038469,
+        "inner_radius": 0.7000000476837158,
+        "outer_radius": 0.9412820339202881,
+        "radial_thickness": 0.2412819854256744,
+        "passed": true
+      },
+      {
+        "z": 0.3,
+        "angle": 4.96238898038469,
+        "inner_radius": 0.700000056090159,
+        "outer_radius": 0.9412820266734291,
+        "radial_thickness": 0.2412819728810228,
+        "passed": true
+      },
+      {
+        "z": 0.3,
+        "angle": 5.13238898038469,
+        "inner_radius": 0.6999157754667742,
+        "outer_radius": 0.9411688062738426,
+        "radial_thickness": 0.2412530325633515,
+        "passed": true
+      },
+      {
+        "z": 0.5,
+        "angle": 4.29238898038469,
+        "inner_radius": 0.6999157088902237,
+        "outer_radius": 0.9434391023617985,
+        "radial_thickness": 0.24352338967597117,
+        "passed": true
+      },
+      {
+        "z": 0.5,
+        "angle": 4.46238898038469,
+        "inner_radius": 0.699999994651872,
+        "outer_radius": 0.9435526225786331,
+        "radial_thickness": 0.24355262806716874,
+        "passed": true
+      },
+      {
+        "z": 0.5,
+        "angle": 4.71238898038469,
+        "inner_radius": 0.7000000476837158,
+        "outer_radius": 0.9435526132583618,
+        "radial_thickness": 0.24355256784062765,
+        "passed": true
+      },
+      {
+        "z": 0.5,
+        "angle": 4.96238898038469,
+        "inner_radius": 0.7000001175284459,
+        "outer_radius": 0.9435526803303139,
+        "radial_thickness": 0.24355255923683486,
+        "passed": true
+      },
+      {
+        "z": 0.5,
+        "angle": 5.13238898038469,
+        "inner_radius": 0.6999157754667742,
+        "outer_radius": 0.9434391145140069,
+        "radial_thickness": 0.24352333613484112,
+        "passed": true
+      },
+      {
+        "z": 0.69,
+        "angle": 4.29238898038469,
+        "inner_radius": 0.6838760533440054,
+        "outer_radius": 0.9513438313078625,
+        "radial_thickness": 0.2674677770945462,
+        "passed": true
+      },
+      {
+        "z": 0.69,
+        "angle": 4.46238898038469,
+        "inner_radius": 0.6839584365361047,
+        "outer_radius": 0.9514583031373048,
+        "radial_thickness": 0.2674998722371349,
+        "passed": true
+      },
+      {
+        "z": 0.69,
+        "angle": 4.71238898038469,
+        "inner_radius": 0.6839582920074463,
+        "outer_radius": 0.9514583349227905,
+        "radial_thickness": 0.26750003761219937,
+        "passed": true
+      },
+      {
+        "z": 0.69,
+        "angle": 4.96238898038469,
+        "inner_radius": 0.6839583750978178,
+        "outer_radius": 0.9514583031373048,
+        "radial_thickness": 0.267499932294407,
+        "passed": true
+      },
+      {
+        "z": 0.69,
+        "angle": 5.13238898038469,
+        "inner_radius": 0.6838760533440054,
+        "outer_radius": 0.9513438857322043,
+        "radial_thickness": 0.267467832806527,
+        "passed": true
+      }
+    ],
+    "ties": [
+      {
+        "id": "cache-hemp-retainer-0",
+        "points": [
+          {
+            "endpoint": "start",
+            "parent": "Red stitched hide panel 0",
+            "surface_distance": 0.0016936740139499307,
+            "passed": true
+          },
+          {
+            "endpoint": "end",
+            "parent": "Hand-laid course 3 stone 01.0",
+            "surface_distance": 0.0010000125039368868,
+            "passed": true
+          }
+        ],
+        "passed": true
+      },
+      {
+        "id": "cache-hemp-retainer-1",
+        "points": [
+          {
+            "endpoint": "start",
+            "parent": "Red stitched hide panel 1",
+            "surface_distance": 0.001665879157371819,
+            "passed": true
+          },
+          {
+            "endpoint": "end",
+            "parent": "Hand-laid course 3 stone 05.0",
+            "surface_distance": 0.0009999973699450493,
+            "passed": true
+          }
+        ],
+        "passed": true
+      },
+      {
+        "id": "cache-hemp-retainer-2",
+        "points": [
+          {
+            "endpoint": "start",
+            "parent": "Red stitched hide panel 2",
+            "surface_distance": 0.002358738100156188,
+            "passed": true
+          },
+          {
+            "endpoint": "end",
+            "parent": "Hand-laid course 3 stone 10.0",
+            "surface_distance": 0.0009999710600823164,
+            "passed": true
+          }
+        ],
+        "passed": true
+      },
+      {
+        "id": "cache-hemp-retainer-3",
+        "points": [
+          {
+            "endpoint": "start",
+            "parent": "Red stitched hide panel 3",
+            "surface_distance": 0.0022275326773524284,
+            "passed": true
+          },
+          {
+            "endpoint": "end",
+            "parent": "Hand-laid course 3 stone 14.1",
+            "surface_distance": 0.0009999846806749701,
+            "passed": true
+          }
+        ],
+        "passed": true
+      }
+    ],
+    "relief": [
+      {
+        "part": "Cache centered emblem | Mars emblem | captured mandibular strut rod",
+        "maximum_projection": 0.009194731712341309,
+        "minimum_projection": 0.007256269454956055,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Mars emblem | fitted cranial vault",
+        "maximum_projection": 0.007848560810089111,
+        "minimum_projection": -0.0010648369789123535,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Mars emblem | fitted mandibular half",
+        "maximum_projection": 0.011151731014251709,
+        "minimum_projection": -0.0015761852264404297,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Mars emblem | fitted orbital and cheek",
+        "maximum_projection": 0.010980010032653809,
+        "minimum_projection": -0.0019904375076293945,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Mars emblem | fixed mandibular strut housing",
+        "maximum_projection": 0.007869601249694824,
+        "minimum_projection": 0.005349159240722656,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Mars emblem | inset optical barrel",
+        "maximum_projection": 0.0084037184715271,
+        "minimum_projection": 0.007462978363037109,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Mars emblem | jaw strut seated anchor 0",
+        "maximum_projection": 0.005702614784240723,
+        "minimum_projection": 0.00496220588684082,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Mars emblem | jaw strut seated anchor 1",
+        "maximum_projection": 0.009404897689819336,
+        "minimum_projection": 0.008671402931213379,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Mars emblem | ocular captive screw 00",
+        "maximum_projection": 0.008503496646881104,
+        "minimum_projection": 0.008344531059265137,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Mars emblem | ocular captive screw 01",
+        "maximum_projection": 0.00851905345916748,
+        "minimum_projection": 0.008397281169891357,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Mars emblem | ocular captive screw 02",
+        "maximum_projection": 0.008455932140350342,
+        "minimum_projection": 0.008288443088531494,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Mars emblem | ocular captive screw 03",
+        "maximum_projection": 0.008518457412719727,
+        "minimum_projection": 0.008383750915527344,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Mars emblem | ocular captive screw 04",
+        "maximum_projection": 0.00848454236984253,
+        "minimum_projection": 0.008311629295349121,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Mars emblem | ocular captive screw 05",
+        "maximum_projection": 0.008518517017364502,
+        "minimum_projection": 0.008383691310882568,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Mars emblem | ocular captive screw 06",
+        "maximum_projection": 0.008457005023956299,
+        "minimum_projection": 0.008289635181427002,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Mars emblem | ocular captive screw 07",
+        "maximum_projection": 0.008519172668457031,
+        "minimum_projection": 0.008397400379180908,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Mars emblem | plate retaining boss 0",
+        "maximum_projection": 0.0075356364250183105,
+        "minimum_projection": 0.007131516933441162,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Mars emblem | plate retaining boss 1",
+        "maximum_projection": 0.007022440433502197,
+        "minimum_projection": 0.006695449352264404,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Mars emblem | plate retaining boss 2",
+        "maximum_projection": 0.0078084468841552734,
+        "minimum_projection": 0.007392168045043945,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Mars emblem | plate retaining boss 3",
+        "maximum_projection": 0.010369062423706055,
+        "minimum_projection": 0.009930551052093506,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Mars emblem | plate retaining stud 0",
+        "maximum_projection": 0.00755000114440918,
+        "minimum_projection": 0.007299244403839111,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Mars emblem | plate retaining stud 1",
+        "maximum_projection": 0.007065892219543457,
+        "minimum_projection": 0.006857156753540039,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Mars emblem | plate retaining stud 2",
+        "maximum_projection": 0.007801353931427002,
+        "minimum_projection": 0.007548689842224121,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Mars emblem | plate retaining stud 3",
+        "maximum_projection": 0.010350286960601807,
+        "minimum_projection": 0.01010221242904663,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Mars emblem | red bionic eye lens",
+        "maximum_projection": 0.00847548246383667,
+        "minimum_projection": 0.008282363414764404,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Mars emblem | surface seated ocular receiving flange",
+        "maximum_projection": 0.008455038070678711,
+        "minimum_projection": 0.006013631820678711,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Mars emblem | twenty tooth cog surround",
+        "maximum_projection": 0.0027511119842529297,
+        "minimum_projection": 0.0012254714965820312,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Supplied DGordillo low-poly skull 0",
+        "maximum_projection": 0.010963022708892822,
+        "minimum_projection": -0.0018510818481445312,
+        "passed": true
+      }
+    ],
+    "terminals": [
+      {
+        "wire": "red",
+        "projection": [
+          0.34375,
+          0.20312499998003658
+        ],
+        "native": [
+          0.34375,
+          0.203125
+        ],
+        "error": 1.996341980614602e-11,
+        "surface_distance": 0.0,
+        "passed": true
+      },
+      {
+        "wire": "green",
+        "projection": [
+          0.40625,
+          0.4218750252122481
+        ],
+        "native": [
+          0.40625,
+          0.421875
+        ],
+        "error": 2.521224812257472e-08,
+        "surface_distance": 0.0,
+        "passed": true
+      }
+    ],
+    "skull_back_embedded": true,
+    "passed": true
+  },
+  "export": {
+    "label": "actual independent GLB import",
+    "wall_samples": [
+      {
+        "z": 0.12,
+        "angle": 4.29238898038469,
+        "inner_radius": 0.6999157088902237,
+        "outer_radius": 0.9442197608057716,
+        "radial_thickness": 0.2443040529665975,
+        "passed": true
+      },
+      {
+        "z": 0.12,
+        "angle": 4.46238898038469,
+        "inner_radius": 0.700000056090159,
+        "outer_radius": 0.9443333927008225,
+        "radial_thickness": 0.24433333373035543,
+        "passed": true
+      },
+      {
+        "z": 0.12,
+        "angle": 4.71238898038469,
+        "inner_radius": 0.6999999284744263,
+        "outer_radius": 0.9443333148956299,
+        "radial_thickness": 0.24433338947629435,
+        "passed": true
+      },
+      {
+        "z": 0.12,
+        "angle": 4.96238898038469,
+        "inner_radius": 0.699999933213585,
+        "outer_radius": 0.9443333312625355,
+        "radial_thickness": 0.24433339852905248,
+        "passed": true
+      },
+      {
+        "z": 0.12,
+        "angle": 5.13238898038469,
+        "inner_radius": 0.6999157088902237,
+        "outer_radius": 0.9442197063814295,
+        "radial_thickness": 0.24430399959655588,
+        "passed": true
+      },
+      {
+        "z": 0.3,
+        "angle": 4.29238898038469,
+        "inner_radius": 0.6999157754667742,
+        "outer_radius": 0.9411688062738426,
+        "radial_thickness": 0.2412530325633515,
+        "passed": true
+      },
+      {
+        "z": 0.3,
+        "angle": 4.46238898038469,
+        "inner_radius": 0.7000001175284459,
+        "outer_radius": 0.9412820266734291,
+        "radial_thickness": 0.24128190774532127,
+        "passed": true
+      },
+      {
+        "z": 0.3,
+        "angle": 4.71238898038469,
+        "inner_radius": 0.7000000476837158,
+        "outer_radius": 0.9412820339202881,
+        "radial_thickness": 0.2412819854256744,
+        "passed": true
+      },
+      {
+        "z": 0.3,
+        "angle": 4.96238898038469,
+        "inner_radius": 0.699999994651872,
+        "outer_radius": 0.9412820266734291,
+        "radial_thickness": 0.24128203077940938,
+        "passed": true
+      },
+      {
+        "z": 0.3,
+        "angle": 5.13238898038469,
+        "inner_radius": 0.6999157754667742,
+        "outer_radius": 0.9411688062738426,
+        "radial_thickness": 0.2412530325633515,
+        "passed": true
+      },
+      {
+        "z": 0.5,
+        "angle": 4.29238898038469,
+        "inner_radius": 0.6999158420433246,
+        "outer_radius": 0.9434391023617985,
+        "radial_thickness": 0.24352325964749205,
+        "passed": true
+      },
+      {
+        "z": 0.5,
+        "angle": 4.46238898038469,
+        "inner_radius": 0.7000001175284459,
+        "outer_radius": 0.9435526803303139,
+        "radial_thickness": 0.24355255923683486,
+        "passed": true
+      },
+      {
+        "z": 0.5,
+        "angle": 4.71238898038469,
+        "inner_radius": 0.7000000476837158,
+        "outer_radius": 0.9435526132583618,
+        "radial_thickness": 0.24355256784062765,
+        "passed": true
+      },
+      {
+        "z": 0.5,
+        "angle": 4.96238898038469,
+        "inner_radius": 0.699999994651872,
+        "outer_radius": 0.9435526188920269,
+        "radial_thickness": 0.24355262424326182,
+        "passed": true
+      },
+      {
+        "z": 0.5,
+        "angle": 5.13238898038469,
+        "inner_radius": 0.6999158420433246,
+        "outer_radius": 0.9434390479374565,
+        "radial_thickness": 0.2435232061063334,
+        "passed": true
+      },
+      {
+        "z": 0.69,
+        "angle": 4.29238898038469,
+        "inner_radius": 0.6838760533440054,
+        "outer_radius": 0.9513438857322043,
+        "radial_thickness": 0.267467832806527,
+        "passed": true
+      },
+      {
+        "z": 0.69,
+        "angle": 4.46238898038469,
+        "inner_radius": 0.6839583750978178,
+        "outer_radius": 0.9514583031373048,
+        "radial_thickness": 0.267499932294407,
+        "passed": true
+      },
+      {
+        "z": 0.69,
+        "angle": 4.71238898038469,
+        "inner_radius": 0.6839582920074463,
+        "outer_radius": 0.9514583349227905,
+        "radial_thickness": 0.26750003761219937,
+        "passed": true
+      },
+      {
+        "z": 0.69,
+        "angle": 4.96238898038469,
+        "inner_radius": 0.6839583136595307,
+        "outer_radius": 0.9514583031373048,
+        "radial_thickness": 0.2674999914812706,
+        "passed": true
+      },
+      {
+        "z": 0.69,
+        "angle": 5.13238898038469,
+        "inner_radius": 0.6838759867674549,
+        "outer_radius": 0.9513438313078625,
+        "radial_thickness": 0.2674678449935212,
+        "passed": true
+      }
+    ],
+    "ties": [
+      {
+        "id": "cache-hemp-retainer-0",
+        "points": [
+          {
+            "endpoint": "start",
+            "parent": "Red stitched hide panel 0",
+            "surface_distance": 0.001595300156623125,
+            "passed": true
+          },
+          {
+            "endpoint": "end",
+            "parent": "Hand-laid course 3 stone 01.0",
+            "surface_distance": 0.0010000125039368868,
+            "passed": true
+          }
+        ],
+        "passed": true
+      },
+      {
+        "id": "cache-hemp-retainer-1",
+        "points": [
+          {
+            "endpoint": "start",
+            "parent": "Red stitched hide panel 1",
+            "surface_distance": 0.0015448341146111488,
+            "passed": true
+          },
+          {
+            "endpoint": "end",
+            "parent": "Hand-laid course 3 stone 05.0",
+            "surface_distance": 0.0009999973699450493,
+            "passed": true
+          }
+        ],
+        "passed": true
+      },
+      {
+        "id": "cache-hemp-retainer-2",
+        "points": [
+          {
+            "endpoint": "start",
+            "parent": "Red stitched hide panel 2",
+            "surface_distance": 0.0024472628720104694,
+            "passed": true
+          },
+          {
+            "endpoint": "end",
+            "parent": "Hand-laid course 3 stone 10.0",
+            "surface_distance": 0.0009999710600823164,
+            "passed": true
+          }
+        ],
+        "passed": true
+      },
+      {
+        "id": "cache-hemp-retainer-3",
+        "points": [
+          {
+            "endpoint": "start",
+            "parent": "Red stitched hide panel 3",
+            "surface_distance": 0.0023401547223329544,
+            "passed": true
+          },
+          {
+            "endpoint": "end",
+            "parent": "Hand-laid course 3 stone 14.1",
+            "surface_distance": 0.0009999846806749701,
+            "passed": true
+          }
+        ],
+        "passed": true
+      }
+    ],
+    "relief": [
+      {
+        "part": "Cache centered emblem | Mars emblem | captured mandibular strut rod",
+        "maximum_projection": 0.009194731712341309,
+        "minimum_projection": 0.007256150245666504,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Mars emblem | fitted cranial vault",
+        "maximum_projection": 0.007848560810089111,
+        "minimum_projection": -0.0010648369789123535,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Mars emblem | fitted mandibular half",
+        "maximum_projection": 0.01115185022354126,
+        "minimum_projection": -0.0015763044357299805,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Mars emblem | fitted orbital and cheek",
+        "maximum_projection": 0.010980010032653809,
+        "minimum_projection": -0.0019905567169189453,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Mars emblem | fixed mandibular strut housing",
+        "maximum_projection": 0.007869601249694824,
+        "minimum_projection": 0.0053490400314331055,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Mars emblem | inset optical barrel",
+        "maximum_projection": 0.00840383768081665,
+        "minimum_projection": 0.00746309757232666,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Mars emblem | jaw strut seated anchor 0",
+        "maximum_projection": 0.005702614784240723,
+        "minimum_projection": 0.00496220588684082,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Mars emblem | jaw strut seated anchor 1",
+        "maximum_projection": 0.009404778480529785,
+        "minimum_projection": 0.008671402931213379,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Mars emblem | ocular captive screw 00",
+        "maximum_projection": 0.008503496646881104,
+        "minimum_projection": 0.008344411849975586,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Mars emblem | ocular captive screw 01",
+        "maximum_projection": 0.008519172668457031,
+        "minimum_projection": 0.008397161960601807,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Mars emblem | ocular captive screw 02",
+        "maximum_projection": 0.008456051349639893,
+        "minimum_projection": 0.008288562297821045,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Mars emblem | ocular captive screw 03",
+        "maximum_projection": 0.008518338203430176,
+        "minimum_projection": 0.008383750915527344,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Mars emblem | ocular captive screw 04",
+        "maximum_projection": 0.008484423160552979,
+        "minimum_projection": 0.00831151008605957,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Mars emblem | ocular captive screw 05",
+        "maximum_projection": 0.008518517017364502,
+        "minimum_projection": 0.008383691310882568,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Mars emblem | ocular captive screw 06",
+        "maximum_projection": 0.008456885814666748,
+        "minimum_projection": 0.008289694786071777,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Mars emblem | ocular captive screw 07",
+        "maximum_projection": 0.008519172668457031,
+        "minimum_projection": 0.008397519588470459,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Mars emblem | plate retaining boss 0",
+        "maximum_projection": 0.00753551721572876,
+        "minimum_projection": 0.007131516933441162,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Mars emblem | plate retaining boss 1",
+        "maximum_projection": 0.007022678852081299,
+        "minimum_projection": 0.006695568561553955,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Mars emblem | plate retaining boss 2",
+        "maximum_projection": 0.007808566093444824,
+        "minimum_projection": 0.007392168045043945,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Mars emblem | plate retaining boss 3",
+        "maximum_projection": 0.010369062423706055,
+        "minimum_projection": 0.009930789470672607,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Mars emblem | plate retaining stud 0",
+        "maximum_projection": 0.007549881935119629,
+        "minimum_projection": 0.007299363613128662,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Mars emblem | plate retaining stud 1",
+        "maximum_projection": 0.007066130638122559,
+        "minimum_projection": 0.00685727596282959,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Mars emblem | plate retaining stud 2",
+        "maximum_projection": 0.007801353931427002,
+        "minimum_projection": 0.007548689842224121,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Mars emblem | plate retaining stud 3",
+        "maximum_projection": 0.010350167751312256,
+        "minimum_projection": 0.010102450847625732,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Mars emblem | red bionic eye lens",
+        "maximum_projection": 0.008475422859191895,
+        "minimum_projection": 0.008282244205474854,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Mars emblem | surface seated ocular receiving flange",
+        "maximum_projection": 0.008455097675323486,
+        "minimum_projection": 0.006013751029968262,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Mars emblem | twenty tooth cog surround",
+        "maximum_projection": 0.0027511119842529297,
+        "minimum_projection": 0.0012255311012268066,
+        "passed": true
+      },
+      {
+        "part": "Cache centered emblem | Supplied DGordillo low-poly skull 0",
+        "maximum_projection": 0.010963261127471924,
+        "minimum_projection": -0.001851201057434082,
+        "passed": true
+      }
+    ],
+    "terminals": [
+      {
+        "wire": "red",
+        "projection": [
+          0.34375,
+          0.20312499998003658
+        ],
+        "native": [
+          0.34375,
+          0.203125
+        ],
+        "error": 1.996341980614602e-11,
+        "surface_distance": 0.0,
+        "passed": true
+      },
+      {
+        "wire": "green",
+        "projection": [
+          0.40625,
+          0.4218750252122481
+        ],
+        "native": [
+          0.40625,
+          0.421875
+        ],
+        "error": 2.521224812257472e-08,
+        "surface_distance": 0.0,
+        "passed": true
+      }
+    ],
+    "skull_back_embedded": true,
+    "passed": true
+  },
+  "requirement": "Full curved wall section from inner to outer radius, not a face-mounted flat slab.",
+  "source_sha256": "66655f50c8f16ceb0bd71c8f5bfb07abaa74daf029a1b948e1c3425fd1c1968e",
+  "export_sha256": "bbd711c07bfbb8517e91d1d46a00683c430c099b316cbd7ec7c45efc9055ab0d"
+}

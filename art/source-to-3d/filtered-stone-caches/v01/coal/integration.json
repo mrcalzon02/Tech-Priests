@@ -1,0 +1,12 @@
+{
+  "key": "coal",
+  "source_sha256": "ff41c79bbf144e3dbc09ea32712de3109f243def45d500c8ae3ac1be9b0f5405",
+  "export_sha256": "0e01a12c5b4fe1f967f0ec5063d119b326990902e374b6af90ce401905d70097",
+  "prototype_sha256": "f8e0d08480306b4e929ee8d44d7f94183d8cabdc1bba64c688ddd7c6a29011af",
+  "runtime_art": {
+    "coal-body.png": "7918085a7608c40b1d6e1aba0a0d56ab31696e5abb8f8864d2b2373caf97d239",
+    "coal-icon.png": "eef2b2361f4b66b5619ac4edd2928fd0675331f98632330c13784b6084e25285",
+    "coal-shadow.png": "a5fef3bcf38c4079c7921bcd54d509e99626445012f41ddbe6f0790d74c214a2"
+  },
+  "scope": "Only this filtered cache picture/icon/backing art; inventory6, recipes, filter steward, circuits, fixed direction and ordinary inserters unchanged"
+}

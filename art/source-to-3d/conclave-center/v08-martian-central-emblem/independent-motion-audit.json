@@ -1,0 +1,462 @@
+{
+  "passed": true,
+  "samples": [
+    1,
+    37,
+    73,
+    109,
+    145,
+    181,
+    217,
+    253,
+    289
+  ],
+  "effects": [
+    {
+      "name": "Arch candle animated flame 00",
+      "source_motion": 0.014827755627951621,
+      "export_motion": 0.014827755627951621,
+      "export_loop_error": 0.0,
+      "source_export_max_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Arch candle animated flame 01",
+      "source_motion": 0.028936775785234594,
+      "export_motion": 0.028936775785234594,
+      "export_loop_error": 0.0,
+      "source_export_max_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Arch candle animated flame 02",
+      "source_motion": 0.0187484043369717,
+      "export_motion": 0.0187484043369717,
+      "export_loop_error": 0.0,
+      "source_export_max_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Arch candle animated flame 03",
+      "source_motion": 0.025625994285436188,
+      "export_motion": 0.025625994285436188,
+      "export_loop_error": 0.0,
+      "source_export_max_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Arch candle animated flame 04",
+      "source_motion": 0.022848583475342087,
+      "export_motion": 0.022848583475342087,
+      "export_loop_error": 0.0,
+      "source_export_max_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Arch candle animated flame 05",
+      "source_motion": 0.02278749098152263,
+      "export_motion": 0.02278749098152263,
+      "export_loop_error": 0.0,
+      "source_export_max_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Arch candle animated flame 06",
+      "source_motion": 0.025515994529975022,
+      "export_motion": 0.025515994529975022,
+      "export_loop_error": 0.0,
+      "source_export_max_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Arch candle animated flame 07",
+      "source_motion": 0.01847117727653569,
+      "export_motion": 0.01847117727653569,
+      "export_loop_error": 0.0,
+      "source_export_max_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Arch candle animated flame 08",
+      "source_motion": 0.0279623156212549,
+      "export_motion": 0.0279623156212549,
+      "export_loop_error": 0.0,
+      "source_export_max_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Candle 00 light smoke 0",
+      "source_motion": 0.22212017803391912,
+      "export_motion": 0.22212017803391912,
+      "export_loop_error": 0.0,
+      "source_export_max_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Candle 00 light smoke 1",
+      "source_motion": 0.1095622996339267,
+      "export_motion": 0.1095622996339267,
+      "export_loop_error": 0.0,
+      "source_export_max_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Candle 00 light smoke 2",
+      "source_motion": 0.11323821780672348,
+      "export_motion": 0.11323821780672348,
+      "export_loop_error": 0.0,
+      "source_export_max_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Candle 01 light smoke 0",
+      "source_motion": 0.1624546081872874,
+      "export_motion": 0.1624546081872874,
+      "export_loop_error": 0.0,
+      "source_export_max_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Candle 01 light smoke 1",
+      "source_motion": 0.09076806243076731,
+      "export_motion": 0.09076806243076731,
+      "export_loop_error": 0.0,
+      "source_export_max_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Candle 01 light smoke 2",
+      "source_motion": 0.07913162893886817,
+      "export_motion": 0.07913162893886817,
+      "export_loop_error": 0.0,
+      "source_export_max_error": 2.9802322387695312e-08,
+      "passed": true
+    },
+    {
+      "name": "Candle 02 light smoke 0",
+      "source_motion": 0.12398222110872062,
+      "export_motion": 0.12398222110872062,
+      "export_loop_error": 0.0,
+      "source_export_max_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Candle 02 light smoke 1",
+      "source_motion": 0.07142134719436974,
+      "export_motion": 0.07142134719436974,
+      "export_loop_error": 0.0,
+      "source_export_max_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Candle 02 light smoke 2",
+      "source_motion": 0.15940574327364454,
+      "export_motion": 0.15940574327364454,
+      "export_loop_error": 0.0,
+      "source_export_max_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Candle 03 light smoke 0",
+      "source_motion": 0.08818873209349745,
+      "export_motion": 0.08818873209349745,
+      "export_loop_error": 0.0,
+      "source_export_max_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Candle 03 light smoke 1",
+      "source_motion": 0.17662217351871448,
+      "export_motion": 0.17662217351871448,
+      "export_loop_error": 0.0,
+      "source_export_max_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Candle 03 light smoke 2",
+      "source_motion": 0.10210361339389899,
+      "export_motion": 0.10210361339389899,
+      "export_loop_error": 0.0,
+      "source_export_max_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Candle 04 light smoke 0",
+      "source_motion": 0.12758163599242028,
+      "export_motion": 0.12758163599598465,
+      "export_loop_error": 0.0,
+      "source_export_max_error": 2.3283064365386963e-10,
+      "passed": true
+    },
+    {
+      "name": "Candle 04 light smoke 1",
+      "source_motion": 0.13811712332283232,
+      "export_motion": 0.1381171235335508,
+      "export_loop_error": 0.0,
+      "source_export_max_error": 1.862645149230957e-09,
+      "passed": true
+    },
+    {
+      "name": "Candle 04 light smoke 2",
+      "source_motion": 0.05883619669102231,
+      "export_motion": 0.05883619669102231,
+      "export_loop_error": 0.0,
+      "source_export_max_error": 1.862645149230957e-09,
+      "passed": true
+    },
+    {
+      "name": "Candle 05 light smoke 0",
+      "source_motion": 0.10357051447864622,
+      "export_motion": 0.10357051447864622,
+      "export_loop_error": 0.0,
+      "source_export_max_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Candle 05 light smoke 1",
+      "source_motion": 0.10027222562986839,
+      "export_motion": 0.10027222562986839,
+      "export_loop_error": 0.0,
+      "source_export_max_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Candle 05 light smoke 2",
+      "source_motion": 0.1958572144241132,
+      "export_motion": 0.1958572144241132,
+      "export_loop_error": 0.0,
+      "source_export_max_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Candle 06 light smoke 0",
+      "source_motion": 0.08387188099448643,
+      "export_motion": 0.08387188099448643,
+      "export_loop_error": 0.0,
+      "source_export_max_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Candle 06 light smoke 1",
+      "source_motion": 0.2075051012922695,
+      "export_motion": 0.2075051012922695,
+      "export_loop_error": 0.0,
+      "source_export_max_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Candle 06 light smoke 2",
+      "source_motion": 0.15021038828675382,
+      "export_motion": 0.15021038828675382,
+      "export_loop_error": 0.0,
+      "source_export_max_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Candle 07 light smoke 0",
+      "source_motion": 0.07363867776957078,
+      "export_motion": 0.07363867776957078,
+      "export_loop_error": 0.0,
+      "source_export_max_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Candle 07 light smoke 1",
+      "source_motion": 0.14207786338502407,
+      "export_motion": 0.14207786338502407,
+      "export_loop_error": 0.0,
+      "source_export_max_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Candle 07 light smoke 2",
+      "source_motion": 0.11353447107538568,
+      "export_motion": 0.11353447107538568,
+      "export_loop_error": 0.0,
+      "source_export_max_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Candle 08 light smoke 0",
+      "source_motion": 0.1643357364297284,
+      "export_motion": 0.1643357364297284,
+      "export_loop_error": 0.0,
+      "source_export_max_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Candle 08 light smoke 1",
+      "source_motion": 0.08450425120373284,
+      "export_motion": 0.08450425120373284,
+      "export_loop_error": 0.0,
+      "source_export_max_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Candle 08 light smoke 2",
+      "source_motion": 0.07965472808576997,
+      "export_motion": 0.07965472808576997,
+      "export_loop_error": 0.0,
+      "source_export_max_error": 0.0,
+      "passed": true
+    }
+  ],
+  "source_shader_samples": [
+    {
+      "frame": 1,
+      "screens": [
+        {
+          "scroll": 0.0,
+          "light": 1.6740000247955322
+        },
+        {
+          "scroll": 0.12999999523162842,
+          "light": 1.7724521160125732
+        },
+        {
+          "scroll": 0.25999999046325684,
+          "light": 1.7803877592086792
+        }
+      ]
+    },
+    {
+      "frame": 37,
+      "screens": [
+        {
+          "scroll": 0.125,
+          "light": 1.693091869354248
+        },
+        {
+          "scroll": 0.2549999952316284,
+          "light": 1.6146992444992065
+        },
+        {
+          "scroll": 0.38499999046325684,
+          "light": 1.590827465057373
+        }
+      ]
+    },
+    {
+      "frame": 73,
+      "screens": [
+        {
+          "scroll": 0.25,
+          "light": 1.6469999551773071
+        },
+        {
+          "scroll": 0.3799999952316284,
+          "light": 1.6594117879867554
+        },
+        {
+          "scroll": 0.5099999904632568,
+          "light": 1.6852359771728516
+        }
+      ]
+    },
+    {
+      "frame": 109,
+      "screens": [
+        {
+          "scroll": 0.375,
+          "light": 1.693091869354248
+        },
+        {
+          "scroll": 0.5049999952316284,
+          "light": 1.7539315223693848
+        },
+        {
+          "scroll": 0.6349999904632568,
+          "light": 1.7412824630737305
+        }
+      ]
+    },
+    {
+      "frame": 145,
+      "screens": [
+        {
+          "scroll": 0.5,
+          "light": 1.6740000247955322
+        },
+        {
+          "scroll": 0.6299999952316284,
+          "light": 1.5755479335784912
+        },
+        {
+          "scroll": 0.7599999904632568,
+          "light": 1.5676121711730957
+        }
+      ]
+    },
+    {
+      "frame": 181,
+      "screens": [
+        {
+          "scroll": 0.625,
+          "light": 1.6549080610275269
+        },
+        {
+          "scroll": 0.7549999952316284,
+          "light": 1.733300805091858
+        },
+        {
+          "scroll": 0.8849999904632568,
+          "light": 1.7571725845336914
+        }
+      ]
+    },
+    {
+      "frame": 217,
+      "screens": [
+        {
+          "scroll": 0.75,
+          "light": 1.7009999752044678
+        },
+        {
+          "scroll": 0.8799999952316284,
+          "light": 1.6885881423950195
+        },
+        {
+          "scroll": 1.0099999904632568,
+          "light": 1.662764072418213
+        }
+      ]
+    },
+    {
+      "frame": 253,
+      "screens": [
+        {
+          "scroll": 0.875,
+          "light": 1.6549080610275269
+        },
+        {
+          "scroll": 1.0049999952316284,
+          "light": 1.5940684080123901
+        },
+        {
+          "scroll": 1.1349999904632568,
+          "light": 1.6067174673080444
+        }
+      ]
+    },
+    {
+      "frame": 289,
+      "screens": [
+        {
+          "scroll": 1.0,
+          "light": 1.6740000247955322
+        },
+        {
+          "scroll": 1.1299999952316284,
+          "light": 1.7724521160125732
+        },
+        {
+          "scroll": 1.2599999904632568,
+          "light": 1.7803877592086792
+        }
+      ]
+    }
+  ],
+  "shader_export_limit": "Screen UV scroll, emission flicker and light spill are source-evaluated for sprites; GLB geometry motion independently measured.",
+  "source_sha256": "39c74555ccc30ea25683985a14dc743c848563a32f3ad5b52795e283bcab3436",
+  "export_sha256": "d09646f59b3982ea4fbf1d3fbbad4818c317aed4bdd537b0efc96870fcf9d3d6"
+}

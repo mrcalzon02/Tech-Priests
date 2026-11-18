@@ -1,0 +1,24 @@
+{
+  "source_sha256": "84ac195d708b4fbea5d5306acec9eaaa7d1d2682a22c96665ab14aef6843b407",
+  "export_sha256": "8e68144d0caeeacf612f6d890096f7f92441903c8e837c5f728c6cc756e9204b",
+  "state_frames": {
+    "charge-f00.png": "fcdbb5341054915a0cc37947b97a3aa0bac3e4962f348dbf60341c5315f5c073",
+    "charge-f01.png": "5cc4d8b53320d528c26de1659de97ba48ceb31978c51cca178773b8584160970",
+    "charge-f02.png": "c193c7966ed1dcf4037f868f1002960cf13bb6a00257f181d4897d83a069b522",
+    "charge-f03.png": "390330cbf8de6d9a8c1ee6d09b700a53a1da1fd5104744bf2a631512685a5ca6",
+    "charge-f04.png": "1cd870241f23ac64135b3095382d03718883e135cebc021312f8de47f8bd776e",
+    "charge-f05.png": "f93c651f6e9ef2a169b8bebeccd9902a9e4288cbc11e143e79504337cad4edd5",
+    "charge-f06.png": "4152418b13da5ed33f3731ef08a99ba3ccf70e97c8991858376f9603c0d4fff4",
+    "charge-f07.png": "aa5e0438ee744897645f7ab14a36f23fae798fcaadfcbd0553cb28356400f1f3",
+    "discharge-f00.png": "7688df5487973f3f7a2d69507bf34e272614abcaaa3b75f7af64f275808741df",
+    "discharge-f01.png": "04de0ad39dc85a207a4c53d1537000e65e9f1b37231bb35ed6167bfc2336485d",
+    "discharge-f02.png": "7220b3207145ca04d25eb0f9c03cc6aed0063244667f124ed20ceeac2a5f4f84",
+    "discharge-f03.png": "46fc7e0661ec806cf27c1e604bb4a95911b9434101014fc2752a0ea1ffb88006",
+    "discharge-f04.png": "c925f639a408dcc8696b40749551c3caab1a7e6679da35fc055057f2a447140c",
+    "discharge-f05.png": "a7cbd8f3134471ced0df02a320c0301b79c916ce7c9fc55670b4fdfaf732efd3",
+    "discharge-f06.png": "9a48e81dca3ee71495eebfbeefa0886bc68e32764a3835fa7815cef218fa6ac3",
+    "discharge-f07.png": "cae1cc5efd1f1ccadc954655593c93d639ba11f8e9f4a93e96dda62d4e33bcea"
+  },
+  "scope": "Sixteen genuine source lens-state renders; static GLB geometry, no material-animation channels claimed",
+  "period": "Eight frames/state at native 12fps; native cooldowns preserved"
+}

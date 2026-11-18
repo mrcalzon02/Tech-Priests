@@ -1,0 +1,152 @@
+{
+  "passed": false,
+  "prototype_changed_fields": {
+    "container": [
+      "stateless_visualisation",
+      "picture",
+      "icon"
+    ],
+    "item": [
+      "icon"
+    ],
+    "recipe": []
+  },
+  "gameplay_fields_preserved": true,
+  "native_function": {
+    "inventory_size": true,
+    "start_recipe": true,
+    "recipe_ingredients": {
+      "iron-plate": 20,
+      "iron-gear-wheel": 10,
+      "copper-cable": 20
+    },
+    "no_fluids": true,
+    "bounds": {
+      "collision": {
+        "left_top": {
+          "y": -0.8984375,
+          "x": -0.8984375
+        },
+        "right_bottom": {
+          "y": 0.8984375,
+          "x": 0.8984375
+        }
+      },
+      "selection": {
+        "left_top": {
+          "y": -1,
+          "x": -1
+        },
+        "right_bottom": {
+          "y": 1,
+          "x": 1
+        }
+      }
+    },
+    "governance_gui": false,
+    "inserter_input": [
+      true,
+      true,
+      true,
+      true
+    ],
+    "inserter_output": [
+      true,
+      true,
+      true,
+      true
+    ],
+    "passed": true
+  },
+  "native_reload": {
+    "inventory_size": true,
+    "start_recipe": true,
+    "recipe_ingredients": {
+      "iron-plate": 20,
+      "iron-gear-wheel": 10,
+      "copper-cable": 20
+    },
+    "no_fluids": true,
+    "bounds": {
+      "collision": {
+        "left_top": {
+          "y": -0.8984375,
+          "x": -0.8984375
+        },
+        "right_bottom": {
+          "y": 0.8984375,
+          "x": 0.8984375
+        }
+      },
+      "selection": {
+        "left_top": {
+          "y": -1,
+          "x": -1
+        },
+        "right_bottom": {
+          "y": 1,
+          "x": 1
+        }
+      }
+    },
+    "governance_gui": false,
+    "inserter_input": [
+      true,
+      true,
+      true,
+      true
+    ],
+    "inserter_output": [
+      true,
+      true,
+      true,
+      true
+    ],
+    "passed": true,
+    "reloaded": true,
+    "reload_inventory_preserved": true
+  },
+  "graphical_frames": 36,
+  "unique_graphical_frames": 36,
+  "motion_regions": {
+    "candles": {
+      "changed": true,
+      "max_rgb_difference_sum": 171048,
+      "crop": [
+        220,
+        135,
+        425,
+        225
+      ]
+    },
+    "central_crt": {
+      "changed": true,
+      "max_rgb_difference_sum": 62173,
+      "crop": [
+        280,
+        262,
+        358,
+        315
+      ]
+    },
+    "keyboard": {
+      "changed": true,
+      "max_rgb_difference_sum": 13294,
+      "crop": [
+        282,
+        311,
+        358,
+        345
+      ]
+    }
+  },
+  "night": "Actual native screenshot retained; visual assessment separately in review.json",
+  "physical_governance_input": "Pending; automated GUI presence never substituted for physical input",
+  "owner_approval": false,
+  "source_sha256": "39c74555ccc30ea25683985a14dc743c848563a32f3ad5b52795e283bcab3436",
+  "export_sha256": "d09646f59b3982ea4fbf1d3fbbad4818c317aed4bdd537b0efc96870fcf9d3d6",
+  "prototype_sha256": "3e0d5b89f2f384b7f7ca61ef62076dcbec05d77293ce11e1c25f649b5bc59114",
+  "functional_passed": true,
+  "visual_gate": false,
+  "reason": "Body-only stateless visual was missing from placement ghosts; night emission too dim. Superseded by static placement body, composited ambient replacements and actual source-rendered light pass."
+}

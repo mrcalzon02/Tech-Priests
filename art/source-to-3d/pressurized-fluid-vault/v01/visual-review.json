@@ -1,0 +1,32 @@
+{
+  "state": "Directional production integration and specific native checks passed; final owner visuals separate",
+  "source_sha256": "8594eba97100ac8ed558d88317200d6102576da6538d6af73e05957a06a8513a",
+  "export_sha256": "3c7f49f18b337eb7d649482ec2ec9eefb6763a06989dd0b13d500342f82a826d",
+  "reference_sha256": "4fbaeee99407c8917d7f416c4a133ff5a527851f8cc892b81fbeb86317480dec",
+  "render_hashes": {
+    "inspection/export-d0.png": "b5bb642e4c7e277a735d71150c70ee50d9f1178bd998081c66188593dcc28559",
+    "inspection/export-d2.png": "1ed4763c0fa7ee84ac363194d8c8c5d72fe113b3b4da694172d85d3af0a61317",
+    "inspection/export-clay.png": "1b3469f101a0a265c25d8fa34ffedad78706169b7f802e525888da1512ba4437",
+    "captures/body-d0.png": "7fb23107fe73d43ef1625a60e44f5286b3c7fb99bc38f74f11941455c46abc39",
+    "captures/body-d1.png": "cf76584166b5b29660306a1abebd8f62afc9d416d652f2b807951b9e0392fbe2",
+    "native-evidence/native-north.png": "3f970b195cd1db388336d5c9147d70e0bdd406c866bb778f4b3d56b7e2389690",
+    "native-evidence/native-east.png": "72327791c6c0a98388f249c9c4d41c244b8bf230ab6dc8d25859e1ed47de4676",
+    "native-evidence/native-rotated.png": "d7d33abaa529754d153c94e8a37eca50e00162f00b8b10f8fa762b2590bf26fb"
+  },
+  "scores_out_of_10": {
+    "construction": {
+      "score": 9,
+      "reason": "Closed liner/floor and gasketed pressure hatch, load-bearing wall sleeves, open full-size through-ports, concave saddles and bored supported gauge tap. Twenty-five axial clearance rays and actual source/export contact checks pass."
+    },
+    "placement_and_interfaces": {
+      "score": 9,
+      "reason": "Engine-probed 3x3 half-grid placement and only two true directions retained. Source/export mouth projections match standard native pipe planes; actual screenshots show joined pipes and registered wire/LED contacts."
+    },
+    "surface_finish": {
+      "score": 8,
+      "reason": "Packed aged iron/bronze and authored ivory dial on distinct pressure geometry, shared quarry surfaces and retained original skull UVs. Owner called construction close to done; final in-game finish review remains separate."
+    }
+  },
+  "owner_review": "Owner requested directional capture and wiring/integration; no final in-game approval inferred.",
+  "native_limit": "Nauvis pipe/fluid/circuit/rotation/reload checks pass; inherited Aquilo freezing not separately exercised."
+}

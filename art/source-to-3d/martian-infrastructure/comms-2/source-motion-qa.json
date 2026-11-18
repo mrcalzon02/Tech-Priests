@@ -1,0 +1,12 @@
+{
+  "source_sha256": "08fdd9ff55831098fb334135a560f645ff4c7fcb934dcc5ab397ad405acf7512",
+  "glb_sha256": "3b8fb09663e998c7409301a27a380691b8c1ef1d0dd1f5211ac6a5124795814e",
+  "packed_source_images_reopened": 21,
+  "source_reopen_pass": true,
+  "rotating_dish": true,
+  "animated_export_seconds": 10.0,
+  "quarter_turn_feed_displacement_tiles": 0.8738977949312159,
+  "full_sweep_fixed_aerial_collision_check": true,
+  "tested_headings": 64,
+  "collision_headings": []
+}

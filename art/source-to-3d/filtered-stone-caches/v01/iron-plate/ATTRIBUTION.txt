@@ -1,0 +1,6 @@
+Low Poly Skull (Craneo) by DGordillo
+https://blendswap.com/blend/2499
+CC BY 3.0: https://creativecommons.org/licenses/by/3.0/
+Conclave adaptation: uniformly resized, original mesh/UV/sculpt normal retained, aged ivory material, mounted shrine. Central skull has additional fitted augmetic half-mask, ocular fitting, jaw hardware and cog surround. No endorsement implied.
+
+Martian Stone Cache adaptation: centered shallow curved skull relief over a red cog, using the original donor anatomy, UV and sculpt normal.

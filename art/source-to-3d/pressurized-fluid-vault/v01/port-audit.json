@@ -1,0 +1,534 @@
+{
+  "passed": true,
+  "source": {
+    "label": "reopened packed source",
+    "full_bore_rays": [
+      {
+        "offset": [
+          0,
+          0
+        ],
+        "hits": [],
+        "passed": true
+      },
+      {
+        "offset": [
+          0.25,
+          0
+        ],
+        "hits": [],
+        "passed": true
+      },
+      {
+        "offset": [
+          -0.25,
+          0
+        ],
+        "hits": [],
+        "passed": true
+      },
+      {
+        "offset": [
+          0,
+          0.25
+        ],
+        "hits": [],
+        "passed": true
+      },
+      {
+        "offset": [
+          0,
+          -0.25
+        ],
+        "hits": [],
+        "passed": true
+      },
+      {
+        "offset": [
+          0.17,
+          0.17
+        ],
+        "hits": [],
+        "passed": true
+      },
+      {
+        "offset": [
+          -0.17,
+          0.17
+        ],
+        "hits": [],
+        "passed": true
+      },
+      {
+        "offset": [
+          0.17,
+          -0.17
+        ],
+        "hits": [],
+        "passed": true
+      },
+      {
+        "offset": [
+          -0.17,
+          -0.17
+        ],
+        "hits": [],
+        "passed": true
+      },
+      {
+        "offset": [
+          0.279,
+          0.0
+        ],
+        "hits": [],
+        "passed": true
+      },
+      {
+        "offset": [
+          0.257762389570649,
+          0.10676867762986006
+        ],
+        "hits": [],
+        "passed": true
+      },
+      {
+        "offset": [
+          0.19728279195104678,
+          0.19728279195104678
+        ],
+        "hits": [],
+        "passed": true
+      },
+      {
+        "offset": [
+          0.10676867762986007,
+          0.257762389570649
+        ],
+        "hits": [],
+        "passed": true
+      },
+      {
+        "offset": [
+          1.708382284810558e-17,
+          0.279
+        ],
+        "hits": [],
+        "passed": true
+      },
+      {
+        "offset": [
+          -0.10676867762986005,
+          0.257762389570649
+        ],
+        "hits": [],
+        "passed": true
+      },
+      {
+        "offset": [
+          -0.19728279195104675,
+          0.19728279195104678
+        ],
+        "hits": [],
+        "passed": true
+      },
+      {
+        "offset": [
+          -0.257762389570649,
+          0.10676867762986009
+        ],
+        "hits": [],
+        "passed": true
+      },
+      {
+        "offset": [
+          -0.279,
+          3.416764569621116e-17
+        ],
+        "hits": [],
+        "passed": true
+      },
+      {
+        "offset": [
+          -0.25776238957064906,
+          -0.10676867762986003
+        ],
+        "hits": [],
+        "passed": true
+      },
+      {
+        "offset": [
+          -0.1972827919510468,
+          -0.19728279195104675
+        ],
+        "hits": [],
+        "passed": true
+      },
+      {
+        "offset": [
+          -0.10676867762986021,
+          -0.25776238957064895
+        ],
+        "hits": [],
+        "passed": true
+      },
+      {
+        "offset": [
+          -5.1251468544316735e-17,
+          -0.279
+        ],
+        "hits": [],
+        "passed": true
+      },
+      {
+        "offset": [
+          0.10676867762986011,
+          -0.257762389570649
+        ],
+        "hits": [],
+        "passed": true
+      },
+      {
+        "offset": [
+          0.19728279195104673,
+          -0.1972827919510468
+        ],
+        "hits": [],
+        "passed": true
+      },
+      {
+        "offset": [
+          0.25776238957064895,
+          -0.10676867762986023
+        ],
+        "hits": [],
+        "passed": true
+      }
+    ],
+    "native_projections": [
+      {
+        "direction": 0,
+        "port": "north",
+        "actual": [
+          0.0,
+          -1.5468750209555386
+        ],
+        "expected": [
+          0,
+          -1.546875
+        ],
+        "error": 2.0955538637679183e-08,
+        "passed": true
+      },
+      {
+        "direction": 0,
+        "port": "south",
+        "actual": [
+          0.0,
+          1.4531247406258823
+        ],
+        "expected": [
+          0,
+          1.453125
+        ],
+        "error": 2.593741177392417e-07,
+        "passed": true
+      },
+      {
+        "direction": 4,
+        "port": "north",
+        "actual": [
+          1.5,
+          -0.04687502095553858
+        ],
+        "expected": [
+          1.5,
+          -0.046875
+        ],
+        "error": 2.0955538582168032e-08,
+        "passed": true
+      },
+      {
+        "direction": 4,
+        "port": "south",
+        "actual": [
+          -1.5,
+          -0.04687502095553858
+        ],
+        "expected": [
+          -1.5,
+          -0.046875
+        ],
+        "error": 2.0955538582168032e-08,
+        "passed": true
+      }
+    ],
+    "passed": true
+  },
+  "export": {
+    "label": "independent actual GLB",
+    "full_bore_rays": [
+      {
+        "offset": [
+          0,
+          0
+        ],
+        "hits": [],
+        "passed": true
+      },
+      {
+        "offset": [
+          0.25,
+          0
+        ],
+        "hits": [],
+        "passed": true
+      },
+      {
+        "offset": [
+          -0.25,
+          0
+        ],
+        "hits": [],
+        "passed": true
+      },
+      {
+        "offset": [
+          0,
+          0.25
+        ],
+        "hits": [],
+        "passed": true
+      },
+      {
+        "offset": [
+          0,
+          -0.25
+        ],
+        "hits": [],
+        "passed": true
+      },
+      {
+        "offset": [
+          0.17,
+          0.17
+        ],
+        "hits": [],
+        "passed": true
+      },
+      {
+        "offset": [
+          -0.17,
+          0.17
+        ],
+        "hits": [],
+        "passed": true
+      },
+      {
+        "offset": [
+          0.17,
+          -0.17
+        ],
+        "hits": [],
+        "passed": true
+      },
+      {
+        "offset": [
+          -0.17,
+          -0.17
+        ],
+        "hits": [],
+        "passed": true
+      },
+      {
+        "offset": [
+          0.279,
+          0.0
+        ],
+        "hits": [],
+        "passed": true
+      },
+      {
+        "offset": [
+          0.257762389570649,
+          0.10676867762986006
+        ],
+        "hits": [],
+        "passed": true
+      },
+      {
+        "offset": [
+          0.19728279195104678,
+          0.19728279195104678
+        ],
+        "hits": [],
+        "passed": true
+      },
+      {
+        "offset": [
+          0.10676867762986007,
+          0.257762389570649
+        ],
+        "hits": [],
+        "passed": true
+      },
+      {
+        "offset": [
+          1.708382284810558e-17,
+          0.279
+        ],
+        "hits": [],
+        "passed": true
+      },
+      {
+        "offset": [
+          -0.10676867762986005,
+          0.257762389570649
+        ],
+        "hits": [],
+        "passed": true
+      },
+      {
+        "offset": [
+          -0.19728279195104675,
+          0.19728279195104678
+        ],
+        "hits": [],
+        "passed": true
+      },
+      {
+        "offset": [
+          -0.257762389570649,
+          0.10676867762986009
+        ],
+        "hits": [],
+        "passed": true
+      },
+      {
+        "offset": [
+          -0.279,
+          3.416764569621116e-17
+        ],
+        "hits": [],
+        "passed": true
+      },
+      {
+        "offset": [
+          -0.25776238957064906,
+          -0.10676867762986003
+        ],
+        "hits": [],
+        "passed": true
+      },
+      {
+        "offset": [
+          -0.1972827919510468,
+          -0.19728279195104675
+        ],
+        "hits": [],
+        "passed": true
+      },
+      {
+        "offset": [
+          -0.10676867762986021,
+          -0.25776238957064895
+        ],
+        "hits": [],
+        "passed": true
+      },
+      {
+        "offset": [
+          -5.1251468544316735e-17,
+          -0.279
+        ],
+        "hits": [],
+        "passed": true
+      },
+      {
+        "offset": [
+          0.10676867762986011,
+          -0.257762389570649
+        ],
+        "hits": [],
+        "passed": true
+      },
+      {
+        "offset": [
+          0.19728279195104673,
+          -0.1972827919510468
+        ],
+        "hits": [],
+        "passed": true
+      },
+      {
+        "offset": [
+          0.25776238957064895,
+          -0.10676867762986023
+        ],
+        "hits": [],
+        "passed": true
+      }
+    ],
+    "native_projections": [
+      {
+        "direction": 0,
+        "port": "north",
+        "actual": [
+          0.0,
+          -1.5468750209555386
+        ],
+        "expected": [
+          0,
+          -1.546875
+        ],
+        "error": 2.0955538637679183e-08,
+        "passed": true
+      },
+      {
+        "direction": 0,
+        "port": "south",
+        "actual": [
+          0.0,
+          1.4531247406258823
+        ],
+        "expected": [
+          0,
+          1.453125
+        ],
+        "error": 2.593741177392417e-07,
+        "passed": true
+      },
+      {
+        "direction": 4,
+        "port": "north",
+        "actual": [
+          1.5,
+          -0.04687502095553858
+        ],
+        "expected": [
+          1.5,
+          -0.046875
+        ],
+        "error": 2.0955538582168032e-08,
+        "passed": true
+      },
+      {
+        "direction": 4,
+        "port": "south",
+        "actual": [
+          -1.5,
+          -0.04687502095553858
+        ],
+        "expected": [
+          -1.5,
+          -0.046875
+        ],
+        "error": 2.0955538582168032e-08,
+        "passed": true
+      }
+    ],
+    "passed": true
+  },
+  "source_sha256": "8594eba97100ac8ed558d88317200d6102576da6538d6af73e05957a06a8513a",
+  "export_sha256": "3c7f49f18b337eb7d649482ec2ec9eefb6763a06989dd0b13d500342f82a826d",
+  "limit": "Twenty-five axial rays, including sixteen at radius0.279 inside the explicit0.28 bore, check every mesh for obstruction through both ports and the full vessel; geometry inspection also checks the sealed liner construction"
+}

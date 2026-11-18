@@ -1,0 +1,15 @@
+{
+  "source_sha256": "39c74555ccc30ea25683985a14dc743c848563a32f3ad5b52795e283bcab3436",
+  "export_sha256": "d09646f59b3982ea4fbf1d3fbbad4818c317aed4bdd537b0efc96870fcf9d3d6",
+  "runtime_art": {
+    "ambient-effects.png": "c81b60683e271da744adb5e597c76356f8c186afecd4932e595a7c327d3df201",
+    "ambient-light.png": "6d37c1d3f982e15b1236e71f81f2ab0d1ad9dec4480840fc766b1430f60ef084",
+    "icon.png": "389733e8df4f375a2cf239ba9e9a3fb34e6dd87cfa0c55195981e09e51c80b2a",
+    "placement-base.png": "3e53acf2b2a95fdaf0b6f98f8c84c1a3e49ffa3da4e625a38bf39b46a0d35629",
+    "shadow.png": "834d620af01c33a7edbae5e80943c4fc9504a433232e0103920bd75eff24ec1e"
+  },
+  "prototype_sha256": "2228cdcc4073d69dbf7bf6c1607fb5d7f463c0b9c0320e206801a3ad47b2cb7e",
+  "state": "Current native day/night/ghost and functional evidence in native-evidence/native-review.json; owner approval pending",
+  "stage": "V08 integrated and native-validated review candidate; owner approval pending",
+  "remaining": "Owner visual review and physical governance-screen input"
+}

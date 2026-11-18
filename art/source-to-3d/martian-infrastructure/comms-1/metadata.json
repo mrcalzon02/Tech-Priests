@@ -1,0 +1,175 @@
+{
+  "name": "comms-1",
+  "footprint": [
+    1,
+    1
+  ],
+  "height": 2.3827402591705322,
+  "camera_scale_tiles": 3.6,
+  "sprite_shift_tiles": [
+    0.0,
+    -0.7413330674171448
+  ],
+  "sprite_HR_pixels": 230,
+  "socket_positions_model": {
+    "red": [
+      -0.2592,
+      -0.23,
+      1.275
+    ],
+    "copper": [
+      0,
+      -0.23,
+      1.275
+    ],
+    "green": [
+      0.2592,
+      -0.23,
+      1.275
+    ]
+  },
+  "wire_points_tiles": {
+    "red": [
+      -0.2591999888420105,
+      -0.7389264822006226
+    ],
+    "copper": [
+      0.0,
+      -0.7389264822006226
+    ],
+    "green": [
+      0.2592000961303711,
+      -0.7389264822006226
+    ]
+  },
+  "routes": [
+    {
+      "name": "Vox whip and coaxial seat",
+      "points": [
+        [
+          -0.18,
+          0.12,
+          1.7400000000000002
+        ],
+        [
+          -0.16499999999999998,
+          0.12,
+          1.9744000000000002
+        ],
+        [
+          -0.10999999999999999,
+          0.145,
+          2.38
+        ]
+      ],
+      "start_and_end_glands": true
+    },
+    {
+      "name": "Vox whip and coaxial seat",
+      "points": [
+        [
+          0.2,
+          0.12,
+          1.02
+        ],
+        [
+          0.21500000000000002,
+          0.12,
+          1.288
+        ],
+        [
+          0.27,
+          0.145,
+          1.73
+        ]
+      ],
+      "start_and_end_glands": true
+    },
+    {
+      "name": "Radio coax to equipment cabinet",
+      "points": [
+        [
+          -0.18,
+          0.12,
+          1.58
+        ],
+        [
+          -0.26,
+          0.12,
+          1.49
+        ],
+        [
+          -0.26,
+          0.12,
+          0.78
+        ]
+      ],
+      "start_and_end_glands": true
+    },
+    {
+      "name": "Terminal to cabinet hardline",
+      "points": [
+        [
+          -0.2592,
+          -0.17,
+          0.79
+        ],
+        [
+          -0.22,
+          -0.23,
+          0.66
+        ],
+        [
+          -0.22,
+          -0.21,
+          0.5
+        ]
+      ],
+      "start_and_end_glands": true
+    },
+    {
+      "name": "Terminal to cabinet hardline",
+      "points": [
+        [
+          0.2592,
+          -0.17,
+          0.79
+        ],
+        [
+          0.22,
+          -0.23,
+          0.66
+        ],
+        [
+          0.22,
+          -0.21,
+          0.5
+        ]
+      ],
+      "start_and_end_glands": true
+    },
+    {
+      "name": "Copper terminal power feed",
+      "points": [
+        [
+          0,
+          -0.17,
+          0.79
+        ],
+        [
+          0,
+          -0.23,
+          0.66
+        ],
+        [
+          0,
+          -0.21,
+          0.5
+        ]
+      ],
+      "start_and_end_glands": true
+    }
+  ],
+  "model_specific_surface_plan": "surface-plan.json",
+  "owner_approval": "pending"
+}

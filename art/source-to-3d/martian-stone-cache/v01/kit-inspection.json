@@ -1,0 +1,25 @@
+{
+  "passed": true,
+  "meshes": 71,
+  "geometry_matches_master": true,
+  "packed_images": [
+    "clay-albedo.png",
+    "clay-normal.png",
+    "clay-orm.png",
+    "dressed-stone-albedo.png",
+    "dressed-stone-normal.png",
+    "dressed-stone-orm.png",
+    "ground-stone-albedo.png",
+    "ground-stone-normal.png",
+    "ground-stone-orm.png",
+    "steel-albedo.png",
+    "steel-normal.png",
+    "steel-orm.png",
+    "stone-albedo.png",
+    "stone-normal.png",
+    "stone-orm.png"
+  ],
+  "kit_sha256": "e6719e82f51f89d33deda1ed2b554fceda410f1df3fc08da00bac4f9fd92957e",
+  "source_sha256": "66655f50c8f16ceb0bd71c8f5bfb07abaa74daf029a1b948e1c3425fd1c1968e",
+  "scope": "Reusable wall library only; cover/emblem remain separate in master; owner material acceptance pending"
+}

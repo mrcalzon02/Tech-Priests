@@ -1,0 +1,31 @@
+{
+  "schema": "fmpl.local-model-record.v1",
+  "id": "tech-priests-stone-cache-iron-gear-wheel-v01",
+  "status": "static-game-sprites-installed-specific-native-filter-checks-passed",
+  "publication": "Local working-tree candidate; no remote publication claimed",
+  "source": {
+    "path": "art\\source-to-3d\\filtered-stone-caches\\v01\\iron-gear-wheel\\filtered-cache-iron-gear-wheel-v01.blend",
+    "sha256": "e1674f5fbd455b647aa29f67ee1cb28d913d27b8e62fee3fc1e1f995c4f04f98"
+  },
+  "runtime": {
+    "path": "art\\source-to-3d\\filtered-stone-caches\\v01\\iron-gear-wheel\\filtered-cache-iron-gear-wheel-v01.glb",
+    "sha256": "088da7ad0c686f924ede8002e53c8667cbade038de3ca62303acb3979b87f072"
+  },
+  "camera_policy": "fmpl.factorio45.v1",
+  "native_directions": [
+    0
+  ],
+  "footprint": [
+    2,
+    2
+  ],
+  "purpose": "Six-slot iron-gear-wheel cache. Shared stone wall and centered tablet; distinct static stock filling. Existing physical filter steward and ordinary inserters preserved.",
+  "evidence": [
+    "contract.json",
+    "inspection.json",
+    "construction.json",
+    "integration.json",
+    "visual-review.json",
+    "native-evidence/review.json"
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "state": "Technical candidate integrated and tested; owner model/material approval pending",
+  "source_sha256": "370f65a287b78427f13d3128c5e7796fe644ee30a259bab5b28ca83272f2ee62",
+  "export_sha256": "6a4a0b2bf8dd50715aab260cd7f8ebdb4046ef129961460fd3e371ca6f244ada",
+  "reference_sha256": "48c930af3749cd4f8a585c6dff78de408d1855019c90daabde617a44830ab186",
+  "render_hashes": {
+    "inspection/export-d0.png": "24648de31a2336e0bc6f5a15f7d8c5cd025644d83d0ef718d3e2fd3e26618fcc",
+    "inspection/export-d2.png": "dd4e490306c3c3e0c79af6623e23a3098b63503568b16594fa304a30fc6158e3",
+    "inspection/export-clay.png": "e93cf7c8e3b42fbfa14d09c198584a3fe7463a30a8c77052d656d832aeb618e1",
+    "native-evidence/native-plain.png": "031071b7465841f314955aad5df0ec49ae88d9f721a412306a0c35c568023359",
+    "native-evidence/native-wired.png": "d7dfe7162c98690b4ff36736e54e2bdb73b197c1c4b837d3374eaccf77f31db4"
+  },
+  "scores_out_of_10": {
+    "construction": {
+      "score": 8,
+      "reason": "Rectangular iron door in continuous metal panel; gasket/panel seating measured at eight perimeter points; all locking-bolt envelopes clear guides/keepers in source and actual GLB."
+    },
+    "identity": {
+      "score": 9,
+      "reason": "Retains stone-ring emergency vault identity; replaces rejected regular octagon/cross ribs with owner-requested rectangular door/panel. Distinct iron enclosure and manual fittings differentiate it from hide-covered base cache."
+    },
+    "surface_finish": {
+      "score": 8,
+      "reason": "Packed forged/rubbed iron and gasket maps with door-boundary wear, plus shared stone and original supplied-skull aging. Owner finish judgment remains open."
+    }
+  },
+  "observations": "Viewed actual export front/rear/clay and real Factorio plain/wired previews; grounded wall, lower registration and live connector alignment retained. Static container has no invented operating animation.",
+  "owner_approval": false
+}

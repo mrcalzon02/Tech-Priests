@@ -1,0 +1,7 @@
+{
+  "passed": true,
+  "mean_rgb_error_255": 0.07730998925971455,
+  "composition": "Porter-Duff replacement on opaque receivers, true new flames/smoke against clear pixels, shared antialiased edges retained once.",
+  "light": "Actual 256px Cycles ambient emission/illumination pass; native additive light layer, same camera and source frame sequence.",
+  "source_sha256": "39c74555ccc30ea25683985a14dc743c848563a32f3ad5b52795e283bcab3436"
+}

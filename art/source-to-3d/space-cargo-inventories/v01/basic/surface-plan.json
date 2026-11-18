@@ -1,0 +1,18 @@
+{
+  "source_sha256": "e8b0dbe39f95808792e10009ec940edf7a2d47b244d418911ae7b94dcad4d7cb",
+  "canonical_fmpl_catalog": "art/source-to-3d/shared-parts/industrial-asset-library/catalog.json",
+  "catalog_sha256": "f170ab606eb7a1e85ef1cc4f545cc4a58c4c057ce9b5d8ed2974ba1566adc031",
+  "material_study": "art/source-to-3d/space-cargo-inventories/v01/basic/studies/material-environment/refined-v03-green/d-refined-steel",
+  "environment_audit": "art/source-to-3d/space-cargo-inventories/v01/basic/studies/material-environment/environment-audit.json",
+  "regions": {
+    "deck": "Machined industrial steel with canonical physical-scale weathering and radiused edges",
+    "structure": "Dark gunmetal truss chords, diagonal braces, housings and barrel hoops",
+    "cargo": "Iron case and weathered Martian-red barrels with formed shoulders",
+    "wood": "Actual FMPL cedar shader baked to albedo/normal; grain follows plank/handle long axis",
+    "tools": "Machined bright steel, wooden hammer and red driver grips",
+    "glass": "Explicit green optical derivative; soft low-energy specular, roughness.26; art-directed effective interface IOR1.08 for readable baked cutaway",
+    "hardware": "Dull brass captured hardware",
+    "well": "Oiled dark enclosed liner"
+  },
+  "production": "All relevant image maps packed; actual GLB reimport and source inspection passed. Initial generic-noise and hard-specular studies retained as superseded."
+}

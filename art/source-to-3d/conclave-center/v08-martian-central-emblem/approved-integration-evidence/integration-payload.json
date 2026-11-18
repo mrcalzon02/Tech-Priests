@@ -1,0 +1,15 @@
+{
+  "path": "build/conclave-approved-integration/delivery/conclave-center-v08-source-integration.zip",
+  "sha256": "ee094a838ff8599a4307d37a92dcdd6589cd535fd54008c37d85fba8c7234f66",
+  "contents": {
+    "tech-priests_src/scripts/core/conclave_center_0558.lua": "55bc15641274c5e78781f7f0e7ee4767079b446078b011f2e91c5526999dc84e",
+    "tech-priests_src/prototypes/conclave_center_0558.lua": "2228cdcc4073d69dbf7bf6c1607fb5d7f463c0b9c0320e206801a3ad47b2cb7e",
+    "tech-priests_src/credits/Conclave-DGordillo-skull.txt": "8b02294793f5d955dd68359122cc6532b3172bbee0d9ff91166d570ca9e44f3f",
+    "tech-priests_src/graphics/entity/conclave-center-v08/ambient-effects.png": "c81b60683e271da744adb5e597c76356f8c186afecd4932e595a7c327d3df201",
+    "tech-priests_src/graphics/entity/conclave-center-v08/ambient-light.png": "6d37c1d3f982e15b1236e71f81f2ab0d1ad9dec4480840fc766b1430f60ef084",
+    "tech-priests_src/graphics/entity/conclave-center-v08/icon.png": "389733e8df4f375a2cf239ba9e9a3fb34e6dd87cfa0c55195981e09e51c80b2a",
+    "tech-priests_src/graphics/entity/conclave-center-v08/placement-base.png": "3e53acf2b2a95fdaf0b6f98f8c84c1a3e49ffa3da4e625a38bf39b46a0d35629",
+    "tech-priests_src/graphics/entity/conclave-center-v08/shadow.png": "834d620af01c33a7edbae5e80943c4fc9504a433232e0103920bd75eff24ec1e"
+  },
+  "classification": "Source integration payload; no whole-mod release claim"
+}

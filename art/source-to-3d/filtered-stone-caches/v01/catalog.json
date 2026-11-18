@@ -1,0 +1,68 @@
+{
+  "rows": [
+    {
+      "key": "coal",
+      "id": "tech-priests-stone-cache-coal",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/coal",
+      "stem": "filtered-cache-coal-v01"
+    },
+    {
+      "key": "copper-ore",
+      "id": "tech-priests-stone-cache-copper-ore",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/copper-ore",
+      "stem": "filtered-cache-copper-ore-v01"
+    },
+    {
+      "key": "copper-plate",
+      "id": "tech-priests-stone-cache-copper-plate",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/copper-plate",
+      "stem": "filtered-cache-copper-plate-v01"
+    },
+    {
+      "key": "copper-cable",
+      "id": "tech-priests-stone-cache-copper-cable",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/copper-cable",
+      "stem": "filtered-cache-copper-cable-v01"
+    },
+    {
+      "key": "iron-gear-wheel",
+      "id": "tech-priests-stone-cache-iron-gear-wheel",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/iron-gear-wheel",
+      "stem": "filtered-cache-iron-gear-wheel-v01"
+    },
+    {
+      "key": "iron-ore",
+      "id": "tech-priests-stone-cache-iron-ore",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/iron-ore",
+      "stem": "filtered-cache-iron-ore-v01"
+    },
+    {
+      "key": "iron-plate",
+      "id": "tech-priests-stone-cache-iron-plate",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/iron-plate",
+      "stem": "filtered-cache-iron-plate-v01"
+    },
+    {
+      "key": "iron-stick",
+      "id": "tech-priests-stone-cache-iron-stick",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/iron-stick",
+      "stem": "filtered-cache-iron-stick-v01"
+    },
+    {
+      "key": "stone",
+      "id": "tech-priests-stone-cache-stone",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/stone",
+      "stem": "filtered-cache-stone-v01"
+    },
+    {
+      "key": "wood",
+      "id": "tech-priests-stone-cache-wood",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/wood",
+      "stem": "filtered-cache-wood-v01"
+    }
+  ],
+  "shared_source": "art/source-to-3d/martian-stone-cache/v01/martian-stone-cache-v01.blend",
+  "shared_sha256": "66655f50c8f16ceb0bd71c8f5bfb07abaa74daf029a1b948e1c3425fd1c1968e",
+  "instruction": "Keep stone wall and centered tablet identical; vary only the interior stock filling.",
+  "baseline_dump_sha256": "3b1143c6af977ed0bfbb30d7ef0f3f8ecdb2986128a72d6d54856393c3b412f6"
+}

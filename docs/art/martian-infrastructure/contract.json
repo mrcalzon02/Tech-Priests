@@ -1,0 +1,16 @@
+{
+  "title": "Martian pylon and vox-array architecture",
+  "stage": "Local authored candidates and isolated Factorio proof; owner visual approval pending",
+  "units": "One Blender unit per Factorio tile; Z up; origin at ground-centre",
+  "brief": "Three distinct sizes each of power pylon and communications array. Both families carry native copper power, red circuit and green circuit wires. Arrays add powered radar-style persistent map vision.",
+  "footprints": [[1,1],[2,2],[3,3]],
+  "power_wire_reach_tiles": [9,18,30],
+  "power_supply_radius_tiles": [2.5,4.5,6.5],
+  "array_nearby_vision_radius_chunks": [1,2,3],
+  "array_power_kW": [75,150,300],
+  "balance_status": "Provisional initial tuning, not owner-approved balance",
+  "art": "Deep Martian red armor, cast gunmetal, ferrocrete foundations, aged brass terminals, ribbed ivory ceramic insulators. Load-bearing gothic ribs, mounted radio aerials and routed services. No imported third-party geometry.",
+  "implementation": "Visible native electric pole plus lifecycle-linked native radar for arrays. Medium/large radar graphics carry a 64-heading rotating dish and moving shadow; fixed bases carry native copper/red/green terminals. Native electric and circuit networks remain authoritative. No scripted charting or polling scan loop.",
+  "dish_motion": "Medium and large dishes continuously yaw on a proper thrust bearing; fixed aerials are outside the full sweep. Ten seconds per rotation at full power, stopped without electricity. Source Blend and GLB both include the authored turn animation.",
+  "main_mod_status": "Unmodified by this candidate"
+}

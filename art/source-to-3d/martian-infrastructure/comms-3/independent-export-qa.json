@@ -1,0 +1,25 @@
+{
+  "technical_pass": true,
+  "failures": [],
+  "bounds": [
+    [
+      -1.4500000476837158,
+      1.4500000476837158
+    ],
+    [
+      -1.4500000476837158,
+      1.4500000476837158
+    ],
+    [
+      0.0,
+      5.303452491760254
+    ]
+  ],
+  "triangles": 29556,
+  "meshes": 188,
+  "degenerate_triangles": 0,
+  "embedded_images": 21,
+  "source_sha256": "55dd6661a5f13e33e39420aa59d1efefb29f6c4f43d9867efba7c36a955fe078",
+  "glb_sha256": "49fa3025efbb6fc543c3067af34bd473f0d960330aa7e4ccfb2c29e81a57d19b",
+  "visual_approval": "pending"
+}

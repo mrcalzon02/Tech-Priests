@@ -1,0 +1,81 @@
+{
+  "passed": true,
+  "rows": [
+    {
+      "key": "coal",
+      "source_sha256": "ff41c79bbf144e3dbc09ea32712de3109f243def45d500c8ae3ac1be9b0f5405",
+      "passed": true
+    },
+    {
+      "key": "copper-ore",
+      "source_sha256": "a49e88451a24eebe7685991cd9ad4dbe15effe9cbf8a220230104e0c8e0e0b7a",
+      "passed": true
+    },
+    {
+      "key": "copper-plate",
+      "source_sha256": "69d11e982f2ac1035fd8d009cda8bc07326d8c8b71ceabb038719df55ee9e3de",
+      "passed": true
+    },
+    {
+      "key": "copper-cable",
+      "source_sha256": "9cad54591ca42ff523ae8db9d271dad429d716252adb28ea748070f81140654e",
+      "passed": true
+    },
+    {
+      "key": "iron-gear-wheel",
+      "source_sha256": "e1674f5fbd455b647aa29f67ee1cb28d913d27b8e62fee3fc1e1f995c4f04f98",
+      "passed": true
+    },
+    {
+      "key": "iron-ore",
+      "source_sha256": "db1a9b9ff52a6a4b69fad2156fc3ef37c0a86d27dfcc199f70654e47fc6ecfbc",
+      "passed": true
+    },
+    {
+      "key": "iron-plate",
+      "source_sha256": "3da3942099d019ebb3e37a590fa0cc4f1dcbc1ce947ae7b3b1997e08479fe593",
+      "passed": true
+    },
+    {
+      "key": "iron-stick",
+      "source_sha256": "5d7fc7793ac256d34b71d23c1b933714d8f9eb17775723a2900c5ab8b6e8ea16",
+      "passed": true
+    },
+    {
+      "key": "stone",
+      "source_sha256": "cc9c98ffcd8d4bd0e8fdbc956762530ec4082e26595b7c02cf80696d092b48c5",
+      "passed": true
+    },
+    {
+      "key": "wood",
+      "source_sha256": "ab403f443f6671b3640b57f08b1d92b7cf71af60d237f6b10fd932d4a1c88e77",
+      "passed": true
+    }
+  ],
+  "unchanged_other_family_definitions": [
+    "container/tech-priests-martian-stone-cache",
+    "container/tech-priests-stone-cache-item-vault",
+    "container/tech-priests-basic-space-cargo-inventory",
+    "container/tech-priests-advanced-space-cargo-inventory",
+    "accumulator/tech-priests-stone-cache-primitive-acclimator-battery-bank",
+    "storage-tank/tech-priests-stone-cache-pressurized-fluid-vault",
+    "item/tech-priests-martian-stone-cache",
+    "item/tech-priests-stone-cache-item-vault",
+    "item/tech-priests-basic-space-cargo-inventory",
+    "item/tech-priests-advanced-space-cargo-inventory",
+    "item/tech-priests-stone-cache-primitive-acclimator-battery-bank",
+    "item/tech-priests-stone-cache-pressurized-fluid-vault",
+    "recipe/tech-priests-martian-stone-cache",
+    "recipe/tech-priests-stone-cache-item-vault",
+    "recipe/tech-priests-basic-space-cargo-inventory",
+    "recipe/tech-priests-advanced-space-cargo-inventory",
+    "recipe/tech-priests-stone-cache-primitive-acclimator-battery-bank",
+    "recipe/tech-priests-stone-cache-pressurized-fluid-vault",
+    "recipe/tech-priests-stone-cache-item-vault-recycling",
+    "recipe/tech-priests-stone-cache-primitive-acclimator-battery-bank-recycling",
+    "recipe/tech-priests-stone-cache-pressurized-fluid-vault-recycling"
+  ],
+  "private_instrumentation": "Production control is exact original prefix plus private bridge; actual filter and storage authority files hash-match production; diagnostic remote interface does not ship.",
+  "scope": "Each six-slot cache: four ordinary inserter in/out sides, capacity block/recovery, both circuit colors/reach, mining and reload. Each existing filter: no-pair safe retention, blocked safe restoration, paired exact reroute, allowed preservation, no spill/custody loss.",
+  "owner_approval": "Pending final visuals"
+}

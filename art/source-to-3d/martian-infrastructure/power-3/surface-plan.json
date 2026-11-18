@@ -1,0 +1,76 @@
+{
+  "model": "power-3",
+  "regions": [
+    {
+      "region": "red",
+      "surface": "oxide-red painted removable armor; exposed steel at panel edges",
+      "physical_repeat_tiles": 0.5,
+      "maps": [
+        "basecolor",
+        "occlusion-roughness-metallic",
+        "tangent-normal"
+      ]
+    },
+    {
+      "region": "steel",
+      "surface": "rolled steel braces; directional mill marks",
+      "physical_repeat_tiles": 0.5,
+      "maps": [
+        "basecolor",
+        "occlusion-roughness-metallic",
+        "tangent-normal"
+      ]
+    },
+    {
+      "region": "dark",
+      "surface": "cast gunmetal main load paths; fine casting pores",
+      "physical_repeat_tiles": 0.5,
+      "maps": [
+        "basecolor",
+        "occlusion-roughness-metallic",
+        "tangent-normal"
+      ]
+    },
+    {
+      "region": "concrete",
+      "surface": "ferrocrete plinth; horizontal shuttering and aggregate",
+      "physical_repeat_tiles": 0.5,
+      "maps": [
+        "basecolor",
+        "occlusion-roughness-metallic",
+        "tangent-normal"
+      ]
+    },
+    {
+      "region": "ceramic",
+      "surface": "ivory glazed ceramic insulators; fine glaze crazing",
+      "physical_repeat_tiles": 0.5,
+      "maps": [
+        "basecolor",
+        "occlusion-roughness-metallic",
+        "tangent-normal"
+      ]
+    },
+    {
+      "region": "brass",
+      "surface": "aged brass cable fittings; restrained longitudinal polish",
+      "physical_repeat_tiles": 0.5,
+      "maps": [
+        "basecolor",
+        "occlusion-roughness-metallic",
+        "tangent-normal"
+      ]
+    },
+    {
+      "region": "rubber",
+      "surface": "black armored service conduit",
+      "physical_repeat_tiles": 0.5,
+      "maps": [
+        "basecolor",
+        "occlusion-roughness-metallic",
+        "tangent-normal"
+      ]
+    }
+  ],
+  "authored_placement": "Red only on armor and service covers; concrete only foundation; ceramic only insulators/radome; mill direction follows member UVs; brass only fittings. Real exposed steel edge strips and seated fasteners."
+}

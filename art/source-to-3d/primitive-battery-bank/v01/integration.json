@@ -1,0 +1,15 @@
+{
+  "source_sha256": "84ac195d708b4fbea5d5306acec9eaaa7d1d2682a22c96665ab14aef6843b407",
+  "export_sha256": "8e68144d0caeeacf612f6d890096f7f92441903c8e837c5f728c6cc756e9204b",
+  "prototype_sha256": "050ea707887747dabfdc09fcd83f0b6aee60251a366dc00d818969199ef74f6e",
+  "runtime_art": {
+    "body.png": "7611a5361e81489728ba5e4ed7e3e0dbc5a59d7e1a6aff0d696b140dabd5ff21",
+    "charge.png": "5dd251a89da879a273fd9f15ed5fc33545fd4df1271a41b262ac08d125fffeba",
+    "discharge.png": "14f333d81974adcacf3c27b3746b6d34ccc95538539af7230d046a11204427b4",
+    "icon.png": "338fb7e363097da63a3f0db133522100123a2259aa06b2de441de4158ab73904",
+    "shadow.png": "367da1ae109768ed1a96529d4c986080f6cc5e34ec62dee5be05db7e35c19904"
+  },
+  "state": "Production graphics candidate; native electrical verification and owner approval separate",
+  "working_layers": "Eight genuine charge lens and eight discharge lens frames; static cells, busbars and guard; native cooldowns preserved",
+  "native_leds": "Inherited artwork re-seated on measured cabinet bezels; original states, wire pins, points, signal and reach preserved"
+}

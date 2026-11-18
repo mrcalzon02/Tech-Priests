@@ -1,0 +1,12 @@
+{
+  "key": "copper-cable",
+  "source_sha256": "9cad54591ca42ff523ae8db9d271dad429d716252adb28ea748070f81140654e",
+  "export_sha256": "9bf2910ac8194f6c76ade53ad264fd122a9aab917840eb225fc12b5cc3794f7f",
+  "prototype_sha256": "f8e0d08480306b4e929ee8d44d7f94183d8cabdc1bba64c688ddd7c6a29011af",
+  "runtime_art": {
+    "copper-cable-body.png": "cb620b3ec3fab55e26348859587c8333f9af1d3396c3c178a5068b829bb17d12",
+    "copper-cable-icon.png": "5c41a286b1d3ed398222cec42bc5f68e41cea5b95bdee7d0e4fb98e4bc290cae",
+    "copper-cable-shadow.png": "36587ec455e7bb44e486d0045de4134733004cc6251ae4d1fb62a819dea5e8b2"
+  },
+  "scope": "Only this filtered cache picture/icon/backing art; inventory6, recipes, filter steward, circuits, fixed direction and ordinary inserters unchanged"
+}

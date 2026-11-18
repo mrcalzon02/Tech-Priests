@@ -1,0 +1,59 @@
+{
+  "operator_target": [
+    0,
+    -0.79,
+    1.12
+  ],
+  "orientation": [
+    {
+      "console": 0,
+      "front_normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "facing_middle_dot": 1.0,
+      "yaw_degrees": 0.0,
+      "position": [
+        0,
+        0.18,
+        0
+      ]
+    },
+    {
+      "console": 1,
+      "front_normal": [
+        0.7071068286895752,
+        -0.7071067094802856,
+        0.0
+      ],
+      "facing_middle_dot": 0.9999999403953552,
+      "yaw_degrees": 45.0,
+      "position": [
+        -0.62,
+        -0.17,
+        0
+      ]
+    },
+    {
+      "console": 2,
+      "front_normal": [
+        -0.7071068286895752,
+        -0.7071067094802856,
+        0.0
+      ],
+      "facing_middle_dot": 0.9999999403953552,
+      "yaw_degrees": -45.0,
+      "position": [
+        0.62,
+        -0.17,
+        0
+      ]
+    }
+  ],
+  "skull_geometry_uv_and_frame_unchanged": {
+    "Supplied DGordillo low-poly skull 0": "0c084daf4426caf6e2ad51d2a107672e74b5799f5b88534e4fb143307e798e24",
+    "Supplied DGordillo low-poly skull 1": "1aeb10e3a03e72239301cf3e15e0b86efbe6309cfeeec700d31e3f882b9800dd",
+    "Supplied DGordillo low-poly skull 2": "c9501d93a960ba83d1953363ceaa00cb432924a210ca4e31477d9cadf23a1f38"
+  }
+}

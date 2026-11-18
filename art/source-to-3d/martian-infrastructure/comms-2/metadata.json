@@ -1,0 +1,198 @@
+{
+  "name": "comms-2",
+  "footprint": [
+    2,
+    2
+  ],
+  "height": 3.8938446044921875,
+  "camera_scale_tiles": 5.6,
+  "sprite_shift_tiles": [
+    0.0,
+    -1.2114783287048339
+  ],
+  "sprite_HR_pixels": 358,
+  "socket_positions_model": {
+    "red": [
+      -0.5184,
+      -0.46,
+      2.04
+    ],
+    "copper": [
+      0,
+      -0.46,
+      2.04
+    ],
+    "green": [
+      0.5184,
+      -0.46,
+      2.04
+    ]
+  },
+  "wire_points_tiles": {
+    "red": [
+      -0.5184000492095947,
+      -1.1172285079956055
+    ],
+    "copper": [
+      0.0,
+      -1.1172285079956055
+    ],
+    "green": [
+      0.5184000492095947,
+      -1.1172285079956055
+    ]
+  },
+  "routes": [
+    {
+      "name": "Transceiver coax to fixed slip-ring collar",
+      "points": [
+        [
+          -0.13,
+          0.14,
+          2.47
+        ],
+        [
+          -0.24,
+          0.15,
+          2.1500000000000004
+        ],
+        [
+          -0.24,
+          0.15,
+          1.6
+        ]
+      ],
+      "start_and_end_glands": true
+    },
+    {
+      "name": "Vox whip and coaxial seat",
+      "points": [
+        [
+          0.72,
+          0.2,
+          2.14
+        ],
+        [
+          0.735,
+          0.2,
+          2.768
+        ],
+        [
+          0.79,
+          0.225,
+          3.6
+        ]
+      ],
+      "start_and_end_glands": true
+    },
+    {
+      "name": "Transceiver coax to fixed slip-ring collar",
+      "points": [
+        [
+          0.13,
+          0.14,
+          2.47
+        ],
+        [
+          0.24,
+          0.15,
+          2.1500000000000004
+        ],
+        [
+          0.24,
+          0.15,
+          1.6
+        ]
+      ],
+      "start_and_end_glands": true
+    },
+    {
+      "name": "Vox whip and coaxial seat",
+      "points": [
+        [
+          -0.72,
+          0.2,
+          3.4800000000000004
+        ],
+        [
+          -0.705,
+          0.2,
+          3.604
+        ],
+        [
+          -0.6499999999999999,
+          0.225,
+          3.8900000000000006
+        ]
+      ],
+      "start_and_end_glands": true
+    },
+    {
+      "name": "Terminal to cabinet hardline",
+      "points": [
+        [
+          -0.5184,
+          -0.4,
+          1.52
+        ],
+        [
+          -0.44,
+          -0.46,
+          1.39
+        ],
+        [
+          -0.44,
+          -0.42,
+          1.23
+        ]
+      ],
+      "start_and_end_glands": true
+    },
+    {
+      "name": "Terminal to cabinet hardline",
+      "points": [
+        [
+          0.5184,
+          -0.4,
+          1.52
+        ],
+        [
+          0.44,
+          -0.46,
+          1.39
+        ],
+        [
+          0.44,
+          -0.42,
+          1.23
+        ]
+      ],
+      "start_and_end_glands": true
+    },
+    {
+      "name": "Copper terminal power feed",
+      "points": [
+        [
+          0,
+          -0.4,
+          1.52
+        ],
+        [
+          0,
+          -0.46,
+          1.39
+        ],
+        [
+          0,
+          -0.42,
+          1.23
+        ]
+      ],
+      "start_and_end_glands": true
+    }
+  ],
+  "rotating_dish": true,
+  "rotation_seconds": 10,
+  "model_specific_surface_plan": "surface-plan.json",
+  "owner_approval": "pending"
+}

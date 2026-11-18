@@ -1,0 +1,12 @@
+{
+  "key": "iron-gear-wheel",
+  "source_sha256": "e1674f5fbd455b647aa29f67ee1cb28d913d27b8e62fee3fc1e1f995c4f04f98",
+  "export_sha256": "088da7ad0c686f924ede8002e53c8667cbade038de3ca62303acb3979b87f072",
+  "prototype_sha256": "f8e0d08480306b4e929ee8d44d7f94183d8cabdc1bba64c688ddd7c6a29011af",
+  "runtime_art": {
+    "iron-gear-wheel-body.png": "0ad4c99d904ca9bc7f59fd5666dd79be831d1a9b4067b81a4c66bc5728eeb902",
+    "iron-gear-wheel-icon.png": "80597936328b202e479f16a4c5c4d7c0b4bfbc02d736336e4fe77c93fe8f02c1",
+    "iron-gear-wheel-shadow.png": "19fb831d907a8e517214fb5666f32bf27072da2e7d7182f7e564349a11736d61"
+  },
+  "scope": "Only this filtered cache picture/icon/backing art; inventory6, recipes, filter steward, circuits, fixed direction and ordinary inserters unchanged"
+}

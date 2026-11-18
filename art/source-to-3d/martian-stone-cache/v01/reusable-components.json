@@ -1,0 +1,13 @@
+{
+  "state": "Editable component kit; material/owner review pending before family propagation",
+  "stone_library": "martian-stone-enclosure-kit.blend",
+  "collections": {
+    "stone": "CACHE KIT | Stone enclosure",
+    "emblem": "CACHE KIT | Centered Martian relief",
+    "cover": "CACHE VARIANT | Domed hide cover"
+  },
+  "geometry_scope": "Full-depth curved front section and surrounding outer stone wall/foundation; cover and skull emblem remain separately editable",
+  "variants": "Only the base cache is constructed. Later variants require their own actual prototype, geometry/fittings, captures and native tests.",
+  "materials": "Revision 2: restrained rubble pores, broad mineral variation and smoother dressed front wall. Owner review pending.",
+  "evidence": "kit-inspection.json independently appends 71 meshes with packed maps; material-revision.json proves geometry/UVs unchanged."
+}

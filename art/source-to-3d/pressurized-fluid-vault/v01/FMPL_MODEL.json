@@ -1,0 +1,55 @@
+{
+  "schema": "fmpl.local-model-record.v1",
+  "id": "tech-priests-pressurized-fluid-vault-v01",
+  "status": "directional-game-sprites-installed-specific-native-checks-passed",
+  "publication": "Local working-tree candidate; no remote publication claimed",
+  "source": {
+    "path": "art\\source-to-3d\\pressurized-fluid-vault\\v01\\pressurized-fluid-vault-v01.blend",
+    "sha256": "8594eba97100ac8ed558d88317200d6102576da6538d6af73e05957a06a8513a"
+  },
+  "runtime": {
+    "path": "art\\source-to-3d\\pressurized-fluid-vault\\v01\\pressurized-fluid-vault-v01.glb",
+    "sha256": "3c7f49f18b337eb7d649482ec2ec9eefb6763a06989dd0b13d500342f82a826d"
+  },
+  "camera_policy": "fmpl.factorio45.v1",
+  "sprite_only_ground_y_scale": 1.4142135623730951,
+  "native_tile_grid": [
+    3,
+    3
+  ],
+  "native_directions": [
+    0,
+    4
+  ],
+  "ports": {
+    "positions": [
+      [
+        0,
+        -1
+      ],
+      [
+        0,
+        1
+      ]
+    ],
+    "source_mouth_planes": [
+      1.5,
+      -1.5
+    ],
+    "axis_z": 0.44,
+    "bore": 0.56,
+    "collar_od": 0.84
+  },
+  "purpose": "Native1000-volume storage tank with hollow sealed pressure construction, opposed ordinary-grid pipe ports, correct directional pictures and actual amount/temperature circuits.",
+  "evidence": [
+    "contract.json",
+    "native-preflight.json",
+    "surface-plan.json",
+    "inspection.json",
+    "port-audit.json",
+    "integration.json",
+    "visual-review.json",
+    "native-evidence/review.json"
+  ],
+  "owner_approval": "Final native visuals not signed off"
+}

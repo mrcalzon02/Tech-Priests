@@ -1,0 +1,127 @@
+{
+  "name": "power-1",
+  "footprint": [
+    1,
+    1
+  ],
+  "height": 2.424999713897705,
+  "camera_scale_tiles": 3.6,
+  "sprite_shift_tiles": [
+    0.0,
+    -0.7544813632965088
+  ],
+  "sprite_HR_pixels": 230,
+  "socket_positions_model": {
+    "red": [
+      -0.2736,
+      0,
+      2.4149999999999996
+    ],
+    "copper": [
+      0,
+      0,
+      2.4149999999999996
+    ],
+    "green": [
+      0.2736,
+      0,
+      2.4149999999999996
+    ]
+  },
+  "wire_points_tiles": {
+    "red": [
+      -0.2736000180244446,
+      -1.7076627016067505
+    ],
+    "copper": [
+      0.0,
+      -1.7076627016067505
+    ],
+    "green": [
+      0.2736001253128052,
+      -1.7076627016067505
+    ]
+  },
+  "routes": [
+    {
+      "name": "Cabinet to crossarm armored riser",
+      "points": [
+        [
+          -0.11,
+          -0.2,
+          0.755
+        ],
+        [
+          -0.11,
+          -0.03,
+          0.9550000000000001
+        ],
+        [
+          -0.11,
+          -0.03,
+          1.8699999999999999
+        ],
+        [
+          -0.2736,
+          0.06,
+          1.9299999999999997
+        ]
+      ],
+      "start_and_end_glands": true
+    },
+    {
+      "name": "Cabinet to crossarm armored riser",
+      "points": [
+        [
+          0.11,
+          -0.2,
+          0.755
+        ],
+        [
+          0.11,
+          -0.03,
+          0.9550000000000001
+        ],
+        [
+          0.11,
+          -0.03,
+          1.8699999999999999
+        ],
+        [
+          0.2736,
+          0.06,
+          1.9299999999999997
+        ]
+      ],
+      "start_and_end_glands": true
+    },
+    {
+      "name": "Copper bus armored central riser",
+      "points": [
+        [
+          0,
+          -0.2,
+          0.755
+        ],
+        [
+          0,
+          -0.07,
+          0.9550000000000001
+        ],
+        [
+          0,
+          -0.07,
+          1.7999999999999998
+        ],
+        [
+          0,
+          0.06,
+          1.9299999999999997
+        ]
+      ],
+      "start_and_end_glands": true
+    }
+  ],
+  "model_specific_surface_plan": "surface-plan.json",
+  "owner_approval": "pending"
+}

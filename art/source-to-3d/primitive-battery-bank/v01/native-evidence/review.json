@@ -1,0 +1,549 @@
+{
+  "passed": true,
+  "source_sha256": "84ac195d708b4fbea5d5306acec9eaaa7d1d2682a22c96665ab14aef6843b407",
+  "export_sha256": "8e68144d0caeeacf612f6d890096f7f92441903c8e837c5f728c6cc756e9204b",
+  "prototype_changes": {
+    "prototype": [
+      "/icon",
+      "/circuit_connector/sprites/led_red/shift/0",
+      "/circuit_connector/sprites/led_red/shift/1",
+      "/circuit_connector/sprites/led_blue_off/shift/0",
+      "/circuit_connector/sprites/led_blue_off/shift/1",
+      "/circuit_connector/sprites/blue_led_light_offset/0",
+      "/circuit_connector/sprites/blue_led_light_offset/1",
+      "/circuit_connector/sprites/connector_shadow/scale",
+      "/circuit_connector/sprites/connector_shadow/height",
+      "/circuit_connector/sprites/connector_shadow/shift",
+      "/circuit_connector/sprites/connector_shadow/width",
+      "/circuit_connector/sprites/connector_shadow/priority",
+      "/circuit_connector/sprites/connector_shadow/x",
+      "/circuit_connector/sprites/connector_shadow/draw_as_shadow",
+      "/circuit_connector/sprites/connector_shadow/filename",
+      "/circuit_connector/sprites/connector_shadow/y",
+      "/circuit_connector/sprites/led_blue/shift/0",
+      "/circuit_connector/sprites/led_blue/shift/1",
+      "/circuit_connector/sprites/led_green/shift/0",
+      "/circuit_connector/sprites/led_green/shift/1",
+      "/circuit_connector/sprites/connector_main/scale",
+      "/circuit_connector/sprites/connector_main/height",
+      "/circuit_connector/sprites/connector_main/shift",
+      "/circuit_connector/sprites/connector_main/width",
+      "/circuit_connector/sprites/connector_main/priority",
+      "/circuit_connector/sprites/connector_main/x",
+      "/circuit_connector/sprites/connector_main/filename",
+      "/circuit_connector/sprites/connector_main/y",
+      "/circuit_connector/sprites/red_green_led_light_offset/0",
+      "/circuit_connector/sprites/red_green_led_light_offset/1",
+      "/chargable_graphics/picture/layers/0/scale",
+      "/chargable_graphics/picture/layers/0/height",
+      "/chargable_graphics/picture/layers/0/shift/0",
+      "/chargable_graphics/picture/layers/0/shift/1",
+      "/chargable_graphics/picture/layers/0/width",
+      "/chargable_graphics/picture/layers/0/line_length",
+      "/chargable_graphics/picture/layers/0/frame_count",
+      "/chargable_graphics/picture/layers/0/filename",
+      "/chargable_graphics/picture/layers/1/scale",
+      "/chargable_graphics/picture/layers/1/height",
+      "/chargable_graphics/picture/layers/1/shift/1",
+      "/chargable_graphics/picture/layers/1/width",
+      "/chargable_graphics/picture/layers/1/line_length",
+      "/chargable_graphics/picture/layers/1/frame_count",
+      "/chargable_graphics/picture/layers/1/filename",
+      "/chargable_graphics/charge_animation/layers",
+      "/chargable_graphics/discharge_animation/layers"
+    ],
+    "item": [
+      "/icon"
+    ],
+    "recipe": [
+      "/icon"
+    ]
+  },
+  "unchanged_family_definitions": [
+    "container/tech-priests-martian-stone-cache",
+    "container/tech-priests-stone-cache-item-vault",
+    "container/tech-priests-stone-cache-coal",
+    "container/tech-priests-stone-cache-stone",
+    "container/tech-priests-stone-cache-wood",
+    "container/tech-priests-stone-cache-iron-ore",
+    "container/tech-priests-stone-cache-copper-ore",
+    "container/tech-priests-stone-cache-iron-plate",
+    "container/tech-priests-stone-cache-copper-plate",
+    "container/tech-priests-stone-cache-copper-cable",
+    "container/tech-priests-stone-cache-iron-gear-wheel",
+    "container/tech-priests-stone-cache-iron-stick",
+    "container/tech-priests-basic-space-cargo-inventory",
+    "container/tech-priests-advanced-space-cargo-inventory",
+    "storage-tank/tech-priests-stone-cache-pressurized-fluid-vault",
+    "item/tech-priests-martian-stone-cache",
+    "item/tech-priests-stone-cache-item-vault",
+    "item/tech-priests-stone-cache-coal",
+    "item/tech-priests-stone-cache-stone",
+    "item/tech-priests-stone-cache-wood",
+    "item/tech-priests-stone-cache-iron-ore",
+    "item/tech-priests-stone-cache-copper-ore",
+    "item/tech-priests-stone-cache-iron-plate",
+    "item/tech-priests-stone-cache-copper-plate",
+    "item/tech-priests-stone-cache-copper-cable",
+    "item/tech-priests-stone-cache-iron-gear-wheel",
+    "item/tech-priests-stone-cache-iron-stick",
+    "item/tech-priests-basic-space-cargo-inventory",
+    "item/tech-priests-advanced-space-cargo-inventory",
+    "item/tech-priests-stone-cache-pressurized-fluid-vault",
+    "recipe/tech-priests-martian-stone-cache",
+    "recipe/tech-priests-stone-cache-item-vault",
+    "recipe/tech-priests-stone-cache-coal",
+    "recipe/tech-priests-stone-cache-stone",
+    "recipe/tech-priests-stone-cache-wood",
+    "recipe/tech-priests-stone-cache-iron-ore",
+    "recipe/tech-priests-stone-cache-copper-ore",
+    "recipe/tech-priests-stone-cache-iron-plate",
+    "recipe/tech-priests-stone-cache-copper-plate",
+    "recipe/tech-priests-stone-cache-copper-cable",
+    "recipe/tech-priests-stone-cache-iron-gear-wheel",
+    "recipe/tech-priests-stone-cache-iron-stick",
+    "recipe/tech-priests-basic-space-cargo-inventory",
+    "recipe/tech-priests-advanced-space-cargo-inventory",
+    "recipe/tech-priests-stone-cache-pressurized-fluid-vault",
+    "recipe/tech-priests-stone-cache-item-vault-recycling",
+    "recipe/tech-priests-stone-cache-coal-recycling",
+    "recipe/tech-priests-stone-cache-stone-recycling",
+    "recipe/tech-priests-stone-cache-wood-recycling",
+    "recipe/tech-priests-stone-cache-iron-ore-recycling",
+    "recipe/tech-priests-stone-cache-copper-ore-recycling",
+    "recipe/tech-priests-stone-cache-iron-plate-recycling",
+    "recipe/tech-priests-stone-cache-copper-plate-recycling",
+    "recipe/tech-priests-stone-cache-copper-cable-recycling",
+    "recipe/tech-priests-stone-cache-iron-gear-wheel-recycling",
+    "recipe/tech-priests-stone-cache-iron-stick-recycling",
+    "recipe/tech-priests-stone-cache-pressurized-fluid-vault-recycling"
+  ],
+  "native": {
+    "energy_trace": [
+      {
+        "tick": 0,
+        "joules": 0
+      },
+      {
+        "tick": 10,
+        "joules": 83333.33333333333
+      },
+      {
+        "tick": 20,
+        "joules": 166666.6666666667
+      },
+      {
+        "tick": 30,
+        "joules": 250000.00000000012
+      },
+      {
+        "tick": 40,
+        "joules": 333333.3333333333
+      },
+      {
+        "tick": 50,
+        "joules": 416666.66666666645
+      },
+      {
+        "tick": 60,
+        "joules": 499999.9999999996
+      },
+      {
+        "tick": 70,
+        "joules": 583333.3333333331
+      },
+      {
+        "tick": 80,
+        "joules": 666666.6666666669
+      },
+      {
+        "tick": 90,
+        "joules": 750000.0000000006
+      },
+      {
+        "tick": 100,
+        "joules": 833333.3333333343
+      },
+      {
+        "tick": 110,
+        "joules": 916666.666666668
+      },
+      {
+        "tick": 120,
+        "joules": 1000000
+      },
+      {
+        "tick": 130,
+        "joules": 1000000
+      },
+      {
+        "tick": 140,
+        "joules": 1000000
+      },
+      {
+        "tick": 150,
+        "joules": 1000000
+      },
+      {
+        "tick": 160,
+        "joules": 1000000
+      },
+      {
+        "tick": 170,
+        "joules": 1000000
+      },
+      {
+        "tick": 180,
+        "joules": 1000000
+      },
+      {
+        "tick": 190,
+        "joules": 1000000
+      },
+      {
+        "tick": 200,
+        "joules": 1000000
+      },
+      {
+        "tick": 210,
+        "joules": 1000000
+      },
+      {
+        "tick": 220,
+        "joules": 1000000
+      },
+      {
+        "tick": 230,
+        "joules": 916666.6666666663
+      },
+      {
+        "tick": 240,
+        "joules": 833333.3333333326
+      },
+      {
+        "tick": 250,
+        "joules": 749999.9999999988
+      },
+      {
+        "tick": 260,
+        "joules": 666666.6666666651
+      },
+      {
+        "tick": 270,
+        "joules": 583333.3333333314
+      },
+      {
+        "tick": 280,
+        "joules": 499999.99999999785
+      },
+      {
+        "tick": 290,
+        "joules": 416666.6666666647
+      },
+      {
+        "tick": 300,
+        "joules": 333333.33333333157
+      },
+      {
+        "tick": 310,
+        "joules": 249999.99999999837
+      },
+      {
+        "tick": 320,
+        "joules": 166666.66666666494
+      },
+      {
+        "tick": 330,
+        "joules": 83333.3333333316
+      },
+      {
+        "tick": 340,
+        "joules": 0
+      },
+      {
+        "tick": 350,
+        "joules": 0
+      },
+      {
+        "tick": 360,
+        "joules": 0
+      },
+      {
+        "tick": 370,
+        "joules": 0
+      },
+      {
+        "tick": 380,
+        "joules": 0
+      },
+      {
+        "tick": 390,
+        "joules": 0
+      },
+      {
+        "tick": 400,
+        "joules": 0
+      },
+      {
+        "tick": 410,
+        "joules": 83333.33333333333
+      },
+      {
+        "tick": 420,
+        "joules": 166666.6666666667
+      },
+      {
+        "tick": 430,
+        "joules": 250000.00000000012
+      },
+      {
+        "tick": 440,
+        "joules": 333333.3333333333
+      },
+      {
+        "tick": 450,
+        "joules": 416666.66666666645
+      },
+      {
+        "tick": 460,
+        "joules": 499999.9999999996
+      },
+      {
+        "tick": 470,
+        "joules": 583333.3333333331
+      },
+      {
+        "tick": 480,
+        "joules": 666666.6666666669
+      },
+      {
+        "tick": 490,
+        "joules": 750000.0000000006
+      },
+      {
+        "tick": 500,
+        "joules": 833333.3333333343
+      },
+      {
+        "tick": 510,
+        "joules": 916666.666666668
+      },
+      {
+        "tick": 520,
+        "joules": 1000000
+      },
+      {
+        "tick": 530,
+        "joules": 1000000
+      },
+      {
+        "tick": 540,
+        "joules": 1000000
+      },
+      {
+        "tick": 550,
+        "joules": 1000000
+      },
+      {
+        "tick": 560,
+        "joules": 1000000
+      },
+      {
+        "tick": 570,
+        "joules": 1000000
+      },
+      {
+        "tick": 580,
+        "joules": 1000000
+      },
+      {
+        "tick": 590,
+        "joules": 1000000
+      },
+      {
+        "tick": 600,
+        "joules": 1000000
+      },
+      {
+        "tick": 610,
+        "joules": 1000000
+      },
+      {
+        "tick": 620,
+        "joules": 1000000
+      },
+      {
+        "tick": 630,
+        "joules": 1000000
+      },
+      {
+        "tick": 640,
+        "joules": 1000000
+      },
+      {
+        "tick": 650,
+        "joules": 1000000
+      },
+      {
+        "tick": 660,
+        "joules": 1000000
+      },
+      {
+        "tick": 670,
+        "joules": 1000000
+      },
+      {
+        "tick": 680,
+        "joules": 1000000
+      },
+      {
+        "tick": 690,
+        "joules": 916666.6666666663
+      },
+      {
+        "tick": 700,
+        "joules": 833333.3333333326
+      },
+      {
+        "tick": 710,
+        "joules": 749999.9999999988
+      },
+      {
+        "tick": 720,
+        "joules": 666666.6666666651
+      },
+      {
+        "tick": 730,
+        "joules": 749999.9999999988
+      },
+      {
+        "tick": 740,
+        "joules": 833333.3333333326
+      },
+      {
+        "tick": 750,
+        "joules": 916666.6666666663
+      },
+      {
+        "tick": 760,
+        "joules": 1000000
+      },
+      {
+        "tick": 770,
+        "joules": 1000000
+      },
+      {
+        "tick": 780,
+        "joules": 1000000
+      },
+      {
+        "tick": 790,
+        "joules": 1000000
+      },
+      {
+        "tick": 800,
+        "joules": 1000000
+      },
+      {
+        "tick": 810,
+        "joules": 1000000
+      },
+      {
+        "tick": 820,
+        "joules": 1000000
+      },
+      {
+        "tick": 830,
+        "joules": 1000000
+      },
+      {
+        "tick": 840,
+        "joules": 1000000
+      },
+      {
+        "tick": 850,
+        "joules": 1000000
+      },
+      {
+        "tick": 860,
+        "joules": 1000000
+      },
+      {
+        "tick": 870,
+        "joules": 1000000
+      },
+      {
+        "tick": 880,
+        "joules": 1000000
+      },
+      {
+        "tick": 890,
+        "joules": 1000000
+      },
+      {
+        "tick": 900,
+        "joules": 1000000
+      },
+      {
+        "tick": 910,
+        "joules": 1000000
+      },
+      {
+        "tick": 920,
+        "joules": 1000000
+      },
+      {
+        "tick": 930,
+        "joules": 1000000
+      },
+      {
+        "tick": 940,
+        "joules": 1000000
+      },
+      {
+        "tick": 950,
+        "joules": 1000000
+      },
+      {
+        "tick": 960,
+        "joules": 1000000
+      }
+    ],
+    "peak_input_j_per_tick": 8333.333333333372,
+    "peak_output_j_per_tick": 8333.333333333372,
+    "no_item_inventory": true,
+    "recipe_initially_locked": true,
+    "wire_connections": [
+      true,
+      true
+    ],
+    "research_unlock": true,
+    "far_wire_rejected": true,
+    "full_charge": true,
+    "full_signal": true,
+    "empty_discharge": true,
+    "empty_signal": true,
+    "recharge": true,
+    "isolated_holds": true,
+    "reconnection_discharges": true,
+    "restart_full": true,
+    "capacity_1MJ": true,
+    "flow_limits": true,
+    "mining": true,
+    "passed": true
+  },
+  "reload": {
+    "passed": true,
+    "reload_preserved": true,
+    "energy": 1000000
+  },
+  "art_hashes": {
+    "body.png": "7611a5361e81489728ba5e4ed7e3e0dbc5a59d7e1a6aff0d696b140dabd5ff21",
+    "charge.png": "5dd251a89da879a273fd9f15ed5fc33545fd4df1271a41b262ac08d125fffeba",
+    "discharge.png": "14f333d81974adcacf3c27b3746b6d34ccc95538539af7230d046a11204427b4",
+    "icon.png": "338fb7e363097da63a3f0db133522100123a2259aa06b2de441de4158ab73904",
+    "shadow.png": "367da1ae109768ed1a96529d4c986080f6cc5e34ec62dee5be05db7e35c19904"
+  },
+  "native_applicability": "Actual accumulator; ordinary electrical pole coverage and native signal-A are tested. Inserter/physical-item storage tests do not apply.",
+  "owner_approval": "Pending owner model and shared finish review; no approval inferred from next instruction"
+}

@@ -1,0 +1,12 @@
+{
+  "stage": "Production graphics integrated; native verification and owner review are separate",
+  "source_sha256": "370f65a287b78427f13d3128c5e7796fe644ee30a259bab5b28ca83272f2ee62",
+  "export_sha256": "6a4a0b2bf8dd50715aab260cd7f8ebdb4046ef129961460fd3e371ca6f244ada",
+  "prototype_sha256": "f8af9550b768751b7cfa686b30fd8de0ed2a560e972a5aa5bdba6719ecaf9600",
+  "runtime_art": {
+    "body.png": "e95f491a5910694d591388a2d5e40ce1165a6af0e9084c914045985629a97104",
+    "icon.png": "1ad228d6957f050c031fe53a85be464aae45211f0c8ad699bcdeb9209a76dbad",
+    "shadow.png": "a1d30450c20dd63fd8de76f1791abc58414e9c55585c0b31a6569cc30394628d"
+  },
+  "scope": "Item Vault picture, icon and connector backing artwork only; native connector points/reach, pins and LEDs retained"
+}

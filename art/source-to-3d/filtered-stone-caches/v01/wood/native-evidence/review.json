@@ -1,0 +1,98 @@
+{
+  "passed": true,
+  "key": "wood",
+  "source_sha256": "ab403f443f6671b3640b57f08b1d92b7cf71af60d237f6b10fd932d4a1c88e77",
+  "export_sha256": "f652573cf6b249ccfdced9c85d9129b525befd9dcb8085f8623995f39612b475",
+  "native": {
+    "inventory_size": true,
+    "recipe_enabled": true,
+    "inputs": [
+      true,
+      true,
+      true,
+      true
+    ],
+    "outputs": [
+      true,
+      true,
+      true,
+      true
+    ],
+    "wires": [
+      true,
+      true
+    ],
+    "far_wire_rejected": true,
+    "capacity": 600,
+    "full_blocks": true,
+    "unblocked": true,
+    "signals": true,
+    "mining": true,
+    "filter": {
+      "actual_installed_module": true,
+      "wrong_item": "copper-plate",
+      "no_pair_retains_wrong": true,
+      "blocked_restores_without_loss": true,
+      "actual_reroute": true,
+      "conserved": true,
+      "allowed_retained": true,
+      "no_spill": true,
+      "reroute_stat": 7,
+      "no_custody": true,
+      "passed": true
+    },
+    "passed": true
+  },
+  "reload": {
+    "passed": true,
+    "reload_preserved": true
+  },
+  "prototype_changes": {
+    "prototype": [
+      "/icon",
+      "/picture/layers/0/frame_count",
+      "/picture/layers/0/shift/0",
+      "/picture/layers/0/shift/1",
+      "/picture/layers/0/scale",
+      "/picture/layers/0/filename",
+      "/picture/layers/0/priority",
+      "/picture/layers/0/line_length",
+      "/picture/layers/0/height",
+      "/picture/layers/0/width",
+      "/picture/layers/1/frame_count",
+      "/picture/layers/1/shift/1",
+      "/picture/layers/1/scale",
+      "/picture/layers/1/filename",
+      "/picture/layers/1/priority",
+      "/picture/layers/1/line_length",
+      "/picture/layers/1/height",
+      "/picture/layers/1/width",
+      "/circuit_connector/0/sprites/connector_main/shift",
+      "/circuit_connector/0/sprites/connector_main/scale",
+      "/circuit_connector/0/sprites/connector_main/x",
+      "/circuit_connector/0/sprites/connector_main/filename",
+      "/circuit_connector/0/sprites/connector_main/y",
+      "/circuit_connector/0/sprites/connector_main/priority",
+      "/circuit_connector/0/sprites/connector_main/height",
+      "/circuit_connector/0/sprites/connector_main/width",
+      "/circuit_connector/0/sprites/connector_shadow/shift",
+      "/circuit_connector/0/sprites/connector_shadow/scale",
+      "/circuit_connector/0/sprites/connector_shadow/x",
+      "/circuit_connector/0/sprites/connector_shadow/filename",
+      "/circuit_connector/0/sprites/connector_shadow/y",
+      "/circuit_connector/0/sprites/connector_shadow/priority",
+      "/circuit_connector/0/sprites/connector_shadow/height",
+      "/circuit_connector/0/sprites/connector_shadow/width",
+      "/circuit_connector/0/sprites/connector_shadow/draw_as_shadow"
+    ],
+    "item": [
+      "/icon"
+    ],
+    "recipe": [
+      "/icon"
+    ]
+  },
+  "proof": "Actual installed production steward invoked in its own mod context using real cache/station/priest/sink entities and inventory operations; no replacement filter or mock deposit. Private remote bridge is appended only in isolated proof copy, never production.",
+  "filter_semantics": "Existing runtime steward, not hard per-slot filters: allowed items stay; wrong items reroute physically through actual storage authority when a valid priest/station pair and destination exist. Without a pair, or with blocked destinations, wrong items remain safely rather than being voided.",
+  "owner_approval": "User requested simplified rapid batch; final native visuals remain separately reviewable"
+}

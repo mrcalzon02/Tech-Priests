@@ -1,0 +1,546 @@
+{
+  "passed": true,
+  "scope": "Accepted Conclave V08 integration and production panel layout repair",
+  "owner_model_accepted": true,
+  "runtime_source_sha256": "55bc15641274c5e78781f7f0e7ee4767079b446078b011f2e91c5526999dc84e",
+  "source_sha256": "39c74555ccc30ea25683985a14dc743c848563a32f3ad5b52795e283bcab3436",
+  "export_sha256": "d09646f59b3982ea4fbf1d3fbbad4818c317aed4bdd537b0efc96870fcf9d3d6",
+  "model_art_unchanged": true,
+  "changes": [
+    "Viewport budget accounts for actual GUI scale.",
+    "Status on its own row; action buttons on a separate full-width row.",
+    "All six tables have column-width budgets and wrapped labels; full captions retained as tooltips.",
+    "All five panes use vertical scrolling only.",
+    "Native sprite resizing disabled for the timer; image scales to a32 GUI-unit widget.",
+    "Live resolution/scale events rebuild an open panel while preserving selected tab."
+  ],
+  "native_tab_captures": [
+    {
+      "resolution": [
+        922,
+        599
+      ],
+      "tab": 1,
+      "png": "approved-integration-evidence/gui-compact/layout-922x599-0.75-1.png",
+      "png_sha256": "28c3182fb2fdfa6a75e111e783deae6bc514324f13aa914761e70d4378044814",
+      "native_layout": {
+        "resolution": {
+          "width": 922,
+          "height": 599
+        },
+        "scale": 0.75,
+        "panel_width": 1000,
+        "panel_height": 734,
+        "tab": 1,
+        "panes": [
+          {
+            "width": 952,
+            "height": 554,
+            "horizontal_scroll_policy": "never",
+            "vertical_scroll_policy": "auto"
+          },
+          {
+            "width": 952,
+            "height": 554,
+            "horizontal_scroll_policy": "never",
+            "vertical_scroll_policy": "auto"
+          },
+          {
+            "width": 952,
+            "height": 554,
+            "horizontal_scroll_policy": "never",
+            "vertical_scroll_policy": "auto"
+          },
+          {
+            "width": 952,
+            "height": 554,
+            "horizontal_scroll_policy": "never",
+            "vertical_scroll_policy": "auto"
+          },
+          {
+            "width": 952,
+            "height": 554,
+            "horizontal_scroll_policy": "never",
+            "vertical_scroll_policy": "auto"
+          }
+        ]
+      }
+    },
+    {
+      "resolution": [
+        922,
+        599
+      ],
+      "tab": 2,
+      "png": "approved-integration-evidence/gui-compact/layout-922x599-0.75-2.png",
+      "png_sha256": "3e34300a04165d7f22bda5d0968e63bc8187794fd9028dd391c41fc45fd8de43",
+      "native_layout": {
+        "resolution": {
+          "width": 922,
+          "height": 599
+        },
+        "scale": 0.75,
+        "panel_width": 1000,
+        "panel_height": 734,
+        "tab": 2,
+        "panes": [
+          {
+            "width": 952,
+            "height": 554,
+            "horizontal_scroll_policy": "never",
+            "vertical_scroll_policy": "auto"
+          },
+          {
+            "width": 952,
+            "height": 554,
+            "horizontal_scroll_policy": "never",
+            "vertical_scroll_policy": "auto"
+          },
+          {
+            "width": 952,
+            "height": 554,
+            "horizontal_scroll_policy": "never",
+            "vertical_scroll_policy": "auto"
+          },
+          {
+            "width": 952,
+            "height": 554,
+            "horizontal_scroll_policy": "never",
+            "vertical_scroll_policy": "auto"
+          },
+          {
+            "width": 952,
+            "height": 554,
+            "horizontal_scroll_policy": "never",
+            "vertical_scroll_policy": "auto"
+          }
+        ]
+      }
+    },
+    {
+      "resolution": [
+        922,
+        599
+      ],
+      "tab": 3,
+      "png": "approved-integration-evidence/gui-compact/layout-922x599-0.75-3.png",
+      "png_sha256": "350e7a96105dc7d3a67620578f2dd454b659d5628e9ca0928cee5a9c6efb998a",
+      "native_layout": {
+        "resolution": {
+          "width": 922,
+          "height": 599
+        },
+        "scale": 0.75,
+        "panel_width": 1000,
+        "panel_height": 734,
+        "tab": 3,
+        "panes": [
+          {
+            "width": 952,
+            "height": 554,
+            "horizontal_scroll_policy": "never",
+            "vertical_scroll_policy": "auto"
+          },
+          {
+            "width": 952,
+            "height": 554,
+            "horizontal_scroll_policy": "never",
+            "vertical_scroll_policy": "auto"
+          },
+          {
+            "width": 952,
+            "height": 554,
+            "horizontal_scroll_policy": "never",
+            "vertical_scroll_policy": "auto"
+          },
+          {
+            "width": 952,
+            "height": 554,
+            "horizontal_scroll_policy": "never",
+            "vertical_scroll_policy": "auto"
+          },
+          {
+            "width": 952,
+            "height": 554,
+            "horizontal_scroll_policy": "never",
+            "vertical_scroll_policy": "auto"
+          }
+        ]
+      }
+    },
+    {
+      "resolution": [
+        922,
+        599
+      ],
+      "tab": 4,
+      "png": "approved-integration-evidence/gui-compact/layout-922x599-0.75-4.png",
+      "png_sha256": "26859262be770314ff01659539b414d5cf57b49c863ebc7ef75f06fd49716485",
+      "native_layout": {
+        "resolution": {
+          "width": 922,
+          "height": 599
+        },
+        "scale": 0.75,
+        "panel_width": 1000,
+        "panel_height": 734,
+        "tab": 4,
+        "panes": [
+          {
+            "width": 952,
+            "height": 554,
+            "horizontal_scroll_policy": "never",
+            "vertical_scroll_policy": "auto"
+          },
+          {
+            "width": 952,
+            "height": 554,
+            "horizontal_scroll_policy": "never",
+            "vertical_scroll_policy": "auto"
+          },
+          {
+            "width": 952,
+            "height": 554,
+            "horizontal_scroll_policy": "never",
+            "vertical_scroll_policy": "auto"
+          },
+          {
+            "width": 952,
+            "height": 554,
+            "horizontal_scroll_policy": "never",
+            "vertical_scroll_policy": "auto"
+          },
+          {
+            "width": 952,
+            "height": 554,
+            "horizontal_scroll_policy": "never",
+            "vertical_scroll_policy": "auto"
+          }
+        ]
+      }
+    },
+    {
+      "resolution": [
+        922,
+        599
+      ],
+      "tab": 5,
+      "png": "approved-integration-evidence/gui-compact/layout-922x599-0.75-5.png",
+      "png_sha256": "9e20ee45608660d2cb4be678b80929f6abe16d637f7f244545e355e9d4ccb1a3",
+      "native_layout": {
+        "resolution": {
+          "width": 922,
+          "height": 599
+        },
+        "scale": 0.75,
+        "panel_width": 1000,
+        "panel_height": 734,
+        "tab": 5,
+        "panes": [
+          {
+            "width": 952,
+            "height": 554,
+            "horizontal_scroll_policy": "never",
+            "vertical_scroll_policy": "auto"
+          },
+          {
+            "width": 952,
+            "height": 554,
+            "horizontal_scroll_policy": "never",
+            "vertical_scroll_policy": "auto"
+          },
+          {
+            "width": 952,
+            "height": 554,
+            "horizontal_scroll_policy": "never",
+            "vertical_scroll_policy": "auto"
+          },
+          {
+            "width": 952,
+            "height": 554,
+            "horizontal_scroll_policy": "never",
+            "vertical_scroll_policy": "auto"
+          },
+          {
+            "width": 952,
+            "height": 554,
+            "horizontal_scroll_policy": "never",
+            "vertical_scroll_policy": "auto"
+          }
+        ]
+      }
+    },
+    {
+      "resolution": [
+        1280,
+        800
+      ],
+      "tab": 1,
+      "png": "approved-integration-evidence/gui-large/layout-1280x800-0.75-1.png",
+      "png_sha256": "2f56349cf9a3c880d7e9bf2bb1d33cb22e7bbb3f3efe2fa005f67701141325fa",
+      "native_layout": {
+        "resolution": {
+          "width": 1280,
+          "height": 800
+        },
+        "scale": 0.75,
+        "panel_width": 1000,
+        "panel_height": 760,
+        "tab": 1,
+        "panes": [
+          {
+            "width": 952,
+            "height": 580,
+            "horizontal_scroll_policy": "never",
+            "vertical_scroll_policy": "auto"
+          },
+          {
+            "width": 952,
+            "height": 580,
+            "horizontal_scroll_policy": "never",
+            "vertical_scroll_policy": "auto"
+          },
+          {
+            "width": 952,
+            "height": 580,
+            "horizontal_scroll_policy": "never",
+            "vertical_scroll_policy": "auto"
+          },
+          {
+            "width": 952,
+            "height": 580,
+            "horizontal_scroll_policy": "never",
+            "vertical_scroll_policy": "auto"
+          },
+          {
+            "width": 952,
+            "height": 580,
+            "horizontal_scroll_policy": "never",
+            "vertical_scroll_policy": "auto"
+          }
+        ]
+      }
+    },
+    {
+      "resolution": [
+        1280,
+        800
+      ],
+      "tab": 2,
+      "png": "approved-integration-evidence/gui-large/layout-1280x800-0.75-2.png",
+      "png_sha256": "58ca03a502dfe38dbed6c62e6e65bad00c7673076e6db407979470e9bf707384",
+      "native_layout": {
+        "resolution": {
+          "width": 1280,
+          "height": 800
+        },
+        "scale": 0.75,
+        "panel_width": 1000,
+        "panel_height": 760,
+        "tab": 2,
+        "panes": [
+          {
+            "width": 952,
+            "height": 580,
+            "horizontal_scroll_policy": "never",
+            "vertical_scroll_policy": "auto"
+          },
+          {
+            "width": 952,
+            "height": 580,
+            "horizontal_scroll_policy": "never",
+            "vertical_scroll_policy": "auto"
+          },
+          {
+            "width": 952,
+            "height": 580,
+            "horizontal_scroll_policy": "never",
+            "vertical_scroll_policy": "auto"
+          },
+          {
+            "width": 952,
+            "height": 580,
+            "horizontal_scroll_policy": "never",
+            "vertical_scroll_policy": "auto"
+          },
+          {
+            "width": 952,
+            "height": 580,
+            "horizontal_scroll_policy": "never",
+            "vertical_scroll_policy": "auto"
+          }
+        ]
+      }
+    },
+    {
+      "resolution": [
+        1280,
+        800
+      ],
+      "tab": 3,
+      "png": "approved-integration-evidence/gui-large/layout-1280x800-0.75-3.png",
+      "png_sha256": "91121057b584f42a89aeced135575ef3ff452e6ed6d126bcc0ee3e5ca86220f6",
+      "native_layout": {
+        "resolution": {
+          "width": 1280,
+          "height": 800
+        },
+        "scale": 0.75,
+        "panel_width": 1000,
+        "panel_height": 760,
+        "tab": 3,
+        "panes": [
+          {
+            "width": 952,
+            "height": 580,
+            "horizontal_scroll_policy": "never",
+            "vertical_scroll_policy": "auto"
+          },
+          {
+            "width": 952,
+            "height": 580,
+            "horizontal_scroll_policy": "never",
+            "vertical_scroll_policy": "auto"
+          },
+          {
+            "width": 952,
+            "height": 580,
+            "horizontal_scroll_policy": "never",
+            "vertical_scroll_policy": "auto"
+          },
+          {
+            "width": 952,
+            "height": 580,
+            "horizontal_scroll_policy": "never",
+            "vertical_scroll_policy": "auto"
+          },
+          {
+            "width": 952,
+            "height": 580,
+            "horizontal_scroll_policy": "never",
+            "vertical_scroll_policy": "auto"
+          }
+        ]
+      }
+    },
+    {
+      "resolution": [
+        1280,
+        800
+      ],
+      "tab": 4,
+      "png": "approved-integration-evidence/gui-large/layout-1280x800-0.75-4.png",
+      "png_sha256": "6c6a160db338c13a8e7a032f9b1a10ff6a41290c559522a6610ba244201f9a06",
+      "native_layout": {
+        "resolution": {
+          "width": 1280,
+          "height": 800
+        },
+        "scale": 0.75,
+        "panel_width": 1000,
+        "panel_height": 760,
+        "tab": 4,
+        "panes": [
+          {
+            "width": 952,
+            "height": 580,
+            "horizontal_scroll_policy": "never",
+            "vertical_scroll_policy": "auto"
+          },
+          {
+            "width": 952,
+            "height": 580,
+            "horizontal_scroll_policy": "never",
+            "vertical_scroll_policy": "auto"
+          },
+          {
+            "width": 952,
+            "height": 580,
+            "horizontal_scroll_policy": "never",
+            "vertical_scroll_policy": "auto"
+          },
+          {
+            "width": 952,
+            "height": 580,
+            "horizontal_scroll_policy": "never",
+            "vertical_scroll_policy": "auto"
+          },
+          {
+            "width": 952,
+            "height": 580,
+            "horizontal_scroll_policy": "never",
+            "vertical_scroll_policy": "auto"
+          }
+        ]
+      }
+    },
+    {
+      "resolution": [
+        1280,
+        800
+      ],
+      "tab": 5,
+      "png": "approved-integration-evidence/gui-large/layout-1280x800-0.75-5.png",
+      "png_sha256": "14c6f0c2bbc0bb4850d40e1cdc5d53acc2561fddd04bf8605ff42e2ba0317d29",
+      "native_layout": {
+        "resolution": {
+          "width": 1280,
+          "height": 800
+        },
+        "scale": 0.75,
+        "panel_width": 1000,
+        "panel_height": 760,
+        "tab": 5,
+        "panes": [
+          {
+            "width": 952,
+            "height": 580,
+            "horizontal_scroll_policy": "never",
+            "vertical_scroll_policy": "auto"
+          },
+          {
+            "width": 952,
+            "height": 580,
+            "horizontal_scroll_policy": "never",
+            "vertical_scroll_policy": "auto"
+          },
+          {
+            "width": 952,
+            "height": 580,
+            "horizontal_scroll_policy": "never",
+            "vertical_scroll_policy": "auto"
+          },
+          {
+            "width": 952,
+            "height": 580,
+            "horizontal_scroll_policy": "never",
+            "vertical_scroll_policy": "auto"
+          },
+          {
+            "width": 952,
+            "height": 580,
+            "horizontal_scroll_policy": "never",
+            "vertical_scroll_policy": "auto"
+          }
+        ]
+      }
+    }
+  ],
+  "physical_open_verified": true,
+  "ordinary_four_sided_inserters": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+  ],
+  "save_reload_verified": true,
+  "limits": [
+    "Overview-button navigation was not separately exercised.",
+    "Live window-resize tab preservation was not separately exercised; distinct window sizes were tested.",
+    "This is scoped integration evidence, not whole-mod release certification."
+  ]
+}

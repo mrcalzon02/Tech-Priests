@@ -1,0 +1,12 @@
+{
+  "stage": "Integrated base-cache candidate; native tests and owner review pending",
+  "source_sha256": "66655f50c8f16ceb0bd71c8f5bfb07abaa74daf029a1b948e1c3425fd1c1968e",
+  "export_sha256": "bbd711c07bfbb8517e91d1d46a00683c430c099b316cbd7ec7c45efc9055ab0d",
+  "prototype_sha256": "e356a43022103d3d88ab6b59edfb043523f86e898a8d8476c8dce5f348ca5abe",
+  "runtime_art": {
+    "body.png": "6f5b204dbe4a1902ee735146e74ad6bdf9208a438cdfdc4838f4b8ef9c96014f",
+    "icon.png": "c9613c063db09f516abe2fe63a6471156826007c0ebad992242001a5b4fbbe83",
+    "shadow.png": "6727e2701c7e7a862d793c0f3888786e3cc09a6cbdba5586c506af949d07f4b0"
+  },
+  "scope": "Only base cache picture and entity/item/recipe icon paths changed. All family gameplay fields, wire points, filters and variant visuals preserved."
+}

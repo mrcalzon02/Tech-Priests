@@ -1,0 +1,1119 @@
+{
+  "stones": [
+    {
+      "name": "Hand-laid course 0 stone 00.0",
+      "course": 0,
+      "inner_radius": 0.7,
+      "outer_radius": 0.935,
+      "z": [
+        0.055,
+        0.25
+      ],
+      "angles": [
+        0.005,
+        0.3440658503988659
+      ]
+    },
+    {
+      "name": "Hand-laid course 0 stone 01.0",
+      "course": 0,
+      "inner_radius": 0.7,
+      "outer_radius": 0.935,
+      "z": [
+        0.055,
+        0.25
+      ],
+      "angles": [
+        0.3540658503988659,
+        0.6931317007977318
+      ]
+    },
+    {
+      "name": "Hand-laid course 0 stone 02.0",
+      "course": 0,
+      "inner_radius": 0.7,
+      "outer_radius": 0.935,
+      "z": [
+        0.055,
+        0.25
+      ],
+      "angles": [
+        0.7031317007977318,
+        1.0421975511965977
+      ]
+    },
+    {
+      "name": "Hand-laid course 0 stone 03.0",
+      "course": 0,
+      "inner_radius": 0.7,
+      "outer_radius": 0.935,
+      "z": [
+        0.055,
+        0.25
+      ],
+      "angles": [
+        1.0521975511965975,
+        1.3912634015954637
+      ]
+    },
+    {
+      "name": "Hand-laid course 0 stone 04.0",
+      "course": 0,
+      "inner_radius": 0.7,
+      "outer_radius": 0.935,
+      "z": [
+        0.055,
+        0.25
+      ],
+      "angles": [
+        1.4012634015954635,
+        1.7403292519943296
+      ]
+    },
+    {
+      "name": "Hand-laid course 0 stone 05.0",
+      "course": 0,
+      "inner_radius": 0.7,
+      "outer_radius": 0.935,
+      "z": [
+        0.055,
+        0.25
+      ],
+      "angles": [
+        1.7503292519943294,
+        2.0893951023931954
+      ]
+    },
+    {
+      "name": "Hand-laid course 0 stone 06.0",
+      "course": 0,
+      "inner_radius": 0.7,
+      "outer_radius": 0.935,
+      "z": [
+        0.055,
+        0.25
+      ],
+      "angles": [
+        2.099395102393195,
+        2.4384609527920613
+      ]
+    },
+    {
+      "name": "Hand-laid course 0 stone 07.0",
+      "course": 0,
+      "inner_radius": 0.7,
+      "outer_radius": 0.935,
+      "z": [
+        0.055,
+        0.25
+      ],
+      "angles": [
+        2.448460952792061,
+        2.7875268031909273
+      ]
+    },
+    {
+      "name": "Hand-laid course 0 stone 08.0",
+      "course": 0,
+      "inner_radius": 0.7,
+      "outer_radius": 0.935,
+      "z": [
+        0.055,
+        0.25
+      ],
+      "angles": [
+        2.797526803190927,
+        3.1365926535897932
+      ]
+    },
+    {
+      "name": "Hand-laid course 0 stone 09.0",
+      "course": 0,
+      "inner_radius": 0.7,
+      "outer_radius": 0.935,
+      "z": [
+        0.055,
+        0.25
+      ],
+      "angles": [
+        3.146592653589793,
+        3.485658503988659
+      ]
+    },
+    {
+      "name": "Hand-laid course 0 stone 10.0",
+      "course": 0,
+      "inner_radius": 0.7,
+      "outer_radius": 0.935,
+      "z": [
+        0.055,
+        0.25
+      ],
+      "angles": [
+        3.495658503988659,
+        3.8347243543875247
+      ]
+    },
+    {
+      "name": "Hand-laid course 0 stone 11.0",
+      "course": 0,
+      "inner_radius": 0.7,
+      "outer_radius": 0.935,
+      "z": [
+        0.055,
+        0.25
+      ],
+      "angles": [
+        3.8447243543875245,
+        4.183790204786391
+      ]
+    },
+    {
+      "name": "Hand-laid course 0 stone 12.0",
+      "course": 0,
+      "inner_radius": 0.7,
+      "outer_radius": 0.935,
+      "z": [
+        0.055,
+        0.25
+      ],
+      "angles": [
+        4.19379020478639,
+        4.20938898038469
+      ]
+    },
+    {
+      "name": "Hand-laid course 0 stone 14.1",
+      "course": 0,
+      "inner_radius": 0.7,
+      "outer_radius": 0.935,
+      "z": [
+        0.055,
+        0.25
+      ],
+      "angles": [
+        5.21538898038469,
+        5.230987755982988
+      ]
+    },
+    {
+      "name": "Hand-laid course 0 stone 15.0",
+      "course": 0,
+      "inner_radius": 0.7,
+      "outer_radius": 0.935,
+      "z": [
+        0.055,
+        0.25
+      ],
+      "angles": [
+        5.240987755982988,
+        5.580053606381854
+      ]
+    },
+    {
+      "name": "Hand-laid course 0 stone 16.0",
+      "course": 0,
+      "inner_radius": 0.7,
+      "outer_radius": 0.935,
+      "z": [
+        0.055,
+        0.25
+      ],
+      "angles": [
+        5.590053606381854,
+        5.929119456780721
+      ]
+    },
+    {
+      "name": "Hand-laid course 0 stone 17.0",
+      "course": 0,
+      "inner_radius": 0.7,
+      "outer_radius": 0.935,
+      "z": [
+        0.055,
+        0.25
+      ],
+      "angles": [
+        5.939119456780721,
+        6.278185307179586
+      ]
+    },
+    {
+      "name": "Hand-laid course 1 stone 00.0",
+      "course": 1,
+      "inner_radius": 0.7,
+      "outer_radius": 0.945,
+      "z": [
+        0.235,
+        0.445
+      ],
+      "angles": [
+        0.17953292519943295,
+        0.5185987755982988
+      ]
+    },
+    {
+      "name": "Hand-laid course 1 stone 01.0",
+      "course": 1,
+      "inner_radius": 0.7,
+      "outer_radius": 0.945,
+      "z": [
+        0.235,
+        0.445
+      ],
+      "angles": [
+        0.5285987755982988,
+        0.8676646259971648
+      ]
+    },
+    {
+      "name": "Hand-laid course 1 stone 02.0",
+      "course": 1,
+      "inner_radius": 0.7,
+      "outer_radius": 0.945,
+      "z": [
+        0.235,
+        0.445
+      ],
+      "angles": [
+        0.8776646259971648,
+        1.2167304763960307
+      ]
+    },
+    {
+      "name": "Hand-laid course 1 stone 03.0",
+      "course": 1,
+      "inner_radius": 0.7,
+      "outer_radius": 0.945,
+      "z": [
+        0.235,
+        0.445
+      ],
+      "angles": [
+        1.2267304763960305,
+        1.5657963267948967
+      ]
+    },
+    {
+      "name": "Hand-laid course 1 stone 04.0",
+      "course": 1,
+      "inner_radius": 0.7,
+      "outer_radius": 0.945,
+      "z": [
+        0.235,
+        0.445
+      ],
+      "angles": [
+        1.5757963267948965,
+        1.9148621771937624
+      ]
+    },
+    {
+      "name": "Hand-laid course 1 stone 05.0",
+      "course": 1,
+      "inner_radius": 0.7,
+      "outer_radius": 0.945,
+      "z": [
+        0.235,
+        0.445
+      ],
+      "angles": [
+        1.9248621771937622,
+        2.2639280275926286
+      ]
+    },
+    {
+      "name": "Hand-laid course 1 stone 06.0",
+      "course": 1,
+      "inner_radius": 0.7,
+      "outer_radius": 0.945,
+      "z": [
+        0.235,
+        0.445
+      ],
+      "angles": [
+        2.2739280275926284,
+        2.612993877991494
+      ]
+    },
+    {
+      "name": "Hand-laid course 1 stone 07.0",
+      "course": 1,
+      "inner_radius": 0.7,
+      "outer_radius": 0.945,
+      "z": [
+        0.235,
+        0.445
+      ],
+      "angles": [
+        2.622993877991494,
+        2.9620597283903605
+      ]
+    },
+    {
+      "name": "Hand-laid course 1 stone 08.0",
+      "course": 1,
+      "inner_radius": 0.7,
+      "outer_radius": 0.945,
+      "z": [
+        0.235,
+        0.445
+      ],
+      "angles": [
+        2.9720597283903603,
+        3.311125578789226
+      ]
+    },
+    {
+      "name": "Hand-laid course 1 stone 09.0",
+      "course": 1,
+      "inner_radius": 0.7,
+      "outer_radius": 0.945,
+      "z": [
+        0.235,
+        0.445
+      ],
+      "angles": [
+        3.3211255787892258,
+        3.6601914291880924
+      ]
+    },
+    {
+      "name": "Hand-laid course 1 stone 10.0",
+      "course": 1,
+      "inner_radius": 0.7,
+      "outer_radius": 0.945,
+      "z": [
+        0.235,
+        0.445
+      ],
+      "angles": [
+        3.670191429188092,
+        4.009257279586958
+      ]
+    },
+    {
+      "name": "Hand-laid course 1 stone 11.0",
+      "course": 1,
+      "inner_radius": 0.7,
+      "outer_radius": 0.945,
+      "z": [
+        0.235,
+        0.445
+      ],
+      "angles": [
+        4.019257279586958,
+        4.20938898038469
+      ]
+    },
+    {
+      "name": "Hand-laid course 1 stone 14.1",
+      "course": 1,
+      "inner_radius": 0.7,
+      "outer_radius": 0.945,
+      "z": [
+        0.235,
+        0.445
+      ],
+      "angles": [
+        5.21538898038469,
+        5.405520681182422
+      ]
+    },
+    {
+      "name": "Hand-laid course 1 stone 15.0",
+      "course": 1,
+      "inner_radius": 0.7,
+      "outer_radius": 0.945,
+      "z": [
+        0.235,
+        0.445
+      ],
+      "angles": [
+        5.4155206811824215,
+        5.754586531581288
+      ]
+    },
+    {
+      "name": "Hand-laid course 1 stone 16.0",
+      "course": 1,
+      "inner_radius": 0.7,
+      "outer_radius": 0.945,
+      "z": [
+        0.235,
+        0.445
+      ],
+      "angles": [
+        5.764586531581288,
+        6.103652381980154
+      ]
+    },
+    {
+      "name": "Hand-laid course 1 stone 17.0",
+      "course": 1,
+      "inner_radius": 0.7,
+      "outer_radius": 0.945,
+      "z": [
+        0.235,
+        0.445
+      ],
+      "angles": [
+        6.113652381980153,
+        6.452718232379019
+      ]
+    },
+    {
+      "name": "Hand-laid course 2 stone 00.0",
+      "course": 2,
+      "inner_radius": 0.7,
+      "outer_radius": 0.94,
+      "z": [
+        0.43,
+        0.635
+      ],
+      "angles": [
+        0.005,
+        0.3440658503988659
+      ]
+    },
+    {
+      "name": "Hand-laid course 2 stone 01.0",
+      "course": 2,
+      "inner_radius": 0.7,
+      "outer_radius": 0.94,
+      "z": [
+        0.43,
+        0.635
+      ],
+      "angles": [
+        0.3540658503988659,
+        0.6931317007977318
+      ]
+    },
+    {
+      "name": "Hand-laid course 2 stone 02.0",
+      "course": 2,
+      "inner_radius": 0.7,
+      "outer_radius": 0.94,
+      "z": [
+        0.43,
+        0.635
+      ],
+      "angles": [
+        0.7031317007977318,
+        1.0421975511965977
+      ]
+    },
+    {
+      "name": "Hand-laid course 2 stone 03.0",
+      "course": 2,
+      "inner_radius": 0.7,
+      "outer_radius": 0.94,
+      "z": [
+        0.43,
+        0.635
+      ],
+      "angles": [
+        1.0521975511965975,
+        1.3912634015954637
+      ]
+    },
+    {
+      "name": "Hand-laid course 2 stone 04.0",
+      "course": 2,
+      "inner_radius": 0.7,
+      "outer_radius": 0.94,
+      "z": [
+        0.43,
+        0.635
+      ],
+      "angles": [
+        1.4012634015954635,
+        1.7403292519943296
+      ]
+    },
+    {
+      "name": "Hand-laid course 2 stone 05.0",
+      "course": 2,
+      "inner_radius": 0.7,
+      "outer_radius": 0.94,
+      "z": [
+        0.43,
+        0.635
+      ],
+      "angles": [
+        1.7503292519943294,
+        2.0893951023931954
+      ]
+    },
+    {
+      "name": "Hand-laid course 2 stone 06.0",
+      "course": 2,
+      "inner_radius": 0.7,
+      "outer_radius": 0.94,
+      "z": [
+        0.43,
+        0.635
+      ],
+      "angles": [
+        2.099395102393195,
+        2.4384609527920613
+      ]
+    },
+    {
+      "name": "Hand-laid course 2 stone 07.0",
+      "course": 2,
+      "inner_radius": 0.7,
+      "outer_radius": 0.94,
+      "z": [
+        0.43,
+        0.635
+      ],
+      "angles": [
+        2.448460952792061,
+        2.7875268031909273
+      ]
+    },
+    {
+      "name": "Hand-laid course 2 stone 08.0",
+      "course": 2,
+      "inner_radius": 0.7,
+      "outer_radius": 0.94,
+      "z": [
+        0.43,
+        0.635
+      ],
+      "angles": [
+        2.797526803190927,
+        3.1365926535897932
+      ]
+    },
+    {
+      "name": "Hand-laid course 2 stone 09.0",
+      "course": 2,
+      "inner_radius": 0.7,
+      "outer_radius": 0.94,
+      "z": [
+        0.43,
+        0.635
+      ],
+      "angles": [
+        3.146592653589793,
+        3.485658503988659
+      ]
+    },
+    {
+      "name": "Hand-laid course 2 stone 10.0",
+      "course": 2,
+      "inner_radius": 0.7,
+      "outer_radius": 0.94,
+      "z": [
+        0.43,
+        0.635
+      ],
+      "angles": [
+        3.495658503988659,
+        3.8347243543875247
+      ]
+    },
+    {
+      "name": "Hand-laid course 2 stone 11.0",
+      "course": 2,
+      "inner_radius": 0.7,
+      "outer_radius": 0.94,
+      "z": [
+        0.43,
+        0.635
+      ],
+      "angles": [
+        3.8447243543875245,
+        4.183790204786391
+      ]
+    },
+    {
+      "name": "Hand-laid course 2 stone 12.0",
+      "course": 2,
+      "inner_radius": 0.7,
+      "outer_radius": 0.94,
+      "z": [
+        0.43,
+        0.635
+      ],
+      "angles": [
+        4.19379020478639,
+        4.20938898038469
+      ]
+    },
+    {
+      "name": "Hand-laid course 2 stone 14.1",
+      "course": 2,
+      "inner_radius": 0.7,
+      "outer_radius": 0.94,
+      "z": [
+        0.43,
+        0.635
+      ],
+      "angles": [
+        5.21538898038469,
+        5.230987755982988
+      ]
+    },
+    {
+      "name": "Hand-laid course 2 stone 15.0",
+      "course": 2,
+      "inner_radius": 0.7,
+      "outer_radius": 0.94,
+      "z": [
+        0.43,
+        0.635
+      ],
+      "angles": [
+        5.240987755982988,
+        5.580053606381854
+      ]
+    },
+    {
+      "name": "Hand-laid course 2 stone 16.0",
+      "course": 2,
+      "inner_radius": 0.7,
+      "outer_radius": 0.94,
+      "z": [
+        0.43,
+        0.635
+      ],
+      "angles": [
+        5.590053606381854,
+        5.929119456780721
+      ]
+    },
+    {
+      "name": "Hand-laid course 2 stone 17.0",
+      "course": 2,
+      "inner_radius": 0.7,
+      "outer_radius": 0.94,
+      "z": [
+        0.43,
+        0.635
+      ],
+      "angles": [
+        5.939119456780721,
+        6.278185307179586
+      ]
+    },
+    {
+      "name": "Hand-laid course 3 stone 00.0",
+      "course": 3,
+      "inner_radius": 0.665,
+      "outer_radius": 0.965,
+      "z": [
+        0.62,
+        0.755
+      ],
+      "angles": [
+        0.17953292519943295,
+        0.5185987755982988
+      ]
+    },
+    {
+      "name": "Hand-laid course 3 stone 01.0",
+      "course": 3,
+      "inner_radius": 0.665,
+      "outer_radius": 0.965,
+      "z": [
+        0.62,
+        0.755
+      ],
+      "angles": [
+        0.5285987755982988,
+        0.8676646259971648
+      ]
+    },
+    {
+      "name": "Hand-laid course 3 stone 02.0",
+      "course": 3,
+      "inner_radius": 0.665,
+      "outer_radius": 0.965,
+      "z": [
+        0.62,
+        0.755
+      ],
+      "angles": [
+        0.8776646259971648,
+        1.2167304763960307
+      ]
+    },
+    {
+      "name": "Hand-laid course 3 stone 03.0",
+      "course": 3,
+      "inner_radius": 0.665,
+      "outer_radius": 0.965,
+      "z": [
+        0.62,
+        0.755
+      ],
+      "angles": [
+        1.2267304763960305,
+        1.5657963267948967
+      ]
+    },
+    {
+      "name": "Hand-laid course 3 stone 04.0",
+      "course": 3,
+      "inner_radius": 0.665,
+      "outer_radius": 0.965,
+      "z": [
+        0.62,
+        0.755
+      ],
+      "angles": [
+        1.5757963267948965,
+        1.9148621771937624
+      ]
+    },
+    {
+      "name": "Hand-laid course 3 stone 05.0",
+      "course": 3,
+      "inner_radius": 0.665,
+      "outer_radius": 0.965,
+      "z": [
+        0.62,
+        0.755
+      ],
+      "angles": [
+        1.9248621771937622,
+        2.2639280275926286
+      ]
+    },
+    {
+      "name": "Hand-laid course 3 stone 06.0",
+      "course": 3,
+      "inner_radius": 0.665,
+      "outer_radius": 0.965,
+      "z": [
+        0.62,
+        0.755
+      ],
+      "angles": [
+        2.2739280275926284,
+        2.612993877991494
+      ]
+    },
+    {
+      "name": "Hand-laid course 3 stone 07.0",
+      "course": 3,
+      "inner_radius": 0.665,
+      "outer_radius": 0.965,
+      "z": [
+        0.62,
+        0.755
+      ],
+      "angles": [
+        2.622993877991494,
+        2.9620597283903605
+      ]
+    },
+    {
+      "name": "Hand-laid course 3 stone 08.0",
+      "course": 3,
+      "inner_radius": 0.665,
+      "outer_radius": 0.965,
+      "z": [
+        0.62,
+        0.755
+      ],
+      "angles": [
+        2.9720597283903603,
+        3.311125578789226
+      ]
+    },
+    {
+      "name": "Hand-laid course 3 stone 09.0",
+      "course": 3,
+      "inner_radius": 0.665,
+      "outer_radius": 0.965,
+      "z": [
+        0.62,
+        0.755
+      ],
+      "angles": [
+        3.3211255787892258,
+        3.6601914291880924
+      ]
+    },
+    {
+      "name": "Hand-laid course 3 stone 10.0",
+      "course": 3,
+      "inner_radius": 0.665,
+      "outer_radius": 0.965,
+      "z": [
+        0.62,
+        0.755
+      ],
+      "angles": [
+        3.670191429188092,
+        4.009257279586958
+      ]
+    },
+    {
+      "name": "Hand-laid course 3 stone 11.0",
+      "course": 3,
+      "inner_radius": 0.665,
+      "outer_radius": 0.965,
+      "z": [
+        0.62,
+        0.755
+      ],
+      "angles": [
+        4.019257279586958,
+        4.20938898038469
+      ]
+    },
+    {
+      "name": "Hand-laid course 3 stone 14.1",
+      "course": 3,
+      "inner_radius": 0.665,
+      "outer_radius": 0.965,
+      "z": [
+        0.62,
+        0.755
+      ],
+      "angles": [
+        5.21538898038469,
+        5.405520681182422
+      ]
+    },
+    {
+      "name": "Hand-laid course 3 stone 15.0",
+      "course": 3,
+      "inner_radius": 0.665,
+      "outer_radius": 0.965,
+      "z": [
+        0.62,
+        0.755
+      ],
+      "angles": [
+        5.4155206811824215,
+        5.754586531581288
+      ]
+    },
+    {
+      "name": "Hand-laid course 3 stone 16.0",
+      "course": 3,
+      "inner_radius": 0.665,
+      "outer_radius": 0.965,
+      "z": [
+        0.62,
+        0.755
+      ],
+      "angles": [
+        5.764586531581288,
+        6.103652381980154
+      ]
+    },
+    {
+      "name": "Hand-laid course 3 stone 17.0",
+      "course": 3,
+      "inner_radius": 0.665,
+      "outer_radius": 0.965,
+      "z": [
+        0.62,
+        0.755
+      ],
+      "angles": [
+        6.113652381980153,
+        6.452718232379019
+      ]
+    }
+  ],
+  "cover": {
+    "panels": [
+      "Red stitched hide panel 0",
+      "Red stitched hide panel 1",
+      "Red stitched hide panel 2",
+      "Red stitched hide panel 3"
+    ],
+    "hem": "r0.76 trapped under capstones",
+    "dome": "z0.870 at center, z0.630 at hem; seams/weights/ties use the same surface function"
+  },
+  "ties": [
+    {
+      "id": "cache-hemp-retainer-0",
+      "start": [
+        0.5051406025886536,
+        0.32377922534942627,
+        0.7223882675170898
+      ],
+      "end": [
+        0.6819300651550293,
+        0.43713805079460144,
+        0.7602635622024536
+      ],
+      "start_parent": "Red stitched hide panel 0",
+      "end_parent": "Hand-laid course 3 stone 01.0",
+      "objects": [
+        "FMPL | PIPETTE | cache-hemp-retainer-0 | continuous visible route"
+      ]
+    },
+    {
+      "id": "cache-hemp-retainer-1",
+      "start": [
+        -0.32841458916664124,
+        0.5021392703056335,
+        0.7167539000511169
+      ],
+      "end": [
+        -0.4434080123901367,
+        0.677901566028595,
+        0.7661197781562805
+      ],
+      "start_parent": "Red stitched hide panel 1",
+      "end_parent": "Hand-laid course 3 stone 05.0",
+      "objects": [
+        "FMPL | PIPETTE | cache-hemp-retainer-1 | continuous visible route"
+      ]
+    },
+    {
+      "id": "cache-hemp-retainer-2",
+      "start": [
+        -0.5024006366729736,
+        -0.32801464200019836,
+        0.7225157022476196
+      ],
+      "end": [
+        -0.6782175898551941,
+        -0.4427242875099182,
+        0.7618252038955688
+      ],
+      "start_parent": "Red stitched hide panel 2",
+      "end_parent": "Hand-laid course 3 stone 10.0",
+      "objects": [
+        "FMPL | PIPETTE | cache-hemp-retainer-2 | continuous visible route"
+      ]
+    },
+    {
+      "id": "cache-hemp-retainer-3",
+      "start": [
+        0.3225715458393097,
+        -0.5059126615524292,
+        0.7276226878166199
+      ],
+      "end": [
+        0.4367384910583496,
+        -0.6821966767311096,
+        0.767094612121582
+      ],
+      "start_parent": "Red stitched hide panel 3",
+      "end_parent": "Hand-laid course 3 stone 14.1",
+      "objects": [
+        "FMPL | PIPETTE | cache-hemp-retainer-3 | continuous visible route"
+      ]
+    }
+  ],
+  "front_wall_section": {
+    "object": "Grounded carved circuit receiving tablet",
+    "angular_bounds": [
+      4.21238898038469,
+      5.21238898038469
+    ],
+    "radial_profile": [
+      [
+        0,
+        0.7,
+        0.955
+      ],
+      [
+        0.1,
+        0.7,
+        0.945
+      ],
+      [
+        0.25,
+        0.7,
+        0.94
+      ],
+      [
+        0.445,
+        0.7,
+        0.945
+      ],
+      [
+        0.635,
+        0.7,
+        0.94
+      ],
+      [
+        0.755,
+        0.665,
+        0.965
+      ],
+      [
+        0.81,
+        0.665,
+        0.965
+      ]
+    ],
+    "construction": "Centered full radial wall thickness, inner-to-outer curved faces, adjacent masonry cut back, relief follows outer curve"
+  },
+  "circuit_support": {
+    "tablet": "Grounded carved circuit receiving tablet",
+    "native_points_unchanged": true,
+    "red": [
+      0.34375,
+      0.203125
+    ],
+    "green": [
+      0.40625,
+      0.421875
+    ],
+    "reach": 9,
+    "terminals": [
+      {
+        "wire": "red",
+        "native": [
+          0.34375,
+          0.203125
+        ],
+        "mouth": [
+          0.34375,
+          -0.9146988987922668,
+          0.8042134642601013
+        ],
+        "seat": [
+          0.33943265676498413,
+          -0.9032071828842163,
+          0.8009999990463257
+        ],
+        "surface_normal": [
+          0.35169005393981934,
+          -0.9361164569854736,
+          0.0
+        ],
+        "object": "Native red circuit contact seat"
+      },
+      {
+        "wire": "green",
+        "native": [
+          0.40625,
+          0.421875
+        ],
+        "mouth": [
+          0.40625,
+          -0.8661819696426392,
+          0.4463372826576233
+        ],
+        "seat": [
+          0.40110206604003906,
+          -0.8556094169616699,
+          0.4460279047489166
+        ],
+        "surface_normal": [
+          0.4376260042190552,
+          -0.8987722992897034,
+          0.02630290761590004
+        ],
+        "object": "Native green circuit contact seat"
+      }
+    ]
+  },
+  "animation": "Static. No native open/working state invented."
+}

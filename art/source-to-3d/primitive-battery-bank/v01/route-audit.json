@@ -1,0 +1,122 @@
+{
+  "passed": true,
+  "source": {
+    "label": "reopened source",
+    "terminals": [
+      {
+        "wire": "red",
+        "projection_error": 9.380907606271194e-09,
+        "surface_distance": 0.0,
+        "passed": true
+      },
+      {
+        "wire": "green",
+        "projection_error": 1.575883246118792e-08,
+        "surface_distance": 0.0,
+        "passed": true
+      }
+    ],
+    "routes": [
+      {
+        "id": "battery-positive",
+        "seats": [
+          {
+            "endpoint": "start",
+            "distance": 7.450580596923828e-09,
+            "passed": true
+          },
+          {
+            "endpoint": "end",
+            "distance": 0.0065000057220458984,
+            "passed": true
+          }
+        ],
+        "minimum_other_surface_distance": 0.05025477334856987,
+        "collisions": [],
+        "minimum_bend_radius": 0.18212914578743092,
+        "passed": true
+      },
+      {
+        "id": "battery-negative",
+        "seats": [
+          {
+            "endpoint": "start",
+            "distance": 7.450580596923828e-09,
+            "passed": true
+          },
+          {
+            "endpoint": "end",
+            "distance": 0.0065000057220458984,
+            "passed": true
+          }
+        ],
+        "minimum_other_surface_distance": 0.05635203793644905,
+        "collisions": [],
+        "minimum_bend_radius": 0.12710689413793963,
+        "passed": true
+      }
+    ],
+    "passed": true
+  },
+  "export": {
+    "label": "actual GLB import",
+    "terminals": [
+      {
+        "wire": "red",
+        "projection_error": 9.380907606271194e-09,
+        "surface_distance": 0.0,
+        "passed": true
+      },
+      {
+        "wire": "green",
+        "projection_error": 1.575883246118792e-08,
+        "surface_distance": 0.0,
+        "passed": true
+      }
+    ],
+    "routes": [
+      {
+        "id": "battery-positive",
+        "seats": [
+          {
+            "endpoint": "start",
+            "distance": 7.450580596923828e-09,
+            "passed": true
+          },
+          {
+            "endpoint": "end",
+            "distance": 0.0065000057220458984,
+            "passed": true
+          }
+        ],
+        "minimum_other_surface_distance": 0.05025477334856987,
+        "collisions": [],
+        "minimum_bend_radius": 0.18212914578743092,
+        "passed": true
+      },
+      {
+        "id": "battery-negative",
+        "seats": [
+          {
+            "endpoint": "start",
+            "distance": 7.450580596923828e-09,
+            "passed": true
+          },
+          {
+            "endpoint": "end",
+            "distance": 0.0065000057220458984,
+            "passed": true
+          }
+        ],
+        "minimum_other_surface_distance": 0.05635203793644905,
+        "collisions": [],
+        "minimum_bend_radius": 0.12710689413793963,
+        "passed": true
+      }
+    ],
+    "passed": true
+  },
+  "source_sha256": "84ac195d708b4fbea5d5306acec9eaaa7d1d2682a22c96665ab14aef6843b407",
+  "export_sha256": "8e68144d0caeeacf612f6d890096f7f92441903c8e837c5f728c6cc756e9204b",
+  "limit": "Cable centerline clearance sampled against every other mesh; endpoint fitting overlaps are intentional within 0.07 units"
+}

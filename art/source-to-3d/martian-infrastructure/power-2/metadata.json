@@ -1,0 +1,127 @@
+{
+  "name": "power-2",
+  "footprint": [
+    2,
+    2
+  ],
+  "height": 3.7599997520446777,
+  "camera_scale_tiles": 5.6,
+  "sprite_shift_tiles": [
+    0.0,
+    -1.1698360204696654
+  ],
+  "sprite_HR_pixels": 358,
+  "socket_positions_model": {
+    "red": [
+      -0.594,
+      0,
+      3.75
+    ],
+    "copper": [
+      0,
+      0,
+      3.75
+    ],
+    "green": [
+      0.594,
+      0,
+      3.75
+    ]
+  },
+  "wire_points_tiles": {
+    "red": [
+      -0.5939999103546142,
+      -2.651650309562683
+    ],
+    "copper": [
+      0.0,
+      -2.651650309562683
+    ],
+    "green": [
+      0.5939999103546142,
+      -2.651650309562683
+    ]
+  },
+  "routes": [
+    {
+      "name": "Cabinet to crossarm armored riser",
+      "points": [
+        [
+          -0.11,
+          -0.4,
+          0.9099999999999999
+        ],
+        [
+          -0.11,
+          -0.03,
+          1.11
+        ],
+        [
+          -0.11,
+          -0.03,
+          3.17
+        ],
+        [
+          -0.594,
+          0.06,
+          3.23
+        ]
+      ],
+      "start_and_end_glands": true
+    },
+    {
+      "name": "Cabinet to crossarm armored riser",
+      "points": [
+        [
+          0.11,
+          -0.4,
+          0.9099999999999999
+        ],
+        [
+          0.11,
+          -0.03,
+          1.11
+        ],
+        [
+          0.11,
+          -0.03,
+          3.17
+        ],
+        [
+          0.594,
+          0.06,
+          3.23
+        ]
+      ],
+      "start_and_end_glands": true
+    },
+    {
+      "name": "Copper bus armored central riser",
+      "points": [
+        [
+          0,
+          -0.4,
+          0.9099999999999999
+        ],
+        [
+          0,
+          -0.07,
+          1.11
+        ],
+        [
+          0,
+          -0.07,
+          3.1
+        ],
+        [
+          0,
+          0.06,
+          3.23
+        ]
+      ],
+      "start_and_end_glands": true
+    }
+  ],
+  "model_specific_surface_plan": "surface-plan.json",
+  "owner_approval": "pending"
+}

@@ -1,0 +1,32 @@
+{
+  "state": "Technical candidate; owner model/material acceptance pending",
+  "source_sha256": "66655f50c8f16ceb0bd71c8f5bfb07abaa74daf029a1b948e1c3425fd1c1968e",
+  "export_sha256": "bbd711c07bfbb8517e91d1d46a00683c430c099b316cbd7ec7c45efc9055ab0d",
+  "render_hashes": {
+    "inspection/export-d0.png": "fb231ba7a1831ed22bad0d3b573c8c2debce1b5ab61e0a046635301b554062c0",
+    "inspection/export-d2.png": "96d000b4128a430d99c93190827d4459aaa2830211f7c38bec7753b02fb4889f",
+    "inspection/export-clay.png": "deafb268bc90c1bd216fda7ff2781e16bd1c0fb1628c2179feed09148f8d1191",
+    "inspection/relief-seating-oblique.png": "47a854ff59c161ebc56c52e86c28f366964b4e6c35d252ce7c579490b1ed92fc"
+  },
+  "reference_sha256": "c2d0143aa5047b6a9f6a425aa7b1ab5e34b284f2f9760a01ce66a0f78aa323b5",
+  "scores_out_of_10": {
+    "construction": {
+      "score": 8,
+      "reason": "Full-depth curved wall with adjacent masonry bearing, grounded base, dome and separately editable supported fittings."
+    },
+    "relief_seating": {
+      "score": 9,
+      "reason": "Source and actual GLB ray audit shows embedded skull back, less than 0.014 forward projection; oblique render shows continuous seating."
+    },
+    "surface_finish": {
+      "score": 8,
+      "reason": "Broad quarry variation, restrained pores and separately dressed front stone now read coherently in front/rear/oblique export renders; original UV aged ivory and bionic steel remain distinct. Owner finish review remains pending."
+    }
+  },
+  "owner_approval": false,
+  "native_render_hashes": {
+    "native-plain.png": "c0a3a0c950f3b59ba033e7eb774cfc6e2fde2c3782ebfa27ea20189129f8d195",
+    "native-wired.png": "d191253b7f490db407122e21a72adf83c2ba3f4e61325178f175ddceda6e464a"
+  },
+  "native_visual_observations": "Refreshed stone finish inspected in actual Factorio; lower sprite registration and circuit contact alignment retained."
+}

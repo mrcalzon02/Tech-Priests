@@ -1,0 +1,6 @@
+{
+  "original_sha256": "5cdc8fc60150cf73156cc4eabb0a297d344d3b2cfd98a889053876244500c186",
+  "bridge_sha256": "ecd6c8d9b770fed1c23795256be05ef1b2991140ec0b9ef46ed7ffea4559d005",
+  "private_sha256": "b9a95143b686bd6779026563d35d72f12f1b5d09d70695548fff8f7f8b5e725e",
+  "note": "Production control bytes preserved as exact prefix; private remote bridge only invokes installed steward with real fixtures, never ships"
+}

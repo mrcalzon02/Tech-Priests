@@ -1,0 +1,12 @@
+{
+  "key": "iron-plate",
+  "source_sha256": "3da3942099d019ebb3e37a590fa0cc4f1dcbc1ce947ae7b3b1997e08479fe593",
+  "export_sha256": "d75ea35d23c9aa480eba82cc27d151ef377985d55f2c8fcc5ec397979cbdaffb",
+  "prototype_sha256": "f8e0d08480306b4e929ee8d44d7f94183d8cabdc1bba64c688ddd7c6a29011af",
+  "runtime_art": {
+    "iron-plate-body.png": "73d5718c8a87ea0b41c35b917373297dc5900b57347ffe3cfbdfc59d620327da",
+    "iron-plate-icon.png": "54fcf6b2f2e7d55c0884054e042ebb1213f3ca943e98ba822bf552ff168fa798",
+    "iron-plate-shadow.png": "078399e0081bb05ef7816b8eff6da35c0b6b3c1cb55d8b7ea6352182696a985b"
+  },
+  "scope": "Only this filtered cache picture/icon/backing art; inventory6, recipes, filter steward, circuits, fixed direction and ordinary inserters unchanged"
+}
