@@ -430,6 +430,36 @@
         "actual_visual_cycles": 37,
         "actual_native_arrivals": 35
       }
+    },
+    {
+      "event_id": "tech-priests-emergency-smelter-v05-operational-2026-11-17",
+      "asset_id": "tech-priests-emergency-smelter-v1",
+      "asset_kind": "model",
+      "revision": "v05-operational-delivery",
+      "state": "verified",
+      "source_sha256": "50fae2883f2fe0870c90c32cc7259a4b33012d71cb9d9adbf1a9b8e986bab6a3",
+      "evidence": {
+        "native_reopen_verified": true,
+        "source_artifact_sha256": "50fae2883f2fe0870c90c32cc7259a4b33012d71cb9d9adbf1a9b8e986bab6a3",
+        "glb_sha256": "68eec69b5c8be25e226b422b672803ae53ce5dc3dfe11573fbf89964051c66c5",
+        "owner_visual_approval": false,
+        "factorio_runtime_verified": true,
+        "source_commit": "ddd75576bd350ceca8d1b605b62c714a0e3bcb08",
+        "source_repository": "mrcalzon02/Tech-Priests",
+        "source_path": "art/source-to-3d/emergency-smelter/v05/smelter-v05.blend",
+        "runtime_path": "art/source-to-3d/emergency-smelter/v05/smelter-v05.glb",
+        "manifest_path": "art/source-to-3d/emergency-smelter/v05/FMPL_MODEL.json",
+        "actual_operated_save_reload": true,
+        "genuine_native_pngs": 12,
+        "native_recipe_output_capacity_repair": {
+          "before": 1,
+          "after": 8
+        },
+        "actual_automatic_input_paths": 6,
+        "hidden_wrappers_not_forced": true,
+        "native_fuel_exhaustion_circuit_and_blocked_recovery_verified": true,
+        "remaining_required_work": []
+      }
     }
   ],
   "schema": "fmpl.checkpoints.v1"

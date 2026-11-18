@@ -30,7 +30,7 @@
     "pbr_maps": 69,
     "bunker_component_candidates": 21,
     "verified_shared_components": 2,
-    "model_records": 27,
+    "model_records": 28,
     "program_records": 22,
     "pipeline_records": 6,
     "external_blender_libraries": 1,
@@ -1402,6 +1402,82 @@
         0
       ],
       "purpose": "Seven-recipe electric exchange altar. Four supported wedge lids reuse existing native cargo pod and landing processions.",
+      "owner_visual_approval": false,
+      "operational_complete": true,
+      "remaining_required_work": []
+    },
+    {
+      "id": "tech-priests-emergency-smelter-v1",
+      "status": "game-sprites-installed-with-specific-native-checks",
+      "source": {
+        "repository": "mrcalzon02/Tech-Priests",
+        "ref": "ddd75576bd350ceca8d1b605b62c714a0e3bcb08",
+        "path": "art/source-to-3d/emergency-smelter/v05/smelter-v05.blend",
+        "sha256": "50fae2883f2fe0870c90c32cc7259a4b33012d71cb9d9adbf1a9b8e986bab6a3"
+      },
+      "runtime": {
+        "repository": "mrcalzon02/Tech-Priests",
+        "ref": "ddd75576bd350ceca8d1b605b62c714a0e3bcb08",
+        "path": "art/source-to-3d/emergency-smelter/v05/smelter-v05.glb",
+        "sha256": "68eec69b5c8be25e226b422b672803ae53ce5dc3dfe11573fbf89964051c66c5"
+      },
+      "exports": [
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "ddd75576bd350ceca8d1b605b62c714a0e3bcb08",
+          "path": "art/source-to-3d/emergency-smelter/v05/smelter-v05.glb"
+        }
+      ],
+      "evidence": [
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "ddd75576bd350ceca8d1b605b62c714a0e3bcb08",
+          "path": "art/source-to-3d/emergency-smelter/v05/FMPL_MODEL.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "ddd75576bd350ceca8d1b605b62c714a0e3bcb08",
+          "path": "art/source-to-3d/emergency-smelter/v05/runtime-inspection.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "ddd75576bd350ceca8d1b605b62c714a0e3bcb08",
+          "path": "art/source-to-3d/emergency-smelter/v05/fmpl-channel-verification.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "ddd75576bd350ceca8d1b605b62c714a0e3bcb08",
+          "path": "art/source-to-3d/emergency-smelter/v05/mechanical-support-and-clearance.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "ddd75576bd350ceca8d1b605b62c714a0e3bcb08",
+          "path": "art/source-to-3d/emergency-smelter/v05/visual-review.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "ddd75576bd350ceca8d1b605b62c714a0e3bcb08",
+          "path": "art/source-to-3d/emergency-smelter/v05/native-evidence/capture-receipt.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "ddd75576bd350ceca8d1b605b62c714a0e3bcb08",
+          "path": "art/source-to-3d/emergency-smelter/v05/native-evidence/operated-reload-receipt.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "ddd75576bd350ceca8d1b605b62c714a0e3bcb08",
+          "path": "art/source-to-3d/emergency-smelter/v05/native-evidence/native-recipe-capacity-repair.json"
+        }
+      ],
+      "footprint": [
+        1,
+        1
+      ],
+      "native_directions": [
+        0
+      ],
+      "purpose": "Closed chemical-burner refractory kiln for actual smelting/reclamation recipes; eight-slot output capacity repairs native selection of existing extra-result recipes. Six automatically selected input paths, normal inserters/wires, actual fuel/circuit/blocked/stop-restart/craft-place-mine/reload pass.",
       "owner_visual_approval": false,
       "operational_complete": true,
       "remaining_required_work": []
