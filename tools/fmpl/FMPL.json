@@ -30,7 +30,7 @@
     "pbr_maps": 69,
     "bunker_component_candidates": 21,
     "verified_shared_components": 2,
-    "model_records": 29,
+    "model_records": 30,
     "program_records": 22,
     "pipeline_records": 6,
     "external_blender_libraries": 1,
@@ -1554,6 +1554,92 @@
         0
       ],
       "purpose": "Closed20kW chemical-burner research cabinet,0.33speed. Twelve actual science input filters, native automation research completion/unlock and subsequent research progress; real fuel/science starvation, normal inserters/circuit signals/research selection/saved resume, craft-place-mine/reload pass.",
+      "owner_visual_approval": false,
+      "operational_complete": true,
+      "remaining_required_work": []
+    },
+    {
+      "id": "tech-priests-emergency-power-grid-v1",
+      "status": "game-sprites-installed-with-specific-native-checks",
+      "source": {
+        "repository": "mrcalzon02/Tech-Priests",
+        "ref": "ecf313155250d020ba19c7384c1c9f14f8d5d685",
+        "path": "art/source-to-3d/emergency-power-grid/v02/power-grid-v02.blend",
+        "sha256": "c2eff12f7a2e552186c0fc3589874810996e4554594ed95ad21f596ed20bce35"
+      },
+      "runtime": {
+        "repository": "mrcalzon02/Tech-Priests",
+        "ref": "ecf313155250d020ba19c7384c1c9f14f8d5d685",
+        "path": "art/source-to-3d/emergency-power-grid/v02/power-grid-v02.glb",
+        "sha256": "e7d869fa648e4a82d8e52ff34c6b2eb14e5bfd71f153e2d9d9b25c50a3c4ee31"
+      },
+      "exports": [
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "ecf313155250d020ba19c7384c1c9f14f8d5d685",
+          "path": "art/source-to-3d/emergency-power-grid/v02/power-grid-v02.glb"
+        }
+      ],
+      "evidence": [
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "ecf313155250d020ba19c7384c1c9f14f8d5d685",
+          "path": "art/source-to-3d/emergency-power-grid/v02/FMPL_MODEL.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "ecf313155250d020ba19c7384c1c9f14f8d5d685",
+          "path": "art/source-to-3d/emergency-power-grid/v02/runtime-inspection.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "ecf313155250d020ba19c7384c1c9f14f8d5d685",
+          "path": "art/source-to-3d/emergency-power-grid/v02/fmpl-channel-verification.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "ecf313155250d020ba19c7384c1c9f14f8d5d685",
+          "path": "art/source-to-3d/emergency-power-grid/v02/fmpl-cedar-provenance-check.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "ecf313155250d020ba19c7384c1c9f14f8d5d685",
+          "path": "art/source-to-3d/emergency-power-grid/v02/structural-support-and-routing.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "ecf313155250d020ba19c7384c1c9f14f8d5d685",
+          "path": "art/source-to-3d/emergency-power-grid/v02/wire-anchors.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "ecf313155250d020ba19c7384c1c9f14f8d5d685",
+          "path": "art/source-to-3d/emergency-power-grid/v02/visual-review.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "ecf313155250d020ba19c7384c1c9f14f8d5d685",
+          "path": "art/source-to-3d/emergency-power-grid/v02/native-evidence/capture-receipt.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "ecf313155250d020ba19c7384c1c9f14f8d5d685",
+          "path": "art/source-to-3d/emergency-power-grid/v02/native-evidence/operated-reload-receipt.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "ecf313155250d020ba19c7384c1c9f14f8d5d685",
+          "path": "art/source-to-3d/emergency-power-grid/v02/native-evidence/operation.json"
+        }
+      ],
+      "footprint": [
+        1,
+        1
+      ],
+      "native_directions": [
+        0
+      ],
+      "purpose": "Passive three-terminal timber/ceramic electric pole. Fixed RotatedSprite and native wire/network states; no invented moving mechanism or generation. Actual7x7 supply,9tile copper/circuit reach,10tile rejection, remote load/cut-reconnect/source loss-restoration, signals, craft-place-mine and reload pass.",
       "owner_visual_approval": false,
       "operational_complete": true,
       "remaining_required_work": []

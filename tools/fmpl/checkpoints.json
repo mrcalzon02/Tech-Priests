@@ -488,6 +488,40 @@
         "gameplay_research_fuel_speed_inputs_and_ports_preserved": true,
         "remaining_required_work": []
       }
+    },
+    {
+      "event_id": "tech-priests-emergency-power-grid-v02-operational-2026-11-17",
+      "asset_id": "tech-priests-emergency-power-grid-v1",
+      "asset_kind": "model",
+      "revision": "v02-operational-delivery",
+      "state": "verified",
+      "source_sha256": "c2eff12f7a2e552186c0fc3589874810996e4554594ed95ad21f596ed20bce35",
+      "evidence": {
+        "native_reopen_verified": true,
+        "source_artifact_sha256": "c2eff12f7a2e552186c0fc3589874810996e4554594ed95ad21f596ed20bce35",
+        "glb_sha256": "e7d869fa648e4a82d8e52ff34c6b2eb14e5bfd71f153e2d9d9b25c50a3c4ee31",
+        "owner_visual_approval": false,
+        "factorio_runtime_verified": true,
+        "source_commit": "ecf313155250d020ba19c7384c1c9f14f8d5d685",
+        "source_repository": "mrcalzon02/Tech-Priests",
+        "source_path": "art/source-to-3d/emergency-power-grid/v02/power-grid-v02.blend",
+        "runtime_path": "art/source-to-3d/emergency-power-grid/v02/power-grid-v02.glb",
+        "manifest_path": "art/source-to-3d/emergency-power-grid/v02/FMPL_MODEL.json",
+        "actual_operated_save_reload": true,
+        "genuine_native_pngs": 8,
+        "actual_supply_area": [
+          7,
+          7
+        ],
+        "actual_copper_circuit_reach": 9,
+        "outside_supply_and10tile_direct_links_rejected": true,
+        "fixed_GLTF_wire_contacts_native_alignment_verified": true,
+        "all92meshes_physically_grounded": true,
+        "original_fmpl_cedar_actually_baked_to_image_maps": true,
+        "passive_pole_no_authored_mechanical_cycle": true,
+        "gameplay_supply_reach_quality_and_recipe_preserved": true,
+        "remaining_required_work": []
+      }
     }
   ],
   "schema": "fmpl.checkpoints.v1"
