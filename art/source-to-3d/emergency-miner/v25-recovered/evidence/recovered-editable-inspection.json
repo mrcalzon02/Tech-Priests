@@ -1,0 +1,352 @@
+{
+  "source": "recovered-original\\emergency-miner-motion-v21\\review\\miner_motion_A.blend",
+  "sha256": "479c6364e57092377aa736240d78cbe8d1cbcaba27e07db7d09a2f1cff326244",
+  "blender": "5.0.0",
+  "scene": "Scene",
+  "frames": [
+    1,
+    96
+  ],
+  "fps": 8,
+  "objects": 245,
+  "meshes": 210,
+  "images": [
+    {
+      "name": "Render Result",
+      "size": [
+        0,
+        0
+      ],
+      "packed": false,
+      "path": ""
+    },
+    {
+      "name": "Viewer Node",
+      "size": [
+        256,
+        256
+      ],
+      "packed": false,
+      "path": ""
+    }
+  ],
+  "materials": [
+    {
+      "name": "amber_light",
+      "nodes": [
+        "ShaderNodeBsdfPrincipled",
+        "ShaderNodeOutputMaterial"
+      ],
+      "animated": false
+    },
+    {
+      "name": "black_steel",
+      "nodes": [
+        "ShaderNodeBsdfPrincipled",
+        "ShaderNodeOutputMaterial",
+        "ShaderNodeTexNoise",
+        "ShaderNodeValToRGB",
+        "ShaderNodeBump",
+        "ShaderNodeTexNoise",
+        "ShaderNodeBump"
+      ],
+      "animated": false
+    },
+    {
+      "name": "black_wire",
+      "nodes": [
+        "ShaderNodeBsdfPrincipled",
+        "ShaderNodeOutputMaterial",
+        "ShaderNodeTexNoise",
+        "ShaderNodeValToRGB",
+        "ShaderNodeBump"
+      ],
+      "animated": false
+    },
+    {
+      "name": "brass",
+      "nodes": [
+        "ShaderNodeBsdfPrincipled",
+        "ShaderNodeOutputMaterial",
+        "ShaderNodeTexNoise",
+        "ShaderNodeValToRGB",
+        "ShaderNodeBump"
+      ],
+      "animated": false
+    },
+    {
+      "name": "bright_green",
+      "nodes": [
+        "ShaderNodeBsdfPrincipled",
+        "ShaderNodeOutputMaterial"
+      ],
+      "animated": false
+    },
+    {
+      "name": "copper",
+      "nodes": [
+        "ShaderNodeBsdfPrincipled",
+        "ShaderNodeOutputMaterial",
+        "ShaderNodeTexNoise",
+        "ShaderNodeValToRGB",
+        "ShaderNodeBump"
+      ],
+      "animated": false
+    },
+    {
+      "name": "crevice",
+      "nodes": [
+        "ShaderNodeBsdfPrincipled",
+        "ShaderNodeOutputMaterial",
+        "ShaderNodeTexNoise",
+        "ShaderNodeValToRGB",
+        "ShaderNodeBump"
+      ],
+      "animated": false
+    },
+    {
+      "name": "dim_green",
+      "nodes": [
+        "ShaderNodeBsdfPrincipled",
+        "ShaderNodeOutputMaterial"
+      ],
+      "animated": false
+    },
+    {
+      "name": "edge_steel",
+      "nodes": [
+        "ShaderNodeBsdfPrincipled",
+        "ShaderNodeOutputMaterial",
+        "ShaderNodeTexNoise",
+        "ShaderNodeValToRGB",
+        "ShaderNodeBump",
+        "ShaderNodeTexNoise",
+        "ShaderNodeBump"
+      ],
+      "animated": false
+    },
+    {
+      "name": "FMPL | relief steam irregular feathered wisps v05",
+      "nodes": [
+        "ShaderNodeOutputMaterial",
+        "ShaderNodeBsdfTransparent",
+        "ShaderNodeBsdfPrincipled",
+        "ShaderNodeMixShader",
+        "ShaderNodeTexCoord",
+        "ShaderNodeVectorMath",
+        "ShaderNodeTexNoise",
+        "ShaderNodeMath",
+        "ShaderNodeMath",
+        "ShaderNodeMath",
+        "ShaderNodeMapRange",
+        "ShaderNodeVolumePrincipled",
+        "ShaderNodeMapRange",
+        "ShaderNodeMath"
+      ],
+      "animated": false
+    },
+    {
+      "name": "FX ONLY | diagnostic lamp 0",
+      "nodes": [
+        "ShaderNodeBsdfPrincipled",
+        "ShaderNodeOutputMaterial"
+      ],
+      "animated": true
+    },
+    {
+      "name": "FX ONLY | diagnostic lamp 1",
+      "nodes": [
+        "ShaderNodeBsdfPrincipled",
+        "ShaderNodeOutputMaterial"
+      ],
+      "animated": true
+    },
+    {
+      "name": "FX ONLY | diagnostic lamp 2",
+      "nodes": [
+        "ShaderNodeBsdfPrincipled",
+        "ShaderNodeOutputMaterial"
+      ],
+      "animated": true
+    },
+    {
+      "name": "FX ONLY | diagnostic lamp 3",
+      "nodes": [
+        "ShaderNodeBsdfPrincipled",
+        "ShaderNodeOutputMaterial"
+      ],
+      "animated": true
+    },
+    {
+      "name": "FX ONLY | independently flickering LCD",
+      "nodes": [
+        "ShaderNodeBsdfPrincipled",
+        "ShaderNodeOutputMaterial"
+      ],
+      "animated": true
+    },
+    {
+      "name": "FX ONLY | moving vent scan hotspot 0 material",
+      "nodes": [
+        "ShaderNodeOutputMaterial",
+        "ShaderNodeBsdfTransparent",
+        "ShaderNodeEmission",
+        "ShaderNodeMixShader"
+      ],
+      "animated": true
+    },
+    {
+      "name": "FX ONLY | moving vent scan hotspot 1 material",
+      "nodes": [
+        "ShaderNodeOutputMaterial",
+        "ShaderNodeBsdfTransparent",
+        "ShaderNodeEmission",
+        "ShaderNodeMixShader"
+      ],
+      "animated": true
+    },
+    {
+      "name": "FX ONLY | moving vent scan hotspot 2 material",
+      "nodes": [
+        "ShaderNodeOutputMaterial",
+        "ShaderNodeBsdfTransparent",
+        "ShaderNodeEmission",
+        "ShaderNodeMixShader"
+      ],
+      "animated": true
+    },
+    {
+      "name": "FX ONLY | one continuous red photocopier scanner material",
+      "nodes": [
+        "ShaderNodeOutputMaterial",
+        "ShaderNodeBsdfTransparent",
+        "ShaderNodeEmission",
+        "ShaderNodeMixShader"
+      ],
+      "animated": true
+    },
+    {
+      "name": "FX ONLY | vent aperture laser glow 0 material",
+      "nodes": [
+        "ShaderNodeOutputMaterial",
+        "ShaderNodeBsdfTransparent",
+        "ShaderNodeEmission",
+        "ShaderNodeMixShader"
+      ],
+      "animated": true
+    },
+    {
+      "name": "FX ONLY | vent aperture laser glow 1 material",
+      "nodes": [
+        "ShaderNodeOutputMaterial",
+        "ShaderNodeBsdfTransparent",
+        "ShaderNodeEmission",
+        "ShaderNodeMixShader"
+      ],
+      "animated": true
+    },
+    {
+      "name": "FX ONLY | vent aperture laser glow 2 material",
+      "nodes": [
+        "ShaderNodeOutputMaterial",
+        "ShaderNodeBsdfTransparent",
+        "ShaderNodeEmission",
+        "ShaderNodeMixShader"
+      ],
+      "animated": true
+    },
+    {
+      "name": "green_wire",
+      "nodes": [
+        "ShaderNodeBsdfPrincipled",
+        "ShaderNodeOutputMaterial",
+        "ShaderNodeTexNoise",
+        "ShaderNodeValToRGB",
+        "ShaderNodeBump"
+      ],
+      "animated": false
+    },
+    {
+      "name": "iron",
+      "nodes": [
+        "ShaderNodeBsdfPrincipled",
+        "ShaderNodeOutputMaterial",
+        "ShaderNodeTexNoise",
+        "ShaderNodeValToRGB",
+        "ShaderNodeBump",
+        "ShaderNodeTexNoise",
+        "ShaderNodeBump"
+      ],
+      "animated": false
+    },
+    {
+      "name": "old_gold",
+      "nodes": [
+        "ShaderNodeBsdfPrincipled",
+        "ShaderNodeOutputMaterial",
+        "ShaderNodeTexNoise",
+        "ShaderNodeValToRGB",
+        "ShaderNodeBump"
+      ],
+      "animated": false
+    },
+    {
+      "name": "red_wire",
+      "nodes": [
+        "ShaderNodeBsdfPrincipled",
+        "ShaderNodeOutputMaterial",
+        "ShaderNodeTexNoise",
+        "ShaderNodeValToRGB",
+        "ShaderNodeBump"
+      ],
+      "animated": false
+    },
+    {
+      "name": "worn_steel",
+      "nodes": [
+        "ShaderNodeBsdfPrincipled",
+        "ShaderNodeOutputMaterial",
+        "ShaderNodeTexNoise",
+        "ShaderNodeValToRGB",
+        "ShaderNodeBump",
+        "ShaderNodeTexNoise",
+        "ShaderNodeBump"
+      ],
+      "animated": false
+    }
+  ],
+  "animation_actions": [
+    "FX ONLY | diagnostic lamp 0Action",
+    "FX ONLY | diagnostic lamp 1Action",
+    "FX ONLY | diagnostic lamp 2Action",
+    "FX ONLY | diagnostic lamp 3Action",
+    "FX ONLY | independently flickering LCDAction",
+    "FX ONLY | moving vent scan hotspot 0 materialAction",
+    "FX ONLY | moving vent scan hotspot 0Action",
+    "FX ONLY | moving vent scan hotspot 1 materialAction",
+    "FX ONLY | moving vent scan hotspot 1Action",
+    "FX ONLY | moving vent scan hotspot 2 materialAction",
+    "FX ONLY | moving vent scan hotspot 2Action",
+    "FX ONLY | one continuous red photocopier scanner materialAction",
+    "FX ONLY | one continuous red photocopier scannerAction",
+    "FX ONLY | one traveling red middle chassis spillAction",
+    "FX ONLY | steam Physical vent cavity dark well 0 lobe 0Action",
+    "FX ONLY | steam Physical vent cavity dark well 0 lobe 1Action",
+    "FX ONLY | steam Physical vent cavity dark well 0 lobe 2Action",
+    "FX ONLY | steam Physical vent cavity dark well 2 lobe 0Action",
+    "FX ONLY | steam Physical vent cavity dark well 2 lobe 1Action",
+    "FX ONLY | steam Physical vent cavity dark well 2 lobe 2Action",
+    "FX ONLY | steam Right lower inspection door lobe 0Action",
+    "FX ONLY | steam Right lower inspection door lobe 1Action",
+    "FX ONLY | steam Right lower inspection door lobe 2Action",
+    "FX ONLY | vent aperture laser glow 0 materialAction",
+    "FX ONLY | vent aperture laser glow 1 materialAction",
+    "FX ONLY | vent aperture laser glow 2 materialAction",
+    "FX ONLY | vent inside point light 0Action",
+    "FX ONLY | vent inside point light 1Action",
+    "FX ONLY | vent inside point light 2Action",
+    "RIG | armor oscillationAction",
+    "RIG | service cover rattleAction",
+    "RIG | upper photocopier cassetteAction"
+  ]
+}

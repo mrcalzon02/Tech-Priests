@@ -1,0 +1,8 @@
+{
+  "passed": true,
+  "actual_operated_save_sha256": "a5f5c1d82309c80409cd3672dc2901b3b9bb66da902b9771251a9ac50ea87ef5",
+  "actual_reload_ticks": 600,
+  "log_sha256": "f462f0b4d0102b9979c728985a32cd0a6ed395aab65739a439bd1b89ea7a871f",
+  "all_nine_selected_recipes_persist": true,
+  "scope": "Native save loaded in a separate Factorio process. Earlier continued-before-actual-reload.json is ordinary continued simulation, not reload evidence."
+}

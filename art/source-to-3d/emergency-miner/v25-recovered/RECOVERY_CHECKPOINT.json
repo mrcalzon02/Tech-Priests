@@ -1,0 +1,30 @@
+{
+  "asset": "tech-priests-emergency-miner",
+  "approved_visual_revision": "V25 variant A",
+  "checkpoint_complete": true,
+  "whole_asset_delivery_complete": false,
+  "approved_sprites_changed": false,
+  "recovered_artifact_sha256": "b10ed62d8395f1db2fe5e2fc386a957213d63e136ff73117c02709ffa040df3f",
+  "native_nine_real_recipes_and_normal_output_inserters": true,
+  "native_full_output_stall_and_release_all_nine": true,
+  "native_script_stop_restart": true,
+  "native_void_power_independence": true,
+  "separate_process_operated_save_reload": true,
+  "actual_native_direction": [
+    0
+  ],
+  "authored_approved_views": 4,
+  "current_energy_source": "void1W, no burner, no ore patch required",
+  "current_fluid_ports": 0,
+  "editable_originals_preserved_byte_for_byte": true,
+  "source_opened_in": "Blender5.0; archive generated with5.2.3; newer-file warning observed. No resave or claim of lossless version conversion.",
+  "fmpl_image_textures_verified": false,
+  "actual_runtime_export_verified": false,
+  "pending": [
+    "Finish image-material/export interchange requirements preserving approved geometry and sprites.",
+    "Verify building craft/mine and circuit control against actual current runtime.",
+    "Capture any missing genuine native state evidence.",
+    "Reconcile canonical FMPL record after required delivery gates."
+  ],
+  "scope": "Recovery and operational evidence checkpoint. Prior archive review flags predate later owner approval; preserved as historical evidence, not rewritten. No new visual approval, full asset completion, portal release or whole user-pack verification claimed."
+}
