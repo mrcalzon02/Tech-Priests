@@ -1,0 +1,45 @@
+{
+  "support_and_moving_clearance_passed": true,
+  "source_and_runtime": [
+    {
+      "artifact": "laboratorium-v03.blend",
+      "sha256": "18411b2c6840e15d76ba51c8e470e4834765a364f05ee7ae590fc76059b12e02",
+      "stationary_grounded_meshes": 250,
+      "moving_meshes": 26,
+      "all_moving_meshes_physically_connected_as_one_rigid_assembly": true,
+      "measured_fixed_shaft_radius": 0.012000003562826806,
+      "measured_moving_bore_radius": 0.012499995529651642,
+      "nominal_running_clearance": 0.0004999919668248354,
+      "polygon_clearance_lower_bound": 0.00043980908340246136,
+      "measured_nearest_founded_surface": {
+        "object": "LABORATORIUM | moving calibration bored hub",
+        "nearest_founded_object": "LABORATORIUM | rotor fixed journal shaft",
+        "gap": 0.0004999935626983643
+      },
+      "foreign_moving_contacts": [],
+      "sampled_full_rotation_poses": 193,
+      "fixed_contacts_fully_adjudicated": false
+    },
+    {
+      "artifact": "laboratorium-v03.glb",
+      "sha256": "b5d6a6ab8b4ad7fa605b131344f02dd1b01351e25623360688323c75acb89225",
+      "stationary_grounded_meshes": 250,
+      "moving_meshes": 26,
+      "all_moving_meshes_physically_connected_as_one_rigid_assembly": true,
+      "measured_fixed_shaft_radius": 0.012000003562826806,
+      "measured_moving_bore_radius": 0.012499995529651642,
+      "nominal_running_clearance": 0.0004999919668248354,
+      "polygon_clearance_lower_bound": 0.00043980908340246136,
+      "measured_nearest_founded_surface": {
+        "object": "LABORATORIUM | moving calibration bored hub",
+        "nearest_founded_object": "LABORATORIUM | rotor fixed journal shaft",
+        "gap": 0.0004999935626983643
+      },
+      "foreign_moving_contacts": [],
+      "sampled_full_rotation_poses": 193,
+      "fixed_contacts_fully_adjudicated": false
+    }
+  ],
+  "scope": "Every fixed component has a measured physical path to the foundation. All26 rotor parts form one measured connected rigid assembly on its captured coaxial shaft.193 source and193 runtime poses cover the complete rotation. Static fitted-seat contacts remain in the raw inventory; exhaustive static overlap adjudication is not claimed.",
+  "owner_visual_approved": false
+}

@@ -1,0 +1,16 @@
+{
+  "base_commit": "2e1c08f10446227f0bd4f783cf1c199e78e63658",
+  "source_sha256": "18411b2c6840e15d76ba51c8e470e4834765a364f05ee7ae590fc76059b12e02",
+  "runtime_sha256": "b5d6a6ab8b4ad7fa605b131344f02dd1b01351e25623360688323c75acb89225",
+  "sprites": {
+    "icon.png": "d6fa0e2abfc71cfad919f4be898c0f66550be29aa63841a7472473d894c7ec46",
+    "idle.png": "3a0a2280cc4d4fd6a97c752c00747fbf0f0a77611a20f2dffcebb3bdc838f6a4",
+    "shadow.png": "1ba5b722dc3306dcfc928b1c66586b0c3fe7ca1d9bac24f592ba30fe274ef874",
+    "working.png": "5d2e21bf0c6396df3f1a1caaf2f921cd7c269da95a3e6a2fbee77b12f05fac24"
+  },
+  "native_verification_pending": true,
+  "production_repository_integrated": false,
+  "only_visual_prototype_fields_changed": true,
+  "native_lab_inputs_fuel_research_speed_and_circuit_reach_preserved": true,
+  "owner_visual_approved": false
+}

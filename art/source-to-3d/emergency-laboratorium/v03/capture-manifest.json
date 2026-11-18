@@ -1,0 +1,202 @@
+{
+  "source_sha256": "18411b2c6840e15d76ba51c8e470e4834765a364f05ee7ae590fc76059b12e02",
+  "runtime_sha256": "b5d6a6ab8b4ad7fa605b131344f02dd1b01351e25623360688323c75acb89225",
+  "genuine_actual_glb_frames": 25,
+  "records": [
+    {
+      "file": "idle.png",
+      "authored_frame": 1,
+      "runtime_frame": 0,
+      "idle_visibility": "Only the three hot sight inserts and bonded green optical film are hidden when idle; the physical dark analysis substrate remains.",
+      "sha256": "1c05f12740bb7d388e17f08a7137cf6eadc2d9d7123c1bd46379a60ae18b6e37"
+    },
+    {
+      "file": "working-00.png",
+      "authored_frame": 1,
+      "runtime_frame": 0,
+      "idle_visibility": "All actual GLB meshes visible.",
+      "sha256": "2bda691b255fa020252b88dccab5cc1d907b5c11b82993c7afc144db2a2621cc"
+    },
+    {
+      "file": "working-01.png",
+      "authored_frame": 5,
+      "runtime_frame": 4,
+      "idle_visibility": "All actual GLB meshes visible.",
+      "sha256": "65387f9de7ba5e496a3d1dc0010173ba42da20a7053812dbf8894ef49a553b5a"
+    },
+    {
+      "file": "working-02.png",
+      "authored_frame": 9,
+      "runtime_frame": 8,
+      "idle_visibility": "All actual GLB meshes visible.",
+      "sha256": "9d24579271eabd09e185152cc28000c60e235e24ef9438dd52893394561a088d"
+    },
+    {
+      "file": "working-03.png",
+      "authored_frame": 13,
+      "runtime_frame": 12,
+      "idle_visibility": "All actual GLB meshes visible.",
+      "sha256": "4c0f47682d58b7b8cb19aaee79fc89169a361ebce20ecac7820bf0a02cfa9387"
+    },
+    {
+      "file": "working-04.png",
+      "authored_frame": 17,
+      "runtime_frame": 16,
+      "idle_visibility": "All actual GLB meshes visible.",
+      "sha256": "237d056ee10f9f416f23e10941e128b42d1f77898972182b3bd49c88b0effbe2"
+    },
+    {
+      "file": "working-05.png",
+      "authored_frame": 21,
+      "runtime_frame": 20,
+      "idle_visibility": "All actual GLB meshes visible.",
+      "sha256": "37b9d0bb8c32b04bcebd636ec9fd0db4b212873d2c3a8bb7d738b0e1e556e645"
+    },
+    {
+      "file": "working-06.png",
+      "authored_frame": 25,
+      "runtime_frame": 24,
+      "idle_visibility": "All actual GLB meshes visible.",
+      "sha256": "b037b70d55494962e4dee9cd9798f3fc9302276326b594102f06addafcfa758e"
+    },
+    {
+      "file": "working-07.png",
+      "authored_frame": 29,
+      "runtime_frame": 28,
+      "idle_visibility": "All actual GLB meshes visible.",
+      "sha256": "4e61d26e619691bc899100d8146fd7fc6aa2f592df7b0dea008be82ecb05894c"
+    },
+    {
+      "file": "working-08.png",
+      "authored_frame": 33,
+      "runtime_frame": 32,
+      "idle_visibility": "All actual GLB meshes visible.",
+      "sha256": "90421acaa2bdb15ed11be018b1495c4e9d0891e04151946097a4ff6740694b05"
+    },
+    {
+      "file": "working-09.png",
+      "authored_frame": 37,
+      "runtime_frame": 36,
+      "idle_visibility": "All actual GLB meshes visible.",
+      "sha256": "5103f11957ee8d899ae683e9f0a96d0e4a3dcc412f79e9104f989762632bb251"
+    },
+    {
+      "file": "working-10.png",
+      "authored_frame": 41,
+      "runtime_frame": 40,
+      "idle_visibility": "All actual GLB meshes visible.",
+      "sha256": "3b44c0c306832361a5e95c2062a20da09444eadce3a290e6c271d8f10d733343"
+    },
+    {
+      "file": "working-11.png",
+      "authored_frame": 45,
+      "runtime_frame": 44,
+      "idle_visibility": "All actual GLB meshes visible.",
+      "sha256": "414eef75a4eb1ed5578eff6dd5f84548a537f504bd5d0284afd7a5a451a4315a"
+    },
+    {
+      "file": "working-12.png",
+      "authored_frame": 49,
+      "runtime_frame": 48,
+      "idle_visibility": "All actual GLB meshes visible.",
+      "sha256": "b623d92f023d68b9794988750ed3e1900d015a6696a9681059da0c750ba74253"
+    },
+    {
+      "file": "working-13.png",
+      "authored_frame": 53,
+      "runtime_frame": 52,
+      "idle_visibility": "All actual GLB meshes visible.",
+      "sha256": "cadb4e54dda8ef9735ef76785b6f875ef361026816c2aa993b2dc5cb815e91ab"
+    },
+    {
+      "file": "working-14.png",
+      "authored_frame": 57,
+      "runtime_frame": 56,
+      "idle_visibility": "All actual GLB meshes visible.",
+      "sha256": "cfbbde180a670032cf32fe69009cd57302e483a812d48de2085c4e32ed20c595"
+    },
+    {
+      "file": "working-15.png",
+      "authored_frame": 61,
+      "runtime_frame": 60,
+      "idle_visibility": "All actual GLB meshes visible.",
+      "sha256": "f152f07461e15f3e271a5918946b7dd7e57692c53c9a2860edd8c24269dda434"
+    },
+    {
+      "file": "working-16.png",
+      "authored_frame": 65,
+      "runtime_frame": 64,
+      "idle_visibility": "All actual GLB meshes visible.",
+      "sha256": "7809f22ca9e474c10b6da86580c8a9b1e4d8f5d2665bb40875f7f06e0537f7f9"
+    },
+    {
+      "file": "working-17.png",
+      "authored_frame": 69,
+      "runtime_frame": 68,
+      "idle_visibility": "All actual GLB meshes visible.",
+      "sha256": "5afc4caa750af7baf078a4d993dee6bd00d5cf1faffb92f68da2fa32f3ffd545"
+    },
+    {
+      "file": "working-18.png",
+      "authored_frame": 73,
+      "runtime_frame": 72,
+      "idle_visibility": "All actual GLB meshes visible.",
+      "sha256": "e1b0a3b390c637fe119b9031ae1ef039b7a8817370fdb9cf8b648f158ba3dcb6"
+    },
+    {
+      "file": "working-19.png",
+      "authored_frame": 77,
+      "runtime_frame": 76,
+      "idle_visibility": "All actual GLB meshes visible.",
+      "sha256": "7740925baf8894cbc5f3a24ffd5e521cfb0b1c954a3567ba14982712bdbbfe2a"
+    },
+    {
+      "file": "working-20.png",
+      "authored_frame": 81,
+      "runtime_frame": 80,
+      "idle_visibility": "All actual GLB meshes visible.",
+      "sha256": "63d9f3f278b6a8a5d1b0aca215c68c4ae9b7dcbcd1014b7917ebbb9d8b3be8fe"
+    },
+    {
+      "file": "working-21.png",
+      "authored_frame": 85,
+      "runtime_frame": 84,
+      "idle_visibility": "All actual GLB meshes visible.",
+      "sha256": "03c967dcf9b44842a71f733b6b6d0d45813de15a46d82f4d3b09867876bb485e"
+    },
+    {
+      "file": "working-22.png",
+      "authored_frame": 89,
+      "runtime_frame": 88,
+      "idle_visibility": "All actual GLB meshes visible.",
+      "sha256": "bfd0aa21c076df13044eb80a2e4e37cbeb200c5678af440eeaa7a574d6b2c191"
+    },
+    {
+      "file": "working-23.png",
+      "authored_frame": 93,
+      "runtime_frame": 92,
+      "idle_visibility": "All actual GLB meshes visible.",
+      "sha256": "4aa3ab12b92d53606cef49ac6417c1075ee1e562b5627ed6a2ed228397603f98"
+    }
+  ],
+  "files": {
+    "icon.png": "d6fa0e2abfc71cfad919f4be898c0f66550be29aa63841a7472473d894c7ec46",
+    "idle.png": "3a0a2280cc4d4fd6a97c752c00747fbf0f0a77611a20f2dffcebb3bdc838f6a4",
+    "shadow.png": "1ba5b722dc3306dcfc928b1c66586b0c3fe7ca1d9bac24f592ba30fe274ef874",
+    "working.png": "5d2e21bf0c6396df3f1a1caaf2f921cd7c269da95a3e6a2fbee77b12f05fac24"
+  },
+  "native_directions": [
+    0
+  ],
+  "frames": 24,
+  "working_animation_fps_requested": 12,
+  "idle_atlas": "One genuine idle capture repeated24times to match native furnace frame-count schema.",
+  "shadow": "Actual Cycles shadow catcher with camera-invisible model.",
+  "idle_source_visibility": "Only three hot sight inserts and green optical film hidden; fixed substrate remains, and native lab switches complete on/off animations.",
+  "sprite_scale": 0.15,
+  "sprite_shift": [
+    0,
+    -0.35355339059327373
+  ],
+  "owner_visual_approved": false
+}

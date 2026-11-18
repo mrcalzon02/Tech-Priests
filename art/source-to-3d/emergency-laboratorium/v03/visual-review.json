@@ -1,0 +1,34 @@
+{
+  "source_sha256": "18411b2c6840e15d76ba51c8e470e4834765a364f05ee7ae590fc76059b12e02",
+  "runtime_sha256": "b5d6a6ab8b4ad7fa605b131344f02dd1b01351e25623360688323c75acb89225",
+  "reference_sha256": "0d8af86f08ce1a29c06e148dd0aed1afbce6ccba333803014eb9b1ae6190ee3d",
+  "render_sha256": {
+    "actual-glb-front.png": "9845812ad10d542df55cf3beedc6693a2a75f07184dd6f2d825a16a91dd64594",
+    "actual-glb-detail.png": "2514a4bcdf860a58d834977f8bcd4e6e54d5adfaaa357a3bde65b7496afd3f18",
+    "actual-glb-rear.png": "798d21075f1e25089c22fff0b24a17b1edbe95c9eb59b0e14e2e89ebd79c477b",
+    "actual-glb-clay.png": "1d24f30618397d63a0006afacb2289dc2553e6a6b18099a817c7d455b37978c0"
+  },
+  "native_image_sha256": {
+    "idle-close.png": "dcc79da48f1fb0325a260a02701c5992b6fc505126c53182bce1bee828741150",
+    "working-01.png": "a0ddfee716718a35340ed3cf81fb3754fbeb7b2e449bb431da72c42355e92c2e",
+    "working-night.png": "aa9f56ec0a5a8ff8464ba7df2ef51c26183b6441e51bfeea1e399dab3a18d86e",
+    "idle-night.png": "b99f08e53b8c95d083eed373ad932a1e454f4a7e7dccc29be33f328257f6b4a4",
+    "logistics-working-wide.png": "9a4be59e561f95dc49178adad5a3a40094aa66e7c5277fc172dd8255a240f120"
+  },
+  "scored_review_out_of_five": {
+    "purpose_readability": 4,
+    "supported_construction": 4,
+    "model_specific_fmpl_surfaces": 4,
+    "motion_and_clearance": 4,
+    "native_integration": 4
+  },
+  "reasoning": "Closed burner-heated research cabinet retains the source reference console and attached conduit identity. Refractory sill, retained arched brow, ivory calibration scale, closed glands and a captive external calibration rotor explain a compact study machine while internal apparatus stays enclosed. Every fixed mesh is grounded; all26 rotor meshes form one physical assembly on the measured captured shaft. Actual native views show a green working analysis plate and lit burner, dark idle substrate and burner, correct night-state lighting and normal four-sided logistics. Actual science consumption completed automation and applied its real unlock.",
+  "delegated_operational_close_enough": true,
+  "owner_visual_approved": false,
+  "limits": [
+    "Static contact inventory is not exhaustive static-overlap adjudication.",
+    "Native captures use medium graphics; delivered sprites retain full resolution.",
+    "Full user mod pack and portal release were not verified.",
+    "All12 science input filters were exercised; actual research completion covers automation, with gun-turret advancing next. Research for every technology was not claimed."
+  ]
+}

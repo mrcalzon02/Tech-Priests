@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "actual_operated_save": "laboratorium-operated.zip",
+  "save_sha256": "8a95e66234f638ae339fee69d3815034d4953a36cd3738fee449c08b7f6d427d",
+  "actual_reload_test_ticks": 600,
+  "reload_exit_code": 0,
+  "reload_log_sha256": "ea8f9c3ba699ef59637b4ebf6037cd899081e0b978de189e4a5ef53e856b5f49",
+  "actual_research_completion_and_operating_modes_passed": true,
+  "research_progress_never_assigned": true,
+  "no_target_or_accumulator_energy_assignments": true
+}

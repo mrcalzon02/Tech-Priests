@@ -1,0 +1,15 @@
+script.on_init(function()
+ local name='tech-priests-emergency-laboratorium';local p=assert(prototypes.entity[name]);local f=game.forces.player;local s=game.surfaces[1];s.request_to_generate_chunks({20,20},1);s.force_generate_chunk_requests();local tiles={};for x=10,40 do for y=10,40 do tiles[#tiles+1]={name='grass-1',position={x,y}}end end;s.set_tiles(tiles,true)
+ for _,e in pairs(s.find_entities_filtered{area={{10,10},{40,40}},type={'tree','simple-entity','cliff'}})do e.destroy()end
+ local e=assert(s.create_entity{name=name,position={20.5,20.5},force=f});local dirs={};for _,d in ipairs({0,4,8,12})do e.direction=d;dirs[#dirs+1]={requested=d,actual=e.direction,rotate=e.rotate(),can_place=s.can_place_entity{name=name,position={32.5,20.5},direction=d,force=f}}end;e.direction=0
+ local wires={};for id in pairs(e.get_wire_connectors(true)or{})do wires[#wires+1]=id end
+ local names={};for _,n in pairs(p.lab_inputs)do names[n]=true end;local techs={};local unlocks={};for n,t in pairs(prototypes.technology)do
+  local eligible=not not t.research_unit_ingredients and #t.research_unit_ingredients>0;for _,i in pairs(t.research_unit_ingredients or{})do if not names[i.name]then eligible=false end end
+  local prereq={};for q in pairs(t.prerequisites)do prereq[#prereq+1]=q end
+  if eligible then techs[#techs+1]={name=n,count=t.research_unit_count,count_formula=t.research_unit_count_formula,ticks=t.research_unit_energy,ingredients=t.research_unit_ingredients,prerequisites=prereq,effects=t.effects}end
+  for _,ef in pairs(t.effects or{})do if ef.type=='unlock-recipe'and ef.recipe==name then unlocks[#unlocks+1]=n end end
+ end
+ table.sort(techs,function(a,b)return(a.count*a.ticks)<(b.count*b.ticks)end)
+ local item=prototypes.item[name];local r=prototypes.recipe[name];local inv=e.get_module_inventory();local report={entity={name=name,type=p.type,footprint={p.tile_width,p.tile_height},collision_box=p.collision_box,selection_box=p.selection_box,max_health=p.get_max_health(),max_energy_usage_watts=p.get_max_energy_usage()*60,burner=not not e.burner,burner_effectivity=p.burner_prototype.effectivity,fuel_categories=p.burner_prototype.fuel_categories,fuel_slots=#e.get_fuel_inventory(),researching_speed=p.get_researching_speed(),module_slots=inv and #inv or 0,science_inventory_slots=#e.get_inventory(defines.inventory.lab_input),lab_inputs=p.lab_inputs,fluid_storage_count=e.fluids_count,circuit_connector_ids=wires,circuit_reach=p.get_max_circuit_wire_distance(),surface_conditions=p.surface_conditions},item={name=name,place_result=item.place_result.name,stack_size=item.stack_size,weight=item.weight},building_recipe={enabled=f.recipes[name].enabled,seconds=r.energy,categories=r.categories,ingredients=r.ingredients,products=r.products},processing_recipes={},building_unlocks=unlocks,compatible_research=techs,native_directions=dirs,normal_nauvis_placement=dirs[1].can_place,prototype_overrides=false}
+ helpers.write_file('laboratorium-contract/contract.json',helpers.table_to_json(report),false);log('LABORATORIUM_ACTUAL_CONTRACT_CAPTURED')
+end)

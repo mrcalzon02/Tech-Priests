@@ -1,0 +1,283 @@
+00:00.703  blend            | Read blend: "C:\Users\Admin\Documents\ChatGPT\Tech priests\tanks-structure-production\build\tp-emergency-laboratorium-main01\authored-v03\laboratorium-v03.blend"
+17:02:45 | INFO: Data are loaded, start creating Blender stuff
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | analysis plate founded jamb.002
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | analysis plate founded jamb.003
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | analysis plate retained sill lintel.002
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | analysis plate retained sill lintel.003
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | analysis plate seated backing.001
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | analysis plate seated trace.005
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | analysis plate seated trace.006
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | analysis plate seated trace.007
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | analysis plate seated trace.008
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | analysis plate seated trace.009
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | attached closed service conduit
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | attached closed service conduit.001
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | attached closed service conduit.002
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | burner fixed grille.005
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | burner fixed grille.006
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | burner fixed grille.007
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | burner fixed grille.008
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | burner fixed grille.009
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | burner grille grounded rail.002
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | burner grille grounded rail.003
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | burner retained iron front.001
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | burner sight slit.003
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | burner sight slit.004
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | burner sight slit.005
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | cabinet corner band.004
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | cabinet corner band.005
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | cabinet corner band.006
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | cabinet corner band.007
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | cage supported top guard.003
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | cage supported top guard.004
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | cage supported top guard.005
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | calibration tablet retained head
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | calibration tablet retained head.001
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | calibration tablet retained head.002
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | calibration tablet retained head.003
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | chapter tab retained glyph.006
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | chapter tab retained glyph.007
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | chapter tab retained glyph.008
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | chapter tab retained glyph.009
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | chapter tab retained glyph.010
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | chapter tab retained glyph.011
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | circuit ceramic seat
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | circuit ceramic seat.001
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | circuit terminal head
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | circuit terminal head.001
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | closed research chamber.001
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | coal charge tray.001
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | coal tray retained upstand.002
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | coal tray retained upstand.003
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | conduit founded closed gland
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | conduit founded closed gland.001
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | conduit founded closed gland.002
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | conduit founded closed gland.003
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | conduit founded closed gland.004
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | conduit founded closed gland.005
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | conduit retained collar
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | conduit retained collar.001
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | conduit retained collar.002
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | conduit retained collar.003
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | conduit retained collar.004
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | conduit retained collar.005
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | conduit retained collar.006
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | conduit retained collar.007
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | conduit retained collar.008
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | conduit saddle seat.009
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | conduit saddle seat.010
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | conduit saddle seat.011
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | conduit saddle seat.012
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | conduit saddle seat.013
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | conduit saddle seat.014
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | conduit saddle seat.015
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | conduit saddle seat.016
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | conduit saddle seat.017
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | console seated key.014
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | console seated key.015
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | console seated key.016
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | console seated key.017
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | console seated key.018
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | console seated key.019
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | console seated key.020
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | console seated key.021
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | console seated key.022
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | console seated key.023
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | console seated key.024
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | console seated key.025
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | console seated key.026
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | console seated key.027
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | control wheel seated shaft
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | corner seated rivet
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | corner seated rivet.001
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | corner seated rivet.002
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | corner seated rivet.003
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | corner seated rivet.004
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | corner seated rivet.005
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | corner seated rivet.006
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | corner seated rivet.007
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | corner seated rivet.008
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | corner seated rivet.009
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | corner seated rivet.010
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | corner seated rivet.011
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | corner seated rivet.012
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | corner seated rivet.013
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | corner seated rivet.014
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | corner seated rivet.015
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | dressed foundation.001
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | fixed control wheel
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | fixed opaque analysis substrate.001
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | fixed shaft retained head
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | fixed wheel retained head
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | foundation keeper.004
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | foundation keeper.005
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | foundation keeper.006
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | foundation keeper.007
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | founded burner firebox.001
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | founded cabinet sill.001
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | founded circuit terminal block.001
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | founded control console.001
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | keeper seated head
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | keeper seated head.001
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | keeper seated head.002
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | keeper seated head.003
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | rear blind service hatch.001
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | rear hatch retained relief.005
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | rear hatch retained relief.006
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | rear hatch retained relief.007
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | rear hatch retained relief.008
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | rear hatch retained relief.009
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | rear hatch retained rivet
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | rear hatch retained rivet.001
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | rear hatch retained rivet.002
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | rear hatch retained rivet.003
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | rear hatch seated index tablet.004
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | rear hatch seated index tablet.005
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | rear hatch seated index tablet.006
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | rear hatch seated index tablet.007
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | rear index tablet raised mark.012
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | rear index tablet raised mark.013
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | rear index tablet raised mark.014
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | rear index tablet raised mark.015
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | rear index tablet raised mark.016
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | rear index tablet raised mark.017
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | rear index tablet raised mark.018
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | rear index tablet raised mark.019
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | rear index tablet raised mark.020
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | rear index tablet raised mark.021
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | rear index tablet raised mark.022
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | rear index tablet raised mark.023
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | refractory roof liner.001
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | retained arched study brow.011
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | retained arched study brow.012
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | retained arched study brow.013
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | retained arched study brow.014
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | retained arched study brow.015
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | retained arched study brow.016
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | retained arched study brow.017
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | retained arched study brow.018
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | retained arched study brow.019
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | retained arched study brow.020
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | retained arched study brow.021
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | retained copper roof cover.001
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | roof calibration chapter tab.003
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | roof calibration chapter tab.004
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | roof calibration chapter tab.005
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | roof parchment calibration tablet.001
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | roof tablet seated scale.005
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | roof tablet seated scale.006
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | roof tablet seated scale.007
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | roof tablet seated scale.008
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | roof tablet seated scale.009
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | rotor fixed axial keeper
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | rotor fixed axial keeper.001
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | rotor fixed cage guard
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | rotor fixed journal shaft
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | rotor founded cage upright
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | rotor founded cage upright.001
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | rotor founded cage upright.002
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | rotor founded cage upright.003
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | rotor founded thermal governor
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | service cover seated tablet.010
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | service cover seated tablet.011
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | service cover seated tablet.012
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | service cover seated tablet.013
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | service cover seated tablet.014
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | service cover seated tablet.015
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | service cover seated tablet.016
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | service cover seated tablet.017
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | service cover seated tablet.018
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | service cover seated tablet.019
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | service tablet relief.040
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | service tablet relief.041
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | service tablet relief.042
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | service tablet relief.043
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | service tablet relief.044
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | service tablet relief.045
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | service tablet relief.046
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | service tablet relief.047
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | service tablet relief.048
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | service tablet relief.049
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | service tablet relief.050
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | service tablet relief.051
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | service tablet relief.052
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | service tablet relief.053
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | service tablet relief.054
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | service tablet relief.055
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | service tablet relief.056
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | service tablet relief.057
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | service tablet relief.058
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | service tablet relief.059
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | service tablet relief.060
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | service tablet relief.061
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | service tablet relief.062
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | service tablet relief.063
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | service tablet relief.064
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | service tablet relief.065
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | service tablet relief.066
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | service tablet relief.067
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | service tablet relief.068
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | service tablet relief.069
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | service tablet relief.070
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | service tablet relief.071
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | service tablet relief.072
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | service tablet relief.073
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | service tablet relief.074
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | service tablet relief.075
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | service tablet relief.076
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | service tablet relief.077
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | service tablet relief.078
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | service tablet relief.079
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | side cover retained border.004
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | side cover retained border.005
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | side cover retained border.006
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | side cover retained border.007
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | side cover retained crosspiece.004
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | side cover retained crosspiece.005
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | side cover retained crosspiece.006
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | side cover retained crosspiece.007
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | side seated blind service cover.002
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | side seated blind service cover.003
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | study brow seated witness
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | study brow seated witness.001
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | study brow seated witness.002
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | study brow seated witness.003
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | study brow seated witness.004
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | study brow seated witness.005
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | study brow seated witness.006
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | study brow seated witness.007
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | study brow seated witness.008
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | study brow seated witness.009
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | study brow seated witness.010
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | moving calibration bored hub
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | moving calibration retained index.018
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | moving calibration retained index.019
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | moving calibration retained index.020
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | moving calibration retained index.021
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | moving calibration retained index.022
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | moving calibration retained index.023
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | moving calibration retained index.024
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | moving calibration retained index.025
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | moving calibration retained index.026
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | moving calibration retained index.027
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | moving calibration retained index.028
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | moving calibration retained index.029
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | moving calibration retained index.030
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | moving calibration retained index.031
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | moving calibration retained index.032
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | moving calibration retained index.033
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | moving calibration retained index.034
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | moving calibration retained index.035
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | moving calibration rigid spoke.006
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | moving calibration rigid spoke.007
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | moving calibration rigid spoke.008
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | moving calibration rigid spoke.009
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | moving calibration rigid spoke.010
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | moving calibration rigid spoke.011
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | moving calibration scale
+17:02:45 | INFO: Blender create Mesh node LABORATORIUM | working green analysis insert.001
+17:02:45 | INFO: glTF import finished in 0.19s
+LABORATORIUM_SUPPORT_AND_MOVING_CLEARANCE_PASS
+Blender 5.0.0 (hash a37564c4df7a built 2025-11-18 11:06:54)
+
+Blender quit

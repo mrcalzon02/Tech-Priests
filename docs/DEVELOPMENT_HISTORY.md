@@ -5,6 +5,23 @@
 **Packaged baseline:** `0.1.672`  
 **Active development lane:** `0.1.674-dev`
 
+## 2026-11-17 - Emergency Laboratorium operational delivery
+
+Closed1x1 burner-heated study cabinet, retained console/conduits, arched brow
+and captive calibration rotor. Correct FMPL image channels/physicalUVs,
+reopened source, inspected animated GLB and193-pose source/runtime moving
+clearance pass. All12 actual science filters exercised. Native pack/fuel
+consumption completed automation and applied its real unlock; next gun-turret
+research advances. Research progress never assigned. Fuel/science starvation,
+script stop/restart, no-current-research idle, four-sided ordinary inserters,
+red/green science/fuel signals, circuit research selection and saved-progress
+resume, actual building craft/place/mine and operated-save reload pass.
+Nine genuine native idle/working/logistics/day/night PNGs retained. Gameplay
+inputs, fuel, research speed, footprint and ports preserved.
+Delegated operational close-enough delivery; owner visual approval not claimed.
+Evidence:art/source-to-3d/emergency-laboratorium/v03/FMPL_MODEL.json.
+Accepted and previously closed machines and concurrent work preserved.
+
 ## 2026-11-17 - Emergency Smelter operational delivery
 
 Authored closed1x1 refractory kiln, founded flue and captive draft damper.

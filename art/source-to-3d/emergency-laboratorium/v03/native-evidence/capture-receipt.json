@@ -1,0 +1,172 @@
+{
+  "genuine_native_capture": true,
+  "separate_task_desktop": true,
+  "default_desktop_untouched": true,
+  "capture": {
+    "passed": true,
+    "frames": [
+      {
+        "file": "idle-close.png",
+        "tick": 22519
+      },
+      {
+        "file": "idle-wide.png",
+        "tick": 22519
+      },
+      {
+        "file": "working-01.png",
+        "tick": 22609
+      },
+      {
+        "file": "logistics-working-wide.png",
+        "tick": 22609
+      },
+      {
+        "file": "logistics-working-close.png",
+        "tick": 22609
+      },
+      {
+        "file": "working-02.png",
+        "tick": 22639
+      },
+      {
+        "file": "working-night.png",
+        "tick": 22669
+      },
+      {
+        "file": "working-night-wide.png",
+        "tick": 22669
+      },
+      {
+        "file": "idle-night.png",
+        "tick": 22749
+      }
+    ],
+    "wide": {},
+    "samples": [
+      {
+        "tick": 22519,
+        "disabled": true,
+        "status": 66,
+        "research": "gun-turret",
+        "research_progress": 0.036354999999999735,
+        "fuel_remaining": 0
+      },
+      {
+        "tick": 22519,
+        "disabled": true,
+        "status": 66,
+        "research": "gun-turret",
+        "research_progress": 0.036354999999999735,
+        "fuel_remaining": 0
+      },
+      {
+        "tick": 22609,
+        "disabled": false,
+        "status": 1,
+        "research": "gun-turret",
+        "research_progress": 0.04454999999999965,
+        "fuel_remaining": 3973303.7037037006
+      },
+      {
+        "tick": 22609,
+        "disabled": false,
+        "status": 1,
+        "research": "gun-turret",
+        "research_progress": 0.04454999999999965,
+        "fuel_remaining": 3834637.0370362215
+      },
+      {
+        "tick": 22609,
+        "disabled": false,
+        "status": 1,
+        "research": "gun-turret",
+        "research_progress": 0.04454999999999965,
+        "fuel_remaining": 3834637.0370362215
+      },
+      {
+        "tick": 22639,
+        "disabled": false,
+        "status": 1,
+        "research": "gun-turret",
+        "research_progress": 0.04784999999999963,
+        "fuel_remaining": 3959970.3703703657
+      },
+      {
+        "tick": 22669,
+        "disabled": false,
+        "status": 1,
+        "research": "gun-turret",
+        "research_progress": 0.05114999999999971,
+        "fuel_remaining": 3946637.037037031
+      },
+      {
+        "tick": 22669,
+        "disabled": false,
+        "status": 1,
+        "research": "gun-turret",
+        "research_progress": 0.05114999999999971,
+        "fuel_remaining": 3946637.037037031
+      },
+      {
+        "tick": 22749,
+        "disabled": true,
+        "status": 66,
+        "research": "gun-turret",
+        "research_progress": 0.056650000000000214,
+        "fuel_remaining": 3937748.148148141
+      }
+    ],
+    "actual_operated_save_loaded": true,
+    "clean_view_uses_actual_crafted_mined_item": true,
+    "native_idle_working_and_night": true,
+    "native_directions": [
+      0
+    ],
+    "native_burner_light_position": [
+      -0.31,
+      0.20449895397947349
+    ],
+    "no_external_lab_electrical_supply": true,
+    "screenshots": [
+      {
+        "file": "idle-close.png",
+        "sha256": "dcc79da48f1fb0325a260a02701c5992b6fc505126c53182bce1bee828741150"
+      },
+      {
+        "file": "idle-wide.png",
+        "sha256": "de1abd1e8062647b55cad801238b9d5936389b4306315f1c9dc1bcc3e7c529f9"
+      },
+      {
+        "file": "working-01.png",
+        "sha256": "a0ddfee716718a35340ed3cf81fb3754fbeb7b2e449bb431da72c42355e92c2e"
+      },
+      {
+        "file": "logistics-working-wide.png",
+        "sha256": "9a4be59e561f95dc49178adad5a3a40094aa66e7c5277fc172dd8255a240f120"
+      },
+      {
+        "file": "logistics-working-close.png",
+        "sha256": "5858294ae9e1d8f7463858fad219b69dd9424838b5a9cb3e5fa8f9bdec383a79"
+      },
+      {
+        "file": "working-02.png",
+        "sha256": "1b4a0ab35322bf3790236ce40dab79981218a00dcd1566d8596bc21f25a0865c"
+      },
+      {
+        "file": "working-night.png",
+        "sha256": "aa9f56ec0a5a8ff8464ba7df2ef51c26183b6441e51bfeea1e399dab3a18d86e"
+      },
+      {
+        "file": "working-night-wide.png",
+        "sha256": "b2af7be5519e8e95f96907a27e08738b1bb7b6dbd971ef4dacd94ef5f3a5adf6"
+      },
+      {
+        "file": "idle-night.png",
+        "sha256": "b99f08e53b8c95d083eed373ad932a1e454f4a7e7dccc29be33f328257f6b4a4"
+      }
+    ]
+  },
+  "engine_graphics_quality": "medium",
+  "owner_visual_approved": false
+}

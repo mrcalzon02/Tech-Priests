@@ -1,0 +1,2874 @@
+{
+  "artifact": "laboratorium-v03.glb",
+  "artifact_sha256": "b5d6a6ab8b4ad7fa605b131344f02dd1b01351e25623360688323c75acb89225",
+  "tolerance_tiles": 0.0001,
+  "root_foundation_meshes": [
+    "LABORATORIUM | dressed foundation"
+  ],
+  "mesh_count": 276,
+  "physically_connected_to_foundation": 250,
+  "unattached_components": [
+    {
+      "objects": [
+        "LABORATORIUM | moving calibration bored hub",
+        "LABORATORIUM | moving calibration retained index",
+        "LABORATORIUM | moving calibration retained index.001",
+        "LABORATORIUM | moving calibration retained index.002",
+        "LABORATORIUM | moving calibration retained index.003",
+        "LABORATORIUM | moving calibration retained index.004",
+        "LABORATORIUM | moving calibration retained index.005",
+        "LABORATORIUM | moving calibration retained index.006",
+        "LABORATORIUM | moving calibration retained index.007",
+        "LABORATORIUM | moving calibration retained index.008",
+        "LABORATORIUM | moving calibration retained index.009",
+        "LABORATORIUM | moving calibration retained index.010",
+        "LABORATORIUM | moving calibration retained index.011",
+        "LABORATORIUM | moving calibration retained index.012",
+        "LABORATORIUM | moving calibration retained index.013",
+        "LABORATORIUM | moving calibration retained index.014",
+        "LABORATORIUM | moving calibration retained index.015",
+        "LABORATORIUM | moving calibration retained index.016",
+        "LABORATORIUM | moving calibration retained index.017",
+        "LABORATORIUM | moving calibration rigid spoke",
+        "LABORATORIUM | moving calibration rigid spoke.001",
+        "LABORATORIUM | moving calibration rigid spoke.002",
+        "LABORATORIUM | moving calibration rigid spoke.003",
+        "LABORATORIUM | moving calibration rigid spoke.004",
+        "LABORATORIUM | moving calibration rigid spoke.005",
+        "LABORATORIUM | moving calibration scale"
+      ],
+      "nearest_founded_seats": [
+        {
+          "object": "LABORATORIUM | moving calibration bored hub",
+          "nearest_founded_object": "LABORATORIUM | rotor fixed journal shaft",
+          "gap": 0.0004999935626983643
+        },
+        {
+          "object": "LABORATORIUM | moving calibration rigid spoke.005",
+          "nearest_founded_object": "LABORATORIUM | rotor founded thermal governor",
+          "gap": 0.01500004529953003
+        },
+        {
+          "object": "LABORATORIUM | moving calibration rigid spoke.001",
+          "nearest_founded_object": "LABORATORIUM | rotor founded thermal governor",
+          "gap": 0.01500004529953003
+        },
+        {
+          "object": "LABORATORIUM | moving calibration rigid spoke.002",
+          "nearest_founded_object": "LABORATORIUM | rotor founded thermal governor",
+          "gap": 0.01500004529953003
+        },
+        {
+          "object": "LABORATORIUM | moving calibration rigid spoke.003",
+          "nearest_founded_object": "LABORATORIUM | rotor founded thermal governor",
+          "gap": 0.01500004529953003
+        },
+        {
+          "object": "LABORATORIUM | moving calibration rigid spoke.004",
+          "nearest_founded_object": "LABORATORIUM | rotor founded thermal governor",
+          "gap": 0.01500004529953003
+        },
+        {
+          "object": "LABORATORIUM | moving calibration rigid spoke",
+          "nearest_founded_object": "LABORATORIUM | rotor founded thermal governor",
+          "gap": 0.01500004529953003
+        },
+        {
+          "object": "LABORATORIUM | moving calibration retained index",
+          "nearest_founded_object": "LABORATORIUM | rotor founded cage upright.001",
+          "gap": 0.018733296543359756
+        },
+        {
+          "object": "LABORATORIUM | moving calibration retained index.009",
+          "nearest_founded_object": "LABORATORIUM | rotor founded cage upright",
+          "gap": 0.018733298406004906
+        },
+        {
+          "object": "LABORATORIUM | moving calibration scale",
+          "nearest_founded_object": "LABORATORIUM | rotor founded cage upright.001",
+          "gap": 0.018999993801116943
+        },
+        {
+          "object": "LABORATORIUM | moving calibration retained index.005",
+          "nearest_founded_object": "LABORATORIUM | rotor founded cage upright.003",
+          "gap": 0.0258485060185194
+        },
+        {
+          "object": "LABORATORIUM | moving calibration retained index.004",
+          "nearest_founded_object": "LABORATORIUM | rotor founded cage upright.003",
+          "gap": 0.0258485060185194
+        }
+      ]
+    }
+  ],
+  "measured_edges": [
+    {
+      "a": "LABORATORIUM | analysis plate founded jamb",
+      "b": "LABORATORIUM | analysis plate retained sill lintel",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | analysis plate founded jamb",
+      "b": "LABORATORIUM | analysis plate retained sill lintel.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | analysis plate founded jamb",
+      "b": "LABORATORIUM | analysis plate seated backing",
+      "basis": "measured near-surface fitted seat",
+      "surface_distance": 1.4901161193847656e-08
+    },
+    {
+      "a": "LABORATORIUM | analysis plate founded jamb",
+      "b": "LABORATORIUM | retained arched study brow.009",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | analysis plate founded jamb",
+      "b": "LABORATORIUM | retained arched study brow.010",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | analysis plate founded jamb",
+      "b": "LABORATORIUM | study brow seated witness.009",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | analysis plate founded jamb",
+      "b": "LABORATORIUM | study brow seated witness.010",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | analysis plate founded jamb.001",
+      "b": "LABORATORIUM | analysis plate retained sill lintel",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | analysis plate founded jamb.001",
+      "b": "LABORATORIUM | analysis plate retained sill lintel.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | analysis plate founded jamb.001",
+      "b": "LABORATORIUM | analysis plate seated backing",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | analysis plate founded jamb.001",
+      "b": "LABORATORIUM | retained arched study brow",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | analysis plate founded jamb.001",
+      "b": "LABORATORIUM | retained arched study brow.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | analysis plate founded jamb.001",
+      "b": "LABORATORIUM | study brow seated witness",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | analysis plate founded jamb.001",
+      "b": "LABORATORIUM | study brow seated witness.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | analysis plate retained sill lintel",
+      "b": "LABORATORIUM | analysis plate seated backing",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | analysis plate retained sill lintel.001",
+      "b": "LABORATORIUM | analysis plate seated backing",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | analysis plate retained sill lintel.001",
+      "b": "LABORATORIUM | retained arched study brow.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | analysis plate retained sill lintel.001",
+      "b": "LABORATORIUM | retained arched study brow.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | analysis plate retained sill lintel.001",
+      "b": "LABORATORIUM | retained arched study brow.008",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | analysis plate retained sill lintel.001",
+      "b": "LABORATORIUM | retained arched study brow.009",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | analysis plate seated backing",
+      "b": "LABORATORIUM | closed research chamber",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | analysis plate seated backing",
+      "b": "LABORATORIUM | fixed opaque analysis substrate",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | analysis plate seated backing",
+      "b": "LABORATORIUM | retained arched study brow",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | analysis plate seated backing",
+      "b": "LABORATORIUM | retained arched study brow.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | analysis plate seated backing",
+      "b": "LABORATORIUM | retained arched study brow.009",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | analysis plate seated backing",
+      "b": "LABORATORIUM | retained arched study brow.010",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | analysis plate seated trace",
+      "b": "LABORATORIUM | fixed opaque analysis substrate",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | analysis plate seated trace",
+      "b": "LABORATORIUM | working green analysis insert",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | analysis plate seated trace.001",
+      "b": "LABORATORIUM | fixed opaque analysis substrate",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | analysis plate seated trace.001",
+      "b": "LABORATORIUM | working green analysis insert",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | analysis plate seated trace.002",
+      "b": "LABORATORIUM | fixed opaque analysis substrate",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | analysis plate seated trace.002",
+      "b": "LABORATORIUM | working green analysis insert",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | analysis plate seated trace.003",
+      "b": "LABORATORIUM | fixed opaque analysis substrate",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | analysis plate seated trace.003",
+      "b": "LABORATORIUM | working green analysis insert",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | analysis plate seated trace.004",
+      "b": "LABORATORIUM | fixed opaque analysis substrate",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | analysis plate seated trace.004",
+      "b": "LABORATORIUM | working green analysis insert",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | attached closed service conduit",
+      "b": "LABORATORIUM | conduit founded closed gland",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | attached closed service conduit",
+      "b": "LABORATORIUM | conduit founded closed gland.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | attached closed service conduit",
+      "b": "LABORATORIUM | conduit retained collar",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | attached closed service conduit",
+      "b": "LABORATORIUM | conduit retained collar.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | attached closed service conduit",
+      "b": "LABORATORIUM | conduit retained collar.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | attached closed service conduit",
+      "b": "LABORATORIUM | conduit saddle seat",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | attached closed service conduit",
+      "b": "LABORATORIUM | conduit saddle seat.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | attached closed service conduit",
+      "b": "LABORATORIUM | conduit saddle seat.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | attached closed service conduit",
+      "b": "LABORATORIUM | service cover seated tablet.009",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | attached closed service conduit",
+      "b": "LABORATORIUM | side cover retained border.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | attached closed service conduit",
+      "b": "LABORATORIUM | side seated blind service cover.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | attached closed service conduit.001",
+      "b": "LABORATORIUM | conduit founded closed gland.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | attached closed service conduit.001",
+      "b": "LABORATORIUM | conduit founded closed gland.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | attached closed service conduit.001",
+      "b": "LABORATORIUM | conduit retained collar.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | attached closed service conduit.001",
+      "b": "LABORATORIUM | conduit retained collar.004",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | attached closed service conduit.001",
+      "b": "LABORATORIUM | conduit retained collar.005",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | attached closed service conduit.001",
+      "b": "LABORATORIUM | conduit saddle seat.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | attached closed service conduit.001",
+      "b": "LABORATORIUM | conduit saddle seat.004",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | attached closed service conduit.001",
+      "b": "LABORATORIUM | conduit saddle seat.005",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | attached closed service conduit.001",
+      "b": "LABORATORIUM | service cover seated tablet.009",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | attached closed service conduit.001",
+      "b": "LABORATORIUM | side cover retained border.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | attached closed service conduit.001",
+      "b": "LABORATORIUM | side seated blind service cover.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | attached closed service conduit.002",
+      "b": "LABORATORIUM | conduit founded closed gland.004",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | attached closed service conduit.002",
+      "b": "LABORATORIUM | conduit founded closed gland.005",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | attached closed service conduit.002",
+      "b": "LABORATORIUM | conduit retained collar.006",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | attached closed service conduit.002",
+      "b": "LABORATORIUM | conduit retained collar.007",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | attached closed service conduit.002",
+      "b": "LABORATORIUM | conduit retained collar.008",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | attached closed service conduit.002",
+      "b": "LABORATORIUM | conduit saddle seat.006",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | attached closed service conduit.002",
+      "b": "LABORATORIUM | conduit saddle seat.007",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | attached closed service conduit.002",
+      "b": "LABORATORIUM | conduit saddle seat.008",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | attached closed service conduit.002",
+      "b": "LABORATORIUM | side cover retained border.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | attached closed service conduit.002",
+      "b": "LABORATORIUM | side seated blind service cover.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | burner fixed grille",
+      "b": "LABORATORIUM | burner grille grounded rail",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | burner fixed grille",
+      "b": "LABORATORIUM | burner grille grounded rail.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | burner fixed grille",
+      "b": "LABORATORIUM | burner sight slit",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | burner fixed grille",
+      "b": "LABORATORIUM | burner sight slit.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | burner fixed grille",
+      "b": "LABORATORIUM | burner sight slit.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | burner fixed grille.001",
+      "b": "LABORATORIUM | burner grille grounded rail",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | burner fixed grille.001",
+      "b": "LABORATORIUM | burner grille grounded rail.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | burner fixed grille.001",
+      "b": "LABORATORIUM | burner sight slit",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | burner fixed grille.001",
+      "b": "LABORATORIUM | burner sight slit.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | burner fixed grille.001",
+      "b": "LABORATORIUM | burner sight slit.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | burner fixed grille.002",
+      "b": "LABORATORIUM | burner grille grounded rail",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | burner fixed grille.002",
+      "b": "LABORATORIUM | burner grille grounded rail.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | burner fixed grille.002",
+      "b": "LABORATORIUM | burner sight slit",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | burner fixed grille.002",
+      "b": "LABORATORIUM | burner sight slit.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | burner fixed grille.002",
+      "b": "LABORATORIUM | burner sight slit.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | burner fixed grille.003",
+      "b": "LABORATORIUM | burner grille grounded rail",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | burner fixed grille.003",
+      "b": "LABORATORIUM | burner grille grounded rail.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | burner fixed grille.003",
+      "b": "LABORATORIUM | burner sight slit",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | burner fixed grille.003",
+      "b": "LABORATORIUM | burner sight slit.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | burner fixed grille.003",
+      "b": "LABORATORIUM | burner sight slit.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | burner fixed grille.004",
+      "b": "LABORATORIUM | burner grille grounded rail",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | burner fixed grille.004",
+      "b": "LABORATORIUM | burner grille grounded rail.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | burner fixed grille.004",
+      "b": "LABORATORIUM | burner sight slit",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | burner fixed grille.004",
+      "b": "LABORATORIUM | burner sight slit.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | burner fixed grille.004",
+      "b": "LABORATORIUM | burner sight slit.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | burner fixed grille.004",
+      "b": "LABORATORIUM | founded control console",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | burner grille grounded rail",
+      "b": "LABORATORIUM | burner retained iron front",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | burner grille grounded rail",
+      "b": "LABORATORIUM | coal charge tray",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | burner grille grounded rail",
+      "b": "LABORATORIUM | coal tray retained upstand",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | burner grille grounded rail",
+      "b": "LABORATORIUM | coal tray retained upstand.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | burner grille grounded rail",
+      "b": "LABORATORIUM | founded cabinet sill",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | burner grille grounded rail",
+      "b": "LABORATORIUM | keeper seated head",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | burner grille grounded rail.001",
+      "b": "LABORATORIUM | burner retained iron front",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | burner grille grounded rail.001",
+      "b": "LABORATORIUM | founded control console",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | burner retained iron front",
+      "b": "LABORATORIUM | burner sight slit",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | burner retained iron front",
+      "b": "LABORATORIUM | burner sight slit.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | burner retained iron front",
+      "b": "LABORATORIUM | burner sight slit.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | burner retained iron front",
+      "b": "LABORATORIUM | coal charge tray",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | burner retained iron front",
+      "b": "LABORATORIUM | coal tray retained upstand",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | burner retained iron front",
+      "b": "LABORATORIUM | coal tray retained upstand.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | burner retained iron front",
+      "b": "LABORATORIUM | dressed foundation",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | burner retained iron front",
+      "b": "LABORATORIUM | founded burner firebox",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | burner retained iron front",
+      "b": "LABORATORIUM | founded cabinet sill",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | burner retained iron front",
+      "b": "LABORATORIUM | founded control console",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | burner sight slit.002",
+      "b": "LABORATORIUM | founded control console",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | cabinet corner band",
+      "b": "LABORATORIUM | closed research chamber",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | cabinet corner band",
+      "b": "LABORATORIUM | coal charge tray",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | cabinet corner band",
+      "b": "LABORATORIUM | corner seated rivet",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | cabinet corner band",
+      "b": "LABORATORIUM | corner seated rivet.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | cabinet corner band",
+      "b": "LABORATORIUM | corner seated rivet.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | cabinet corner band",
+      "b": "LABORATORIUM | corner seated rivet.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | cabinet corner band",
+      "b": "LABORATORIUM | founded burner firebox",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | cabinet corner band",
+      "b": "LABORATORIUM | founded cabinet sill",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | cabinet corner band",
+      "b": "LABORATORIUM | refractory roof liner",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | cabinet corner band.001",
+      "b": "LABORATORIUM | closed research chamber",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | cabinet corner band.001",
+      "b": "LABORATORIUM | corner seated rivet.004",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | cabinet corner band.001",
+      "b": "LABORATORIUM | corner seated rivet.005",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | cabinet corner band.001",
+      "b": "LABORATORIUM | corner seated rivet.006",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | cabinet corner band.001",
+      "b": "LABORATORIUM | corner seated rivet.007",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | cabinet corner band.001",
+      "b": "LABORATORIUM | founded cabinet sill",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | cabinet corner band.001",
+      "b": "LABORATORIUM | founded circuit terminal block",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | cabinet corner band.001",
+      "b": "LABORATORIUM | refractory roof liner",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | cabinet corner band.002",
+      "b": "LABORATORIUM | closed research chamber",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | cabinet corner band.002",
+      "b": "LABORATORIUM | corner seated rivet.008",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | cabinet corner band.002",
+      "b": "LABORATORIUM | corner seated rivet.009",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | cabinet corner band.002",
+      "b": "LABORATORIUM | corner seated rivet.010",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | cabinet corner band.002",
+      "b": "LABORATORIUM | corner seated rivet.011",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | cabinet corner band.002",
+      "b": "LABORATORIUM | founded cabinet sill",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | cabinet corner band.002",
+      "b": "LABORATORIUM | refractory roof liner",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | cabinet corner band.003",
+      "b": "LABORATORIUM | closed research chamber",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | cabinet corner band.003",
+      "b": "LABORATORIUM | corner seated rivet.012",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | cabinet corner band.003",
+      "b": "LABORATORIUM | corner seated rivet.013",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | cabinet corner band.003",
+      "b": "LABORATORIUM | corner seated rivet.014",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | cabinet corner band.003",
+      "b": "LABORATORIUM | corner seated rivet.015",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | cabinet corner band.003",
+      "b": "LABORATORIUM | founded cabinet sill",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | cabinet corner band.003",
+      "b": "LABORATORIUM | refractory roof liner",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | cage supported top guard",
+      "b": "LABORATORIUM | rotor fixed cage guard",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | cage supported top guard.001",
+      "b": "LABORATORIUM | rotor fixed cage guard",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | cage supported top guard.002",
+      "b": "LABORATORIUM | rotor fixed cage guard",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | calibration tablet retained head",
+      "b": "LABORATORIUM | roof parchment calibration tablet",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | calibration tablet retained head.001",
+      "b": "LABORATORIUM | roof parchment calibration tablet",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | calibration tablet retained head.002",
+      "b": "LABORATORIUM | roof parchment calibration tablet",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | calibration tablet retained head.003",
+      "b": "LABORATORIUM | roof parchment calibration tablet",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | chapter tab retained glyph",
+      "b": "LABORATORIUM | roof calibration chapter tab",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | chapter tab retained glyph.001",
+      "b": "LABORATORIUM | roof calibration chapter tab",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | chapter tab retained glyph.002",
+      "b": "LABORATORIUM | roof calibration chapter tab.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | chapter tab retained glyph.003",
+      "b": "LABORATORIUM | roof calibration chapter tab.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | chapter tab retained glyph.004",
+      "b": "LABORATORIUM | roof calibration chapter tab.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | chapter tab retained glyph.005",
+      "b": "LABORATORIUM | roof calibration chapter tab.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | circuit ceramic seat",
+      "b": "LABORATORIUM | circuit terminal head",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | circuit ceramic seat",
+      "b": "LABORATORIUM | founded circuit terminal block",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | circuit ceramic seat.001",
+      "b": "LABORATORIUM | circuit terminal head.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | circuit ceramic seat.001",
+      "b": "LABORATORIUM | founded circuit terminal block",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | circuit ceramic seat.001",
+      "b": "LABORATORIUM | roof parchment calibration tablet",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | closed research chamber",
+      "b": "LABORATORIUM | coal tray retained upstand.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | closed research chamber",
+      "b": "LABORATORIUM | conduit founded closed gland",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | closed research chamber",
+      "b": "LABORATORIUM | conduit founded closed gland.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | closed research chamber",
+      "b": "LABORATORIUM | conduit founded closed gland.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | closed research chamber",
+      "b": "LABORATORIUM | conduit founded closed gland.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | closed research chamber",
+      "b": "LABORATORIUM | conduit founded closed gland.004",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | closed research chamber",
+      "b": "LABORATORIUM | conduit founded closed gland.005",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | closed research chamber",
+      "b": "LABORATORIUM | founded burner firebox",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | closed research chamber",
+      "b": "LABORATORIUM | founded cabinet sill",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | closed research chamber",
+      "b": "LABORATORIUM | founded circuit terminal block",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | closed research chamber",
+      "b": "LABORATORIUM | founded control console",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | closed research chamber",
+      "b": "LABORATORIUM | rear blind service hatch",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | closed research chamber",
+      "b": "LABORATORIUM | refractory roof liner",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | closed research chamber",
+      "b": "LABORATORIUM | side seated blind service cover",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | closed research chamber",
+      "b": "LABORATORIUM | side seated blind service cover.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | coal charge tray",
+      "b": "LABORATORIUM | coal tray retained upstand",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | coal charge tray",
+      "b": "LABORATORIUM | coal tray retained upstand.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | coal charge tray",
+      "b": "LABORATORIUM | foundation keeper",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | coal charge tray",
+      "b": "LABORATORIUM | founded burner firebox",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | coal charge tray",
+      "b": "LABORATORIUM | founded cabinet sill",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | coal charge tray",
+      "b": "LABORATORIUM | keeper seated head",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | coal tray retained upstand",
+      "b": "LABORATORIUM | foundation keeper",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | coal tray retained upstand",
+      "b": "LABORATORIUM | keeper seated head",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | coal tray retained upstand.001",
+      "b": "LABORATORIUM | founded cabinet sill",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | conduit founded closed gland",
+      "b": "LABORATORIUM | side cover retained border.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | conduit founded closed gland",
+      "b": "LABORATORIUM | side seated blind service cover.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | conduit founded closed gland.001",
+      "b": "LABORATORIUM | service cover seated tablet.009",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | conduit founded closed gland.001",
+      "b": "LABORATORIUM | service tablet relief.036",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | conduit founded closed gland.001",
+      "b": "LABORATORIUM | side seated blind service cover.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | conduit founded closed gland.002",
+      "b": "LABORATORIUM | side cover retained border.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | conduit founded closed gland.002",
+      "b": "LABORATORIUM | side seated blind service cover.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | conduit founded closed gland.003",
+      "b": "LABORATORIUM | service cover seated tablet.009",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | conduit founded closed gland.003",
+      "b": "LABORATORIUM | service tablet relief.038",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | conduit founded closed gland.003",
+      "b": "LABORATORIUM | side seated blind service cover.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | conduit founded closed gland.004",
+      "b": "LABORATORIUM | side cover retained border.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | conduit founded closed gland.004",
+      "b": "LABORATORIUM | side seated blind service cover.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | conduit founded closed gland.005",
+      "b": "LABORATORIUM | service cover seated tablet.009",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | conduit founded closed gland.005",
+      "b": "LABORATORIUM | side seated blind service cover.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | conduit retained collar",
+      "b": "LABORATORIUM | conduit saddle seat",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | conduit retained collar.001",
+      "b": "LABORATORIUM | conduit saddle seat.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | conduit retained collar.002",
+      "b": "LABORATORIUM | conduit saddle seat.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | conduit retained collar.003",
+      "b": "LABORATORIUM | conduit saddle seat.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | conduit retained collar.003",
+      "b": "LABORATORIUM | service tablet relief.022",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | conduit retained collar.004",
+      "b": "LABORATORIUM | conduit saddle seat.004",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | conduit retained collar.005",
+      "b": "LABORATORIUM | conduit saddle seat.005",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | conduit retained collar.005",
+      "b": "LABORATORIUM | service tablet relief.034",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | conduit retained collar.006",
+      "b": "LABORATORIUM | conduit saddle seat.006",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | conduit retained collar.007",
+      "b": "LABORATORIUM | conduit saddle seat.007",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | conduit retained collar.008",
+      "b": "LABORATORIUM | conduit saddle seat.008",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | conduit saddle seat",
+      "b": "LABORATORIUM | service cover seated tablet.005",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | conduit saddle seat",
+      "b": "LABORATORIUM | service tablet relief.020",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | conduit saddle seat",
+      "b": "LABORATORIUM | side seated blind service cover.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | conduit saddle seat.001",
+      "b": "LABORATORIUM | service cover seated tablet.007",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | conduit saddle seat.001",
+      "b": "LABORATORIUM | side seated blind service cover.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | conduit saddle seat.002",
+      "b": "LABORATORIUM | service cover seated tablet.008",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | conduit saddle seat.002",
+      "b": "LABORATORIUM | service tablet relief.032",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | conduit saddle seat.002",
+      "b": "LABORATORIUM | side seated blind service cover.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | conduit saddle seat.003",
+      "b": "LABORATORIUM | service cover seated tablet.005",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | conduit saddle seat.003",
+      "b": "LABORATORIUM | service tablet relief.022",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | conduit saddle seat.003",
+      "b": "LABORATORIUM | side seated blind service cover.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | conduit saddle seat.004",
+      "b": "LABORATORIUM | service cover seated tablet.007",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | conduit saddle seat.004",
+      "b": "LABORATORIUM | side seated blind service cover.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | conduit saddle seat.005",
+      "b": "LABORATORIUM | service cover seated tablet.008",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | conduit saddle seat.005",
+      "b": "LABORATORIUM | service tablet relief.034",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | conduit saddle seat.005",
+      "b": "LABORATORIUM | side seated blind service cover.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | conduit saddle seat.006",
+      "b": "LABORATORIUM | side seated blind service cover.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | conduit saddle seat.007",
+      "b": "LABORATORIUM | side seated blind service cover.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | conduit saddle seat.008",
+      "b": "LABORATORIUM | side seated blind service cover.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | console seated key",
+      "b": "LABORATORIUM | founded control console",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | console seated key.001",
+      "b": "LABORATORIUM | founded control console",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | console seated key.002",
+      "b": "LABORATORIUM | founded control console",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | console seated key.003",
+      "b": "LABORATORIUM | founded control console",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | console seated key.004",
+      "b": "LABORATORIUM | founded control console",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | console seated key.005",
+      "b": "LABORATORIUM | founded control console",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | console seated key.006",
+      "b": "LABORATORIUM | founded control console",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | console seated key.007",
+      "b": "LABORATORIUM | founded control console",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | console seated key.008",
+      "b": "LABORATORIUM | founded control console",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | console seated key.009",
+      "b": "LABORATORIUM | founded control console",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | console seated key.010",
+      "b": "LABORATORIUM | founded control console",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | console seated key.011",
+      "b": "LABORATORIUM | founded control console",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | console seated key.012",
+      "b": "LABORATORIUM | founded control console",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | console seated key.013",
+      "b": "LABORATORIUM | founded control console",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | control wheel seated shaft",
+      "b": "LABORATORIUM | fixed control wheel",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | control wheel seated shaft",
+      "b": "LABORATORIUM | founded control console",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | corner seated rivet",
+      "b": "LABORATORIUM | founded burner firebox",
+      "basis": "contained solid volume contact",
+      "surface_distance": 0.007999986410140991
+    },
+    {
+      "a": "LABORATORIUM | corner seated rivet.003",
+      "b": "LABORATORIUM | refractory roof liner",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | corner seated rivet.007",
+      "b": "LABORATORIUM | founded circuit terminal block",
+      "basis": "contained solid volume contact",
+      "surface_distance": 0.0010000169277191162
+    },
+    {
+      "a": "LABORATORIUM | corner seated rivet.007",
+      "b": "LABORATORIUM | refractory roof liner",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | corner seated rivet.011",
+      "b": "LABORATORIUM | refractory roof liner",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | corner seated rivet.015",
+      "b": "LABORATORIUM | refractory roof liner",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | dressed foundation",
+      "b": "LABORATORIUM | foundation keeper",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | dressed foundation",
+      "b": "LABORATORIUM | foundation keeper.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | dressed foundation",
+      "b": "LABORATORIUM | foundation keeper.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | dressed foundation",
+      "b": "LABORATORIUM | foundation keeper.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | dressed foundation",
+      "b": "LABORATORIUM | founded burner firebox",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | dressed foundation",
+      "b": "LABORATORIUM | founded cabinet sill",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | fixed control wheel",
+      "b": "LABORATORIUM | fixed wheel retained head",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | fixed opaque analysis substrate",
+      "b": "LABORATORIUM | working green analysis insert",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | fixed shaft retained head",
+      "b": "LABORATORIUM | rotor fixed journal shaft",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | foundation keeper",
+      "b": "LABORATORIUM | keeper seated head",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | foundation keeper.001",
+      "b": "LABORATORIUM | keeper seated head.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | foundation keeper.002",
+      "b": "LABORATORIUM | keeper seated head.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | foundation keeper.003",
+      "b": "LABORATORIUM | founded cabinet sill",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | foundation keeper.003",
+      "b": "LABORATORIUM | keeper seated head.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | founded burner firebox",
+      "b": "LABORATORIUM | founded cabinet sill",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | founded burner firebox",
+      "b": "LABORATORIUM | founded control console",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | founded burner firebox",
+      "b": "LABORATORIUM | side cover retained border",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | founded burner firebox",
+      "b": "LABORATORIUM | side cover retained crosspiece",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | founded burner firebox",
+      "b": "LABORATORIUM | side seated blind service cover",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | founded cabinet sill",
+      "b": "LABORATORIUM | keeper seated head.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | founded circuit terminal block",
+      "b": "LABORATORIUM | refractory roof liner",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | founded circuit terminal block",
+      "b": "LABORATORIUM | retained copper roof cover",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | founded circuit terminal block",
+      "b": "LABORATORIUM | roof parchment calibration tablet",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | founded circuit terminal block",
+      "b": "LABORATORIUM | side cover retained crosspiece.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | rear blind service hatch",
+      "b": "LABORATORIUM | rear hatch retained relief",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | rear blind service hatch",
+      "b": "LABORATORIUM | rear hatch retained relief.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | rear blind service hatch",
+      "b": "LABORATORIUM | rear hatch retained relief.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | rear blind service hatch",
+      "b": "LABORATORIUM | rear hatch retained relief.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | rear blind service hatch",
+      "b": "LABORATORIUM | rear hatch retained relief.004",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | rear blind service hatch",
+      "b": "LABORATORIUM | rear hatch retained rivet",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | rear blind service hatch",
+      "b": "LABORATORIUM | rear hatch retained rivet.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | rear blind service hatch",
+      "b": "LABORATORIUM | rear hatch retained rivet.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | rear blind service hatch",
+      "b": "LABORATORIUM | rear hatch retained rivet.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | rear hatch retained relief.001",
+      "b": "LABORATORIUM | rear hatch seated index tablet",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | rear hatch retained relief.001",
+      "b": "LABORATORIUM | rear hatch seated index tablet.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | rear hatch retained relief.001",
+      "b": "LABORATORIUM | rear hatch seated index tablet.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | rear hatch retained relief.001",
+      "b": "LABORATORIUM | rear hatch seated index tablet.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | rear hatch retained relief.002",
+      "b": "LABORATORIUM | rear hatch seated index tablet",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | rear hatch retained relief.002",
+      "b": "LABORATORIUM | rear hatch seated index tablet.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | rear hatch retained relief.002",
+      "b": "LABORATORIUM | rear hatch seated index tablet.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | rear hatch retained relief.002",
+      "b": "LABORATORIUM | rear hatch seated index tablet.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | rear hatch retained relief.003",
+      "b": "LABORATORIUM | rear hatch seated index tablet",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | rear hatch retained relief.003",
+      "b": "LABORATORIUM | rear hatch seated index tablet.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | rear hatch retained relief.003",
+      "b": "LABORATORIUM | rear hatch seated index tablet.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | rear hatch retained relief.003",
+      "b": "LABORATORIUM | rear hatch seated index tablet.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | rear hatch seated index tablet",
+      "b": "LABORATORIUM | rear index tablet raised mark",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | rear hatch seated index tablet",
+      "b": "LABORATORIUM | rear index tablet raised mark.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | rear hatch seated index tablet",
+      "b": "LABORATORIUM | rear index tablet raised mark.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | rear hatch seated index tablet.001",
+      "b": "LABORATORIUM | rear index tablet raised mark.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | rear hatch seated index tablet.001",
+      "b": "LABORATORIUM | rear index tablet raised mark.004",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | rear hatch seated index tablet.001",
+      "b": "LABORATORIUM | rear index tablet raised mark.005",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | rear hatch seated index tablet.002",
+      "b": "LABORATORIUM | rear index tablet raised mark.006",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | rear hatch seated index tablet.002",
+      "b": "LABORATORIUM | rear index tablet raised mark.007",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | rear hatch seated index tablet.002",
+      "b": "LABORATORIUM | rear index tablet raised mark.008",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | rear hatch seated index tablet.003",
+      "b": "LABORATORIUM | rear index tablet raised mark.009",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | rear hatch seated index tablet.003",
+      "b": "LABORATORIUM | rear index tablet raised mark.010",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | rear hatch seated index tablet.003",
+      "b": "LABORATORIUM | rear index tablet raised mark.011",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | refractory roof liner",
+      "b": "LABORATORIUM | retained copper roof cover",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | refractory roof liner",
+      "b": "LABORATORIUM | rotor founded thermal governor",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | retained arched study brow",
+      "b": "LABORATORIUM | retained arched study brow.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | retained arched study brow",
+      "b": "LABORATORIUM | study brow seated witness",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | retained arched study brow.001",
+      "b": "LABORATORIUM | retained arched study brow.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | retained arched study brow.001",
+      "b": "LABORATORIUM | study brow seated witness.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | retained arched study brow.002",
+      "b": "LABORATORIUM | retained arched study brow.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | retained arched study brow.002",
+      "b": "LABORATORIUM | study brow seated witness.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | retained arched study brow.003",
+      "b": "LABORATORIUM | retained arched study brow.004",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | retained arched study brow.003",
+      "b": "LABORATORIUM | study brow seated witness.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | retained arched study brow.004",
+      "b": "LABORATORIUM | retained arched study brow.005",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | retained arched study brow.004",
+      "b": "LABORATORIUM | study brow seated witness.004",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | retained arched study brow.005",
+      "b": "LABORATORIUM | retained arched study brow.006",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | retained arched study brow.005",
+      "b": "LABORATORIUM | study brow seated witness.005",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | retained arched study brow.006",
+      "b": "LABORATORIUM | retained arched study brow.007",
+      "basis": "measured near-surface fitted seat",
+      "surface_distance": 0.0
+    },
+    {
+      "a": "LABORATORIUM | retained arched study brow.006",
+      "b": "LABORATORIUM | study brow seated witness.006",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | retained arched study brow.007",
+      "b": "LABORATORIUM | retained arched study brow.008",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | retained arched study brow.007",
+      "b": "LABORATORIUM | study brow seated witness.007",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | retained arched study brow.008",
+      "b": "LABORATORIUM | retained arched study brow.009",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | retained arched study brow.008",
+      "b": "LABORATORIUM | study brow seated witness.008",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | retained arched study brow.009",
+      "b": "LABORATORIUM | retained arched study brow.010",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | retained arched study brow.009",
+      "b": "LABORATORIUM | study brow seated witness.009",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | retained arched study brow.010",
+      "b": "LABORATORIUM | study brow seated witness.010",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | retained copper roof cover",
+      "b": "LABORATORIUM | roof parchment calibration tablet",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | retained copper roof cover",
+      "b": "LABORATORIUM | rotor fixed journal shaft",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | retained copper roof cover",
+      "b": "LABORATORIUM | rotor founded cage upright",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | retained copper roof cover",
+      "b": "LABORATORIUM | rotor founded cage upright.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | retained copper roof cover",
+      "b": "LABORATORIUM | rotor founded cage upright.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | retained copper roof cover",
+      "b": "LABORATORIUM | rotor founded thermal governor",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | roof calibration chapter tab",
+      "b": "LABORATORIUM | roof parchment calibration tablet",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | roof calibration chapter tab",
+      "b": "LABORATORIUM | roof tablet seated scale",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | roof calibration chapter tab.001",
+      "b": "LABORATORIUM | roof parchment calibration tablet",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | roof calibration chapter tab.001",
+      "b": "LABORATORIUM | roof tablet seated scale.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | roof calibration chapter tab.002",
+      "b": "LABORATORIUM | roof parchment calibration tablet",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | roof calibration chapter tab.002",
+      "b": "LABORATORIUM | roof tablet seated scale.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | roof parchment calibration tablet",
+      "b": "LABORATORIUM | roof tablet seated scale",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | roof parchment calibration tablet",
+      "b": "LABORATORIUM | roof tablet seated scale.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | roof parchment calibration tablet",
+      "b": "LABORATORIUM | roof tablet seated scale.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | roof parchment calibration tablet",
+      "b": "LABORATORIUM | roof tablet seated scale.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | roof parchment calibration tablet",
+      "b": "LABORATORIUM | roof tablet seated scale.004",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | roof parchment calibration tablet",
+      "b": "LABORATORIUM | rotor founded cage upright",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | roof parchment calibration tablet",
+      "b": "LABORATORIUM | rotor founded thermal governor",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | rotor fixed axial keeper",
+      "b": "LABORATORIUM | rotor fixed journal shaft",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | rotor fixed axial keeper",
+      "b": "LABORATORIUM | rotor founded thermal governor",
+      "basis": "contained solid volume contact",
+      "surface_distance": 0.0040000081062316895
+    },
+    {
+      "a": "LABORATORIUM | rotor fixed axial keeper.001",
+      "b": "LABORATORIUM | rotor fixed journal shaft",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | rotor fixed cage guard",
+      "b": "LABORATORIUM | rotor founded cage upright",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | rotor fixed cage guard",
+      "b": "LABORATORIUM | rotor founded cage upright.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | rotor fixed cage guard",
+      "b": "LABORATORIUM | rotor founded cage upright.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | rotor fixed cage guard",
+      "b": "LABORATORIUM | rotor founded cage upright.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | rotor fixed journal shaft",
+      "b": "LABORATORIUM | rotor founded thermal governor",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | service cover seated tablet",
+      "b": "LABORATORIUM | service tablet relief",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | service cover seated tablet",
+      "b": "LABORATORIUM | service tablet relief.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | service cover seated tablet",
+      "b": "LABORATORIUM | service tablet relief.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | service cover seated tablet",
+      "b": "LABORATORIUM | service tablet relief.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | service cover seated tablet",
+      "b": "LABORATORIUM | side seated blind service cover",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | service cover seated tablet.001",
+      "b": "LABORATORIUM | service tablet relief.004",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | service cover seated tablet.001",
+      "b": "LABORATORIUM | service tablet relief.005",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | service cover seated tablet.001",
+      "b": "LABORATORIUM | service tablet relief.006",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | service cover seated tablet.001",
+      "b": "LABORATORIUM | service tablet relief.007",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | service cover seated tablet.001",
+      "b": "LABORATORIUM | side seated blind service cover",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | service cover seated tablet.002",
+      "b": "LABORATORIUM | service tablet relief.008",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | service cover seated tablet.002",
+      "b": "LABORATORIUM | service tablet relief.009",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | service cover seated tablet.002",
+      "b": "LABORATORIUM | service tablet relief.010",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | service cover seated tablet.002",
+      "b": "LABORATORIUM | service tablet relief.011",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | service cover seated tablet.002",
+      "b": "LABORATORIUM | side seated blind service cover",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | service cover seated tablet.003",
+      "b": "LABORATORIUM | service tablet relief.012",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | service cover seated tablet.003",
+      "b": "LABORATORIUM | service tablet relief.013",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | service cover seated tablet.003",
+      "b": "LABORATORIUM | service tablet relief.014",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | service cover seated tablet.003",
+      "b": "LABORATORIUM | service tablet relief.015",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | service cover seated tablet.003",
+      "b": "LABORATORIUM | side seated blind service cover",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | service cover seated tablet.004",
+      "b": "LABORATORIUM | service tablet relief.016",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | service cover seated tablet.004",
+      "b": "LABORATORIUM | service tablet relief.017",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | service cover seated tablet.004",
+      "b": "LABORATORIUM | service tablet relief.018",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | service cover seated tablet.004",
+      "b": "LABORATORIUM | service tablet relief.019",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | service cover seated tablet.004",
+      "b": "LABORATORIUM | side seated blind service cover",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | service cover seated tablet.005",
+      "b": "LABORATORIUM | service tablet relief.020",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | service cover seated tablet.005",
+      "b": "LABORATORIUM | service tablet relief.021",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | service cover seated tablet.005",
+      "b": "LABORATORIUM | service tablet relief.022",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | service cover seated tablet.005",
+      "b": "LABORATORIUM | service tablet relief.023",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | service cover seated tablet.005",
+      "b": "LABORATORIUM | side seated blind service cover.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | service cover seated tablet.006",
+      "b": "LABORATORIUM | service tablet relief.024",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | service cover seated tablet.006",
+      "b": "LABORATORIUM | service tablet relief.025",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | service cover seated tablet.006",
+      "b": "LABORATORIUM | service tablet relief.026",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | service cover seated tablet.006",
+      "b": "LABORATORIUM | service tablet relief.027",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | service cover seated tablet.006",
+      "b": "LABORATORIUM | side seated blind service cover.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | service cover seated tablet.007",
+      "b": "LABORATORIUM | service tablet relief.028",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | service cover seated tablet.007",
+      "b": "LABORATORIUM | service tablet relief.029",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | service cover seated tablet.007",
+      "b": "LABORATORIUM | service tablet relief.030",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | service cover seated tablet.007",
+      "b": "LABORATORIUM | service tablet relief.031",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | service cover seated tablet.007",
+      "b": "LABORATORIUM | side seated blind service cover.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | service cover seated tablet.008",
+      "b": "LABORATORIUM | service tablet relief.032",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | service cover seated tablet.008",
+      "b": "LABORATORIUM | service tablet relief.033",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | service cover seated tablet.008",
+      "b": "LABORATORIUM | service tablet relief.034",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | service cover seated tablet.008",
+      "b": "LABORATORIUM | service tablet relief.035",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | service cover seated tablet.008",
+      "b": "LABORATORIUM | side seated blind service cover.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | service cover seated tablet.009",
+      "b": "LABORATORIUM | service tablet relief.036",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | service cover seated tablet.009",
+      "b": "LABORATORIUM | service tablet relief.037",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | service cover seated tablet.009",
+      "b": "LABORATORIUM | service tablet relief.038",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | service cover seated tablet.009",
+      "b": "LABORATORIUM | service tablet relief.039",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | service cover seated tablet.009",
+      "b": "LABORATORIUM | side seated blind service cover.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | side cover retained border",
+      "b": "LABORATORIUM | side cover retained crosspiece",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | side cover retained border",
+      "b": "LABORATORIUM | side cover retained crosspiece.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | side cover retained border",
+      "b": "LABORATORIUM | side seated blind service cover",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | side cover retained border.001",
+      "b": "LABORATORIUM | side cover retained crosspiece",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | side cover retained border.001",
+      "b": "LABORATORIUM | side cover retained crosspiece.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | side cover retained border.001",
+      "b": "LABORATORIUM | side seated blind service cover",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | side cover retained border.002",
+      "b": "LABORATORIUM | side cover retained crosspiece.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | side cover retained border.002",
+      "b": "LABORATORIUM | side cover retained crosspiece.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | side cover retained border.002",
+      "b": "LABORATORIUM | side seated blind service cover.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | side cover retained border.003",
+      "b": "LABORATORIUM | side cover retained crosspiece.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | side cover retained border.003",
+      "b": "LABORATORIUM | side cover retained crosspiece.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | side cover retained border.003",
+      "b": "LABORATORIUM | side seated blind service cover.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | side cover retained crosspiece",
+      "b": "LABORATORIUM | side seated blind service cover",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | side cover retained crosspiece.001",
+      "b": "LABORATORIUM | side seated blind service cover",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | side cover retained crosspiece.002",
+      "b": "LABORATORIUM | side seated blind service cover.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | side cover retained crosspiece.003",
+      "b": "LABORATORIUM | side seated blind service cover.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | moving calibration bored hub",
+      "b": "LABORATORIUM | moving calibration rigid spoke",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | moving calibration bored hub",
+      "b": "LABORATORIUM | moving calibration rigid spoke.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | moving calibration bored hub",
+      "b": "LABORATORIUM | moving calibration rigid spoke.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | moving calibration bored hub",
+      "b": "LABORATORIUM | moving calibration rigid spoke.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | moving calibration bored hub",
+      "b": "LABORATORIUM | moving calibration rigid spoke.004",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | moving calibration bored hub",
+      "b": "LABORATORIUM | moving calibration rigid spoke.005",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | moving calibration retained index",
+      "b": "LABORATORIUM | moving calibration rigid spoke",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | moving calibration retained index",
+      "b": "LABORATORIUM | moving calibration scale",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | moving calibration retained index.001",
+      "b": "LABORATORIUM | moving calibration scale",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | moving calibration retained index.002",
+      "b": "LABORATORIUM | moving calibration scale",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | moving calibration retained index.003",
+      "b": "LABORATORIUM | moving calibration rigid spoke.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | moving calibration retained index.003",
+      "b": "LABORATORIUM | moving calibration scale",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | moving calibration retained index.004",
+      "b": "LABORATORIUM | moving calibration scale",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | moving calibration retained index.005",
+      "b": "LABORATORIUM | moving calibration scale",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | moving calibration retained index.006",
+      "b": "LABORATORIUM | moving calibration rigid spoke.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | moving calibration retained index.006",
+      "b": "LABORATORIUM | moving calibration scale",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | moving calibration retained index.007",
+      "b": "LABORATORIUM | moving calibration scale",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | moving calibration retained index.008",
+      "b": "LABORATORIUM | moving calibration scale",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | moving calibration retained index.009",
+      "b": "LABORATORIUM | moving calibration rigid spoke.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | moving calibration retained index.009",
+      "b": "LABORATORIUM | moving calibration scale",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | moving calibration retained index.010",
+      "b": "LABORATORIUM | moving calibration scale",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | moving calibration retained index.011",
+      "b": "LABORATORIUM | moving calibration scale",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | moving calibration retained index.012",
+      "b": "LABORATORIUM | moving calibration rigid spoke.004",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | moving calibration retained index.012",
+      "b": "LABORATORIUM | moving calibration scale",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | moving calibration retained index.013",
+      "b": "LABORATORIUM | moving calibration scale",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | moving calibration retained index.014",
+      "b": "LABORATORIUM | moving calibration scale",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | moving calibration retained index.015",
+      "b": "LABORATORIUM | moving calibration rigid spoke.005",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | moving calibration retained index.015",
+      "b": "LABORATORIUM | moving calibration scale",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | moving calibration retained index.016",
+      "b": "LABORATORIUM | moving calibration scale",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | moving calibration retained index.017",
+      "b": "LABORATORIUM | moving calibration scale",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | moving calibration rigid spoke",
+      "b": "LABORATORIUM | moving calibration scale",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | moving calibration rigid spoke.001",
+      "b": "LABORATORIUM | moving calibration scale",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | moving calibration rigid spoke.002",
+      "b": "LABORATORIUM | moving calibration scale",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | moving calibration rigid spoke.003",
+      "b": "LABORATORIUM | moving calibration scale",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | moving calibration rigid spoke.004",
+      "b": "LABORATORIUM | moving calibration scale",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "LABORATORIUM | moving calibration rigid spoke.005",
+      "b": "LABORATORIUM | moving calibration scale",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    }
+  ],
+  "passed_without_manual_exclusions": false,
+  "note": "Raw support graph. Volume contacts still require intended-interface review; a contact is not proof that two unrelated components should intersect. Bearings need clearance and explicit support design."
+}

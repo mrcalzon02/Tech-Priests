@@ -1,0 +1,3355 @@
+{
+  "artifact": "tanks-structure-production\\build\\tp-emergency-laboratorium-main01\\authored-v03\\laboratorium-v03.blend",
+  "sha256": "18411b2c6840e15d76ba51c8e470e4834765a364f05ee7ae590fc76059b12e02",
+  "sampled_poses": 193,
+  "authored_frames": 97,
+  "includes_half_frames": true,
+  "moving_meshes": [
+    "LABORATORIUM | moving calibration bored hub",
+    "LABORATORIUM | moving calibration retained index",
+    "LABORATORIUM | moving calibration retained index.001",
+    "LABORATORIUM | moving calibration retained index.002",
+    "LABORATORIUM | moving calibration retained index.003",
+    "LABORATORIUM | moving calibration retained index.004",
+    "LABORATORIUM | moving calibration retained index.005",
+    "LABORATORIUM | moving calibration retained index.006",
+    "LABORATORIUM | moving calibration retained index.007",
+    "LABORATORIUM | moving calibration retained index.008",
+    "LABORATORIUM | moving calibration retained index.009",
+    "LABORATORIUM | moving calibration retained index.010",
+    "LABORATORIUM | moving calibration retained index.011",
+    "LABORATORIUM | moving calibration retained index.012",
+    "LABORATORIUM | moving calibration retained index.013",
+    "LABORATORIUM | moving calibration retained index.014",
+    "LABORATORIUM | moving calibration retained index.015",
+    "LABORATORIUM | moving calibration retained index.016",
+    "LABORATORIUM | moving calibration retained index.017",
+    "LABORATORIUM | moving calibration rigid spoke",
+    "LABORATORIUM | moving calibration rigid spoke.001",
+    "LABORATORIUM | moving calibration rigid spoke.002",
+    "LABORATORIUM | moving calibration rigid spoke.003",
+    "LABORATORIUM | moving calibration rigid spoke.004",
+    "LABORATORIUM | moving calibration rigid spoke.005",
+    "LABORATORIUM | moving calibration scale"
+  ],
+  "motion_owners": {
+    "LABORATORIUM | dressed foundation": null,
+    "LABORATORIUM | founded cabinet sill": null,
+    "LABORATORIUM | closed research chamber": null,
+    "LABORATORIUM | refractory roof liner": null,
+    "LABORATORIUM | retained copper roof cover": null,
+    "LABORATORIUM | roof parchment calibration tablet": null,
+    "LABORATORIUM | roof tablet seated scale": null,
+    "LABORATORIUM | roof tablet seated scale.001": null,
+    "LABORATORIUM | roof tablet seated scale.002": null,
+    "LABORATORIUM | roof tablet seated scale.003": null,
+    "LABORATORIUM | roof tablet seated scale.004": null,
+    "LABORATORIUM | calibration tablet retained head": null,
+    "LABORATORIUM | calibration tablet retained head.001": null,
+    "LABORATORIUM | calibration tablet retained head.002": null,
+    "LABORATORIUM | calibration tablet retained head.003": null,
+    "LABORATORIUM | cabinet corner band": null,
+    "LABORATORIUM | corner seated rivet": null,
+    "LABORATORIUM | corner seated rivet.001": null,
+    "LABORATORIUM | corner seated rivet.002": null,
+    "LABORATORIUM | corner seated rivet.003": null,
+    "LABORATORIUM | cabinet corner band.001": null,
+    "LABORATORIUM | corner seated rivet.004": null,
+    "LABORATORIUM | corner seated rivet.005": null,
+    "LABORATORIUM | corner seated rivet.006": null,
+    "LABORATORIUM | corner seated rivet.007": null,
+    "LABORATORIUM | cabinet corner band.002": null,
+    "LABORATORIUM | corner seated rivet.008": null,
+    "LABORATORIUM | corner seated rivet.009": null,
+    "LABORATORIUM | corner seated rivet.010": null,
+    "LABORATORIUM | corner seated rivet.011": null,
+    "LABORATORIUM | cabinet corner band.003": null,
+    "LABORATORIUM | corner seated rivet.012": null,
+    "LABORATORIUM | corner seated rivet.013": null,
+    "LABORATORIUM | corner seated rivet.014": null,
+    "LABORATORIUM | corner seated rivet.015": null,
+    "LABORATORIUM | analysis plate seated backing": null,
+    "LABORATORIUM | analysis plate founded jamb": null,
+    "LABORATORIUM | analysis plate founded jamb.001": null,
+    "LABORATORIUM | analysis plate retained sill lintel": null,
+    "LABORATORIUM | analysis plate retained sill lintel.001": null,
+    "LABORATORIUM | fixed opaque analysis substrate": null,
+    "LABORATORIUM | working green analysis insert": null,
+    "LABORATORIUM | analysis plate seated trace": null,
+    "LABORATORIUM | analysis plate seated trace.001": null,
+    "LABORATORIUM | analysis plate seated trace.002": null,
+    "LABORATORIUM | analysis plate seated trace.003": null,
+    "LABORATORIUM | analysis plate seated trace.004": null,
+    "LABORATORIUM | founded control console": null,
+    "LABORATORIUM | console seated key": null,
+    "LABORATORIUM | console seated key.001": null,
+    "LABORATORIUM | console seated key.002": null,
+    "LABORATORIUM | console seated key.003": null,
+    "LABORATORIUM | console seated key.004": null,
+    "LABORATORIUM | console seated key.005": null,
+    "LABORATORIUM | console seated key.006": null,
+    "LABORATORIUM | console seated key.007": null,
+    "LABORATORIUM | console seated key.008": null,
+    "LABORATORIUM | console seated key.009": null,
+    "LABORATORIUM | console seated key.010": null,
+    "LABORATORIUM | console seated key.011": null,
+    "LABORATORIUM | console seated key.012": null,
+    "LABORATORIUM | console seated key.013": null,
+    "LABORATORIUM | control wheel seated shaft": null,
+    "LABORATORIUM | fixed control wheel": null,
+    "LABORATORIUM | fixed wheel retained head": null,
+    "LABORATORIUM | founded burner firebox": null,
+    "LABORATORIUM | burner retained iron front": null,
+    "LABORATORIUM | burner sight slit": null,
+    "LABORATORIUM | burner sight slit.001": null,
+    "LABORATORIUM | burner sight slit.002": null,
+    "LABORATORIUM | burner fixed grille": null,
+    "LABORATORIUM | burner fixed grille.001": null,
+    "LABORATORIUM | burner fixed grille.002": null,
+    "LABORATORIUM | burner fixed grille.003": null,
+    "LABORATORIUM | burner fixed grille.004": null,
+    "LABORATORIUM | burner grille grounded rail": null,
+    "LABORATORIUM | burner grille grounded rail.001": null,
+    "LABORATORIUM | coal charge tray": null,
+    "LABORATORIUM | coal tray retained upstand": null,
+    "LABORATORIUM | coal tray retained upstand.001": null,
+    "LABORATORIUM | side seated blind service cover": null,
+    "LABORATORIUM | side cover retained border": null,
+    "LABORATORIUM | side cover retained border.001": null,
+    "LABORATORIUM | side cover retained crosspiece": null,
+    "LABORATORIUM | side cover retained crosspiece.001": null,
+    "LABORATORIUM | service cover seated tablet": null,
+    "LABORATORIUM | service tablet relief": null,
+    "LABORATORIUM | service tablet relief.001": null,
+    "LABORATORIUM | service tablet relief.002": null,
+    "LABORATORIUM | service tablet relief.003": null,
+    "LABORATORIUM | service cover seated tablet.001": null,
+    "LABORATORIUM | service tablet relief.004": null,
+    "LABORATORIUM | service tablet relief.005": null,
+    "LABORATORIUM | service tablet relief.006": null,
+    "LABORATORIUM | service tablet relief.007": null,
+    "LABORATORIUM | service cover seated tablet.002": null,
+    "LABORATORIUM | service tablet relief.008": null,
+    "LABORATORIUM | service tablet relief.009": null,
+    "LABORATORIUM | service tablet relief.010": null,
+    "LABORATORIUM | service tablet relief.011": null,
+    "LABORATORIUM | service cover seated tablet.003": null,
+    "LABORATORIUM | service tablet relief.012": null,
+    "LABORATORIUM | service tablet relief.013": null,
+    "LABORATORIUM | service tablet relief.014": null,
+    "LABORATORIUM | service tablet relief.015": null,
+    "LABORATORIUM | service cover seated tablet.004": null,
+    "LABORATORIUM | service tablet relief.016": null,
+    "LABORATORIUM | service tablet relief.017": null,
+    "LABORATORIUM | service tablet relief.018": null,
+    "LABORATORIUM | service tablet relief.019": null,
+    "LABORATORIUM | side seated blind service cover.001": null,
+    "LABORATORIUM | side cover retained border.002": null,
+    "LABORATORIUM | side cover retained border.003": null,
+    "LABORATORIUM | side cover retained crosspiece.002": null,
+    "LABORATORIUM | side cover retained crosspiece.003": null,
+    "LABORATORIUM | service cover seated tablet.005": null,
+    "LABORATORIUM | service tablet relief.020": null,
+    "LABORATORIUM | service tablet relief.021": null,
+    "LABORATORIUM | service tablet relief.022": null,
+    "LABORATORIUM | service tablet relief.023": null,
+    "LABORATORIUM | service cover seated tablet.006": null,
+    "LABORATORIUM | service tablet relief.024": null,
+    "LABORATORIUM | service tablet relief.025": null,
+    "LABORATORIUM | service tablet relief.026": null,
+    "LABORATORIUM | service tablet relief.027": null,
+    "LABORATORIUM | service cover seated tablet.007": null,
+    "LABORATORIUM | service tablet relief.028": null,
+    "LABORATORIUM | service tablet relief.029": null,
+    "LABORATORIUM | service tablet relief.030": null,
+    "LABORATORIUM | service tablet relief.031": null,
+    "LABORATORIUM | service cover seated tablet.008": null,
+    "LABORATORIUM | service tablet relief.032": null,
+    "LABORATORIUM | service tablet relief.033": null,
+    "LABORATORIUM | service tablet relief.034": null,
+    "LABORATORIUM | service tablet relief.035": null,
+    "LABORATORIUM | service cover seated tablet.009": null,
+    "LABORATORIUM | service tablet relief.036": null,
+    "LABORATORIUM | service tablet relief.037": null,
+    "LABORATORIUM | service tablet relief.038": null,
+    "LABORATORIUM | service tablet relief.039": null,
+    "LABORATORIUM | attached closed service conduit": null,
+    "LABORATORIUM | conduit founded closed gland": null,
+    "LABORATORIUM | conduit founded closed gland.001": null,
+    "LABORATORIUM | conduit retained collar": null,
+    "LABORATORIUM | conduit saddle seat": null,
+    "LABORATORIUM | conduit retained collar.001": null,
+    "LABORATORIUM | conduit saddle seat.001": null,
+    "LABORATORIUM | conduit retained collar.002": null,
+    "LABORATORIUM | conduit saddle seat.002": null,
+    "LABORATORIUM | attached closed service conduit.001": null,
+    "LABORATORIUM | conduit founded closed gland.002": null,
+    "LABORATORIUM | conduit founded closed gland.003": null,
+    "LABORATORIUM | conduit retained collar.003": null,
+    "LABORATORIUM | conduit saddle seat.003": null,
+    "LABORATORIUM | conduit retained collar.004": null,
+    "LABORATORIUM | conduit saddle seat.004": null,
+    "LABORATORIUM | conduit retained collar.005": null,
+    "LABORATORIUM | conduit saddle seat.005": null,
+    "LABORATORIUM | attached closed service conduit.002": null,
+    "LABORATORIUM | conduit founded closed gland.004": null,
+    "LABORATORIUM | conduit founded closed gland.005": null,
+    "LABORATORIUM | conduit retained collar.006": null,
+    "LABORATORIUM | conduit saddle seat.006": null,
+    "LABORATORIUM | conduit retained collar.007": null,
+    "LABORATORIUM | conduit saddle seat.007": null,
+    "LABORATORIUM | conduit retained collar.008": null,
+    "LABORATORIUM | conduit saddle seat.008": null,
+    "LABORATORIUM | rotor founded thermal governor": null,
+    "LABORATORIUM | rotor fixed journal shaft": null,
+    "LABORATORIUM | rotor fixed axial keeper": null,
+    "LABORATORIUM | rotor fixed axial keeper.001": null,
+    "LABORATORIUM | fixed shaft retained head": null,
+    "LABORATORIUM | moving calibration bored hub": "LABORATORIUM | WORKING captive calibration rotor",
+    "LABORATORIUM | moving calibration scale": "LABORATORIUM | WORKING captive calibration rotor",
+    "LABORATORIUM | moving calibration rigid spoke": "LABORATORIUM | WORKING captive calibration rotor",
+    "LABORATORIUM | moving calibration rigid spoke.001": "LABORATORIUM | WORKING captive calibration rotor",
+    "LABORATORIUM | moving calibration rigid spoke.002": "LABORATORIUM | WORKING captive calibration rotor",
+    "LABORATORIUM | moving calibration rigid spoke.003": "LABORATORIUM | WORKING captive calibration rotor",
+    "LABORATORIUM | moving calibration rigid spoke.004": "LABORATORIUM | WORKING captive calibration rotor",
+    "LABORATORIUM | moving calibration rigid spoke.005": "LABORATORIUM | WORKING captive calibration rotor",
+    "LABORATORIUM | moving calibration retained index": "LABORATORIUM | WORKING captive calibration rotor",
+    "LABORATORIUM | moving calibration retained index.001": "LABORATORIUM | WORKING captive calibration rotor",
+    "LABORATORIUM | moving calibration retained index.002": "LABORATORIUM | WORKING captive calibration rotor",
+    "LABORATORIUM | moving calibration retained index.003": "LABORATORIUM | WORKING captive calibration rotor",
+    "LABORATORIUM | moving calibration retained index.004": "LABORATORIUM | WORKING captive calibration rotor",
+    "LABORATORIUM | moving calibration retained index.005": "LABORATORIUM | WORKING captive calibration rotor",
+    "LABORATORIUM | moving calibration retained index.006": "LABORATORIUM | WORKING captive calibration rotor",
+    "LABORATORIUM | moving calibration retained index.007": "LABORATORIUM | WORKING captive calibration rotor",
+    "LABORATORIUM | moving calibration retained index.008": "LABORATORIUM | WORKING captive calibration rotor",
+    "LABORATORIUM | moving calibration retained index.009": "LABORATORIUM | WORKING captive calibration rotor",
+    "LABORATORIUM | moving calibration retained index.010": "LABORATORIUM | WORKING captive calibration rotor",
+    "LABORATORIUM | moving calibration retained index.011": "LABORATORIUM | WORKING captive calibration rotor",
+    "LABORATORIUM | moving calibration retained index.012": "LABORATORIUM | WORKING captive calibration rotor",
+    "LABORATORIUM | moving calibration retained index.013": "LABORATORIUM | WORKING captive calibration rotor",
+    "LABORATORIUM | moving calibration retained index.014": "LABORATORIUM | WORKING captive calibration rotor",
+    "LABORATORIUM | moving calibration retained index.015": "LABORATORIUM | WORKING captive calibration rotor",
+    "LABORATORIUM | moving calibration retained index.016": "LABORATORIUM | WORKING captive calibration rotor",
+    "LABORATORIUM | moving calibration retained index.017": "LABORATORIUM | WORKING captive calibration rotor",
+    "LABORATORIUM | rotor founded cage upright": null,
+    "LABORATORIUM | rotor founded cage upright.001": null,
+    "LABORATORIUM | rotor founded cage upright.002": null,
+    "LABORATORIUM | rotor founded cage upright.003": null,
+    "LABORATORIUM | rotor fixed cage guard": null,
+    "LABORATORIUM | cage supported top guard": null,
+    "LABORATORIUM | cage supported top guard.001": null,
+    "LABORATORIUM | cage supported top guard.002": null,
+    "LABORATORIUM | founded circuit terminal block": null,
+    "LABORATORIUM | circuit ceramic seat": null,
+    "LABORATORIUM | circuit terminal head": null,
+    "LABORATORIUM | circuit ceramic seat.001": null,
+    "LABORATORIUM | circuit terminal head.001": null,
+    "LABORATORIUM | foundation keeper": null,
+    "LABORATORIUM | keeper seated head": null,
+    "LABORATORIUM | foundation keeper.001": null,
+    "LABORATORIUM | keeper seated head.001": null,
+    "LABORATORIUM | foundation keeper.002": null,
+    "LABORATORIUM | keeper seated head.002": null,
+    "LABORATORIUM | foundation keeper.003": null,
+    "LABORATORIUM | keeper seated head.003": null,
+    "LABORATORIUM | rear blind service hatch": null,
+    "LABORATORIUM | rear hatch retained rivet": null,
+    "LABORATORIUM | rear hatch retained rivet.001": null,
+    "LABORATORIUM | rear hatch retained rivet.002": null,
+    "LABORATORIUM | rear hatch retained rivet.003": null,
+    "LABORATORIUM | rear hatch retained relief": null,
+    "LABORATORIUM | rear hatch retained relief.001": null,
+    "LABORATORIUM | rear hatch retained relief.002": null,
+    "LABORATORIUM | rear hatch retained relief.003": null,
+    "LABORATORIUM | rear hatch retained relief.004": null,
+    "LABORATORIUM | retained arched study brow": null,
+    "LABORATORIUM | study brow seated witness": null,
+    "LABORATORIUM | retained arched study brow.001": null,
+    "LABORATORIUM | study brow seated witness.001": null,
+    "LABORATORIUM | retained arched study brow.002": null,
+    "LABORATORIUM | study brow seated witness.002": null,
+    "LABORATORIUM | retained arched study brow.003": null,
+    "LABORATORIUM | study brow seated witness.003": null,
+    "LABORATORIUM | retained arched study brow.004": null,
+    "LABORATORIUM | study brow seated witness.004": null,
+    "LABORATORIUM | retained arched study brow.005": null,
+    "LABORATORIUM | study brow seated witness.005": null,
+    "LABORATORIUM | retained arched study brow.006": null,
+    "LABORATORIUM | study brow seated witness.006": null,
+    "LABORATORIUM | retained arched study brow.007": null,
+    "LABORATORIUM | study brow seated witness.007": null,
+    "LABORATORIUM | retained arched study brow.008": null,
+    "LABORATORIUM | study brow seated witness.008": null,
+    "LABORATORIUM | retained arched study brow.009": null,
+    "LABORATORIUM | study brow seated witness.009": null,
+    "LABORATORIUM | retained arched study brow.010": null,
+    "LABORATORIUM | study brow seated witness.010": null,
+    "LABORATORIUM | roof calibration chapter tab": null,
+    "LABORATORIUM | chapter tab retained glyph": null,
+    "LABORATORIUM | chapter tab retained glyph.001": null,
+    "LABORATORIUM | roof calibration chapter tab.001": null,
+    "LABORATORIUM | chapter tab retained glyph.002": null,
+    "LABORATORIUM | chapter tab retained glyph.003": null,
+    "LABORATORIUM | roof calibration chapter tab.002": null,
+    "LABORATORIUM | chapter tab retained glyph.004": null,
+    "LABORATORIUM | chapter tab retained glyph.005": null,
+    "LABORATORIUM | rear hatch seated index tablet": null,
+    "LABORATORIUM | rear index tablet raised mark": null,
+    "LABORATORIUM | rear index tablet raised mark.001": null,
+    "LABORATORIUM | rear index tablet raised mark.002": null,
+    "LABORATORIUM | rear hatch seated index tablet.001": null,
+    "LABORATORIUM | rear index tablet raised mark.003": null,
+    "LABORATORIUM | rear index tablet raised mark.004": null,
+    "LABORATORIUM | rear index tablet raised mark.005": null,
+    "LABORATORIUM | rear hatch seated index tablet.002": null,
+    "LABORATORIUM | rear index tablet raised mark.006": null,
+    "LABORATORIUM | rear index tablet raised mark.007": null,
+    "LABORATORIUM | rear index tablet raised mark.008": null,
+    "LABORATORIUM | rear hatch seated index tablet.003": null,
+    "LABORATORIUM | rear index tablet raised mark.009": null,
+    "LABORATORIUM | rear index tablet raised mark.010": null,
+    "LABORATORIUM | rear index tablet raised mark.011": null
+  },
+  "fixed_mesh_count": 250,
+  "pairs": {
+    "LABORATORIUM | burner retained iron front <> LABORATORIUM | dressed foundation": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "LABORATORIUM | dressed foundation <> LABORATORIUM | foundation keeper": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 64,
+      "moving": false
+    },
+    "LABORATORIUM | dressed foundation <> LABORATORIUM | foundation keeper.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 67,
+      "moving": false
+    },
+    "LABORATORIUM | dressed foundation <> LABORATORIUM | foundation keeper.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 66,
+      "moving": false
+    },
+    "LABORATORIUM | dressed foundation <> LABORATORIUM | foundation keeper.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 64,
+      "moving": false
+    },
+    "LABORATORIUM | closed research chamber <> LABORATORIUM | founded cabinet sill": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "LABORATORIUM | cabinet corner band <> LABORATORIUM | founded cabinet sill": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "LABORATORIUM | cabinet corner band.001 <> LABORATORIUM | founded cabinet sill": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | cabinet corner band.002 <> LABORATORIUM | founded cabinet sill": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | cabinet corner band.003 <> LABORATORIUM | founded cabinet sill": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "LABORATORIUM | founded burner firebox <> LABORATORIUM | founded cabinet sill": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 64,
+      "moving": false
+    },
+    "LABORATORIUM | burner retained iron front <> LABORATORIUM | founded cabinet sill": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 67,
+      "moving": false
+    },
+    "LABORATORIUM | burner grille grounded rail <> LABORATORIUM | founded cabinet sill": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 47,
+      "moving": false
+    },
+    "LABORATORIUM | coal charge tray <> LABORATORIUM | founded cabinet sill": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 56,
+      "moving": false
+    },
+    "LABORATORIUM | coal tray retained upstand.001 <> LABORATORIUM | founded cabinet sill": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 49,
+      "moving": false
+    },
+    "LABORATORIUM | foundation keeper.003 <> LABORATORIUM | founded cabinet sill": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 68,
+      "moving": false
+    },
+    "LABORATORIUM | founded cabinet sill <> LABORATORIUM | keeper seated head.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 21,
+      "moving": false
+    },
+    "LABORATORIUM | closed research chamber <> LABORATORIUM | refractory roof liner": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | cabinet corner band <> LABORATORIUM | closed research chamber": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 35,
+      "moving": false
+    },
+    "LABORATORIUM | cabinet corner band.001 <> LABORATORIUM | closed research chamber": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 35,
+      "moving": false
+    },
+    "LABORATORIUM | cabinet corner band.002 <> LABORATORIUM | closed research chamber": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 35,
+      "moving": false
+    },
+    "LABORATORIUM | cabinet corner band.003 <> LABORATORIUM | closed research chamber": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 35,
+      "moving": false
+    },
+    "LABORATORIUM | analysis plate seated backing <> LABORATORIUM | closed research chamber": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | closed research chamber <> LABORATORIUM | founded burner firebox": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 49,
+      "moving": false
+    },
+    "LABORATORIUM | closed research chamber <> LABORATORIUM | coal tray retained upstand.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 41,
+      "moving": false
+    },
+    "LABORATORIUM | closed research chamber <> LABORATORIUM | side seated blind service cover": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | closed research chamber <> LABORATORIUM | side seated blind service cover.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | closed research chamber <> LABORATORIUM | conduit founded closed gland": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "LABORATORIUM | closed research chamber <> LABORATORIUM | conduit founded closed gland.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "LABORATORIUM | closed research chamber <> LABORATORIUM | conduit founded closed gland.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "LABORATORIUM | closed research chamber <> LABORATORIUM | conduit founded closed gland.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "LABORATORIUM | closed research chamber <> LABORATORIUM | conduit founded closed gland.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 50,
+      "moving": false
+    },
+    "LABORATORIUM | closed research chamber <> LABORATORIUM | conduit founded closed gland.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "LABORATORIUM | closed research chamber <> LABORATORIUM | founded circuit terminal block": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 52,
+      "moving": false
+    },
+    "LABORATORIUM | closed research chamber <> LABORATORIUM | rear blind service hatch": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | refractory roof liner <> LABORATORIUM | retained copper roof cover": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | cabinet corner band <> LABORATORIUM | refractory roof liner": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 47,
+      "moving": false
+    },
+    "LABORATORIUM | corner seated rivet.003 <> LABORATORIUM | refractory roof liner": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 21,
+      "moving": false
+    },
+    "LABORATORIUM | cabinet corner band.001 <> LABORATORIUM | refractory roof liner": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 44,
+      "moving": false
+    },
+    "LABORATORIUM | corner seated rivet.007 <> LABORATORIUM | refractory roof liner": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 16,
+      "moving": false
+    },
+    "LABORATORIUM | cabinet corner band.002 <> LABORATORIUM | refractory roof liner": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 45,
+      "moving": false
+    },
+    "LABORATORIUM | corner seated rivet.011 <> LABORATORIUM | refractory roof liner": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 19,
+      "moving": false
+    },
+    "LABORATORIUM | cabinet corner band.003 <> LABORATORIUM | refractory roof liner": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 47,
+      "moving": false
+    },
+    "LABORATORIUM | corner seated rivet.015 <> LABORATORIUM | refractory roof liner": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 18,
+      "moving": false
+    },
+    "LABORATORIUM | refractory roof liner <> LABORATORIUM | rotor founded thermal governor": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "LABORATORIUM | founded circuit terminal block <> LABORATORIUM | refractory roof liner": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 66,
+      "moving": false
+    },
+    "LABORATORIUM | retained copper roof cover <> LABORATORIUM | roof parchment calibration tablet": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | retained copper roof cover <> LABORATORIUM | rotor founded thermal governor": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 100,
+      "moving": false
+    },
+    "LABORATORIUM | retained copper roof cover <> LABORATORIUM | rotor fixed journal shaft": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "LABORATORIUM | retained copper roof cover <> LABORATORIUM | rotor founded cage upright": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "LABORATORIUM | retained copper roof cover <> LABORATORIUM | rotor founded cage upright.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "LABORATORIUM | retained copper roof cover <> LABORATORIUM | rotor founded cage upright.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "LABORATORIUM | founded circuit terminal block <> LABORATORIUM | retained copper roof cover": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 49,
+      "moving": false
+    },
+    "LABORATORIUM | roof parchment calibration tablet <> LABORATORIUM | roof tablet seated scale": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | roof parchment calibration tablet <> LABORATORIUM | roof tablet seated scale.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | roof parchment calibration tablet <> LABORATORIUM | roof tablet seated scale.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | roof parchment calibration tablet <> LABORATORIUM | roof tablet seated scale.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | roof parchment calibration tablet <> LABORATORIUM | roof tablet seated scale.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "LABORATORIUM | calibration tablet retained head <> LABORATORIUM | roof parchment calibration tablet": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 24,
+      "moving": false
+    },
+    "LABORATORIUM | calibration tablet retained head.001 <> LABORATORIUM | roof parchment calibration tablet": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "LABORATORIUM | calibration tablet retained head.002 <> LABORATORIUM | roof parchment calibration tablet": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "LABORATORIUM | calibration tablet retained head.003 <> LABORATORIUM | roof parchment calibration tablet": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 24,
+      "moving": false
+    },
+    "LABORATORIUM | roof parchment calibration tablet <> LABORATORIUM | rotor founded thermal governor": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 66,
+      "moving": false
+    },
+    "LABORATORIUM | roof parchment calibration tablet <> LABORATORIUM | rotor founded cage upright": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 96,
+      "moving": false
+    },
+    "LABORATORIUM | founded circuit terminal block <> LABORATORIUM | roof parchment calibration tablet": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 45,
+      "moving": false
+    },
+    "LABORATORIUM | circuit ceramic seat.001 <> LABORATORIUM | roof parchment calibration tablet": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 30,
+      "moving": false
+    },
+    "LABORATORIUM | roof calibration chapter tab <> LABORATORIUM | roof tablet seated scale": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 71,
+      "moving": false
+    },
+    "LABORATORIUM | roof calibration chapter tab.001 <> LABORATORIUM | roof tablet seated scale.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 71,
+      "moving": false
+    },
+    "LABORATORIUM | roof calibration chapter tab.002 <> LABORATORIUM | roof tablet seated scale.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 71,
+      "moving": false
+    },
+    "LABORATORIUM | cabinet corner band <> LABORATORIUM | corner seated rivet": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 24,
+      "moving": false
+    },
+    "LABORATORIUM | cabinet corner band <> LABORATORIUM | corner seated rivet.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "LABORATORIUM | cabinet corner band <> LABORATORIUM | corner seated rivet.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "LABORATORIUM | cabinet corner band <> LABORATORIUM | corner seated rivet.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 24,
+      "moving": false
+    },
+    "LABORATORIUM | cabinet corner band <> LABORATORIUM | founded burner firebox": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "LABORATORIUM | cabinet corner band <> LABORATORIUM | coal charge tray": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 45,
+      "moving": false
+    },
+    "LABORATORIUM | cabinet corner band.001 <> LABORATORIUM | corner seated rivet.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 24,
+      "moving": false
+    },
+    "LABORATORIUM | cabinet corner band.001 <> LABORATORIUM | corner seated rivet.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "LABORATORIUM | cabinet corner band.001 <> LABORATORIUM | corner seated rivet.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "LABORATORIUM | cabinet corner band.001 <> LABORATORIUM | corner seated rivet.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 24,
+      "moving": false
+    },
+    "LABORATORIUM | cabinet corner band.001 <> LABORATORIUM | founded circuit terminal block": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 47,
+      "moving": false
+    },
+    "LABORATORIUM | cabinet corner band.002 <> LABORATORIUM | corner seated rivet.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 24,
+      "moving": false
+    },
+    "LABORATORIUM | cabinet corner band.002 <> LABORATORIUM | corner seated rivet.009": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "LABORATORIUM | cabinet corner band.002 <> LABORATORIUM | corner seated rivet.010": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "LABORATORIUM | cabinet corner band.002 <> LABORATORIUM | corner seated rivet.011": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 24,
+      "moving": false
+    },
+    "LABORATORIUM | cabinet corner band.003 <> LABORATORIUM | corner seated rivet.012": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 24,
+      "moving": false
+    },
+    "LABORATORIUM | cabinet corner band.003 <> LABORATORIUM | corner seated rivet.013": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "LABORATORIUM | cabinet corner band.003 <> LABORATORIUM | corner seated rivet.014": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "LABORATORIUM | cabinet corner band.003 <> LABORATORIUM | corner seated rivet.015": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 24,
+      "moving": false
+    },
+    "LABORATORIUM | analysis plate seated backing <> LABORATORIUM | fixed opaque analysis substrate": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | analysis plate seated backing <> LABORATORIUM | retained arched study brow": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 27,
+      "moving": false
+    },
+    "LABORATORIUM | analysis plate seated backing <> LABORATORIUM | retained arched study brow.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 47,
+      "moving": false
+    },
+    "LABORATORIUM | analysis plate seated backing <> LABORATORIUM | retained arched study brow.009": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 45,
+      "moving": false
+    },
+    "LABORATORIUM | analysis plate seated backing <> LABORATORIUM | retained arched study brow.010": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 25,
+      "moving": false
+    },
+    "LABORATORIUM | analysis plate founded jamb <> LABORATORIUM | analysis plate retained sill lintel": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 76,
+      "moving": false
+    },
+    "LABORATORIUM | analysis plate founded jamb <> LABORATORIUM | analysis plate retained sill lintel.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 62,
+      "moving": false
+    },
+    "LABORATORIUM | analysis plate founded jamb <> LABORATORIUM | retained arched study brow.009": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 40,
+      "moving": false
+    },
+    "LABORATORIUM | analysis plate founded jamb <> LABORATORIUM | study brow seated witness.009": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 33,
+      "moving": false
+    },
+    "LABORATORIUM | analysis plate founded jamb <> LABORATORIUM | retained arched study brow.010": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 77,
+      "moving": false
+    },
+    "LABORATORIUM | analysis plate founded jamb <> LABORATORIUM | study brow seated witness.010": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 30,
+      "moving": false
+    },
+    "LABORATORIUM | analysis plate founded jamb.001 <> LABORATORIUM | analysis plate retained sill lintel": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 64,
+      "moving": false
+    },
+    "LABORATORIUM | analysis plate founded jamb.001 <> LABORATORIUM | analysis plate retained sill lintel.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 61,
+      "moving": false
+    },
+    "LABORATORIUM | analysis plate founded jamb.001 <> LABORATORIUM | retained arched study brow": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 76,
+      "moving": false
+    },
+    "LABORATORIUM | analysis plate founded jamb.001 <> LABORATORIUM | study brow seated witness": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 28,
+      "moving": false
+    },
+    "LABORATORIUM | analysis plate founded jamb.001 <> LABORATORIUM | retained arched study brow.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 41,
+      "moving": false
+    },
+    "LABORATORIUM | analysis plate founded jamb.001 <> LABORATORIUM | study brow seated witness.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 31,
+      "moving": false
+    },
+    "LABORATORIUM | analysis plate retained sill lintel.001 <> LABORATORIUM | retained arched study brow.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 40,
+      "moving": false
+    },
+    "LABORATORIUM | analysis plate retained sill lintel.001 <> LABORATORIUM | retained arched study brow.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 38,
+      "moving": false
+    },
+    "LABORATORIUM | analysis plate retained sill lintel.001 <> LABORATORIUM | retained arched study brow.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 40,
+      "moving": false
+    },
+    "LABORATORIUM | analysis plate retained sill lintel.001 <> LABORATORIUM | retained arched study brow.009": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 38,
+      "moving": false
+    },
+    "LABORATORIUM | fixed opaque analysis substrate <> LABORATORIUM | working green analysis insert": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 24,
+      "moving": false
+    },
+    "LABORATORIUM | analysis plate seated trace <> LABORATORIUM | working green analysis insert": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "LABORATORIUM | analysis plate seated trace.001 <> LABORATORIUM | working green analysis insert": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | analysis plate seated trace.002 <> LABORATORIUM | working green analysis insert": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | analysis plate seated trace.003 <> LABORATORIUM | working green analysis insert": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | analysis plate seated trace.004 <> LABORATORIUM | working green analysis insert": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | console seated key <> LABORATORIUM | founded control console": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 64,
+      "moving": false
+    },
+    "LABORATORIUM | console seated key.001 <> LABORATORIUM | founded control console": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 64,
+      "moving": false
+    },
+    "LABORATORIUM | console seated key.002 <> LABORATORIUM | founded control console": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 64,
+      "moving": false
+    },
+    "LABORATORIUM | console seated key.003 <> LABORATORIUM | founded control console": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 65,
+      "moving": false
+    },
+    "LABORATORIUM | console seated key.004 <> LABORATORIUM | founded control console": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 64,
+      "moving": false
+    },
+    "LABORATORIUM | console seated key.005 <> LABORATORIUM | founded control console": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 65,
+      "moving": false
+    },
+    "LABORATORIUM | console seated key.006 <> LABORATORIUM | founded control console": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 64,
+      "moving": false
+    },
+    "LABORATORIUM | console seated key.007 <> LABORATORIUM | founded control console": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 64,
+      "moving": false
+    },
+    "LABORATORIUM | console seated key.008 <> LABORATORIUM | founded control console": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 64,
+      "moving": false
+    },
+    "LABORATORIUM | console seated key.009 <> LABORATORIUM | founded control console": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 64,
+      "moving": false
+    },
+    "LABORATORIUM | console seated key.010 <> LABORATORIUM | founded control console": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 65,
+      "moving": false
+    },
+    "LABORATORIUM | console seated key.011 <> LABORATORIUM | founded control console": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 64,
+      "moving": false
+    },
+    "LABORATORIUM | console seated key.012 <> LABORATORIUM | founded control console": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 65,
+      "moving": false
+    },
+    "LABORATORIUM | console seated key.013 <> LABORATORIUM | founded control console": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 64,
+      "moving": false
+    },
+    "LABORATORIUM | control wheel seated shaft <> LABORATORIUM | founded control console": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "LABORATORIUM | founded burner firebox <> LABORATORIUM | founded control console": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 47,
+      "moving": false
+    },
+    "LABORATORIUM | burner retained iron front <> LABORATORIUM | founded control console": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 49,
+      "moving": false
+    },
+    "LABORATORIUM | burner sight slit.002 <> LABORATORIUM | founded control console": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "LABORATORIUM | burner fixed grille.004 <> LABORATORIUM | founded control console": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "LABORATORIUM | burner grille grounded rail.001 <> LABORATORIUM | founded control console": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | control wheel seated shaft <> LABORATORIUM | fixed control wheel": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 50,
+      "moving": false
+    },
+    "LABORATORIUM | fixed control wheel <> LABORATORIUM | fixed wheel retained head": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 52,
+      "moving": false
+    },
+    "LABORATORIUM | burner retained iron front <> LABORATORIUM | founded burner firebox": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | coal charge tray <> LABORATORIUM | founded burner firebox": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 70,
+      "moving": false
+    },
+    "LABORATORIUM | founded burner firebox <> LABORATORIUM | side seated blind service cover": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 45,
+      "moving": false
+    },
+    "LABORATORIUM | founded burner firebox <> LABORATORIUM | side cover retained border": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "LABORATORIUM | founded burner firebox <> LABORATORIUM | side cover retained crosspiece": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "LABORATORIUM | burner retained iron front <> LABORATORIUM | burner sight slit": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | burner retained iron front <> LABORATORIUM | burner sight slit.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | burner retained iron front <> LABORATORIUM | burner sight slit.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | burner grille grounded rail <> LABORATORIUM | burner retained iron front": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 58,
+      "moving": false
+    },
+    "LABORATORIUM | burner grille grounded rail.001 <> LABORATORIUM | burner retained iron front": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 58,
+      "moving": false
+    },
+    "LABORATORIUM | burner retained iron front <> LABORATORIUM | coal charge tray": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 68,
+      "moving": false
+    },
+    "LABORATORIUM | burner retained iron front <> LABORATORIUM | coal tray retained upstand": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 50,
+      "moving": false
+    },
+    "LABORATORIUM | burner retained iron front <> LABORATORIUM | coal tray retained upstand.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 50,
+      "moving": false
+    },
+    "LABORATORIUM | burner fixed grille <> LABORATORIUM | burner sight slit": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 45,
+      "moving": false
+    },
+    "LABORATORIUM | burner fixed grille.001 <> LABORATORIUM | burner sight slit": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 60,
+      "moving": false
+    },
+    "LABORATORIUM | burner fixed grille.002 <> LABORATORIUM | burner sight slit": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 60,
+      "moving": false
+    },
+    "LABORATORIUM | burner fixed grille.003 <> LABORATORIUM | burner sight slit": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 60,
+      "moving": false
+    },
+    "LABORATORIUM | burner fixed grille.004 <> LABORATORIUM | burner sight slit": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 47,
+      "moving": false
+    },
+    "LABORATORIUM | burner fixed grille <> LABORATORIUM | burner sight slit.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 47,
+      "moving": false
+    },
+    "LABORATORIUM | burner fixed grille.001 <> LABORATORIUM | burner sight slit.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 60,
+      "moving": false
+    },
+    "LABORATORIUM | burner fixed grille.002 <> LABORATORIUM | burner sight slit.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 60,
+      "moving": false
+    },
+    "LABORATORIUM | burner fixed grille.003 <> LABORATORIUM | burner sight slit.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 60,
+      "moving": false
+    },
+    "LABORATORIUM | burner fixed grille.004 <> LABORATORIUM | burner sight slit.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 47,
+      "moving": false
+    },
+    "LABORATORIUM | burner fixed grille <> LABORATORIUM | burner sight slit.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 47,
+      "moving": false
+    },
+    "LABORATORIUM | burner fixed grille.001 <> LABORATORIUM | burner sight slit.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 60,
+      "moving": false
+    },
+    "LABORATORIUM | burner fixed grille.002 <> LABORATORIUM | burner sight slit.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 60,
+      "moving": false
+    },
+    "LABORATORIUM | burner fixed grille.003 <> LABORATORIUM | burner sight slit.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 60,
+      "moving": false
+    },
+    "LABORATORIUM | burner fixed grille.004 <> LABORATORIUM | burner sight slit.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 45,
+      "moving": false
+    },
+    "LABORATORIUM | burner fixed grille <> LABORATORIUM | burner grille grounded rail": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "LABORATORIUM | burner fixed grille <> LABORATORIUM | burner grille grounded rail.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | burner fixed grille.001 <> LABORATORIUM | burner grille grounded rail": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "LABORATORIUM | burner fixed grille.001 <> LABORATORIUM | burner grille grounded rail.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | burner fixed grille.002 <> LABORATORIUM | burner grille grounded rail": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | burner fixed grille.002 <> LABORATORIUM | burner grille grounded rail.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | burner fixed grille.003 <> LABORATORIUM | burner grille grounded rail": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | burner fixed grille.003 <> LABORATORIUM | burner grille grounded rail.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "LABORATORIUM | burner fixed grille.004 <> LABORATORIUM | burner grille grounded rail": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | burner fixed grille.004 <> LABORATORIUM | burner grille grounded rail.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "LABORATORIUM | burner grille grounded rail <> LABORATORIUM | coal charge tray": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | burner grille grounded rail <> LABORATORIUM | coal tray retained upstand": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | burner grille grounded rail <> LABORATORIUM | coal tray retained upstand.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | burner grille grounded rail <> LABORATORIUM | keeper seated head": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 39,
+      "moving": false
+    },
+    "LABORATORIUM | coal charge tray <> LABORATORIUM | coal tray retained upstand": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 63,
+      "moving": false
+    },
+    "LABORATORIUM | coal charge tray <> LABORATORIUM | coal tray retained upstand.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 63,
+      "moving": false
+    },
+    "LABORATORIUM | coal charge tray <> LABORATORIUM | foundation keeper": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 38,
+      "moving": false
+    },
+    "LABORATORIUM | coal charge tray <> LABORATORIUM | keeper seated head": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 24,
+      "moving": false
+    },
+    "LABORATORIUM | coal tray retained upstand <> LABORATORIUM | foundation keeper": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "LABORATORIUM | coal tray retained upstand <> LABORATORIUM | keeper seated head": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 28,
+      "moving": false
+    },
+    "LABORATORIUM | side cover retained border <> LABORATORIUM | side seated blind service cover": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 49,
+      "moving": false
+    },
+    "LABORATORIUM | side cover retained border.001 <> LABORATORIUM | side seated blind service cover": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 49,
+      "moving": false
+    },
+    "LABORATORIUM | side cover retained crosspiece <> LABORATORIUM | side seated blind service cover": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 39,
+      "moving": false
+    },
+    "LABORATORIUM | side cover retained crosspiece.001 <> LABORATORIUM | side seated blind service cover": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 39,
+      "moving": false
+    },
+    "LABORATORIUM | service cover seated tablet <> LABORATORIUM | side seated blind service cover": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "LABORATORIUM | service cover seated tablet.001 <> LABORATORIUM | side seated blind service cover": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "LABORATORIUM | service cover seated tablet.002 <> LABORATORIUM | side seated blind service cover": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "LABORATORIUM | service cover seated tablet.003 <> LABORATORIUM | side seated blind service cover": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "LABORATORIUM | service cover seated tablet.004 <> LABORATORIUM | side seated blind service cover": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "LABORATORIUM | side cover retained border <> LABORATORIUM | side cover retained crosspiece": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 59,
+      "moving": false
+    },
+    "LABORATORIUM | side cover retained border <> LABORATORIUM | side cover retained crosspiece.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 58,
+      "moving": false
+    },
+    "LABORATORIUM | side cover retained border.001 <> LABORATORIUM | side cover retained crosspiece": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 53,
+      "moving": false
+    },
+    "LABORATORIUM | side cover retained border.001 <> LABORATORIUM | side cover retained crosspiece.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 54,
+      "moving": false
+    },
+    "LABORATORIUM | founded circuit terminal block <> LABORATORIUM | side cover retained crosspiece.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 37,
+      "moving": false
+    },
+    "LABORATORIUM | service cover seated tablet <> LABORATORIUM | service tablet relief": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | service cover seated tablet <> LABORATORIUM | service tablet relief.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | service cover seated tablet <> LABORATORIUM | service tablet relief.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | service cover seated tablet <> LABORATORIUM | service tablet relief.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "LABORATORIUM | service cover seated tablet.001 <> LABORATORIUM | service tablet relief.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | service cover seated tablet.001 <> LABORATORIUM | service tablet relief.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | service cover seated tablet.001 <> LABORATORIUM | service tablet relief.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | service cover seated tablet.001 <> LABORATORIUM | service tablet relief.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "LABORATORIUM | service cover seated tablet.002 <> LABORATORIUM | service tablet relief.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | service cover seated tablet.002 <> LABORATORIUM | service tablet relief.009": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | service cover seated tablet.002 <> LABORATORIUM | service tablet relief.010": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | service cover seated tablet.002 <> LABORATORIUM | service tablet relief.011": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "LABORATORIUM | service cover seated tablet.003 <> LABORATORIUM | service tablet relief.012": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | service cover seated tablet.003 <> LABORATORIUM | service tablet relief.013": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | service cover seated tablet.003 <> LABORATORIUM | service tablet relief.014": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | service cover seated tablet.003 <> LABORATORIUM | service tablet relief.015": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "LABORATORIUM | service cover seated tablet.004 <> LABORATORIUM | service tablet relief.016": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | service cover seated tablet.004 <> LABORATORIUM | service tablet relief.017": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | service cover seated tablet.004 <> LABORATORIUM | service tablet relief.018": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | service cover seated tablet.004 <> LABORATORIUM | service tablet relief.019": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "LABORATORIUM | side cover retained border.002 <> LABORATORIUM | side seated blind service cover.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 49,
+      "moving": false
+    },
+    "LABORATORIUM | side cover retained border.003 <> LABORATORIUM | side seated blind service cover.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 49,
+      "moving": false
+    },
+    "LABORATORIUM | side cover retained crosspiece.002 <> LABORATORIUM | side seated blind service cover.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 36,
+      "moving": false
+    },
+    "LABORATORIUM | side cover retained crosspiece.003 <> LABORATORIUM | side seated blind service cover.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 36,
+      "moving": false
+    },
+    "LABORATORIUM | service cover seated tablet.005 <> LABORATORIUM | side seated blind service cover.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "LABORATORIUM | service cover seated tablet.006 <> LABORATORIUM | side seated blind service cover.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "LABORATORIUM | service cover seated tablet.007 <> LABORATORIUM | side seated blind service cover.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "LABORATORIUM | service cover seated tablet.008 <> LABORATORIUM | side seated blind service cover.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "LABORATORIUM | service cover seated tablet.009 <> LABORATORIUM | side seated blind service cover.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "LABORATORIUM | attached closed service conduit <> LABORATORIUM | side seated blind service cover.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 103,
+      "moving": false
+    },
+    "LABORATORIUM | conduit founded closed gland <> LABORATORIUM | side seated blind service cover.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 53,
+      "moving": false
+    },
+    "LABORATORIUM | conduit founded closed gland.001 <> LABORATORIUM | side seated blind service cover.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "LABORATORIUM | conduit saddle seat <> LABORATORIUM | side seated blind service cover.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "LABORATORIUM | conduit saddle seat.001 <> LABORATORIUM | side seated blind service cover.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "LABORATORIUM | conduit saddle seat.002 <> LABORATORIUM | side seated blind service cover.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | attached closed service conduit.001 <> LABORATORIUM | side seated blind service cover.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 103,
+      "moving": false
+    },
+    "LABORATORIUM | conduit founded closed gland.002 <> LABORATORIUM | side seated blind service cover.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 53,
+      "moving": false
+    },
+    "LABORATORIUM | conduit founded closed gland.003 <> LABORATORIUM | side seated blind service cover.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "LABORATORIUM | conduit saddle seat.003 <> LABORATORIUM | side seated blind service cover.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "LABORATORIUM | conduit saddle seat.004 <> LABORATORIUM | side seated blind service cover.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | conduit saddle seat.005 <> LABORATORIUM | side seated blind service cover.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "LABORATORIUM | attached closed service conduit.002 <> LABORATORIUM | side seated blind service cover.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 103,
+      "moving": false
+    },
+    "LABORATORIUM | conduit founded closed gland.004 <> LABORATORIUM | side seated blind service cover.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 53,
+      "moving": false
+    },
+    "LABORATORIUM | conduit founded closed gland.005 <> LABORATORIUM | side seated blind service cover.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "LABORATORIUM | conduit saddle seat.006 <> LABORATORIUM | side seated blind service cover.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | conduit saddle seat.007 <> LABORATORIUM | side seated blind service cover.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "LABORATORIUM | conduit saddle seat.008 <> LABORATORIUM | side seated blind service cover.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "LABORATORIUM | side cover retained border.002 <> LABORATORIUM | side cover retained crosspiece.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 57,
+      "moving": false
+    },
+    "LABORATORIUM | side cover retained border.002 <> LABORATORIUM | side cover retained crosspiece.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 56,
+      "moving": false
+    },
+    "LABORATORIUM | attached closed service conduit <> LABORATORIUM | side cover retained border.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 79,
+      "moving": false
+    },
+    "LABORATORIUM | conduit founded closed gland <> LABORATORIUM | side cover retained border.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 99,
+      "moving": false
+    },
+    "LABORATORIUM | attached closed service conduit.001 <> LABORATORIUM | side cover retained border.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 79,
+      "moving": false
+    },
+    "LABORATORIUM | conduit founded closed gland.002 <> LABORATORIUM | side cover retained border.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 100,
+      "moving": false
+    },
+    "LABORATORIUM | attached closed service conduit.002 <> LABORATORIUM | side cover retained border.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 80,
+      "moving": false
+    },
+    "LABORATORIUM | conduit founded closed gland.004 <> LABORATORIUM | side cover retained border.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 98,
+      "moving": false
+    },
+    "LABORATORIUM | side cover retained border.003 <> LABORATORIUM | side cover retained crosspiece.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 54,
+      "moving": false
+    },
+    "LABORATORIUM | side cover retained border.003 <> LABORATORIUM | side cover retained crosspiece.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 53,
+      "moving": false
+    },
+    "LABORATORIUM | service cover seated tablet.005 <> LABORATORIUM | service tablet relief.020": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | service cover seated tablet.005 <> LABORATORIUM | service tablet relief.021": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | service cover seated tablet.005 <> LABORATORIUM | service tablet relief.022": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | service cover seated tablet.005 <> LABORATORIUM | service tablet relief.023": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "LABORATORIUM | conduit saddle seat <> LABORATORIUM | service cover seated tablet.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 70,
+      "moving": false
+    },
+    "LABORATORIUM | conduit saddle seat.003 <> LABORATORIUM | service cover seated tablet.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 66,
+      "moving": false
+    },
+    "LABORATORIUM | conduit saddle seat <> LABORATORIUM | service tablet relief.020": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 41,
+      "moving": false
+    },
+    "LABORATORIUM | conduit retained collar.003 <> LABORATORIUM | service tablet relief.022": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 40,
+      "moving": false
+    },
+    "LABORATORIUM | conduit saddle seat.003 <> LABORATORIUM | service tablet relief.022": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "LABORATORIUM | service cover seated tablet.006 <> LABORATORIUM | service tablet relief.024": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | service cover seated tablet.006 <> LABORATORIUM | service tablet relief.025": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | service cover seated tablet.006 <> LABORATORIUM | service tablet relief.026": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | service cover seated tablet.006 <> LABORATORIUM | service tablet relief.027": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "LABORATORIUM | service cover seated tablet.007 <> LABORATORIUM | service tablet relief.028": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | service cover seated tablet.007 <> LABORATORIUM | service tablet relief.029": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | service cover seated tablet.007 <> LABORATORIUM | service tablet relief.030": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | service cover seated tablet.007 <> LABORATORIUM | service tablet relief.031": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "LABORATORIUM | conduit saddle seat.001 <> LABORATORIUM | service cover seated tablet.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 66,
+      "moving": false
+    },
+    "LABORATORIUM | conduit saddle seat.004 <> LABORATORIUM | service cover seated tablet.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 60,
+      "moving": false
+    },
+    "LABORATORIUM | service cover seated tablet.008 <> LABORATORIUM | service tablet relief.032": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | service cover seated tablet.008 <> LABORATORIUM | service tablet relief.033": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | service cover seated tablet.008 <> LABORATORIUM | service tablet relief.034": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | service cover seated tablet.008 <> LABORATORIUM | service tablet relief.035": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "LABORATORIUM | conduit saddle seat.002 <> LABORATORIUM | service cover seated tablet.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 102,
+      "moving": false
+    },
+    "LABORATORIUM | conduit saddle seat.005 <> LABORATORIUM | service cover seated tablet.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 92,
+      "moving": false
+    },
+    "LABORATORIUM | conduit saddle seat.002 <> LABORATORIUM | service tablet relief.032": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 45,
+      "moving": false
+    },
+    "LABORATORIUM | conduit retained collar.005 <> LABORATORIUM | service tablet relief.034": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 39,
+      "moving": false
+    },
+    "LABORATORIUM | conduit saddle seat.005 <> LABORATORIUM | service tablet relief.034": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | service cover seated tablet.009 <> LABORATORIUM | service tablet relief.036": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | service cover seated tablet.009 <> LABORATORIUM | service tablet relief.037": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | service cover seated tablet.009 <> LABORATORIUM | service tablet relief.038": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | service cover seated tablet.009 <> LABORATORIUM | service tablet relief.039": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "LABORATORIUM | attached closed service conduit <> LABORATORIUM | service cover seated tablet.009": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 90,
+      "moving": false
+    },
+    "LABORATORIUM | conduit founded closed gland.001 <> LABORATORIUM | service cover seated tablet.009": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 75,
+      "moving": false
+    },
+    "LABORATORIUM | attached closed service conduit.001 <> LABORATORIUM | service cover seated tablet.009": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 88,
+      "moving": false
+    },
+    "LABORATORIUM | conduit founded closed gland.003 <> LABORATORIUM | service cover seated tablet.009": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 84,
+      "moving": false
+    },
+    "LABORATORIUM | conduit founded closed gland.005 <> LABORATORIUM | service cover seated tablet.009": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 35,
+      "moving": false
+    },
+    "LABORATORIUM | conduit founded closed gland.001 <> LABORATORIUM | service tablet relief.036": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 33,
+      "moving": false
+    },
+    "LABORATORIUM | conduit founded closed gland.003 <> LABORATORIUM | service tablet relief.038": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 46,
+      "moving": false
+    },
+    "LABORATORIUM | attached closed service conduit <> LABORATORIUM | conduit founded closed gland": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "LABORATORIUM | attached closed service conduit <> LABORATORIUM | conduit founded closed gland.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "LABORATORIUM | attached closed service conduit <> LABORATORIUM | conduit retained collar": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 68,
+      "moving": false
+    },
+    "LABORATORIUM | attached closed service conduit <> LABORATORIUM | conduit saddle seat": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 76,
+      "moving": false
+    },
+    "LABORATORIUM | attached closed service conduit <> LABORATORIUM | conduit retained collar.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 68,
+      "moving": false
+    },
+    "LABORATORIUM | attached closed service conduit <> LABORATORIUM | conduit saddle seat.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 76,
+      "moving": false
+    },
+    "LABORATORIUM | attached closed service conduit <> LABORATORIUM | conduit retained collar.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 68,
+      "moving": false
+    },
+    "LABORATORIUM | attached closed service conduit <> LABORATORIUM | conduit saddle seat.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 72,
+      "moving": false
+    },
+    "LABORATORIUM | conduit retained collar <> LABORATORIUM | conduit saddle seat": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 72,
+      "moving": false
+    },
+    "LABORATORIUM | conduit retained collar.001 <> LABORATORIUM | conduit saddle seat.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 72,
+      "moving": false
+    },
+    "LABORATORIUM | conduit retained collar.002 <> LABORATORIUM | conduit saddle seat.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 72,
+      "moving": false
+    },
+    "LABORATORIUM | attached closed service conduit.001 <> LABORATORIUM | conduit founded closed gland.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "LABORATORIUM | attached closed service conduit.001 <> LABORATORIUM | conduit founded closed gland.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "LABORATORIUM | attached closed service conduit.001 <> LABORATORIUM | conduit retained collar.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 69,
+      "moving": false
+    },
+    "LABORATORIUM | attached closed service conduit.001 <> LABORATORIUM | conduit saddle seat.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 72,
+      "moving": false
+    },
+    "LABORATORIUM | attached closed service conduit.001 <> LABORATORIUM | conduit retained collar.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 67,
+      "moving": false
+    },
+    "LABORATORIUM | attached closed service conduit.001 <> LABORATORIUM | conduit saddle seat.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 72,
+      "moving": false
+    },
+    "LABORATORIUM | attached closed service conduit.001 <> LABORATORIUM | conduit retained collar.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 69,
+      "moving": false
+    },
+    "LABORATORIUM | attached closed service conduit.001 <> LABORATORIUM | conduit saddle seat.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 76,
+      "moving": false
+    },
+    "LABORATORIUM | conduit retained collar.003 <> LABORATORIUM | conduit saddle seat.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 72,
+      "moving": false
+    },
+    "LABORATORIUM | conduit retained collar.004 <> LABORATORIUM | conduit saddle seat.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 72,
+      "moving": false
+    },
+    "LABORATORIUM | conduit retained collar.005 <> LABORATORIUM | conduit saddle seat.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 72,
+      "moving": false
+    },
+    "LABORATORIUM | attached closed service conduit.002 <> LABORATORIUM | conduit founded closed gland.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "LABORATORIUM | attached closed service conduit.002 <> LABORATORIUM | conduit founded closed gland.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "LABORATORIUM | attached closed service conduit.002 <> LABORATORIUM | conduit retained collar.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 69,
+      "moving": false
+    },
+    "LABORATORIUM | attached closed service conduit.002 <> LABORATORIUM | conduit saddle seat.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 74,
+      "moving": false
+    },
+    "LABORATORIUM | attached closed service conduit.002 <> LABORATORIUM | conduit retained collar.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 67,
+      "moving": false
+    },
+    "LABORATORIUM | attached closed service conduit.002 <> LABORATORIUM | conduit saddle seat.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 74,
+      "moving": false
+    },
+    "LABORATORIUM | attached closed service conduit.002 <> LABORATORIUM | conduit retained collar.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 69,
+      "moving": false
+    },
+    "LABORATORIUM | attached closed service conduit.002 <> LABORATORIUM | conduit saddle seat.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 74,
+      "moving": false
+    },
+    "LABORATORIUM | conduit retained collar.006 <> LABORATORIUM | conduit saddle seat.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 72,
+      "moving": false
+    },
+    "LABORATORIUM | conduit retained collar.007 <> LABORATORIUM | conduit saddle seat.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 72,
+      "moving": false
+    },
+    "LABORATORIUM | conduit retained collar.008 <> LABORATORIUM | conduit saddle seat.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 72,
+      "moving": false
+    },
+    "LABORATORIUM | rotor fixed journal shaft <> LABORATORIUM | rotor founded thermal governor": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "LABORATORIUM | rotor fixed axial keeper <> LABORATORIUM | rotor fixed journal shaft": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 155,
+      "moving": false
+    },
+    "LABORATORIUM | rotor fixed axial keeper.001 <> LABORATORIUM | rotor fixed journal shaft": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 155,
+      "moving": false
+    },
+    "LABORATORIUM | fixed shaft retained head <> LABORATORIUM | rotor fixed journal shaft": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "LABORATORIUM | rotor fixed cage guard <> LABORATORIUM | rotor founded cage upright": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "LABORATORIUM | rotor fixed cage guard <> LABORATORIUM | rotor founded cage upright.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "LABORATORIUM | rotor fixed cage guard <> LABORATORIUM | rotor founded cage upright.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 47,
+      "moving": false
+    },
+    "LABORATORIUM | rotor fixed cage guard <> LABORATORIUM | rotor founded cage upright.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 45,
+      "moving": false
+    },
+    "LABORATORIUM | cage supported top guard <> LABORATORIUM | rotor fixed cage guard": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 82,
+      "moving": false
+    },
+    "LABORATORIUM | cage supported top guard.001 <> LABORATORIUM | rotor fixed cage guard": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 74,
+      "moving": false
+    },
+    "LABORATORIUM | cage supported top guard.002 <> LABORATORIUM | rotor fixed cage guard": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 82,
+      "moving": false
+    },
+    "LABORATORIUM | circuit ceramic seat <> LABORATORIUM | circuit terminal head": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 56,
+      "moving": false
+    },
+    "LABORATORIUM | circuit ceramic seat.001 <> LABORATORIUM | circuit terminal head.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 56,
+      "moving": false
+    },
+    "LABORATORIUM | foundation keeper <> LABORATORIUM | keeper seated head": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "LABORATORIUM | foundation keeper.001 <> LABORATORIUM | keeper seated head.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "LABORATORIUM | foundation keeper.002 <> LABORATORIUM | keeper seated head.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "LABORATORIUM | foundation keeper.003 <> LABORATORIUM | keeper seated head.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "LABORATORIUM | rear blind service hatch <> LABORATORIUM | rear hatch retained rivet": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "LABORATORIUM | rear blind service hatch <> LABORATORIUM | rear hatch retained rivet.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 24,
+      "moving": false
+    },
+    "LABORATORIUM | rear blind service hatch <> LABORATORIUM | rear hatch retained rivet.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 24,
+      "moving": false
+    },
+    "LABORATORIUM | rear blind service hatch <> LABORATORIUM | rear hatch retained rivet.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "LABORATORIUM | rear blind service hatch <> LABORATORIUM | rear hatch retained relief": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | rear blind service hatch <> LABORATORIUM | rear hatch retained relief.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | rear blind service hatch <> LABORATORIUM | rear hatch retained relief.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | rear blind service hatch <> LABORATORIUM | rear hatch retained relief.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | rear blind service hatch <> LABORATORIUM | rear hatch retained relief.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | rear hatch retained relief.001 <> LABORATORIUM | rear hatch seated index tablet": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 47,
+      "moving": false
+    },
+    "LABORATORIUM | rear hatch retained relief.001 <> LABORATORIUM | rear hatch seated index tablet.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 64,
+      "moving": false
+    },
+    "LABORATORIUM | rear hatch retained relief.001 <> LABORATORIUM | rear hatch seated index tablet.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 62,
+      "moving": false
+    },
+    "LABORATORIUM | rear hatch retained relief.001 <> LABORATORIUM | rear hatch seated index tablet.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 64,
+      "moving": false
+    },
+    "LABORATORIUM | rear hatch retained relief.002 <> LABORATORIUM | rear hatch seated index tablet": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 47,
+      "moving": false
+    },
+    "LABORATORIUM | rear hatch retained relief.002 <> LABORATORIUM | rear hatch seated index tablet.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 62,
+      "moving": false
+    },
+    "LABORATORIUM | rear hatch retained relief.002 <> LABORATORIUM | rear hatch seated index tablet.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 60,
+      "moving": false
+    },
+    "LABORATORIUM | rear hatch retained relief.002 <> LABORATORIUM | rear hatch seated index tablet.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 62,
+      "moving": false
+    },
+    "LABORATORIUM | rear hatch retained relief.003 <> LABORATORIUM | rear hatch seated index tablet": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 47,
+      "moving": false
+    },
+    "LABORATORIUM | rear hatch retained relief.003 <> LABORATORIUM | rear hatch seated index tablet.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 64,
+      "moving": false
+    },
+    "LABORATORIUM | rear hatch retained relief.003 <> LABORATORIUM | rear hatch seated index tablet.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 62,
+      "moving": false
+    },
+    "LABORATORIUM | rear hatch retained relief.003 <> LABORATORIUM | rear hatch seated index tablet.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 64,
+      "moving": false
+    },
+    "LABORATORIUM | retained arched study brow <> LABORATORIUM | study brow seated witness": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "LABORATORIUM | retained arched study brow <> LABORATORIUM | retained arched study brow.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 2,
+      "moving": false
+    },
+    "LABORATORIUM | retained arched study brow.001 <> LABORATORIUM | study brow seated witness.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "LABORATORIUM | retained arched study brow.001 <> LABORATORIUM | retained arched study brow.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 9,
+      "moving": false
+    },
+    "LABORATORIUM | retained arched study brow.002 <> LABORATORIUM | study brow seated witness.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "LABORATORIUM | retained arched study brow.002 <> LABORATORIUM | retained arched study brow.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 13,
+      "moving": false
+    },
+    "LABORATORIUM | retained arched study brow.003 <> LABORATORIUM | study brow seated witness.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "LABORATORIUM | retained arched study brow.003 <> LABORATORIUM | retained arched study brow.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 1,
+      "moving": false
+    },
+    "LABORATORIUM | retained arched study brow.004 <> LABORATORIUM | study brow seated witness.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "LABORATORIUM | retained arched study brow.004 <> LABORATORIUM | retained arched study brow.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 4,
+      "moving": false
+    },
+    "LABORATORIUM | retained arched study brow.005 <> LABORATORIUM | study brow seated witness.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "LABORATORIUM | retained arched study brow.005 <> LABORATORIUM | retained arched study brow.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 8,
+      "moving": false
+    },
+    "LABORATORIUM | retained arched study brow.006 <> LABORATORIUM | study brow seated witness.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "LABORATORIUM | retained arched study brow.007 <> LABORATORIUM | study brow seated witness.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "LABORATORIUM | retained arched study brow.007 <> LABORATORIUM | retained arched study brow.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 10,
+      "moving": false
+    },
+    "LABORATORIUM | retained arched study brow.008 <> LABORATORIUM | study brow seated witness.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "LABORATORIUM | retained arched study brow.008 <> LABORATORIUM | retained arched study brow.009": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 8,
+      "moving": false
+    },
+    "LABORATORIUM | retained arched study brow.009 <> LABORATORIUM | study brow seated witness.009": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "LABORATORIUM | retained arched study brow.009 <> LABORATORIUM | retained arched study brow.010": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 3,
+      "moving": false
+    },
+    "LABORATORIUM | retained arched study brow.010 <> LABORATORIUM | study brow seated witness.010": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "LABORATORIUM | chapter tab retained glyph <> LABORATORIUM | roof calibration chapter tab": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 67,
+      "moving": false
+    },
+    "LABORATORIUM | chapter tab retained glyph.001 <> LABORATORIUM | roof calibration chapter tab": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 67,
+      "moving": false
+    },
+    "LABORATORIUM | chapter tab retained glyph.002 <> LABORATORIUM | roof calibration chapter tab.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 67,
+      "moving": false
+    },
+    "LABORATORIUM | chapter tab retained glyph.003 <> LABORATORIUM | roof calibration chapter tab.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 67,
+      "moving": false
+    },
+    "LABORATORIUM | chapter tab retained glyph.004 <> LABORATORIUM | roof calibration chapter tab.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 67,
+      "moving": false
+    },
+    "LABORATORIUM | chapter tab retained glyph.005 <> LABORATORIUM | roof calibration chapter tab.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 67,
+      "moving": false
+    },
+    "LABORATORIUM | rear hatch seated index tablet <> LABORATORIUM | rear index tablet raised mark": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | rear hatch seated index tablet <> LABORATORIUM | rear index tablet raised mark.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | rear hatch seated index tablet <> LABORATORIUM | rear index tablet raised mark.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | rear hatch seated index tablet.001 <> LABORATORIUM | rear index tablet raised mark.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | rear hatch seated index tablet.001 <> LABORATORIUM | rear index tablet raised mark.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | rear hatch seated index tablet.001 <> LABORATORIUM | rear index tablet raised mark.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | rear hatch seated index tablet.002 <> LABORATORIUM | rear index tablet raised mark.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | rear hatch seated index tablet.002 <> LABORATORIUM | rear index tablet raised mark.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | rear hatch seated index tablet.002 <> LABORATORIUM | rear index tablet raised mark.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | rear hatch seated index tablet.003 <> LABORATORIUM | rear index tablet raised mark.009": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | rear hatch seated index tablet.003 <> LABORATORIUM | rear index tablet raised mark.010": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | rear hatch seated index tablet.003 <> LABORATORIUM | rear index tablet raised mark.011": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "LABORATORIUM | moving calibration bored hub <> LABORATORIUM | moving calibration rigid spoke": {
+      "first_frame": 1.0,
+      "last_frame": 97.0,
+      "frames": 193,
+      "maximum_triangle_intersections": 38,
+      "moving": true
+    },
+    "LABORATORIUM | moving calibration bored hub <> LABORATORIUM | moving calibration rigid spoke.001": {
+      "first_frame": 1.0,
+      "last_frame": 97.0,
+      "frames": 193,
+      "maximum_triangle_intersections": 40,
+      "moving": true
+    },
+    "LABORATORIUM | moving calibration bored hub <> LABORATORIUM | moving calibration rigid spoke.002": {
+      "first_frame": 1.0,
+      "last_frame": 97.0,
+      "frames": 193,
+      "maximum_triangle_intersections": 40,
+      "moving": true
+    },
+    "LABORATORIUM | moving calibration bored hub <> LABORATORIUM | moving calibration rigid spoke.003": {
+      "first_frame": 1.0,
+      "last_frame": 97.0,
+      "frames": 193,
+      "maximum_triangle_intersections": 38,
+      "moving": true
+    },
+    "LABORATORIUM | moving calibration bored hub <> LABORATORIUM | moving calibration rigid spoke.004": {
+      "first_frame": 1.0,
+      "last_frame": 97.0,
+      "frames": 193,
+      "maximum_triangle_intersections": 40,
+      "moving": true
+    },
+    "LABORATORIUM | moving calibration bored hub <> LABORATORIUM | moving calibration rigid spoke.005": {
+      "first_frame": 1.0,
+      "last_frame": 97.0,
+      "frames": 193,
+      "maximum_triangle_intersections": 40,
+      "moving": true
+    },
+    "LABORATORIUM | moving calibration rigid spoke <> LABORATORIUM | moving calibration scale": {
+      "first_frame": 1.0,
+      "last_frame": 97.0,
+      "frames": 193,
+      "maximum_triangle_intersections": 38,
+      "moving": true
+    },
+    "LABORATORIUM | moving calibration rigid spoke.001 <> LABORATORIUM | moving calibration scale": {
+      "first_frame": 1.0,
+      "last_frame": 97.0,
+      "frames": 193,
+      "maximum_triangle_intersections": 34,
+      "moving": true
+    },
+    "LABORATORIUM | moving calibration rigid spoke.002 <> LABORATORIUM | moving calibration scale": {
+      "first_frame": 1.0,
+      "last_frame": 97.0,
+      "frames": 193,
+      "maximum_triangle_intersections": 34,
+      "moving": true
+    },
+    "LABORATORIUM | moving calibration rigid spoke.003 <> LABORATORIUM | moving calibration scale": {
+      "first_frame": 1.0,
+      "last_frame": 97.0,
+      "frames": 193,
+      "maximum_triangle_intersections": 38,
+      "moving": true
+    },
+    "LABORATORIUM | moving calibration rigid spoke.004 <> LABORATORIUM | moving calibration scale": {
+      "first_frame": 1.0,
+      "last_frame": 97.0,
+      "frames": 193,
+      "maximum_triangle_intersections": 34,
+      "moving": true
+    },
+    "LABORATORIUM | moving calibration rigid spoke.005 <> LABORATORIUM | moving calibration scale": {
+      "first_frame": 1.0,
+      "last_frame": 97.0,
+      "frames": 193,
+      "maximum_triangle_intersections": 34,
+      "moving": true
+    },
+    "LABORATORIUM | moving calibration retained index <> LABORATORIUM | moving calibration scale": {
+      "first_frame": 1.0,
+      "last_frame": 97.0,
+      "frames": 193,
+      "maximum_triangle_intersections": 46,
+      "moving": true
+    },
+    "LABORATORIUM | moving calibration retained index.001 <> LABORATORIUM | moving calibration scale": {
+      "first_frame": 1.0,
+      "last_frame": 97.0,
+      "frames": 193,
+      "maximum_triangle_intersections": 37,
+      "moving": true
+    },
+    "LABORATORIUM | moving calibration retained index.002 <> LABORATORIUM | moving calibration scale": {
+      "first_frame": 1.0,
+      "last_frame": 97.0,
+      "frames": 193,
+      "maximum_triangle_intersections": 35,
+      "moving": true
+    },
+    "LABORATORIUM | moving calibration retained index.003 <> LABORATORIUM | moving calibration scale": {
+      "first_frame": 1.0,
+      "last_frame": 97.0,
+      "frames": 193,
+      "maximum_triangle_intersections": 39,
+      "moving": true
+    },
+    "LABORATORIUM | moving calibration retained index.004 <> LABORATORIUM | moving calibration scale": {
+      "first_frame": 1.0,
+      "last_frame": 97.0,
+      "frames": 193,
+      "maximum_triangle_intersections": 42,
+      "moving": true
+    },
+    "LABORATORIUM | moving calibration retained index.005 <> LABORATORIUM | moving calibration scale": {
+      "first_frame": 1.0,
+      "last_frame": 97.0,
+      "frames": 193,
+      "maximum_triangle_intersections": 38,
+      "moving": true
+    },
+    "LABORATORIUM | moving calibration retained index.006 <> LABORATORIUM | moving calibration scale": {
+      "first_frame": 1.0,
+      "last_frame": 97.0,
+      "frames": 193,
+      "maximum_triangle_intersections": 37,
+      "moving": true
+    },
+    "LABORATORIUM | moving calibration retained index.007 <> LABORATORIUM | moving calibration scale": {
+      "first_frame": 1.0,
+      "last_frame": 97.0,
+      "frames": 193,
+      "maximum_triangle_intersections": 35,
+      "moving": true
+    },
+    "LABORATORIUM | moving calibration retained index.008 <> LABORATORIUM | moving calibration scale": {
+      "first_frame": 1.0,
+      "last_frame": 97.0,
+      "frames": 193,
+      "maximum_triangle_intersections": 39,
+      "moving": true
+    },
+    "LABORATORIUM | moving calibration retained index.009 <> LABORATORIUM | moving calibration scale": {
+      "first_frame": 1.0,
+      "last_frame": 97.0,
+      "frames": 193,
+      "maximum_triangle_intersections": 46,
+      "moving": true
+    },
+    "LABORATORIUM | moving calibration retained index.010 <> LABORATORIUM | moving calibration scale": {
+      "first_frame": 1.0,
+      "last_frame": 97.0,
+      "frames": 193,
+      "maximum_triangle_intersections": 37,
+      "moving": true
+    },
+    "LABORATORIUM | moving calibration retained index.011 <> LABORATORIUM | moving calibration scale": {
+      "first_frame": 1.0,
+      "last_frame": 97.0,
+      "frames": 193,
+      "maximum_triangle_intersections": 35,
+      "moving": true
+    },
+    "LABORATORIUM | moving calibration retained index.012 <> LABORATORIUM | moving calibration scale": {
+      "first_frame": 1.0,
+      "last_frame": 97.0,
+      "frames": 193,
+      "maximum_triangle_intersections": 39,
+      "moving": true
+    },
+    "LABORATORIUM | moving calibration retained index.013 <> LABORATORIUM | moving calibration scale": {
+      "first_frame": 1.0,
+      "last_frame": 97.0,
+      "frames": 193,
+      "maximum_triangle_intersections": 42,
+      "moving": true
+    },
+    "LABORATORIUM | moving calibration retained index.014 <> LABORATORIUM | moving calibration scale": {
+      "first_frame": 1.0,
+      "last_frame": 97.0,
+      "frames": 193,
+      "maximum_triangle_intersections": 38,
+      "moving": true
+    },
+    "LABORATORIUM | moving calibration retained index.015 <> LABORATORIUM | moving calibration scale": {
+      "first_frame": 1.0,
+      "last_frame": 97.0,
+      "frames": 193,
+      "maximum_triangle_intersections": 37,
+      "moving": true
+    },
+    "LABORATORIUM | moving calibration retained index.016 <> LABORATORIUM | moving calibration scale": {
+      "first_frame": 1.0,
+      "last_frame": 97.0,
+      "frames": 193,
+      "maximum_triangle_intersections": 35,
+      "moving": true
+    },
+    "LABORATORIUM | moving calibration retained index.017 <> LABORATORIUM | moving calibration scale": {
+      "first_frame": 1.0,
+      "last_frame": 97.0,
+      "frames": 193,
+      "maximum_triangle_intersections": 39,
+      "moving": true
+    }
+  },
+  "note": "Raw triangle contacts include intentional fitted joints, tooth engagement and fasteners. Every pair requires adjudication; this inventory is not a clearance pass."
+}
