@@ -1,0 +1,98 @@
+{
+  "style": "Four hinged wedge lids and receiving well; existing native cargo pod/procession handles arrival.",
+  "clip_seconds": 10,
+  "source_fps": 48,
+  "hatch_open_seconds": [
+    0.5,
+    1.5
+  ],
+  "native_pod_timing_comes_from_engine_events": true,
+  "hatch_close_seconds": [
+    5.5,
+    7.0
+  ],
+  "sealed_landing_well_actual_foundation_bore": true,
+  "existing_native_cargo_pod_reused": true,
+  "authored_replacement_pod_meshes": 0,
+  "cargo_pod_reference": "base cargo-pod; unchanged native graphics/procession catalogue",
+  "no_actual_native_cargo_transport_gameplay_added": true,
+  "hinge_journals": [
+    {
+      "leaf": "ORBITAL | WORKING cargo wedge hinge 0",
+      "fixed_station": "ORBITAL | cargo hatch founded hinge station 0",
+      "pivot": [
+        0.32999999999999996,
+        -1.0,
+        1.68
+      ],
+      "axis": [
+        -0.0,
+        1.0,
+        0
+      ],
+      "rotating_pin_radius": 0.0195,
+      "fixed_journal_bore": 0.02,
+      "radial_running_clearance": 0.0005,
+      "inner_axial_clearance": 0.0005,
+      "leaf_profile_relief_for_ears_and_actuator": true
+    },
+    {
+      "leaf": "ORBITAL | WORKING cargo wedge hinge 1",
+      "fixed_station": "ORBITAL | cargo hatch founded hinge station 1",
+      "pivot": [
+        -0.6499999999999999,
+        -0.020000000000000018,
+        1.68
+      ],
+      "axis": [
+        -1.0,
+        6.123233995736766e-17,
+        0
+      ],
+      "rotating_pin_radius": 0.0195,
+      "fixed_journal_bore": 0.02,
+      "radial_running_clearance": 0.0005,
+      "inner_axial_clearance": 0.0005,
+      "leaf_profile_relief_for_ears_and_actuator": true
+    },
+    {
+      "leaf": "ORBITAL | WORKING cargo wedge hinge 2",
+      "fixed_station": "ORBITAL | cargo hatch founded hinge station 2",
+      "pivot": [
+        -1.63,
+        -0.9999999999999999,
+        1.68
+      ],
+      "axis": [
+        -1.2246467991473532e-16,
+        -1.0,
+        0
+      ],
+      "rotating_pin_radius": 0.0195,
+      "fixed_journal_bore": 0.02,
+      "radial_running_clearance": 0.0005,
+      "inner_axial_clearance": 0.0005,
+      "leaf_profile_relief_for_ears_and_actuator": true
+    },
+    {
+      "leaf": "ORBITAL | WORKING cargo wedge hinge 3",
+      "fixed_station": "ORBITAL | cargo hatch founded hinge station 3",
+      "pivot": [
+        -0.6500000000000002,
+        -1.98,
+        1.68
+      ],
+      "axis": [
+        1.0,
+        -1.8369701987210297e-16,
+        0
+      ],
+      "rotating_pin_radius": 0.0195,
+      "fixed_journal_bore": 0.02,
+      "radial_running_clearance": 0.0005,
+      "inner_axial_clearance": 0.0005,
+      "leaf_profile_relief_for_ears_and_actuator": true
+    }
+  ],
+  "owner_visual_approved": false
+}

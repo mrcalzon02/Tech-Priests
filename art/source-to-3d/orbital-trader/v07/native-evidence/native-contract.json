@@ -1,0 +1,971 @@
+{
+  "entity": {
+    "name": "orbital-trader",
+    "type": "assembling-machine",
+    "footprint": [
+      6,
+      6
+    ],
+    "collision_box": {
+      "left_top": {
+        "y": -2.69921875,
+        "x": -2.69921875
+      },
+      "right_bottom": {
+        "y": 2.69921875,
+        "x": 2.69921875
+      }
+    },
+    "selection_box": {
+      "left_top": {
+        "y": -3,
+        "x": -3
+      },
+      "right_bottom": {
+        "y": 3,
+        "x": 3
+      }
+    },
+    "max_energy_usage_watts": 750000,
+    "electric_source": {
+      "buffer": 0,
+      "drain": 25000
+    },
+    "burner": false,
+    "crafting_categories": {
+      "orbital-trader": true,
+      "parameters": true
+    },
+    "crafting_speed": 1,
+    "module_slots": 0,
+    "result_inventory_slots": 0,
+    "fluid_boxes": {},
+    "prototype_fluid_boxes": [
+      {
+        "index": 1,
+        "production_type": "input",
+        "pipe_connections": [
+          {
+            "connection_type": "normal",
+            "positions": [
+              {
+                "x": 0,
+                "y": -1
+              },
+              {
+                "x": 1,
+                "y": 0
+              },
+              {
+                "x": 0,
+                "y": 1
+              },
+              {
+                "x": -1,
+                "y": 0
+              }
+            ],
+            "flow_direction": "input",
+            "direction": 0,
+            "connection_category": [
+              "default"
+            ],
+            "hide_connection_info": false
+          }
+        ]
+      },
+      {
+        "index": 2,
+        "production_type": "output",
+        "pipe_connections": [
+          {
+            "connection_type": "normal",
+            "positions": [
+              {
+                "x": 0,
+                "y": 1
+              },
+              {
+                "x": -1,
+                "y": 0
+              },
+              {
+                "x": 0,
+                "y": -1
+              },
+              {
+                "x": 1,
+                "y": 0
+              }
+            ],
+            "flow_direction": "output",
+            "direction": 8,
+            "connection_category": [
+              "default"
+            ],
+            "hide_connection_info": false
+          }
+        ]
+      }
+    ],
+    "circuit_connector_ids": [
+      1,
+      2
+    ],
+    "circuit_reach": 9,
+    "surface_conditions": [
+      {
+        "property": "gravity",
+        "min": -1000000,
+        "max": 1000000
+      },
+      {
+        "property": "pressure",
+        "min": -1000000,
+        "max": 1000000
+      }
+    ]
+  },
+  "item": {
+    "name": "orbital-trader",
+    "place_result": "orbital-trader",
+    "stack_size": 5,
+    "weight": 500000
+  },
+  "building_recipe": {
+    "seconds": 10,
+    "categories": [
+      "crafting"
+    ],
+    "ingredients": [
+      {
+        "type": "item",
+        "name": "steel-plate",
+        "amount": 40
+      },
+      {
+        "type": "item",
+        "name": "copper-cable",
+        "amount": 40
+      },
+      {
+        "type": "item",
+        "name": "electronic-circuit",
+        "amount": 30
+      },
+      {
+        "type": "item",
+        "name": "advanced-circuit",
+        "amount": 5
+      },
+      {
+        "type": "item",
+        "name": "sacred-machine-oil",
+        "amount": 20
+      }
+    ],
+    "products": [
+      {
+        "independent_probability": 1,
+        "shared_probability": {
+          "min": 0,
+          "max": 1
+        },
+        "type": "item",
+        "name": "orbital-trader",
+        "amount": 1,
+        "affected_by_quality": true
+      },
+      {
+        "independent_probability": 0,
+        "shared_probability": {
+          "min": 0,
+          "max": 1
+        },
+        "type": "item",
+        "name": "mechanical-detritus",
+        "amount": 1,
+        "ignored_by_stats": 1,
+        "ignored_by_productivity": 1,
+        "affected_by_quality": true
+      }
+    ]
+  },
+  "processing_recipes": [
+    {
+      "name": "orbital-trade-offworld-cogitator-components",
+      "seconds": 20,
+      "ingredients": [
+        {
+          "type": "item",
+          "name": "electronic-circuit",
+          "amount": 5
+        },
+        {
+          "type": "item",
+          "name": "sacred-machine-oil",
+          "amount": 10
+        }
+      ],
+      "products": [
+        {
+          "independent_probability": 1,
+          "shared_probability": {
+            "min": 0,
+            "max": 1
+          },
+          "type": "item",
+          "name": "offworld-cogitator-components",
+          "amount": 1,
+          "affected_by_quality": true
+        },
+        {
+          "independent_probability": 0,
+          "shared_probability": {
+            "min": 0,
+            "max": 1
+          },
+          "type": "item",
+          "name": "mechanical-detritus",
+          "amount": 1,
+          "ignored_by_stats": 1,
+          "ignored_by_productivity": 1,
+          "affected_by_quality": true
+        }
+      ],
+      "categories": [
+        "orbital-trader"
+      ],
+      "enabled": false,
+      "native_input_slots": 2,
+      "native_output_slots": 2,
+      "native_fluid_storage_count": 0
+    },
+    {
+      "name": "orbital-trade-relic-fragment",
+      "seconds": 30,
+      "ingredients": [
+        {
+          "type": "item",
+          "name": "steel-plate",
+          "amount": 10
+        },
+        {
+          "type": "item",
+          "name": "machine-maintenance-litany",
+          "amount": 2
+        }
+      ],
+      "products": [
+        {
+          "independent_probability": 1,
+          "shared_probability": {
+            "min": 0,
+            "max": 1
+          },
+          "type": "item",
+          "name": "relic-fragment",
+          "amount": 1,
+          "affected_by_quality": true
+        },
+        {
+          "independent_probability": 0,
+          "shared_probability": {
+            "min": 0,
+            "max": 1
+          },
+          "type": "item",
+          "name": "mechanical-detritus",
+          "amount": 1,
+          "ignored_by_stats": 1,
+          "ignored_by_productivity": 1,
+          "affected_by_quality": true
+        }
+      ],
+      "categories": [
+        "orbital-trader"
+      ],
+      "enabled": false,
+      "native_input_slots": 2,
+      "native_output_slots": 2,
+      "native_fluid_storage_count": 0
+    },
+    {
+      "name": "orbital-trade-servitor-parts",
+      "seconds": 20,
+      "ingredients": [
+        {
+          "type": "item",
+          "name": "iron-gear-wheel",
+          "amount": 10
+        },
+        {
+          "type": "item",
+          "name": "sacred-machine-oil",
+          "amount": 12
+        }
+      ],
+      "products": [
+        {
+          "independent_probability": 1,
+          "shared_probability": {
+            "min": 0,
+            "max": 1
+          },
+          "type": "item",
+          "name": "servitor-parts",
+          "amount": 1,
+          "affected_by_quality": true
+        },
+        {
+          "independent_probability": 0,
+          "shared_probability": {
+            "min": 0,
+            "max": 1
+          },
+          "type": "item",
+          "name": "mechanical-detritus",
+          "amount": 1,
+          "ignored_by_stats": 1,
+          "ignored_by_productivity": 1,
+          "affected_by_quality": true
+        }
+      ],
+      "categories": [
+        "orbital-trader"
+      ],
+      "enabled": false,
+      "native_input_slots": 2,
+      "native_output_slots": 2,
+      "native_fluid_storage_count": 0
+    },
+    {
+      "name": "orbital-trade-void-sealed-cargo",
+      "seconds": 45,
+      "ingredients": [
+        {
+          "type": "item",
+          "name": "repair-pack",
+          "amount": 5
+        },
+        {
+          "type": "item",
+          "name": "sacred-machine-oil",
+          "amount": 20
+        }
+      ],
+      "products": [
+        {
+          "independent_probability": 1,
+          "shared_probability": {
+            "min": 0,
+            "max": 1
+          },
+          "type": "item",
+          "name": "void-sealed-cargo",
+          "amount": 1,
+          "affected_by_quality": true
+        },
+        {
+          "independent_probability": 0,
+          "shared_probability": {
+            "min": 0,
+            "max": 1
+          },
+          "type": "item",
+          "name": "mechanical-detritus",
+          "amount": 1,
+          "ignored_by_stats": 1,
+          "ignored_by_productivity": 1,
+          "affected_by_quality": true
+        }
+      ],
+      "categories": [
+        "orbital-trader"
+      ],
+      "enabled": false,
+      "native_input_slots": 2,
+      "native_output_slots": 2,
+      "native_fluid_storage_count": 0
+    },
+    {
+      "name": "void-sealed-cargo-militant-unsealing",
+      "seconds": 18,
+      "ingredients": [
+        {
+          "type": "item",
+          "name": "repair-pack",
+          "amount": 1
+        },
+        {
+          "type": "item",
+          "name": "void-sealed-cargo",
+          "amount": 1
+        }
+      ],
+      "products": [
+        {
+          "independent_probability": 0.22000000000000003,
+          "shared_probability": {
+            "min": 0,
+            "max": 1
+          },
+          "type": "item",
+          "name": "hot-shot-power-cell",
+          "amount_min": 1,
+          "amount_max": 3,
+          "affected_by_quality": true
+        },
+        {
+          "independent_probability": 0.035,
+          "shared_probability": {
+            "min": 0,
+            "max": 1
+          },
+          "type": "item",
+          "name": "las-carbine",
+          "amount": 1,
+          "affected_by_quality": true
+        },
+        {
+          "independent_probability": 0.025,
+          "shared_probability": {
+            "min": 0,
+            "max": 1
+          },
+          "type": "item",
+          "name": "rite-sealed-flak-vest",
+          "amount": 1,
+          "affected_by_quality": true
+        },
+        {
+          "independent_probability": 0.16,
+          "shared_probability": {
+            "min": 0,
+            "max": 1
+          },
+          "type": "item",
+          "name": "mars-pattern-repair-kit",
+          "amount_min": 1,
+          "amount_max": 2,
+          "affected_by_quality": true
+        },
+        {
+          "independent_probability": 0.08,
+          "shared_probability": {
+            "min": 0,
+            "max": 1
+          },
+          "type": "item",
+          "name": "noospheric-targeter",
+          "amount": 1,
+          "affected_by_quality": true
+        },
+        {
+          "independent_probability": 0.07,
+          "shared_probability": {
+            "min": 0,
+            "max": 1
+          },
+          "type": "item",
+          "name": "combat-servitor-targeting-eye",
+          "amount": 1,
+          "affected_by_quality": true
+        },
+        {
+          "independent_probability": 0.12,
+          "shared_probability": {
+            "min": 0,
+            "max": 1
+          },
+          "type": "item",
+          "name": "spent-phosphor-lumen",
+          "amount_min": 1,
+          "amount_max": 2,
+          "affected_by_quality": true
+        },
+        {
+          "independent_probability": 0.18,
+          "shared_probability": {
+            "min": 0,
+            "max": 1
+          },
+          "type": "item",
+          "name": "firearm-magazine",
+          "amount_min": 1,
+          "amount_max": 2,
+          "affected_by_quality": true
+        },
+        {
+          "independent_probability": 0.09,
+          "shared_probability": {
+            "min": 0,
+            "max": 1
+          },
+          "type": "item",
+          "name": "piercing-rounds-magazine",
+          "amount": 1,
+          "affected_by_quality": true
+        },
+        {
+          "independent_probability": 0.04,
+          "shared_probability": {
+            "min": 0,
+            "max": 1
+          },
+          "type": "item",
+          "name": "grenade",
+          "amount": 1,
+          "affected_by_quality": true
+        },
+        {
+          "independent_probability": 0,
+          "shared_probability": {
+            "min": 0,
+            "max": 1
+          },
+          "type": "item",
+          "name": "mechanical-detritus",
+          "amount": 1,
+          "ignored_by_stats": 1,
+          "ignored_by_productivity": 1,
+          "affected_by_quality": true
+        }
+      ],
+      "categories": [
+        "orbital-trader"
+      ],
+      "enabled": false,
+      "native_input_slots": 2,
+      "native_output_slots": 11,
+      "native_fluid_storage_count": 0
+    },
+    {
+      "name": "void-sealed-cargo-riteful-sorting",
+      "seconds": 22,
+      "ingredients": [
+        {
+          "type": "item",
+          "name": "sacred-machine-oil",
+          "amount": 2
+        },
+        {
+          "type": "item",
+          "name": "void-sealed-cargo",
+          "amount": 1
+        }
+      ],
+      "products": [
+        {
+          "independent_probability": 0.24,
+          "shared_probability": {
+            "min": 0,
+            "max": 1
+          },
+          "type": "item",
+          "name": "red-robe-fiber-bundle",
+          "amount_min": 1,
+          "amount_max": 3,
+          "affected_by_quality": true
+        },
+        {
+          "independent_probability": 0.2,
+          "shared_probability": {
+            "min": 0,
+            "max": 1
+          },
+          "type": "item",
+          "name": "sealed-ration-cache",
+          "amount_min": 1,
+          "amount_max": 2,
+          "affected_by_quality": true
+        },
+        {
+          "independent_probability": 0.15,
+          "shared_probability": {
+            "min": 0,
+            "max": 1
+          },
+          "type": "item",
+          "name": "omen-bearing-data-slate",
+          "amount": 1,
+          "affected_by_quality": true
+        },
+        {
+          "independent_probability": 0.25,
+          "shared_probability": {
+            "min": 0,
+            "max": 1
+          },
+          "type": "item",
+          "name": "ritually-suspect-machine-plate",
+          "amount_min": 1,
+          "amount_max": 4,
+          "affected_by_quality": true
+        },
+        {
+          "independent_probability": 0.17,
+          "shared_probability": {
+            "min": 0,
+            "max": 1
+          },
+          "type": "item",
+          "name": "void-chilled-lubricant-ampoule",
+          "amount_min": 1,
+          "amount_max": 2,
+          "affected_by_quality": true
+        },
+        {
+          "independent_probability": 0.09,
+          "shared_probability": {
+            "min": 0,
+            "max": 1
+          },
+          "type": "item",
+          "name": "servitor-parts",
+          "amount": 1,
+          "affected_by_quality": true
+        },
+        {
+          "independent_probability": 0.06,
+          "shared_probability": {
+            "min": 0,
+            "max": 1
+          },
+          "type": "item",
+          "name": "machine-maintenance-litany",
+          "amount": 1,
+          "affected_by_quality": true
+        },
+        {
+          "independent_probability": 0.035,
+          "shared_probability": {
+            "min": 0,
+            "max": 1
+          },
+          "type": "item",
+          "name": "sacred-incense-grenade",
+          "amount": 1,
+          "affected_by_quality": true
+        },
+        {
+          "independent_probability": 0.02,
+          "shared_probability": {
+            "min": 0,
+            "max": 1
+          },
+          "type": "item",
+          "name": "ritual-of-machine-appeasement",
+          "amount": 1,
+          "affected_by_quality": true
+        },
+        {
+          "independent_probability": 0.03,
+          "shared_probability": {
+            "min": 0,
+            "max": 1
+          },
+          "type": "item",
+          "name": "relic-fragment",
+          "amount": 1,
+          "affected_by_quality": true
+        },
+        {
+          "independent_probability": 0,
+          "shared_probability": {
+            "min": 0,
+            "max": 1
+          },
+          "type": "item",
+          "name": "mechanical-detritus",
+          "amount": 1,
+          "ignored_by_stats": 1,
+          "ignored_by_productivity": 1,
+          "affected_by_quality": true
+        }
+      ],
+      "categories": [
+        "orbital-trader"
+      ],
+      "enabled": false,
+      "native_input_slots": 2,
+      "native_output_slots": 11,
+      "native_fluid_storage_count": 0
+    },
+    {
+      "name": "void-sealed-cargo-scrutiny",
+      "seconds": 14,
+      "ingredients": [
+        {
+          "type": "item",
+          "name": "void-sealed-cargo",
+          "amount": 1
+        }
+      ],
+      "products": [
+        {
+          "independent_probability": 0.34,
+          "shared_probability": {
+            "min": 0,
+            "max": 1
+          },
+          "type": "item",
+          "name": "auspex-scrap",
+          "amount_min": 1,
+          "amount_max": 2,
+          "affected_by_quality": true
+        },
+        {
+          "independent_probability": 0.26,
+          "shared_probability": {
+            "min": 0,
+            "max": 1
+          },
+          "type": "item",
+          "name": "hexagrammic-circuit-shard",
+          "amount_min": 1,
+          "amount_max": 2,
+          "affected_by_quality": true
+        },
+        {
+          "independent_probability": 0.22000000000000003,
+          "shared_probability": {
+            "min": 0,
+            "max": 1
+          },
+          "type": "item",
+          "name": "archeotech-capacitor",
+          "amount_min": 1,
+          "amount_max": 2,
+          "affected_by_quality": true
+        },
+        {
+          "independent_probability": 0.18,
+          "shared_probability": {
+            "min": 0,
+            "max": 1
+          },
+          "type": "item",
+          "name": "micro-servitor-actuator",
+          "amount": 1,
+          "affected_by_quality": true
+        },
+        {
+          "independent_probability": 0.2,
+          "shared_probability": {
+            "min": 0,
+            "max": 1
+          },
+          "type": "item",
+          "name": "machine-spirit-bound-relay",
+          "amount": 1,
+          "affected_by_quality": true
+        },
+        {
+          "independent_probability": 0.13,
+          "shared_probability": {
+            "min": 0,
+            "max": 1
+          },
+          "type": "item",
+          "name": "sanctified-lens-array",
+          "amount": 1,
+          "affected_by_quality": true
+        },
+        {
+          "independent_probability": 0.08,
+          "shared_probability": {
+            "min": 0,
+            "max": 1
+          },
+          "type": "item",
+          "name": "plasma-coil-reliquary",
+          "amount": 1,
+          "affected_by_quality": true
+        },
+        {
+          "independent_probability": 0.06,
+          "shared_probability": {
+            "min": 0,
+            "max": 1
+          },
+          "type": "item",
+          "name": "void-burned-cogitator-core",
+          "amount": 1,
+          "affected_by_quality": true
+        },
+        {
+          "independent_probability": 0.11000000000000001,
+          "shared_probability": {
+            "min": 0,
+            "max": 1
+          },
+          "type": "item",
+          "name": "offworld-cogitator-components",
+          "amount_min": 1,
+          "amount_max": 2,
+          "affected_by_quality": true
+        },
+        {
+          "independent_probability": 0.025,
+          "shared_probability": {
+            "min": 0,
+            "max": 1
+          },
+          "type": "item",
+          "name": "relic-fragment",
+          "amount": 1,
+          "affected_by_quality": true
+        },
+        {
+          "independent_probability": 0,
+          "shared_probability": {
+            "min": 0,
+            "max": 1
+          },
+          "type": "item",
+          "name": "mechanical-detritus",
+          "amount": 1,
+          "ignored_by_stats": 1,
+          "ignored_by_productivity": 1,
+          "affected_by_quality": true
+        }
+      ],
+      "categories": [
+        "orbital-trader"
+      ],
+      "enabled": false,
+      "native_input_slots": 1,
+      "native_output_slots": 11,
+      "native_fluid_storage_count": 0
+    }
+  ],
+  "unlocks": [
+    {
+      "name": "rocket-silo",
+      "prerequisites": [
+        "concrete",
+        "rocket-fuel",
+        "processing-unit",
+        "logistic-robotics",
+        "low-density-structure",
+        "advanced-material-processing-2"
+      ],
+      "count": 1000,
+      "ticks": 3600,
+      "ingredients": [
+        {
+          "name": "automation-science-pack",
+          "amount": 1
+        },
+        {
+          "name": "logistic-science-pack",
+          "amount": 1
+        },
+        {
+          "name": "chemical-science-pack",
+          "amount": 1
+        }
+      ],
+      "recipes": [
+        "orbital-trader"
+      ]
+    },
+    {
+      "name": "orbital-trader-deployment",
+      "prerequisites": [
+        "efficient-sacred-oil-rendering",
+        "steel-processing",
+        "advanced-circuit"
+      ],
+      "count": 120,
+      "ticks": 1800,
+      "ingredients": [
+        {
+          "name": "automation-science-pack",
+          "amount": 1
+        },
+        {
+          "name": "logistic-science-pack",
+          "amount": 1
+        }
+      ],
+      "recipes": [
+        "orbital-trader",
+        "orbital-trade-offworld-cogitator-components",
+        "orbital-trade-servitor-parts",
+        "orbital-trade-void-sealed-cargo"
+      ]
+    },
+    {
+      "name": "void-sealed-cargo-unsealing",
+      "prerequisites": [
+        "orbital-trader-deployment",
+        "military"
+      ],
+      "count": 90,
+      "ticks": 1500,
+      "ingredients": [
+        {
+          "name": "automation-science-pack",
+          "amount": 1
+        },
+        {
+          "name": "logistic-science-pack",
+          "amount": 1
+        }
+      ],
+      "recipes": [
+        "void-sealed-cargo-scrutiny",
+        "void-sealed-cargo-militant-unsealing",
+        "void-sealed-cargo-riteful-sorting"
+      ]
+    },
+    {
+      "name": "orbital-relic-procurement",
+      "prerequisites": [
+        "orbital-trader-deployment",
+        "machine-maintenance-litanies"
+      ],
+      "count": 110,
+      "ticks": 1500,
+      "ingredients": [
+        {
+          "name": "automation-science-pack",
+          "amount": 1
+        },
+        {
+          "name": "logistic-science-pack",
+          "amount": 1
+        }
+      ],
+      "recipes": [
+        "orbital-trade-relic-fragment"
+      ]
+    }
+  ],
+  "native_directions": [
+    {
+      "requested": 0,
+      "actual": 0,
+      "can_place": true
+    },
+    {
+      "requested": 4,
+      "actual": 0,
+      "can_place": true
+    },
+    {
+      "requested": 8,
+      "actual": 0,
+      "can_place": true
+    },
+    {
+      "requested": 12,
+      "actual": 0,
+      "can_place": true
+    }
+  ],
+  "normal_nauvis_placement": true,
+  "prototype_overrides": false
+}

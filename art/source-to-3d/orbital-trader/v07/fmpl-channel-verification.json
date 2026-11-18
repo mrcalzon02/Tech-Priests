@@ -1,0 +1,104 @@
+{
+  "passed": true,
+  "source_sha256": "1582db2273b3cb047ced03ad47f9e1df4162996b135c172223abd388c1ce63f6",
+  "runtime_sha256": "c10ebc27191ca8d109ba6dfed52701d5b8e11210791649d37ccf734eb23a1134",
+  "materials": [
+    {
+      "role": "machine_steel",
+      "fmpl_material_id": "machine_steel",
+      "actual_glb_pixels_max_error": {
+        "albedo": 0.0,
+        "normal": 0.0,
+        "roughness_from_original_green": 0.0,
+        "metallic_from_original_blue": 0.0
+      },
+      "correct_orm_green_roughness_blue_metallic": true,
+      "normal_scale": 0.2800000011920929,
+      "passed": true
+    },
+    {
+      "role": "brass",
+      "fmpl_material_id": "brass",
+      "actual_glb_pixels_max_error": {
+        "albedo": 0.0,
+        "normal": 0.0,
+        "roughness_from_original_green": 0.0,
+        "metallic_from_original_blue": 0.0
+      },
+      "correct_orm_green_roughness_blue_metallic": true,
+      "normal_scale": 0.2800000011920929,
+      "passed": true
+    },
+    {
+      "role": "indicator_green",
+      "fmpl_material_id": "indicator_green",
+      "actual_glb_pixels_max_error": {
+        "albedo": 0.0,
+        "normal": 0.0,
+        "roughness_from_original_green": 0.0,
+        "metallic_from_original_blue": 0.0
+      },
+      "correct_orm_green_roughness_blue_metallic": true,
+      "normal_scale": 0.2800000011920929,
+      "passed": true
+    },
+    {
+      "role": "glass",
+      "fmpl_material_id": "glass",
+      "actual_glb_pixels_max_error": {
+        "albedo": 0.0,
+        "normal": 0.0,
+        "roughness_from_original_green": 0.0,
+        "metallic_from_original_blue": 0.0
+      },
+      "correct_orm_green_roughness_blue_metallic": true,
+      "normal_scale": 0.2800000011920929,
+      "passed": true
+    },
+    {
+      "role": "gunmetal_dark",
+      "fmpl_material_id": "gunmetal_dark",
+      "actual_glb_pixels_max_error": {
+        "albedo": 0.0,
+        "normal": 0.0,
+        "roughness_from_original_green": 0.0,
+        "metallic_from_original_blue": 0.0
+      },
+      "correct_orm_green_roughness_blue_metallic": true,
+      "normal_scale": 0.2800000011920929,
+      "passed": true
+    },
+    {
+      "role": "insulator",
+      "fmpl_material_id": "insulator",
+      "actual_glb_pixels_max_error": {
+        "albedo": 0.0,
+        "normal": 0.0,
+        "roughness_from_original_green": 0.0,
+        "metallic_from_original_blue": 0.0
+      },
+      "correct_orm_green_roughness_blue_metallic": true,
+      "normal_scale": 0.2800000011920929,
+      "passed": true
+    },
+    {
+      "role": "ferrocrete_dark",
+      "fmpl_material_id": "ferrocrete_dark",
+      "actual_glb_pixels_max_error": {
+        "albedo": 0.0,
+        "normal": 0.0,
+        "roughness_from_original_green": 0.0,
+        "metallic_from_original_blue": 0.0
+      },
+      "correct_orm_green_roughness_blue_metallic": true,
+      "normal_scale": 0.44999998807907104,
+      "passed": true
+    }
+  ],
+  "original_source_maps_git_blob_verified": true,
+  "albedo_color_space": "sRGB",
+  "normal_and_orm_color_space": "Non-Color",
+  "all_actual_exported_pixels_checked": true,
+  "correct_source_indexed_fmpl_materials": true,
+  "owner_visual_approved": false
+}

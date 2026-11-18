@@ -1,0 +1,55 @@
+{
+  "base_commit": "c24c5599976b77a68d6ce4cdfc6f3737e3408127",
+  "source_sha256": "1582db2273b3cb047ced03ad47f9e1df4162996b135c172223abd388c1ce63f6",
+  "runtime_sha256": "c10ebc27191ca8d109ba6dfed52701d5b8e11210791649d37ccf734eb23a1134",
+  "isolated_mod": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\tanks-structure-production\\build\\tp-sterling-contract-main01\\mods\\tech-priests_0.1.687",
+  "original_cargo_pod_assets_and_processions_reused": true,
+  "authored_replacement_cargo_pod": false,
+  "sprites": {
+    "body-idle.png": {
+      "sha256": "ad8769a3a489fa555a00bb9f4a52b84091fc3841a286f14a89853758de09546f",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    "body-working.png": {
+      "sha256": "e9bc705ea5b31cfbff4226b355e422b542b80a3b49b2be96fe5b73af8348ff0b",
+      "dimensions": [
+        4096,
+        2048
+      ]
+    },
+    "front-wall-mask.png": {
+      "sha256": "0cedba66ac780521fd45272fbf17ee4e7cf79e5ad70774e4f93b54c954120ed7",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    "hatch-back.png": {
+      "sha256": "88cbbdbdb486fa5592b9d27c856ca30fac086aa58329592ec36cdc07e59cc106",
+      "dimensions": [
+        3584,
+        1536
+      ]
+    },
+    "hatch-front.png": {
+      "sha256": "5d4573a19c94264d2392a1d01ee4f5ac1fdca24b595467b3d4cda38ab31b20bb",
+      "dimensions": [
+        3584,
+        1536
+      ]
+    },
+    "icon.png": {
+      "sha256": "b69609ae3da3a1a2fec30f13134cb4a5d874e826bae4cb4da8d23a01cf90431c",
+      "dimensions": [
+        128,
+        128
+      ]
+    }
+  },
+  "native_coupled_verification_pending": true,
+  "production_repository_integrated": false,
+  "owner_visual_approved": false
+}

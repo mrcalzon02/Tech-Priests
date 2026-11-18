@@ -1,0 +1,35 @@
+{
+  "source_sha256": "1582db2273b3cb047ced03ad47f9e1df4162996b135c172223abd388c1ce63f6",
+  "runtime_sha256": "c10ebc27191ca8d109ba6dfed52701d5b8e11210791649d37ccf734eb23a1134",
+  "reference_sha256": "46824491fa45a9fe42eef1b20233764acde6e925e4ad59de519e49e406f56036",
+  "render_sha256": {
+    "actual-glb-front.png": "6f81c3e0322c59fbeb288d7b3ced8d67dbcfaef558edbf8fc7cd352f9aa3138c",
+    "actual-glb-rear.png": "9b6e64b0bb3463471443873b3787ee286a386ca3fcc40c2d87c5abdf3f6b2867",
+    "actual-glb-detail.png": "556a2cd38479b008492bc233e38c9e51b56a433ec3e7c5246d4996f392debfd0",
+    "actual-glb-clay.png": "5b32d64450187b380e1c49ba55dd31d8d6b75df1a4cac3e17d07af6c10786bcf",
+    "closed-model-reference.png": "e0afb652a4b3eb5a163fd878b7e17133b98029a184123b71e167ad3edb8b493a",
+    "hatch-half-open-reference.png": "17b445803316488b56bb5e7cca109fc9950e6609399aca2ac83a7a3d0b77d544",
+    "hatch-open-reference.png": "b74f114af4b1c96b37b6b44c13a53dac3b972574abfc8ba84d68b0a46298ebb6"
+  },
+  "native_image_sha256": {
+    "wide-idle.png": "204e09e3fdd1d012c01be9b5974b4b5fcd77d4349a4298079a57875228ec98ed",
+    "wide-receiving.png": "90936a9469f883431c1935c6bbe77018455fd168bcecfed6e16d57eb44395331",
+    "arrival-038.png": "ed64f55caaf22129202dbdf2770908ed24b446f7bd5cf7e1aac19862c8f0876b"
+  },
+  "scored_review_out_of_five": {
+    "recognizable_closed_exchange_altar": 4,
+    "supported_construction": 4,
+    "surface_materials_and_uvs": 4,
+    "operation_readability": 4,
+    "native_integration": 4
+  },
+  "reasoning": "Closed greebled exchange altar preserves the existing tower/dome/annex/round-green-hatch layout. Retained curved dome scales, ribbed panels and seated fittings explain construction. Four hinged wedge leaves uncover a real bored receiving well; all stationary meshes are grounded and moving components match measured journal-supported assemblies. Actual FMPL albedo/normal/ORM pixels and physically directed UVs pass. Actual native images show the existing Factorio pod in the well with foreground occlusion. Engine operation records repeated complete cycles.",
+  "delegated_operational_close_enough": true,
+  "owner_visual_approved": false,
+  "limits": [
+    "Fixed contact inventory is not an exhaustive static-overlap adjudication.",
+    "Native capture uses medium graphics; full-resolution delivery sprites are unchanged.",
+    "The capture wall-clock cap prevented a final full-cycle video tail; actual engine phase cycles and operated-save reload independently passed.",
+    "Full user mod-pack and portal release not verified."
+  ]
+}

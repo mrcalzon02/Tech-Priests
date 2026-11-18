@@ -635,3 +635,5 @@ require("prototypes.generated_graphics.void-steam-engine-v1")
 require("prototypes.generated_graphics.citadel-manufactoreo-v1")
 
 require("prototypes.generated_graphics.entropic-extractor-v1")
+
+require("prototypes.generated_graphics.orbital-trader-v1")

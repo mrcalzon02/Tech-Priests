@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "actual_operated_save": "orbital-operated.zip",
+  "save_sha256": "96bbbefe380f1a301e83d92577b97960529ea13c1fe399e4d800b1c20e10c3a0",
+  "actual_reload_test_ticks": 600,
+  "reload_exit_code": 0,
+  "reload_log_sha256": "19919cab820e7f1a949f8afc1b58ad4d50297abf62fa3446b7fa9097bd0c0c44",
+  "all_seven_recipes_and_operating_modes_passed": true,
+  "native_stock_pod_and_procession_reused": true,
+  "authored_replacement_pod": false,
+  "no_target_or_accumulator_energy_assignments": true
+}

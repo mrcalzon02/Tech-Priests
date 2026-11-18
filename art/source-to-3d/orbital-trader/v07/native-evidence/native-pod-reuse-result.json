@@ -1,0 +1,59 @@
+{
+  "events": [
+    {
+      "kind": "native finished descending",
+      "tick": 349,
+      "state": "descending",
+      "position": {
+        "y": 40.9765625,
+        "x": 39.34765625
+      }
+    },
+    {
+      "kind": "native delivered cargo",
+      "tick": 349,
+      "state": "descending",
+      "position": {
+        "y": 40.9765625,
+        "x": 39.34765625
+      }
+    },
+    {
+      "kind": "native finished descending",
+      "tick": 399,
+      "state": "descending",
+      "position": {
+        "y": 40.96484375,
+        "x": 39.34765625
+      }
+    },
+    {
+      "kind": "native delivered cargo",
+      "tick": 399,
+      "state": "descending",
+      "position": {
+        "y": 40.96484375,
+        "x": 39.34765625
+      }
+    }
+  ],
+  "rows": [
+    {
+      "platform": false,
+      "target_health": 1200,
+      "original_health": 1200,
+      "pod_valid": false,
+      "pod_state": "destroyed",
+      "position": false
+    },
+    {
+      "platform": true,
+      "target_health": 1200,
+      "original_health": 1200,
+      "pod_valid": false,
+      "pod_state": "destroyed",
+      "position": false
+    }
+  ],
+  "empty_owned_container_removed": true
+}

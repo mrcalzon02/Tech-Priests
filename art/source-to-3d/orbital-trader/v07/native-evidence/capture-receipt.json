@@ -1,0 +1,196 @@
+{
+  "genuine_native_capture": true,
+  "source_sha256": "1582db2273b3cb047ced03ad47f9e1df4162996b135c172223abd388c1ce63f6",
+  "runtime_sha256": "c10ebc27191ca8d109ba6dfed52701d5b8e11210791649d37ccf734eb23a1134",
+  "screenshots": [
+    {
+      "file": "arrival-000.png",
+      "sha256": "789b9f34f9205342a6a4030d815adb55367d1c032d3b873582baaee31b6d0229"
+    },
+    {
+      "file": "arrival-001.png",
+      "sha256": "9c6fd40e9a8949ab21090e39bada3e115351f30f5fb6faa09a9950d0512127ff"
+    },
+    {
+      "file": "arrival-002.png",
+      "sha256": "9f3acf1e7ac9a3b2ebcd46f3021342ffef8aa0f0b529458aad751569777415d6"
+    },
+    {
+      "file": "arrival-003.png",
+      "sha256": "c2e9ba45db9805cbfb77908d1a647de11557c985ec99e2b0da3544fb0bd8109f"
+    },
+    {
+      "file": "arrival-004.png",
+      "sha256": "623a2a92100c14e9ccd02155f58b49c6c93e3808e90499a8847b84e6e135aedf"
+    },
+    {
+      "file": "arrival-005.png",
+      "sha256": "7241704feb3e6f78f68e45ccfaf804ef1723adda0bfec94cfdf1ddfac2bad0cf"
+    },
+    {
+      "file": "arrival-006.png",
+      "sha256": "a0b4c902eb261fa0fdbb319b8cc047d6eb46b72aedfd94f8b44820c061411e90"
+    },
+    {
+      "file": "arrival-007.png",
+      "sha256": "354c9cd9465e9111e61a4aba3ea5346a79d859c43a1ed3ea269dc933be2d82ec"
+    },
+    {
+      "file": "arrival-008.png",
+      "sha256": "14e6018a704625a024bb0bdee9b3889f6e23ebab32ad1c6b1dd4ff56eef342dc"
+    },
+    {
+      "file": "arrival-009.png",
+      "sha256": "c05f953e93fa82a1d59b485ff23966ba5e22a3c97f8c75cfad439f448bc163ac"
+    },
+    {
+      "file": "arrival-010.png",
+      "sha256": "2ac28029bedd514bc11ce1d0a7820ec9cf4988592507487a44bef2ae77347097"
+    },
+    {
+      "file": "arrival-011.png",
+      "sha256": "8311fe0968231c7a9e5f0bbecfb5c1ad125226ab28caacad349384dd3e331e3e"
+    },
+    {
+      "file": "arrival-012.png",
+      "sha256": "33eeeeda877bad5cbd23b4af15e7ea1db218e91e4da59768ac4bf94f7f413731"
+    },
+    {
+      "file": "arrival-013.png",
+      "sha256": "8e4b0b53cb8ae044234e9e243cd9fa38040ae116595e6be5736eb0d76747c74a"
+    },
+    {
+      "file": "arrival-014.png",
+      "sha256": "78d7f6a0359d886220ae0afa0306fbd5a60c6de3b7ebef2d4a3415d70b25b01d"
+    },
+    {
+      "file": "arrival-015.png",
+      "sha256": "89c48825a5e2bcffd04d0df7c4620e31452ff2eefc1458b496bf042f7d3e1f4b"
+    },
+    {
+      "file": "arrival-016.png",
+      "sha256": "87e78a47e610c6f89d1161d19d46ef9d694f2b0e1a3874d74c11d94619a65567"
+    },
+    {
+      "file": "arrival-017.png",
+      "sha256": "beb1e39083e41875949e785899e1e53bbaba17615e1f4b7b740e63cd06f4b7bf"
+    },
+    {
+      "file": "arrival-018.png",
+      "sha256": "78f69b74861e86f21267815d37c4d7dbd7134d522524fbb1fc5c6e399e483a74"
+    },
+    {
+      "file": "arrival-019.png",
+      "sha256": "b3700034a8d948141a8120e5c03d333f65453d8dc531e6a293a214aa3d64ccfe"
+    },
+    {
+      "file": "arrival-020.png",
+      "sha256": "07970122b3e50e9c406d7c5a5c200f15ab0dfad53ffe3cd61b8a96f4b051deb6"
+    },
+    {
+      "file": "arrival-021.png",
+      "sha256": "7365f232e8814e21d63d8da1812aa4fbe55daf9d1c69f8f16653ade707420a9b"
+    },
+    {
+      "file": "arrival-022.png",
+      "sha256": "c14819b941a1e5e811a6ca35c6120cdb20c97dfe0cb79e52d15f636036c5c327"
+    },
+    {
+      "file": "arrival-023.png",
+      "sha256": "774f2050e1eff2f4462e6fdce086794cdecbbd24af38cb26420ae0c7ba3d4c39"
+    },
+    {
+      "file": "arrival-024.png",
+      "sha256": "f4d6ffbafb616ff283712ac8e5860226fb2e34ef218b14d733987f5360e649d1"
+    },
+    {
+      "file": "arrival-025.png",
+      "sha256": "5004c1f8968e851a751ddb88301307d577fd5e16f5fc096baf4dc4986d1d14c5"
+    },
+    {
+      "file": "arrival-026.png",
+      "sha256": "41da45574366b993842413d79afc686aa6cb6b47508878548ba974d7512f2966"
+    },
+    {
+      "file": "arrival-027.png",
+      "sha256": "cdb86f7715fe2f43772f99cd5d3a579f1184315f18cc42bf276fa5609f1632b6"
+    },
+    {
+      "file": "arrival-028.png",
+      "sha256": "c37fe8841272aa69eb603775f21e86ef4b0c1a12baff2881c72675bb5289847c"
+    },
+    {
+      "file": "arrival-029.png",
+      "sha256": "c566ad7083e07ada2a327be56a08c6da8fd4c9375a8f9f351e0f264be6263de2"
+    },
+    {
+      "file": "arrival-030.png",
+      "sha256": "cf05a38118026b89b60892e085850ae20504b09e09a1bfbce9f8c2b33ea4bb16"
+    },
+    {
+      "file": "arrival-031.png",
+      "sha256": "7a35f9a5ce63094785aba98e6c394f17b197570bf6995596efbb8a610a24374a"
+    },
+    {
+      "file": "arrival-032.png",
+      "sha256": "a8d0a487934e2db983af53802484bb8283b468de89393b82578f1b3ac171da46"
+    },
+    {
+      "file": "arrival-033.png",
+      "sha256": "fa2e9711b4b8f139fa47446fb01d1193461838e2010b607bd141985cfd6ecab9"
+    },
+    {
+      "file": "arrival-034.png",
+      "sha256": "23ff083e85f0de420c1da59c7bfa4e313e4b61f531f6fb19a73c764fc0d98c07"
+    },
+    {
+      "file": "arrival-035.png",
+      "sha256": "3848f98cfe3305d50280afadc34a78edd6a17a8f777ac4769c3353282ce6cc81"
+    },
+    {
+      "file": "arrival-036.png",
+      "sha256": "f2d2be841c63590e945d34c71cd6b6d30f917a0e59fc536efdb595b4e7dbb050"
+    },
+    {
+      "file": "arrival-037.png",
+      "sha256": "aa5cfd5115b6811d894f6f04b992dc2e8188ac0ce1b0dd3c7345accbbc459db0"
+    },
+    {
+      "file": "arrival-038.png",
+      "sha256": "ed64f55caaf22129202dbdf2770908ed24b446f7bd5cf7e1aac19862c8f0876b"
+    },
+    {
+      "file": "wide-idle.png",
+      "sha256": "204e09e3fdd1d012c01be9b5974b4b5fcd77d4349a4298079a57875228ec98ed"
+    },
+    {
+      "file": "wide-opening.png",
+      "sha256": "1bb6033e03b1b83b65c0ecbc34fecb7a0588679a3da0dcaee678842a379a9b0f"
+    },
+    {
+      "file": "wide-receiving.png",
+      "sha256": "90936a9469f883431c1935c6bbe77018455fd168bcecfed6e16d57eb44395331"
+    }
+  ],
+  "valid_png_crcs": true,
+  "default_desktop_untouched": true,
+  "engine_graphics_quality": "medium",
+  "delivered_sprites_remain_full_resolution": true,
+  "visually_inspected": [
+    "wide-idle.png",
+    "wide-receiving.png",
+    "arrival-025.png",
+    "arrival-038.png"
+  ],
+  "actual_native_existing_pod_seen_in_receiving_well": true,
+  "native_full_cycle_video_tail_captured": false,
+  "helper_limit": "The separate desktop capture reached its180-second wall-clock cap. Genuine idle, hatch opening and native arrival PNGs are retained. A final closing tail was not captured.",
+  "full_cycle_verification_basis": {
+    "actual_native_operational_and_operated_reload_pass": true,
+    "actual_visual_cycles": 37,
+    "actual_native_pod_arrivals": 35,
+    "idle_closed_frame_zero_and_valid_render_objects_in_operated_state": true,
+    "evidence": "operated-reload-receipt.json and operation.json"
+  },
+  "owner_visual_approved": false
+}

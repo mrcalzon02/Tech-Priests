@@ -1240,3 +1240,6 @@ assert(require("scripts.bunker_cannon_integration").install_main(
   require("scripts.core.runtime_event_registry")))
 
 require("hydrogen.runtime")
+
+-- Orbital arrival visuals reuse the existing native cargo pod and canonical dispatcher.
+assert(require("scripts.orbital_trader_visuals").install_main(require("scripts.core.runtime_event_registry")))

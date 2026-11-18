@@ -1,0 +1,201 @@
+{
+  "support_and_moving_clearance_passed": true,
+  "source_and_runtime": [
+    {
+      "artifact": "orbital-v07.blend",
+      "sha256": "1582db2273b3cb047ced03ad47f9e1df4162996b135c172223abd388c1ce63f6",
+      "stationary_grounded_meshes": 1924,
+      "journal_supported_moving_meshes": 141,
+      "bearings": [
+        {
+          "motion_owner": "ORBITAL | WORKING cargo wedge hinge 0",
+          "rigid_mesh_count": 36,
+          "exact_component_matches_all_motion_owner_meshes": true,
+          "fixed_grounded_journals": [
+            "ORBITAL | wedge fixed bored journal ear.001",
+            "ORBITAL | wedge fixed bored journal ear"
+          ],
+          "measured_shaft_radius": 0.01950002984557534,
+          "measured_bore_radius": 0.019999946221966734,
+          "measured_radial_running_clearance": 0.0004999163763913933,
+          "nearest_founded_surface": {
+            "object": "ORBITAL | wedge rigid rotating drive pin",
+            "nearest_founded_object": "ORBITAL | wedge fixed closed rotary actuator casing",
+            "gap": 0.0004974296898581088
+          }
+        },
+        {
+          "motion_owner": "ORBITAL | WORKING cargo wedge hinge 1",
+          "rigid_mesh_count": 33,
+          "exact_component_matches_all_motion_owner_meshes": true,
+          "fixed_grounded_journals": [
+            "ORBITAL | wedge fixed bored journal ear.003",
+            "ORBITAL | wedge fixed bored journal ear.002"
+          ],
+          "measured_shaft_radius": 0.01950002902796182,
+          "measured_bore_radius": 0.01999994554061959,
+          "measured_radial_running_clearance": 0.00049991651265777,
+          "nearest_founded_surface": {
+            "object": "ORBITAL | wedge rigid rotating drive pin.001",
+            "nearest_founded_object": "ORBITAL | wedge fixed closed rotary actuator casing.001",
+            "gap": 0.0004974280600436032
+          }
+        },
+        {
+          "motion_owner": "ORBITAL | WORKING cargo wedge hinge 3",
+          "rigid_mesh_count": 33,
+          "exact_component_matches_all_motion_owner_meshes": true,
+          "fixed_grounded_journals": [
+            "ORBITAL | wedge fixed bored journal ear.006",
+            "ORBITAL | wedge fixed bored journal ear.007"
+          ],
+          "measured_shaft_radius": 0.019500052435073658,
+          "measured_bore_radius": 0.01999993293265907,
+          "measured_radial_running_clearance": 0.0004998804975854115,
+          "nearest_founded_surface": {
+            "object": "ORBITAL | wedge rigid rotating drive pin.003",
+            "nearest_founded_object": "ORBITAL | wedge fixed closed rotary actuator casing.003",
+            "gap": 0.0004974469775334001
+          }
+        },
+        {
+          "motion_owner": "ORBITAL | WORKING cargo wedge hinge 2",
+          "rigid_mesh_count": 33,
+          "exact_component_matches_all_motion_owner_meshes": true,
+          "fixed_grounded_journals": [
+            "ORBITAL | wedge fixed bored journal ear.004",
+            "ORBITAL | wedge fixed bored journal ear.005"
+          ],
+          "measured_shaft_radius": 0.019500092625861283,
+          "measured_bore_radius": 0.019999913770758906,
+          "measured_radial_running_clearance": 0.0004998211448976227,
+          "nearest_founded_surface": {
+            "object": "ORBITAL | wedge rigid rotating drive pin.002",
+            "nearest_founded_object": "ORBITAL | wedge fixed closed rotary actuator casing.002",
+            "gap": 0.0004974124021828175
+          }
+        },
+        {
+          "motion_owner": "ORBITAL | WORKING externally guarded cooling rotor",
+          "rigid_mesh_count": 6,
+          "exact_component_matches_all_motion_owner_meshes": true,
+          "fixed_grounded_journals": [
+            "ORBITAL | fan fixed shaft"
+          ],
+          "measured_shaft_radius": 0.034500061491865505,
+          "measured_bore_radius": 0.03499992311520471,
+          "measured_radial_running_clearance": 0.0004998616233392039,
+          "nearest_founded_surface": {
+            "object": "ORBITAL | fan bored rotating hub",
+            "nearest_founded_object": "ORBITAL | fan fixed shaft",
+            "gap": 0.0004998616059310734
+          }
+        }
+      ],
+      "sampled_sweep_poses": 244,
+      "foreign_moving_contacts": [],
+      "same_rigid_assembly_contact_pairs": 141,
+      "fixed_contact_pairs": 2767,
+      "fixed_contact_inventory_fully_adjudicated": false
+    },
+    {
+      "artifact": "orbital-v07.glb",
+      "sha256": "c10ebc27191ca8d109ba6dfed52701d5b8e11210791649d37ccf734eb23a1134",
+      "stationary_grounded_meshes": 1924,
+      "journal_supported_moving_meshes": 141,
+      "bearings": [
+        {
+          "motion_owner": "ORBITAL | WORKING cargo wedge hinge 2",
+          "rigid_mesh_count": 33,
+          "exact_component_matches_all_motion_owner_meshes": true,
+          "fixed_grounded_journals": [
+            "ORBITAL | wedge fixed bored journal ear.004",
+            "ORBITAL | wedge fixed bored journal ear.005"
+          ],
+          "measured_shaft_radius": 0.01950010707991071,
+          "measured_bore_radius": 0.019999913770758906,
+          "measured_radial_running_clearance": 0.0004998066908481966,
+          "nearest_founded_surface": {
+            "object": "ORBITAL | wedge rigid rotating drive pin.002",
+            "nearest_founded_object": "ORBITAL | wedge fixed closed rotary actuator casing.002",
+            "gap": 0.0004974124021828175
+          }
+        },
+        {
+          "motion_owner": "ORBITAL | WORKING externally guarded cooling rotor",
+          "rigid_mesh_count": 6,
+          "exact_component_matches_all_motion_owner_meshes": true,
+          "fixed_grounded_journals": [
+            "ORBITAL | fan fixed shaft"
+          ],
+          "measured_shaft_radius": 0.034500061491865505,
+          "measured_bore_radius": 0.03499992311520471,
+          "measured_radial_running_clearance": 0.0004998616233392039,
+          "nearest_founded_surface": {
+            "object": "ORBITAL | fan bored rotating hub",
+            "nearest_founded_object": "ORBITAL | fan fixed shaft",
+            "gap": 0.0004998616059310734
+          }
+        },
+        {
+          "motion_owner": "ORBITAL | WORKING cargo wedge hinge 0",
+          "rigid_mesh_count": 36,
+          "exact_component_matches_all_motion_owner_meshes": true,
+          "fixed_grounded_journals": [
+            "ORBITAL | wedge fixed bored journal ear.001",
+            "ORBITAL | wedge fixed bored journal ear"
+          ],
+          "measured_shaft_radius": 0.01950008284462267,
+          "measured_bore_radius": 0.019999946221966734,
+          "measured_radial_running_clearance": 0.0004998633773440654,
+          "nearest_founded_surface": {
+            "object": "ORBITAL | wedge rigid rotating drive pin",
+            "nearest_founded_object": "ORBITAL | wedge fixed closed rotary actuator casing",
+            "gap": 0.0004974296898581088
+          }
+        },
+        {
+          "motion_owner": "ORBITAL | WORKING cargo wedge hinge 3",
+          "rigid_mesh_count": 33,
+          "exact_component_matches_all_motion_owner_meshes": true,
+          "fixed_grounded_journals": [
+            "ORBITAL | wedge fixed bored journal ear.006",
+            "ORBITAL | wedge fixed bored journal ear.007"
+          ],
+          "measured_shaft_radius": 0.019500146954927487,
+          "measured_bore_radius": 0.01999986730515957,
+          "measured_radial_running_clearance": 0.0004997203502320816,
+          "nearest_founded_surface": {
+            "object": "ORBITAL | wedge rigid rotating drive pin.003",
+            "nearest_founded_object": "ORBITAL | wedge fixed closed rotary actuator casing.003",
+            "gap": 0.000497425498906523
+          }
+        },
+        {
+          "motion_owner": "ORBITAL | WORKING cargo wedge hinge 1",
+          "rigid_mesh_count": 33,
+          "exact_component_matches_all_motion_owner_meshes": true,
+          "fixed_grounded_journals": [
+            "ORBITAL | wedge fixed bored journal ear.003",
+            "ORBITAL | wedge fixed bored journal ear.002"
+          ],
+          "measured_shaft_radius": 0.019500085695823916,
+          "measured_bore_radius": 0.019999945268080896,
+          "measured_radial_running_clearance": 0.0004998595722569797,
+          "nearest_founded_surface": {
+            "object": "ORBITAL | wedge rigid rotating drive pin.001",
+            "nearest_founded_object": "ORBITAL | wedge fixed closed rotary actuator casing.001",
+            "gap": 0.000497424800414592
+          }
+        }
+      ],
+      "sampled_sweep_poses": 244,
+      "foreign_moving_contacts": [],
+      "same_rigid_assembly_contact_pairs": 141,
+      "fixed_contact_pairs": 2766,
+      "fixed_contact_inventory_fully_adjudicated": false
+    }
+  ],
+  "scope": "All stationary details have measured physical paths to the founded slab. All five moving components match their entire rigid assembly and are supported by measured coaxial grounded journals with running clearance. No cross-assembly moving contacts across244 sampled poses per artifact. Fixed casting/plating/fastener contacts remain a raw inventory; this is not a claim that every static overlap was independently adjudicated.",
+  "owner_visual_approved": false
+}

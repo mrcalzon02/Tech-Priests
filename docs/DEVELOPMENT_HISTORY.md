@@ -5,6 +5,21 @@
 **Packaged baseline:** `0.1.672`  
 **Active development lane:** `0.1.674-dev`
 
+## 2026-11-17 - Orbital Trader operational delivery
+
+Closed6x6 FMPL exchange altar with four supported hinged wedge lids.
+Reuses the EXISTING Factorio cargo pod and landing processions; no replacement
+pod model or descent animation. Grounded stationary details, five journal-
+supported rigid moving assemblies and244-pose source/runtime sweep pass.
+Seven actual recipes, real ordinary inserters and red/green circuit wires,
+blocked output, script/circuit stop-restart, power/input loss, actual building
+craft/place/mine,37 engine visual cycles/35 native arrivals and operated-save
+reload pass. Genuine native idle/opening/pod-arrival images retained; video
+tail hit capture cap. Original gameplay/power/ports preserved.
+Delegated operational close-enough delivery; owner visual approval not claimed.
+Evidence:art/source-to-3d/orbital-trader/v07/FMPL_MODEL.json.
+Citadel and Entropic remain closed; concurrent cargo/thruster/engine work preserved.
+
 ## 2026-11-17 - Entropic Extractor operational delivery
 
 Closed3x3 reliquary for the actual2MW processed-blackstone-fragment burner-generator.
