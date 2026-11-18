@@ -30,7 +30,7 @@
     "pbr_maps": 69,
     "bunker_component_candidates": 21,
     "verified_shared_components": 2,
-    "model_records": 25,
+    "model_records": 27,
     "program_records": 22,
     "pipeline_records": 6,
     "external_blender_libraries": 1,
@@ -1266,6 +1266,143 @@
       ],
       "purpose": "Enclosed platform manufacturing cathedral; actual chunk processing, slab manufacture and Entropic Extractor construction.",
       "owner_visual_approval": true,
+      "operational_complete": true,
+      "remaining_required_work": []
+    },
+    {
+      "id": "tech-priests-entropic-extractor-v1",
+      "status": "game-sprites-installed-with-specific-native-checks",
+      "source": {
+        "repository": "mrcalzon02/Tech-Priests",
+        "ref": "c24c5599976b77a68d6ce4cdfc6f3737e3408127",
+        "path": "art/source-to-3d/entropic-extractor/v02/entropic-v02.blend",
+        "sha256": "cefe48fe2ae9a68fce1da1ca4294f2a434a835653aeba937c95b78d814cc010d"
+      },
+      "runtime": {
+        "repository": "mrcalzon02/Tech-Priests",
+        "ref": "c24c5599976b77a68d6ce4cdfc6f3737e3408127",
+        "path": "art/source-to-3d/entropic-extractor/v02/entropic-v02.glb",
+        "sha256": "ad800e1e8b434617b4fe5687c01a253717cf1be9adfa69829c806060e9d94495"
+      },
+      "exports": [
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "c24c5599976b77a68d6ce4cdfc6f3737e3408127",
+          "path": "art/source-to-3d/entropic-extractor/v02/entropic-v02.glb",
+          "sha256": "ad800e1e8b434617b4fe5687c01a253717cf1be9adfa69829c806060e9d94495"
+        }
+      ],
+      "evidence": [
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "c24c5599976b77a68d6ce4cdfc6f3737e3408127",
+          "path": "art/source-to-3d/entropic-extractor/v02/FMPL_MODEL.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "c24c5599976b77a68d6ce4cdfc6f3737e3408127",
+          "path": "art/source-to-3d/entropic-extractor/v02/runtime-inspection.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "c24c5599976b77a68d6ce4cdfc6f3737e3408127",
+          "path": "art/source-to-3d/entropic-extractor/v02/fmpl-channel-verification.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "c24c5599976b77a68d6ce4cdfc6f3737e3408127",
+          "path": "art/source-to-3d/entropic-extractor/v02/native-evidence/capture-receipt.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "c24c5599976b77a68d6ce4cdfc6f3737e3408127",
+          "path": "art/source-to-3d/entropic-extractor/v02/OWNER_DIRECTED_MOVE_ON.json"
+        }
+      ],
+      "footprint": [
+        3,
+        3
+      ],
+      "native_directions": [
+        0,
+        4,
+        8,
+        12
+      ],
+      "purpose": "Actual platform-only2MW fragment-burning generator; owner directed closed with no further refinement/testing.",
+      "owner_visual_approval": false,
+      "operational_complete": true,
+      "remaining_required_work": []
+    },
+    {
+      "id": "tech-priests-orbital-trader-v1",
+      "status": "game-sprites-installed-with-specific-native-checks",
+      "source": {
+        "repository": "mrcalzon02/Tech-Priests",
+        "ref": "6a53440d790eb782ac712d415c56875cdbf748bb",
+        "path": "art/source-to-3d/orbital-trader/v07/orbital-v07.blend",
+        "sha256": "1582db2273b3cb047ced03ad47f9e1df4162996b135c172223abd388c1ce63f6"
+      },
+      "runtime": {
+        "repository": "mrcalzon02/Tech-Priests",
+        "ref": "6a53440d790eb782ac712d415c56875cdbf748bb",
+        "path": "art/source-to-3d/orbital-trader/v07/orbital-v07.glb",
+        "sha256": "c10ebc27191ca8d109ba6dfed52701d5b8e11210791649d37ccf734eb23a1134"
+      },
+      "exports": [
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "6a53440d790eb782ac712d415c56875cdbf748bb",
+          "path": "art/source-to-3d/orbital-trader/v07/orbital-v07.glb",
+          "sha256": "c10ebc27191ca8d109ba6dfed52701d5b8e11210791649d37ccf734eb23a1134"
+        }
+      ],
+      "evidence": [
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "6a53440d790eb782ac712d415c56875cdbf748bb",
+          "path": "art/source-to-3d/orbital-trader/v07/FMPL_MODEL.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "6a53440d790eb782ac712d415c56875cdbf748bb",
+          "path": "art/source-to-3d/orbital-trader/v07/runtime-inspection.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "6a53440d790eb782ac712d415c56875cdbf748bb",
+          "path": "art/source-to-3d/orbital-trader/v07/fmpl-channel-verification.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "6a53440d790eb782ac712d415c56875cdbf748bb",
+          "path": "art/source-to-3d/orbital-trader/v07/native-evidence/capture-receipt.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "6a53440d790eb782ac712d415c56875cdbf748bb",
+          "path": "art/source-to-3d/orbital-trader/v07/mechanical-support-and-clearance.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "6a53440d790eb782ac712d415c56875cdbf748bb",
+          "path": "art/source-to-3d/orbital-trader/v07/visual-review.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "6a53440d790eb782ac712d415c56875cdbf748bb",
+          "path": "art/source-to-3d/orbital-trader/v07/native-evidence/operated-reload-receipt.json"
+        }
+      ],
+      "footprint": [
+        6,
+        6
+      ],
+      "native_directions": [
+        0
+      ],
+      "purpose": "Seven-recipe electric exchange altar. Four supported wedge lids reuse existing native cargo pod and landing processions.",
+      "owner_visual_approval": false,
       "operational_complete": true,
       "remaining_required_work": []
     }

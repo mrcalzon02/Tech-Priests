@@ -376,6 +376,60 @@
         "no_further_refinement_or_testing": true,
         "remaining_required_work": []
       }
+    },
+    {
+      "event_id": "tech-priests-entropic-extractor-v02-operational-2026-11-17",
+      "asset_id": "tech-priests-entropic-extractor-v1",
+      "asset_kind": "model",
+      "revision": "v02-operational-delivery",
+      "state": "verified",
+      "source_sha256": "cefe48fe2ae9a68fce1da1ca4294f2a434a835653aeba937c95b78d814cc010d",
+      "evidence": {
+        "native_reopen_verified": true,
+        "source_artifact_sha256": "cefe48fe2ae9a68fce1da1ca4294f2a434a835653aeba937c95b78d814cc010d",
+        "glb_sha256": "ad800e1e8b434617b4fe5687c01a253717cf1be9adfa69829c806060e9d94495",
+        "owner_visual_approval": false,
+        "factorio_runtime_verified": true,
+        "source_commit": "c24c5599976b77a68d6ce4cdfc6f3737e3408127",
+        "source_repository": "mrcalzon02/Tech-Priests",
+        "source_path": "art/source-to-3d/entropic-extractor/v02/entropic-v02.blend",
+        "runtime_path": "art/source-to-3d/entropic-extractor/v02/entropic-v02.glb",
+        "manifest_path": "art/source-to-3d/entropic-extractor/v02/FMPL_MODEL.json",
+        "actual_operated_save_reload": true,
+        "native_full_cycle_video_tail_captured": false,
+        "remaining_required_work": [],
+        "scope": "Operational delivered with specific native evidence; individual owner visual approval not claimed.",
+        "owner_directed_no_further_testing": true
+      }
+    },
+    {
+      "event_id": "tech-priests-orbital-trader-v07-operational-2026-11-17",
+      "asset_id": "tech-priests-orbital-trader-v1",
+      "asset_kind": "model",
+      "revision": "v07-operational-delivery",
+      "state": "verified",
+      "source_sha256": "1582db2273b3cb047ced03ad47f9e1df4162996b135c172223abd388c1ce63f6",
+      "evidence": {
+        "native_reopen_verified": true,
+        "source_artifact_sha256": "1582db2273b3cb047ced03ad47f9e1df4162996b135c172223abd388c1ce63f6",
+        "glb_sha256": "c10ebc27191ca8d109ba6dfed52701d5b8e11210791649d37ccf734eb23a1134",
+        "owner_visual_approval": false,
+        "factorio_runtime_verified": true,
+        "source_commit": "6a53440d790eb782ac712d415c56875cdbf748bb",
+        "source_repository": "mrcalzon02/Tech-Priests",
+        "source_path": "art/source-to-3d/orbital-trader/v07/orbital-v07.blend",
+        "runtime_path": "art/source-to-3d/orbital-trader/v07/orbital-v07.glb",
+        "manifest_path": "art/source-to-3d/orbital-trader/v07/FMPL_MODEL.json",
+        "actual_operated_save_reload": true,
+        "native_full_cycle_video_tail_captured": false,
+        "remaining_required_work": [],
+        "scope": "Operational delivered with specific native evidence; individual owner visual approval not claimed.",
+        "existing_native_cargo_pod_reused": true,
+        "authored_replacement_pod": false,
+        "genuine_native_pngs": 42,
+        "actual_visual_cycles": 37,
+        "actual_native_arrivals": 35
+      }
     }
   ],
   "schema": "fmpl.checkpoints.v1"
