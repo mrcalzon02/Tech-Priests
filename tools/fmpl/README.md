@@ -71,7 +71,7 @@ The register command uses temp-file atomic rename, rejects duplicate events, val
 
 **Condenser:** V21 actual hollow receiver/neck mesh and material transition at x=1, y=-.5, z=.36 for its 2×2 body. The editable V21 package is linked externally, not falsely claimed checked in.
 
-**Assembler:** reference sprite exists, but no distinct approved 3D source found in the verified repository paths. Do **not** substitute the timber workbench source.
+**Assembler:** the exact owner-supplied V07 animated source is recovered and permanently pinned in FMPL.json. Its hinged arm, knobbly capsule, electrical arcs, heat, and steam are captured as a 12-second four-direction animation, with source, motion, atlas, visual-review, and specific native evidence. The runtime loads the assembler's own graphics; do **not** substitute the timber workbench source.
 
 **Tanks-for-bob:** distinct pipeline for campfire, workbench, pipe-connection reference and Factorio mod graphic attachment; source paths are pinned in FMPL.json.
 
@@ -85,7 +85,7 @@ Private Google Drive Greebles.blend is indexed as greebles-drive-2026-10 in FMPL
 
 ### Emergency-machine component harvest
 
-The FMPL candidate registry now indexes 12 specific boiler V08 meshes (cage, valve, flange, gauge, manifold and support parts), the V21 fused condenser outlet, and five Emergency Miner Blender generator operators. Their names come from actual committed source/roundtrip evidence; all 18 are **candidates**, not independently extracted and approved physical parts. The emergency assembler remains a sprite-only reference until its correct native source is recovered.
+The FMPL candidate registry now indexes 12 specific boiler V08 meshes (cage, valve, flange, gauge, manifold and support parts), the V21 fused condenser outlet, and five Emergency Miner Blender generator operators. Their names come from actual committed source/roundtrip evidence; all 18 are **candidates**, not independently extracted and approved physical parts. The emergency assembler's distinct V07 source is now recovered; its source and native evidence are pinned separately in the model record.
 
 ## FMPL v0.2 geometry-first donor pipeline
 

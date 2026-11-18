@@ -145,15 +145,100 @@
     },
     {
       "id": "emergency-assembler",
-      "status": "sprite-only-no-verified-native-model",
+      "status": "game-sprites-installed-with-specific-native-checks",
       "source": {
         "repository": "mrcalzon02/Tech-Priests",
-        "ref": "b16f98c6e62d0a82697fd01eaa3fc6953c35ccde",
-        "path": "tech-priests_src/graphics/entity/martian-micro/tech-priests-emergency-assembler.png"
+        "ref": "10ee006941817a9421c0d491d5231c3b9ee4418a",
+        "path": "art/source-to-3d/emergency-assembler/v07/tech_priests_emergency_assembler_v07_animated.blend"
       },
-      "evidence": [],
-      "footprint": null,
-      "purpose": "artwork reference only; do not substitute workbench"
+      "source_sha256": "00d047b9aa80e13bd148b1dcbd2e5440b4a5e0414d744b446f273b0fc741845d",
+      "evidence": [
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "10ee006941817a9421c0d491d5231c3b9ee4418a",
+          "path": "art/source-to-3d/emergency-assembler/v07/README.md"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "10ee006941817a9421c0d491d5231c3b9ee4418a",
+          "path": "art/source-to-3d/emergency-assembler/v07/source-inspection.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "10ee006941817a9421c0d491d5231c3b9ee4418a",
+          "path": "art/source-to-3d/emergency-assembler/v07/motion-audit.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "10ee006941817a9421c0d491d5231c3b9ee4418a",
+          "path": "art/source-to-3d/emergency-assembler/v07/atlas-manifest.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "10ee006941817a9421c0d491d5231c3b9ee4418a",
+          "path": "art/source-to-3d/emergency-assembler/v07/visual-review.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "10ee006941817a9421c0d491d5231c3b9ee4418a",
+          "path": "art/source-to-3d/emergency-assembler/v07/surface-plan.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "10ee006941817a9421c0d491d5231c3b9ee4418a",
+          "path": "art/source-to-3d/emergency-assembler/v07/native-evidence/0080-idle-no-fuel.png"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "10ee006941817a9421c0d491d5231c3b9ee4418a",
+          "path": "art/source-to-3d/emergency-assembler/v07/native-evidence/0352-cycle-anchor.png"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "10ee006941817a9421c0d491d5231c3b9ee4418a",
+          "path": "art/source-to-3d/emergency-assembler/v07/native-evidence/1072-cycle-repeat.png"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "10ee006941817a9421c0d491d5231c3b9ee4418a",
+          "path": "art/source-to-3d/emergency-assembler/v07/native-evidence/engine-evidence.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "10ee006941817a9421c0d491d5231c3b9ee4418a",
+          "path": "art/source-to-3d/emergency-assembler/v07/native-evidence/native-acceptance.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "10ee006941817a9421c0d491d5231c3b9ee4418a",
+          "path": "art/source-to-3d/emergency-assembler/v07/native-evidence/native-clock-proof.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "10ee006941817a9421c0d491d5231c3b9ee4418a",
+          "path": "art/source-to-3d/emergency-assembler/v07/native-evidence/production.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "10ee006941817a9421c0d491d5231c3b9ee4418a",
+          "path": "art/source-to-3d/emergency-assembler/v07/native-evidence/save-reload.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "10ee006941817a9421c0d491d5231c3b9ee4418a",
+          "path": "art/source-to-3d/emergency-assembler/v07/native-evidence/source-manifest.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "10ee006941817a9421c0d491d5231c3b9ee4418a",
+          "path": "art/source-to-3d/emergency-assembler/v07/native-evidence/superseded-studies.json"
+        }
+      ],
+      "footprint": [
+        1,
+        1
+      ],
+      "purpose": "Exact owner-supplied V07 hinged-arm and knobbly-capsule assembler; 12-second four-direction native animation. Preserve this distinct model; never substitute the timber workbench."
     },
     {
       "id": "timber-workbench-v05",
