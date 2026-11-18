@@ -30,7 +30,7 @@
     "pbr_maps": 69,
     "bunker_component_candidates": 21,
     "verified_shared_components": 2,
-    "model_records": 30,
+    "model_records": 31,
     "program_records": 22,
     "pipeline_records": 6,
     "external_blender_libraries": 1,
@@ -1641,6 +1641,111 @@
       ],
       "purpose": "Passive three-terminal timber/ceramic electric pole. Fixed RotatedSprite and native wire/network states; no invented moving mechanism or generation. Actual7x7 supply,9tile copper/circuit reach,10tile rejection, remote load/cut-reconnect/source loss-restoration, signals, craft-place-mine and reload pass.",
       "owner_visual_approval": false,
+      "operational_complete": true,
+      "remaining_required_work": []
+    },
+    {
+      "id": "tech-priests-emergency-miner-v25",
+      "status": "game-sprites-installed-with-specific-native-checks",
+      "source": {
+        "repository": "mrcalzon02/Tech-Priests",
+        "ref": "18c448113f16f16ef72f903815e2452e95bc8d3f",
+        "path": "art/source-to-3d/emergency-miner/v25-interchange/miner-v25-image-materials.blend",
+        "sha256": "1b23b1280a872d8a0b5b6a60fd16c7a9806a7d5d9b62619e8e39b01705db3354"
+      },
+      "runtime": {
+        "repository": "mrcalzon02/Tech-Priests",
+        "ref": "18c448113f16f16ef72f903815e2452e95bc8d3f",
+        "path": "art/source-to-3d/emergency-miner/v25-interchange/miner-v25-physical.glb",
+        "sha256": "0724914638323f9b9758e7a3957156ec6aabf38b0b00072df21edaf486ad0920"
+      },
+      "exports": [
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "18c448113f16f16ef72f903815e2452e95bc8d3f",
+          "path": "art/source-to-3d/emergency-miner/v25-interchange/miner-v25-physical.glb"
+        }
+      ],
+      "evidence": [
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "18c448113f16f16ef72f903815e2452e95bc8d3f",
+          "path": "art/source-to-3d/emergency-miner/v25-interchange/FMPL_MODEL.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "18c448113f16f16ef72f903815e2452e95bc8d3f",
+          "path": "art/source-to-3d/emergency-miner/v25-interchange/runtime-inspection.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "18c448113f16f16ef72f903815e2452e95bc8d3f",
+          "path": "art/source-to-3d/emergency-miner/v25-interchange/packaged-source-check.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "18c448113f16f16ef72f903815e2452e95bc8d3f",
+          "path": "art/source-to-3d/emergency-miner/v25-interchange/bake-manifest.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "18c448113f16f16ef72f903815e2452e95bc8d3f",
+          "path": "art/source-to-3d/emergency-miner/v25-interchange/export-index-cleanup.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "18c448113f16f16ef72f903815e2452e95bc8d3f",
+          "path": "art/source-to-3d/emergency-miner/v25-interchange/visual-review.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "18c448113f16f16ef72f903815e2452e95bc8d3f",
+          "path": "art/source-to-3d/emergency-miner/v25-interchange/native-evidence/capture-receipt.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "18c448113f16f16ef72f903815e2452e95bc8d3f",
+          "path": "art/source-to-3d/emergency-miner/v25-interchange/native-evidence/focused-operation.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "18c448113f16f16ef72f903815e2452e95bc8d3f",
+          "path": "art/source-to-3d/emergency-miner/v25-recovered/evidence/artifact-recovery-receipt.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "18c448113f16f16ef72f903815e2452e95bc8d3f",
+          "path": "art/source-to-3d/emergency-miner/v25-recovered/evidence/approved-sprite-integrity.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "18c448113f16f16ef72f903815e2452e95bc8d3f",
+          "path": "art/source-to-3d/emergency-miner/v25-recovered/evidence/operation.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "18c448113f16f16ef72f903815e2452e95bc8d3f",
+          "path": "art/source-to-3d/emergency-miner/v25-recovered/evidence/operated-reload-receipt.json"
+        }
+      ],
+      "approved_original_source": {
+        "repository": "mrcalzon02/Tech-Priests",
+        "ref": "18c448113f16f16ef72f903815e2452e95bc8d3f",
+        "path": "art/source-to-3d/emergency-miner/v25-recovered/editable/miner_motion_A.blend",
+        "sha256": "479c6364e57092377aa736240d78cbe8d1cbcaba27e07db7d09a2f1cff326244"
+      },
+      "footprint": [
+        1,
+        1
+      ],
+      "native_directions": [
+        0
+      ],
+      "preserved_approved_authored_views": 4,
+      "purpose": "Existing approved photocopier/ablator. Nine actual zero-input recovery recipes; fixednorth void1W, no fuel, fluids or ore patch. Existing V25 game sprites unchanged. New image/PBR/physical-TRS interchange verified; shader/light/steam FX retained in original and sprites.",
+      "owner_visual_approval": false,
+      "installed_original_v25_source_and_sprites_owner_approved": true,
+      "approval_scope": "Original V25 geometry and installed sprites previously owner-approved; no new individual approval for image/interchange derivative claimed.",
       "operational_complete": true,
       "remaining_required_work": []
     }

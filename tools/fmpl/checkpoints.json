@@ -522,6 +522,34 @@
         "gameplay_supply_reach_quality_and_recipe_preserved": true,
         "remaining_required_work": []
       }
+    },
+    {
+      "event_id": "tech-priests-emergency-miner-v25-source-export-operational-2026-11-17",
+      "asset_id": "tech-priests-emergency-miner-v25",
+      "asset_kind": "model",
+      "revision": "v25-operational-closeout",
+      "state": "verified",
+      "source_sha256": "1b23b1280a872d8a0b5b6a60fd16c7a9806a7d5d9b62619e8e39b01705db3354",
+      "evidence": {
+        "native_reopen_verified": true,
+        "source_artifact_sha256": "1b23b1280a872d8a0b5b6a60fd16c7a9806a7d5d9b62619e8e39b01705db3354",
+        "glb_sha256": "0724914638323f9b9758e7a3957156ec6aabf38b0b00072df21edaf486ad0920",
+        "owner_visual_approval": false,
+        "previous_original_sprite_approval_preserved": true,
+        "factorio_runtime_verified": true,
+        "source_commit": "18c448113f16f16ef72f903815e2452e95bc8d3f",
+        "source_repository": "mrcalzon02/Tech-Priests",
+        "source_path": "art/source-to-3d/emergency-miner/v25-interchange/miner-v25-image-materials.blend",
+        "runtime_path": "art/source-to-3d/emergency-miner/v25-interchange/miner-v25-physical.glb",
+        "manifest_path": "art/source-to-3d/emergency-miner/v25-interchange/FMPL_MODEL.json",
+        "actual_operated_save_reload": true,
+        "genuine_native_pngs": 19,
+        "actual_nine_full_duration_recipes": true,
+        "actual_craft_place_mine_and_circuit_stop_restart": true,
+        "approved_sprites_unchanged": true,
+        "actual_glb_physical_scope_only": true,
+        "remaining_required_work": []
+      }
     }
   ],
   "schema": "fmpl.checkpoints.v1"
