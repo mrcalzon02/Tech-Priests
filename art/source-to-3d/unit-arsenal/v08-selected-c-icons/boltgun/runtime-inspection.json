@@ -1,0 +1,163 @@
+{
+  "passed": true,
+  "roster": {
+    "id": "boltgun",
+    "unit": "Battle Sister",
+    "label": "Boltgun",
+    "supply": "bolt-magazines",
+    "stage": "Mid / blue",
+    "donor": "Imperial/Battle-Sister",
+    "mesh": "BattleSister",
+    "groups": [
+      "Gun"
+    ],
+    "grip": "Gun",
+    "muzzle": "Muzzle"
+  },
+  "source": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\art\\source-to-3d\\gladius-unit-donors\\Imperial\\Battle-Sister\\Battle-Sister.blend",
+  "source_sha256": "c93e9f054d054ebc306761ad9d88d5a3aa09201de332b298a09acc114e95c91b",
+  "extraction_groups": [
+    "Gun"
+  ],
+  "source_mesh": "BattleSister",
+  "grip_world_matrix": [
+    [
+      -0.42513251304626465,
+      0.7825316190719604,
+      -0.13002510368824005,
+      6.885809898376465
+    ],
+    [
+      0.7880426049232483,
+      0.399731308221817,
+      -0.1708909273147583,
+      -10.525765419006348
+    ],
+    [
+      -0.0908360406756401,
+      -0.1945740133523941,
+      -0.8740078210830688,
+      52.404579162597656
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "muzzle_world": [
+    27.719314575195312,
+    0.08996772766113281,
+    46.995330810546875
+  ],
+  "basis": [
+    [
+      1.6763969767907838e-07,
+      0.9999550580978394,
+      0.009477389045059681
+    ],
+    [
+      0.994619607925415,
+      0.0009816385572776198,
+      -0.10358982533216476
+    ],
+    [
+      -0.10359448939561844,
+      0.009426415897905827,
+      -0.994575023651123
+    ]
+  ],
+  "scale": 0.06885143506835548,
+  "item_roll": [
+    [
+      1.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.9962289333343506,
+      -0.0867634117603302
+    ],
+    [
+      0.0,
+      0.0867634117603302,
+      0.9962289333343506
+    ]
+  ],
+  "adaptation": [],
+  "triangles": 736,
+  "degenerate_triangles": 0,
+  "bounds_max_error": 0.0,
+  "glb_sha256": "fe80cf5e86c079c256ce245c32823ca526fc905f70ac4ce98bdaabe782a00fc8",
+  "source_unchanged": true,
+  "native_uv_preserved": true,
+  "production_atlas": "ProductionAtlas",
+  "attribution": "Proxy Studios / Slitherine Ltd. / Games Workshop; original donor geometry and texture rights retained",
+  "presentation": {
+    "preset": "C",
+    "model_rotation": [
+      [
+        0.8012516498565674,
+        -0.3392205536365509,
+        -0.49287453293800354,
+        0.0
+      ],
+      [
+        0.5437327027320862,
+        0.7565965056419373,
+        0.3632032871246338,
+        0.0
+      ],
+      [
+        0.24970115721225739,
+        -0.5590091943740845,
+        0.7906694412231445,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "projected_forward_degrees": 35,
+    "end_view_degrees": 12,
+    "top_view_degrees": 18,
+    "camera_elevation_degrees": 45,
+    "camera_azimuth_degrees": 0,
+    "frame": "Muzzle upper-right, stock/grip lower-left",
+    "method": "Rigid model rotation, no raster rotation and no camera rotation",
+    "predecessor": "art\\source-to-3d\\unit-arsenal\\v04-native-uv-textures\\boltgun",
+    "matrix": [
+      [
+        0.8012516498565674,
+        -0.3392205536365509,
+        -0.49287453293800354,
+        0.0019140711519867182
+      ],
+      [
+        0.5437327027320862,
+        0.7565965056419373,
+        0.3632032871246338,
+        -0.2375754863023758
+      ],
+      [
+        0.24970115721225739,
+        -0.5590091943740845,
+        0.7906694412231445,
+        -0.1978050172328949
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ]
+  },
+  "native_uv_layout_unchanged": true,
+  "textures_rebaked": false
+}

@@ -1,0 +1,19 @@
+{
+  "asset": "condemnor-boltgun",
+  "passed": true,
+  "mean_absolute_rgb_error_8bit": [
+    2.369573082489146,
+    2.517727930535456,
+    2.700479377713459
+  ],
+  "p95_max_channel_error_8bit": 8,
+  "silhouette_iou": 1.0,
+  "limits": {
+    "mean_absolute_channel_error_max": 4,
+    "p95_max_channel_error_max": 12,
+    "silhouette_iou_min": 0.995
+  },
+  "source_render_sha256": "12d32201b22a415c70632de0d09185b2b27a6c57c54585b2262cc15abfaff813",
+  "export_render_sha256": "fc8f01f2219f37283aaa65e9d5c1fec04d8869b1eda56f6894aefb9555e2c9bd",
+  "glb_sha256": "db5b4665a4788eac3ab015fb3c47853b855a5d8cddbc73482a04c6d5589e7ed2"
+}

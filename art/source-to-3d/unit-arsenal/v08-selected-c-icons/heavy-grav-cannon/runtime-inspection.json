@@ -1,0 +1,163 @@
+{
+  "passed": true,
+  "roster": {
+    "id": "heavy-grav-cannon",
+    "unit": "Kataphron Destroyer",
+    "label": "Heavy grav-cannon",
+    "supply": "graviton-charges",
+    "stage": "Final late-game unlock",
+    "donor": "Mechanicus/Kataphron-Destroyer",
+    "mesh": "KataphronDestroyer",
+    "groups": [
+      "GunArm"
+    ],
+    "grip": "GunArm",
+    "muzzle": "GunArmMuzzle"
+  },
+  "source": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\art\\source-to-3d\\gladius-unit-donors\\Mechanicus\\Kataphron-Destroyer\\Kataphron-Destroyer.blend",
+  "source_sha256": "69bd76d34e87ab0c6af7de225753d8d10da83f1d836ae998002db5eb31bf51e0",
+  "extraction_groups": [
+    "GunArm"
+  ],
+  "source_mesh": "KataphronDestroyer",
+  "grip_world_matrix": [
+    [
+      -4.759392524533723e-08,
+      0.7987285852432251,
+      -0.0451277531683445,
+      17.65296745300293
+    ],
+    [
+      0.800000011920929,
+      -4.515252882697496e-08,
+      -1.642886104491481e-06,
+      -20.142332077026367
+    ],
+    [
+      -1.6431357607871178e-06,
+      -0.04513637349009514,
+      -0.7988811135292053,
+      63.65064239501953
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "muzzle_world": [
+    67.57746887207031,
+    -20.142332077026367,
+    69.0997314453125
+  ],
+  "basis": [
+    [
+      -2.9201098072917375e-07,
+      0.9863962531089783,
+      -0.1643856018781662
+    ],
+    [
+      1.0,
+      -4.629659855481805e-08,
+      -2.054180868071853e-06
+    ],
+    [
+      -2.0338466129032895e-06,
+      -0.164385586977005,
+      -0.9863961338996887
+    ]
+  ],
+  "scale": 0.026578636401859035,
+  "item_roll": [
+    [
+      1.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.9999992251396179,
+      0.0012265987461432815
+    ],
+    [
+      0.0,
+      -0.0012265987461432815,
+      0.9999992251396179
+    ]
+  ],
+  "adaptation": [],
+  "triangles": 768,
+  "degenerate_triangles": 0,
+  "bounds_max_error": 0.0,
+  "glb_sha256": "16e59cc70b7fad63e531ed62a49a5db1b04908bd77474175cadd1d57c8ea2d6c",
+  "source_unchanged": true,
+  "native_uv_preserved": true,
+  "production_atlas": "ProductionAtlas",
+  "attribution": "Proxy Studios / Slitherine Ltd. / Games Workshop; original donor geometry and texture rights retained",
+  "presentation": {
+    "preset": "C",
+    "model_rotation": [
+      [
+        0.8012516498565674,
+        -0.3392205536365509,
+        -0.49287453293800354,
+        0.0
+      ],
+      [
+        0.5437327027320862,
+        0.7565965056419373,
+        0.3632032871246338,
+        0.0
+      ],
+      [
+        0.24970115721225739,
+        -0.5590091943740845,
+        0.7906694412231445,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "projected_forward_degrees": 35,
+    "end_view_degrees": 12,
+    "top_view_degrees": 18,
+    "camera_elevation_degrees": 45,
+    "camera_azimuth_degrees": 0,
+    "frame": "Muzzle upper-right, stock/grip lower-left",
+    "method": "Rigid model rotation, no raster rotation and no camera rotation",
+    "predecessor": "art\\source-to-3d\\unit-arsenal\\v04-native-uv-textures\\heavy-grav-cannon",
+    "matrix": [
+      [
+        0.8012516498565674,
+        -0.3392205536365509,
+        -0.49287453293800354,
+        0.17523567378520966
+      ],
+      [
+        0.5437327027320862,
+        0.7565965056419373,
+        0.3632032871246338,
+        -0.31111663579940796
+      ],
+      [
+        0.24970115721225739,
+        -0.5590091943740845,
+        0.7906694412231445,
+        -0.07862601429224014
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ]
+  },
+  "native_uv_layout_unchanged": true,
+  "textures_rebaked": false
+}

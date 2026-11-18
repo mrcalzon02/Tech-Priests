@@ -1,0 +1,19 @@
+{
+  "asset": "heavy-arc-rifle",
+  "passed": true,
+  "mean_absolute_rgb_error_8bit": [
+    1.3808406569372091,
+    1.5649182805105977,
+    1.6768401797431105
+  ],
+  "p95_max_channel_error_8bit": 6,
+  "silhouette_iou": 0.9999807614613594,
+  "limits": {
+    "mean_absolute_channel_error_max": 4,
+    "p95_max_channel_error_max": 12,
+    "silhouette_iou_min": 0.995
+  },
+  "source_render_sha256": "082bc52521934aa0dfa183448b14934e306778873b9f25d6483aec7e6430680d",
+  "export_render_sha256": "a403e711c87c437fed4e8dc2ac932b6b73487a1f577f7091a8f86dfc26bf1d52",
+  "glb_sha256": "c5484e8ec26772e32dfcf9427e1a1ba89eb86360849a15ac936c6626db6c2596"
+}

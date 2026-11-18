@@ -1,0 +1,19 @@
+{
+  "asset": "martian-manufactorum",
+  "assistant_gate_passed": true,
+  "owner_visual_acceptance": false,
+  "glb_sha256": "72464ca3b58b2890442532aa70bc1df139e2d8468762eff6555cf41bcf083855",
+  "source_sha256": "890816a08426343b7a668f4ae1b6a741d37ba378d654624fb97ddc0b11a0af09",
+  "render_sha256": "f8f055ac1166fb802bc3814bc08dd00accd869c74fa4406657e2b517a185c6da",
+  "reference_icon_sha256": [
+    "8643739c0bdd5e750c7439db49f3225b4ac083008f3129469690ceda53ec20ed"
+  ],
+  "contact_sheet_sha256": "3290e2de2c72bdc074017c3f329bb2d75ede15dfdd2b73d1535c8193ea4457b8",
+  "scores_out_of_5": {
+    "export_fidelity": 5,
+    "native_size_readability": 4,
+    "construction": 4,
+    "material_identity": 4
+  },
+  "review": "Reuse the existing authored Martian Manufactorum model; upright building under canonical FMPL optics. Current 128 px and 64 px renders were inspected on the final contact sheets. Existing project-authored building GLB is unchanged; inventory capture only."
+}

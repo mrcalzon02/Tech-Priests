@@ -1,0 +1,14 @@
+{
+  "method": "Retain actual imported magazine geometry, UVs and textures; no replacement appearance invented",
+  "weapon": "heavy-arc-rifle",
+  "supply": {
+    "id": "heavy-arc-cells",
+    "label": "Heavy arc cells",
+    "users": [
+      "Kataphron Breacher"
+    ],
+    "weapons": [
+      "heavy-arc-rifle"
+    ]
+  }
+}

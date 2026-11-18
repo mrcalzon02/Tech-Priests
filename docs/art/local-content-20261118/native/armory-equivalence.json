@@ -1,0 +1,405 @@
+{
+  "passed": true,
+  "native_engine": "Factorio 2.1.24",
+  "compared": [
+    {
+      "type": "gun",
+      "name": "tech-priests-galvanic-rifle"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-lasgun"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-omnissian-axe"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-laspistol"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-bolt-pistol"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-radium-carbine"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-radium-serpenta"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-gamma-pistol"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-boltgun"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-dialogus-staff"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-condemnor-boltgun"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-magnarail-lance"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-volkite-blaster"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-heavy-arc-rifle"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-heavy-grav-cannon"
+    },
+    {
+      "type": "ammo",
+      "name": "tech-priests-galvanic-clip"
+    },
+    {
+      "type": "ammo",
+      "name": "tech-priests-las-charge-cell"
+    },
+    {
+      "type": "ammo",
+      "name": "tech-priests-induction-charge"
+    },
+    {
+      "type": "ammo",
+      "name": "tech-priests-bolt-magazine"
+    },
+    {
+      "type": "ammo",
+      "name": "tech-priests-radium-magazine"
+    },
+    {
+      "type": "ammo",
+      "name": "tech-priests-gamma-cell"
+    },
+    {
+      "type": "ammo",
+      "name": "tech-priests-magnarail-slug-pack"
+    },
+    {
+      "type": "ammo",
+      "name": "tech-priests-volkite-cell"
+    },
+    {
+      "type": "ammo",
+      "name": "tech-priests-heavy-arc-cell"
+    },
+    {
+      "type": "ammo",
+      "name": "tech-priests-graviton-charge"
+    },
+    {
+      "type": "recipe",
+      "name": "tech-priests-martian-manufactorum"
+    },
+    {
+      "type": "recipe",
+      "name": "tech-priests-guard-muster-hall"
+    },
+    {
+      "type": "recipe",
+      "name": "tech-priests-sororitas-convent"
+    },
+    {
+      "type": "recipe",
+      "name": "tech-priests-field-supply-pack"
+    },
+    {
+      "type": "recipe",
+      "name": "tech-priests-galvanic-clip"
+    },
+    {
+      "type": "recipe",
+      "name": "tech-priests-las-charge-cell"
+    },
+    {
+      "type": "recipe",
+      "name": "tech-priests-induction-charge"
+    },
+    {
+      "type": "recipe",
+      "name": "tech-priests-bolt-magazine"
+    },
+    {
+      "type": "recipe",
+      "name": "tech-priests-radium-magazine"
+    },
+    {
+      "type": "recipe",
+      "name": "tech-priests-gamma-cell"
+    },
+    {
+      "type": "recipe",
+      "name": "tech-priests-magnarail-slug-pack"
+    },
+    {
+      "type": "recipe",
+      "name": "tech-priests-volkite-cell"
+    },
+    {
+      "type": "recipe",
+      "name": "tech-priests-heavy-arc-cell"
+    },
+    {
+      "type": "recipe",
+      "name": "tech-priests-graviton-charge"
+    },
+    {
+      "type": "recipe",
+      "name": "tech-priests-galvanic-rifle"
+    },
+    {
+      "type": "recipe",
+      "name": "tech-priests-lasgun"
+    },
+    {
+      "type": "recipe",
+      "name": "tech-priests-omnissian-axe"
+    },
+    {
+      "type": "recipe",
+      "name": "tech-priests-laspistol"
+    },
+    {
+      "type": "recipe",
+      "name": "tech-priests-bolt-pistol"
+    },
+    {
+      "type": "recipe",
+      "name": "tech-priests-radium-carbine"
+    },
+    {
+      "type": "recipe",
+      "name": "tech-priests-radium-serpenta"
+    },
+    {
+      "type": "recipe",
+      "name": "tech-priests-gamma-pistol"
+    },
+    {
+      "type": "recipe",
+      "name": "tech-priests-boltgun"
+    },
+    {
+      "type": "recipe",
+      "name": "tech-priests-dialogus-staff"
+    },
+    {
+      "type": "recipe",
+      "name": "tech-priests-condemnor-boltgun"
+    },
+    {
+      "type": "recipe",
+      "name": "tech-priests-magnarail-lance"
+    },
+    {
+      "type": "recipe",
+      "name": "tech-priests-volkite-blaster"
+    },
+    {
+      "type": "recipe",
+      "name": "tech-priests-heavy-arc-rifle"
+    },
+    {
+      "type": "recipe",
+      "name": "tech-priests-heavy-grav-cannon"
+    },
+    {
+      "type": "recipe",
+      "name": "tech-priests-field-supply-pack-recycling"
+    },
+    {
+      "type": "beam",
+      "name": "tech-priests-combat-beam-las"
+    },
+    {
+      "type": "beam",
+      "name": "tech-priests-combat-beam-gamma"
+    },
+    {
+      "type": "beam",
+      "name": "tech-priests-combat-beam-volkite"
+    },
+    {
+      "type": "beam",
+      "name": "tech-priests-combat-beam-arc"
+    },
+    {
+      "type": "projectile",
+      "name": "tech-priests-combat-projectile-galvanic"
+    },
+    {
+      "type": "projectile",
+      "name": "tech-priests-combat-projectile-bolt"
+    },
+    {
+      "type": "projectile",
+      "name": "tech-priests-combat-projectile-radium"
+    },
+    {
+      "type": "projectile",
+      "name": "tech-priests-combat-projectile-magnarail"
+    },
+    {
+      "type": "projectile",
+      "name": "tech-priests-combat-projectile-graviton"
+    },
+    {
+      "type": "item",
+      "name": "tech-priests-martian-manufactorum"
+    },
+    {
+      "type": "item",
+      "name": "tech-priests-guard-muster-hall"
+    },
+    {
+      "type": "item",
+      "name": "tech-priests-sororitas-convent"
+    },
+    {
+      "type": "item",
+      "name": "tech-priests-field-supply-pack"
+    },
+    {
+      "type": "item-subgroup",
+      "name": "tech-priests-combat-supplies"
+    },
+    {
+      "type": "fuel-category",
+      "name": "tech-priests-field-supply"
+    },
+    {
+      "type": "ammo-category",
+      "name": "tech-priests-combat-galvanic"
+    },
+    {
+      "type": "ammo-category",
+      "name": "tech-priests-combat-las"
+    },
+    {
+      "type": "ammo-category",
+      "name": "tech-priests-combat-induction"
+    },
+    {
+      "type": "ammo-category",
+      "name": "tech-priests-combat-bolt"
+    },
+    {
+      "type": "ammo-category",
+      "name": "tech-priests-combat-radium"
+    },
+    {
+      "type": "ammo-category",
+      "name": "tech-priests-combat-gamma"
+    },
+    {
+      "type": "ammo-category",
+      "name": "tech-priests-combat-magnarail"
+    },
+    {
+      "type": "ammo-category",
+      "name": "tech-priests-combat-volkite"
+    },
+    {
+      "type": "ammo-category",
+      "name": "tech-priests-combat-arc"
+    },
+    {
+      "type": "ammo-category",
+      "name": "tech-priests-combat-graviton"
+    },
+    {
+      "type": "technology",
+      "name": "tech-priests-guard-muster"
+    },
+    {
+      "type": "technology",
+      "name": "tech-priests-militant-orders"
+    },
+    {
+      "type": "technology",
+      "name": "tech-priests-enginseer-initiation"
+    },
+    {
+      "type": "technology",
+      "name": "tech-priests-officer-corps"
+    },
+    {
+      "type": "technology",
+      "name": "tech-priests-bolt-armaments"
+    },
+    {
+      "type": "technology",
+      "name": "tech-priests-commissariat"
+    },
+    {
+      "type": "technology",
+      "name": "tech-priests-radium-armaments"
+    },
+    {
+      "type": "technology",
+      "name": "tech-priests-vanguard-cohorts"
+    },
+    {
+      "type": "technology",
+      "name": "tech-priests-skitarii-command"
+    },
+    {
+      "type": "technology",
+      "name": "tech-priests-cybernetica-protocols"
+    },
+    {
+      "type": "technology",
+      "name": "tech-priests-sacred-liturgies"
+    },
+    {
+      "type": "technology",
+      "name": "tech-priests-canoness-command"
+    },
+    {
+      "type": "technology",
+      "name": "tech-priests-galvanic-mastery"
+    },
+    {
+      "type": "technology",
+      "name": "tech-priests-dominus-ascension"
+    },
+    {
+      "type": "technology",
+      "name": "tech-priests-heavy-servitor-chassis"
+    },
+    {
+      "type": "technology",
+      "name": "tech-priests-grav-annihilation"
+    },
+    {
+      "type": "assembling-machine",
+      "name": "tech-priests-martian-manufactorum"
+    },
+    {
+      "type": "assembling-machine",
+      "name": "tech-priests-guard-muster-hall"
+    },
+    {
+      "type": "assembling-machine",
+      "name": "tech-priests-sororitas-convent"
+    }
+  ],
+  "differences": [],
+  "excluded": "15 actor prototypes, their entity items/recipes/reinforcement/AAI adapters and actor-only research unlocks remain unenabled WIP",
+  "scope": "Native complete prototype equality for the original implemented armory values, effects, recipes, supply, factories and applicable research; canonical reviewed icons installed identically in both profiles."
+}

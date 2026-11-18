@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "asset": "volkite-cells",
+  "source": "runtime-reimport.blend",
+  "capture_kind": "item",
+  "camera_policy": "fmpl.factorio45.v1",
+  "source_size": 256,
+  "sizes": [
+    64,
+    128,
+    256
+  ],
+  "samples": 32,
+  "seed": 5855,
+  "columns": 1,
+  "fps": 24,
+  "directions": [
+    0
+  ],
+  "pivot": [
+    0,
+    0,
+    0
+  ],
+  "camera_override": {
+    "type": "ORTHO",
+    "elevation_deg": 45,
+    "azimuth_deg": 0,
+    "distance": 8.485281374,
+    "target": [
+      0.019005417823791504,
+      -0.05820956826210022,
+      -0.059756189584732056
+    ],
+    "ortho_scale": 2.0643358150416637
+  },
+  "states": {
+    "icon": [
+      0
+    ]
+  },
+  "threads": 4,
+  "workers": 1
+}

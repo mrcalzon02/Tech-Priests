@@ -1,0 +1,163 @@
+{
+  "passed": true,
+  "roster": {
+    "id": "dialogus-staff",
+    "unit": "Dialogus",
+    "label": "Dialogus staff",
+    "supply": "tool-charges",
+    "stage": "Mid / blue",
+    "donor": "Imperial/Dialogus",
+    "mesh": "Dialogus",
+    "groups": [
+      "Staff",
+      "Staff_Scroll1",
+      "Staff_Scroll2"
+    ],
+    "grip": "Staff",
+    "muzzle": null
+  },
+  "source": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\art\\source-to-3d\\gladius-unit-donors\\Imperial\\Dialogus\\Dialogus.blend",
+  "source_sha256": "7aabe25b74f76a16346040e73161885009c5a17db36b096c7966c00297e8545f",
+  "extraction_groups": [
+    "Staff",
+    "Staff_Scroll1",
+    "Staff_Scroll2"
+  ],
+  "source_mesh": "Dialogus",
+  "grip_world_matrix": [
+    [
+      -0.5478502511978149,
+      0.0054444256238639355,
+      0.5829498171806335,
+      -1.803100824356079
+    ],
+    [
+      0.5808859467506409,
+      0.07276495546102524,
+      0.5452309846878052,
+      -22.042123794555664
+    ],
+    [
+      -0.04931231215596199,
+      0.7966653108596802,
+      -0.0537836030125618,
+      41.45315170288086
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "muzzle_world": null,
+  "basis": [
+    [
+      0.0,
+      1.0,
+      0.0
+    ],
+    [
+      0.7370812892913818,
+      0.0,
+      -0.675804078578949
+    ],
+    [
+      -0.675804078578949,
+      0.0,
+      -0.7370812892913818
+    ]
+  ],
+  "scale": 0.02967490994876532,
+  "item_roll": [
+    [
+      1.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.5225079655647278,
+      0.8526344299316406
+    ],
+    [
+      0.0,
+      -0.8526344299316406,
+      0.5225079655647278
+    ]
+  ],
+  "adaptation": [],
+  "triangles": 880,
+  "degenerate_triangles": 0,
+  "bounds_max_error": 0.0,
+  "glb_sha256": "a2da2fa2538086b43db54157373287b6762499d86a567537744d8e94055d79b7",
+  "source_unchanged": true,
+  "native_uv_preserved": true,
+  "production_atlas": "ProductionAtlas",
+  "attribution": "Proxy Studios / Slitherine Ltd. / Games Workshop; original donor geometry and texture rights retained",
+  "presentation": {
+    "preset": "C",
+    "model_rotation": [
+      [
+        0.8012516498565674,
+        -0.3392205536365509,
+        -0.49287453293800354,
+        0.0
+      ],
+      [
+        0.5437327027320862,
+        0.7565965056419373,
+        0.3632032871246338,
+        0.0
+      ],
+      [
+        0.24970115721225739,
+        -0.5590091943740845,
+        0.7906694412231445,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "projected_forward_degrees": 35,
+    "end_view_degrees": 12,
+    "top_view_degrees": 18,
+    "camera_elevation_degrees": 45,
+    "camera_azimuth_degrees": 0,
+    "frame": "Muzzle upper-right, stock/grip lower-left",
+    "method": "Rigid model rotation, no raster rotation and no camera rotation",
+    "predecessor": "art\\source-to-3d\\unit-arsenal\\v04-native-uv-textures\\dialogus-staff",
+    "matrix": [
+      [
+        0.8012516498565674,
+        -0.3392205536365509,
+        -0.49287453293800354,
+        0.032603126019239426
+      ],
+      [
+        0.5437327027320862,
+        0.7565965056419373,
+        0.3632032871246338,
+        -0.06726471334695816
+      ],
+      [
+        0.24970115721225739,
+        -0.5590091943740845,
+        0.7906694412231445,
+        -0.02251775935292244
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ]
+  },
+  "native_uv_layout_unchanged": true,
+  "textures_rebaked": false
+}

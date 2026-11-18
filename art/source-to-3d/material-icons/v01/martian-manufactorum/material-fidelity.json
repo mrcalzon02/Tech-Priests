@@ -1,0 +1,17 @@
+{
+  "asset": "martian-manufactorum",
+  "passed": true,
+  "mean_absolute_rgb_error_8bit": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "p95_max_channel_error_8bit": 0,
+  "silhouette_iou": 1.0,
+  "limits": {
+    "mean_max": 4,
+    "p95_max": 12,
+    "iou_min": 0.995
+  },
+  "glb_sha256": "72464ca3b58b2890442532aa70bc1df139e2d8468762eff6555cf41bcf083855"
+}

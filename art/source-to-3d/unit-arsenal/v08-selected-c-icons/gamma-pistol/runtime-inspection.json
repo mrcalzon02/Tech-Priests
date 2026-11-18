@@ -1,0 +1,163 @@
+{
+  "passed": true,
+  "roster": {
+    "id": "gamma-pistol",
+    "unit": "Datasmith",
+    "label": "Gamma pistol",
+    "supply": "gamma-cells",
+    "stage": "Mid / blue",
+    "donor": "Mechanicus/Cybernetica-Datasmith",
+    "mesh": "CyberneticaDatasmith",
+    "groups": [
+      "Gun"
+    ],
+    "grip": "Gun",
+    "muzzle": "Muzzle"
+  },
+  "source": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\art\\source-to-3d\\gladius-unit-donors\\Mechanicus\\Cybernetica-Datasmith\\Cybernetica-Datasmith.blend",
+  "source_sha256": "99a8752a9ef3000ffdeb5c0d7173beee6b536dc57c7e2bcabb8ec48440e751f6",
+  "extraction_groups": [
+    "Gun"
+  ],
+  "source_mesh": "CyberneticaDatasmith",
+  "grip_world_matrix": [
+    [
+      0.8407703042030334,
+      0.04602349177002907,
+      0.31778448820114136,
+      -4.291171073913574
+    ],
+    [
+      -0.26863718032836914,
+      -0.38710206747055054,
+      0.7668024897575378,
+      -22.084716796875
+    ],
+    [
+      0.17589561641216278,
+      -0.8111926913261414,
+      -0.3478889763355255,
+      40.05976486206055
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "muzzle_world": [
+    -0.22837495803833008,
+    -34.810272216796875,
+    16.697994232177734
+  ],
+  "basis": [
+    [
+      0.11251793801784515,
+      0.9935507774353027,
+      -0.014020717702805996
+    ],
+    [
+      0.799153745174408,
+      -0.08209935575723648,
+      0.5954939723014832
+    ],
+    [
+      0.5905023813247681,
+      -0.07820846140384674,
+      -0.8032373785972595
+    ]
+  ],
+  "scale": 0.06068961938110962,
+  "item_roll": [
+    [
+      1.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.6266589760780334,
+      -0.7792935967445374
+    ],
+    [
+      0.0,
+      0.7792935967445374,
+      0.6266589760780334
+    ]
+  ],
+  "adaptation": [],
+  "triangles": 1468,
+  "degenerate_triangles": 0,
+  "bounds_max_error": 0.0,
+  "glb_sha256": "616d9216cf5b8bd941ce32fb11ad16001c5c2692e2d41b66221415c726cc0f1f",
+  "source_unchanged": true,
+  "native_uv_preserved": true,
+  "production_atlas": "ProductionAtlas",
+  "attribution": "Proxy Studios / Slitherine Ltd. / Games Workshop; original donor geometry and texture rights retained",
+  "presentation": {
+    "preset": "C",
+    "model_rotation": [
+      [
+        0.8012516498565674,
+        -0.3392205536365509,
+        -0.49287453293800354,
+        0.0
+      ],
+      [
+        0.5437327027320862,
+        0.7565965056419373,
+        0.3632032871246338,
+        0.0
+      ],
+      [
+        0.24970115721225739,
+        -0.5590091943740845,
+        0.7906694412231445,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "projected_forward_degrees": 35,
+    "end_view_degrees": 12,
+    "top_view_degrees": 18,
+    "camera_elevation_degrees": 45,
+    "camera_azimuth_degrees": 0,
+    "frame": "Muzzle upper-right, stock/grip lower-left",
+    "method": "Rigid model rotation, no raster rotation and no camera rotation",
+    "predecessor": "art\\source-to-3d\\unit-arsenal\\v04-native-uv-textures\\gamma-pistol",
+    "matrix": [
+      [
+        0.8012516498565674,
+        -0.3392205536365509,
+        -0.49287453293800354,
+        0.03532643988728523
+      ],
+      [
+        0.5437327027320862,
+        0.7565965056419373,
+        0.3632032871246338,
+        -0.25614380836486816
+      ],
+      [
+        0.24970115721225739,
+        -0.5590091943740845,
+        0.7906694412231445,
+        -0.1785232275724411
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ]
+  },
+  "native_uv_layout_unchanged": true,
+  "textures_rebaked": false
+}

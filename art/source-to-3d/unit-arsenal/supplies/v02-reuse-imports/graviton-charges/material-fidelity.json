@@ -1,0 +1,19 @@
+{
+  "supply": "graviton-charges",
+  "passed": true,
+  "mean_absolute_rgb_error_8bit": [
+    0.000145032632342277,
+    0.00010359473738734072,
+    0.00012431368486480888
+  ],
+  "p95_max_channel_error_8bit": 0,
+  "silhouette_iou": 1.0,
+  "limits": {
+    "mean_absolute_channel_error_max": 4,
+    "p95_max_channel_error_max": 12,
+    "silhouette_iou_min": 0.995
+  },
+  "glb_sha256": "3ecceb3c6f017894f52b2d797f9c8ad148944985c265aa09a95b1c4844fc5054",
+  "source_render_sha256": "d115bbf88c18fea85bca1fdd1361cbbec352cbc4de8b6551411e6607d404c772",
+  "export_render_sha256": "3a42f1c89d76da0a03406a4661823a1f9c469283504533dd37937ba605a39ce8"
+}

@@ -1,0 +1,19 @@
+{
+  "supply": "galvanic-clips",
+  "passed": true,
+  "mean_absolute_rgb_error_8bit": [
+    0.3618190759973385,
+    0.3518963172968438,
+    0.36881997280643386
+  ],
+  "p95_max_channel_error_8bit": 1,
+  "silhouette_iou": 1.0,
+  "limits": {
+    "mean_absolute_channel_error_max": 4,
+    "p95_max_channel_error_max": 12,
+    "silhouette_iou_min": 0.995
+  },
+  "glb_sha256": "1c827666b35b0ea6a16b2c974787dcb3344d4e5b7d611a4c87e01fe186d0f597",
+  "source_render_sha256": "288b369f540814475788f6a1968319465fb57b3a0daf18032d32ce0cc532be47",
+  "export_render_sha256": "44c52b85e964d99a325208dd3f4d0b5b105e4275b4242bdd6823fc0c33c60f9b"
+}

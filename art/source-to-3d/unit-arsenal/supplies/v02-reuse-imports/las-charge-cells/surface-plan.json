@@ -1,0 +1,16 @@
+{
+  "method": "Retain actual imported magazine geometry, UVs and textures; no replacement appearance invented",
+  "weapon": "lasgun",
+  "supply": {
+    "id": "las-charge-cells",
+    "label": "Las charge cells",
+    "users": [
+      "Guardsman",
+      "Imperial Officer"
+    ],
+    "weapons": [
+      "lasgun",
+      "laspistol"
+    ]
+  }
+}

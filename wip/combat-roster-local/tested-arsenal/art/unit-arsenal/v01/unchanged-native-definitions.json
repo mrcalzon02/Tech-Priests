@@ -1,0 +1,7 @@
+{
+  "passed": true,
+  "definitions_sha256": "828b2fdeeacc1d28bc99540bf16efe3c2bc30d264b0c1635314c7934c91a2038",
+  "reference_profile": "build/unit-arsenal-native-06",
+  "reference_engine": "2.1.24",
+  "changes": "Texture export and rigid item orientation only; native weapon/ammo definitions are identical to the behavior-tested version"
+}

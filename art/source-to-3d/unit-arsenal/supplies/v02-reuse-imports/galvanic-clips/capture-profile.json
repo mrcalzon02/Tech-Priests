@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "asset": "galvanic-clips",
+  "source": "runtime-reimport.blend",
+  "capture_kind": "item",
+  "camera_policy": "fmpl.factorio45.v1",
+  "source_size": 256,
+  "sizes": [
+    64,
+    128,
+    256
+  ],
+  "samples": 32,
+  "seed": 5855,
+  "columns": 1,
+  "fps": 24,
+  "directions": [
+    0
+  ],
+  "pivot": [
+    0,
+    0,
+    0
+  ],
+  "camera_override": {
+    "type": "ORTHO",
+    "elevation_deg": 45,
+    "azimuth_deg": 0,
+    "distance": 8.485281374,
+    "target": [
+      -0.029610514640808105,
+      -0.0023425817489624023,
+      -0.09136728942394257
+    ],
+    "ortho_scale": 1.7300924835677294
+  },
+  "states": {
+    "icon": [
+      0
+    ]
+  },
+  "threads": 4,
+  "workers": 1
+}

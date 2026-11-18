@@ -1,0 +1,163 @@
+{
+  "passed": true,
+  "roster": {
+    "id": "volkite-blaster",
+    "unit": "Dominus",
+    "label": "Volkite blaster",
+    "supply": "volkite-cells",
+    "stage": "Late / yellow",
+    "donor": "Mechanicus/Tech-Priest-Dominus",
+    "mesh": "TechPriestDominus",
+    "groups": [
+      "Forearm2_R"
+    ],
+    "grip": "Forearm2_R",
+    "muzzle": "Muzzle1"
+  },
+  "source": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\art\\source-to-3d\\gladius-unit-donors\\Mechanicus\\Tech-Priest-Dominus\\Tech-Priest-Dominus.blend",
+  "source_sha256": "eda35fd7ac8bc75b3f7df0b7fc56f46ea0db64b9ea08cbdd3cb150581bbebd1e",
+  "extraction_groups": [
+    "Forearm2_R"
+  ],
+  "source_mesh": "TechPriestDominus",
+  "grip_world_matrix": [
+    [
+      0.9432887434959412,
+      0.5032947659492493,
+      -0.2586517930030823,
+      6.096018314361572
+    ],
+    [
+      0.5226386189460754,
+      -0.5821431279182434,
+      0.7732772827148438,
+      -16.336999893188477
+    ],
+    [
+      0.21692191064357758,
+      -0.7860048413276672,
+      -0.7383368611335754,
+      51.71661376953125
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "muzzle_world": [
+    23.707422256469727,
+    -36.63557815551758,
+    25.744152069091797
+  ],
+  "basis": [
+    [
+      0.008995646610856056,
+      0.9996174573898315,
+      -0.02615455910563469
+    ],
+    [
+      0.9590945243835449,
+      -0.0012242239899933338,
+      0.28308331966400146
+    ],
+    [
+      0.2829430103302002,
+      -0.027631212025880814,
+      -0.9587386846542358
+    ]
+  ],
+  "scale": 0.06997919917991458,
+  "item_roll": [
+    [
+      1.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.37425339221954346,
+      -0.927326500415802
+    ],
+    [
+      0.0,
+      0.927326500415802,
+      0.37425339221954346
+    ]
+  ],
+  "adaptation": [],
+  "triangles": 1666,
+  "degenerate_triangles": 0,
+  "bounds_max_error": 0.0,
+  "glb_sha256": "74c0700440e935436bfe53009fbf0624a9b14d5036d67cba20ac700d06d870e7",
+  "source_unchanged": true,
+  "native_uv_preserved": true,
+  "production_atlas": "ProductionAtlas",
+  "attribution": "Proxy Studios / Slitherine Ltd. / Games Workshop; original donor geometry and texture rights retained",
+  "presentation": {
+    "preset": "C",
+    "model_rotation": [
+      [
+        0.8012516498565674,
+        -0.3392205536365509,
+        -0.49287453293800354,
+        0.0
+      ],
+      [
+        0.5437327027320862,
+        0.7565965056419373,
+        0.3632032871246338,
+        0.0
+      ],
+      [
+        0.24970115721225739,
+        -0.5590091943740845,
+        0.7906694412231445,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "projected_forward_degrees": 35,
+    "end_view_degrees": 12,
+    "top_view_degrees": 18,
+    "camera_elevation_degrees": 45,
+    "camera_azimuth_degrees": 0,
+    "frame": "Muzzle upper-right, stock/grip lower-left",
+    "method": "Rigid model rotation, no raster rotation and no camera rotation",
+    "predecessor": "art\\source-to-3d\\unit-arsenal\\v04-native-uv-textures\\volkite-blaster",
+    "matrix": [
+      [
+        0.8012516498565674,
+        -0.3392205536365509,
+        -0.49287453293800354,
+        0.16246098279953003
+      ],
+      [
+        0.5437327027320862,
+        0.7565965056419373,
+        0.3632032871246338,
+        -0.5363438129425049
+      ],
+      [
+        0.24970115721225739,
+        -0.5590091943740845,
+        0.7906694412231445,
+        -0.2813878357410431
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ]
+  },
+  "native_uv_layout_unchanged": true,
+  "textures_rebaked": false
+}

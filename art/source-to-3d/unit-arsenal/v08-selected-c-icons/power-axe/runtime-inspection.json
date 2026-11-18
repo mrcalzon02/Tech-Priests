@@ -1,0 +1,155 @@
+{
+  "passed": true,
+  "roster": {
+    "id": "power-axe",
+    "unit": "Enginseer",
+    "label": "Power axe",
+    "supply": "tool-charges",
+    "stage": "Early / red",
+    "donor": "Mechanicus/Tech-Priest-Enginseer",
+    "mesh": "TechpriestEnginseerPowerAxe",
+    "groups": [],
+    "grip": "Axe",
+    "muzzle": null
+  },
+  "source": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\art\\source-to-3d\\gladius-unit-donors\\Mechanicus\\Tech-Priest-Enginseer\\Tech-Priest-Enginseer.blend",
+  "source_sha256": "487056b54ffff2117445ae9eaf93be0442acb018fa80346bc25d15b0133341db",
+  "extraction_groups": [],
+  "source_mesh": "TechpriestEnginseerPowerAxe",
+  "grip_world_matrix": [
+    [
+      -1.1785970855271444e-05,
+      1.2516974265963654e-06,
+      0.9999987483024597,
+      12.481698989868164
+    ],
+    [
+      0.9999786615371704,
+      -0.006136154755949974,
+      1.1785773494921159e-05,
+      13.514200210571289
+    ],
+    [
+      0.006136154755949974,
+      0.9999799132347107,
+      1.3122157724865247e-06,
+      35.97999954223633
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "muzzle_world": null,
+  "basis": [
+    [
+      0.0,
+      1.0,
+      0.0
+    ],
+    [
+      0.00019219718524254858,
+      -0.0,
+      1.0
+    ],
+    [
+      1.0,
+      0.0,
+      -0.00019219718524254858
+    ]
+  ],
+  "scale": 0.02639642534980805,
+  "item_roll": [
+    [
+      1.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0011518774554133415,
+      -0.9999993443489075
+    ],
+    [
+      0.0,
+      0.9999993443489075,
+      0.0011518774554133415
+    ]
+  ],
+  "adaptation": [],
+  "triangles": 100,
+  "degenerate_triangles": 0,
+  "bounds_max_error": 0.0,
+  "glb_sha256": "4cc884a51a1900204745c55d83f87be4dc6bf8ac34c7d7f09885985ce16098d3",
+  "source_unchanged": true,
+  "native_uv_preserved": true,
+  "production_atlas": "ProductionAtlas",
+  "attribution": "Proxy Studios / Slitherine Ltd. / Games Workshop; original donor geometry and texture rights retained",
+  "presentation": {
+    "preset": "C",
+    "model_rotation": [
+      [
+        0.8012516498565674,
+        -0.3392205536365509,
+        -0.49287453293800354,
+        0.0
+      ],
+      [
+        0.5437327027320862,
+        0.7565965056419373,
+        0.3632032871246338,
+        0.0
+      ],
+      [
+        0.24970115721225739,
+        -0.5590091943740845,
+        0.7906694412231445,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "projected_forward_degrees": 35,
+    "end_view_degrees": 12,
+    "top_view_degrees": 18,
+    "camera_elevation_degrees": 45,
+    "camera_azimuth_degrees": 0,
+    "frame": "Muzzle upper-right, stock/grip lower-left",
+    "method": "Rigid model rotation, no raster rotation and no camera rotation",
+    "predecessor": "art\\source-to-3d\\unit-arsenal\\v04-native-uv-textures\\power-axe",
+    "matrix": [
+      [
+        0.8012516498565674,
+        -0.3392205536365509,
+        -0.49287453293800354,
+        0.1533687859773636
+      ],
+      [
+        0.5437327027320862,
+        0.7565965056419373,
+        0.3632032871246338,
+        -0.21522729098796844
+      ],
+      [
+        0.24970115721225739,
+        -0.5590091943740845,
+        0.7906694412231445,
+        -0.020820964127779007
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ]
+  },
+  "native_uv_layout_unchanged": true,
+  "textures_rebaked": false
+}

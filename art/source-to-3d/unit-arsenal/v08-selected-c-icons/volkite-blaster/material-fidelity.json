@@ -1,0 +1,19 @@
+{
+  "asset": "volkite-blaster",
+  "passed": true,
+  "mean_absolute_rgb_error_8bit": [
+    1.2582123969566839,
+    1.247386807693901,
+    1.242360641250466
+  ],
+  "p95_max_channel_error_8bit": 5,
+  "silhouette_iou": 1.0,
+  "limits": {
+    "mean_absolute_channel_error_max": 4,
+    "p95_max_channel_error_max": 12,
+    "silhouette_iou_min": 0.995
+  },
+  "source_render_sha256": "10cc213fa09689fadb7fcf4c34bbd9d0481f82add9eae480641d1475cbb7dfd4",
+  "export_render_sha256": "b093dad07f2bc81784388f0d9de76bb7bd53ab14635a64b347e784bdfe7bdd47",
+  "glb_sha256": "74c0700440e935436bfe53009fbf0624a9b14d5036d67cba20ac700d06d870e7"
+}

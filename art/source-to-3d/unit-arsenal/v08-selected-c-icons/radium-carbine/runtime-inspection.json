@@ -1,0 +1,163 @@
+{
+  "passed": true,
+  "roster": {
+    "id": "radium-carbine",
+    "unit": "Skitarii Vanguard",
+    "label": "Radium carbine",
+    "supply": "radium-magazines",
+    "stage": "Mid / blue",
+    "donor": "Mechanicus/Skitarii-Vanguard",
+    "mesh": "SkitariiVanguard",
+    "groups": [
+      "Gun"
+    ],
+    "grip": "Gun",
+    "muzzle": "Muzzle"
+  },
+  "source": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\art\\source-to-3d\\gladius-unit-donors\\Mechanicus\\Skitarii-Vanguard\\Skitarii-Vanguard.blend",
+  "source_sha256": "bcaaa7a40bf1ae481d9c4c3905a62d55a91e124afbd73ec7f12aa198adf6f76e",
+  "extraction_groups": [
+    "Gun"
+  ],
+  "source_mesh": "SkitariiVanguard",
+  "grip_world_matrix": [
+    [
+      -0.6548211574554443,
+      0.45673561096191406,
+      0.41545578837394714,
+      4.595902919769287
+    ],
+    [
+      0.5121314525604248,
+      0.7400554418563843,
+      -0.006391169037669897,
+      -8.429932594299316
+    ],
+    [
+      -0.3448653221130371,
+      0.23175835609436035,
+      -0.7983457446098328,
+      48.4611930847168
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "muzzle_world": [
+    25.969318389892578,
+    26.947206497192383,
+    60.413509368896484
+  ],
+  "basis": [
+    [
+      9.97432834992651e-07,
+      0.9997367262840271,
+      -0.022944629192352295
+    ],
+    [
+      0.9170016050338745,
+      -0.00915315467864275,
+      -0.3987787365913391
+    ],
+    [
+      -0.3988837003707886,
+      -0.02103986218571663,
+      -0.9167600870132446
+    ]
+  ],
+  "scale": 0.03849385520369175,
+  "item_roll": [
+    [
+      1.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.9170601963996887,
+      -0.3987487256526947
+    ],
+    [
+      0.0,
+      0.3987487256526947,
+      0.9170601963996887
+    ]
+  ],
+  "adaptation": [],
+  "triangles": 935,
+  "degenerate_triangles": 0,
+  "bounds_max_error": 0.0,
+  "glb_sha256": "d919205bde4cb4900385ae99d7b790d9e4b5b2de9a1cff068f03ab314efd7951",
+  "source_unchanged": true,
+  "native_uv_preserved": true,
+  "production_atlas": "ProductionAtlas",
+  "attribution": "Proxy Studios / Slitherine Ltd. / Games Workshop; original donor geometry and texture rights retained",
+  "presentation": {
+    "preset": "C",
+    "model_rotation": [
+      [
+        0.8012516498565674,
+        -0.3392205536365509,
+        -0.49287453293800354,
+        0.0
+      ],
+      [
+        0.5437327027320862,
+        0.7565965056419373,
+        0.3632032871246338,
+        0.0
+      ],
+      [
+        0.24970115721225739,
+        -0.5590091943740845,
+        0.7906694412231445,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "projected_forward_degrees": 35,
+    "end_view_degrees": 12,
+    "top_view_degrees": 18,
+    "camera_elevation_degrees": 45,
+    "camera_azimuth_degrees": 0,
+    "frame": "Muzzle upper-right, stock/grip lower-left",
+    "method": "Rigid model rotation, no raster rotation and no camera rotation",
+    "predecessor": "art\\source-to-3d\\unit-arsenal\\v04-native-uv-textures\\radium-carbine",
+    "matrix": [
+      [
+        0.8012516498565674,
+        -0.3392205536365509,
+        -0.49287453293800354,
+        0.018310900777578354
+      ],
+      [
+        0.5437327027320862,
+        0.7565965056419373,
+        0.3632032871246338,
+        -0.2575608193874359
+      ],
+      [
+        0.24970115721225739,
+        -0.5590091943740845,
+        0.7906694412231445,
+        -0.19748705625534058
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ]
+  },
+  "native_uv_layout_unchanged": true,
+  "textures_rebaked": false
+}

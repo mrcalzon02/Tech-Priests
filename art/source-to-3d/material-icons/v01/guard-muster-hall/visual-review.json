@@ -1,0 +1,19 @@
+{
+  "asset": "guard-muster-hall",
+  "assistant_gate_passed": true,
+  "owner_visual_acceptance": false,
+  "glb_sha256": "d3212d2147e45ced07b5b9cb615e0573c3dfe3cf8147e7b3232fe1f06b084ec2",
+  "source_sha256": "d7b142571bc50ed61331d91a94365e49bbd9911a6005d36ad2b40ac4e05033b1",
+  "render_sha256": "f1da65b16e55f2be4e9613e18498430104a90c7b58ec09360d0df425fd12df61",
+  "reference_icon_sha256": [
+    "8643739c0bdd5e750c7439db49f3225b4ac083008f3129469690ceda53ec20ed"
+  ],
+  "contact_sheet_sha256": "3290e2de2c72bdc074017c3f329bb2d75ede15dfdd2b73d1535c8193ea4457b8",
+  "scores_out_of_5": {
+    "export_fidelity": 5,
+    "native_size_readability": 4,
+    "construction": 4,
+    "material_identity": 4
+  },
+  "review": "Reuse the existing authored Guard Muster Hall model; upright building under canonical FMPL optics. Current 128 px and 64 px renders were inspected on the final contact sheets. Existing project-authored building GLB is unchanged; inventory capture only."
+}

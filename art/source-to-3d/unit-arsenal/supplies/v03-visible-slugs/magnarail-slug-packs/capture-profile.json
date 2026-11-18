@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "asset": "magnarail-slug-packs",
+  "source": "runtime-reimport.blend",
+  "capture_kind": "item",
+  "camera_policy": "fmpl.factorio45.v1",
+  "source_size": 256,
+  "sizes": [
+    64,
+    128,
+    256
+  ],
+  "samples": 32,
+  "seed": 5855,
+  "columns": 1,
+  "fps": 24,
+  "directions": [
+    0
+  ],
+  "pivot": [
+    0,
+    0,
+    0
+  ],
+  "camera_override": {
+    "type": "ORTHO",
+    "elevation_deg": 45,
+    "azimuth_deg": 0,
+    "distance": 8.485281374,
+    "target": [
+      -0.11434108018875122,
+      -0.010732382535934448,
+      -0.07422871887683868
+    ],
+    "ortho_scale": 1.8985201835632324
+  },
+  "states": {
+    "icon": [
+      0
+    ]
+  },
+  "threads": 4,
+  "workers": 1
+}

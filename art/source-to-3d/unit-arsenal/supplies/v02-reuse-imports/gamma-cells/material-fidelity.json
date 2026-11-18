@@ -1,0 +1,19 @@
+{
+  "supply": "gamma-cells",
+  "passed": true,
+  "mean_absolute_rgb_error_8bit": [
+    0.2710325603004375,
+    0.4071199039838941,
+    0.6543807348329397
+  ],
+  "p95_max_channel_error_8bit": 1,
+  "silhouette_iou": 1.0,
+  "limits": {
+    "mean_absolute_channel_error_max": 4,
+    "p95_max_channel_error_max": 12,
+    "silhouette_iou_min": 0.995
+  },
+  "glb_sha256": "98aa3f408bfbaa3adbb45277bc10ac0b8655e58ba921d712fdb5c3f3910c8619",
+  "source_render_sha256": "d2f9646d45b4baeff744f007950879eda7c04b403ab4ee845b3067be21462b6e",
+  "export_render_sha256": "f0921fa9c2d1c1ee6b6363d605ff1b5df2d2859457bcb2efc3554e96109d8324"
+}

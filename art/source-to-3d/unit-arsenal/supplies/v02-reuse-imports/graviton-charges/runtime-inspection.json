@@ -1,0 +1,101 @@
+{
+  "passed": true,
+  "supply": {
+    "id": "graviton-charges",
+    "label": "Graviton charges",
+    "users": [
+      "Kataphron Destroyer"
+    ],
+    "weapons": [
+      "heavy-grav-cannon"
+    ]
+  },
+  "triangles": 42,
+  "degenerate_triangles": 0,
+  "bounds_max_error": 5.960464477539063e-08,
+  "glb_sha256": "3ecceb3c6f017894f52b2d797f9c8ad148944985c265aa09a95b1c4844fc5054",
+  "authored_sha256": "790751b9473555830bb3e4f0ad784ef686825f50a2fc7af78b360f686fba0abb",
+  "source_method": "Actual magazine/cell faces extracted from imported weapon",
+  "weapon": "heavy-grav-cannon",
+  "source": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\art\\source-to-3d\\unit-arsenal\\v04-native-uv-textures\\heavy-grav-cannon\\runtime-reimport.blend",
+  "source_sha256": "e0e8d605bb3696805ff7a212328762ae0e8e44c880d9413c66cc2d9addd6e00b",
+  "selected_faces": [
+    107,
+    108,
+    109,
+    110,
+    111,
+    112,
+    113,
+    114,
+    115,
+    116,
+    117,
+    118,
+    119,
+    120,
+    121,
+    122,
+    213,
+    214,
+    215,
+    216,
+    217,
+    218,
+    382,
+    517,
+    518,
+    519,
+    520,
+    521,
+    522,
+    523,
+    524,
+    525,
+    526,
+    527,
+    528,
+    607,
+    608,
+    609,
+    610,
+    611,
+    612,
+    739
+  ],
+  "native_uv_unchanged": true,
+  "textures_rebaked": false,
+  "source_to_item_matrix": [
+    [
+      2.911280632019043,
+      -1.2325292825698853,
+      -1.7908180952072144,
+      2.3598580360412598
+    ],
+    [
+      1.9756067991256714,
+      2.7490298748016357,
+      1.3196682929992676,
+      0.6933585405349731
+    ],
+    [
+      0.9072681069374084,
+      -2.0311126708984375,
+      2.872830867767334,
+      -0.5130152702331543
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "pose": {
+    "preset": "C",
+    "screen_diagonal": 35,
+    "end_view": 12,
+    "top_view": 18
+  },
+  "source_face_count_verified": true
+}

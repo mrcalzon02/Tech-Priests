@@ -1,0 +1,41 @@
+{
+  "status": "installed; native comparison follows",
+  "bindings": [
+    {
+      "owner": "tech-priests",
+      "type": "item",
+      "name": "tech-priests-field-supply-pack",
+      "asset": "field-supply-pack",
+      "source": "art\\source-to-3d\\material-icons\\v01\\field-supply-pack",
+      "icon_sha256": "6ee39659bc79489fd02e7acd66c8467e5c6a276de4a65566245d2190e0662d82",
+      "glb_sha256": "0a1540cb5880674aab192206075b32389e41ae6b08dfc12ebc79e16a6e863b34"
+    },
+    {
+      "owner": "tech-priests",
+      "type": "item",
+      "name": "tech-priests-martian-manufactorum",
+      "asset": "martian-manufactorum",
+      "source": "art\\source-to-3d\\material-icons\\v01\\martian-manufactorum",
+      "icon_sha256": "f333b2793bd658d80c5e779ffc5cc4db27a8a7b8e816424db640ff0e4e99f987",
+      "glb_sha256": "72464ca3b58b2890442532aa70bc1df139e2d8468762eff6555cf41bcf083855"
+    },
+    {
+      "owner": "tech-priests",
+      "type": "item",
+      "name": "tech-priests-guard-muster-hall",
+      "asset": "guard-muster-hall",
+      "source": "art\\source-to-3d\\material-icons\\v01\\guard-muster-hall",
+      "icon_sha256": "fd4f233ddee6f17a42a669fecdd958688b10bcf5f7e131605380ee0a238a16cc",
+      "glb_sha256": "d3212d2147e45ced07b5b9cb615e0573c3dfe3cf8147e7b3232fe1f06b084ec2"
+    },
+    {
+      "owner": "tech-priests",
+      "type": "item",
+      "name": "tech-priests-sororitas-convent",
+      "asset": "sororitas-convent",
+      "source": "art\\source-to-3d\\material-icons\\v01\\sororitas-convent",
+      "icon_sha256": "3f86147dabff648df97b1ba0d20d381603a6ba6efe438710e716a32a1b7e5871",
+      "glb_sha256": "8871e5f33830a2c1bef345aace1ff50128191565e3e6507d4729a341de7e1341"
+    }
+  ]
+}

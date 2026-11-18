@@ -1,0 +1,92 @@
+{
+  "supply": {
+    "id": "magnarail-slug-packs",
+    "label": "Magnarail slug packs",
+    "users": [
+      "Manipulus"
+    ],
+    "weapons": [
+      "magnarail-lance"
+    ]
+  },
+  "regions": [
+    {
+      "part": "Long slug cassette floor",
+      "materials": [
+        "magnarail-slug-packs | dark"
+      ]
+    },
+    {
+      "part": "Copper feed-index rail",
+      "materials": [
+        "magnarail-slug-packs | copper"
+      ]
+    },
+    {
+      "part": "Copper feed-index rail.001",
+      "materials": [
+        "magnarail-slug-packs | copper"
+      ]
+    },
+    {
+      "part": "Dense magnarail slug",
+      "materials": [
+        "magnarail-slug-packs | steel"
+      ]
+    },
+    {
+      "part": "Machined penetrator",
+      "materials": [
+        "magnarail-slug-packs | steel"
+      ]
+    },
+    {
+      "part": "Dense magnarail slug.001",
+      "materials": [
+        "magnarail-slug-packs | steel"
+      ]
+    },
+    {
+      "part": "Machined penetrator.001",
+      "materials": [
+        "magnarail-slug-packs | steel"
+      ]
+    },
+    {
+      "part": "Dense magnarail slug.002",
+      "materials": [
+        "magnarail-slug-packs | steel"
+      ]
+    },
+    {
+      "part": "Machined penetrator.002",
+      "materials": [
+        "magnarail-slug-packs | steel"
+      ]
+    },
+    {
+      "part": "Slug support crossbar",
+      "materials": [
+        "magnarail-slug-packs | brass"
+      ]
+    },
+    {
+      "part": "Slug support crossbar.001",
+      "materials": [
+        "magnarail-slug-packs | brass"
+      ]
+    },
+    {
+      "part": "Cassette end lock",
+      "materials": [
+        "magnarail-slug-packs | steel"
+      ]
+    }
+  ],
+  "principles": [
+    "Functional silhouette before ornament",
+    "Steel shell, copper contacts, ceramic insulation and recessed status lenses",
+    "Model-specific wear, cavity shading and machined edge highlights",
+    "No floating gauges, wires or unsupported fittings"
+  ]
+}

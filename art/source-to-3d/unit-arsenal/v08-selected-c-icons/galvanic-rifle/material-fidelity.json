@@ -1,0 +1,19 @@
+{
+  "asset": "galvanic-rifle",
+  "passed": true,
+  "mean_absolute_rgb_error_8bit": [
+    1.0345518713781534,
+    0.9124221166833689,
+    0.8593525336586642
+  ],
+  "p95_max_channel_error_8bit": 4,
+  "silhouette_iou": 1.0,
+  "limits": {
+    "mean_absolute_channel_error_max": 4,
+    "p95_max_channel_error_max": 12,
+    "silhouette_iou_min": 0.995
+  },
+  "source_render_sha256": "61ae7dcc18fffeb86dde5d71bbfea754712df3479fa204f4563936fa50cea929",
+  "export_render_sha256": "e3de1128cf4d8a4bdeb009cca06c7259fdd9c9eecda6704b22e6069358171380",
+  "glb_sha256": "f78400b7a0dd8d95929cfe8b217a9c1099323cd15abaf9937689edbefc5caf84"
+}

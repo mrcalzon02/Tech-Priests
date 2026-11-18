@@ -1,0 +1,25 @@
+{
+  "revision": 4,
+  "owner_rejected_previous": true,
+  "contract": {
+    "label": "Martian Manufactorum",
+    "tiles": 4,
+    "height": 3.6,
+    "target": 1.35
+  },
+  "materials": [
+    "martian black rubber",
+    "martian cast iron",
+    "martian edge chips and old primer",
+    "martian green monitor glass",
+    "martian oxide red enamel",
+    "martian soot concrete",
+    "martian warm hazard enamel",
+    "martian warm workshop lamp",
+    "martian worn copper"
+  ],
+  "surface_treatment": "Regional paint/primer and exposed edges; ambient cavity grime; physical joints, roof sheets/slates and ashlar; distinct cloth/stone/timber/metal grains.",
+  "texture_maps": "2048 base colour, roughness, tangent normal, metallic and emission; area-based UV packing and actual export readback",
+  "construction": "New architectural assembly with supported entrances, roof members, service equipment and aperture cutters with outward normals",
+  "icons": "Excluded by owner instruction"
+}

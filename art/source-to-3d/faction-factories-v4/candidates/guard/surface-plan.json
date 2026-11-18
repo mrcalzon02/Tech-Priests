@@ -1,0 +1,26 @@
+{
+  "revision": 4,
+  "owner_rejected_previous": true,
+  "contract": {
+    "label": "Imperial Guard Muster Hall",
+    "tiles": 5,
+    "height": 3.9,
+    "target": 1.45
+  },
+  "materials": [
+    "guard blackened steel",
+    "guard blue wireglass",
+    "guard canvas weave",
+    "guard charcoal roof underlay",
+    "guard crate timber",
+    "guard dusty khaki plaster",
+    "guard olive corrugated steel",
+    "guard porch lamp",
+    "guard worn foundation",
+    "guard worn stencilling enamel"
+  ],
+  "surface_treatment": "Regional paint/primer and exposed edges; ambient cavity grime; physical joints, roof sheets/slates and ashlar; distinct cloth/stone/timber/metal grains.",
+  "texture_maps": "2048 base colour, roughness, tangent normal, metallic and emission; area-based UV packing and actual export readback",
+  "construction": "New architectural assembly with supported entrances, roof members, service equipment and aperture cutters with outward normals",
+  "icons": "Excluded by owner instruction"
+}

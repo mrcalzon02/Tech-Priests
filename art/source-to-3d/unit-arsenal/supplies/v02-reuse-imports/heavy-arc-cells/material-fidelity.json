@@ -1,0 +1,19 @@
+{
+  "supply": "heavy-arc-cells",
+  "passed": true,
+  "mean_absolute_rgb_error_8bit": [
+    0.0006433732554686726,
+    0.0006268765053284503,
+    0.0005443927546273384
+  ],
+  "p95_max_channel_error_8bit": 0,
+  "silhouette_iou": 1.0,
+  "limits": {
+    "mean_absolute_channel_error_max": 4,
+    "p95_max_channel_error_max": 12,
+    "silhouette_iou_min": 0.995
+  },
+  "glb_sha256": "2aa77e6398d2641ba5a1efba88036a2abc73e1f59755eaa5dde65cab3bb54cbd",
+  "source_render_sha256": "18b25ece66bc639af392ed69c891b287d4c2b9a976ab15cd5c42f8b93e192911",
+  "export_render_sha256": "b25af7d0ee47c1f4d05fe7075c7c93d0abae19e3ad46ea76ba0723de9440948b"
+}

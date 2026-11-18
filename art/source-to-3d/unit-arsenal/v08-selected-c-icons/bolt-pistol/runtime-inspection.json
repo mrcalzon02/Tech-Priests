@@ -1,0 +1,159 @@
+{
+  "passed": true,
+  "roster": {
+    "id": "bolt-pistol",
+    "unit": "Lord Commissar",
+    "label": "Bolt pistol",
+    "supply": "bolt-magazines",
+    "stage": "Green + military",
+    "donor": "Imperial/Lord-Commissar",
+    "mesh": "LordCommissarBoltPistol",
+    "groups": [],
+    "grip": "RightHandBone",
+    "muzzle": ".Muzzle0"
+  },
+  "source": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\art\\source-to-3d\\gladius-unit-donors\\Imperial\\Lord-Commissar\\Lord-Commissar.blend",
+  "source_sha256": "a308b09100a313f95d92d0dd5d0de39e276c6ea66a0fb6aecb90a1943881e93e",
+  "extraction_groups": [],
+  "source_mesh": "LordCommissarBoltPistol",
+  "grip_world_matrix": [
+    [
+      0.5950309634208679,
+      0.17453555762767792,
+      -0.7845220565795898,
+      -2.656461000442505
+    ],
+    [
+      0.7123106122016907,
+      -0.5666045546531677,
+      0.4142073690891266,
+      -18.044408798217773
+    ],
+    [
+      -0.37222015857696533,
+      -0.8052917122840881,
+      -0.4614710211753845,
+      31.363697052001953
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "muzzle_world": [
+    5.310998916625977,
+    -25.90645408630371,
+    18.612041473388672
+  ],
+  "basis": [
+    [
+      0.22908899188041687,
+      0.9497020840644836,
+      -0.2135046273469925
+    ],
+    [
+      0.9249634146690369,
+      -0.2807188332080841,
+      -0.2562021017074585
+    ],
+    [
+      -0.3032504618167877,
+      -0.13879090547561646,
+      -0.9427493810653687
+    ]
+  ],
+  "scale": 0.13617643376396227,
+  "item_roll": [
+    [
+      1.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.9467969536781311,
+      -0.32183149456977844
+    ],
+    [
+      0.0,
+      0.32183149456977844,
+      0.9467969536781311
+    ]
+  ],
+  "adaptation": [],
+  "triangles": 66,
+  "degenerate_triangles": 0,
+  "bounds_max_error": 0.0,
+  "glb_sha256": "6a25283ba8b53ed92d6284c5c4032dc285116b7548847be8c4fbdd75368e35bc",
+  "source_unchanged": true,
+  "native_uv_preserved": true,
+  "production_atlas": "ProductionAtlas",
+  "attribution": "Proxy Studios / Slitherine Ltd. / Games Workshop; original donor geometry and texture rights retained",
+  "presentation": {
+    "preset": "C",
+    "model_rotation": [
+      [
+        0.8012516498565674,
+        -0.3392205536365509,
+        -0.49287453293800354,
+        0.0
+      ],
+      [
+        0.5437327027320862,
+        0.7565965056419373,
+        0.3632032871246338,
+        0.0
+      ],
+      [
+        0.24970115721225739,
+        -0.5590091943740845,
+        0.7906694412231445,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "projected_forward_degrees": 35,
+    "end_view_degrees": 12,
+    "top_view_degrees": 18,
+    "camera_elevation_degrees": 45,
+    "camera_azimuth_degrees": 0,
+    "frame": "Muzzle upper-right, stock/grip lower-left",
+    "method": "Rigid model rotation, no raster rotation and no camera rotation",
+    "predecessor": "art\\source-to-3d\\unit-arsenal\\v04-native-uv-textures\\bolt-pistol",
+    "matrix": [
+      [
+        0.8012516498565674,
+        -0.3392205536365509,
+        -0.49287453293800354,
+        0.2685614824295044
+      ],
+      [
+        0.5437327027320862,
+        0.7565965056419373,
+        0.3632032871246338,
+        -0.6310682892799377
+      ],
+      [
+        0.24970115721225739,
+        -0.5590091943740845,
+        0.7906694412231445,
+        -0.2502342760562897
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ]
+  },
+  "native_uv_layout_unchanged": true,
+  "textures_rebaked": false
+}

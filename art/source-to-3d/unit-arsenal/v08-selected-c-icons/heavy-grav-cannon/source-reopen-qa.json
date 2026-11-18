@@ -1,0 +1,46 @@
+{
+  "passed": true,
+  "source_sha256": "fb0c1fc363bbcead76737b892c1ec95ae06a00e79fb7cf265e3685b4ad72c341",
+  "donor_unchanged": true,
+  "source_reopened": true,
+  "camera": {
+    "name": "FMPL_CAPTURE_CAMERA",
+    "matrix_world": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.43486809730529785
+      ],
+      [
+        0.0,
+        0.7071068286895752,
+        -0.7071067094802856,
+        -6.030182361602783
+      ],
+      [
+        0.0,
+        0.7071067094802856,
+        0.7071068286895752,
+        6.027605056762695
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "type": "ORTHO",
+    "ortho_scale": 2.646913528442383,
+    "shift_x": 0.0,
+    "shift_y": 0.0,
+    "resolution": [
+      256,
+      256
+    ]
+  },
+  "persistent_camera_count": 1,
+  "packed_native_images": 3,
+  "attribution_preserved": true
+}

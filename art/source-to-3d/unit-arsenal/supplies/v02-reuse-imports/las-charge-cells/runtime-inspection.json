@@ -1,0 +1,74 @@
+{
+  "passed": true,
+  "supply": {
+    "id": "las-charge-cells",
+    "label": "Las charge cells",
+    "users": [
+      "Guardsman",
+      "Imperial Officer"
+    ],
+    "weapons": [
+      "lasgun",
+      "laspistol"
+    ]
+  },
+  "triangles": 13,
+  "degenerate_triangles": 0,
+  "bounds_max_error": 0.0,
+  "glb_sha256": "2ea0350a556455a1c58595b27671994554d6debf4087fb2b93a2c56900899e0d",
+  "authored_sha256": "0c76037f9cf10bf2b91b4a6942d5eb0843fbfdc8b192497437d02f33fd127b22",
+  "source_method": "Actual magazine/cell faces extracted from imported weapon",
+  "weapon": "lasgun",
+  "source": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\art\\source-to-3d\\unit-arsenal\\v04-native-uv-textures\\lasgun\\runtime-reimport.blend",
+  "source_sha256": "2609b6160989143ca341f18a1ea4aec7fba48f439636e3f7b72e823079c0deb9",
+  "selected_faces": [
+    16,
+    17,
+    96,
+    97,
+    99,
+    102,
+    103,
+    104,
+    105,
+    106,
+    107,
+    108,
+    109
+  ],
+  "native_uv_unchanged": true,
+  "textures_rebaked": false,
+  "pose": {
+    "preset": "C",
+    "screen_diagonal": 35,
+    "end_view": 12,
+    "top_view": 18
+  },
+  "source_to_item_matrix": [
+    [
+      3.1530449390411377,
+      -2.1700801849365234,
+      5.12581205368042,
+      -0.4649484157562256
+    ],
+    [
+      -2.3235042095184326,
+      4.840141296386719,
+      3.4783971309661865,
+      0.931888222694397
+    ],
+    [
+      -5.058114528656006,
+      -3.576124906539917,
+      1.5974022150039673,
+      2.369658946990967
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "source_face_count_verified": true
+}

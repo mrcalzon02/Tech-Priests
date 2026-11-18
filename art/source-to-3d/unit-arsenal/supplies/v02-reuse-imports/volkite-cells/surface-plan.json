@@ -1,0 +1,176 @@
+{
+  "supply": {
+    "id": "volkite-cells",
+    "label": "Volkite cells",
+    "users": [
+      "Dominus"
+    ],
+    "weapons": [
+      "volkite-blaster"
+    ]
+  },
+  "regions": [
+    {
+      "part": "Volkite twin-cell floor",
+      "materials": [
+        "volkite-cells | dark"
+      ]
+    },
+    {
+      "part": "Copper thermal cell",
+      "materials": [
+        "volkite-cells | copper"
+      ]
+    },
+    {
+      "part": "Heat rejection fin",
+      "materials": [
+        "volkite-cells | dark"
+      ]
+    },
+    {
+      "part": "Heat rejection fin.001",
+      "materials": [
+        "volkite-cells | dark"
+      ]
+    },
+    {
+      "part": "Heat rejection fin.002",
+      "materials": [
+        "volkite-cells | dark"
+      ]
+    },
+    {
+      "part": "Heat rejection fin.003",
+      "materials": [
+        "volkite-cells | dark"
+      ]
+    },
+    {
+      "part": "Heat rejection fin.004",
+      "materials": [
+        "volkite-cells | dark"
+      ]
+    },
+    {
+      "part": "Heat rejection fin.005",
+      "materials": [
+        "volkite-cells | dark"
+      ]
+    },
+    {
+      "part": "Volkite cell terminal",
+      "materials": [
+        "volkite-cells | brass"
+      ]
+    },
+    {
+      "part": "Copper thermal cell.001",
+      "materials": [
+        "volkite-cells | copper"
+      ]
+    },
+    {
+      "part": "Heat rejection fin.006",
+      "materials": [
+        "volkite-cells | dark"
+      ]
+    },
+    {
+      "part": "Heat rejection fin.007",
+      "materials": [
+        "volkite-cells | dark"
+      ]
+    },
+    {
+      "part": "Heat rejection fin.008",
+      "materials": [
+        "volkite-cells | dark"
+      ]
+    },
+    {
+      "part": "Heat rejection fin.009",
+      "materials": [
+        "volkite-cells | dark"
+      ]
+    },
+    {
+      "part": "Heat rejection fin.010",
+      "materials": [
+        "volkite-cells | dark"
+      ]
+    },
+    {
+      "part": "Heat rejection fin.011",
+      "materials": [
+        "volkite-cells | dark"
+      ]
+    },
+    {
+      "part": "Volkite cell terminal.001",
+      "materials": [
+        "volkite-cells | brass"
+      ]
+    },
+    {
+      "part": "Supported thermal witness panel",
+      "materials": [
+        "volkite-cells | steel"
+      ]
+    },
+    {
+      "part": "Inset lamp bezel",
+      "materials": [
+        "volkite-cells | dark"
+      ]
+    },
+    {
+      "part": "Recessed charge lens",
+      "materials": [
+        "volkite-cells | amber"
+      ]
+    },
+    {
+      "part": "Inset lamp bezel.001",
+      "materials": [
+        "volkite-cells | dark"
+      ]
+    },
+    {
+      "part": "Recessed charge lens.001",
+      "materials": [
+        "volkite-cells | amber"
+      ]
+    },
+    {
+      "part": "Inset lamp bezel.002",
+      "materials": [
+        "volkite-cells | dark"
+      ]
+    },
+    {
+      "part": "Recessed charge lens.002",
+      "materials": [
+        "volkite-cells | amber"
+      ]
+    },
+    {
+      "part": "Cell module hold-down",
+      "materials": [
+        "volkite-cells | steel"
+      ]
+    },
+    {
+      "part": "Cell module hold-down.001",
+      "materials": [
+        "volkite-cells | steel"
+      ]
+    }
+  ],
+  "principles": [
+    "Functional silhouette before ornament",
+    "Steel shell, copper contacts, ceramic insulation and recessed status lenses",
+    "Model-specific wear, cavity shading and machined edge highlights",
+    "No floating gauges, wires or unsupported fittings"
+  ]
+}

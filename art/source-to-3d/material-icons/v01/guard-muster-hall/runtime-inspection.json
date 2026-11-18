@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "asset": "guard-muster-hall",
+  "source_method": "unchanged authored factory GLB reused as item icon",
+  "original_glb": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\local-validation\\sources\\Tech-Priests\\art\\source-to-3d\\faction-factories-v4\\candidates\\guard\\guard.glb",
+  "original_glb_sha256": "d3212d2147e45ced07b5b9cb615e0573c3dfe3cf8147e7b3232fe1f06b084ec2",
+  "original_editable_master": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\local-validation\\sources\\Tech-Priests\\art\\source-to-3d\\faction-factories-v4\\candidates\\guard\\guard-source.blend",
+  "original_editable_sha256": "52b437e8e7cc4fb7faad9059144937627ce6b0f2a923fac13e34de4f323d2694",
+  "glb_sha256": "d3212d2147e45ced07b5b9cb615e0573c3dfe3cf8147e7b3232fe1f06b084ec2",
+  "authored_sha256": "d7b142571bc50ed61331d91a94365e49bbd9911a6005d36ad2b40ac4e05033b1",
+  "triangles": 44520,
+  "degenerate_triangles": 0,
+  "pose": "upright building; canonical FMPL 45-degree orthographic optics",
+  "new_texture_bake": false
+}

@@ -1,0 +1,94 @@
+{
+  "status": "APPROVED_FOR_LOCAL_ENGINE_REVIEW",
+  "reviewer": "assistant visual inspection",
+  "owner_acceptance": "Not claimed. Current detailed arm follows owner feedback; working flicker/smoke follows the owner request.",
+  "reference": {
+    "path": "art/source-to-3d/condenser-v21/captures/v24/Condenser_V24_Four_Way_Integration_Proof.png",
+    "sha256": "44c20e1402cea0cb8e67effecab91e7f0a68054db7427d137b6c613da079b7eb",
+    "comparison": "Existing Tech Priests condenser finish; compare material separation, grounded industrial assembly and fixed Factorio capture convention rather than requiring identical architecture."
+  },
+  "models": {
+    "martian": {
+      "glb_sha256": "72464ca3b58b2890442532aa70bc1df139e2d8468762eff6555cf41bcf083855",
+      "source_sha256": "5196628ddf78d6c0ae07ae559227d61af50bc47920749ae3be6543d4bf87ac41",
+      "render_sha256": {
+        "clay.png": "8f3d6bc40400dbaa0ac7eca58a6afea04eef1d923ea28693a0b8a9d4b7343487",
+        "closeup.png": "aef752c2ea5a18611eacaf298ee7df9e6dc8d7913aa0e268b888f3d8b7283542",
+        "east-shadow.png": "f03afaa63cfb219475e67f2645ebbe4f2a6e0366b1cb98a79dafd4e4d0a24348",
+        "east.png": "c1c79de2e54543037998bf5673e93bb701946f82e0a283b6dd13a93f32a8c67d",
+        "north-shadow.png": "33f7c80e24483d0bd601e3731d27f2b9574aab1948aa2ff31cee6b8a9dde6704",
+        "north.png": "e4f478027e2bc788922d33230c3b2cd5d795081ac1b1eb72ab60bb5f9693e1b2",
+        "servo-closeup.png": "0aa16582d2e007e080c8653da7a51bc3ea6c6f2b546090115060e1484fe3b534",
+        "south-shadow.png": "77ab849cc1e7ab76491fc3bbd8102f3d87d6f41de2d969bc95afd08ecbeea32c",
+        "south.png": "d606aae184b2a1a70d74e8d09bf74150441106feebba3f5169d6c1d007b697ae",
+        "west-shadow.png": "da3f279be21bdf9e6bdc8daf4e58a64a199cb3be25208f1fe83cdf2483b64170",
+        "west.png": "72ce6060ff90a26cd3cbc3c7ade382f3dc84ccf8031a59272e2d15484e4d0cc8"
+      },
+      "scores": {
+        "construction_and_connections": 4,
+        "material_coherence": 4,
+        "silhouette": 4,
+        "reference_finish_comparison": 4,
+        "faction_identity": 4
+      },
+      "findings": "Vaulted manufacture bay, actual bore flanges, supported pipes, distinct oxide paint/copper/iron, internal task light. Owner-requested servo now has geared covers/bolts, paired bored links, planar joints, actuator and clevis, cables, wrist reducer and lead-screw jaws; inspected dedicated close-up. Servo source components and aligned joint frames verified independently; actual lamps/cogitator supply emissive maps."
+    },
+    "guard": {
+      "glb_sha256": "d3212d2147e45ced07b5b9cb615e0573c3dfe3cf8147e7b3232fe1f06b084ec2",
+      "source_sha256": "52b437e8e7cc4fb7faad9059144937627ce6b0f2a923fac13e34de4f323d2694",
+      "render_sha256": {
+        "clay.png": "fb3d17eae08abf64877e8470986e6225b5f6e70bacb1e5ae6d6a1901dd00a824",
+        "closeup.png": "fb28090344132403d8636c0f5c70b5a75590f90c566cec814dac3ba857b63537",
+        "east-shadow.png": "2bb59116ac67cba7903c988dce08ab8cfcef23ccfe991cb75589c1054052c96c",
+        "east.png": "ced6bf0da32717bda3c15587bc85467b6ae6e3043c9f013802e8664b9217d265",
+        "north-shadow.png": "632f8349aaeb3d3a65b974347e636c512d5fc80b9b81577b718eda7ac43c3014",
+        "north.png": "dbb5141ecfada9856676e565b683e8ccf559e68a676b5fb87e2561525a5f1d1e",
+        "south-shadow.png": "e09090fc4ee95a7608fe0755ec91a1bfd20c5de2b8dd93d60e6d54bf0ea731d3",
+        "south.png": "dd53bcf2ea8631c1fdadc884709967f2b7619d14572e3adee8805c56a11e669a",
+        "west-shadow.png": "48fc1c3e56fc5d2451d32094fa3d1b909f450c9f2e6912992c3c580de0e2e6f3",
+        "west.png": "0fe94eacacad12e777e5ce5b835abed7ea687cd5beeeb92bdb25deb3cc03a563"
+      },
+      "scores": {
+        "construction_and_connections": 4,
+        "material_coherence": 4,
+        "silhouette": 4,
+        "reference_finish_comparison": 4,
+        "faction_identity": 4
+      },
+      "findings": "Standing-seam roof, ridge louvres, mounted framed windows, drainage/gutters, separate canvas and timber, supply crates/sandbags and rear dispatch access. Front and side construction read as military production. Actual porch/window material regions supply the native working light masks."
+    },
+    "sororitas": {
+      "glb_sha256": "8871e5f33830a2c1bef345aace1ff50128191565e3e6507d4729a341de7e1341",
+      "source_sha256": "c78966e734c3743dafc93cfd1ddf3399852fc690cf7b053a8c77a834f2ef2e5a",
+      "render_sha256": {
+        "clay.png": "395b1c5c904854f24de159f7c2879dbe4e4fae623fc773423e9890f25c36da40",
+        "closeup.png": "6ba767bd616e39bd74220e789d9d4a3dfcc2876d58b1d46cf0168fb3fd9bfaa7",
+        "east-shadow.png": "95d509e0016a53cc0595b34c85058556f41c30b21488ebd8562f5910f084006f",
+        "east.png": "215ba8da25545be8b5edcf61b3c8eb916a09bb8418790d18d1f943a46e535150",
+        "north-shadow.png": "ee562aed25f2ec36be3cbb8ac4f0e9793ec5cd26e187d3b24dda20ca37dac918",
+        "north.png": "2f6b3533327f2ca70ef0036371cac9d9a04f5f53ecf34068152be3a3def7a929",
+        "south-shadow.png": "91f2d9434738f68cafee5ea0bba7377dd7274a69bebe8b1a0ec766c071dd3402",
+        "south.png": "3d880af2b0374bb655bf4870dbce7ed2bdc8be93ab092348d221dafefe573d69",
+        "west-shadow.png": "8b1cd24af7013e74f9d07dbe23548018b94a83975964c24cb2b748ef44f219b6",
+        "west.png": "aacf5bb210eceb57d6b72cccd56beb2d0467f553db0d8d0b188e8b072da5d05b"
+      },
+      "scores": {
+        "construction_and_connections": 4,
+        "material_coherence": 4,
+        "silhouette": 4,
+        "reference_finish_comparison": 4,
+        "faction_identity": 4
+      },
+      "findings": "Real carved window openings and inset glass, coursed ashlar and quoins, fitted portal, physically separated roof slates and spire seams, supported buttresses and rear forge access. Stone, slate, bronze and cloth retain separate roughness/colour treatment. Two real rear forge flues support the production smoke sockets; actual glass/forge regions supply the glow mask."
+    }
+  },
+  "limits": [
+    "Static posed servo mechanism; movement animation is not requested or claimed.",
+    "Native active/night flicker and smoke captures are the remaining independent engine gate.",
+    "Inventory item icons are excluded."
+  ],
+  "working_fx_review": {
+    "filmstrip_sha256": "3e5c039ecf829815cf72d5b153b54abffd9f5fb5383f1a4880bb33c8bde890e6",
+    "findings": "Inspected model-specific puffs, gentle emissive variation and camera-matched source sockets. Actual building holdouts occlude smoke/glow. Mars rear lamps are correctly hidden rather than leaking through its rear wall."
+  }
+}

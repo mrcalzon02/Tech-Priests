@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "asset": "sororitas-convent",
+  "source_method": "unchanged authored factory GLB reused as item icon",
+  "original_glb": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\local-validation\\sources\\Tech-Priests\\art\\source-to-3d\\faction-factories-v4\\candidates\\sororitas\\sororitas.glb",
+  "original_glb_sha256": "8871e5f33830a2c1bef345aace1ff50128191565e3e6507d4729a341de7e1341",
+  "original_editable_master": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\local-validation\\sources\\Tech-Priests\\art\\source-to-3d\\faction-factories-v4\\candidates\\sororitas\\sororitas-source.blend",
+  "original_editable_sha256": "c78966e734c3743dafc93cfd1ddf3399852fc690cf7b053a8c77a834f2ef2e5a",
+  "glb_sha256": "8871e5f33830a2c1bef345aace1ff50128191565e3e6507d4729a341de7e1341",
+  "authored_sha256": "5235451bd7623f28cc937f8f2871c08a510bc6632c4c5b4326dff93b5a1d7c25",
+  "triangles": 148904,
+  "degenerate_triangles": 0,
+  "pose": "upright building; canonical FMPL 45-degree orthographic optics",
+  "new_texture_bake": false
+}

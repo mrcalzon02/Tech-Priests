@@ -1,0 +1,18 @@
+{
+  "method": "Retain actual imported magazine geometry, UVs and textures; no replacement appearance invented",
+  "weapon": "boltgun",
+  "supply": {
+    "id": "bolt-magazines",
+    "label": "Bolt magazines",
+    "users": [
+      "Lord Commissar",
+      "Battle Sister",
+      "Canoness"
+    ],
+    "weapons": [
+      "bolt-pistol",
+      "boltgun",
+      "condemnor-boltgun"
+    ]
+  }
+}

@@ -1,0 +1,163 @@
+{
+  "passed": true,
+  "roster": {
+    "id": "magnarail-lance",
+    "unit": "Manipulus",
+    "label": "Magnarail lance",
+    "supply": "magnarail-slug-packs",
+    "stage": "Advanced / purple",
+    "donor": "Mechanicus/Tech-Priest-Manipulus",
+    "mesh": "TechPriestManipulus",
+    "groups": [
+      "Backarm_Forearm_R"
+    ],
+    "grip": "Backarm_Forearm_R",
+    "muzzle": "Muzzle"
+  },
+  "source": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\art\\source-to-3d\\gladius-unit-donors\\Mechanicus\\Tech-Priest-Manipulus\\Tech-Priest-Manipulus.blend",
+  "source_sha256": "ba8497fb7df045e372277dbb1fbc7814e263ddfee5820bb6248ed254a55284a9",
+  "extraction_groups": [
+    "Backarm_Forearm_R"
+  ],
+  "source_mesh": "TechPriestManipulus",
+  "grip_world_matrix": [
+    [
+      -0.7149046659469604,
+      0.675602376461029,
+      0.18020185828208923,
+      -16.636802673339844
+    ],
+    [
+      -0.5583267211914062,
+      -0.7067117691040039,
+      0.43454527854919434,
+      -16.69184112548828
+    ],
+    [
+      0.42093074321746826,
+      0.21004712581634521,
+      0.8824381828308105,
+      78.68626403808594
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "muzzle_world": [
+    9.042055130004883,
+    -44.691246032714844,
+    85.99297332763672
+  ],
+  "basis": [
+    [
+      0.009059654548764229,
+      0.999560534954071,
+      -0.02822391875088215
+    ],
+    [
+      -0.9042523503303528,
+      0.020239131525158882,
+      0.4265184998512268
+    ],
+    [
+      0.4269023537635803,
+      0.021657437086105347,
+      0.9040384292602539
+    ]
+  ],
+  "scale": 0.05324298394589886,
+  "item_roll": [
+    [
+      1.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.8971647024154663,
+      -0.4416961371898651
+    ],
+    [
+      0.0,
+      0.4416961371898651,
+      0.8971647024154663
+    ]
+  ],
+  "adaptation": [],
+  "triangles": 1650,
+  "degenerate_triangles": 0,
+  "bounds_max_error": 0.0,
+  "glb_sha256": "f5bdf691fc42be1c0b0715595b66b6fe36809dbe3d68aab47f03307f1d46a6fb",
+  "source_unchanged": true,
+  "native_uv_preserved": true,
+  "production_atlas": "ProductionAtlas",
+  "attribution": "Proxy Studios / Slitherine Ltd. / Games Workshop; original donor geometry and texture rights retained",
+  "presentation": {
+    "preset": "C",
+    "model_rotation": [
+      [
+        0.8012516498565674,
+        -0.3392205536365509,
+        -0.49287453293800354,
+        0.0
+      ],
+      [
+        0.5437327027320862,
+        0.7565965056419373,
+        0.3632032871246338,
+        0.0
+      ],
+      [
+        0.24970115721225739,
+        -0.5590091943740845,
+        0.7906694412231445,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "projected_forward_degrees": 35,
+    "end_view_degrees": 12,
+    "top_view_degrees": 18,
+    "camera_elevation_degrees": 45,
+    "camera_azimuth_degrees": 0,
+    "frame": "Muzzle upper-right, stock/grip lower-left",
+    "method": "Rigid model rotation, no raster rotation and no camera rotation",
+    "predecessor": "art\\source-to-3d\\unit-arsenal\\v04-native-uv-textures\\magnarail-lance",
+    "matrix": [
+      [
+        0.8012516498565674,
+        -0.3392205536365509,
+        -0.49287453293800354,
+        0.09558774530887604
+      ],
+      [
+        0.5437327027320862,
+        0.7565965056419373,
+        0.3632032871246338,
+        -0.3968508243560791
+      ],
+      [
+        0.24970115721225739,
+        -0.5590091943740845,
+        0.7906694412231445,
+        -0.23391903936862946
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ]
+  },
+  "native_uv_layout_unchanged": true,
+  "textures_rebaked": false
+}

@@ -1,0 +1,1457 @@
+{
+  "passed": true,
+  "icon_changed": [
+    {
+      "type": "module",
+      "name": "Retro-Encabulator"
+    },
+    {
+      "type": "module",
+      "name": "Hydrocoptic-marselvanes"
+    },
+    {
+      "type": "module",
+      "name": "DuplexedSpervingArm"
+    },
+    {
+      "type": "module",
+      "name": "DuctedSpervingArm"
+    },
+    {
+      "type": "module",
+      "name": "HyperEncabulator"
+    },
+    {
+      "type": "module",
+      "name": "Cradinal-grametter"
+    },
+    {
+      "type": "module",
+      "name": "Encabulator"
+    },
+    {
+      "type": "module",
+      "name": "FramulatedEncabulator"
+    },
+    {
+      "type": "module",
+      "name": "SpervingArm"
+    },
+    {
+      "type": "module",
+      "name": "TurboEncabulator"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-omnissian-axe"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-boltgun"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-heavy-arc-rifle"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-heavy-grav-cannon"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-gamma-pistol"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-volkite-blaster"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-condemnor-boltgun"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-dialogus-staff"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-radium-serpenta"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-lasgun"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-galvanic-rifle"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-bolt-pistol"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-laspistol"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-radium-carbine"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-magnarail-lance"
+    },
+    {
+      "type": "offshore-pump",
+      "name": "stone-water-wheel"
+    },
+    {
+      "type": "item",
+      "name": "tech-priests-sororitas-convent"
+    },
+    {
+      "type": "item",
+      "name": "fish-ash"
+    },
+    {
+      "type": "item",
+      "name": "charcoal"
+    },
+    {
+      "type": "item",
+      "name": "retrograde-polymer-sheet"
+    },
+    {
+      "type": "item",
+      "name": "bioceramic-preform"
+    },
+    {
+      "type": "item",
+      "name": "tech-priests-martian-manufactorum"
+    },
+    {
+      "type": "item",
+      "name": "bioceramic-grit"
+    },
+    {
+      "type": "item",
+      "name": "electro-phase-precursor"
+    },
+    {
+      "type": "item",
+      "name": "bio-reactive-slurry"
+    },
+    {
+      "type": "item",
+      "name": "trace-mineral-slurry"
+    },
+    {
+      "type": "item",
+      "name": "gradient-saline-matrix"
+    },
+    {
+      "type": "item",
+      "name": "compressed-crystal-bed"
+    },
+    {
+      "type": "item",
+      "name": "Canister-waste"
+    },
+    {
+      "type": "item",
+      "name": "salinity-locked-emulsion"
+    },
+    {
+      "type": "item",
+      "name": "duplexed-substrate"
+    },
+    {
+      "type": "item",
+      "name": "crude-glass"
+    },
+    {
+      "type": "item",
+      "name": "calcified-bone-dust"
+    },
+    {
+      "type": "item",
+      "name": "ceramic-lattice-core"
+    },
+    {
+      "type": "item",
+      "name": "marseline-compound"
+    },
+    {
+      "type": "item",
+      "name": "crystalline-agglomerate"
+    },
+    {
+      "type": "item",
+      "name": "encabuloy-alloy"
+    },
+    {
+      "type": "item",
+      "name": "stone-water-wheel"
+    },
+    {
+      "type": "item",
+      "name": "wood-pulp"
+    },
+    {
+      "type": "item",
+      "name": "tank-ammo-casing"
+    },
+    {
+      "type": "item",
+      "name": "reactive-enzyme-binder"
+    },
+    {
+      "type": "item",
+      "name": "calcifier"
+    },
+    {
+      "type": "item",
+      "name": "balanced-reactive-medium"
+    },
+    {
+      "type": "item",
+      "name": "phase-diluted-brine"
+    },
+    {
+      "type": "item",
+      "name": "denatured-organic-base"
+    },
+    {
+      "type": "item",
+      "name": "folder"
+    },
+    {
+      "type": "item",
+      "name": "ceramic-seed-grain"
+    },
+    {
+      "type": "item",
+      "name": "Alumatedplate"
+    },
+    {
+      "type": "item",
+      "name": "hydrolyzed-suspension"
+    },
+    {
+      "type": "item",
+      "name": "lipid-carrier-gel"
+    },
+    {
+      "type": "item",
+      "name": "ionic-scum"
+    },
+    {
+      "type": "item",
+      "name": "pre-turbulated-emulsion"
+    },
+    {
+      "type": "item",
+      "name": "phase-unstable-granulate"
+    },
+    {
+      "type": "item",
+      "name": "phase-reactive-granules"
+    },
+    {
+      "type": "item",
+      "name": "crude-paper"
+    },
+    {
+      "type": "item",
+      "name": "brick"
+    },
+    {
+      "type": "item",
+      "name": "heavy-brine-fraction"
+    },
+    {
+      "type": "item",
+      "name": "conductive-residue"
+    },
+    {
+      "type": "item",
+      "name": "tank-ammo-reinforced-casing"
+    },
+    {
+      "type": "item",
+      "name": "mineral-phase-fragments"
+    },
+    {
+      "type": "item",
+      "name": "hyperphase-matrix"
+    },
+    {
+      "type": "item",
+      "name": "catalytic-organic-medium"
+    },
+    {
+      "type": "item",
+      "name": "biphasic-brine-gel"
+    },
+    {
+      "type": "item",
+      "name": "executive-marseline-resin"
+    },
+    {
+      "type": "item",
+      "name": "enzyme-paste"
+    },
+    {
+      "type": "item",
+      "name": "stamps"
+    },
+    {
+      "type": "item",
+      "name": "tech-priests-field-supply-pack"
+    },
+    {
+      "type": "item",
+      "name": "enzyme-saturated-mass"
+    },
+    {
+      "type": "item",
+      "name": "fractured-lattice-mass"
+    },
+    {
+      "type": "item",
+      "name": "protein-slurry"
+    },
+    {
+      "type": "item",
+      "name": "staples"
+    },
+    {
+      "type": "item",
+      "name": "amulite-flakes"
+    },
+    {
+      "type": "item",
+      "name": "ink"
+    },
+    {
+      "type": "item",
+      "name": "osmotic-residue"
+    },
+    {
+      "type": "item",
+      "name": "corporate-waste"
+    },
+    {
+      "type": "item",
+      "name": "viscoelastic-froth"
+    },
+    {
+      "type": "item",
+      "name": "dielectric-chowder"
+    },
+    {
+      "type": "item",
+      "name": "tank-ammo-Radioactivewaste"
+    },
+    {
+      "type": "item",
+      "name": "fish-oil-residue"
+    },
+    {
+      "type": "item",
+      "name": "hydrocoptic-precursor"
+    },
+    {
+      "type": "item",
+      "name": "charged-ionic-matrix"
+    },
+    {
+      "type": "item",
+      "name": "Canister-Radioactivewaste"
+    },
+    {
+      "type": "item",
+      "name": "tank-ammo-Industrialwaste"
+    },
+    {
+      "type": "item",
+      "name": "PhaseDetractor"
+    },
+    {
+      "type": "item",
+      "name": "Canister"
+    },
+    {
+      "type": "item",
+      "name": "clay"
+    },
+    {
+      "type": "item",
+      "name": "dielectric-suspension"
+    },
+    {
+      "type": "item",
+      "name": "microcrystal-sediment"
+    },
+    {
+      "type": "item",
+      "name": "clipboard"
+    },
+    {
+      "type": "item",
+      "name": "oscillated-lubricant"
+    },
+    {
+      "type": "item",
+      "name": "phase-primed-carrier"
+    },
+    {
+      "type": "item",
+      "name": "compressed-biohazard-waste"
+    },
+    {
+      "type": "item",
+      "name": "stone-tools"
+    },
+    {
+      "type": "item",
+      "name": "tank-ammo-universal-explosive"
+    },
+    {
+      "type": "item",
+      "name": "tank-light-chasis-wlsk"
+    },
+    {
+      "type": "item",
+      "name": "stabilized-brine-gel"
+    },
+    {
+      "type": "item",
+      "name": "bio-synthetic-precursor"
+    },
+    {
+      "type": "item",
+      "name": "saline-particulate"
+    },
+    {
+      "type": "item",
+      "name": "Charged-Canister"
+    },
+    {
+      "type": "item",
+      "name": "rendered-organics"
+    },
+    {
+      "type": "item",
+      "name": "tech-priests-guard-muster-hall"
+    },
+    {
+      "type": "item",
+      "name": "hydrocoptic-crystal"
+    },
+    {
+      "type": "technology",
+      "name": "pre-encabulation-materials"
+    },
+    {
+      "type": "technology",
+      "name": "ionic-phase-conditioning"
+    },
+    {
+      "type": "technology",
+      "name": "biomineral-synthesis"
+    },
+    {
+      "type": "technology",
+      "name": "ceramic-lattice-conditioning"
+    },
+    {
+      "type": "technology",
+      "name": "bio-reactive-processing"
+    },
+    {
+      "type": "technology",
+      "name": "brine-conditioning"
+    },
+    {
+      "type": "technology",
+      "name": "mineral-fractionation"
+    },
+    {
+      "type": "technology",
+      "name": "advanced-encabulation-substrates"
+    },
+    {
+      "type": "technology",
+      "name": "stabilized-emulsion-systems"
+    },
+    {
+      "type": "technology",
+      "name": "organic-substrate-conditioning"
+    },
+    {
+      "type": "recipe",
+      "name": "charcoal"
+    },
+    {
+      "type": "recipe",
+      "name": "audit-ready-deliverable-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "protein-slurry-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "audit-ready-deliverable"
+    },
+    {
+      "type": "recipe",
+      "name": "Canister-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "salinity-locked-emulsion"
+    },
+    {
+      "type": "recipe",
+      "name": "duplexed-substrate"
+    },
+    {
+      "type": "recipe",
+      "name": "HyperEncabulator"
+    },
+    {
+      "type": "recipe",
+      "name": "certified-work-order"
+    },
+    {
+      "type": "recipe",
+      "name": "shalerc"
+    },
+    {
+      "type": "recipe",
+      "name": "marseline-compound"
+    },
+    {
+      "type": "recipe",
+      "name": "stabilized-brine-gel-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "stone-water-wheel"
+    },
+    {
+      "type": "recipe",
+      "name": "bioceramic-grit-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "amulite-flakes-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "enzyme-paste-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "phase-diluted-brine"
+    },
+    {
+      "type": "recipe",
+      "name": "shalerb"
+    },
+    {
+      "type": "recipe",
+      "name": "denatured-organic-base"
+    },
+    {
+      "type": "recipe",
+      "name": "dielectric-suspension-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "folder-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "compress-toxic-sludge"
+    },
+    {
+      "type": "recipe",
+      "name": "phase-reactive-granules"
+    },
+    {
+      "type": "recipe",
+      "name": "heavy-brine-fraction"
+    },
+    {
+      "type": "recipe",
+      "name": "liability-contained-report"
+    },
+    {
+      "type": "recipe",
+      "name": "stone-water-wheel-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "wood-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "executive-marseline-resin"
+    },
+    {
+      "type": "recipe",
+      "name": "TurboEncabulator-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "tank-ammo-casing-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "stakeholder-review-summary"
+    },
+    {
+      "type": "recipe",
+      "name": "stakeholder-review-summary-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "marseline-compound-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "staples"
+    },
+    {
+      "type": "recipe",
+      "name": "bio-reactive-slurry-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "shalera"
+    },
+    {
+      "type": "recipe",
+      "name": "risk-assessment-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "crude-glass-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "FramulatedEncabulator"
+    },
+    {
+      "type": "recipe",
+      "name": "oscillated-lubricant"
+    },
+    {
+      "type": "recipe",
+      "name": "tank-ammo-universal-explosive"
+    },
+    {
+      "type": "recipe",
+      "name": "certified-work-order-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "Charged-Canister"
+    },
+    {
+      "type": "recipe",
+      "name": "DuplexedSpervingArm-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "tank-ammo-reinforced-casing-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "retrograde-polymer-sheet"
+    },
+    {
+      "type": "recipe",
+      "name": "trace-mineral-slurry-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "compressed-crystal-bed-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "stamps-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "electro-phase-precursor"
+    },
+    {
+      "type": "recipe",
+      "name": "heavy-brine-fraction-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "gradient-saline-matrix"
+    },
+    {
+      "type": "recipe",
+      "name": "compressed-crystal-bed"
+    },
+    {
+      "type": "recipe",
+      "name": "calcified-bone-dust-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "crystalline-agglomerate-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "ceramic-lattice-core"
+    },
+    {
+      "type": "recipe",
+      "name": "encabuloy-alloy"
+    },
+    {
+      "type": "recipe",
+      "name": "reactive-enzyme-binder-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "wood-pulp"
+    },
+    {
+      "type": "recipe",
+      "name": "oscillated-lubricant-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "steam-meal"
+    },
+    {
+      "type": "recipe",
+      "name": "Cradinal-grametter-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "calcifier"
+    },
+    {
+      "type": "recipe",
+      "name": "balanced-reactive-medium-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "ceramic-seed-grain"
+    },
+    {
+      "type": "recipe",
+      "name": "hydrocoptic-precursor-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "hydrolyzed-suspension"
+    },
+    {
+      "type": "recipe",
+      "name": "ionic-scum"
+    },
+    {
+      "type": "recipe",
+      "name": "pre-turbulated-emulsion"
+    },
+    {
+      "type": "recipe",
+      "name": "phase-diluted-brine-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "fractured-lattice-mass-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "fish-oil-residue-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "submitted-evaluation-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "brick-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "brick"
+    },
+    {
+      "type": "recipe",
+      "name": "phase-primed-carrier-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "hyperphase-matrix"
+    },
+    {
+      "type": "recipe",
+      "name": "tank-ammo-Industrialwaste-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "corporate-waste-to-toxic-sludge"
+    },
+    {
+      "type": "recipe",
+      "name": "Charged-Canister-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "osmotic-residue-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "stamps"
+    },
+    {
+      "type": "recipe",
+      "name": "radioactive-waste-to-toxic-sludge"
+    },
+    {
+      "type": "recipe",
+      "name": "enzyme-saturated-mass-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "lipid-carrier-gel-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "fractured-lattice-mass"
+    },
+    {
+      "type": "recipe",
+      "name": "compliance-packet"
+    },
+    {
+      "type": "recipe",
+      "name": "ink-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "ink"
+    },
+    {
+      "type": "recipe",
+      "name": "clipboard-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "SpervingArm"
+    },
+    {
+      "type": "recipe",
+      "name": "osmotic-residue"
+    },
+    {
+      "type": "recipe",
+      "name": "risk-assessment"
+    },
+    {
+      "type": "recipe",
+      "name": "gradient-saline-matrix-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "compliance-packet-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "PhaseDetractor"
+    },
+    {
+      "type": "recipe",
+      "name": "work-order-slip-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "SpervingArm-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "biphasic-brine-gel-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "pre-turbulated-emulsion-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "microcrystal-sediment-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "denatured-organic-base-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "requisition-slip-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "bioceramic-preform"
+    },
+    {
+      "type": "recipe",
+      "name": "Canister-Radioactivewaste-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "bioceramic-grit"
+    },
+    {
+      "type": "recipe",
+      "name": "bio-reactive-slurry"
+    },
+    {
+      "type": "recipe",
+      "name": "board-advisory-risk-assessment-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "trace-mineral-slurry"
+    },
+    {
+      "type": "recipe",
+      "name": "bio-synthetic-precursor-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "calcified-bone-dust"
+    },
+    {
+      "type": "recipe",
+      "name": "duplexed-substrate-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "crystalline-agglomerate"
+    },
+    {
+      "type": "recipe",
+      "name": "DuctedSpervingArm"
+    },
+    {
+      "type": "recipe",
+      "name": "tank-ammo-casing"
+    },
+    {
+      "type": "recipe",
+      "name": "risk-assessed-work-order"
+    },
+    {
+      "type": "recipe",
+      "name": "reactive-enzyme-binder"
+    },
+    {
+      "type": "recipe",
+      "name": "bioceramic-preform-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "fish-ash-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "board-review-docket"
+    },
+    {
+      "type": "recipe",
+      "name": "tank-light-chasis-wlsk-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "encabuloy-alloy-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "salinity-locked-emulsion-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "corporate-waste-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "phase-unstable-granulate"
+    },
+    {
+      "type": "recipe",
+      "name": "calcifier-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "crude-paper"
+    },
+    {
+      "type": "recipe",
+      "name": "conductive-residue"
+    },
+    {
+      "type": "recipe",
+      "name": "crude-paper-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "catalytic-organic-medium"
+    },
+    {
+      "type": "recipe",
+      "name": "tank-ammo-Radioactivewaste-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "biphasic-brine-gel"
+    },
+    {
+      "type": "recipe",
+      "name": "enzyme-paste"
+    },
+    {
+      "type": "recipe",
+      "name": "hydrolyzed-suspension-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "enzyme-saturated-mass"
+    },
+    {
+      "type": "recipe",
+      "name": "Encabulator"
+    },
+    {
+      "type": "recipe",
+      "name": "risk-assessed-work-order-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "submitted-evaluation"
+    },
+    {
+      "type": "recipe",
+      "name": "amulite-flakes"
+    },
+    {
+      "type": "recipe",
+      "name": "charcoal-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "executive-marseline-resin-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "viscoelastic-froth"
+    },
+    {
+      "type": "recipe",
+      "name": "dielectric-chowder"
+    },
+    {
+      "type": "recipe",
+      "name": "TurboEncabulator"
+    },
+    {
+      "type": "recipe",
+      "name": "UnCharge-Canister"
+    },
+    {
+      "type": "recipe",
+      "name": "fish-oil-residue"
+    },
+    {
+      "type": "recipe",
+      "name": "Encabulator-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "tank-ammo-universal-explosive-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "Canister"
+    },
+    {
+      "type": "recipe",
+      "name": "DuplexedSpervingArm"
+    },
+    {
+      "type": "recipe",
+      "name": "phase-primed-carrier"
+    },
+    {
+      "type": "recipe",
+      "name": "ionic-scum-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "tank-light-chasis-wlsk"
+    },
+    {
+      "type": "recipe",
+      "name": "industrial-waste-to-toxic-sludge"
+    },
+    {
+      "type": "recipe",
+      "name": "hydrocoptic-crystal-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "hydrocoptic-crystal"
+    },
+    {
+      "type": "recipe",
+      "name": "stabilized-brine-gel"
+    },
+    {
+      "type": "recipe",
+      "name": "ceramic-seed-grain-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "FramulatedEncabulator-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "Hydrocoptic-marselvanes-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "phase-unstable-granulate-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "ceramic-lattice-core-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "work-order-slip"
+    },
+    {
+      "type": "recipe",
+      "name": "Canister-waste-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "crude-glass"
+    },
+    {
+      "type": "recipe",
+      "name": "charged-ionic-matrix-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "viscoelastic-froth-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "PhaseDetractor-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "requisition-slip"
+    },
+    {
+      "type": "recipe",
+      "name": "retrograde-polymer-sheet-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "fish-ash-processing"
+    },
+    {
+      "type": "recipe",
+      "name": "HyperEncabulator-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "balanced-reactive-medium"
+    },
+    {
+      "type": "recipe",
+      "name": "catalytic-organic-medium-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "Retro-Encabulator-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "folder"
+    },
+    {
+      "type": "recipe",
+      "name": "liability-contained-report-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "Alumatedplate"
+    },
+    {
+      "type": "recipe",
+      "name": "lipid-carrier-gel"
+    },
+    {
+      "type": "recipe",
+      "name": "Retro-Encabulator"
+    },
+    {
+      "type": "recipe",
+      "name": "hyperphase-matrix-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "compressed-biohazard-waste-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "tank-ammo-reinforced-casing"
+    },
+    {
+      "type": "recipe",
+      "name": "shaler3"
+    },
+    {
+      "type": "recipe",
+      "name": "mineral-phase-fragments"
+    },
+    {
+      "type": "recipe",
+      "name": "dielectric-chowder-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "DuctedSpervingArm-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "rendered-organics-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "protein-slurry"
+    },
+    {
+      "type": "recipe",
+      "name": "clay-with-tools"
+    },
+    {
+      "type": "recipe",
+      "name": "phase-reactive-granules-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "Alumatedplate-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "hydrocoptic-precursor"
+    },
+    {
+      "type": "recipe",
+      "name": "charged-ionic-matrix"
+    },
+    {
+      "type": "recipe",
+      "name": "meal-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "dielectric-suspension"
+    },
+    {
+      "type": "recipe",
+      "name": "electro-phase-precursor-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "microcrystal-sediment"
+    },
+    {
+      "type": "recipe",
+      "name": "clipboard"
+    },
+    {
+      "type": "recipe",
+      "name": "mineral-phase-fragments-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "board-advisory-risk-assessment"
+    },
+    {
+      "type": "recipe",
+      "name": "tank-ammo-universal-explosive-synthetic"
+    },
+    {
+      "type": "recipe",
+      "name": "staples-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "conductive-residue-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "saline-particulate-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "bio-synthetic-precursor"
+    },
+    {
+      "type": "recipe",
+      "name": "board-review-docket-recycling"
+    },
+    {
+      "type": "recipe",
+      "name": "saline-particulate"
+    },
+    {
+      "type": "recipe",
+      "name": "Hydrocoptic-marselvanes"
+    },
+    {
+      "type": "recipe",
+      "name": "Cradinal-grametter"
+    },
+    {
+      "type": "recipe",
+      "name": "rendered-organics"
+    },
+    {
+      "type": "fluid",
+      "name": "toxic-sludge"
+    },
+    {
+      "type": "ammo",
+      "name": "tech-priests-magnarail-slug-pack"
+    },
+    {
+      "type": "ammo",
+      "name": "tech-priests-radium-magazine"
+    },
+    {
+      "type": "ammo",
+      "name": "tech-priests-las-charge-cell"
+    },
+    {
+      "type": "ammo",
+      "name": "tech-priests-graviton-charge"
+    },
+    {
+      "type": "ammo",
+      "name": "tech-priests-bolt-magazine"
+    },
+    {
+      "type": "ammo",
+      "name": "tech-priests-volkite-cell"
+    },
+    {
+      "type": "ammo",
+      "name": "tech-priests-induction-charge"
+    },
+    {
+      "type": "ammo",
+      "name": "tech-priests-gamma-cell"
+    },
+    {
+      "type": "ammo",
+      "name": "tech-priests-galvanic-clip"
+    },
+    {
+      "type": "ammo",
+      "name": "tech-priests-heavy-arc-cell"
+    },
+    {
+      "type": "tool",
+      "name": "meal"
+    },
+    {
+      "type": "tool",
+      "name": "stakeholder-review-summary"
+    },
+    {
+      "type": "tool",
+      "name": "board-review-docket"
+    },
+    {
+      "type": "tool",
+      "name": "submitted-evaluation"
+    },
+    {
+      "type": "tool",
+      "name": "certified-work-order"
+    },
+    {
+      "type": "tool",
+      "name": "compliance-packet"
+    },
+    {
+      "type": "tool",
+      "name": "work-order-slip"
+    },
+    {
+      "type": "tool",
+      "name": "risk-assessed-work-order"
+    },
+    {
+      "type": "tool",
+      "name": "board-advisory-risk-assessment"
+    },
+    {
+      "type": "tool",
+      "name": "risk-assessment"
+    },
+    {
+      "type": "tool",
+      "name": "Seared-fish"
+    },
+    {
+      "type": "tool",
+      "name": "requisition-slip"
+    },
+    {
+      "type": "tool",
+      "name": "audit-ready-deliverable"
+    },
+    {
+      "type": "tool",
+      "name": "liability-contained-report"
+    },
+    {
+      "type": "assembling-machine",
+      "name": "tech-priests-sororitas-convent"
+    },
+    {
+      "type": "assembling-machine",
+      "name": "tech-priests-martian-manufactorum"
+    },
+    {
+      "type": "assembling-machine",
+      "name": "calcifier"
+    },
+    {
+      "type": "assembling-machine",
+      "name": "tech-priests-guard-muster-hall"
+    }
+  ],
+  "other_changes": [],
+  "scope": "All engine-resolved prototypes, not only weapon/ammo tables",
+  "before_profile": "05",
+  "after_profile": "04"
+}

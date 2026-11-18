@@ -1,0 +1,131 @@
+{
+  "bounds_min": [
+    -1.9824999570846558,
+    -1.9824999570846558,
+    0.0
+  ],
+  "bounds_max": [
+    1.9824999570846558,
+    1.9824999570846558,
+    3.5625
+  ],
+  "triangles": 68724,
+  "degenerate_triangles": 0,
+  "uv_area_fraction": 1.0,
+  "textured_area_fraction": 1.0,
+  "source_images": [
+    {
+      "name": "martian base-color",
+      "size": [
+        2048,
+        2048
+      ],
+      "pixels_loaded": true
+    },
+    {
+      "name": "martian base-color.001",
+      "size": [
+        2048,
+        2048
+      ],
+      "pixels_loaded": true
+    },
+    {
+      "name": "martian emission",
+      "size": [
+        2048,
+        2048
+      ],
+      "pixels_loaded": true
+    },
+    {
+      "name": "martian emission.001",
+      "size": [
+        2048,
+        2048
+      ],
+      "pixels_loaded": true
+    },
+    {
+      "name": "martian metallic",
+      "size": [
+        2048,
+        2048
+      ],
+      "pixels_loaded": true
+    },
+    {
+      "name": "martian metallic-martian roughness",
+      "size": [
+        2048,
+        2048
+      ],
+      "pixels_loaded": true
+    },
+    {
+      "name": "martian normal",
+      "size": [
+        2048,
+        2048
+      ],
+      "pixels_loaded": true
+    },
+    {
+      "name": "martian normal.001",
+      "size": [
+        2048,
+        2048
+      ],
+      "pixels_loaded": true
+    },
+    {
+      "name": "martian roughness",
+      "size": [
+        2048,
+        2048
+      ],
+      "pixels_loaded": true
+    }
+  ],
+  "model": "martian",
+  "label": "Martian Manufactorum",
+  "revision": 4,
+  "authored_parts": 403,
+  "footprint_tiles": 4,
+  "runtime": {
+    "size": 768,
+    "scale": 0.5,
+    "shift": [
+      0,
+      -0.9545941546018392
+    ],
+    "camera_elevation": 45,
+    "sun_ray": [
+      4,
+      6,
+      -8
+    ]
+  },
+  "status": "TECHNICAL_PASS_VISUAL_REVIEW_REQUIRED",
+  "sha256": {
+    "base-color.png": "e18bc36b67a5c5ac89a72f62e62bd4517001920ac3df757e30f5807e22df7b9b",
+    "emission.png": "062d536e3477f86e4ab9ae284e36f3859f01b8b354843d4fdcd28c04054a352f",
+    "martian-export-review.blend": "30b17d08957c1f30d720bd73ce8adc0c8e542810d7c42cb07ef0734b9aa82528",
+    "martian-source.blend": "5196628ddf78d6c0ae07ae559227d61af50bc47920749ae3be6543d4bf87ac41",
+    "martian.glb": "72464ca3b58b2890442532aa70bc1df139e2d8468762eff6555cf41bcf083855",
+    "metallic.png": "a450ebca2e10bba500694b040c67f0d952786837ea1ba2acd5e78b1159ad5908",
+    "normal.png": "0a724753244bc84a07243b9338e65b3adc3dda49e048d241a2a29fbe86bf7d9f",
+    "roughness.png": "833a8cbf6faf32e63b46be3cb677a017eff893bfb8a2d13401ffd531a1dbf1cc",
+    "renders\\clay.png": "8f3d6bc40400dbaa0ac7eca58a6afea04eef1d923ea28693a0b8a9d4b7343487",
+    "renders\\closeup.png": "aef752c2ea5a18611eacaf298ee7df9e6dc8d7913aa0e268b888f3d8b7283542",
+    "renders\\east-shadow.png": "f03afaa63cfb219475e67f2645ebbe4f2a6e0366b1cb98a79dafd4e4d0a24348",
+    "renders\\east.png": "c1c79de2e54543037998bf5673e93bb701946f82e0a283b6dd13a93f32a8c67d",
+    "renders\\north-shadow.png": "33f7c80e24483d0bd601e3731d27f2b9574aab1948aa2ff31cee6b8a9dde6704",
+    "renders\\north.png": "e4f478027e2bc788922d33230c3b2cd5d795081ac1b1eb72ab60bb5f9693e1b2",
+    "renders\\servo-closeup.png": "0aa16582d2e007e080c8653da7a51bc3ea6c6f2b546090115060e1484fe3b534",
+    "renders\\south-shadow.png": "77ab849cc1e7ab76491fc3bbd8102f3d87d6f41de2d969bc95afd08ecbeea32c",
+    "renders\\south.png": "d606aae184b2a1a70d74e8d09bf74150441106feebba3f5169d6c1d007b697ae",
+    "renders\\west-shadow.png": "da3f279be21bdf9e6bdc8daf4e58a64a199cb3be25208f1fe83cdf2483b64170",
+    "renders\\west.png": "72ce6060ff90a26cd3cbc3c7ade382f3dc84ccf8031a59272e2d15484e4d0cc8"
+  }
+}

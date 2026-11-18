@@ -1,0 +1,1003 @@
+{
+  "bindings": [
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "clay",
+      "asset": "clay",
+      "source": "art\\source-to-3d\\material-icons\\v01\\clay",
+      "icon_sha256": "8814dab800f12a46bf6afb9005569fbcfdccfddf71df688ea2d0296c742f29ff",
+      "glb_sha256": "5b8d33104557f4f588863a161a05b175d37e31b8f05458924f7586b0842ff1d6"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "brick",
+      "asset": "brick",
+      "source": "art\\source-to-3d\\material-icons\\v01\\brick",
+      "icon_sha256": "23203c261216c415a183556be9319af9c922cfbfe8fc3a86d799d67c7f471ee1",
+      "glb_sha256": "eabcb2d248d43b3010f0dfcbf63d169076f545eed25904f4a5000cda4ef33b6c"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "charcoal",
+      "asset": "charcoal",
+      "source": "art\\source-to-3d\\material-icons\\v02\\charcoal",
+      "icon_sha256": "fd260adb70ebc454a5dccea104488cd46962748e8a270e075af4cfecb3f338b7",
+      "glb_sha256": "32311d49598faee2783d6275ad8143957c0e2aee1651f77bca9d3405651bad60"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "crude-paper",
+      "asset": "crude-paper",
+      "source": "art\\source-to-3d\\material-icons\\v02\\crude-paper",
+      "icon_sha256": "8b08828294909828b27b36cbb8e2307fb5a1999ebd31c63be968a31298216eda",
+      "glb_sha256": "17b62abe13bbb742654cad25097a7db04230aea5a745b64a82c4c69340e86c35"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "ink",
+      "asset": "ink",
+      "source": "art\\source-to-3d\\material-icons\\v01\\ink",
+      "icon_sha256": "d655140bbda04dfe03399bd75ad1c4c078e4742b74233b48d567941b6eb322f4",
+      "glb_sha256": "2d31d890baf45e8826397b166f2e89ff50f4d39d4707cf13481bbbace7f7e59c"
+    },
+    {
+      "owner": "tech-priests",
+      "type": "item",
+      "name": "tech-priests-field-supply-pack",
+      "asset": "field-supply-pack",
+      "source": "art\\source-to-3d\\material-icons\\v01\\field-supply-pack",
+      "icon_sha256": "6ee39659bc79489fd02e7acd66c8467e5c6a276de4a65566245d2190e0662d82",
+      "glb_sha256": "0a1540cb5880674aab192206075b32389e41ae6b08dfc12ebc79e16a6e863b34"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "calcifier",
+      "asset": "calcifier",
+      "source": "art\\source-to-3d\\material-icons\\v01\\calcifier",
+      "icon_sha256": "a663c9d2f49df92b4becf8e801607926b21f8013fd4555524571a7ac1402b78b",
+      "glb_sha256": "12889cb8d952bb84c0a488b2f7565a25d68567a9ff2a35c87e3f61506dfaf319"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "crude-glass",
+      "asset": "crude-glass",
+      "source": "art\\source-to-3d\\material-icons\\v02\\crude-glass",
+      "icon_sha256": "8dec1347152d17746dd5624136598b14a7cb470375d223d037cc6597b522bb53",
+      "glb_sha256": "f1f401c5c1e31c6f0711df7c1f584c42637ad164441a6f4b1969e8c80cc61be6"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "fluid",
+      "name": "toxic-sludge",
+      "asset": "toxic-sludge",
+      "source": "art\\source-to-3d\\material-icons\\v01\\toxic-sludge",
+      "icon_sha256": "3916624b5a7b76fc47e4e5f835a5985b954f57398254176626a836cf2d5e94b7",
+      "glb_sha256": "6223a94ee79d3a610e222f5f4e3d77bf257a8bab9a4fb75cd59bb847700d4811"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "stone-tools",
+      "asset": "stone-tools",
+      "source": "art\\source-to-3d\\material-icons\\v01\\stone-tools",
+      "icon_sha256": "4a07e17efbea14e1f1472b9c9aaa231c11442f2fa212f51c97a94009fed89842",
+      "glb_sha256": "8a5bbf654a63d942f5e5a0eb74b058536f351ec742732031d4e60115d7d2c395"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "wood-pulp",
+      "asset": "wood-pulp",
+      "source": "art\\source-to-3d\\material-icons\\v02\\wood-pulp",
+      "icon_sha256": "2c6ab9aeb6ec924da696f8eb223e7877103c8ba5ffde057462a3369e6f07395f",
+      "glb_sha256": "2bc832f3deac64201ff9fb5ba100cbd5410bfdb9b962d920e5cd98917bdf55c9"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "staples",
+      "asset": "staples",
+      "source": "art\\source-to-3d\\material-icons\\v01\\staples",
+      "icon_sha256": "eb84695abcca25477fb97ab521f5570e6f9e5fe06bc3b91a03caea09b13aecce",
+      "glb_sha256": "83635a4b1b150a7713156db8cb03a3169256c60c0a0682b484f152a12adb2a69"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "stamps",
+      "asset": "stamps",
+      "source": "art\\source-to-3d\\material-icons\\v01\\stamps",
+      "icon_sha256": "0249aafc3181838ada56a3e133ac96eec1e7783d597c185006fe4824216f8a2b",
+      "glb_sha256": "27acca13a8b23f60ee056774522b9142e3fdeee9465e37a1416ee4fbf09b1606"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "folder",
+      "asset": "folder",
+      "source": "art\\source-to-3d\\material-icons\\v01\\folder",
+      "icon_sha256": "11b68e3a5ddd4728258b599ffa441182ba57fe97d8f4678dd9df9c5cd6fa16fd",
+      "glb_sha256": "ac1669ad255f52f1945a2d59d361e770ecaa3f098bba8f4743924e0663b2b48c"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "clipboard",
+      "asset": "clipboard",
+      "source": "art\\source-to-3d\\material-icons\\v01\\clipboard",
+      "icon_sha256": "c92a45b24e5ff8a24459bf035773f14720e86dafa8574b4e7acf4d46938ca8fa",
+      "glb_sha256": "9eeb054ccee64b5cf32e484cb5c84b6fecde7841c17043b563ebd0e06ae9d046"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "corporate-waste",
+      "asset": "corporate-waste",
+      "source": "art\\source-to-3d\\material-icons\\v01\\corporate-waste",
+      "icon_sha256": "292828a756050e06a4164ab137d2c054d6c9699c15d700ccf2d7980245e13b63",
+      "glb_sha256": "6c3ce0724abd3d2342f36e070be36698c3baeafa99a4cdfc437f606025354da3"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "PhaseDetractor",
+      "asset": "phasedetractor",
+      "source": "art\\source-to-3d\\material-icons\\v01\\phasedetractor",
+      "icon_sha256": "9b9f52f4925354500a96561f2c0de09f1527501243dd470727184f2ed4eef947",
+      "glb_sha256": "5fb8af774f1e87c12af78ba353528f6ed518e068f39141f566ce870b3b57d8a6"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "Canister",
+      "asset": "canister",
+      "source": "art\\source-to-3d\\material-icons\\v02\\canister",
+      "icon_sha256": "7414627fa613da6d819a0a0a182a8490d81a2893021cb70af1f630e24fb16294",
+      "glb_sha256": "8cc3754b72961c37694dd2a1657d1cdde7457bc4815b600212967352dc671d46"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "Charged-Canister",
+      "asset": "charged-canister",
+      "source": "art\\source-to-3d\\material-icons\\v02\\charged-canister",
+      "icon_sha256": "4fdfdbe4e088dd88016de78f3340c4f4f16baf16d1bc115b1251f1bdd3167042",
+      "glb_sha256": "30d05a0793bfc762e4ce4afbafb00edcb6840cd577e48a3563eab206eb431a20"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "Canister-waste",
+      "asset": "canister-waste",
+      "source": "art\\source-to-3d\\material-icons\\v02\\canister-waste",
+      "icon_sha256": "9e588a9fbdc235e4869c2dff190c62fa58a3a5f0fb94daec86a4f0ad0c2d392a",
+      "glb_sha256": "149023a8836d7d5426ace9559a736fef779c74c2f1441bb795a84927d3942239"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "Canister-Radioactivewaste",
+      "asset": "canister-radioactivewaste",
+      "source": "art\\source-to-3d\\material-icons\\v02\\canister-radioactivewaste",
+      "icon_sha256": "6e509bedf42ffe7e3ca3ad9979a912c8ba2c627c0e20b7aebf8143189a4dbaf8",
+      "glb_sha256": "c8570a474d0464d0eca526bcc712a5fe263d0fc2a572fad5999ab90189f2a9e4"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "Alumatedplate",
+      "asset": "alumatedplate",
+      "source": "art\\source-to-3d\\material-icons\\v01\\alumatedplate",
+      "icon_sha256": "c98e6d9564b25f1fa7c6d78f69f0e256baf5c19cccd588fb830d2171414b2ca1",
+      "glb_sha256": "0ef018aacedde1331a59258f4e896c695dce885a15c177073811ceb08eb2f16c"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "trace-mineral-slurry",
+      "asset": "trace-mineral-slurry",
+      "source": "art\\source-to-3d\\material-icons\\v01\\trace-mineral-slurry",
+      "icon_sha256": "bccacf768822323d897355b44028d4d1093ca8d512ebc72c6e46d2ba23159e43",
+      "glb_sha256": "7c0abef847c059815c0f50b2931d2e14e020c20854e55a9af81b7b991c25dc1b"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "saline-particulate",
+      "asset": "saline-particulate",
+      "source": "art\\source-to-3d\\material-icons\\v01\\saline-particulate",
+      "icon_sha256": "862511742b5b7c62f9a1b0460eddeb78c1c3d9fdbdff43354d152543ac5956c2",
+      "glb_sha256": "205ee40f4de755f7d98fb66cb3a407ef684fc260d4b7a8acf421e3f00c6dbdda"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "ionic-scum",
+      "asset": "ionic-scum",
+      "source": "art\\source-to-3d\\material-icons\\v02\\ionic-scum",
+      "icon_sha256": "5e40cc223c7d3e48e452b09def9513f4c2e805ac217095a227c720ae30c20926",
+      "glb_sha256": "b2e99c7d0a11e7aeb882ad949a4266fccd2d5f4bd7110456c45d4abce3dbb483"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "heavy-brine-fraction",
+      "asset": "heavy-brine-fraction",
+      "source": "art\\source-to-3d\\material-icons\\v02\\heavy-brine-fraction",
+      "icon_sha256": "e96a6196f12889af30914a0883dfb41d712542e4440cad7e6981f0acf00218e5",
+      "glb_sha256": "b94567742acb42e3523eeee2885e2d14da6197707f67fcd0e6abcdeb459390c5"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "microcrystal-sediment",
+      "asset": "microcrystal-sediment",
+      "source": "art\\source-to-3d\\material-icons\\v02\\microcrystal-sediment",
+      "icon_sha256": "4a4fa8addcb06c7edabd8f53784d82935c2b255506c025feaeee6a83c2378b9e",
+      "glb_sha256": "defba503ae909ff71a7f509d7aaeb411d924121cac0b9192037f344ab32b79c3"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "fish-oil-residue",
+      "asset": "fish-oil-residue",
+      "source": "art\\source-to-3d\\material-icons\\v02\\fish-oil-residue",
+      "icon_sha256": "5602c435f1a0f0d35006bb7c9e6bbb3ea552bae29ae4377d602af5a8aa975f48",
+      "glb_sha256": "9fad37a4dae0e19b6f797ffecd74a2c7b08c1ccdb344b74bbbbfa39589331165"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "fish-ash",
+      "asset": "fish-ash",
+      "source": "art\\source-to-3d\\material-icons\\v01\\fish-ash",
+      "icon_sha256": "6dbfd297fcd4f8adb068afb7d88175421637793520162b3beb86498062cf002d",
+      "glb_sha256": "6bc25133bbe1a6c3bf7b60e1939b2faf5d2328d9ca16db57979b2d3fe09cedbc"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "protein-slurry",
+      "asset": "protein-slurry",
+      "source": "art\\source-to-3d\\material-icons\\v01\\protein-slurry",
+      "icon_sha256": "21d817e3c1b8be6f9768f15bff0fb488a169049c7df6caed3fc77e56e0bdd5cf",
+      "glb_sha256": "a94742ec73c2d7dc74d8749fe817d35b7fb32222eccb51603307913619093160"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "calcified-bone-dust",
+      "asset": "calcified-bone-dust",
+      "source": "art\\source-to-3d\\material-icons\\v01\\calcified-bone-dust",
+      "icon_sha256": "7f1ad3bb9bb2a7aba78d80dde855a9e7d28a889ab3c59c07bca8184bae536159",
+      "glb_sha256": "a98bccbc12a13ba21783c3e0e44016897acecc3293c31bf4158e9b5a92b25c26"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "enzyme-paste",
+      "asset": "enzyme-paste",
+      "source": "art\\source-to-3d\\material-icons\\v01\\enzyme-paste",
+      "icon_sha256": "b2a3dd78b566fc25430ddcbe4f10037bb0f6c614951ccc731dd45ca17e2ecc84",
+      "glb_sha256": "2930ec554271c74fdd7f1321048851d112b177788ef7e4b024243b487a6678ab"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "rendered-organics",
+      "asset": "rendered-organics",
+      "source": "art\\source-to-3d\\material-icons\\v01\\rendered-organics",
+      "icon_sha256": "7f7c26a87af20232fed2d433fe0e4a17d96f4f678252b2844e2bf8550b7089bc",
+      "glb_sha256": "51ee87285f93383a262b1061bee1df42a510b78c7b029d2418dde93fbce40005"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "hydrolyzed-suspension",
+      "asset": "hydrolyzed-suspension",
+      "source": "art\\source-to-3d\\material-icons\\v02\\hydrolyzed-suspension",
+      "icon_sha256": "30f1f12a593e2e2b9b7cd5d3a6ed63dd62e6fcba2dac12f81c20257cc3c3121e",
+      "glb_sha256": "c381867208662057b1a2f16609c07edcbc314f3614e36e82465ccfafac77d390"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "phase-diluted-brine",
+      "asset": "phase-diluted-brine",
+      "source": "art\\source-to-3d\\material-icons\\v02\\phase-diluted-brine",
+      "icon_sha256": "7f370e18f1ab5e46cc072120c5c17940ddae9f545463a9477deb1175a28efacb",
+      "glb_sha256": "67257e85988a8fc884f4c79ae378185b85dbe2d4ddea8a82074ab8e0238b1cd9"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "osmotic-residue",
+      "asset": "osmotic-residue",
+      "source": "art\\source-to-3d\\material-icons\\v01\\osmotic-residue",
+      "icon_sha256": "4da2a804ba7556857e1efb7615c8c9aec2825c7750063bff9d7938ef5993cff3",
+      "glb_sha256": "83758914088c83c7c019102515d070710e60b2c96913486b238e52fa8c350700"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "gradient-saline-matrix",
+      "asset": "gradient-saline-matrix",
+      "source": "art\\source-to-3d\\material-icons\\v01\\gradient-saline-matrix",
+      "icon_sha256": "13a149aece96a8c27d07a50643026132f489cf8a25dcb1ad402625025b48035a",
+      "glb_sha256": "0b861a786dbdd78b0e176ac6e068f49057c1b40992a4234894d7efecf69c3733"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "biphasic-brine-gel",
+      "asset": "biphasic-brine-gel",
+      "source": "art\\source-to-3d\\material-icons\\v02\\biphasic-brine-gel",
+      "icon_sha256": "03ddd4745e9097d1540f907a7b2bd88c9562b13a6f9dfeff67830a570b8c0df0",
+      "glb_sha256": "0ce8a87e1bf409d96cfde8b7962f90f8ce45dc2a851cfc946660f0ac98898c60"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "salinity-locked-emulsion",
+      "asset": "salinity-locked-emulsion",
+      "source": "art\\source-to-3d\\material-icons\\v02\\salinity-locked-emulsion",
+      "icon_sha256": "c865f4dff15f0865b5e7d5816c1e5558c74afc3cfbd37b37fea4d26fcfc55945",
+      "glb_sha256": "07431dbfb7c18032ef3bd3b05cc6a556439bd00db3a22c78b022fbfc9b19097b"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "hydrocoptic-precursor",
+      "asset": "hydrocoptic-precursor",
+      "source": "art\\source-to-3d\\material-icons\\v01\\hydrocoptic-precursor",
+      "icon_sha256": "cde2407c016de668e2ee819d4c6e2c8960c72c1e423f9c3b94858b31c60e1a8b",
+      "glb_sha256": "f59e46c14020e25613e43c3fd61a18581688f9fd3551f9433bc01bfd1bd1e8fd"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "denatured-organic-base",
+      "asset": "denatured-organic-base",
+      "source": "art\\source-to-3d\\material-icons\\v01\\denatured-organic-base",
+      "icon_sha256": "6dc346ddcb2eecb80d9e13cb0eb825c8ede4fdbaee92123f263d44c9f4b51ed4",
+      "glb_sha256": "24a9efc3b00ff3ab4468aaf9ca245073e29f08a8d2e9d266b17f0d9c200497fd"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "enzyme-saturated-mass",
+      "asset": "enzyme-saturated-mass",
+      "source": "art\\source-to-3d\\material-icons\\v02\\enzyme-saturated-mass",
+      "icon_sha256": "9c396261464e7d5a0c9c5bd0b1c639f717f0c7efee735d9cdc9ba968508c42d8",
+      "glb_sha256": "500c564db88ca2b41b7396154e3f09aea252841bcb2798a27ab875d91961e3da"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "lipid-carrier-gel",
+      "asset": "lipid-carrier-gel",
+      "source": "art\\source-to-3d\\material-icons\\v01\\lipid-carrier-gel",
+      "icon_sha256": "f8c7b311d34c22f9de537b481a48957be96c412492a60e4d13158d7c7f5e0eee",
+      "glb_sha256": "6a9b805ab82268e688bf496eba00bc23a7d45bb905b473a41e0be4eeb2b128e6"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "bio-reactive-slurry",
+      "asset": "bio-reactive-slurry",
+      "source": "art\\source-to-3d\\material-icons\\v02\\bio-reactive-slurry",
+      "icon_sha256": "8fdce82d50e9294c631fd493499573386304dc3675a5ee3de60d6c171cf867dd",
+      "glb_sha256": "172470b5f6085b15e987c694a1c286a77c1689c5c4c1d11ace9fa605efd90708"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "catalytic-organic-medium",
+      "asset": "catalytic-organic-medium",
+      "source": "art\\source-to-3d\\material-icons\\v01\\catalytic-organic-medium",
+      "icon_sha256": "eb7b0d226a257f1cd327108539ae05eb072143199cc6bb28d2b4f55fcabdeca3",
+      "glb_sha256": "8370f611ad8d70e40fe11fae252c6ef61a0d67d8d987c799ec38cde6a8f5ad18"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "reactive-enzyme-binder",
+      "asset": "reactive-enzyme-binder",
+      "source": "art\\source-to-3d\\material-icons\\v01\\reactive-enzyme-binder",
+      "icon_sha256": "6ef245864d1035d7128958ea1bad9c38c294bb81187bc957106e96dea35acfda",
+      "glb_sha256": "143212f9c96062536b07ad59cb58ea8acc53e5f4c3046c3c0a43855672ccc235"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "bio-synthetic-precursor",
+      "asset": "bio-synthetic-precursor",
+      "source": "art\\source-to-3d\\material-icons\\v01\\bio-synthetic-precursor",
+      "icon_sha256": "ec4afcac8dcf1b0f33a2e1db1cec35b08a5e2b48a51ca0219f5ec7a9d587ac9f",
+      "glb_sha256": "73ace5c9bfd4715709754ec79b19211e4fbd0ba9be31e02d06a839bef33af04b"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "crystalline-agglomerate",
+      "asset": "crystalline-agglomerate",
+      "source": "art\\source-to-3d\\material-icons\\v02\\crystalline-agglomerate",
+      "icon_sha256": "073a623759fc2ec70eab5de70581200c8359993b35aff20f87b6f120e5275bb5",
+      "glb_sha256": "001a236304a7c2c8771a5b8ec42f3ebbd99689fe1621482e8150be74d2de9666"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "fractured-lattice-mass",
+      "asset": "fractured-lattice-mass",
+      "source": "art\\source-to-3d\\material-icons\\v01\\fractured-lattice-mass",
+      "icon_sha256": "092e070a617074632d67bea698d560eec034c7bd06ebd73abe19a694b30a2419",
+      "glb_sha256": "441b96480f09d61c7881c2689ddbda4ff593e9d1c69eef7b7526966b2b9662a9"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "ceramic-seed-grain",
+      "asset": "ceramic-seed-grain",
+      "source": "art\\source-to-3d\\material-icons\\v01\\ceramic-seed-grain",
+      "icon_sha256": "1dfdef90d6e52366e9eda12e80f59a5dc667b2c245408549cafb4bbaad539e30",
+      "glb_sha256": "7c1e36b031a33b3b67752bc9e3a9b6c511c3729ceafa0a6c039a812e4ab551eb"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "mineral-phase-fragments",
+      "asset": "mineral-phase-fragments",
+      "source": "art\\source-to-3d\\material-icons\\v01\\mineral-phase-fragments",
+      "icon_sha256": "f5a2e05f7dd8ca210de9a109506e554d5e4f47238db3c0ae3f3f6dbef4621900",
+      "glb_sha256": "1907a5e03d3e7e4917343e9d63410521c12c7b521625d190bd8fe9c2bc504bab"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "ceramic-lattice-core",
+      "asset": "ceramic-lattice-core",
+      "source": "art\\source-to-3d\\material-icons\\v01\\ceramic-lattice-core",
+      "icon_sha256": "0888a642df9efa496028efcf81075173343e08a11912e8d96f0d0b9eb025a0f8",
+      "glb_sha256": "b518f6dd7e2ec286a65f28432ecf52b8515d68ee233915005f0a135e2d94b27e"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "compressed-crystal-bed",
+      "asset": "compressed-crystal-bed",
+      "source": "art\\source-to-3d\\material-icons\\v01\\compressed-crystal-bed",
+      "icon_sha256": "1ad4fa05d3849cb3f4b82a048db138b23261568c3a363b236da72d5ecc8d7093",
+      "glb_sha256": "3f89c587defa6dfde08eada694f1f669eac6a7301d44d1de655f312b20b448e1"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "bioceramic-preform",
+      "asset": "bioceramic-preform",
+      "source": "art\\source-to-3d\\material-icons\\v01\\bioceramic-preform",
+      "icon_sha256": "09558ea5d771f28f909199cd99d4939c746c98a1cafe9befdf01eefa8c6bcdef",
+      "glb_sha256": "ce03d66cc456d434fb70236ff05e1527adfa3a4c70ebf77748d3f8fec42384ae"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "charged-ionic-matrix",
+      "asset": "charged-ionic-matrix",
+      "source": "art\\source-to-3d\\material-icons\\v01\\charged-ionic-matrix",
+      "icon_sha256": "ef71382e7518be416497556eeef2a3915380c0cc82c1cd1d2956587b2f1b75ef",
+      "glb_sha256": "61354da51f8561aff9918fb8c0b941c634d54d035f23e69020d0a557a4b42850"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "dielectric-suspension",
+      "asset": "dielectric-suspension",
+      "source": "art\\source-to-3d\\material-icons\\v02\\dielectric-suspension",
+      "icon_sha256": "4780063571d94fdd21a23e63e7a9cc109dc22938c4af447b897ab4fc11c2e3fb",
+      "glb_sha256": "41a464409f796100e63c663bba3dcd396bf71784e9c8bbedb5750f2d5c1a51aa"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "conductive-residue",
+      "asset": "conductive-residue",
+      "source": "art\\source-to-3d\\material-icons\\v01\\conductive-residue",
+      "icon_sha256": "7cd5c138714db0e0ff71916b93ed76ce3e7e98d40ad6b05dca5f88e129d56fbf",
+      "glb_sha256": "fab9dad4f4de0896e9cad3efab5abf0dd3965885172dfefa008cc6b031f9679d"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "phase-unstable-granulate",
+      "asset": "phase-unstable-granulate",
+      "source": "art\\source-to-3d\\material-icons\\v01\\phase-unstable-granulate",
+      "icon_sha256": "2cb01cceefdcde744403fe0ac1983b54fbacffcdc8840c84c42861a1372b99de",
+      "glb_sha256": "8bb5531e0f96c27faf948218caa81174b0eb4a87458f2be1d4e46d7a90083836"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "balanced-reactive-medium",
+      "asset": "balanced-reactive-medium",
+      "source": "art\\source-to-3d\\material-icons\\v01\\balanced-reactive-medium",
+      "icon_sha256": "45b4e5597a45fcc8d6e7557312e9e05fc7ce9e8972d601273be40a67e6021ca5",
+      "glb_sha256": "e532af26fd7eba73bed0df87013fcc39b7ff62db70accf4bee54e29422277746"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "phase-primed-carrier",
+      "asset": "phase-primed-carrier",
+      "source": "art\\source-to-3d\\material-icons\\v01\\phase-primed-carrier",
+      "icon_sha256": "a993b4b635601491719ccfa8703342dc3d2021d2bdb01d31e3d2f149c45b6262",
+      "glb_sha256": "5eac54b366133d8ddf01e3c3b0aa5baef56d6e70697cc1b32012962fb09c6f73"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "electro-phase-precursor",
+      "asset": "electro-phase-precursor",
+      "source": "art\\source-to-3d\\material-icons\\v01\\electro-phase-precursor",
+      "icon_sha256": "28450e8e2f77d2f359623afdeeff1736555cccc96a87004946409c7ceb6689be",
+      "glb_sha256": "3ad9fb6b1e62c6691f013abfbb99f2e2d217d969bcce2c59d1dc0954b8e24e44"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "marseline-compound",
+      "asset": "marseline-compound",
+      "source": "art\\source-to-3d\\material-icons\\v02\\marseline-compound",
+      "icon_sha256": "dd733be1b62e57bea40f3b5ea3a71c799a1e1533c8b67875122fa143749f6154",
+      "glb_sha256": "c7a806073dca89da8ae3f35430bbe649f6776c6c9724efaeb4d7210504c1e162"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "bioceramic-grit",
+      "asset": "bioceramic-grit",
+      "source": "art\\source-to-3d\\material-icons\\v01\\bioceramic-grit",
+      "icon_sha256": "3360b9dc89c3a08a2904cb3934fc5737610e1d359f76dc9cdacf589e7e81d442",
+      "glb_sha256": "56087df57cbba00cc8eb6d137154d13ececab78b08d80f1e619284ce9052c873"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "hydrocoptic-crystal",
+      "asset": "hydrocoptic-crystal",
+      "source": "art\\source-to-3d\\material-icons\\v02\\hydrocoptic-crystal",
+      "icon_sha256": "1e754aecb197c0bcbbbbdeccdd1029bc39cfcf4a6e5898b0dd1b78aad9b4dbc1",
+      "glb_sha256": "0d9b740b1df430858f414bcbe02b69b1c7bc8d0cd70d51407e2b064499b277bb"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "amulite-flakes",
+      "asset": "amulite-flakes",
+      "source": "art\\source-to-3d\\material-icons\\v01\\amulite-flakes",
+      "icon_sha256": "3f642ce0f5c63b686ed2228b1c257afcce11a40fb6f156429100a32c3001f40d",
+      "glb_sha256": "bfe9c42075fdef573714c54f039a40ca73ae8531e943dbcc9ebe66e11e4c4c6a"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "phase-reactive-granules",
+      "asset": "phase-reactive-granules",
+      "source": "art\\source-to-3d\\material-icons\\v01\\phase-reactive-granules",
+      "icon_sha256": "911b704ee3eb59e1106b9a060ee3f7bd36e45f4480ddba04322c446c87b52817",
+      "glb_sha256": "14c98eb4c2177241ec4f50b8b86925d04bb6665f8e12604c2d59d887230c00cc"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "oscillated-lubricant",
+      "asset": "oscillated-lubricant",
+      "source": "art\\source-to-3d\\material-icons\\v02\\oscillated-lubricant",
+      "icon_sha256": "d136769682d9361ed591444014e684710f822f96dd5c01e0bb696e58fb5f99cc",
+      "glb_sha256": "1d2b8f0a897dd97a6724f9b0e341803361992556dc8727a628d73b9a8b38c43f"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "stabilized-brine-gel",
+      "asset": "stabilized-brine-gel",
+      "source": "art\\source-to-3d\\material-icons\\v01\\stabilized-brine-gel",
+      "icon_sha256": "f65e9cf959ec710e7c30624f28c0b9689fbf122a247ce8ea165f92b4cecf0102",
+      "glb_sha256": "2e7db8db1288d19b945bdaedec4f071a3c443ac408edf0e1649bc56f74bf6ec1"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "dielectric-chowder",
+      "asset": "dielectric-chowder",
+      "source": "art\\source-to-3d\\material-icons\\v01\\dielectric-chowder",
+      "icon_sha256": "2fd7145e6b0d371ecce783458a5c8e426f3b4647351ce5c641dc22308ad4e6cf",
+      "glb_sha256": "56efda866d98b882fa777d37e85dcfe69590c37428d09554f645078e95384e5a"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "pre-turbulated-emulsion",
+      "asset": "pre-turbulated-emulsion",
+      "source": "art\\source-to-3d\\material-icons\\v01\\pre-turbulated-emulsion",
+      "icon_sha256": "539e37f8fb77fe9a51c076a5ff97a72fc85912b00962b0b037030536d3cc3ce9",
+      "glb_sha256": "90aff24f1fc62eb49a8d304bfa0da40faac21d67d56c7af8499342bf3c619352"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "viscoelastic-froth",
+      "asset": "viscoelastic-froth",
+      "source": "art\\source-to-3d\\material-icons\\v01\\viscoelastic-froth",
+      "icon_sha256": "3667b70d8f03f2dbcf030086974decb3a7951ca2f4f17868c21c4c3fa8004dad",
+      "glb_sha256": "e5a4a5cc91c6300268dcd72c68e071252269901fa4399eb9530e26ce05304d6b"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "executive-marseline-resin",
+      "asset": "executive-marseline-resin",
+      "source": "art\\source-to-3d\\material-icons\\v01\\executive-marseline-resin",
+      "icon_sha256": "b98a06a1a8ffe66adf2eda3e2ca7950490b193a9ec88fd004771283c98eafff5",
+      "glb_sha256": "2244d67b47e15ebe1a542ae45bc8c37cedbf294f8de9cffe862b46b09df72d84"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "encabuloy-alloy",
+      "asset": "encabuloy-alloy",
+      "source": "art\\source-to-3d\\material-icons\\v01\\encabuloy-alloy",
+      "icon_sha256": "54ea9d78dc4544e866490ec7f23e3be695b31ee307683763739dbae2bd7a674e",
+      "glb_sha256": "6deed4467987a58812856e3ff90cbf4dc1512714a50c1bd45be02142a8b1628e"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "hyperphase-matrix",
+      "asset": "hyperphase-matrix",
+      "source": "art\\source-to-3d\\material-icons\\v01\\hyperphase-matrix",
+      "icon_sha256": "e48b5ae21abc51ae692c1791395259992653524d768dc09767ef41acceea397d",
+      "glb_sha256": "321ddd1ecdfdf916f5264717521b72ebb8639a250cb24e413ddcc4fff86b41a0"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "retrograde-polymer-sheet",
+      "asset": "retrograde-polymer-sheet",
+      "source": "art\\source-to-3d\\material-icons\\v01\\retrograde-polymer-sheet",
+      "icon_sha256": "d469bf58d32bcf63d27a1363085579c768598b867447b843eb1723973300f4e4",
+      "glb_sha256": "b6bb90fb49108aad8e4f283c62cb9c3894c41f5db727fc3b3bca8f9ddeb6c9d0"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "duplexed-substrate",
+      "asset": "duplexed-substrate",
+      "source": "art\\source-to-3d\\material-icons\\v01\\duplexed-substrate",
+      "icon_sha256": "d768e0db81efc2128e445a007d64f774bbc46745830019a9fc548e96bdfc36cd",
+      "glb_sha256": "0e39e3c57859c05cac402cea30a4f9b7678d50b895571a7ba4d9b6345135936c"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "tank-light-chasis-wlsk",
+      "asset": "tank-light-chasis-wlsk",
+      "source": "art\\source-to-3d\\material-icons\\v01\\tank-light-chasis-wlsk",
+      "icon_sha256": "1fff913fa49a6322ffe6d6f9418ece39fc5d53fd56ca621ba31914beb5a8dda3",
+      "glb_sha256": "415ce57ef19606624406f4ec66dd67cec4b8a2764009a1e54d03c84aee8edd1a"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "tank-ammo-casing",
+      "asset": "tank-ammo-casing",
+      "source": "art\\source-to-3d\\material-icons\\v01\\tank-ammo-casing",
+      "icon_sha256": "d18a40a89900d63673b70747b0cea5f01c25f48333cc4cc08d8cc94e2124d077",
+      "glb_sha256": "c7281bd05ac50e83fc16c46bdf6d1c41f3d4761c0f378b6365caa4889549f155"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "tank-ammo-reinforced-casing",
+      "asset": "tank-ammo-reinforced-casing",
+      "source": "art\\source-to-3d\\material-icons\\v01\\tank-ammo-reinforced-casing",
+      "icon_sha256": "181248aafc4c0864d36093b8b59f7ce1cb1802dc2e6b07c3e0dc9b43895602a8",
+      "glb_sha256": "a776ddadac61e1aa98b70524cb839ccb75b337cec26ce2af9d7bccf73793cf67"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "tank-ammo-Industrialwaste",
+      "asset": "tank-ammo-industrialwaste",
+      "source": "art\\source-to-3d\\material-icons\\v02\\tank-ammo-industrialwaste",
+      "icon_sha256": "1a70a7a3a4d0abb03c14adffe4296526fc139676d7f0ee32fb424c8b1769e363",
+      "glb_sha256": "0999b91dd30a4b7cb0c8ad68e5aae931941aff78e271f3ef200eb4e2e4383a20"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "tank-ammo-Radioactivewaste",
+      "asset": "tank-ammo-radioactivewaste",
+      "source": "art\\source-to-3d\\material-icons\\v02\\tank-ammo-radioactivewaste",
+      "icon_sha256": "87c1b2a0996f36f02fec5cb0681cc2966ecaf4b74a2b961e7ce7fc456fbb89df",
+      "glb_sha256": "6d03caf2aaac8eae138a36ec69d683e1793bd3696d3da60d45ac3d4abf2e8847"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "tank-ammo-universal-explosive",
+      "asset": "tank-ammo-universal-explosive",
+      "source": "art\\source-to-3d\\material-icons\\v01\\tank-ammo-universal-explosive",
+      "icon_sha256": "80e5aa17135d63d789be3e1f74a05d441328d3cc45683087426e1e19a2ac0221",
+      "glb_sha256": "360df8937340b6a2bb1a758cafbd802b80cf1a3d8c7c27f68ef079de36e72d7c"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "compressed-biohazard-waste",
+      "asset": "compressed-biohazard-waste",
+      "source": "art\\source-to-3d\\material-icons\\v02\\compressed-biohazard-waste",
+      "icon_sha256": "8480d6b475f23ac770307f019429b62871557afcfec00d7e57f131caed287064",
+      "glb_sha256": "889f32da34d987a62626197464d180e6a6ab9f1cef5eafb7bc477099e3ad6b78"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "tool",
+      "name": "Seared-fish",
+      "asset": "seared-fish",
+      "source": "art\\source-to-3d\\material-icons\\v01\\seared-fish",
+      "icon_sha256": "880362b6670e6c9809556887c2a9b8ba961ee67d7f39ba42a9ab46f88a98479a",
+      "glb_sha256": "27abe5e0722da8b0ee41a54e2c8ed503ae115320e81d456e9d9477013953a943"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "tool",
+      "name": "meal",
+      "asset": "meal",
+      "source": "art\\source-to-3d\\material-icons\\v01\\meal",
+      "icon_sha256": "243982f6d43175edd59f228b95b42a31d7ab1097ad5cb4c54e13db498ca74530",
+      "glb_sha256": "b961afffbf299f601209787ff241a2372d62419a92b055c71047c7d39870648f"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "tool",
+      "name": "requisition-slip",
+      "asset": "requisition-slip",
+      "source": "art\\source-to-3d\\material-icons\\v02\\requisition-slip",
+      "icon_sha256": "659facabca1f49ebb9aa92406dd017dbfdecdf17eeeace809fd013fef0030dcd",
+      "glb_sha256": "ebafdf682dacc41a4401136701f5b05a6382a69798f89c377ef7b371e89b8621"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "tool",
+      "name": "work-order-slip",
+      "asset": "work-order-slip",
+      "source": "art\\source-to-3d\\material-icons\\v01\\work-order-slip",
+      "icon_sha256": "c6da64edb74ef624705fee9f6707ca595285472ea6a49d29c5eac0e6064d60b3",
+      "glb_sha256": "310c388d5e51357a6630112545969d8385131969e46446799d6ca8bff3fa7e82"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "tool",
+      "name": "certified-work-order",
+      "asset": "certified-work-order",
+      "source": "art\\source-to-3d\\material-icons\\v01\\certified-work-order",
+      "icon_sha256": "645d82bc45a1f70020dc61142b53f954dfdcf8a291846206061afd920e1c5862",
+      "glb_sha256": "7fa1eac0bbc3f6a1ff99d2ddbe85f82f801bfa8106c9947f04b0d8152408a5f8"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "tool",
+      "name": "submitted-evaluation",
+      "asset": "submitted-evaluation",
+      "source": "art\\source-to-3d\\material-icons\\v01\\submitted-evaluation",
+      "icon_sha256": "c71fd2dd194f59fc4c9dc4412427f4a0c1fcee063bad85d80e12f92c7b867326",
+      "glb_sha256": "8ffc9808ff3dce0505e01086c062f541b679d9d6ea215ddf848a5a829b8d0c20"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "tool",
+      "name": "risk-assessment",
+      "asset": "risk-assessment",
+      "source": "art\\source-to-3d\\material-icons\\v01\\risk-assessment",
+      "icon_sha256": "73fdb3ac07f754fd00c9d2555081d8322bac1746babd1d45c9675bd620a32fa3",
+      "glb_sha256": "ededc332632c8ae3733f161321c1890640a09c0dd9bca9eaba9ed288005975f7"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "tool",
+      "name": "risk-assessed-work-order",
+      "asset": "risk-assessed-work-order",
+      "source": "art\\source-to-3d\\material-icons\\v01\\risk-assessed-work-order",
+      "icon_sha256": "f65f8cc372176f67ea5143e82731603bbc735bd4cbc16145a347c49209fb0b3b",
+      "glb_sha256": "73ace946a479fdb56643e44b327024be08d290dc5bfa194ba7c3e8d4f489753c"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "tool",
+      "name": "compliance-packet",
+      "asset": "compliance-packet",
+      "source": "art\\source-to-3d\\material-icons\\v01\\compliance-packet",
+      "icon_sha256": "e896f87c65e22bcbb950e58de98e3bfabf9d865adc0099979dc66fc0bbf01ee6",
+      "glb_sha256": "9d06a4848fdcba231d25684839f199d6a7d2cdeba895317403302aa540c62d62"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "tool",
+      "name": "audit-ready-deliverable",
+      "asset": "audit-ready-deliverable",
+      "source": "art\\source-to-3d\\material-icons\\v02\\audit-ready-deliverable",
+      "icon_sha256": "bf539f2b47277904ab36b64ffb9607b1223b362b2a858a240246c32fcdf00727",
+      "glb_sha256": "764ce3c32a85b41ada74ebc7211a7b6e0f85fbdeb9be2ec55539cc584d7bb0c6"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "tool",
+      "name": "stakeholder-review-summary",
+      "asset": "stakeholder-review-summary",
+      "source": "art\\source-to-3d\\material-icons\\v01\\stakeholder-review-summary",
+      "icon_sha256": "8f3cb619bafc62f29d1e233d623a59b3ee5c9d2f628dc7ead5e0f87ff5db1505",
+      "glb_sha256": "ec8473e5421a7d0bf3fa0801ed0d75a8af5498b9b9af9c68965084882a0f2fef"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "tool",
+      "name": "liability-contained-report",
+      "asset": "liability-contained-report",
+      "source": "art\\source-to-3d\\material-icons\\v02\\liability-contained-report",
+      "icon_sha256": "cad52d7839524b82e705a74da5560b294dc720482f2d2a533744295796bf3a38",
+      "glb_sha256": "ba79fa29bc6a263343e0a6b52113a0c3c6d5ec28365ab86b2268183e7b19cb36"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "tool",
+      "name": "board-review-docket",
+      "asset": "board-review-docket",
+      "source": "art\\source-to-3d\\material-icons\\v01\\board-review-docket",
+      "icon_sha256": "bfd369ffb13f15104abef7f567df46ffeb463cd8ef9a3f77237a2bf04017b131",
+      "glb_sha256": "3cdd2d16f73df1d0554930b93ce609c76059bf600d937ed317889d2f65300574"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "tool",
+      "name": "board-advisory-risk-assessment",
+      "asset": "board-advisory-risk-assessment",
+      "source": "art\\source-to-3d\\material-icons\\v02\\board-advisory-risk-assessment",
+      "icon_sha256": "e4a8c02ef6e8dcbcf71b249ab920ecf4d5d5fdb86471db17d6aff92c8343f9c3",
+      "glb_sha256": "2e0e7c692934ef7700e5e02a8b5cb98bfea3a55cd4e49ef5187538cd0a5f5dfa"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "module",
+      "name": "Cradinal-grametter",
+      "asset": "cradinal-grametter",
+      "source": "art\\source-to-3d\\material-icons\\v01\\cradinal-grametter",
+      "icon_sha256": "030916914ce755c364e4227b12c58418bee83b5b19c724237f018040a374790e",
+      "glb_sha256": "4a5da0c149ef880fd73f005de8faa39643050a9cfa475f743c4372ec2951980f"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "module",
+      "name": "Hydrocoptic-marselvanes",
+      "asset": "hydrocoptic-marselvanes",
+      "source": "art\\source-to-3d\\material-icons\\v01\\hydrocoptic-marselvanes",
+      "icon_sha256": "d7b13758b8127a831eb26ed069167f095c381c4eacb60430467313632476d7bf",
+      "glb_sha256": "588fedbeffaf5ef44dc46f08245f12e75ad867bb3f80b0da6f2b89ad7720356a"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "module",
+      "name": "Retro-Encabulator",
+      "asset": "retro-encabulator",
+      "source": "art\\source-to-3d\\material-icons\\v01\\retro-encabulator",
+      "icon_sha256": "24b88d8cdef85752d8554247842df96feac3c77af018aeb58ec70cdfab0cd145",
+      "glb_sha256": "17313d8627388a4c59b280227b565f328447fd06c9007f113e7d282f87dd0726"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "module",
+      "name": "SpervingArm",
+      "asset": "spervingarm",
+      "source": "art\\source-to-3d\\material-icons\\v02\\spervingarm",
+      "icon_sha256": "f42511a906a2815063f6d41a8575b8fa27eb1e5d36693b85da79446a179a1c8a",
+      "glb_sha256": "d3d63f947b50718e5088d51ab6f6f1f271fb562a20b28e5af3bfb9d8c18f4f44"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "module",
+      "name": "DuctedSpervingArm",
+      "asset": "ductedspervingarm",
+      "source": "art\\source-to-3d\\material-icons\\v02\\ductedspervingarm",
+      "icon_sha256": "bb77b4a4ca4550be4fa79373daeece66a46b4efe23d3c9d414cbe3ffb02a4602",
+      "glb_sha256": "d19f6ee7a1d7eda229ac671a00e30e6bf3a2e8ef284d21a0673855daa8501ef8"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "module",
+      "name": "DuplexedSpervingArm",
+      "asset": "duplexedspervingarm",
+      "source": "art\\source-to-3d\\material-icons\\v02\\duplexedspervingarm",
+      "icon_sha256": "323f85e0371c0ae4bb32cc3899743b08768ad8d0cea359b31e56ee76f2e1bfe7",
+      "glb_sha256": "5cf57d017c03eb3caf85f773b66550b4483cff344a5be1fb2a0dc9da19b9db74"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "module",
+      "name": "Encabulator",
+      "asset": "encabulator",
+      "source": "art\\source-to-3d\\material-icons\\v01\\encabulator",
+      "icon_sha256": "c97fa2367d1ad2436113e5c079ec47a0f8e4cc336200b1e2567f72790eee57ae",
+      "glb_sha256": "28808f4b8a553fc47831940847fa0b22f5087c49cc7ff8bf91f8fc024f3c8622"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "module",
+      "name": "TurboEncabulator",
+      "asset": "turboencabulator",
+      "source": "art\\source-to-3d\\material-icons\\v01\\turboencabulator",
+      "icon_sha256": "5a750aed7a70cc484f416af85824ad76924168742f82d69397eebffda551fb61",
+      "glb_sha256": "4f9a52f07f2dab1d69e45a6a61c96349e3e0fed9596be5185343bad9e68caae1"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "module",
+      "name": "HyperEncabulator",
+      "asset": "hyperencabulator",
+      "source": "art\\source-to-3d\\material-icons\\v01\\hyperencabulator",
+      "icon_sha256": "3c58bb509f3ca47ca0e978251b4108195b68868e2fb2f2d08a928dd2bff2eb1a",
+      "glb_sha256": "6aa82e5b0adf9d660e973bb6b667b60ed0540e8a7a98bddc1d7b5c1edac2ca0e"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "module",
+      "name": "FramulatedEncabulator",
+      "asset": "framulatedencabulator",
+      "source": "art\\source-to-3d\\material-icons\\v01\\framulatedencabulator",
+      "icon_sha256": "52f97af5e8e54800760765f8196a252cf70294fcad7d8e5d2b9fcb1c9a5f8986",
+      "glb_sha256": "2d925387656e01f301d5c9000f2dd3ca99f9aa44de1a2d3a7a4e72305bcd15f6"
+    },
+    {
+      "owner": "tanks_for_bob_fork",
+      "type": "item",
+      "name": "stone-water-wheel",
+      "asset": "stone-water-wheel",
+      "source": "art\\source-to-3d\\material-icons\\v01\\stone-water-wheel",
+      "icon_sha256": "26e26ea620464defba426e0363830e5abcaddeafadbfbf12a21647af934d0fce",
+      "glb_sha256": "57672214a9c563031158f822e4237cfe5c102f09e8dff00297ca9e4199632b3f"
+    },
+    {
+      "owner": "tech-priests",
+      "type": "item",
+      "name": "tech-priests-martian-manufactorum",
+      "asset": "martian-manufactorum",
+      "source": "art\\source-to-3d\\material-icons\\v01\\martian-manufactorum",
+      "icon_sha256": "f333b2793bd658d80c5e779ffc5cc4db27a8a7b8e816424db640ff0e4e99f987",
+      "glb_sha256": "72464ca3b58b2890442532aa70bc1df139e2d8468762eff6555cf41bcf083855"
+    },
+    {
+      "owner": "tech-priests",
+      "type": "item",
+      "name": "tech-priests-guard-muster-hall",
+      "asset": "guard-muster-hall",
+      "source": "art\\source-to-3d\\material-icons\\v01\\guard-muster-hall",
+      "icon_sha256": "fd4f233ddee6f17a42a669fecdd958688b10bcf5f7e131605380ee0a238a16cc",
+      "glb_sha256": "d3212d2147e45ced07b5b9cb615e0573c3dfe3cf8147e7b3232fe1f06b084ec2"
+    },
+    {
+      "owner": "tech-priests",
+      "type": "item",
+      "name": "tech-priests-sororitas-convent",
+      "asset": "sororitas-convent",
+      "source": "art\\source-to-3d\\material-icons\\v01\\sororitas-convent",
+      "icon_sha256": "3f86147dabff648df97b1ba0d20d381603a6ba6efe438710e716a32a1b7e5871",
+      "glb_sha256": "8871e5f33830a2c1bef345aace1ff50128191565e3e6507d4729a341de7e1341"
+    }
+  ]
+}

@@ -1,0 +1,194 @@
+{
+  "supply": {
+    "id": "galvanic-clips",
+    "label": "Galvanic clips",
+    "users": [
+      "Skitarii Ranger"
+    ],
+    "weapons": [
+      "galvanic-rifle"
+    ]
+  },
+  "regions": [
+    {
+      "part": "Copper strip clip",
+      "materials": [
+        "galvanic-clips | copper"
+      ]
+    },
+    {
+      "part": "Clip lower rail",
+      "materials": [
+        "galvanic-clips | steel"
+      ]
+    },
+    {
+      "part": "Drawn case",
+      "materials": [
+        "galvanic-clips | brass"
+      ]
+    },
+    {
+      "part": "Case rim",
+      "materials": [
+        "galvanic-clips | brass"
+      ]
+    },
+    {
+      "part": "Case neck",
+      "materials": [
+        "galvanic-clips | brass"
+      ]
+    },
+    {
+      "part": "Projectile",
+      "materials": [
+        "galvanic-clips | steel"
+      ]
+    },
+    {
+      "part": "Clip retention tooth",
+      "materials": [
+        "galvanic-clips | copper"
+      ]
+    },
+    {
+      "part": "Drawn case.001",
+      "materials": [
+        "galvanic-clips | brass"
+      ]
+    },
+    {
+      "part": "Case rim.001",
+      "materials": [
+        "galvanic-clips | brass"
+      ]
+    },
+    {
+      "part": "Case neck.001",
+      "materials": [
+        "galvanic-clips | brass"
+      ]
+    },
+    {
+      "part": "Projectile.001",
+      "materials": [
+        "galvanic-clips | steel"
+      ]
+    },
+    {
+      "part": "Clip retention tooth.001",
+      "materials": [
+        "galvanic-clips | copper"
+      ]
+    },
+    {
+      "part": "Drawn case.002",
+      "materials": [
+        "galvanic-clips | brass"
+      ]
+    },
+    {
+      "part": "Case rim.002",
+      "materials": [
+        "galvanic-clips | brass"
+      ]
+    },
+    {
+      "part": "Case neck.002",
+      "materials": [
+        "galvanic-clips | brass"
+      ]
+    },
+    {
+      "part": "Projectile.002",
+      "materials": [
+        "galvanic-clips | steel"
+      ]
+    },
+    {
+      "part": "Clip retention tooth.002",
+      "materials": [
+        "galvanic-clips | copper"
+      ]
+    },
+    {
+      "part": "Drawn case.003",
+      "materials": [
+        "galvanic-clips | brass"
+      ]
+    },
+    {
+      "part": "Case rim.003",
+      "materials": [
+        "galvanic-clips | brass"
+      ]
+    },
+    {
+      "part": "Case neck.003",
+      "materials": [
+        "galvanic-clips | brass"
+      ]
+    },
+    {
+      "part": "Projectile.003",
+      "materials": [
+        "galvanic-clips | steel"
+      ]
+    },
+    {
+      "part": "Clip retention tooth.003",
+      "materials": [
+        "galvanic-clips | copper"
+      ]
+    },
+    {
+      "part": "Drawn case.004",
+      "materials": [
+        "galvanic-clips | brass"
+      ]
+    },
+    {
+      "part": "Case rim.004",
+      "materials": [
+        "galvanic-clips | brass"
+      ]
+    },
+    {
+      "part": "Case neck.004",
+      "materials": [
+        "galvanic-clips | brass"
+      ]
+    },
+    {
+      "part": "Projectile.004",
+      "materials": [
+        "galvanic-clips | steel"
+      ]
+    },
+    {
+      "part": "Clip retention tooth.004",
+      "materials": [
+        "galvanic-clips | copper"
+      ]
+    },
+    {
+      "part": "Folded clip end",
+      "materials": [
+        "galvanic-clips | steel"
+      ]
+    },
+    {
+      "part": "Folded clip end.001",
+      "materials": [
+        "galvanic-clips | steel"
+      ]
+    }
+  ],
+  "principles": [
+    "Functional silhouette before ornament",
+    "Steel shell, copper contacts, ceramic insulation and recessed status lenses",
+    "Model-specific wear, cavity shading and machined edge highlights",
+    "No floating gauges, wires or unsupported fittings"
+  ]
+}

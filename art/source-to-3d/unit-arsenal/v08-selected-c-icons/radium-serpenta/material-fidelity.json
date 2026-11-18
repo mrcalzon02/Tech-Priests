@@ -1,0 +1,19 @@
+{
+  "asset": "radium-serpenta",
+  "passed": true,
+  "mean_absolute_rgb_error_8bit": [
+    1.2381050342375173,
+    1.3562171216974754,
+    1.504334792958533
+  ],
+  "p95_max_channel_error_8bit": 6,
+  "silhouette_iou": 1.0,
+  "limits": {
+    "mean_absolute_channel_error_max": 4,
+    "p95_max_channel_error_max": 12,
+    "silhouette_iou_min": 0.995
+  },
+  "source_render_sha256": "c72863a6dfd122ef7b7fbbb96f8d3195e722ee17db41ca16152a20b32bc7c19e",
+  "export_render_sha256": "641e4f075fd869bf2f1c9594de37bcb936e57d5580af5285dae0e9b5d6f1ffe8",
+  "glb_sha256": "78c990adc67f77ee1665f5ff68f888f6abbdd6bcebb76aa86cf19baf8f003aac"
+}

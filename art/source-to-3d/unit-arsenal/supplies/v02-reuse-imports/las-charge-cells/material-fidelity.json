@@ -1,0 +1,19 @@
+{
+  "supply": "las-charge-cells",
+  "passed": true,
+  "mean_absolute_rgb_error_8bit": [
+    7.22334585379948e-05,
+    7.22334585379948e-05,
+    9.631127805065973e-05
+  ],
+  "p95_max_channel_error_8bit": 0,
+  "silhouette_iou": 1.0,
+  "limits": {
+    "mean_absolute_channel_error_max": 4,
+    "p95_max_channel_error_max": 12,
+    "silhouette_iou_min": 0.995
+  },
+  "glb_sha256": "2ea0350a556455a1c58595b27671994554d6debf4087fb2b93a2c56900899e0d",
+  "source_render_sha256": "1a8acfee9ae220c17f845ad758ec17c8b5605b8e5c981fe2d9ba31f1d606e62c",
+  "export_render_sha256": "feb1bb3857ad7a8bc989fed8bf0b085012e1d3c3871bcb3a58be7927fb97be93"
+}

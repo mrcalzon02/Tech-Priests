@@ -1,0 +1,19 @@
+{
+  "asset": "bolt-pistol",
+  "passed": true,
+  "mean_absolute_rgb_error_8bit": [
+    0.12147093985653853,
+    0.11797636564281773,
+    0.12312626448409049
+  ],
+  "p95_max_channel_error_8bit": 1,
+  "silhouette_iou": 1.0,
+  "limits": {
+    "mean_absolute_channel_error_max": 4,
+    "p95_max_channel_error_max": 12,
+    "silhouette_iou_min": 0.995
+  },
+  "source_render_sha256": "7630f042caa166375984a7fd0f0df42d7e3245a507f6669018b98854a02a3910",
+  "export_render_sha256": "93ce640f83f7f3bec9fe441b220f411784aa8ce1086dfa448f2f252d6273bef6",
+  "glb_sha256": "6a25283ba8b53ed92d6284c5c4032dc285116b7548847be8c4fbdd75368e35bc"
+}

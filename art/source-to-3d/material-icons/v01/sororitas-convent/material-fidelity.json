@@ -1,0 +1,17 @@
+{
+  "asset": "sororitas-convent",
+  "passed": true,
+  "mean_absolute_rgb_error_8bit": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "p95_max_channel_error_8bit": 0,
+  "silhouette_iou": 1.0,
+  "limits": {
+    "mean_max": 4,
+    "p95_max": 12,
+    "iou_min": 0.995
+  },
+  "glb_sha256": "8871e5f33830a2c1bef345aace1ff50128191565e3e6507d4729a341de7e1341"
+}

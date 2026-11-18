@@ -1,0 +1,1138 @@
+{
+  "engine": "2.1.24",
+  "players": [
+    {
+      "weapon": "galvanic-rifle",
+      "ammo_used": 12,
+      "damage": 144,
+      "expected_damage": 144,
+      "cadence_passed": true,
+      "shot_intervals": [
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30
+      ],
+      "passed": true
+    },
+    {
+      "weapon": "lasgun",
+      "ammo_used": 30,
+      "damage": 240,
+      "expected_damage": 240,
+      "cadence_passed": true,
+      "shot_intervals": [
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12
+      ],
+      "passed": true
+    },
+    {
+      "weapon": "power-axe",
+      "ammo_used": 12,
+      "damage": 336,
+      "expected_damage": 336,
+      "cadence_passed": true,
+      "shot_intervals": [
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30
+      ],
+      "passed": true
+    },
+    {
+      "weapon": "laspistol",
+      "ammo_used": 20,
+      "damage": 128.0078125,
+      "expected_damage": 128,
+      "cadence_passed": true,
+      "shot_intervals": [
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18
+      ],
+      "passed": true
+    },
+    {
+      "weapon": "bolt-pistol",
+      "ammo_used": 15,
+      "damage": 336.005859375,
+      "expected_damage": 336.00000000000006,
+      "cadence_passed": true,
+      "shot_intervals": [
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24
+      ],
+      "passed": true
+    },
+    {
+      "weapon": "radium-carbine",
+      "ammo_used": 45,
+      "damage": 450,
+      "expected_damage": 450,
+      "cadence_passed": true,
+      "shot_intervals": [
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8
+      ],
+      "passed": true
+    },
+    {
+      "weapon": "radium-serpenta",
+      "ammo_used": 20,
+      "damage": 320,
+      "expected_damage": 320,
+      "cadence_passed": true,
+      "shot_intervals": [
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18
+      ],
+      "passed": true
+    },
+    {
+      "weapon": "gamma-pistol",
+      "ammo_used": 9,
+      "damage": 540,
+      "expected_damage": 540,
+      "cadence_passed": true,
+      "shot_intervals": [
+        40,
+        40,
+        40,
+        40,
+        40,
+        40,
+        40,
+        40
+      ],
+      "passed": true
+    },
+    {
+      "weapon": "boltgun",
+      "ammo_used": 20,
+      "damage": 560,
+      "expected_damage": 560,
+      "cadence_passed": true,
+      "shot_intervals": [
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18
+      ],
+      "passed": true
+    },
+    {
+      "weapon": "dialogus-staff",
+      "ammo_used": 9,
+      "damage": 396,
+      "expected_damage": 396,
+      "cadence_passed": true,
+      "shot_intervals": [
+        40,
+        40,
+        40,
+        40,
+        40,
+        40,
+        40,
+        40
+      ],
+      "passed": true
+    },
+    {
+      "weapon": "condemnor-boltgun",
+      "ammo_used": 15,
+      "damage": 503.994140625,
+      "expected_damage": 504,
+      "cadence_passed": true,
+      "shot_intervals": [
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24
+      ],
+      "passed": true
+    },
+    {
+      "weapon": "magnarail-lance",
+      "ammo_used": 4,
+      "damage": 800,
+      "expected_damage": 800,
+      "cadence_passed": true,
+      "shot_intervals": [
+        90,
+        90,
+        90
+      ],
+      "passed": true
+    },
+    {
+      "weapon": "volkite-blaster",
+      "ammo_used": 6,
+      "damage": 1110,
+      "expected_damage": 1110,
+      "cadence_passed": true,
+      "shot_intervals": [
+        60,
+        60,
+        60,
+        60,
+        60
+      ],
+      "passed": true
+    },
+    {
+      "weapon": "heavy-arc-rifle",
+      "ammo_used": 8,
+      "damage": 1440,
+      "expected_damage": 1440,
+      "cadence_passed": true,
+      "shot_intervals": [
+        45,
+        45,
+        45,
+        45,
+        45,
+        45,
+        45
+      ],
+      "passed": true
+    },
+    {
+      "weapon": "heavy-grav-cannon",
+      "ammo_used": 4,
+      "damage": 1440,
+      "expected_damage": 1440,
+      "cadence_passed": true,
+      "shot_intervals": [
+        90,
+        90,
+        90
+      ],
+      "passed": true
+    }
+  ],
+  "mounted": [
+    {
+      "weapon": "galvanic-rifle",
+      "ammo_used": 12,
+      "damage": 144,
+      "expected_damage": 144,
+      "cadence_passed": true,
+      "shot_intervals": [
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30
+      ],
+      "passed": true
+    },
+    {
+      "weapon": "lasgun",
+      "ammo_used": 28,
+      "damage": 224,
+      "expected_damage": 224,
+      "cadence_passed": true,
+      "shot_intervals": [
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12
+      ],
+      "passed": true
+    },
+    {
+      "weapon": "power-axe",
+      "ammo_used": 12,
+      "damage": 336,
+      "expected_damage": 336,
+      "cadence_passed": true,
+      "shot_intervals": [
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30
+      ],
+      "passed": true
+    },
+    {
+      "weapon": "laspistol",
+      "ammo_used": 19,
+      "damage": 121.607421875,
+      "expected_damage": 121.60000000000001,
+      "cadence_passed": true,
+      "shot_intervals": [
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18
+      ],
+      "passed": true
+    },
+    {
+      "weapon": "bolt-pistol",
+      "ammo_used": 14,
+      "damage": 313.60546875,
+      "expected_damage": 313.6,
+      "cadence_passed": true,
+      "shot_intervals": [
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24
+      ],
+      "passed": true
+    },
+    {
+      "weapon": "radium-carbine",
+      "ammo_used": 42,
+      "damage": 420,
+      "expected_damage": 420,
+      "cadence_passed": true,
+      "shot_intervals": [
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8
+      ],
+      "passed": true
+    },
+    {
+      "weapon": "radium-serpenta",
+      "ammo_used": 19,
+      "damage": 304,
+      "expected_damage": 304,
+      "cadence_passed": true,
+      "shot_intervals": [
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18
+      ],
+      "passed": true
+    },
+    {
+      "weapon": "gamma-pistol",
+      "ammo_used": 9,
+      "damage": 540,
+      "expected_damage": 540,
+      "cadence_passed": true,
+      "shot_intervals": [
+        40,
+        40,
+        40,
+        40,
+        40,
+        40,
+        40,
+        40
+      ],
+      "passed": true
+    },
+    {
+      "weapon": "boltgun",
+      "ammo_used": 19,
+      "damage": 532,
+      "expected_damage": 532,
+      "cadence_passed": true,
+      "shot_intervals": [
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18
+      ],
+      "passed": true
+    },
+    {
+      "weapon": "dialogus-staff",
+      "ammo_used": 9,
+      "damage": 396,
+      "expected_damage": 396,
+      "cadence_passed": true,
+      "shot_intervals": [
+        40,
+        40,
+        40,
+        40,
+        40,
+        40,
+        40,
+        40
+      ],
+      "passed": true
+    },
+    {
+      "weapon": "condemnor-boltgun",
+      "ammo_used": 14,
+      "damage": 470.39453125,
+      "expected_damage": 470.40000000000003,
+      "cadence_passed": true,
+      "shot_intervals": [
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24
+      ],
+      "passed": true
+    },
+    {
+      "weapon": "magnarail-lance",
+      "ammo_used": 4,
+      "damage": 800,
+      "expected_damage": 800,
+      "cadence_passed": true,
+      "shot_intervals": [
+        90,
+        90,
+        90
+      ],
+      "passed": true
+    },
+    {
+      "weapon": "volkite-blaster",
+      "ammo_used": 6,
+      "damage": 1110,
+      "expected_damage": 1110,
+      "cadence_passed": true,
+      "shot_intervals": [
+        60,
+        60,
+        60,
+        60,
+        60
+      ],
+      "passed": true
+    },
+    {
+      "weapon": "heavy-arc-rifle",
+      "ammo_used": 8,
+      "damage": 1440,
+      "expected_damage": 1440,
+      "cadence_passed": true,
+      "shot_intervals": [
+        45,
+        45,
+        45,
+        45,
+        45,
+        45,
+        45
+      ],
+      "passed": true
+    },
+    {
+      "weapon": "heavy-grav-cannon",
+      "ammo_used": 4,
+      "damage": 1440,
+      "expected_damage": 1440,
+      "cadence_passed": true,
+      "shot_intervals": [
+        90,
+        90,
+        90
+      ],
+      "passed": true
+    }
+  ],
+  "unlocks": [
+    {
+      "weapon": "galvanic-rifle",
+      "passed": true
+    },
+    {
+      "weapon": "lasgun",
+      "passed": true
+    },
+    {
+      "weapon": "power-axe",
+      "passed": true
+    },
+    {
+      "weapon": "laspistol",
+      "passed": true
+    },
+    {
+      "weapon": "bolt-pistol",
+      "passed": true
+    },
+    {
+      "weapon": "radium-carbine",
+      "passed": true
+    },
+    {
+      "weapon": "radium-serpenta",
+      "passed": true
+    },
+    {
+      "weapon": "gamma-pistol",
+      "passed": true
+    },
+    {
+      "weapon": "boltgun",
+      "passed": true
+    },
+    {
+      "weapon": "dialogus-staff",
+      "passed": true
+    },
+    {
+      "weapon": "condemnor-boltgun",
+      "passed": true
+    },
+    {
+      "weapon": "magnarail-lance",
+      "passed": true
+    },
+    {
+      "weapon": "volkite-blaster",
+      "passed": true
+    },
+    {
+      "weapon": "heavy-arc-rifle",
+      "passed": true
+    },
+    {
+      "weapon": "heavy-grav-cannon",
+      "passed": true
+    }
+  ],
+  "effects_seen": {
+    "tech-priests-arsenal-galvanic-clips-shot": true,
+    "tech-priests-arsenal-las-beam": true,
+    "tech-priests-arsenal-bolt-magazines-shot": true,
+    "tech-priests-arsenal-radium-magazines-shot": true,
+    "tech-priests-arsenal-gamma-beam": true,
+    "tech-priests-arsenal-magnarail-slug-packs-shot": true,
+    "tech-priests-arsenal-volkite-beam": true,
+    "tech-priests-arsenal-arc-beam": true,
+    "tech-priests-arsenal-graviton-beam": true,
+    "tech-priests-arsenal-gravity-slow": true
+  },
+  "area": [
+    {
+      "weapon": "volkite-blaster",
+      "secondary_damage": 150,
+      "expected": 150,
+      "friendly_damage": 0,
+      "passed": true
+    },
+    {
+      "weapon": "heavy-arc-rifle",
+      "secondary_damage": 480,
+      "expected": 480,
+      "friendly_damage": 0,
+      "passed": true
+    },
+    {
+      "weapon": "heavy-grav-cannon",
+      "secondary_damage": 480,
+      "expected": 480,
+      "friendly_damage": 0,
+      "passed": true
+    }
+  ],
+  "component_crafts": [
+    {
+      "weapon": "galvanic-rifle",
+      "result": "tp-arsenal-test-unit-ranger",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "weapon": "lasgun",
+      "result": "tp-arsenal-test-unit-guardsman",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "weapon": "power-axe",
+      "result": "tp-arsenal-test-unit-enginseer",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "weapon": "laspistol",
+      "result": "tp-arsenal-test-unit-imperial-officer",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "weapon": "bolt-pistol",
+      "result": "tp-arsenal-test-unit-lord-commissar",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "weapon": "radium-carbine",
+      "result": "tp-arsenal-test-unit-skitarii-vanguard",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "weapon": "radium-serpenta",
+      "result": "tp-arsenal-test-unit-skitarii-marshal",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "weapon": "gamma-pistol",
+      "result": "tp-arsenal-test-unit-datasmith",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "weapon": "boltgun",
+      "result": "tp-arsenal-test-unit-battle-sister",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "weapon": "dialogus-staff",
+      "result": "tp-arsenal-test-unit-dialogus",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "weapon": "condemnor-boltgun",
+      "result": "tp-arsenal-test-unit-canoness",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "weapon": "magnarail-lance",
+      "result": "tp-arsenal-test-unit-manipulus",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "weapon": "volkite-blaster",
+      "result": "tp-arsenal-test-unit-dominus",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "weapon": "heavy-arc-rifle",
+      "result": "tp-arsenal-test-unit-kataphron-breacher",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "weapon": "heavy-grav-cannon",
+      "result": "tp-arsenal-test-unit-kataphron-destroyer",
+      "count": 1,
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "melee_range": [
+    {
+      "weapon": "galvanic-rifle",
+      "range": 24,
+      "out_of_range_ammo_used": 0,
+      "passed": true
+    },
+    {
+      "weapon": "lasgun",
+      "range": 20,
+      "out_of_range_ammo_used": 0,
+      "passed": true
+    },
+    {
+      "weapon": "power-axe",
+      "range": 1.5,
+      "out_of_range_ammo_used": 0,
+      "passed": true
+    },
+    {
+      "weapon": "laspistol",
+      "range": 16,
+      "out_of_range_ammo_used": 0,
+      "passed": true
+    },
+    {
+      "weapon": "bolt-pistol",
+      "range": 18,
+      "out_of_range_ammo_used": 0,
+      "passed": true
+    },
+    {
+      "weapon": "radium-carbine",
+      "range": 18,
+      "out_of_range_ammo_used": 0,
+      "passed": true
+    },
+    {
+      "weapon": "radium-serpenta",
+      "range": 20,
+      "out_of_range_ammo_used": 0,
+      "passed": true
+    },
+    {
+      "weapon": "gamma-pistol",
+      "range": 16,
+      "out_of_range_ammo_used": 0,
+      "passed": true
+    },
+    {
+      "weapon": "boltgun",
+      "range": 22,
+      "out_of_range_ammo_used": 0,
+      "passed": true
+    },
+    {
+      "weapon": "dialogus-staff",
+      "range": 1.5,
+      "out_of_range_ammo_used": 0,
+      "passed": true
+    },
+    {
+      "weapon": "condemnor-boltgun",
+      "range": 28,
+      "out_of_range_ammo_used": 0,
+      "passed": true
+    },
+    {
+      "weapon": "magnarail-lance",
+      "range": 34,
+      "out_of_range_ammo_used": 0,
+      "passed": true
+    },
+    {
+      "weapon": "volkite-blaster",
+      "range": 26,
+      "out_of_range_ammo_used": 0,
+      "passed": true
+    },
+    {
+      "weapon": "heavy-arc-rifle",
+      "range": 24,
+      "out_of_range_ammo_used": 0,
+      "passed": true
+    },
+    {
+      "weapon": "heavy-grav-cannon",
+      "range": 28,
+      "out_of_range_ammo_used": 0,
+      "passed": true
+    }
+  ],
+  "manufacturing": [
+    {
+      "weapon": "galvanic-rifle",
+      "weapon_output": 1,
+      "supply": "galvanic-clips",
+      "supply_output": 5,
+      "expected_supply_output": 5,
+      "passed": true
+    },
+    {
+      "weapon": "lasgun",
+      "weapon_output": 1,
+      "supply": "las-charge-cells",
+      "supply_output": 5,
+      "expected_supply_output": 5,
+      "passed": true
+    },
+    {
+      "weapon": "power-axe",
+      "weapon_output": 1,
+      "supply": "tool-charges",
+      "supply_output": 5,
+      "expected_supply_output": 5,
+      "passed": true
+    },
+    {
+      "weapon": "laspistol",
+      "weapon_output": 1,
+      "supply": "las-charge-cells",
+      "supply_output": 5,
+      "expected_supply_output": 5,
+      "passed": true
+    },
+    {
+      "weapon": "bolt-pistol",
+      "weapon_output": 1,
+      "supply": "bolt-magazines",
+      "supply_output": 4,
+      "expected_supply_output": 4,
+      "passed": true
+    },
+    {
+      "weapon": "radium-carbine",
+      "weapon_output": 1,
+      "supply": "radium-magazines",
+      "supply_output": 10,
+      "expected_supply_output": 10,
+      "passed": true
+    },
+    {
+      "weapon": "radium-serpenta",
+      "weapon_output": 1,
+      "supply": "radium-magazines",
+      "supply_output": 10,
+      "expected_supply_output": 10,
+      "passed": true
+    },
+    {
+      "weapon": "gamma-pistol",
+      "weapon_output": 1,
+      "supply": "gamma-cells",
+      "supply_output": 5,
+      "expected_supply_output": 5,
+      "passed": true
+    },
+    {
+      "weapon": "boltgun",
+      "weapon_output": 1,
+      "supply": "bolt-magazines",
+      "supply_output": 4,
+      "expected_supply_output": 4,
+      "passed": true
+    },
+    {
+      "weapon": "dialogus-staff",
+      "weapon_output": 1,
+      "supply": "tool-charges",
+      "supply_output": 5,
+      "expected_supply_output": 5,
+      "passed": true
+    },
+    {
+      "weapon": "condemnor-boltgun",
+      "weapon_output": 1,
+      "supply": "bolt-magazines",
+      "supply_output": 4,
+      "expected_supply_output": 4,
+      "passed": true
+    },
+    {
+      "weapon": "magnarail-lance",
+      "weapon_output": 1,
+      "supply": "magnarail-slug-packs",
+      "supply_output": 5,
+      "expected_supply_output": 5,
+      "passed": true
+    },
+    {
+      "weapon": "volkite-blaster",
+      "weapon_output": 1,
+      "supply": "volkite-cells",
+      "supply_output": 5,
+      "expected_supply_output": 5,
+      "passed": true
+    },
+    {
+      "weapon": "heavy-arc-rifle",
+      "weapon_output": 1,
+      "supply": "heavy-arc-cells",
+      "supply_output": 5,
+      "expected_supply_output": 5,
+      "passed": true
+    },
+    {
+      "weapon": "heavy-grav-cannon",
+      "weapon_output": 1,
+      "supply": "graviton-charges",
+      "supply_output": 5,
+      "expected_supply_output": 5,
+      "passed": true
+    }
+  ],
+  "scope": "15 player guns and mounted backends: damage, cadence, range, shared unlocks, enemy splash/friendly exclusion, component crafting and manufacturing. No AAI actor acceptance claimed.",
+  "profile": "build\\unit-arsenal-native-20",
+  "graphics_enabled": false,
+  "definition_sha256": {
+    "firing_effects.lua": "c0e408a1efdd6042814e933a9e721b37ce471f0bfe0a8229727b5bafb1d8862e",
+    "unit_arsenal.lua": "78bf79b9c044557018510e0127905ed73f5651c9142ed803de17d43797598bd8",
+    "unit_unlocks.lua": "26fe08f26d2c873b696cb8f64babae8d6888b80e9ec420025062c82ae11cc026",
+    "weapon_profiles.lua": "fa903d007f7014b30e5fc88047628b63195a7bc80f5216c3cdef75856bc65061"
+  }
+}

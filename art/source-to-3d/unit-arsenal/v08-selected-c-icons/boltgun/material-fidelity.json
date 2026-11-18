@@ -1,0 +1,19 @@
+{
+  "asset": "boltgun",
+  "passed": true,
+  "mean_absolute_rgb_error_8bit": [
+    2.3411731703355922,
+    2.2738480164178885,
+    2.2021821617870696
+  ],
+  "p95_max_channel_error_8bit": 9,
+  "silhouette_iou": 1.0,
+  "limits": {
+    "mean_absolute_channel_error_max": 4,
+    "p95_max_channel_error_max": 12,
+    "silhouette_iou_min": 0.995
+  },
+  "source_render_sha256": "8760400e8aaa0561d388ed88053a4dec576ca1b845429cdbe03665a92f052a3a",
+  "export_render_sha256": "49ece6a7c4962df138e912e44a3b6f6df1d9630aa0068505e3a0e92ee46f4639",
+  "glb_sha256": "fe80cf5e86c079c256ce245c32823ca526fc905f70ac4ce98bdaabe782a00fc8"
+}

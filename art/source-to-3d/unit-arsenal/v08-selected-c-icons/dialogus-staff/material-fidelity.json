@@ -1,0 +1,19 @@
+{
+  "asset": "dialogus-staff",
+  "passed": true,
+  "mean_absolute_rgb_error_8bit": [
+    1.3379339440694311,
+    1.510788331726133,
+    1.7179363548698168
+  ],
+  "p95_max_channel_error_8bit": 6,
+  "silhouette_iou": 1.0,
+  "limits": {
+    "mean_absolute_channel_error_max": 4,
+    "p95_max_channel_error_max": 12,
+    "silhouette_iou_min": 0.995
+  },
+  "source_render_sha256": "18387a54effc096bccfbf93c4e22829b2ed435275b19771ed6a001abdf99e359",
+  "export_render_sha256": "45450bbc3f39414bc9fa672d8d47df83dff0bb27a4de579396a99cab42fd9ccb",
+  "glb_sha256": "a2da2fa2538086b43db54157373287b6762499d86a567537744d8e94055d79b7"
+}

@@ -1,0 +1,27 @@
+{
+  "revision": 4,
+  "owner_rejected_previous": true,
+  "contract": {
+    "label": "Sororitas Convent",
+    "tiles": 6,
+    "height": 5.9,
+    "target": 2.0
+  },
+  "materials": [
+    "sororitas aged bronze",
+    "sororitas charcoal roof felt",
+    "sororitas crimson woven pennant",
+    "sororitas forge aperture glow",
+    "sororitas oxblood slate",
+    "sororitas pale carved trim",
+    "sororitas ruby glass",
+    "sororitas smoked oak portal",
+    "sororitas turquoise stained glass",
+    "sororitas warm carved limestone",
+    "sororitas weathered grey ashlar"
+  ],
+  "surface_treatment": "Regional paint/primer and exposed edges; ambient cavity grime; physical joints, roof sheets/slates and ashlar; distinct cloth/stone/timber/metal grains.",
+  "texture_maps": "2048 base colour, roughness, tangent normal, metallic and emission; area-based UV packing and actual export readback",
+  "construction": "New architectural assembly with supported entrances, roof members, service equipment and aperture cutters with outward normals",
+  "icons": "Excluded by owner instruction"
+}

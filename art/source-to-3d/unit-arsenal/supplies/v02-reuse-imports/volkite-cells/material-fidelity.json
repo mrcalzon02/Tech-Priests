@@ -1,0 +1,19 @@
+{
+  "supply": "volkite-cells",
+  "passed": true,
+  "mean_absolute_rgb_error_8bit": [
+    0.3440529069193564,
+    0.32683841674069686,
+    0.33864376665679596
+  ],
+  "p95_max_channel_error_8bit": 1,
+  "silhouette_iou": 1.0,
+  "limits": {
+    "mean_absolute_channel_error_max": 4,
+    "p95_max_channel_error_max": 12,
+    "silhouette_iou_min": 0.995
+  },
+  "glb_sha256": "28a46f01e58cbbe526dc5a3afc115914f72d0ac52594e4d136ee15c03e77ef78",
+  "source_render_sha256": "e9c8357558e9442b0e2659f68ffc6386c093d1bcbfe8c36551554daad5984b9d",
+  "export_render_sha256": "98ba739d5db3e6c53bc2a022689b25895b33bcc1ee4a1db4fb09e25bad5c1500"
+}

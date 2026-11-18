@@ -1,0 +1,19 @@
+{
+  "supply": "radium-magazines",
+  "passed": true,
+  "mean_absolute_rgb_error_8bit": [
+    0.0002523659305993691,
+    0.00022432527164388362,
+    0.00032246757798808274
+  ],
+  "p95_max_channel_error_8bit": 0,
+  "silhouette_iou": 1.0,
+  "limits": {
+    "mean_absolute_channel_error_max": 4,
+    "p95_max_channel_error_max": 12,
+    "silhouette_iou_min": 0.995
+  },
+  "glb_sha256": "52e65aa885efc507858f4da8e17aa106b890ae85bc8ac58095bb8fed676689d7",
+  "source_render_sha256": "4bbd5def91f6c4820caae3895770a83c06666d5cfef4e8ee711d88cb56a55e90",
+  "export_render_sha256": "c60f154906b0b5e8f67594dbb8d4674012b8cfa17d390652a1a6ebf9b3ef0bb3"
+}

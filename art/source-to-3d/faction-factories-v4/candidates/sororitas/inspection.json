@@ -1,0 +1,130 @@
+{
+  "bounds_min": [
+    -2.9825000762939453,
+    -2.9825000762939453,
+    0.0
+  ],
+  "bounds_max": [
+    2.9825000762939453,
+    2.9825000762939453,
+    5.670000076293945
+  ],
+  "triangles": 148904,
+  "degenerate_triangles": 0,
+  "uv_area_fraction": 1.0,
+  "textured_area_fraction": 1.0,
+  "source_images": [
+    {
+      "name": "sororitas base-color",
+      "size": [
+        2048,
+        2048
+      ],
+      "pixels_loaded": true
+    },
+    {
+      "name": "sororitas base-color.001",
+      "size": [
+        2048,
+        2048
+      ],
+      "pixels_loaded": true
+    },
+    {
+      "name": "sororitas emission",
+      "size": [
+        2048,
+        2048
+      ],
+      "pixels_loaded": true
+    },
+    {
+      "name": "sororitas emission.001",
+      "size": [
+        2048,
+        2048
+      ],
+      "pixels_loaded": true
+    },
+    {
+      "name": "sororitas metallic",
+      "size": [
+        2048,
+        2048
+      ],
+      "pixels_loaded": true
+    },
+    {
+      "name": "sororitas metallic-sororitas roughness",
+      "size": [
+        2048,
+        2048
+      ],
+      "pixels_loaded": true
+    },
+    {
+      "name": "sororitas normal",
+      "size": [
+        2048,
+        2048
+      ],
+      "pixels_loaded": true
+    },
+    {
+      "name": "sororitas normal.001",
+      "size": [
+        2048,
+        2048
+      ],
+      "pixels_loaded": true
+    },
+    {
+      "name": "sororitas roughness",
+      "size": [
+        2048,
+        2048
+      ],
+      "pixels_loaded": true
+    }
+  ],
+  "model": "sororitas",
+  "label": "Sororitas Convent",
+  "revision": 4,
+  "authored_parts": 1171,
+  "footprint_tiles": 6,
+  "runtime": {
+    "size": 768,
+    "scale": 0.5,
+    "shift": [
+      0,
+      -1.414213562373095
+    ],
+    "camera_elevation": 45,
+    "sun_ray": [
+      4,
+      6,
+      -8
+    ]
+  },
+  "status": "TECHNICAL_PASS_VISUAL_REVIEW_REQUIRED",
+  "sha256": {
+    "base-color.png": "180d98e96e7bbc596b8497a19b0bfbcf3ff7888e4137355614890da2e767e163",
+    "emission.png": "472801a59e0a97b7d6229c80f10dc662e7f26bfbd7ec3ee7f073eeb153f23bd1",
+    "metallic.png": "7adfcd916683be13e6ca6e783985afc58217df4f0320c3b9f6ce165030187c17",
+    "normal.png": "0c6168add167e2b3a0fdf5ec6b6a46f703442e85b364837294d026fdd743554c",
+    "roughness.png": "daa7ec9de22a7ccc8bc1265c9d62f91369b1fe4a0b5e23eb1f112162ddc19183",
+    "sororitas-export-review.blend": "93b7953d1f0d7a93c5321cc38b681165a72e3f069e24d53029062379df609bdf",
+    "sororitas-source.blend": "c78966e734c3743dafc93cfd1ddf3399852fc690cf7b053a8c77a834f2ef2e5a",
+    "sororitas.glb": "8871e5f33830a2c1bef345aace1ff50128191565e3e6507d4729a341de7e1341",
+    "renders\\clay.png": "395b1c5c904854f24de159f7c2879dbe4e4fae623fc773423e9890f25c36da40",
+    "renders\\closeup.png": "6ba767bd616e39bd74220e789d9d4a3dfcc2876d58b1d46cf0168fb3fd9bfaa7",
+    "renders\\east-shadow.png": "95d509e0016a53cc0595b34c85058556f41c30b21488ebd8562f5910f084006f",
+    "renders\\east.png": "215ba8da25545be8b5edcf61b3c8eb916a09bb8418790d18d1f943a46e535150",
+    "renders\\north-shadow.png": "ee562aed25f2ec36be3cbb8ac4f0e9793ec5cd26e187d3b24dda20ca37dac918",
+    "renders\\north.png": "2f6b3533327f2ca70ef0036371cac9d9a04f5f53ecf34068152be3a3def7a929",
+    "renders\\south-shadow.png": "91f2d9434738f68cafee5ea0bba7377dd7274a69bebe8b1a0ec766c071dd3402",
+    "renders\\south.png": "3d880af2b0374bb655bf4870dbce7ed2bdc8be93ab092348d221dafefe573d69",
+    "renders\\west-shadow.png": "8b1cd24af7013e74f9d07dbe23548018b94a83975964c24cb2b748ef44f219b6",
+    "renders\\west.png": "aacf5bb210eceb57d6b72cccd56beb2d0467f553db0d8d0b188e8b072da5d05b"
+  }
+}

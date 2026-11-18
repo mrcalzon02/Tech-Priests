@@ -1,0 +1,17 @@
+Original model and animation attribution
+
+Source: Warhammer 40,000: Gladius - Relics of War
+DEVELOPER: Proxy Studios
+PUBLISHER: Slitherine Ltd.
+
+All rights and copyrights remain with Proxy Studios, Slitherine Ltd., or
+Games Workshop, as applicable.
+
+These models, textures, rigs, and original animations are third-party game assets.
+Extraction, conversion, rendering, or inclusion in this project does not transfer
+ownership or grant redistribution rights. Retain this notice with editable sources,
+manifests, previews, sprite sheets, and any subsequent package. Do not describe the
+original models as original Tech Priests or Foundry artwork.
+
+Where Workshop modifications are used, preserve their source paths and Workshop
+item identifiers. Applicable third-party creators retain their rights.

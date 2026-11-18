@@ -1,0 +1,103 @@
+{
+  "passed": true,
+  "supply": {
+    "id": "heavy-arc-cells",
+    "label": "Heavy arc cells",
+    "users": [
+      "Kataphron Breacher"
+    ],
+    "weapons": [
+      "heavy-arc-rifle"
+    ]
+  },
+  "triangles": 44,
+  "degenerate_triangles": 0,
+  "bounds_max_error": 5.960464477539063e-08,
+  "glb_sha256": "2aa77e6398d2641ba5a1efba88036a2abc73e1f59755eaa5dde65cab3bb54cbd",
+  "authored_sha256": "f28ee6509a6380d7b190bce1e5d53ac1246ab2807f05a631c9230271008b9fc8",
+  "source_method": "Actual magazine/cell faces extracted from imported weapon",
+  "weapon": "heavy-arc-rifle",
+  "source": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\art\\source-to-3d\\unit-arsenal\\v04-native-uv-textures\\heavy-arc-rifle\\runtime-reimport.blend",
+  "source_sha256": "d396932a3b4af0ad51da33d6011b175c4a90a2ca195f7f7d828f9455672829b3",
+  "selected_faces": [
+    75,
+    76,
+    77,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91,
+    92,
+    93,
+    94,
+    95,
+    96,
+    97,
+    98,
+    99,
+    100,
+    604,
+    605,
+    606,
+    607,
+    608,
+    609,
+    610,
+    611,
+    612,
+    613,
+    614,
+    615,
+    616,
+    617,
+    618,
+    619,
+    620,
+    621
+  ],
+  "native_uv_unchanged": true,
+  "textures_rebaked": false,
+  "source_to_item_matrix": [
+    [
+      3.9654290676116943,
+      -1.6788172721862793,
+      -2.4392576217651367,
+      2.7422852516174316
+    ],
+    [
+      2.6909568309783936,
+      3.744428873062134,
+      1.797508955001831,
+      1.285110592842102
+    ],
+    [
+      1.2357817888259888,
+      -2.7665610313415527,
+      3.913057327270508,
+      0.12391219288110733
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "pose": {
+    "preset": "C",
+    "screen_diagonal": 35,
+    "end_view": 12,
+    "top_view": 18
+  },
+  "source_face_count_verified": true
+}

@@ -1,0 +1,19 @@
+{
+  "asset": "heavy-grav-cannon",
+  "passed": true,
+  "mean_absolute_rgb_error_8bit": [
+    1.620205106836123,
+    1.7140079172164733,
+    1.8604069727064378
+  ],
+  "p95_max_channel_error_8bit": 7,
+  "silhouette_iou": 1.0,
+  "limits": {
+    "mean_absolute_channel_error_max": 4,
+    "p95_max_channel_error_max": 12,
+    "silhouette_iou_min": 0.995
+  },
+  "source_render_sha256": "aa590d6180624ea7366e23d6e5a8624336eb6a426cfb228bc05d41074f72817b",
+  "export_render_sha256": "53cf4645fbd733b80fcb9816af3980ccdb9eb88df312183464f01b67a5d3734c",
+  "glb_sha256": "16e59cc70b7fad63e531ed62a49a5db1b04908bd77474175cadd1d57c8ea2d6c"
+}

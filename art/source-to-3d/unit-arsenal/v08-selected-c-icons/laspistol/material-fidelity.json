@@ -1,0 +1,19 @@
+{
+  "asset": "laspistol",
+  "passed": true,
+  "mean_absolute_rgb_error_8bit": [
+    0.1728932414460162,
+    0.1621932051747068,
+    0.17035424978841737
+  ],
+  "p95_max_channel_error_8bit": 1,
+  "silhouette_iou": 1.0,
+  "limits": {
+    "mean_absolute_channel_error_max": 4,
+    "p95_max_channel_error_max": 12,
+    "silhouette_iou_min": 0.995
+  },
+  "source_render_sha256": "9c11a6f7ec3d6b23b20dbc87f0873c57a0109cce94a4c314d8e8dfb41aeeacf0",
+  "export_render_sha256": "c0bf897ae208319d89380644ac3b60ad670b0b9e7b926f00017ea851a5e01ccb",
+  "glb_sha256": "b2c214475a9a8d07acddd2a503a46fc244d484f8518d73ec012f1cbc0e1f933f"
+}

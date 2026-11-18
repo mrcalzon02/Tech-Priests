@@ -1,0 +1,19 @@
+{
+  "asset": "gamma-pistol",
+  "passed": true,
+  "mean_absolute_rgb_error_8bit": [
+    1.4051094197809706,
+    1.4875396207793194,
+    1.536223356805284
+  ],
+  "p95_max_channel_error_8bit": 5,
+  "silhouette_iou": 1.0,
+  "limits": {
+    "mean_absolute_channel_error_max": 4,
+    "p95_max_channel_error_max": 12,
+    "silhouette_iou_min": 0.995
+  },
+  "source_render_sha256": "a9930517a9f30a27ac5554c3285a3dd04a4f222425b082f94350a85632c5336a",
+  "export_render_sha256": "3bf3880a3249510322bec6a193bea7996bada733b17e646c7d84e2f03b9fe174",
+  "glb_sha256": "616d9216cf5b8bd941ce32fb11ad16001c5c2692e2d41b66221415c726cc0f1f"
+}

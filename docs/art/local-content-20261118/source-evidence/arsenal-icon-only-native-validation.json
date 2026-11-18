@@ -1,0 +1,107 @@
+{
+  "passed": true,
+  "icon_changed": [
+    {
+      "type": "gun",
+      "name": "tech-priests-heavy-arc-rifle"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-laspistol"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-galvanic-rifle"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-lasgun"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-radium-serpenta"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-volkite-blaster"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-condemnor-boltgun"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-omnissian-axe"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-boltgun"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-gamma-pistol"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-magnarail-lance"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-bolt-pistol"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-dialogus-staff"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-radium-carbine"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-heavy-grav-cannon"
+    },
+    {
+      "type": "ammo",
+      "name": "tech-priests-gamma-cell"
+    },
+    {
+      "type": "ammo",
+      "name": "tech-priests-heavy-arc-cell"
+    },
+    {
+      "type": "ammo",
+      "name": "tech-priests-galvanic-clip"
+    },
+    {
+      "type": "ammo",
+      "name": "tech-priests-bolt-magazine"
+    },
+    {
+      "type": "ammo",
+      "name": "tech-priests-magnarail-slug-pack"
+    },
+    {
+      "type": "ammo",
+      "name": "tech-priests-volkite-cell"
+    },
+    {
+      "type": "ammo",
+      "name": "tech-priests-induction-charge"
+    },
+    {
+      "type": "ammo",
+      "name": "tech-priests-radium-magazine"
+    },
+    {
+      "type": "ammo",
+      "name": "tech-priests-graviton-charge"
+    },
+    {
+      "type": "ammo",
+      "name": "tech-priests-las-charge-cell"
+    }
+  ],
+  "other_changes": [],
+  "scope": "All engine-resolved prototypes, not only weapon/ammo tables"
+}

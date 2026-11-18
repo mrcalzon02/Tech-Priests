@@ -1,0 +1,17 @@
+{
+  "asset": "field-supply-pack",
+  "passed": true,
+  "mean_absolute_rgb_error_8bit": [
+    0.12822502982478834,
+    0.12167076308338004,
+    0.1314015494516551
+  ],
+  "p95_max_channel_error_8bit": 1,
+  "silhouette_iou": 1.0,
+  "limits": {
+    "mean_max": 4,
+    "p95_max": 12,
+    "iou_min": 0.995
+  },
+  "glb_sha256": "0a1540cb5880674aab192206075b32389e41ae6b08dfc12ebc79e16a6e863b34"
+}

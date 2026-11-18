@@ -1,0 +1,19 @@
+{
+  "asset": "radium-carbine",
+  "passed": true,
+  "mean_absolute_rgb_error_8bit": [
+    1.05651395969076,
+    1.007460922993822,
+    0.9913912426994362
+  ],
+  "p95_max_channel_error_8bit": 4,
+  "silhouette_iou": 1.0,
+  "limits": {
+    "mean_absolute_channel_error_max": 4,
+    "p95_max_channel_error_max": 12,
+    "silhouette_iou_min": 0.995
+  },
+  "source_render_sha256": "3fb441a982f781c8a1aa31adb83a916a438573525ec767cc4db07a23244f5fff",
+  "export_render_sha256": "601705751784ecc97e844819531d5722945301555e33366e59a011dd5725e227",
+  "glb_sha256": "d919205bde4cb4900385ae99d7b790d9e4b5b2de9a1cff068f03ab314efd7951"
+}

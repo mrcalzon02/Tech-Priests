@@ -1,0 +1,19 @@
+{
+  "supply": "bolt-magazines",
+  "passed": true,
+  "mean_absolute_rgb_error_8bit": [
+    0.00012210509178232733,
+    0.00012210509178232733,
+    0.00018315763767349098
+  ],
+  "p95_max_channel_error_8bit": 0,
+  "silhouette_iou": 1.0,
+  "limits": {
+    "mean_absolute_channel_error_max": 4,
+    "p95_max_channel_error_max": 12,
+    "silhouette_iou_min": 0.995
+  },
+  "glb_sha256": "fe3b0623dbe1ca42b5ab1228dab34b92bd81e376cee0425c771e9b17f162588c",
+  "source_render_sha256": "6b5a34906923e381f5ea68b0bf61e70cad2462c6f99fbcb7f5c5e1c1ae9f3c37",
+  "export_render_sha256": "1c3f94e30308eb4dbd9c2c8997885c23e563a1ca8f665293be1b6ce2d74e977f"
+}

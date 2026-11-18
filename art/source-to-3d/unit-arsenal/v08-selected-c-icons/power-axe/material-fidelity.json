@@ -1,0 +1,19 @@
+{
+  "asset": "power-axe",
+  "passed": true,
+  "mean_absolute_rgb_error_8bit": [
+    1.1863713101754745,
+    1.2519056632731365,
+    1.2575842840333555
+  ],
+  "p95_max_channel_error_8bit": 4,
+  "silhouette_iou": 1.0,
+  "limits": {
+    "mean_absolute_channel_error_max": 4,
+    "p95_max_channel_error_max": 12,
+    "silhouette_iou_min": 0.995
+  },
+  "source_render_sha256": "90264cbba6e1ca5ab3e4c71f7dcf668fdbf737dbc17680ab1008ac48c31a580e",
+  "export_render_sha256": "a41d886db5edb02e17bc142428945824f3ebe4be312ffc2fc27285b6f0f23d1a",
+  "glb_sha256": "4cc884a51a1900204745c55d83f87be4dc6bf8ac34c7d7f09885985ce16098d3"
+}

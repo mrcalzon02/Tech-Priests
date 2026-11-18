@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "asset": "martian-manufactorum",
+  "source_method": "unchanged authored factory GLB reused as item icon",
+  "original_glb": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\local-validation\\sources\\Tech-Priests\\art\\source-to-3d\\faction-factories-v4\\candidates\\martian\\martian.glb",
+  "original_glb_sha256": "72464ca3b58b2890442532aa70bc1df139e2d8468762eff6555cf41bcf083855",
+  "original_editable_master": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\local-validation\\sources\\Tech-Priests\\art\\source-to-3d\\faction-factories-v4\\candidates\\martian\\martian-source.blend",
+  "original_editable_sha256": "5196628ddf78d6c0ae07ae559227d61af50bc47920749ae3be6543d4bf87ac41",
+  "glb_sha256": "72464ca3b58b2890442532aa70bc1df139e2d8468762eff6555cf41bcf083855",
+  "authored_sha256": "890816a08426343b7a668f4ae1b6a741d37ba378d654624fb97ddc0b11a0af09",
+  "triangles": 68724,
+  "degenerate_triangles": 0,
+  "pose": "upright building; canonical FMPL 45-degree orthographic optics",
+  "new_texture_bake": false
+}

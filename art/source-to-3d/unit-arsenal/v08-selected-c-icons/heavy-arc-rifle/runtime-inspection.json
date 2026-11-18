@@ -1,0 +1,163 @@
+{
+  "passed": true,
+  "roster": {
+    "id": "heavy-arc-rifle",
+    "unit": "Kataphron Breacher",
+    "label": "Heavy arc rifle",
+    "supply": "heavy-arc-cells",
+    "stage": "Late / yellow",
+    "donor": "Mechanicus/Kataphron-Breacher",
+    "mesh": "KataphronBreacher",
+    "groups": [
+      "GunArm"
+    ],
+    "grip": "GunArm",
+    "muzzle": "GunArmMuzzle"
+  },
+  "source": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\art\\source-to-3d\\gladius-unit-donors\\Mechanicus\\Kataphron-Breacher\\Kataphron-Breacher.blend",
+  "source_sha256": "53ee8c5fbd4c2480fec0d6ac691d2607b37120eee1ee2061eb40c9f8e7e4b68b",
+  "extraction_groups": [
+    "GunArm"
+  ],
+  "source_mesh": "KataphronBreacher",
+  "grip_world_matrix": [
+    [
+      -5.354300114390753e-08,
+      0.8985669016838074,
+      -0.050768569111824036,
+      20.412639617919922
+    ],
+    [
+      0.8999999761581421,
+      -5.07965935980792e-08,
+      -1.848246824920352e-06,
+      -18.939695358276367
+    ],
+    [
+      -1.8481690631233505e-06,
+      -0.050768569111824036,
+      -0.8985669016838074,
+      61.29277801513672
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "muzzle_world": [
+    63.45256042480469,
+    -18.939695358276367,
+    65.38981628417969
+  ],
+  "basis": [
+    [
+      -2.9470780305018707e-07,
+      0.9885691404342651,
+      -0.15076790750026703
+    ],
+    [
+      1.0,
+      -1.54360595416847e-08,
+      -2.0559245967888273e-06
+    ],
+    [
+      -2.0347511053842027e-06,
+      -0.15076792240142822,
+      -0.9885692596435547
+    ]
+  ],
+  "scale": 0.03378277472920163,
+  "item_roll": [
+    [
+      1.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.999998927116394,
+      -0.0014567513717338443
+    ],
+    [
+      0.0,
+      0.0014567513717338443,
+      0.999998927116394
+    ]
+  ],
+  "adaptation": [],
+  "triangles": 1056,
+  "degenerate_triangles": 0,
+  "bounds_max_error": 0.0,
+  "glb_sha256": "c5484e8ec26772e32dfcf9427e1a1ba89eb86360849a15ac936c6626db6c2596",
+  "source_unchanged": true,
+  "native_uv_preserved": true,
+  "production_atlas": "ProductionAtlas",
+  "attribution": "Proxy Studios / Slitherine Ltd. / Games Workshop; original donor geometry and texture rights retained",
+  "presentation": {
+    "preset": "C",
+    "model_rotation": [
+      [
+        0.8012516498565674,
+        -0.3392205536365509,
+        -0.49287453293800354,
+        0.0
+      ],
+      [
+        0.5437327027320862,
+        0.7565965056419373,
+        0.3632032871246338,
+        0.0
+      ],
+      [
+        0.24970115721225739,
+        -0.5590091943740845,
+        0.7906694412231445,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "projected_forward_degrees": 35,
+    "end_view_degrees": 12,
+    "top_view_degrees": 18,
+    "camera_elevation_degrees": 45,
+    "camera_azimuth_degrees": 0,
+    "frame": "Muzzle upper-right, stock/grip lower-left",
+    "method": "Rigid model rotation, no raster rotation and no camera rotation",
+    "predecessor": "art\\source-to-3d\\unit-arsenal\\v04-native-uv-textures\\heavy-arc-rifle",
+    "matrix": [
+      [
+        0.8012516498565674,
+        -0.3392205536365509,
+        -0.49287453293800354,
+        0.097799152135849
+      ],
+      [
+        0.5437327027320862,
+        0.7565965056419373,
+        0.3632032871246338,
+        -0.24357616901397705
+      ],
+      [
+        0.24970115721225739,
+        -0.5590091943740845,
+        0.7906694412231445,
+        -0.10270319133996964
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ]
+  },
+  "native_uv_layout_unchanged": true,
+  "textures_rebaked": false
+}

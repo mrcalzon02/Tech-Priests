@@ -1,0 +1,159 @@
+{
+  "passed": true,
+  "roster": {
+    "id": "lasgun",
+    "unit": "Guardsman",
+    "label": "Lasgun",
+    "supply": "las-charge-cells",
+    "stage": "Early / red",
+    "donor": "Imperial/Guardsman",
+    "mesh": "GuardsmanLasgun",
+    "groups": [],
+    "grip": "GuardsmanLasgunBone",
+    "muzzle": "GuardsmanLasgunMuzzle0"
+  },
+  "source": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\art\\source-to-3d\\gladius-unit-donors\\Imperial\\Guardsman\\Guardsman.blend",
+  "source_sha256": "fcb393d1c233e7b3e6703e6b81b55888ec6de680527f7cfdc56bb23b41222e0e",
+  "extraction_groups": [],
+  "source_mesh": "GuardsmanLasgun",
+  "grip_world_matrix": [
+    [
+      -0.9809041023254395,
+      -0.01759873703122139,
+      -0.19369392096996307,
+      9.000632286071777
+    ],
+    [
+      0.04177575930953026,
+      0.9535893201828003,
+      -0.2981991767883301,
+      -7.572290420532227
+    ],
+    [
+      0.18995216488838196,
+      -0.3005966246128082,
+      -0.9346442222595215,
+      39.81690216064453
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "muzzle_world": [
+    7.442695140838623,
+    26.459327697753906,
+    34.66175079345703
+  ],
+  "basis": [
+    [
+      0.05719418078660965,
+      0.9876394271850586,
+      -0.14593525230884552
+    ],
+    [
+      0.9779675602912903,
+      -0.026028456166386604,
+      0.20712833106517792
+    ],
+    [
+      0.20076963305473328,
+      -0.1545664668083191,
+      -0.9673680067062378
+    ]
+  ],
+  "scale": 0.04308560858359805,
+  "item_roll": [
+    [
+      1.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.9989197254180908,
+      0.04646867513656616
+    ],
+    [
+      0.0,
+      -0.04646867513656616,
+      0.9989197254180908
+    ]
+  ],
+  "adaptation": [],
+  "triangles": 196,
+  "degenerate_triangles": 0,
+  "bounds_max_error": 0.0,
+  "glb_sha256": "0f09aee2750850a8a74911316e19967dc6aab8761b364e819207c8696999dcf1",
+  "source_unchanged": true,
+  "native_uv_preserved": true,
+  "production_atlas": "ProductionAtlas",
+  "attribution": "Proxy Studios / Slitherine Ltd. / Games Workshop; original donor geometry and texture rights retained",
+  "presentation": {
+    "preset": "C",
+    "model_rotation": [
+      [
+        0.8012516498565674,
+        -0.3392205536365509,
+        -0.49287453293800354,
+        0.0
+      ],
+      [
+        0.5437327027320862,
+        0.7565965056419373,
+        0.3632032871246338,
+        0.0
+      ],
+      [
+        0.24970115721225739,
+        -0.5590091943740845,
+        0.7906694412231445,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "projected_forward_degrees": 35,
+    "end_view_degrees": 12,
+    "top_view_degrees": 18,
+    "camera_elevation_degrees": 45,
+    "camera_azimuth_degrees": 0,
+    "frame": "Muzzle upper-right, stock/grip lower-left",
+    "method": "Rigid model rotation, no raster rotation and no camera rotation",
+    "predecessor": "art\\source-to-3d\\unit-arsenal\\v04-native-uv-textures\\lasgun",
+    "matrix": [
+      [
+        0.8012516498565674,
+        -0.3392205536365509,
+        -0.49287453293800354,
+        0.17725171148777008
+      ],
+      [
+        0.5437327027320862,
+        0.7565965056419373,
+        0.3632032871246338,
+        -0.45311886072158813
+      ],
+      [
+        0.24970115721225739,
+        -0.5590091943740845,
+        0.7906694412231445,
+        -0.1959461122751236
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ]
+  },
+  "native_uv_layout_unchanged": true,
+  "textures_rebaked": false
+}

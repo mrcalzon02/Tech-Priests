@@ -1,0 +1,155 @@
+{
+  "status": "installed; awaiting native icon-only comparison",
+  "bindings": [
+    {
+      "type": "gun",
+      "name": "tech-priests-galvanic-rifle",
+      "model": "art\\source-to-3d\\unit-arsenal\\v08-selected-c-icons\\galvanic-rifle",
+      "icon_sha256": "3b7b961ee867337234592be3c51e3097f5562915a80c6d339b7fe3d54933b683"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-lasgun",
+      "model": "art\\source-to-3d\\unit-arsenal\\v08-selected-c-icons\\lasgun",
+      "icon_sha256": "9be394d5baa2b3abcc81f93b65c88561861b0bb5e882062d1508653c425e66fe"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-omnissian-axe",
+      "model": "art\\source-to-3d\\unit-arsenal\\v08-selected-c-icons\\power-axe",
+      "icon_sha256": "11b57b3b41936fa5925905bc2342083f715c43fe7954638241b76b048b269cfe"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-laspistol",
+      "model": "art\\source-to-3d\\unit-arsenal\\v08-selected-c-icons\\laspistol",
+      "icon_sha256": "69a7ef20c52d61344980a34206abb20396beb1fac5d03332a5e5f771fe906b9f"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-bolt-pistol",
+      "model": "art\\source-to-3d\\unit-arsenal\\v08-selected-c-icons\\bolt-pistol",
+      "icon_sha256": "a7e7c58c7bca5212c01d395eadb6a7d4cf15b589df34fae7cf6f1d6605abf1bf"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-radium-carbine",
+      "model": "art\\source-to-3d\\unit-arsenal\\v08-selected-c-icons\\radium-carbine",
+      "icon_sha256": "3d6aab8e2fe5d434f0d6da8080256b23859d09015d85a948b72c3d3617f0da14"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-radium-serpenta",
+      "model": "art\\source-to-3d\\unit-arsenal\\v08-selected-c-icons\\radium-serpenta",
+      "icon_sha256": "bd9cfd206a28731771fb933c10b6a5b85b379be08953915cb1d467b5f71924ba"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-gamma-pistol",
+      "model": "art\\source-to-3d\\unit-arsenal\\v08-selected-c-icons\\gamma-pistol",
+      "icon_sha256": "5739d335143f67321540962ac3778b949f5f1101ad7279736b0e82b1de9544bb"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-boltgun",
+      "model": "art\\source-to-3d\\unit-arsenal\\v08-selected-c-icons\\boltgun",
+      "icon_sha256": "8ccd15de7019fff5e37f989e7dac988f5d5532fd22557cb11b5b583288814690"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-dialogus-staff",
+      "model": "art\\source-to-3d\\unit-arsenal\\v08-selected-c-icons\\dialogus-staff",
+      "icon_sha256": "b44658694b476c14bc9cb5df3f7bacdc7fd1559037ec67806d4e37a194f4f2e2"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-condemnor-boltgun",
+      "model": "art\\source-to-3d\\unit-arsenal\\v08-selected-c-icons\\condemnor-boltgun",
+      "icon_sha256": "e9f8e8cacbd17124b7fe0613918d0c032396a014841642198dd211aaceede0a3"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-magnarail-lance",
+      "model": "art\\source-to-3d\\unit-arsenal\\v08-selected-c-icons\\magnarail-lance",
+      "icon_sha256": "d91ee1150aaf5a127ba01167c6fdf8b9dbbe889b2e10fdb5f3532679e3da35cd"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-volkite-blaster",
+      "model": "art\\source-to-3d\\unit-arsenal\\v08-selected-c-icons\\volkite-blaster",
+      "icon_sha256": "a283ebd378c84da340c4f1a45d067848426ee996bbe39157bd97c36cd420b9a3"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-heavy-arc-rifle",
+      "model": "art\\source-to-3d\\unit-arsenal\\v08-selected-c-icons\\heavy-arc-rifle",
+      "icon_sha256": "a2023393bc6f1b1344dfd71180b5902602879ed77f03d0c3a68b2ba3e73de1a9"
+    },
+    {
+      "type": "gun",
+      "name": "tech-priests-heavy-grav-cannon",
+      "model": "art\\source-to-3d\\unit-arsenal\\v08-selected-c-icons\\heavy-grav-cannon",
+      "icon_sha256": "c1c71ea4dbf18699a1595b1f2dd7dc4a59f20bac204b48883c1e8a9ae159fe6a"
+    },
+    {
+      "type": "ammo",
+      "name": "tech-priests-galvanic-clip",
+      "model": "art\\source-to-3d\\unit-arsenal\\supplies\\v02-reuse-imports\\galvanic-clips",
+      "icon_sha256": "47bf15b22e005a9e5d8b5012439e8a746e10cdc2dcdbda18f2d66bc30d3ba768"
+    },
+    {
+      "type": "ammo",
+      "name": "tech-priests-las-charge-cell",
+      "model": "art\\source-to-3d\\unit-arsenal\\supplies\\v02-reuse-imports\\las-charge-cells",
+      "icon_sha256": "2d8590ea96cb20e806088f7c360afa6d7f5894fa3082706dc3fea2f3d1fd363f"
+    },
+    {
+      "type": "ammo",
+      "name": "tech-priests-induction-charge",
+      "model": "art\\source-to-3d\\unit-arsenal\\supplies\\v02-reuse-imports\\tool-charges",
+      "icon_sha256": "80f2c28400e9d1b5574f5b895f470ebe44289fd67f610b80f7af4a3c0891fccf"
+    },
+    {
+      "type": "ammo",
+      "name": "tech-priests-bolt-magazine",
+      "model": "art\\source-to-3d\\unit-arsenal\\supplies\\v02-reuse-imports\\bolt-magazines",
+      "icon_sha256": "db807aecdbc8e4f9585a69b48c8ea2529cde6faa1f543d606f1049517ce791c8"
+    },
+    {
+      "type": "ammo",
+      "name": "tech-priests-radium-magazine",
+      "model": "art\\source-to-3d\\unit-arsenal\\supplies\\v02-reuse-imports\\radium-magazines",
+      "icon_sha256": "dbaeb840b569a17c478c193556fc224d75c0bf08fda80b0783169a6c47765a36"
+    },
+    {
+      "type": "ammo",
+      "name": "tech-priests-gamma-cell",
+      "model": "art\\source-to-3d\\unit-arsenal\\supplies\\v02-reuse-imports\\gamma-cells",
+      "icon_sha256": "fc2c7fb2492a53db6568756b9e9f55857dce3e927fe345de1281d6a9e3178e99"
+    },
+    {
+      "type": "ammo",
+      "name": "tech-priests-magnarail-slug-pack",
+      "model": "art\\source-to-3d\\unit-arsenal\\supplies\\v03-visible-slugs\\magnarail-slug-packs",
+      "icon_sha256": "e27a18f880d13f435af224920d6914c86fb8f32aa27f610ea304849e247062a9"
+    },
+    {
+      "type": "ammo",
+      "name": "tech-priests-volkite-cell",
+      "model": "art\\source-to-3d\\unit-arsenal\\supplies\\v02-reuse-imports\\volkite-cells",
+      "icon_sha256": "311fbe2ec742d65b32b30f2c16925a2d366bea4da8a335e2607ffb3810d70945"
+    },
+    {
+      "type": "ammo",
+      "name": "tech-priests-heavy-arc-cell",
+      "model": "art\\source-to-3d\\unit-arsenal\\supplies\\v02-reuse-imports\\heavy-arc-cells",
+      "icon_sha256": "0b37060406699ffe7b77b339fca719bc8674e5656a851c54e7d8384bfdac5fc0"
+    },
+    {
+      "type": "ammo",
+      "name": "tech-priests-graviton-charge",
+      "model": "art\\source-to-3d\\unit-arsenal\\supplies\\v02-reuse-imports\\graviton-charges",
+      "icon_sha256": "3bbc5164aa1b87fd27cdd1352e632ceca19189a3f74e39b276839d47c48cd37d"
+    }
+  ]
+}

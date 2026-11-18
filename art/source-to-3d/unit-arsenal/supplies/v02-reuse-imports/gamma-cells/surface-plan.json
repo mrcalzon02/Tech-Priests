@@ -1,0 +1,98 @@
+{
+  "supply": {
+    "id": "gamma-cells",
+    "label": "Gamma cells",
+    "users": [
+      "Datasmith"
+    ],
+    "weapons": [
+      "gamma-pistol"
+    ]
+  },
+  "regions": [
+    {
+      "part": "Gamma cell support cradle",
+      "materials": [
+        "gamma-cells | steel"
+      ]
+    },
+    {
+      "part": "Ceramic-contained gamma cell",
+      "materials": [
+        "gamma-cells | ceramic"
+      ]
+    },
+    {
+      "part": "Containment seal",
+      "materials": [
+        "gamma-cells | brass"
+      ]
+    },
+    {
+      "part": "Containment seal.001",
+      "materials": [
+        "gamma-cells | brass"
+      ]
+    },
+    {
+      "part": "Shielded gamma window",
+      "materials": [
+        "gamma-cells | violet"
+      ]
+    },
+    {
+      "part": "Gamma terminal",
+      "materials": [
+        "gamma-cells | brass"
+      ]
+    },
+    {
+      "part": "Ceramic-contained gamma cell.001",
+      "materials": [
+        "gamma-cells | ceramic"
+      ]
+    },
+    {
+      "part": "Containment seal.002",
+      "materials": [
+        "gamma-cells | brass"
+      ]
+    },
+    {
+      "part": "Containment seal.003",
+      "materials": [
+        "gamma-cells | brass"
+      ]
+    },
+    {
+      "part": "Shielded gamma window.001",
+      "materials": [
+        "gamma-cells | violet"
+      ]
+    },
+    {
+      "part": "Gamma terminal.001",
+      "materials": [
+        "gamma-cells | brass"
+      ]
+    },
+    {
+      "part": "Twin cell hold-down",
+      "materials": [
+        "gamma-cells | dark"
+      ]
+    },
+    {
+      "part": "Twin cell hold-down.001",
+      "materials": [
+        "gamma-cells | dark"
+      ]
+    }
+  ],
+  "principles": [
+    "Functional silhouette before ornament",
+    "Steel shell, copper contacts, ceramic insulation and recessed status lenses",
+    "Model-specific wear, cavity shading and machined edge highlights",
+    "No floating gauges, wires or unsupported fittings"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "asset": "magnarail-lance",
+  "passed": true,
+  "mean_absolute_rgb_error_8bit": [
+    1.7057519168603563,
+    1.6755096043386497,
+    1.6764713739948172
+  ],
+  "p95_max_channel_error_8bit": 6,
+  "silhouette_iou": 1.0,
+  "limits": {
+    "mean_absolute_channel_error_max": 4,
+    "p95_max_channel_error_max": 12,
+    "silhouette_iou_min": 0.995
+  },
+  "source_render_sha256": "20a6f03579b27c9ce31bedbde78d3e478e4b9bea70dad5978652a6b31e45b7ce",
+  "export_render_sha256": "9ecd54dd38e33bd20fa42fd3c61993294bc185a5953214d7e153b47df7488fc6",
+  "glb_sha256": "f5bdf691fc42be1c0b0715595b66b6fe36809dbe3d68aab47f03307f1d46a6fb"
+}

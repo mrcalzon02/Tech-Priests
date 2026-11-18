@@ -1,0 +1,100 @@
+{
+  "supply": {
+    "id": "tool-charges",
+    "label": "Tool charges",
+    "users": [
+      "Enginseer",
+      "Dialogus"
+    ],
+    "weapons": [
+      "power-axe",
+      "dialogus-staff"
+    ]
+  },
+  "regions": [
+    {
+      "part": "Hexagonal induction cartridge",
+      "materials": [
+        "tool-charges | steel"
+      ]
+    },
+    {
+      "part": "End retaining cap",
+      "materials": [
+        "tool-charges | dark"
+      ]
+    },
+    {
+      "part": "End retaining cap.001",
+      "materials": [
+        "tool-charges | dark"
+      ]
+    },
+    {
+      "part": "Contained induction winding",
+      "materials": [
+        "tool-charges | copper"
+      ]
+    },
+    {
+      "part": "Contained induction winding.001",
+      "materials": [
+        "tool-charges | copper"
+      ]
+    },
+    {
+      "part": "Contained induction winding.002",
+      "materials": [
+        "tool-charges | copper"
+      ]
+    },
+    {
+      "part": "Contained induction winding.003",
+      "materials": [
+        "tool-charges | copper"
+      ]
+    },
+    {
+      "part": "Contained induction winding.004",
+      "materials": [
+        "tool-charges | copper"
+      ]
+    },
+    {
+      "part": "Coil guard side bridge",
+      "materials": [
+        "tool-charges | steel"
+      ]
+    },
+    {
+      "part": "Inset lamp bezel",
+      "materials": [
+        "tool-charges | dark"
+      ]
+    },
+    {
+      "part": "Recessed charge lens",
+      "materials": [
+        "tool-charges | cyan"
+      ]
+    },
+    {
+      "part": "Tool power contact",
+      "materials": [
+        "tool-charges | copper"
+      ]
+    },
+    {
+      "part": "Tool power contact.001",
+      "materials": [
+        "tool-charges | copper"
+      ]
+    }
+  ],
+  "principles": [
+    "Functional silhouette before ornament",
+    "Steel shell, copper contacts, ceramic insulation and recessed status lenses",
+    "Model-specific wear, cavity shading and machined edge highlights",
+    "No floating gauges, wires or unsupported fittings"
+  ]
+}

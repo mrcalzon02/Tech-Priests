@@ -1,0 +1,19 @@
+{
+  "asset": "lasgun",
+  "passed": true,
+  "mean_absolute_rgb_error_8bit": [
+    0.14567497353988262,
+    0.131049745020687,
+    0.13903588954103724
+  ],
+  "p95_max_channel_error_8bit": 1,
+  "silhouette_iou": 1.0,
+  "limits": {
+    "mean_absolute_channel_error_max": 4,
+    "p95_max_channel_error_max": 12,
+    "silhouette_iou_min": 0.995
+  },
+  "source_render_sha256": "d96a626997428ab18e3b03e1c9dc46e9e66854f68cfbea1dc1190473c432ee29",
+  "export_render_sha256": "499040ab266c82c1a5887c3034cf5d4138c8eca738adacf09ba863861e691e80",
+  "glb_sha256": "0f09aee2750850a8a74911316e19967dc6aab8761b364e819207c8696999dcf1"
+}

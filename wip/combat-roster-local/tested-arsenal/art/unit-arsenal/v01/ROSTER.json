@@ -1,0 +1,206 @@
+[
+  {
+    "id": "galvanic-rifle",
+    "unit": "Skitarii Ranger",
+    "label": "Galvanic rifle",
+    "supply": "galvanic-clips",
+    "stage": "Start",
+    "donor": "Mechanicus/Skitarii-Ranger",
+    "mesh": "SkitariiRanger",
+    "groups": [
+      "Rifle"
+    ],
+    "grip": "Rifle",
+    "muzzle": "Muzzle"
+  },
+  {
+    "id": "lasgun",
+    "unit": "Guardsman",
+    "label": "Lasgun",
+    "supply": "las-charge-cells",
+    "stage": "Early / red",
+    "donor": "Imperial/Guardsman",
+    "mesh": "GuardsmanLasgun",
+    "groups": [],
+    "grip": "GuardsmanLasgunBone",
+    "muzzle": "GuardsmanLasgunMuzzle0"
+  },
+  {
+    "id": "power-axe",
+    "unit": "Enginseer",
+    "label": "Power axe",
+    "supply": "tool-charges",
+    "stage": "Early / red",
+    "donor": "Mechanicus/Tech-Priest-Enginseer",
+    "mesh": "TechpriestEnginseerPowerAxe",
+    "groups": [],
+    "grip": "Axe",
+    "muzzle": null
+  },
+  {
+    "id": "laspistol",
+    "unit": "Imperial Officer",
+    "label": "Laspistol",
+    "supply": "las-charge-cells",
+    "stage": "Green",
+    "donor": "Imperial/Guardsman",
+    "mesh": "GuardsmanLasgun",
+    "groups": [],
+    "grip": "GuardsmanLasgunBone",
+    "muzzle": "GuardsmanLasgunMuzzle0"
+  },
+  {
+    "id": "bolt-pistol",
+    "unit": "Lord Commissar",
+    "label": "Bolt pistol",
+    "supply": "bolt-magazines",
+    "stage": "Green + military",
+    "donor": "Imperial/Lord-Commissar",
+    "mesh": "LordCommissarBoltPistol",
+    "groups": [],
+    "grip": "RightHandBone",
+    "muzzle": ".Muzzle0"
+  },
+  {
+    "id": "radium-carbine",
+    "unit": "Skitarii Vanguard",
+    "label": "Radium carbine",
+    "supply": "radium-magazines",
+    "stage": "Mid / blue",
+    "donor": "Mechanicus/Skitarii-Vanguard",
+    "mesh": "SkitariiVanguard",
+    "groups": [
+      "Gun"
+    ],
+    "grip": "Gun",
+    "muzzle": "Muzzle"
+  },
+  {
+    "id": "radium-serpenta",
+    "unit": "Skitarii Marshal",
+    "label": "Radium serpenta",
+    "supply": "radium-magazines",
+    "stage": "Mid / blue",
+    "donor": "Mechanicus/Skitarii-Marshal",
+    "mesh": "SkitariiMarshal",
+    "groups": [
+      "Gun"
+    ],
+    "grip": "Gun",
+    "muzzle": "GunMuzzle"
+  },
+  {
+    "id": "gamma-pistol",
+    "unit": "Datasmith",
+    "label": "Gamma pistol",
+    "supply": "gamma-cells",
+    "stage": "Mid / blue",
+    "donor": "Mechanicus/Cybernetica-Datasmith",
+    "mesh": "CyberneticaDatasmith",
+    "groups": [
+      "Gun"
+    ],
+    "grip": "Gun",
+    "muzzle": "Muzzle"
+  },
+  {
+    "id": "boltgun",
+    "unit": "Battle Sister",
+    "label": "Boltgun",
+    "supply": "bolt-magazines",
+    "stage": "Mid / blue",
+    "donor": "Imperial/Battle-Sister",
+    "mesh": "BattleSister",
+    "groups": [
+      "Gun"
+    ],
+    "grip": "Gun",
+    "muzzle": "Muzzle"
+  },
+  {
+    "id": "dialogus-staff",
+    "unit": "Dialogus",
+    "label": "Dialogus staff",
+    "supply": "tool-charges",
+    "stage": "Mid / blue",
+    "donor": "Imperial/Dialogus",
+    "mesh": "Dialogus",
+    "groups": [
+      "Staff",
+      "Staff_Scroll1",
+      "Staff_Scroll2"
+    ],
+    "grip": "Staff",
+    "muzzle": null
+  },
+  {
+    "id": "condemnor-boltgun",
+    "unit": "Canoness",
+    "label": "Condemnor boltgun",
+    "supply": "bolt-magazines",
+    "stage": "Later mid / blue",
+    "donor": "Imperial/Canoness",
+    "mesh": "Canoness",
+    "groups": [
+      "Gun"
+    ],
+    "grip": "Gun",
+    "muzzle": "Muzzle"
+  },
+  {
+    "id": "magnarail-lance",
+    "unit": "Manipulus",
+    "label": "Magnarail lance",
+    "supply": "magnarail-slug-packs",
+    "stage": "Advanced / purple",
+    "donor": "Mechanicus/Tech-Priest-Manipulus",
+    "mesh": "TechPriestManipulus",
+    "groups": [
+      "Backarm_Forearm_R"
+    ],
+    "grip": "Backarm_Forearm_R",
+    "muzzle": "Muzzle"
+  },
+  {
+    "id": "volkite-blaster",
+    "unit": "Dominus",
+    "label": "Volkite blaster",
+    "supply": "volkite-cells",
+    "stage": "Late / yellow",
+    "donor": "Mechanicus/Tech-Priest-Dominus",
+    "mesh": "TechPriestDominus",
+    "groups": [
+      "Forearm2_R"
+    ],
+    "grip": "Forearm2_R",
+    "muzzle": "Muzzle1"
+  },
+  {
+    "id": "heavy-arc-rifle",
+    "unit": "Kataphron Breacher",
+    "label": "Heavy arc rifle",
+    "supply": "heavy-arc-cells",
+    "stage": "Late / yellow",
+    "donor": "Mechanicus/Kataphron-Breacher",
+    "mesh": "KataphronBreacher",
+    "groups": [
+      "GunArm"
+    ],
+    "grip": "GunArm",
+    "muzzle": "GunArmMuzzle"
+  },
+  {
+    "id": "heavy-grav-cannon",
+    "unit": "Kataphron Destroyer",
+    "label": "Heavy grav-cannon",
+    "supply": "graviton-charges",
+    "stage": "Final late-game unlock",
+    "donor": "Mechanicus/Kataphron-Destroyer",
+    "mesh": "KataphronDestroyer",
+    "groups": [
+      "GunArm"
+    ],
+    "grip": "GunArm",
+    "muzzle": "GunArmMuzzle"
+  }
+]

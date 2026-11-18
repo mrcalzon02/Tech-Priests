@@ -1,0 +1,17 @@
+{
+  "asset": "guard-muster-hall",
+  "passed": true,
+  "mean_absolute_rgb_error_8bit": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "p95_max_channel_error_8bit": 0,
+  "silhouette_iou": 1.0,
+  "limits": {
+    "mean_max": 4,
+    "p95_max": 12,
+    "iou_min": 0.995
+  },
+  "glb_sha256": "d3212d2147e45ced07b5b9cb615e0573c3dfe3cf8147e7b3232fe1f06b084ec2"
+}

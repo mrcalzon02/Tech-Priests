@@ -1,0 +1,14 @@
+{
+  "method": "Retain actual imported magazine geometry, UVs and textures; no replacement appearance invented",
+  "weapon": "heavy-grav-cannon",
+  "supply": {
+    "id": "graviton-charges",
+    "label": "Graviton charges",
+    "users": [
+      "Kataphron Destroyer"
+    ],
+    "weapons": [
+      "heavy-grav-cannon"
+    ]
+  }
+}

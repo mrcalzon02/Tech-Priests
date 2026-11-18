@@ -1,0 +1,19 @@
+{
+  "asset": "sororitas-convent",
+  "assistant_gate_passed": true,
+  "owner_visual_acceptance": false,
+  "glb_sha256": "8871e5f33830a2c1bef345aace1ff50128191565e3e6507d4729a341de7e1341",
+  "source_sha256": "5235451bd7623f28cc937f8f2871c08a510bc6632c4c5b4326dff93b5a1d7c25",
+  "render_sha256": "31ab48c5c43d82faf0f6c34acffc762657b4bc1b369914fc9f68b3d18f1bd475",
+  "reference_icon_sha256": [
+    "8643739c0bdd5e750c7439db49f3225b4ac083008f3129469690ceda53ec20ed"
+  ],
+  "contact_sheet_sha256": "3290e2de2c72bdc074017c3f329bb2d75ede15dfdd2b73d1535c8193ea4457b8",
+  "scores_out_of_5": {
+    "export_fidelity": 5,
+    "native_size_readability": 4,
+    "construction": 4,
+    "material_identity": 4
+  },
+  "review": "Reuse the existing authored Sororitas Convent model; upright building under canonical FMPL optics. Current 128 px and 64 px renders were inspected on the final contact sheets. Existing project-authored building GLB is unchanged; inventory capture only."
+}

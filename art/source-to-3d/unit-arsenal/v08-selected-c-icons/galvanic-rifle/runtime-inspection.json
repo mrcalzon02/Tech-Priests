@@ -1,0 +1,165 @@
+{
+  "passed": true,
+  "roster": {
+    "id": "galvanic-rifle",
+    "unit": "Skitarii Ranger",
+    "label": "Galvanic rifle",
+    "supply": "galvanic-clips",
+    "stage": "Start",
+    "donor": "Mechanicus/Skitarii-Ranger",
+    "mesh": "SkitariiRanger",
+    "groups": [
+      "Rifle"
+    ],
+    "grip": "Rifle",
+    "muzzle": "Muzzle"
+  },
+  "source": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\art\\source-to-3d\\gladius-unit-donors\\Mechanicus\\Skitarii-Ranger\\Skitarii-Ranger.blend",
+  "source_sha256": "4b8f1150685596355ea6136c481dc558ceb9c9aac12e7f3659882a177c9bae3a",
+  "extraction_groups": [
+    "Rifle"
+  ],
+  "source_mesh": "SkitariiRanger",
+  "grip_world_matrix": [
+    [
+      -0.4502246379852295,
+      0.8054792284965515,
+      -0.3853583335876465,
+      2.164083480834961
+    ],
+    [
+      0.8857070803642273,
+      0.3481322228908539,
+      -0.30712687969207764,
+      -4.3983154296875
+    ],
+    [
+      -0.1132286787033081,
+      -0.47959068417549133,
+      -0.8701562881469727,
+      39.25265884399414
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "muzzle_world": [
+    61.7447509765625,
+    21.50235366821289,
+    4.948356628417969
+  ],
+  "basis": [
+    [
+      -6.33629497315269e-07,
+      0.9998949766159058,
+      -0.014490601606667042
+    ],
+    [
+      0.991768479347229,
+      -0.0018548142397776246,
+      -0.12803111970424652
+    ],
+    [
+      -0.12804454565048218,
+      -0.014371400699019432,
+      -0.9916642308235168
+    ]
+  ],
+  "scale": 0.026787575425605135,
+  "item_roll": [
+    [
+      1.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.895077645778656,
+      -0.4459102749824524
+    ],
+    [
+      0.0,
+      0.4459102749824524,
+      0.895077645778656
+    ]
+  ],
+  "adaptation": [
+    "Retained donor stock/receiver; shortened arquebus fore-end for the agreed starter galvanic-rifle role."
+  ],
+  "triangles": 2212,
+  "degenerate_triangles": 0,
+  "bounds_max_error": 0.0,
+  "glb_sha256": "f78400b7a0dd8d95929cfe8b217a9c1099323cd15abaf9937689edbefc5caf84",
+  "source_unchanged": true,
+  "native_uv_preserved": true,
+  "production_atlas": "ProductionAtlas",
+  "attribution": "Proxy Studios / Slitherine Ltd. / Games Workshop; original donor geometry and texture rights retained",
+  "presentation": {
+    "preset": "C",
+    "model_rotation": [
+      [
+        0.8012516498565674,
+        -0.3392205536365509,
+        -0.49287453293800354,
+        0.0
+      ],
+      [
+        0.5437327027320862,
+        0.7565965056419373,
+        0.3632032871246338,
+        0.0
+      ],
+      [
+        0.24970115721225739,
+        -0.5590091943740845,
+        0.7906694412231445,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "projected_forward_degrees": 35,
+    "end_view_degrees": 12,
+    "top_view_degrees": 18,
+    "camera_elevation_degrees": 45,
+    "camera_azimuth_degrees": 0,
+    "frame": "Muzzle upper-right, stock/grip lower-left",
+    "method": "Rigid model rotation, no raster rotation and no camera rotation",
+    "predecessor": "art\\source-to-3d\\unit-arsenal\\v04-native-uv-textures\\galvanic-rifle",
+    "matrix": [
+      [
+        0.8012516498565674,
+        -0.3392205536365509,
+        -0.49287453293800354,
+        0.07357025891542435
+      ],
+      [
+        0.5437327027320862,
+        0.7565965056419373,
+        0.3632032871246338,
+        -0.20864826440811157
+      ],
+      [
+        0.24970115721225739,
+        -0.5590091943740845,
+        0.7906694412231445,
+        -0.09863457828760147
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ]
+  },
+  "native_uv_layout_unchanged": true,
+  "textures_rebaked": false
+}

@@ -1,0 +1,16 @@
+{
+  "method": "Retain actual imported magazine geometry, UVs and textures; no replacement appearance invented",
+  "weapon": "radium-carbine",
+  "supply": {
+    "id": "radium-magazines",
+    "label": "Radium magazines",
+    "users": [
+      "Skitarii Vanguard",
+      "Skitarii Marshal"
+    ],
+    "weapons": [
+      "radium-carbine",
+      "radium-serpenta"
+    ]
+  }
+}

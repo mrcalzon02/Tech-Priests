@@ -1,0 +1,19 @@
+{
+  "supply": "magnarail-slug-packs",
+  "passed": true,
+  "mean_absolute_rgb_error_8bit": [
+    0.25844881537773806,
+    0.253039785426911,
+    0.25666070630308446
+  ],
+  "p95_max_channel_error_8bit": 1,
+  "silhouette_iou": 1.0,
+  "limits": {
+    "mean_absolute_channel_error_max": 4,
+    "p95_max_channel_error_max": 12,
+    "silhouette_iou_min": 0.995
+  },
+  "glb_sha256": "acacb1ae9fa9879791cc3f6eb99de8d156801f69d887a4c854482e2a5a9ba24f",
+  "source_render_sha256": "99360869b89371d85e2fd89e75fbc75756bf18c169ca1ecddb390363b69a331a",
+  "export_render_sha256": "2db0604f4bc11ecbb898643423753cd6596c985bef9b512aa84ce3750a018848"
+}

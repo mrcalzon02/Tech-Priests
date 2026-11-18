@@ -1,0 +1,19 @@
+{
+  "asset": "field-supply-pack",
+  "assistant_gate_passed": true,
+  "owner_visual_acceptance": false,
+  "glb_sha256": "0a1540cb5880674aab192206075b32389e41ae6b08dfc12ebc79e16a6e863b34",
+  "source_sha256": "14179561ce5b7735998b5ad2a7281ed5769f4b8e25c5c4eb92c852b7a01211c3",
+  "render_sha256": "519e21e278ce3a7a85ed24dffa7501b259b13230f784eec0b9283e9ca048d3b8",
+  "reference_icon_sha256": [
+    "519779858e61b8be29870d07b190d3a6e2db15911eb23283596372bb5eea683c"
+  ],
+  "contact_sheet_sha256": "04ae7cea0dd7c21c432f72e33030807dd3f1f3437ead50045b4f08faf6d3a6c0",
+  "scores_out_of_5": {
+    "export_fidelity": 5,
+    "native_size_readability": 4,
+    "construction": 4,
+    "material_identity": 4
+  },
+  "review": "Canvas field-power pack with supported buckled straps, armored contact cover and recessed fuel gauge. Current 128 px and 64 px renders were inspected on the final contact sheets."
+}

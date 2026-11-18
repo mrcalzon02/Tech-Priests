@@ -1,0 +1,130 @@
+{
+  "bounds_min": [
+    -2.4825000762939453,
+    -2.4825000762939453,
+    0.0
+  ],
+  "bounds_max": [
+    2.4825000762939453,
+    2.4825000762939453,
+    3.859999895095825
+  ],
+  "triangles": 44520,
+  "degenerate_triangles": 0,
+  "uv_area_fraction": 1.0,
+  "textured_area_fraction": 1.0,
+  "source_images": [
+    {
+      "name": "guard base-color",
+      "size": [
+        2048,
+        2048
+      ],
+      "pixels_loaded": true
+    },
+    {
+      "name": "guard base-color.001",
+      "size": [
+        2048,
+        2048
+      ],
+      "pixels_loaded": true
+    },
+    {
+      "name": "guard emission",
+      "size": [
+        2048,
+        2048
+      ],
+      "pixels_loaded": true
+    },
+    {
+      "name": "guard emission.001",
+      "size": [
+        2048,
+        2048
+      ],
+      "pixels_loaded": true
+    },
+    {
+      "name": "guard metallic",
+      "size": [
+        2048,
+        2048
+      ],
+      "pixels_loaded": true
+    },
+    {
+      "name": "guard metallic-guard roughness",
+      "size": [
+        2048,
+        2048
+      ],
+      "pixels_loaded": true
+    },
+    {
+      "name": "guard normal",
+      "size": [
+        2048,
+        2048
+      ],
+      "pixels_loaded": true
+    },
+    {
+      "name": "guard normal.001",
+      "size": [
+        2048,
+        2048
+      ],
+      "pixels_loaded": true
+    },
+    {
+      "name": "guard roughness",
+      "size": [
+        2048,
+        2048
+      ],
+      "pixels_loaded": true
+    }
+  ],
+  "model": "guard",
+  "label": "Imperial Guard Muster Hall",
+  "revision": 4,
+  "authored_parts": 348,
+  "footprint_tiles": 5,
+  "runtime": {
+    "size": 768,
+    "scale": 0.5,
+    "shift": [
+      0,
+      -1.0253048327204939
+    ],
+    "camera_elevation": 45,
+    "sun_ray": [
+      4,
+      6,
+      -8
+    ]
+  },
+  "status": "TECHNICAL_PASS_VISUAL_REVIEW_REQUIRED",
+  "sha256": {
+    "base-color.png": "b839ca52bda60a418ccd290e6a35dfc1a54880ae5c390e5455e2913df2cfb2c6",
+    "emission.png": "5ac5579ae0aa38c3d41b079d75b1f772b6ab7c26bfa978c25df00b8a7b193025",
+    "guard-export-review.blend": "389f1ea3dc0dedef572db6441b019dd435c24f2cc345f49d58e4b0afc4685e32",
+    "guard-source.blend": "52b437e8e7cc4fb7faad9059144937627ce6b0f2a923fac13e34de4f323d2694",
+    "guard.glb": "d3212d2147e45ced07b5b9cb615e0573c3dfe3cf8147e7b3232fe1f06b084ec2",
+    "metallic.png": "c65bd61e860bca787c6d5bab6b61a452977cf63884f6ccaf6bab0488b5848235",
+    "normal.png": "92b69dea5895958daea3eeb949e432915b91cc891d9bf1a6239ff8dc59725f0e",
+    "roughness.png": "5522b7c5de880a67150d29c9cb47135fc289e4855943e88e328ee0199c372291",
+    "renders\\clay.png": "fb3d17eae08abf64877e8470986e6225b5f6e70bacb1e5ae6d6a1901dd00a824",
+    "renders\\closeup.png": "fb28090344132403d8636c0f5c70b5a75590f90c566cec814dac3ba857b63537",
+    "renders\\east-shadow.png": "2bb59116ac67cba7903c988dce08ab8cfcef23ccfe991cb75589c1054052c96c",
+    "renders\\east.png": "ced6bf0da32717bda3c15587bc85467b6ae6e3043c9f013802e8664b9217d265",
+    "renders\\north-shadow.png": "632f8349aaeb3d3a65b974347e636c512d5fc80b9b81577b718eda7ac43c3014",
+    "renders\\north.png": "dbb5141ecfada9856676e565b683e8ccf559e68a676b5fb87e2561525a5f1d1e",
+    "renders\\south-shadow.png": "e09090fc4ee95a7608fe0755ec91a1bfd20c5de2b8dd93d60e6d54bf0ea731d3",
+    "renders\\south.png": "dd53bcf2ea8631c1fdadc884709967f2b7619d14572e3adee8805c56a11e669a",
+    "renders\\west-shadow.png": "48fc1c3e56fc5d2451d32094fa3d1b909f450c9f2e6912992c3c580de0e2e6f3",
+    "renders\\west.png": "0fe94eacacad12e777e5ce5b835abed7ea687cd5beeeb92bdb25deb3cc03a563"
+  }
+}

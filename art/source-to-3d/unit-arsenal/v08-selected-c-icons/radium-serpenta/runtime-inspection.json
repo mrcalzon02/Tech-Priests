@@ -1,0 +1,163 @@
+{
+  "passed": true,
+  "roster": {
+    "id": "radium-serpenta",
+    "unit": "Skitarii Marshal",
+    "label": "Radium serpenta",
+    "supply": "radium-magazines",
+    "stage": "Mid / blue",
+    "donor": "Mechanicus/Skitarii-Marshal",
+    "mesh": "SkitariiMarshal",
+    "groups": [
+      "Gun"
+    ],
+    "grip": "Gun",
+    "muzzle": "GunMuzzle"
+  },
+  "source": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\art\\source-to-3d\\gladius-unit-donors\\Mechanicus\\Skitarii-Marshal\\Skitarii-Marshal.blend",
+  "source_sha256": "6c479a2b327edfd48cab067a605e7a9f95179c58bc6e3c03c06d8c880dc1a61c",
+  "extraction_groups": [
+    "Gun"
+  ],
+  "source_mesh": "SkitariiMarshal",
+  "grip_world_matrix": [
+    [
+      0.5368270874023438,
+      0.07907155901193619,
+      -0.8399789333343506,
+      -1.0837383270263672
+    ],
+    [
+      0.7706915140151978,
+      -0.4510634243488312,
+      0.4500848948955536,
+      -24.088836669921875
+    ],
+    [
+      -0.34329479932785034,
+      -0.888982355594635,
+      -0.30308282375335693,
+      39.908687591552734
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "muzzle_world": [
+    2.125030517578125,
+    -40.875877380371094,
+    7.239768981933594
+  ],
+  "basis": [
+    [
+      -1.7136375163318007e-07,
+      0.9999551177024841,
+      -0.009479477070271969
+    ],
+    [
+      0.6719756722450256,
+      -0.0070201326161623,
+      -0.7405400276184082
+    ],
+    [
+      -0.7405732274055481,
+      -0.006370104383677244,
+      -0.6719454526901245
+    ]
+  ],
+  "scale": 0.05267270094171059,
+  "item_roll": [
+    [
+      1.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.6719202995300293,
+      -0.7406234741210938
+    ],
+    [
+      0.0,
+      0.7406234741210938,
+      0.6719202995300293
+    ]
+  ],
+  "adaptation": [],
+  "triangles": 2092,
+  "degenerate_triangles": 0,
+  "bounds_max_error": 0.0,
+  "glb_sha256": "78c990adc67f77ee1665f5ff68f888f6abbdd6bcebb76aa86cf19baf8f003aac",
+  "source_unchanged": true,
+  "native_uv_preserved": true,
+  "production_atlas": "ProductionAtlas",
+  "attribution": "Proxy Studios / Slitherine Ltd. / Games Workshop; original donor geometry and texture rights retained",
+  "presentation": {
+    "preset": "C",
+    "model_rotation": [
+      [
+        0.8012516498565674,
+        -0.3392205536365509,
+        -0.49287453293800354,
+        0.0
+      ],
+      [
+        0.5437327027320862,
+        0.7565965056419373,
+        0.3632032871246338,
+        0.0
+      ],
+      [
+        0.24970115721225739,
+        -0.5590091943740845,
+        0.7906694412231445,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "projected_forward_degrees": 35,
+    "end_view_degrees": 12,
+    "top_view_degrees": 18,
+    "camera_elevation_degrees": 45,
+    "camera_azimuth_degrees": 0,
+    "frame": "Muzzle upper-right, stock/grip lower-left",
+    "method": "Rigid model rotation, no raster rotation and no camera rotation",
+    "predecessor": "art\\source-to-3d\\unit-arsenal\\v04-native-uv-textures\\radium-serpenta",
+    "matrix": [
+      [
+        0.8012516498565674,
+        -0.3392205536365509,
+        -0.49287453293800354,
+        0.06454366445541382
+      ],
+      [
+        0.5437327027320862,
+        0.7565965056419373,
+        0.3632032871246338,
+        -0.33443483710289
+      ],
+      [
+        0.24970115721225739,
+        -0.5590091943740845,
+        0.7906694412231445,
+        -0.2138507217168808
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ]
+  },
+  "native_uv_layout_unchanged": true,
+  "textures_rebaked": false
+}

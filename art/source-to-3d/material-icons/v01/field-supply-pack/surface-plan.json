@@ -1,0 +1,138 @@
+{
+  "asset": "field-supply-pack",
+  "construction": "Canvas field-power pack with supported buckled straps, armored contact cover and recessed fuel gauge.",
+  "regions": [
+    {
+      "part": "Canvas power supply pouch",
+      "materials": [
+        "field-supply-pack | cloth"
+      ]
+    },
+    {
+      "part": "Folded canvas top flap",
+      "materials": [
+        "field-supply-pack | cloth"
+      ]
+    },
+    {
+      "part": "Supported leather retaining strap",
+      "materials": [
+        "field-supply-pack | leather"
+      ]
+    },
+    {
+      "part": "Brass buckle frame",
+      "materials": [
+        "field-supply-pack | brass"
+      ]
+    },
+    {
+      "part": "Buckle opening",
+      "materials": [
+        "field-supply-pack | dark"
+      ]
+    },
+    {
+      "part": "Buckle pin",
+      "materials": [
+        "field-supply-pack | steel"
+      ]
+    },
+    {
+      "part": "Stitch on supported strap",
+      "materials": [
+        "field-supply-pack | stitch"
+      ]
+    },
+    {
+      "part": "Stitch on supported strap.001",
+      "materials": [
+        "field-supply-pack | stitch"
+      ]
+    },
+    {
+      "part": "Stitch on supported strap.002",
+      "materials": [
+        "field-supply-pack | stitch"
+      ]
+    },
+    {
+      "part": "Supported leather retaining strap.001",
+      "materials": [
+        "field-supply-pack | leather"
+      ]
+    },
+    {
+      "part": "Brass buckle frame.001",
+      "materials": [
+        "field-supply-pack | brass"
+      ]
+    },
+    {
+      "part": "Buckle opening.001",
+      "materials": [
+        "field-supply-pack | dark"
+      ]
+    },
+    {
+      "part": "Buckle pin.001",
+      "materials": [
+        "field-supply-pack | steel"
+      ]
+    },
+    {
+      "part": "Stitch on supported strap.003",
+      "materials": [
+        "field-supply-pack | stitch"
+      ]
+    },
+    {
+      "part": "Stitch on supported strap.004",
+      "materials": [
+        "field-supply-pack | stitch"
+      ]
+    },
+    {
+      "part": "Stitch on supported strap.005",
+      "materials": [
+        "field-supply-pack | stitch"
+      ]
+    },
+    {
+      "part": "Armored contact access cover",
+      "materials": [
+        "field-supply-pack | dark"
+      ]
+    },
+    {
+      "part": "Recessed fuel state lens",
+      "materials": [
+        "field-supply-pack | green"
+      ]
+    },
+    {
+      "part": "Insulated power coupling",
+      "materials": [
+        "field-supply-pack | dark"
+      ]
+    },
+    {
+      "part": "Insulated power coupling.001",
+      "materials": [
+        "field-supply-pack | dark"
+      ]
+    },
+    {
+      "part": "Canvas carry handle",
+      "materials": [
+        "field-supply-pack | cloth"
+      ]
+    }
+  ],
+  "principles": [
+    "Model-specific construction and material regions",
+    "No borrowed crate artwork",
+    "No floating fittings",
+    "Pose C under unchanged FMPL camera"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "supply": "tool-charges",
+  "passed": true,
+  "mean_absolute_rgb_error_8bit": [
+    0.4387074839987583,
+    0.42250668874074293,
+    0.4217232561233389
+  ],
+  "p95_max_channel_error_8bit": 1,
+  "silhouette_iou": 1.0,
+  "limits": {
+    "mean_absolute_channel_error_max": 4,
+    "p95_max_channel_error_max": 12,
+    "silhouette_iou_min": 0.995
+  },
+  "glb_sha256": "fafd5aca099626807acb9491e565492c76a137972b372faddf668c9298b6c860",
+  "source_render_sha256": "f86facc25375c12c531b408f127b7b62b1b0429adbd6bb8f41798833f1c2d6ce",
+  "export_render_sha256": "d7dd220ea8b04a68fb50a99fa28472b2821b2212ef5294e7d9c405221deb12f6"
+}

@@ -1,0 +1,163 @@
+{
+  "passed": true,
+  "roster": {
+    "id": "condemnor-boltgun",
+    "unit": "Canoness",
+    "label": "Condemnor boltgun",
+    "supply": "bolt-magazines",
+    "stage": "Later mid / blue",
+    "donor": "Imperial/Canoness",
+    "mesh": "Canoness",
+    "groups": [
+      "Gun"
+    ],
+    "grip": "Gun",
+    "muzzle": "Muzzle"
+  },
+  "source": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\art\\source-to-3d\\gladius-unit-donors\\Imperial\\Canoness\\Canoness.blend",
+  "source_sha256": "4a387b844a26bd72462b69cd3d50cbc5e7fd357da6fe8edffc5c91658be8d52d",
+  "extraction_groups": [
+    "Gun"
+  ],
+  "source_mesh": "Canoness",
+  "grip_world_matrix": [
+    [
+      -0.6466813087463379,
+      0.03144293650984764,
+      0.4699091613292694,
+      8.125070571899414
+    ],
+    [
+      -0.46509042382240295,
+      0.08298637717962265,
+      -0.6456026434898376,
+      12.540496826171875
+    ],
+    [
+      -0.07411970943212509,
+      -0.7950626611709595,
+      -0.0488024577498436,
+      37.167266845703125
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "muzzle_world": [
+    12.835145950317383,
+    17.794279098510742,
+    13.01807689666748
+  ],
+  "basis": [
+    [
+      -0.18380551040172577,
+      0.9829626083374023,
+      -7.827596846254892e-07
+    ],
+    [
+      0.21380986273288727,
+      0.03997981920838356,
+      -0.9760569334030151
+    ],
+    [
+      -0.9594274163246155,
+      -0.17940481007099152,
+      -0.21751560270786285
+    ]
+  ],
+  "scale": 0.0612510101278813,
+  "item_roll": [
+    [
+      1.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.2228553742170334,
+      -0.9748514890670776
+    ],
+    [
+      0.0,
+      0.9748514890670776,
+      0.2228553742170334
+    ]
+  ],
+  "adaptation": [],
+  "triangles": 2227,
+  "degenerate_triangles": 0,
+  "bounds_max_error": 0.0,
+  "glb_sha256": "db5b4665a4788eac3ab015fb3c47853b855a5d8cddbc73482a04c6d5589e7ed2",
+  "source_unchanged": true,
+  "native_uv_preserved": true,
+  "production_atlas": "ProductionAtlas",
+  "attribution": "Proxy Studios / Slitherine Ltd. / Games Workshop; original donor geometry and texture rights retained",
+  "presentation": {
+    "preset": "C",
+    "model_rotation": [
+      [
+        0.8012516498565674,
+        -0.3392205536365509,
+        -0.49287453293800354,
+        0.0
+      ],
+      [
+        0.5437327027320862,
+        0.7565965056419373,
+        0.3632032871246338,
+        0.0
+      ],
+      [
+        0.24970115721225739,
+        -0.5590091943740845,
+        0.7906694412231445,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "projected_forward_degrees": 35,
+    "end_view_degrees": 12,
+    "top_view_degrees": 18,
+    "camera_elevation_degrees": 45,
+    "camera_azimuth_degrees": 0,
+    "frame": "Muzzle upper-right, stock/grip lower-left",
+    "method": "Rigid model rotation, no raster rotation and no camera rotation",
+    "predecessor": "art\\source-to-3d\\unit-arsenal\\v04-native-uv-textures\\condemnor-boltgun",
+    "matrix": [
+      [
+        0.8012516498565674,
+        -0.3392205536365509,
+        -0.49287453293800354,
+        0.11980237811803818
+      ],
+      [
+        0.5437327027320862,
+        0.7565965056419373,
+        0.3632032871246338,
+        -0.41101551055908203
+      ],
+      [
+        0.24970115721225739,
+        -0.5590091943740845,
+        0.7906694412231445,
+        -0.2205403745174408
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ]
+  },
+  "native_uv_layout_unchanged": true,
+  "textures_rebaked": false
+}

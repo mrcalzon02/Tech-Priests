@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "asset": "field-supply-pack",
+  "triangles": 4332,
+  "degenerate_triangles": 0,
+  "bounds_max_error": 5.960464477539063e-08,
+  "glb_sha256": "0a1540cb5880674aab192206075b32389e41ae6b08dfc12ebc79e16a6e863b34",
+  "authored_sha256": "14179561ce5b7735998b5ad2a7281ed5769f4b8e25c5c4eb92c852b7a01211c3",
+  "pose": {
+    "preset": "C",
+    "screen_diagonal": 35,
+    "end_view": 12,
+    "top_view": 18
+  },
+  "map_size": 1024
+}
