@@ -1,0 +1,39 @@
+{
+  "engine": "Factorio 2.1.24 (build 87808, win64, steam, space-age)",
+  "native_run": "build/emergency-assembler-v07/native-20261117-232654",
+  "create_log_sha256": "e2581bab798a7225d4854b9e0c8d1831faf2959cdaf1d1c355e3add50d93664b",
+  "graphics_log_sha256": "b1a0079115cf76c31a6c4ac651c0f18db3c5f290fe957867f882160958e010f4",
+  "module_sha256": "70989df82b71b1b6cefb5db2726f127df6b32b6e48a074568749a319708be0f0",
+  "runner_sha256": "ce80a1296197df7ced333a516552f5c1ce25cb152db3164305f726d7910e446f",
+  "source_manifest_sha256": "baf309e6c613dc6e568f09a8b86239144ae39bc30616071c645d2511f3b157e3",
+  "native_clock": {
+    "status": "PASS",
+    "ticks": [
+      352,
+      1072
+    ],
+    "delta_ticks": 720,
+    "simulation_seconds": 12,
+    "comparison": "Exact full native PNG bytes",
+    "anchor_sha256": "a0f08a043b99d7c80900600dc252f3140a78eead8d1d476e168dd0a5eb77e1fe",
+    "repeat_sha256": "a0f08a043b99d7c80900600dc252f3140a78eead8d1d476e168dd0a5eb77e1fe",
+    "continuous_crafting_at_both_anchors": true
+  },
+  "graphical_test_speed": 16,
+  "speed_one_windows": [
+    [
+      342,
+      362
+    ],
+    [
+      1062,
+      1082
+    ]
+  ],
+  "full_priest_runtime": "not_staged",
+  "screenshots": {
+    "0080-idle-no-fuel.png": "e7c3afcf3660f2af79ed48190d7d6a85ffdb50eb90fce0a67dde31cb5ce7d3d1",
+    "0352-cycle-anchor.png": "a0f08a043b99d7c80900600dc252f3140a78eead8d1d476e168dd0a5eb77e1fe",
+    "1072-cycle-repeat.png": "a0f08a043b99d7c80900600dc252f3140a78eead8d1d476e168dd0a5eb77e1fe"
+  }
+}

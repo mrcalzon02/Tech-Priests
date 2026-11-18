@@ -23,3 +23,10 @@ tech-priests_src/scripts/artillery_barrage_geometry.* -text whitespace=cr-at-eol
 tech-priests_src/scripts/artillery_barrage_visuals.lua -text whitespace=cr-at-eol
 tech-priests_src/graphics/entity/bunker-artillery/* -text whitespace=cr-at-eol
 tools/render_artillery*.py text eol=lf
+
+# Exact Emergency Assembler V07 source, capture and native-proof writer bytes.
+art/source-to-3d/emergency-assembler/v07/** -text whitespace=cr-at-eol
+tools/art/emergency_assembler/*.py -text whitespace=cr-at-eol
+tests/scenarios/emergency-assembler-v07/*.lua -text whitespace=cr-at-eol
+tech-priests_src/prototypes/generated_graphics/emergency-assembler-v07.lua -text whitespace=cr-at-eol
+tech-priests_src/graphics/entity/emergency-assembler-v07/* -text whitespace=cr-at-eol

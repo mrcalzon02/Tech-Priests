@@ -1,0 +1,52 @@
+{
+  "scope": "Exact production builder, helpers, item and recipe spec/loops, plus unchanged installed V07 graphics module; full priest runtime is not staged.",
+  "production_sources": {
+    "prototypes/entity.lua": "cb51b135bc4c115f5f98ba9bb1a7c85db7376b6c059725e46c924970654b4ec3",
+    "prototypes/item.lua": "1a5779b6e5015e3c7e7826ba79cf5f23f22224043b1264f960d8eba91730b7d5",
+    "prototypes/recipe.lua": "9a04613a73e25b289bb58fffa17c4f16f670663a6911e224c7840dcb900d3cf0",
+    "prototypes/compatibility/native_crafting_categories_1275.lua": "d4cabcff41762bfb60a4031519c3432ee13ac2efd78072dbf494792ee27ec83f",
+    "prototypes/compatibility/native_recipe_schema_1274.lua": "d11fcb84520ecf974ff28e1960eaf9f5b5dd285113af73e3839f27f13a066445",
+    "prototypes/generated_graphics/emergency-assembler-v07.lua": "70989df82b71b1b6cefb5db2726f127df6b32b6e48a074568749a319708be0f0"
+  },
+  "extracted_lua_sha256": "6d3647039c764ca5c129b6649e83cbc7da0c42072fa7b9cbcaca4d2e44cfbd31",
+  "fixture_sources": {
+    "data.lua": "65107550192656730714038a3da1ea4d6f59b7fae21c27cec5c31010c77cb44b",
+    "control.lua": "27c07cd30c4e3f8fc4f28096bb56ac53c724121155f25f680853609f965f37aa"
+  },
+  "staged_graphics": {
+    "graphics/entity/emergency-assembler-v07/icon.png": "5619ba2b86aedc13f0aeb3a3ff34017795e9940eee95f848e5ccd977c20be7cb",
+    "graphics/entity/emergency-assembler-v07/idle-east.png": "d883c70ec5ce3132faa1981ce7f814996d0b579ed9f4ceb41e17f375ba5234e3",
+    "graphics/entity/emergency-assembler-v07/idle-north.png": "4c3a49660d6503910e6d7250ce2202186d8f9b352ce179c2d974aaa87a3661e7",
+    "graphics/entity/emergency-assembler-v07/idle-south.png": "64910d2e3d89c33a76aa3d9ffc38d4e4ac4fe8a0b2c0241ba3ab2bc65a4237e3",
+    "graphics/entity/emergency-assembler-v07/idle-west.png": "6ce13a436245541e7e45bfb5d92b113ad9792c79b871a9c07073935a88e0e54f",
+    "graphics/entity/emergency-assembler-v07/working-east.png": "e7e54117a554a7df28b250c91dd09eb72cd929fef77cffd1b4bf1c1f729db691",
+    "graphics/entity/emergency-assembler-v07/working-north.png": "a7b5982e53ae5eb06900450018eff1251358e679742a07b3df9b539ae31e44f6",
+    "graphics/entity/emergency-assembler-v07/working-south.png": "f58262a3de9023f6207254395d4a5624c3564806700ed273b96d912f81fc9823",
+    "graphics/entity/emergency-assembler-v07/working-west.png": "b104fce79778f32880c668cac6fce7f6e80d9efdc52ad8d616c54bf05746407a",
+    "graphics/entity/martian-micro/tech-priests-emergency-assembler-shadow.png": "e6b31fa06cef5cfe415950be41c7497741a1849d4f74c57da82bb5dd581bf6b1",
+    "graphics/entity/martian-micro/tech-priests-emergency-assembler.png": "7eb767449ded95b4241137cbd98dca010ade7f5d57e355f3444100fffd294862",
+    "graphics/icons/martian-micro/tech-priests-emergency-assembler.png": "fda5fca12a70e5905d36623cfa960791795cdc106235d594fa08aed1afb65739"
+  },
+  "graphical_fixture": {
+    "source_sha256": "e3468fece9a8a013df68641eb73cdef411beb57a67ff5aca8ff3af830feb6773",
+    "staged_control_sha256": "8010b0c3f00a29f1b52d8d1cef25766d4682dc06d75d78c26ff27d4e320aeabc",
+    "simulation_speed": 16,
+    "speed_one_windows": [
+      [
+        342,
+        362
+      ],
+      [
+        1062,
+        1082
+      ]
+    ],
+    "phase_anchor_ticks": [
+      352,
+      1072
+    ],
+    "stop_at_report_tick": 5400,
+    "hard_timeout_seconds": 60,
+    "until_tick_option": "Not used: Factorio 2.1 --until-tick disables graphical rendering."
+  }
+}

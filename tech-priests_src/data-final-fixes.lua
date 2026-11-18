@@ -613,8 +613,8 @@ require("prototypes.bunker_artillery").finalize()
 require("prototypes.compatibility.native_recipe_schema_1274")(
   data.raw.recipe, mods and mods["base"])
 
--- Final registration: do not let legacy micro-art rescaling erase sprite shifts.
-require("prototypes.workbench_graphics")
+-- Exact owner-supplied V07 assembler; register after legacy micro-art rescaling.
+require("prototypes.generated_graphics.emergency-assembler-v07")
 
 -- Boiler V08: authored four-way animation and native rear-row pipe interfaces.
 require("prototypes.generated_graphics.emergency-boiler-v08")

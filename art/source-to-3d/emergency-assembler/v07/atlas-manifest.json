@@ -1,0 +1,112 @@
+{
+  "status": "PASS",
+  "source": "art/source-to-3d/emergency-assembler/v07/tech_priests_emergency_assembler_v07_animated.blend",
+  "source_sha256": "00d047b9aa80e13bd148b1dcbd2e5440b4a5e0414d744b446f273b0fc741845d",
+  "source_frames": 288,
+  "source_fps": 24,
+  "runtime_frames": 144,
+  "runtime_fps": 12,
+  "duration_seconds": 12,
+  "directions": [
+    "north",
+    "east",
+    "south",
+    "west"
+  ],
+  "capture_receipt": "art/source-to-3d/emergency-assembler/v07/captures/receipt-0-1-2-3.json",
+  "camera": {
+    "name": "FMPL_CAPTURE_CAMERA",
+    "matrix_world": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        -0.009999999776482582
+      ],
+      [
+        0.0,
+        0.7071068286895752,
+        -0.7071067094802856,
+        -2.933427095413208
+      ],
+      [
+        0.0,
+        0.7071067094802856,
+        0.7071068286895752,
+        3.128427028656006
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "type": "ORTHO",
+    "ortho_scale": 1.5,
+    "shift_x": 0.0,
+    "shift_y": 0.0,
+    "resolution": [
+      256,
+      256
+    ]
+  },
+  "scale": 0.1875,
+  "shift": [
+    0,
+    -0.21213203435596426
+  ],
+  "footprint": [
+    1,
+    1
+  ],
+  "shadow": "Actual per-frame Cycles ground shadow embedded in RGBA body",
+  "alpha_noise_cleanup": "Alpha <=8/255 removed; outer 12px soft shadow-only margin feathered to transparent to avoid texture-border seams",
+  "source_border_alpha_max": 37,
+  "files": [
+    {
+      "file": "working-north.png",
+      "sha256": "a7b5982e53ae5eb06900450018eff1251358e679742a07b3df9b539ae31e44f6",
+      "frames": 144
+    },
+    {
+      "file": "idle-north.png",
+      "sha256": "4c3a49660d6503910e6d7250ce2202186d8f9b352ce179c2d974aaa87a3661e7",
+      "frames": 1
+    },
+    {
+      "file": "working-east.png",
+      "sha256": "e7e54117a554a7df28b250c91dd09eb72cd929fef77cffd1b4bf1c1f729db691",
+      "frames": 144
+    },
+    {
+      "file": "idle-east.png",
+      "sha256": "d883c70ec5ce3132faa1981ce7f814996d0b579ed9f4ceb41e17f375ba5234e3",
+      "frames": 1
+    },
+    {
+      "file": "working-south.png",
+      "sha256": "f58262a3de9023f6207254395d4a5624c3564806700ed273b96d912f81fc9823",
+      "frames": 144
+    },
+    {
+      "file": "idle-south.png",
+      "sha256": "64910d2e3d89c33a76aa3d9ffc38d4e4ac4fe8a0b2c0241ba3ab2bc65a4237e3",
+      "frames": 1
+    },
+    {
+      "file": "working-west.png",
+      "sha256": "b104fce79778f32880c668cac6fce7f6e80d9efdc52ad8d616c54bf05746407a",
+      "frames": 144
+    },
+    {
+      "file": "idle-west.png",
+      "sha256": "6ce13a436245541e7e45bfb5d92b113ad9792c79b871a9c07073935a88e0e54f",
+      "frames": 1
+    },
+    {
+      "file": "icon.png",
+      "sha256": "5619ba2b86aedc13f0aeb3a3ff34017795e9940eee95f848e5ccd977c20be7cb"
+    }
+  ]
+}

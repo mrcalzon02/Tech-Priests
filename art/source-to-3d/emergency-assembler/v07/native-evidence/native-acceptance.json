@@ -1,0 +1,5971 @@
+{
+  "status": "PASS",
+  "source_manifest_sha256": "baf309e6c613dc6e568f09a8b86239144ae39bc30616071c645d2511f3b157e3",
+  "source": {
+    "scope": "Exact production builder, helpers, item and recipe spec/loops, plus unchanged installed V07 graphics module; full priest runtime is not staged.",
+    "production_sources": {
+      "prototypes/entity.lua": "cb51b135bc4c115f5f98ba9bb1a7c85db7376b6c059725e46c924970654b4ec3",
+      "prototypes/item.lua": "1a5779b6e5015e3c7e7826ba79cf5f23f22224043b1264f960d8eba91730b7d5",
+      "prototypes/recipe.lua": "9a04613a73e25b289bb58fffa17c4f16f670663a6911e224c7840dcb900d3cf0",
+      "prototypes/compatibility/native_crafting_categories_1275.lua": "d4cabcff41762bfb60a4031519c3432ee13ac2efd78072dbf494792ee27ec83f",
+      "prototypes/compatibility/native_recipe_schema_1274.lua": "d11fcb84520ecf974ff28e1960eaf9f5b5dd285113af73e3839f27f13a066445",
+      "prototypes/generated_graphics/emergency-assembler-v07.lua": "70989df82b71b1b6cefb5db2726f127df6b32b6e48a074568749a319708be0f0"
+    },
+    "extracted_lua_sha256": "6d3647039c764ca5c129b6649e83cbc7da0c42072fa7b9cbcaca4d2e44cfbd31",
+    "fixture_sources": {
+      "data.lua": "65107550192656730714038a3da1ea4d6f59b7fae21c27cec5c31010c77cb44b",
+      "control.lua": "27c07cd30c4e3f8fc4f28096bb56ac53c724121155f25f680853609f965f37aa"
+    },
+    "staged_graphics": {
+      "graphics/entity/emergency-assembler-v07/icon.png": "5619ba2b86aedc13f0aeb3a3ff34017795e9940eee95f848e5ccd977c20be7cb",
+      "graphics/entity/emergency-assembler-v07/idle-east.png": "d883c70ec5ce3132faa1981ce7f814996d0b579ed9f4ceb41e17f375ba5234e3",
+      "graphics/entity/emergency-assembler-v07/idle-north.png": "4c3a49660d6503910e6d7250ce2202186d8f9b352ce179c2d974aaa87a3661e7",
+      "graphics/entity/emergency-assembler-v07/idle-south.png": "64910d2e3d89c33a76aa3d9ffc38d4e4ac4fe8a0b2c0241ba3ab2bc65a4237e3",
+      "graphics/entity/emergency-assembler-v07/idle-west.png": "6ce13a436245541e7e45bfb5d92b113ad9792c79b871a9c07073935a88e0e54f",
+      "graphics/entity/emergency-assembler-v07/working-east.png": "e7e54117a554a7df28b250c91dd09eb72cd929fef77cffd1b4bf1c1f729db691",
+      "graphics/entity/emergency-assembler-v07/working-north.png": "a7b5982e53ae5eb06900450018eff1251358e679742a07b3df9b539ae31e44f6",
+      "graphics/entity/emergency-assembler-v07/working-south.png": "f58262a3de9023f6207254395d4a5624c3564806700ed273b96d912f81fc9823",
+      "graphics/entity/emergency-assembler-v07/working-west.png": "b104fce79778f32880c668cac6fce7f6e80d9efdc52ad8d616c54bf05746407a",
+      "graphics/entity/martian-micro/tech-priests-emergency-assembler-shadow.png": "e6b31fa06cef5cfe415950be41c7497741a1849d4f74c57da82bb5dd581bf6b1",
+      "graphics/entity/martian-micro/tech-priests-emergency-assembler.png": "7eb767449ded95b4241137cbd98dca010ade7f5d57e355f3444100fffd294862",
+      "graphics/icons/martian-micro/tech-priests-emergency-assembler.png": "fda5fca12a70e5905d36623cfa960791795cdc106235d594fa08aed1afb65739"
+    },
+    "graphical_fixture": {
+      "source_sha256": "e3468fece9a8a013df68641eb73cdef411beb57a67ff5aca8ff3af830feb6773",
+      "staged_control_sha256": "8010b0c3f00a29f1b52d8d1cef25766d4682dc06d75d78c26ff27d4e320aeabc",
+      "simulation_speed": 16,
+      "speed_one_windows": [
+        [
+          342,
+          362
+        ],
+        [
+          1062,
+          1082
+        ]
+      ],
+      "phase_anchor_ticks": [
+        352,
+        1072
+      ],
+      "stop_at_report_tick": 5400,
+      "hard_timeout_seconds": 60,
+      "until_tick_option": "Not used: Factorio 2.1 --until-tick disables graphical rendering."
+    }
+  },
+  "native_data": {
+    "native_data_stage": "PASS",
+    "directions": {
+      "north": {
+        "working": [
+          {
+            "filename": "__tech-priests__/graphics/entity/emergency-assembler-v07/working-north.png",
+            "priority": "high",
+            "width": 256,
+            "height": 256,
+            "frame_count": 144,
+            "repeat_count": 1,
+            "line_length": 12,
+            "animation_speed": 0.2,
+            "scale": 0.1875,
+            "shift": [
+              0,
+              -0.21213203435596434
+            ]
+          }
+        ],
+        "idle": [
+          {
+            "filename": "__tech-priests__/graphics/entity/emergency-assembler-v07/idle-north.png",
+            "priority": "high",
+            "width": 256,
+            "height": 256,
+            "frame_count": 1,
+            "repeat_count": 144,
+            "line_length": 1,
+            "animation_speed": 0.2,
+            "scale": 0.1875,
+            "shift": [
+              0,
+              -0.21213203435596434
+            ]
+          }
+        ]
+      },
+      "east": {
+        "working": [
+          {
+            "filename": "__tech-priests__/graphics/entity/emergency-assembler-v07/working-east.png",
+            "priority": "high",
+            "width": 256,
+            "height": 256,
+            "frame_count": 144,
+            "repeat_count": 1,
+            "line_length": 12,
+            "animation_speed": 0.2,
+            "scale": 0.1875,
+            "shift": [
+              0,
+              -0.21213203435596434
+            ]
+          }
+        ],
+        "idle": [
+          {
+            "filename": "__tech-priests__/graphics/entity/emergency-assembler-v07/idle-east.png",
+            "priority": "high",
+            "width": 256,
+            "height": 256,
+            "frame_count": 1,
+            "repeat_count": 144,
+            "line_length": 1,
+            "animation_speed": 0.2,
+            "scale": 0.1875,
+            "shift": [
+              0,
+              -0.21213203435596434
+            ]
+          }
+        ]
+      },
+      "south": {
+        "working": [
+          {
+            "filename": "__tech-priests__/graphics/entity/emergency-assembler-v07/working-south.png",
+            "priority": "high",
+            "width": 256,
+            "height": 256,
+            "frame_count": 144,
+            "repeat_count": 1,
+            "line_length": 12,
+            "animation_speed": 0.2,
+            "scale": 0.1875,
+            "shift": [
+              0,
+              -0.21213203435596434
+            ]
+          }
+        ],
+        "idle": [
+          {
+            "filename": "__tech-priests__/graphics/entity/emergency-assembler-v07/idle-south.png",
+            "priority": "high",
+            "width": 256,
+            "height": 256,
+            "frame_count": 1,
+            "repeat_count": 144,
+            "line_length": 1,
+            "animation_speed": 0.2,
+            "scale": 0.1875,
+            "shift": [
+              0,
+              -0.21213203435596434
+            ]
+          }
+        ]
+      },
+      "west": {
+        "working": [
+          {
+            "filename": "__tech-priests__/graphics/entity/emergency-assembler-v07/working-west.png",
+            "priority": "high",
+            "width": 256,
+            "height": 256,
+            "frame_count": 144,
+            "repeat_count": 1,
+            "line_length": 12,
+            "animation_speed": 0.2,
+            "scale": 0.1875,
+            "shift": [
+              0,
+              -0.21213203435596434
+            ]
+          }
+        ],
+        "idle": [
+          {
+            "filename": "__tech-priests__/graphics/entity/emergency-assembler-v07/idle-west.png",
+            "priority": "high",
+            "width": 256,
+            "height": 256,
+            "frame_count": 1,
+            "repeat_count": 144,
+            "line_length": 1,
+            "animation_speed": 0.2,
+            "scale": 0.1875,
+            "shift": [
+              0,
+              -0.21213203435596434
+            ]
+          }
+        ]
+      }
+    },
+    "crafting_speed": 0.17,
+    "energy_source": {
+      "type": "burner",
+      "fuel_categories": [
+        "chemical"
+      ],
+      "effectivity": 0.75,
+      "fuel_inventory_size": 1,
+      "emissions_per_minute": {
+        "pollution": 20
+      }
+    },
+    "collision_box": [
+      [
+        -0.35,
+        -0.36
+      ],
+      [
+        0.35,
+        0.36
+      ]
+    ],
+    "selection_box": [
+      [
+        -0.5,
+        -0.5
+      ],
+      [
+        0.5,
+        0.5
+      ]
+    ],
+    "animation_progress": 1,
+    "animation_random_start_frame": false,
+    "perceived_performance": {
+      "minimum": 1,
+      "maximum": 1
+    },
+    "rotation_scope": "Four directions before placement; native burner crafting machines cannot rotate after placement.",
+    "cycle_seconds": 12.0
+  },
+  "production": {
+    "status": "PASS",
+    "production_source": true,
+    "tick": 5400,
+    "sites": [
+      {
+        "direction": "north",
+        "recipe": "copper-cable",
+        "product": "copper-cable",
+        "finished": 20,
+        "completed_batches": 20,
+        "output": 40,
+        "input_remaining": 0,
+        "initial_starvation": true,
+        "initial_working_output": 4,
+        "natural_starvation": true,
+        "starved_at": 1450,
+        "starved_output": 12,
+        "recovered": true,
+        "exact_output_accounting": true
+      },
+      {
+        "direction": "east",
+        "recipe": "iron-gear-wheel",
+        "product": "iron-gear-wheel",
+        "finished": 10,
+        "completed_batches": 10,
+        "output": 10,
+        "input_remaining": 0,
+        "initial_starvation": true,
+        "initial_working_output": 2,
+        "natural_starvation": true,
+        "starved_at": 1450,
+        "starved_output": 6,
+        "recovered": true,
+        "exact_output_accounting": true
+      },
+      {
+        "direction": "south",
+        "recipe": "copper-cable",
+        "product": "copper-cable",
+        "finished": 20,
+        "completed_batches": 20,
+        "output": 40,
+        "input_remaining": 0,
+        "initial_starvation": true,
+        "initial_working_output": 4,
+        "natural_starvation": true,
+        "starved_at": 1450,
+        "starved_output": 12,
+        "recovered": true,
+        "exact_output_accounting": true
+      },
+      {
+        "direction": "west",
+        "recipe": "iron-gear-wheel",
+        "product": "iron-gear-wheel",
+        "finished": 10,
+        "completed_batches": 10,
+        "output": 10,
+        "input_remaining": 0,
+        "initial_starvation": true,
+        "initial_working_output": 2,
+        "natural_starvation": true,
+        "starved_at": 1450,
+        "starved_output": 6,
+        "recovered": true,
+        "exact_output_accounting": true
+      }
+    ],
+    "screenshots": {},
+    "samples": [
+      {
+        "tick": 0,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 0,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "east",
+            "output": 0,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "south",
+            "output": 0,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "west",
+            "output": 0,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 0
+          }
+        ]
+      },
+      {
+        "tick": 100,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 0,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "east",
+            "output": 0,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "south",
+            "output": 0,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "west",
+            "output": 0,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 0
+          }
+        ]
+      },
+      {
+        "tick": 200,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 0,
+            "progress": 0.4419999999999993,
+            "working": true,
+            "remaining_burning_fuel": 1859437.037037039
+          },
+          {
+            "direction": "east",
+            "output": 0,
+            "progress": 0.4419999999999993,
+            "working": true,
+            "remaining_burning_fuel": 1859437.037037039
+          },
+          {
+            "direction": "south",
+            "output": 0,
+            "progress": 0.4419999999999993,
+            "working": true,
+            "remaining_burning_fuel": 1859437.037037039
+          },
+          {
+            "direction": "west",
+            "output": 0,
+            "progress": 0.4419999999999993,
+            "working": true,
+            "remaining_burning_fuel": 1859437.037037039
+          }
+        ]
+      },
+      {
+        "tick": 300,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 2,
+            "progress": 0.008666666666669515,
+            "working": true,
+            "remaining_burning_fuel": 1681659.2592592638
+          },
+          {
+            "direction": "east",
+            "output": 1,
+            "progress": 0.008666666666669515,
+            "working": true,
+            "remaining_burning_fuel": 1681659.2592592638
+          },
+          {
+            "direction": "south",
+            "output": 2,
+            "progress": 0.008666666666669515,
+            "working": true,
+            "remaining_burning_fuel": 1681659.2592592638
+          },
+          {
+            "direction": "west",
+            "output": 1,
+            "progress": 0.008666666666669515,
+            "working": true,
+            "remaining_burning_fuel": 1681659.2592592638
+          }
+        ]
+      },
+      {
+        "tick": 400,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 2,
+            "progress": 0.5753333333333359,
+            "working": true,
+            "remaining_burning_fuel": 1503881.4814814886
+          },
+          {
+            "direction": "east",
+            "output": 1,
+            "progress": 0.5753333333333359,
+            "working": true,
+            "remaining_burning_fuel": 1503881.4814814886
+          },
+          {
+            "direction": "south",
+            "output": 2,
+            "progress": 0.5753333333333359,
+            "working": true,
+            "remaining_burning_fuel": 1503881.4814814886
+          },
+          {
+            "direction": "west",
+            "output": 1,
+            "progress": 0.5753333333333359,
+            "working": true,
+            "remaining_burning_fuel": 1503881.4814814886
+          }
+        ]
+      },
+      {
+        "tick": 500,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 4,
+            "progress": 0.14200000000000568,
+            "working": true,
+            "remaining_burning_fuel": 1326103.7037037134
+          },
+          {
+            "direction": "east",
+            "output": 2,
+            "progress": 0.14200000000000568,
+            "working": true,
+            "remaining_burning_fuel": 1326103.7037037134
+          },
+          {
+            "direction": "south",
+            "output": 4,
+            "progress": 0.14200000000000568,
+            "working": true,
+            "remaining_burning_fuel": 1326103.7037037134
+          },
+          {
+            "direction": "west",
+            "output": 2,
+            "progress": 0.14200000000000568,
+            "working": true,
+            "remaining_burning_fuel": 1326103.7037037134
+          }
+        ]
+      },
+      {
+        "tick": 600,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 4,
+            "progress": 0.708666666666673,
+            "working": true,
+            "remaining_burning_fuel": 1148325.9259259382
+          },
+          {
+            "direction": "east",
+            "output": 2,
+            "progress": 0.708666666666673,
+            "working": true,
+            "remaining_burning_fuel": 1148325.9259259382
+          },
+          {
+            "direction": "south",
+            "output": 4,
+            "progress": 0.708666666666673,
+            "working": true,
+            "remaining_burning_fuel": 1148325.9259259382
+          },
+          {
+            "direction": "west",
+            "output": 2,
+            "progress": 0.708666666666673,
+            "working": true,
+            "remaining_burning_fuel": 1148325.9259259382
+          }
+        ]
+      },
+      {
+        "tick": 700,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 6,
+            "progress": 0.2753333333333415,
+            "working": true,
+            "remaining_burning_fuel": 970548.148148163
+          },
+          {
+            "direction": "east",
+            "output": 3,
+            "progress": 0.2753333333333415,
+            "working": true,
+            "remaining_burning_fuel": 970548.148148163
+          },
+          {
+            "direction": "south",
+            "output": 6,
+            "progress": 0.2753333333333415,
+            "working": true,
+            "remaining_burning_fuel": 970548.148148163
+          },
+          {
+            "direction": "west",
+            "output": 3,
+            "progress": 0.2753333333333415,
+            "working": true,
+            "remaining_burning_fuel": 970548.148148163
+          }
+        ]
+      },
+      {
+        "tick": 800,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 6,
+            "progress": 0.8420000000000101,
+            "working": true,
+            "remaining_burning_fuel": 792770.3703703878
+          },
+          {
+            "direction": "east",
+            "output": 3,
+            "progress": 0.8420000000000101,
+            "working": true,
+            "remaining_burning_fuel": 792770.3703703878
+          },
+          {
+            "direction": "south",
+            "output": 6,
+            "progress": 0.8420000000000101,
+            "working": true,
+            "remaining_burning_fuel": 792770.3703703878
+          },
+          {
+            "direction": "west",
+            "output": 3,
+            "progress": 0.8420000000000101,
+            "working": true,
+            "remaining_burning_fuel": 792770.3703703878
+          }
+        ]
+      },
+      {
+        "tick": 900,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 8,
+            "progress": 0.40866666666667734,
+            "working": true,
+            "remaining_burning_fuel": 614992.5925926126
+          },
+          {
+            "direction": "east",
+            "output": 4,
+            "progress": 0.40866666666667734,
+            "working": true,
+            "remaining_burning_fuel": 614992.5925926126
+          },
+          {
+            "direction": "south",
+            "output": 8,
+            "progress": 0.40866666666667734,
+            "working": true,
+            "remaining_burning_fuel": 614992.5925926126
+          },
+          {
+            "direction": "west",
+            "output": 4,
+            "progress": 0.40866666666667734,
+            "working": true,
+            "remaining_burning_fuel": 614992.5925926126
+          }
+        ]
+      },
+      {
+        "tick": 1000,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 8,
+            "progress": 0.9753333333333473,
+            "working": true,
+            "remaining_burning_fuel": 437214.8148148374
+          },
+          {
+            "direction": "east",
+            "output": 4,
+            "progress": 0.9753333333333473,
+            "working": true,
+            "remaining_burning_fuel": 437214.8148148374
+          },
+          {
+            "direction": "south",
+            "output": 8,
+            "progress": 0.9753333333333473,
+            "working": true,
+            "remaining_burning_fuel": 437214.8148148374
+          },
+          {
+            "direction": "west",
+            "output": 4,
+            "progress": 0.9753333333333473,
+            "working": true,
+            "remaining_burning_fuel": 437214.8148148374
+          }
+        ]
+      },
+      {
+        "tick": 1100,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 10,
+            "progress": 0.5420000000000136,
+            "working": true,
+            "remaining_burning_fuel": 259437.03703706217
+          },
+          {
+            "direction": "east",
+            "output": 5,
+            "progress": 0.5420000000000136,
+            "working": true,
+            "remaining_burning_fuel": 259437.03703706217
+          },
+          {
+            "direction": "south",
+            "output": 10,
+            "progress": 0.5420000000000136,
+            "working": true,
+            "remaining_burning_fuel": 259437.03703706217
+          },
+          {
+            "direction": "west",
+            "output": 5,
+            "progress": 0.5420000000000136,
+            "working": true,
+            "remaining_burning_fuel": 259437.03703706217
+          }
+        ]
+      },
+      {
+        "tick": 1200,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 12,
+            "progress": 0.1086666666666836,
+            "working": true,
+            "remaining_burning_fuel": 81659.25925928407
+          },
+          {
+            "direction": "east",
+            "output": 6,
+            "progress": 0.1086666666666836,
+            "working": true,
+            "remaining_burning_fuel": 81659.25925928407
+          },
+          {
+            "direction": "south",
+            "output": 12,
+            "progress": 0.1086666666666836,
+            "working": true,
+            "remaining_burning_fuel": 81659.25925928407
+          },
+          {
+            "direction": "west",
+            "output": 6,
+            "progress": 0.1086666666666836,
+            "working": true,
+            "remaining_burning_fuel": 81659.25925928407
+          }
+        ]
+      },
+      {
+        "tick": 1300,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 12,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "east",
+            "output": 6,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "south",
+            "output": 12,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "west",
+            "output": 6,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          }
+        ]
+      },
+      {
+        "tick": 1400,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 12,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "east",
+            "output": 6,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "south",
+            "output": 12,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "west",
+            "output": 6,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          }
+        ]
+      },
+      {
+        "tick": 1500,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 12,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "east",
+            "output": 6,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "south",
+            "output": 12,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "west",
+            "output": 6,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          }
+        ]
+      },
+      {
+        "tick": 1600,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 12,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "east",
+            "output": 6,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "south",
+            "output": 12,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "west",
+            "output": 6,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          }
+        ]
+      },
+      {
+        "tick": 1700,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 12,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "east",
+            "output": 6,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "south",
+            "output": 12,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "west",
+            "output": 6,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          }
+        ]
+      },
+      {
+        "tick": 1800,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 12,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "east",
+            "output": 6,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "south",
+            "output": 12,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "west",
+            "output": 6,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          }
+        ]
+      },
+      {
+        "tick": 1900,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 12,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "east",
+            "output": 6,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "south",
+            "output": 12,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "west",
+            "output": 6,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          }
+        ]
+      },
+      {
+        "tick": 2000,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 12,
+            "progress": 0.936000000000098,
+            "working": true,
+            "remaining_burning_fuel": 3822103.7037036833
+          },
+          {
+            "direction": "east",
+            "output": 6,
+            "progress": 0.936000000000098,
+            "working": true,
+            "remaining_burning_fuel": 3822103.7037036833
+          },
+          {
+            "direction": "south",
+            "output": 12,
+            "progress": 0.936000000000098,
+            "working": true,
+            "remaining_burning_fuel": 3822103.7037036833
+          },
+          {
+            "direction": "west",
+            "output": 6,
+            "progress": 0.936000000000098,
+            "working": true,
+            "remaining_burning_fuel": 3822103.7037036833
+          }
+        ]
+      },
+      {
+        "tick": 2100,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 14,
+            "progress": 0.5026666666667644,
+            "working": true,
+            "remaining_burning_fuel": 3644325.925925885
+          },
+          {
+            "direction": "east",
+            "output": 7,
+            "progress": 0.5026666666667644,
+            "working": true,
+            "remaining_burning_fuel": 3644325.925925885
+          },
+          {
+            "direction": "south",
+            "output": 14,
+            "progress": 0.5026666666667644,
+            "working": true,
+            "remaining_burning_fuel": 3644325.925925885
+          },
+          {
+            "direction": "west",
+            "output": 7,
+            "progress": 0.5026666666667644,
+            "working": true,
+            "remaining_burning_fuel": 3644325.925925885
+          }
+        ]
+      },
+      {
+        "tick": 2200,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 16,
+            "progress": 0.06933333333343474,
+            "working": true,
+            "remaining_burning_fuel": 3466548.1481480864
+          },
+          {
+            "direction": "east",
+            "output": 8,
+            "progress": 0.06933333333343474,
+            "working": true,
+            "remaining_burning_fuel": 3466548.1481480864
+          },
+          {
+            "direction": "south",
+            "output": 16,
+            "progress": 0.06933333333343474,
+            "working": true,
+            "remaining_burning_fuel": 3466548.1481480864
+          },
+          {
+            "direction": "west",
+            "output": 8,
+            "progress": 0.06933333333343474,
+            "working": true,
+            "remaining_burning_fuel": 3466548.1481480864
+          }
+        ]
+      },
+      {
+        "tick": 2300,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 16,
+            "progress": 0.6360000000001016,
+            "working": true,
+            "remaining_burning_fuel": 3288770.370370288
+          },
+          {
+            "direction": "east",
+            "output": 8,
+            "progress": 0.6360000000001016,
+            "working": true,
+            "remaining_burning_fuel": 3288770.370370288
+          },
+          {
+            "direction": "south",
+            "output": 16,
+            "progress": 0.6360000000001016,
+            "working": true,
+            "remaining_burning_fuel": 3288770.370370288
+          },
+          {
+            "direction": "west",
+            "output": 8,
+            "progress": 0.6360000000001016,
+            "working": true,
+            "remaining_burning_fuel": 3288770.370370288
+          }
+        ]
+      },
+      {
+        "tick": 2400,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 18,
+            "progress": 0.20266666666677083,
+            "working": true,
+            "remaining_burning_fuel": 3110992.5925924894
+          },
+          {
+            "direction": "east",
+            "output": 9,
+            "progress": 0.20266666666677083,
+            "working": true,
+            "remaining_burning_fuel": 3110992.5925924894
+          },
+          {
+            "direction": "south",
+            "output": 18,
+            "progress": 0.20266666666677083,
+            "working": true,
+            "remaining_burning_fuel": 3110992.5925924894
+          },
+          {
+            "direction": "west",
+            "output": 9,
+            "progress": 0.20266666666677083,
+            "working": true,
+            "remaining_burning_fuel": 3110992.5925924894
+          }
+        ]
+      },
+      {
+        "tick": 2500,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 18,
+            "progress": 0.7693333333334388,
+            "working": true,
+            "remaining_burning_fuel": 2933214.814814691
+          },
+          {
+            "direction": "east",
+            "output": 9,
+            "progress": 0.7693333333334388,
+            "working": true,
+            "remaining_burning_fuel": 2933214.814814691
+          },
+          {
+            "direction": "south",
+            "output": 18,
+            "progress": 0.7693333333334388,
+            "working": true,
+            "remaining_burning_fuel": 2933214.814814691
+          },
+          {
+            "direction": "west",
+            "output": 9,
+            "progress": 0.7693333333334388,
+            "working": true,
+            "remaining_burning_fuel": 2933214.814814691
+          }
+        ]
+      },
+      {
+        "tick": 2600,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 20,
+            "progress": 0.33600000000010666,
+            "working": true,
+            "remaining_burning_fuel": 2755437.0370368925
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 20,
+            "progress": 0.33600000000010666,
+            "working": true,
+            "remaining_burning_fuel": 2755437.0370368925
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 2700,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 20,
+            "progress": 0.902666666666776,
+            "working": true,
+            "remaining_burning_fuel": 2577659.259259094
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 20,
+            "progress": 0.902666666666776,
+            "working": true,
+            "remaining_burning_fuel": 2577659.259259094
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 2800,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 22,
+            "progress": 0.46933333333344257,
+            "working": true,
+            "remaining_burning_fuel": 2399881.4814812955
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 22,
+            "progress": 0.46933333333344257,
+            "working": true,
+            "remaining_burning_fuel": 2399881.4814812955
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 2900,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 24,
+            "progress": 0.03600000000011287,
+            "working": true,
+            "remaining_burning_fuel": 2222103.703703497
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 24,
+            "progress": 0.03600000000011287,
+            "working": true,
+            "remaining_burning_fuel": 2222103.703703497
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 3000,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 24,
+            "progress": 0.6026666666667795,
+            "working": true,
+            "remaining_burning_fuel": 2044325.9259257056
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 24,
+            "progress": 0.6026666666667795,
+            "working": true,
+            "remaining_burning_fuel": 2044325.9259257056
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 3100,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 26,
+            "progress": 0.16933333333344902,
+            "working": true,
+            "remaining_burning_fuel": 1866548.1481479304
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 26,
+            "progress": 0.16933333333344902,
+            "working": true,
+            "remaining_burning_fuel": 1866548.1481479304
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 3200,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 26,
+            "progress": 0.7360000000001167,
+            "working": true,
+            "remaining_burning_fuel": 1688770.3703701552
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 26,
+            "progress": 0.7360000000001167,
+            "working": true,
+            "remaining_burning_fuel": 1688770.3703701552
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 3300,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 28,
+            "progress": 0.3026666666667849,
+            "working": true,
+            "remaining_burning_fuel": 1510992.59259238
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 28,
+            "progress": 0.3026666666667849,
+            "working": true,
+            "remaining_burning_fuel": 1510992.59259238
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 3400,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 28,
+            "progress": 0.869333333333454,
+            "working": true,
+            "remaining_burning_fuel": 1333214.8148146048
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 28,
+            "progress": 0.869333333333454,
+            "working": true,
+            "remaining_burning_fuel": 1333214.8148146048
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 3500,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 30,
+            "progress": 0.43600000000012085,
+            "working": true,
+            "remaining_burning_fuel": 1155437.0370368296
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 30,
+            "progress": 0.43600000000012085,
+            "working": true,
+            "remaining_burning_fuel": 1155437.0370368296
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 3600,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 32,
+            "progress": 0.0026666666667910094,
+            "working": true,
+            "remaining_burning_fuel": 977659.2592590544
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 32,
+            "progress": 0.0026666666667910094,
+            "working": true,
+            "remaining_burning_fuel": 977659.2592590544
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 3700,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 32,
+            "progress": 0.5693333333334574,
+            "working": true,
+            "remaining_burning_fuel": 799881.4814812792
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 32,
+            "progress": 0.5693333333334574,
+            "working": true,
+            "remaining_burning_fuel": 799881.4814812792
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 3800,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 34,
+            "progress": 0.13600000000012719,
+            "working": true,
+            "remaining_burning_fuel": 622103.703703504
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 34,
+            "progress": 0.13600000000012719,
+            "working": true,
+            "remaining_burning_fuel": 622103.703703504
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 3900,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 34,
+            "progress": 0.7026666666667944,
+            "working": true,
+            "remaining_burning_fuel": 444325.92592572886
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 34,
+            "progress": 0.7026666666667944,
+            "working": true,
+            "remaining_burning_fuel": 444325.92592572886
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 4000,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 36,
+            "progress": 0.269333333333463,
+            "working": true,
+            "remaining_burning_fuel": 266548.1481479537
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 36,
+            "progress": 0.269333333333463,
+            "working": true,
+            "remaining_burning_fuel": 266548.1481479537
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 4100,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 36,
+            "progress": 0.8360000000001315,
+            "working": true,
+            "remaining_burning_fuel": 88770.37037017563
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 36,
+            "progress": 0.8360000000001315,
+            "working": true,
+            "remaining_burning_fuel": 88770.37037017563
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 4200,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 38,
+            "progress": 0.4026666666667989,
+            "working": true,
+            "remaining_burning_fuel": 3910992.5925923875
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 38,
+            "progress": 0.4026666666667989,
+            "working": true,
+            "remaining_burning_fuel": 3910992.5925923875
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 4300,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 38,
+            "progress": 0.9693333333334687,
+            "working": true,
+            "remaining_burning_fuel": 3733214.814814589
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 38,
+            "progress": 0.9693333333334687,
+            "working": true,
+            "remaining_burning_fuel": 3733214.814814589
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 4400,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 4500,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 4600,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 4700,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 4800,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 4900,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 5000,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 5100,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 5200,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 5300,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 5400,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      }
+    ],
+    "real_recipes": [
+      "copper-cable",
+      "iron-gear-wheel"
+    ],
+    "real_fuel": [
+      "wood",
+      "coal"
+    ],
+    "graphical_client": false
+  },
+  "save_reload": {
+    "status": "PASS",
+    "production_source": true,
+    "tick": 5400,
+    "sites": [
+      {
+        "direction": "north",
+        "recipe": "copper-cable",
+        "product": "copper-cable",
+        "finished": 20,
+        "completed_batches": 20,
+        "output": 40,
+        "input_remaining": 0,
+        "initial_starvation": true,
+        "initial_working_output": 4,
+        "natural_starvation": true,
+        "starved_at": 1450,
+        "starved_output": 12,
+        "recovered": true,
+        "exact_output_accounting": true
+      },
+      {
+        "direction": "east",
+        "recipe": "iron-gear-wheel",
+        "product": "iron-gear-wheel",
+        "finished": 10,
+        "completed_batches": 10,
+        "output": 10,
+        "input_remaining": 0,
+        "initial_starvation": true,
+        "initial_working_output": 2,
+        "natural_starvation": true,
+        "starved_at": 1450,
+        "starved_output": 6,
+        "recovered": true,
+        "exact_output_accounting": true
+      },
+      {
+        "direction": "south",
+        "recipe": "copper-cable",
+        "product": "copper-cable",
+        "finished": 20,
+        "completed_batches": 20,
+        "output": 40,
+        "input_remaining": 0,
+        "initial_starvation": true,
+        "initial_working_output": 4,
+        "natural_starvation": true,
+        "starved_at": 1450,
+        "starved_output": 12,
+        "recovered": true,
+        "exact_output_accounting": true
+      },
+      {
+        "direction": "west",
+        "recipe": "iron-gear-wheel",
+        "product": "iron-gear-wheel",
+        "finished": 10,
+        "completed_batches": 10,
+        "output": 10,
+        "input_remaining": 0,
+        "initial_starvation": true,
+        "initial_working_output": 2,
+        "natural_starvation": true,
+        "starved_at": 1450,
+        "starved_output": 6,
+        "recovered": true,
+        "exact_output_accounting": true
+      }
+    ],
+    "resume": {
+      "saved_tick": 520,
+      "tick": 521,
+      "working": 4
+    },
+    "screenshots": {},
+    "samples": [
+      {
+        "tick": 0,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 0,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "east",
+            "output": 0,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "south",
+            "output": 0,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "west",
+            "output": 0,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 0
+          }
+        ]
+      },
+      {
+        "tick": 100,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 0,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "east",
+            "output": 0,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "south",
+            "output": 0,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "west",
+            "output": 0,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 0
+          }
+        ]
+      },
+      {
+        "tick": 200,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 0,
+            "progress": 0.4419999999999993,
+            "working": true,
+            "remaining_burning_fuel": 1859437.037037039
+          },
+          {
+            "direction": "east",
+            "output": 0,
+            "progress": 0.4419999999999993,
+            "working": true,
+            "remaining_burning_fuel": 1859437.037037039
+          },
+          {
+            "direction": "south",
+            "output": 0,
+            "progress": 0.4419999999999993,
+            "working": true,
+            "remaining_burning_fuel": 1859437.037037039
+          },
+          {
+            "direction": "west",
+            "output": 0,
+            "progress": 0.4419999999999993,
+            "working": true,
+            "remaining_burning_fuel": 1859437.037037039
+          }
+        ]
+      },
+      {
+        "tick": 300,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 2,
+            "progress": 0.008666666666669515,
+            "working": true,
+            "remaining_burning_fuel": 1681659.2592592638
+          },
+          {
+            "direction": "east",
+            "output": 1,
+            "progress": 0.008666666666669515,
+            "working": true,
+            "remaining_burning_fuel": 1681659.2592592638
+          },
+          {
+            "direction": "south",
+            "output": 2,
+            "progress": 0.008666666666669515,
+            "working": true,
+            "remaining_burning_fuel": 1681659.2592592638
+          },
+          {
+            "direction": "west",
+            "output": 1,
+            "progress": 0.008666666666669515,
+            "working": true,
+            "remaining_burning_fuel": 1681659.2592592638
+          }
+        ]
+      },
+      {
+        "tick": 400,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 2,
+            "progress": 0.5753333333333359,
+            "working": true,
+            "remaining_burning_fuel": 1503881.4814814886
+          },
+          {
+            "direction": "east",
+            "output": 1,
+            "progress": 0.5753333333333359,
+            "working": true,
+            "remaining_burning_fuel": 1503881.4814814886
+          },
+          {
+            "direction": "south",
+            "output": 2,
+            "progress": 0.5753333333333359,
+            "working": true,
+            "remaining_burning_fuel": 1503881.4814814886
+          },
+          {
+            "direction": "west",
+            "output": 1,
+            "progress": 0.5753333333333359,
+            "working": true,
+            "remaining_burning_fuel": 1503881.4814814886
+          }
+        ]
+      },
+      {
+        "tick": 500,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 4,
+            "progress": 0.14200000000000568,
+            "working": true,
+            "remaining_burning_fuel": 1326103.7037037134
+          },
+          {
+            "direction": "east",
+            "output": 2,
+            "progress": 0.14200000000000568,
+            "working": true,
+            "remaining_burning_fuel": 1326103.7037037134
+          },
+          {
+            "direction": "south",
+            "output": 4,
+            "progress": 0.14200000000000568,
+            "working": true,
+            "remaining_burning_fuel": 1326103.7037037134
+          },
+          {
+            "direction": "west",
+            "output": 2,
+            "progress": 0.14200000000000568,
+            "working": true,
+            "remaining_burning_fuel": 1326103.7037037134
+          }
+        ]
+      },
+      {
+        "tick": 600,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 4,
+            "progress": 0.708666666666673,
+            "working": true,
+            "remaining_burning_fuel": 1148325.9259259382
+          },
+          {
+            "direction": "east",
+            "output": 2,
+            "progress": 0.708666666666673,
+            "working": true,
+            "remaining_burning_fuel": 1148325.9259259382
+          },
+          {
+            "direction": "south",
+            "output": 4,
+            "progress": 0.708666666666673,
+            "working": true,
+            "remaining_burning_fuel": 1148325.9259259382
+          },
+          {
+            "direction": "west",
+            "output": 2,
+            "progress": 0.708666666666673,
+            "working": true,
+            "remaining_burning_fuel": 1148325.9259259382
+          }
+        ]
+      },
+      {
+        "tick": 700,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 6,
+            "progress": 0.2753333333333415,
+            "working": true,
+            "remaining_burning_fuel": 970548.148148163
+          },
+          {
+            "direction": "east",
+            "output": 3,
+            "progress": 0.2753333333333415,
+            "working": true,
+            "remaining_burning_fuel": 970548.148148163
+          },
+          {
+            "direction": "south",
+            "output": 6,
+            "progress": 0.2753333333333415,
+            "working": true,
+            "remaining_burning_fuel": 970548.148148163
+          },
+          {
+            "direction": "west",
+            "output": 3,
+            "progress": 0.2753333333333415,
+            "working": true,
+            "remaining_burning_fuel": 970548.148148163
+          }
+        ]
+      },
+      {
+        "tick": 800,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 6,
+            "progress": 0.8420000000000101,
+            "working": true,
+            "remaining_burning_fuel": 792770.3703703878
+          },
+          {
+            "direction": "east",
+            "output": 3,
+            "progress": 0.8420000000000101,
+            "working": true,
+            "remaining_burning_fuel": 792770.3703703878
+          },
+          {
+            "direction": "south",
+            "output": 6,
+            "progress": 0.8420000000000101,
+            "working": true,
+            "remaining_burning_fuel": 792770.3703703878
+          },
+          {
+            "direction": "west",
+            "output": 3,
+            "progress": 0.8420000000000101,
+            "working": true,
+            "remaining_burning_fuel": 792770.3703703878
+          }
+        ]
+      },
+      {
+        "tick": 900,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 8,
+            "progress": 0.40866666666667734,
+            "working": true,
+            "remaining_burning_fuel": 614992.5925926126
+          },
+          {
+            "direction": "east",
+            "output": 4,
+            "progress": 0.40866666666667734,
+            "working": true,
+            "remaining_burning_fuel": 614992.5925926126
+          },
+          {
+            "direction": "south",
+            "output": 8,
+            "progress": 0.40866666666667734,
+            "working": true,
+            "remaining_burning_fuel": 614992.5925926126
+          },
+          {
+            "direction": "west",
+            "output": 4,
+            "progress": 0.40866666666667734,
+            "working": true,
+            "remaining_burning_fuel": 614992.5925926126
+          }
+        ]
+      },
+      {
+        "tick": 1000,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 8,
+            "progress": 0.9753333333333473,
+            "working": true,
+            "remaining_burning_fuel": 437214.8148148374
+          },
+          {
+            "direction": "east",
+            "output": 4,
+            "progress": 0.9753333333333473,
+            "working": true,
+            "remaining_burning_fuel": 437214.8148148374
+          },
+          {
+            "direction": "south",
+            "output": 8,
+            "progress": 0.9753333333333473,
+            "working": true,
+            "remaining_burning_fuel": 437214.8148148374
+          },
+          {
+            "direction": "west",
+            "output": 4,
+            "progress": 0.9753333333333473,
+            "working": true,
+            "remaining_burning_fuel": 437214.8148148374
+          }
+        ]
+      },
+      {
+        "tick": 1100,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 10,
+            "progress": 0.5420000000000136,
+            "working": true,
+            "remaining_burning_fuel": 259437.03703706217
+          },
+          {
+            "direction": "east",
+            "output": 5,
+            "progress": 0.5420000000000136,
+            "working": true,
+            "remaining_burning_fuel": 259437.03703706217
+          },
+          {
+            "direction": "south",
+            "output": 10,
+            "progress": 0.5420000000000136,
+            "working": true,
+            "remaining_burning_fuel": 259437.03703706217
+          },
+          {
+            "direction": "west",
+            "output": 5,
+            "progress": 0.5420000000000136,
+            "working": true,
+            "remaining_burning_fuel": 259437.03703706217
+          }
+        ]
+      },
+      {
+        "tick": 1200,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 12,
+            "progress": 0.1086666666666836,
+            "working": true,
+            "remaining_burning_fuel": 81659.25925928407
+          },
+          {
+            "direction": "east",
+            "output": 6,
+            "progress": 0.1086666666666836,
+            "working": true,
+            "remaining_burning_fuel": 81659.25925928407
+          },
+          {
+            "direction": "south",
+            "output": 12,
+            "progress": 0.1086666666666836,
+            "working": true,
+            "remaining_burning_fuel": 81659.25925928407
+          },
+          {
+            "direction": "west",
+            "output": 6,
+            "progress": 0.1086666666666836,
+            "working": true,
+            "remaining_burning_fuel": 81659.25925928407
+          }
+        ]
+      },
+      {
+        "tick": 1300,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 12,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "east",
+            "output": 6,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "south",
+            "output": 12,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "west",
+            "output": 6,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          }
+        ]
+      },
+      {
+        "tick": 1400,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 12,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "east",
+            "output": 6,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "south",
+            "output": 12,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "west",
+            "output": 6,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          }
+        ]
+      },
+      {
+        "tick": 1500,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 12,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "east",
+            "output": 6,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "south",
+            "output": 12,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "west",
+            "output": 6,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          }
+        ]
+      },
+      {
+        "tick": 1600,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 12,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "east",
+            "output": 6,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "south",
+            "output": 12,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "west",
+            "output": 6,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          }
+        ]
+      },
+      {
+        "tick": 1700,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 12,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "east",
+            "output": 6,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "south",
+            "output": 12,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "west",
+            "output": 6,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          }
+        ]
+      },
+      {
+        "tick": 1800,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 12,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "east",
+            "output": 6,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "south",
+            "output": 12,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "west",
+            "output": 6,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          }
+        ]
+      },
+      {
+        "tick": 1900,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 12,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "east",
+            "output": 6,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "south",
+            "output": 12,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "west",
+            "output": 6,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          }
+        ]
+      },
+      {
+        "tick": 2000,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 12,
+            "progress": 0.936000000000098,
+            "working": true,
+            "remaining_burning_fuel": 3822103.7037036833
+          },
+          {
+            "direction": "east",
+            "output": 6,
+            "progress": 0.936000000000098,
+            "working": true,
+            "remaining_burning_fuel": 3822103.7037036833
+          },
+          {
+            "direction": "south",
+            "output": 12,
+            "progress": 0.936000000000098,
+            "working": true,
+            "remaining_burning_fuel": 3822103.7037036833
+          },
+          {
+            "direction": "west",
+            "output": 6,
+            "progress": 0.936000000000098,
+            "working": true,
+            "remaining_burning_fuel": 3822103.7037036833
+          }
+        ]
+      },
+      {
+        "tick": 2100,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 14,
+            "progress": 0.5026666666667644,
+            "working": true,
+            "remaining_burning_fuel": 3644325.925925885
+          },
+          {
+            "direction": "east",
+            "output": 7,
+            "progress": 0.5026666666667644,
+            "working": true,
+            "remaining_burning_fuel": 3644325.925925885
+          },
+          {
+            "direction": "south",
+            "output": 14,
+            "progress": 0.5026666666667644,
+            "working": true,
+            "remaining_burning_fuel": 3644325.925925885
+          },
+          {
+            "direction": "west",
+            "output": 7,
+            "progress": 0.5026666666667644,
+            "working": true,
+            "remaining_burning_fuel": 3644325.925925885
+          }
+        ]
+      },
+      {
+        "tick": 2200,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 16,
+            "progress": 0.06933333333343474,
+            "working": true,
+            "remaining_burning_fuel": 3466548.1481480864
+          },
+          {
+            "direction": "east",
+            "output": 8,
+            "progress": 0.06933333333343474,
+            "working": true,
+            "remaining_burning_fuel": 3466548.1481480864
+          },
+          {
+            "direction": "south",
+            "output": 16,
+            "progress": 0.06933333333343474,
+            "working": true,
+            "remaining_burning_fuel": 3466548.1481480864
+          },
+          {
+            "direction": "west",
+            "output": 8,
+            "progress": 0.06933333333343474,
+            "working": true,
+            "remaining_burning_fuel": 3466548.1481480864
+          }
+        ]
+      },
+      {
+        "tick": 2300,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 16,
+            "progress": 0.6360000000001016,
+            "working": true,
+            "remaining_burning_fuel": 3288770.370370288
+          },
+          {
+            "direction": "east",
+            "output": 8,
+            "progress": 0.6360000000001016,
+            "working": true,
+            "remaining_burning_fuel": 3288770.370370288
+          },
+          {
+            "direction": "south",
+            "output": 16,
+            "progress": 0.6360000000001016,
+            "working": true,
+            "remaining_burning_fuel": 3288770.370370288
+          },
+          {
+            "direction": "west",
+            "output": 8,
+            "progress": 0.6360000000001016,
+            "working": true,
+            "remaining_burning_fuel": 3288770.370370288
+          }
+        ]
+      },
+      {
+        "tick": 2400,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 18,
+            "progress": 0.20266666666677083,
+            "working": true,
+            "remaining_burning_fuel": 3110992.5925924894
+          },
+          {
+            "direction": "east",
+            "output": 9,
+            "progress": 0.20266666666677083,
+            "working": true,
+            "remaining_burning_fuel": 3110992.5925924894
+          },
+          {
+            "direction": "south",
+            "output": 18,
+            "progress": 0.20266666666677083,
+            "working": true,
+            "remaining_burning_fuel": 3110992.5925924894
+          },
+          {
+            "direction": "west",
+            "output": 9,
+            "progress": 0.20266666666677083,
+            "working": true,
+            "remaining_burning_fuel": 3110992.5925924894
+          }
+        ]
+      },
+      {
+        "tick": 2500,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 18,
+            "progress": 0.7693333333334388,
+            "working": true,
+            "remaining_burning_fuel": 2933214.814814691
+          },
+          {
+            "direction": "east",
+            "output": 9,
+            "progress": 0.7693333333334388,
+            "working": true,
+            "remaining_burning_fuel": 2933214.814814691
+          },
+          {
+            "direction": "south",
+            "output": 18,
+            "progress": 0.7693333333334388,
+            "working": true,
+            "remaining_burning_fuel": 2933214.814814691
+          },
+          {
+            "direction": "west",
+            "output": 9,
+            "progress": 0.7693333333334388,
+            "working": true,
+            "remaining_burning_fuel": 2933214.814814691
+          }
+        ]
+      },
+      {
+        "tick": 2600,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 20,
+            "progress": 0.33600000000010666,
+            "working": true,
+            "remaining_burning_fuel": 2755437.0370368925
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 20,
+            "progress": 0.33600000000010666,
+            "working": true,
+            "remaining_burning_fuel": 2755437.0370368925
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 2700,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 20,
+            "progress": 0.902666666666776,
+            "working": true,
+            "remaining_burning_fuel": 2577659.259259094
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 20,
+            "progress": 0.902666666666776,
+            "working": true,
+            "remaining_burning_fuel": 2577659.259259094
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 2800,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 22,
+            "progress": 0.46933333333344257,
+            "working": true,
+            "remaining_burning_fuel": 2399881.4814812955
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 22,
+            "progress": 0.46933333333344257,
+            "working": true,
+            "remaining_burning_fuel": 2399881.4814812955
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 2900,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 24,
+            "progress": 0.03600000000011287,
+            "working": true,
+            "remaining_burning_fuel": 2222103.703703497
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 24,
+            "progress": 0.03600000000011287,
+            "working": true,
+            "remaining_burning_fuel": 2222103.703703497
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 3000,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 24,
+            "progress": 0.6026666666667795,
+            "working": true,
+            "remaining_burning_fuel": 2044325.9259257056
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 24,
+            "progress": 0.6026666666667795,
+            "working": true,
+            "remaining_burning_fuel": 2044325.9259257056
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 3100,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 26,
+            "progress": 0.16933333333344902,
+            "working": true,
+            "remaining_burning_fuel": 1866548.1481479304
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 26,
+            "progress": 0.16933333333344902,
+            "working": true,
+            "remaining_burning_fuel": 1866548.1481479304
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 3200,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 26,
+            "progress": 0.7360000000001167,
+            "working": true,
+            "remaining_burning_fuel": 1688770.3703701552
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 26,
+            "progress": 0.7360000000001167,
+            "working": true,
+            "remaining_burning_fuel": 1688770.3703701552
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 3300,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 28,
+            "progress": 0.3026666666667849,
+            "working": true,
+            "remaining_burning_fuel": 1510992.59259238
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 28,
+            "progress": 0.3026666666667849,
+            "working": true,
+            "remaining_burning_fuel": 1510992.59259238
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 3400,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 28,
+            "progress": 0.869333333333454,
+            "working": true,
+            "remaining_burning_fuel": 1333214.8148146048
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 28,
+            "progress": 0.869333333333454,
+            "working": true,
+            "remaining_burning_fuel": 1333214.8148146048
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 3500,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 30,
+            "progress": 0.43600000000012085,
+            "working": true,
+            "remaining_burning_fuel": 1155437.0370368296
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 30,
+            "progress": 0.43600000000012085,
+            "working": true,
+            "remaining_burning_fuel": 1155437.0370368296
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 3600,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 32,
+            "progress": 0.0026666666667910094,
+            "working": true,
+            "remaining_burning_fuel": 977659.2592590544
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 32,
+            "progress": 0.0026666666667910094,
+            "working": true,
+            "remaining_burning_fuel": 977659.2592590544
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 3700,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 32,
+            "progress": 0.5693333333334574,
+            "working": true,
+            "remaining_burning_fuel": 799881.4814812792
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 32,
+            "progress": 0.5693333333334574,
+            "working": true,
+            "remaining_burning_fuel": 799881.4814812792
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 3800,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 34,
+            "progress": 0.13600000000012719,
+            "working": true,
+            "remaining_burning_fuel": 622103.703703504
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 34,
+            "progress": 0.13600000000012719,
+            "working": true,
+            "remaining_burning_fuel": 622103.703703504
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 3900,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 34,
+            "progress": 0.7026666666667944,
+            "working": true,
+            "remaining_burning_fuel": 444325.92592572886
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 34,
+            "progress": 0.7026666666667944,
+            "working": true,
+            "remaining_burning_fuel": 444325.92592572886
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 4000,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 36,
+            "progress": 0.269333333333463,
+            "working": true,
+            "remaining_burning_fuel": 266548.1481479537
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 36,
+            "progress": 0.269333333333463,
+            "working": true,
+            "remaining_burning_fuel": 266548.1481479537
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 4100,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 36,
+            "progress": 0.8360000000001315,
+            "working": true,
+            "remaining_burning_fuel": 88770.37037017563
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 36,
+            "progress": 0.8360000000001315,
+            "working": true,
+            "remaining_burning_fuel": 88770.37037017563
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 4200,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 38,
+            "progress": 0.4026666666667989,
+            "working": true,
+            "remaining_burning_fuel": 3910992.5925923875
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 38,
+            "progress": 0.4026666666667989,
+            "working": true,
+            "remaining_burning_fuel": 3910992.5925923875
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 4300,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 38,
+            "progress": 0.9693333333334687,
+            "working": true,
+            "remaining_burning_fuel": 3733214.814814589
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 38,
+            "progress": 0.9693333333334687,
+            "working": true,
+            "remaining_burning_fuel": 3733214.814814589
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 4400,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 4500,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 4600,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 4700,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 4800,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 4900,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 5000,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 5100,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 5200,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 5300,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 5400,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      }
+    ],
+    "real_recipes": [
+      "copper-cable",
+      "iron-gear-wheel"
+    ],
+    "real_fuel": [
+      "wood",
+      "coal"
+    ],
+    "graphical_client": false
+  },
+  "graphical": {
+    "status": "PASS",
+    "production_source": true,
+    "tick": 5400,
+    "sites": [
+      {
+        "direction": "north",
+        "recipe": "copper-cable",
+        "product": "copper-cable",
+        "finished": 20,
+        "completed_batches": 20,
+        "output": 40,
+        "input_remaining": 0,
+        "initial_starvation": true,
+        "initial_working_output": 4,
+        "natural_starvation": true,
+        "starved_at": 1450,
+        "starved_output": 12,
+        "recovered": true,
+        "exact_output_accounting": true
+      },
+      {
+        "direction": "east",
+        "recipe": "iron-gear-wheel",
+        "product": "iron-gear-wheel",
+        "finished": 10,
+        "completed_batches": 10,
+        "output": 10,
+        "input_remaining": 0,
+        "initial_starvation": true,
+        "initial_working_output": 2,
+        "natural_starvation": true,
+        "starved_at": 1450,
+        "starved_output": 6,
+        "recovered": true,
+        "exact_output_accounting": true
+      },
+      {
+        "direction": "south",
+        "recipe": "copper-cable",
+        "product": "copper-cable",
+        "finished": 20,
+        "completed_batches": 20,
+        "output": 40,
+        "input_remaining": 0,
+        "initial_starvation": true,
+        "initial_working_output": 4,
+        "natural_starvation": true,
+        "starved_at": 1450,
+        "starved_output": 12,
+        "recovered": true,
+        "exact_output_accounting": true
+      },
+      {
+        "direction": "west",
+        "recipe": "iron-gear-wheel",
+        "product": "iron-gear-wheel",
+        "finished": 10,
+        "completed_batches": 10,
+        "output": 10,
+        "input_remaining": 0,
+        "initial_starvation": true,
+        "initial_working_output": 2,
+        "natural_starvation": true,
+        "starved_at": 1450,
+        "starved_output": 6,
+        "recovered": true,
+        "exact_output_accounting": true
+      }
+    ],
+    "screenshots": [
+      "0080-idle-no-fuel.png",
+      "0350-working-open.png",
+      "0352-cycle-anchor.png",
+      "0500-working-cycle.png",
+      "0680-working-late-cycle.png",
+      "0900-working-next-cycle.png",
+      "1072-cycle-repeat.png",
+      "1700-natural-fuel-starvation.png",
+      "2100-recovered-working.png",
+      "5350-finished-idle.png"
+    ],
+    "samples": [
+      {
+        "tick": 0,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 0,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "east",
+            "output": 0,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "south",
+            "output": 0,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "west",
+            "output": 0,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 0
+          }
+        ]
+      },
+      {
+        "tick": 100,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 0,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "east",
+            "output": 0,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "south",
+            "output": 0,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "west",
+            "output": 0,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 0
+          }
+        ]
+      },
+      {
+        "tick": 200,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 0,
+            "progress": 0.4419999999999993,
+            "working": true,
+            "remaining_burning_fuel": 1859437.037037039
+          },
+          {
+            "direction": "east",
+            "output": 0,
+            "progress": 0.4419999999999993,
+            "working": true,
+            "remaining_burning_fuel": 1859437.037037039
+          },
+          {
+            "direction": "south",
+            "output": 0,
+            "progress": 0.4419999999999993,
+            "working": true,
+            "remaining_burning_fuel": 1859437.037037039
+          },
+          {
+            "direction": "west",
+            "output": 0,
+            "progress": 0.4419999999999993,
+            "working": true,
+            "remaining_burning_fuel": 1859437.037037039
+          }
+        ]
+      },
+      {
+        "tick": 300,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 2,
+            "progress": 0.008666666666669515,
+            "working": true,
+            "remaining_burning_fuel": 1681659.2592592638
+          },
+          {
+            "direction": "east",
+            "output": 1,
+            "progress": 0.008666666666669515,
+            "working": true,
+            "remaining_burning_fuel": 1681659.2592592638
+          },
+          {
+            "direction": "south",
+            "output": 2,
+            "progress": 0.008666666666669515,
+            "working": true,
+            "remaining_burning_fuel": 1681659.2592592638
+          },
+          {
+            "direction": "west",
+            "output": 1,
+            "progress": 0.008666666666669515,
+            "working": true,
+            "remaining_burning_fuel": 1681659.2592592638
+          }
+        ]
+      },
+      {
+        "tick": 400,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 2,
+            "progress": 0.5753333333333359,
+            "working": true,
+            "remaining_burning_fuel": 1503881.4814814886
+          },
+          {
+            "direction": "east",
+            "output": 1,
+            "progress": 0.5753333333333359,
+            "working": true,
+            "remaining_burning_fuel": 1503881.4814814886
+          },
+          {
+            "direction": "south",
+            "output": 2,
+            "progress": 0.5753333333333359,
+            "working": true,
+            "remaining_burning_fuel": 1503881.4814814886
+          },
+          {
+            "direction": "west",
+            "output": 1,
+            "progress": 0.5753333333333359,
+            "working": true,
+            "remaining_burning_fuel": 1503881.4814814886
+          }
+        ]
+      },
+      {
+        "tick": 500,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 4,
+            "progress": 0.14200000000000568,
+            "working": true,
+            "remaining_burning_fuel": 1326103.7037037134
+          },
+          {
+            "direction": "east",
+            "output": 2,
+            "progress": 0.14200000000000568,
+            "working": true,
+            "remaining_burning_fuel": 1326103.7037037134
+          },
+          {
+            "direction": "south",
+            "output": 4,
+            "progress": 0.14200000000000568,
+            "working": true,
+            "remaining_burning_fuel": 1326103.7037037134
+          },
+          {
+            "direction": "west",
+            "output": 2,
+            "progress": 0.14200000000000568,
+            "working": true,
+            "remaining_burning_fuel": 1326103.7037037134
+          }
+        ]
+      },
+      {
+        "tick": 600,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 4,
+            "progress": 0.708666666666673,
+            "working": true,
+            "remaining_burning_fuel": 1148325.9259259382
+          },
+          {
+            "direction": "east",
+            "output": 2,
+            "progress": 0.708666666666673,
+            "working": true,
+            "remaining_burning_fuel": 1148325.9259259382
+          },
+          {
+            "direction": "south",
+            "output": 4,
+            "progress": 0.708666666666673,
+            "working": true,
+            "remaining_burning_fuel": 1148325.9259259382
+          },
+          {
+            "direction": "west",
+            "output": 2,
+            "progress": 0.708666666666673,
+            "working": true,
+            "remaining_burning_fuel": 1148325.9259259382
+          }
+        ]
+      },
+      {
+        "tick": 700,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 6,
+            "progress": 0.2753333333333415,
+            "working": true,
+            "remaining_burning_fuel": 970548.148148163
+          },
+          {
+            "direction": "east",
+            "output": 3,
+            "progress": 0.2753333333333415,
+            "working": true,
+            "remaining_burning_fuel": 970548.148148163
+          },
+          {
+            "direction": "south",
+            "output": 6,
+            "progress": 0.2753333333333415,
+            "working": true,
+            "remaining_burning_fuel": 970548.148148163
+          },
+          {
+            "direction": "west",
+            "output": 3,
+            "progress": 0.2753333333333415,
+            "working": true,
+            "remaining_burning_fuel": 970548.148148163
+          }
+        ]
+      },
+      {
+        "tick": 800,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 6,
+            "progress": 0.8420000000000101,
+            "working": true,
+            "remaining_burning_fuel": 792770.3703703878
+          },
+          {
+            "direction": "east",
+            "output": 3,
+            "progress": 0.8420000000000101,
+            "working": true,
+            "remaining_burning_fuel": 792770.3703703878
+          },
+          {
+            "direction": "south",
+            "output": 6,
+            "progress": 0.8420000000000101,
+            "working": true,
+            "remaining_burning_fuel": 792770.3703703878
+          },
+          {
+            "direction": "west",
+            "output": 3,
+            "progress": 0.8420000000000101,
+            "working": true,
+            "remaining_burning_fuel": 792770.3703703878
+          }
+        ]
+      },
+      {
+        "tick": 900,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 8,
+            "progress": 0.40866666666667734,
+            "working": true,
+            "remaining_burning_fuel": 614992.5925926126
+          },
+          {
+            "direction": "east",
+            "output": 4,
+            "progress": 0.40866666666667734,
+            "working": true,
+            "remaining_burning_fuel": 614992.5925926126
+          },
+          {
+            "direction": "south",
+            "output": 8,
+            "progress": 0.40866666666667734,
+            "working": true,
+            "remaining_burning_fuel": 614992.5925926126
+          },
+          {
+            "direction": "west",
+            "output": 4,
+            "progress": 0.40866666666667734,
+            "working": true,
+            "remaining_burning_fuel": 614992.5925926126
+          }
+        ]
+      },
+      {
+        "tick": 1000,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 8,
+            "progress": 0.9753333333333473,
+            "working": true,
+            "remaining_burning_fuel": 437214.8148148374
+          },
+          {
+            "direction": "east",
+            "output": 4,
+            "progress": 0.9753333333333473,
+            "working": true,
+            "remaining_burning_fuel": 437214.8148148374
+          },
+          {
+            "direction": "south",
+            "output": 8,
+            "progress": 0.9753333333333473,
+            "working": true,
+            "remaining_burning_fuel": 437214.8148148374
+          },
+          {
+            "direction": "west",
+            "output": 4,
+            "progress": 0.9753333333333473,
+            "working": true,
+            "remaining_burning_fuel": 437214.8148148374
+          }
+        ]
+      },
+      {
+        "tick": 1100,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 10,
+            "progress": 0.5420000000000136,
+            "working": true,
+            "remaining_burning_fuel": 259437.03703706217
+          },
+          {
+            "direction": "east",
+            "output": 5,
+            "progress": 0.5420000000000136,
+            "working": true,
+            "remaining_burning_fuel": 259437.03703706217
+          },
+          {
+            "direction": "south",
+            "output": 10,
+            "progress": 0.5420000000000136,
+            "working": true,
+            "remaining_burning_fuel": 259437.03703706217
+          },
+          {
+            "direction": "west",
+            "output": 5,
+            "progress": 0.5420000000000136,
+            "working": true,
+            "remaining_burning_fuel": 259437.03703706217
+          }
+        ]
+      },
+      {
+        "tick": 1200,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 12,
+            "progress": 0.1086666666666836,
+            "working": true,
+            "remaining_burning_fuel": 81659.25925928407
+          },
+          {
+            "direction": "east",
+            "output": 6,
+            "progress": 0.1086666666666836,
+            "working": true,
+            "remaining_burning_fuel": 81659.25925928407
+          },
+          {
+            "direction": "south",
+            "output": 12,
+            "progress": 0.1086666666666836,
+            "working": true,
+            "remaining_burning_fuel": 81659.25925928407
+          },
+          {
+            "direction": "west",
+            "output": 6,
+            "progress": 0.1086666666666836,
+            "working": true,
+            "remaining_burning_fuel": 81659.25925928407
+          }
+        ]
+      },
+      {
+        "tick": 1300,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 12,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "east",
+            "output": 6,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "south",
+            "output": 12,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "west",
+            "output": 6,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          }
+        ]
+      },
+      {
+        "tick": 1400,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 12,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "east",
+            "output": 6,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "south",
+            "output": 12,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "west",
+            "output": 6,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          }
+        ]
+      },
+      {
+        "tick": 1500,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 12,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "east",
+            "output": 6,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "south",
+            "output": 12,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "west",
+            "output": 6,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          }
+        ]
+      },
+      {
+        "tick": 1600,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 12,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "east",
+            "output": 6,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "south",
+            "output": 12,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "west",
+            "output": 6,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          }
+        ]
+      },
+      {
+        "tick": 1700,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 12,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "east",
+            "output": 6,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "south",
+            "output": 12,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "west",
+            "output": 6,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          }
+        ]
+      },
+      {
+        "tick": 1800,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 12,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "east",
+            "output": 6,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "south",
+            "output": 12,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "west",
+            "output": 6,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          }
+        ]
+      },
+      {
+        "tick": 1900,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 12,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "east",
+            "output": 6,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "south",
+            "output": 12,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          },
+          {
+            "direction": "west",
+            "output": 6,
+            "progress": 0.3750000000000952,
+            "working": true,
+            "remaining_burning_fuel": 0
+          }
+        ]
+      },
+      {
+        "tick": 2000,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 12,
+            "progress": 0.936000000000098,
+            "working": true,
+            "remaining_burning_fuel": 3822103.7037036833
+          },
+          {
+            "direction": "east",
+            "output": 6,
+            "progress": 0.936000000000098,
+            "working": true,
+            "remaining_burning_fuel": 3822103.7037036833
+          },
+          {
+            "direction": "south",
+            "output": 12,
+            "progress": 0.936000000000098,
+            "working": true,
+            "remaining_burning_fuel": 3822103.7037036833
+          },
+          {
+            "direction": "west",
+            "output": 6,
+            "progress": 0.936000000000098,
+            "working": true,
+            "remaining_burning_fuel": 3822103.7037036833
+          }
+        ]
+      },
+      {
+        "tick": 2100,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 14,
+            "progress": 0.5026666666667644,
+            "working": true,
+            "remaining_burning_fuel": 3644325.925925885
+          },
+          {
+            "direction": "east",
+            "output": 7,
+            "progress": 0.5026666666667644,
+            "working": true,
+            "remaining_burning_fuel": 3644325.925925885
+          },
+          {
+            "direction": "south",
+            "output": 14,
+            "progress": 0.5026666666667644,
+            "working": true,
+            "remaining_burning_fuel": 3644325.925925885
+          },
+          {
+            "direction": "west",
+            "output": 7,
+            "progress": 0.5026666666667644,
+            "working": true,
+            "remaining_burning_fuel": 3644325.925925885
+          }
+        ]
+      },
+      {
+        "tick": 2200,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 16,
+            "progress": 0.06933333333343474,
+            "working": true,
+            "remaining_burning_fuel": 3466548.1481480864
+          },
+          {
+            "direction": "east",
+            "output": 8,
+            "progress": 0.06933333333343474,
+            "working": true,
+            "remaining_burning_fuel": 3466548.1481480864
+          },
+          {
+            "direction": "south",
+            "output": 16,
+            "progress": 0.06933333333343474,
+            "working": true,
+            "remaining_burning_fuel": 3466548.1481480864
+          },
+          {
+            "direction": "west",
+            "output": 8,
+            "progress": 0.06933333333343474,
+            "working": true,
+            "remaining_burning_fuel": 3466548.1481480864
+          }
+        ]
+      },
+      {
+        "tick": 2300,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 16,
+            "progress": 0.6360000000001016,
+            "working": true,
+            "remaining_burning_fuel": 3288770.370370288
+          },
+          {
+            "direction": "east",
+            "output": 8,
+            "progress": 0.6360000000001016,
+            "working": true,
+            "remaining_burning_fuel": 3288770.370370288
+          },
+          {
+            "direction": "south",
+            "output": 16,
+            "progress": 0.6360000000001016,
+            "working": true,
+            "remaining_burning_fuel": 3288770.370370288
+          },
+          {
+            "direction": "west",
+            "output": 8,
+            "progress": 0.6360000000001016,
+            "working": true,
+            "remaining_burning_fuel": 3288770.370370288
+          }
+        ]
+      },
+      {
+        "tick": 2400,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 18,
+            "progress": 0.20266666666677083,
+            "working": true,
+            "remaining_burning_fuel": 3110992.5925924894
+          },
+          {
+            "direction": "east",
+            "output": 9,
+            "progress": 0.20266666666677083,
+            "working": true,
+            "remaining_burning_fuel": 3110992.5925924894
+          },
+          {
+            "direction": "south",
+            "output": 18,
+            "progress": 0.20266666666677083,
+            "working": true,
+            "remaining_burning_fuel": 3110992.5925924894
+          },
+          {
+            "direction": "west",
+            "output": 9,
+            "progress": 0.20266666666677083,
+            "working": true,
+            "remaining_burning_fuel": 3110992.5925924894
+          }
+        ]
+      },
+      {
+        "tick": 2500,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 18,
+            "progress": 0.7693333333334388,
+            "working": true,
+            "remaining_burning_fuel": 2933214.814814691
+          },
+          {
+            "direction": "east",
+            "output": 9,
+            "progress": 0.7693333333334388,
+            "working": true,
+            "remaining_burning_fuel": 2933214.814814691
+          },
+          {
+            "direction": "south",
+            "output": 18,
+            "progress": 0.7693333333334388,
+            "working": true,
+            "remaining_burning_fuel": 2933214.814814691
+          },
+          {
+            "direction": "west",
+            "output": 9,
+            "progress": 0.7693333333334388,
+            "working": true,
+            "remaining_burning_fuel": 2933214.814814691
+          }
+        ]
+      },
+      {
+        "tick": 2600,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 20,
+            "progress": 0.33600000000010666,
+            "working": true,
+            "remaining_burning_fuel": 2755437.0370368925
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 20,
+            "progress": 0.33600000000010666,
+            "working": true,
+            "remaining_burning_fuel": 2755437.0370368925
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 2700,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 20,
+            "progress": 0.902666666666776,
+            "working": true,
+            "remaining_burning_fuel": 2577659.259259094
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 20,
+            "progress": 0.902666666666776,
+            "working": true,
+            "remaining_burning_fuel": 2577659.259259094
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 2800,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 22,
+            "progress": 0.46933333333344257,
+            "working": true,
+            "remaining_burning_fuel": 2399881.4814812955
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 22,
+            "progress": 0.46933333333344257,
+            "working": true,
+            "remaining_burning_fuel": 2399881.4814812955
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 2900,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 24,
+            "progress": 0.03600000000011287,
+            "working": true,
+            "remaining_burning_fuel": 2222103.703703497
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 24,
+            "progress": 0.03600000000011287,
+            "working": true,
+            "remaining_burning_fuel": 2222103.703703497
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 3000,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 24,
+            "progress": 0.6026666666667795,
+            "working": true,
+            "remaining_burning_fuel": 2044325.9259257056
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 24,
+            "progress": 0.6026666666667795,
+            "working": true,
+            "remaining_burning_fuel": 2044325.9259257056
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 3100,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 26,
+            "progress": 0.16933333333344902,
+            "working": true,
+            "remaining_burning_fuel": 1866548.1481479304
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 26,
+            "progress": 0.16933333333344902,
+            "working": true,
+            "remaining_burning_fuel": 1866548.1481479304
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 3200,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 26,
+            "progress": 0.7360000000001167,
+            "working": true,
+            "remaining_burning_fuel": 1688770.3703701552
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 26,
+            "progress": 0.7360000000001167,
+            "working": true,
+            "remaining_burning_fuel": 1688770.3703701552
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 3300,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 28,
+            "progress": 0.3026666666667849,
+            "working": true,
+            "remaining_burning_fuel": 1510992.59259238
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 28,
+            "progress": 0.3026666666667849,
+            "working": true,
+            "remaining_burning_fuel": 1510992.59259238
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 3400,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 28,
+            "progress": 0.869333333333454,
+            "working": true,
+            "remaining_burning_fuel": 1333214.8148146048
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 28,
+            "progress": 0.869333333333454,
+            "working": true,
+            "remaining_burning_fuel": 1333214.8148146048
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 3500,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 30,
+            "progress": 0.43600000000012085,
+            "working": true,
+            "remaining_burning_fuel": 1155437.0370368296
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 30,
+            "progress": 0.43600000000012085,
+            "working": true,
+            "remaining_burning_fuel": 1155437.0370368296
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 3600,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 32,
+            "progress": 0.0026666666667910094,
+            "working": true,
+            "remaining_burning_fuel": 977659.2592590544
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 32,
+            "progress": 0.0026666666667910094,
+            "working": true,
+            "remaining_burning_fuel": 977659.2592590544
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 3700,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 32,
+            "progress": 0.5693333333334574,
+            "working": true,
+            "remaining_burning_fuel": 799881.4814812792
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 32,
+            "progress": 0.5693333333334574,
+            "working": true,
+            "remaining_burning_fuel": 799881.4814812792
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 3800,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 34,
+            "progress": 0.13600000000012719,
+            "working": true,
+            "remaining_burning_fuel": 622103.703703504
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 34,
+            "progress": 0.13600000000012719,
+            "working": true,
+            "remaining_burning_fuel": 622103.703703504
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 3900,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 34,
+            "progress": 0.7026666666667944,
+            "working": true,
+            "remaining_burning_fuel": 444325.92592572886
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 34,
+            "progress": 0.7026666666667944,
+            "working": true,
+            "remaining_burning_fuel": 444325.92592572886
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 4000,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 36,
+            "progress": 0.269333333333463,
+            "working": true,
+            "remaining_burning_fuel": 266548.1481479537
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 36,
+            "progress": 0.269333333333463,
+            "working": true,
+            "remaining_burning_fuel": 266548.1481479537
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 4100,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 36,
+            "progress": 0.8360000000001315,
+            "working": true,
+            "remaining_burning_fuel": 88770.37037017563
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 36,
+            "progress": 0.8360000000001315,
+            "working": true,
+            "remaining_burning_fuel": 88770.37037017563
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 4200,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 38,
+            "progress": 0.4026666666667989,
+            "working": true,
+            "remaining_burning_fuel": 3910992.5925923875
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 38,
+            "progress": 0.4026666666667989,
+            "working": true,
+            "remaining_burning_fuel": 3910992.5925923875
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 4300,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 38,
+            "progress": 0.9693333333334687,
+            "working": true,
+            "remaining_burning_fuel": 3733214.814814589
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 38,
+            "progress": 0.9693333333334687,
+            "working": true,
+            "remaining_burning_fuel": 3733214.814814589
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 4400,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 4500,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 4600,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 4700,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 4800,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 4900,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 5000,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 5100,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 5200,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 5300,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      },
+      {
+        "tick": 5400,
+        "machines": [
+          {
+            "direction": "north",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "east",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          },
+          {
+            "direction": "south",
+            "output": 40,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 3724325.925925699
+          },
+          {
+            "direction": "west",
+            "output": 10,
+            "progress": 0,
+            "working": false,
+            "remaining_burning_fuel": 2862103.7037035716
+          }
+        ]
+      }
+    ],
+    "real_recipes": [
+      "copper-cable",
+      "iron-gear-wheel"
+    ],
+    "real_fuel": [
+      "wood",
+      "coal"
+    ],
+    "graphical_client": true,
+    "native_clock": {
+      "status": "PASS",
+      "ticks": [
+        352,
+        1072
+      ],
+      "delta_ticks": 720,
+      "simulation_seconds": 12,
+      "comparison": "Exact full native PNG bytes",
+      "anchor_sha256": "a0f08a043b99d7c80900600dc252f3140a78eead8d1d476e168dd0a5eb77e1fe",
+      "repeat_sha256": "a0f08a043b99d7c80900600dc252f3140a78eead8d1d476e168dd0a5eb77e1fe",
+      "continuous_crafting_at_both_anchors": true
+    }
+  },
+  "full_priest_runtime": "not_staged",
+  "visual_acceptance": "Native screenshots require independent visual review; timing/data and gameplay assertions passed.",
+  "verification_runner_sha256": "ce80a1296197df7ced333a516552f5c1ce25cb152db3164305f726d7910e446f"
+}

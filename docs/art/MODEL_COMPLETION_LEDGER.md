@@ -1,3 +1,21 @@
+## Emergency Assembler V07 source and native integration — 2026-11-17
+
+The exact owner-supplied V07 animated Blender scene is archived unchanged at
+`art/source-to-3d/emergency-assembler/v07/tech_priests_emergency_assembler_v07_animated.blend` (SHA-256 `00d047b9aa80e13bd148b1dcbd2e5440b4a5e0414d744b446f273b0fc741845d`). Its hinged mechanical
+arm, knobbly capsule, opening hatches, electrical arcs, localized heat, and
+steam during discharge are preserved. The 288-frame, 24-fps source cycle is
+captured as 144 frames at 12 fps in four directions with the fixed FMPL camera.
+
+The emergency assembler now loads its own V07 graphics and matching icon
+instead of the unrelated timber workbench. The one-tile grid, burner and recipes
+are retained; collision depth changes only from 0.70 to 0.72 tile to allow native
+directional placement before construction (in-place rotation is unsupported).
+Source preservation, motion checks, atlas hashes, viewed renders,
+and the specific native operation/save-reload evidence are retained under
+`art/source-to-3d/emergency-assembler/v07`. Technical verification and owner visual acceptance remain distinct.
+This is a focused source/art checkpoint; no mod version bump, packaged-release
+claim, or GitHub Actions change is included.
+
 ## 2026-11-17 - Approved Emergency Miner V25 source and operational closeout
 
 Exact approved V25 originals recovered and preserved. Game sprites unchanged.

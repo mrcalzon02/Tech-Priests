@@ -1,0 +1,74 @@
+{
+  "source_sha256": "00d047b9aa80e13bd148b1dcbd2e5440b4a5e0414d744b446f273b0fc741845d",
+  "reviewer": "Codex independent render review",
+  "status": "PASS",
+  "scope": "Actual source, packed runtime sheets, four-direction cycle board, front/rear discharge views and actual Factorio2.1.24 idle/working screenshots independently viewed",
+  "references": [
+    {
+      "path": "four-direction-cycle-review.png",
+      "sha256": "3f6361ca5bfa96b2dfdbedfbd3548f89e3aae4d12abd6d6c59ac83b45c8fd559"
+    },
+    {
+      "path": "review-front-rear.png",
+      "sha256": "c2aa5690e0a54b6cc3fdf19e3b7593eef39eb383a0a25f144ea08bc6bc0fa4eb"
+    },
+    {
+      "path": "native-evidence/0080-idle-no-fuel.png",
+      "sha256": "e7c3afcf3660f2af79ed48190d7d6a85ffdb50eb90fce0a67dde31cb5ce7d3d1"
+    },
+    {
+      "path": "native-evidence/0352-cycle-anchor.png",
+      "sha256": "a0f08a043b99d7c80900600dc252f3140a78eead8d1d476e168dd0a5eb77e1fe"
+    },
+    {
+      "path": "native-evidence/1072-cycle-repeat.png",
+      "sha256": "a0f08a043b99d7c80900600dc252f3140a78eead8d1d476e168dd0a5eb77e1fe"
+    },
+    {
+      "path": "native-evidence/native-acceptance.json",
+      "sha256": "226909c82f9ffd89d94da19972cf2296d343456bc1609730bdb5f28ea164706a"
+    },
+    {
+      "path": "native-evidence/native-clock-proof.json",
+      "sha256": "64d8eba2b033364703ad1250c754c3f76fb19d1fd0836828cbf62040137d6d24"
+    }
+  ],
+  "criteria": [
+    {
+      "criterion": "Silhouette and construction",
+      "score_out_of_10": 9,
+      "reason": "Original twin towers, controls and foundation remain distinct; side/rear captures expose real arm, wrist and opening."
+    },
+    {
+      "criterion": "Materials and texture placement",
+      "score_out_of_10": 9,
+      "reason": "Original worn steel, brass, packed LCD and localized heat preserved; no replacement texture or new UV distortion."
+    },
+    {
+      "criterion": "Motion and process readability",
+      "score_out_of_10": 8,
+      "reason": "All seven cycle phases and four directions are visible; original vapor is deliberately faint, and side-on discharge overlaps the capsule in projection."
+    },
+    {
+      "criterion": "Export framing and transparency",
+      "score_out_of_10": 9,
+      "reason": "All 576 frames finite/nonempty, no colored machinery in outer margin; shadow tail feather prevents texture-border seams."
+    }
+  ],
+  "native_review": {
+    "status": "PASS",
+    "engine": "Factorio 2.1.24",
+    "observed": "Correct one-tile placement, all four actual facings, intact original materials, readable raised capsule and arcs, and no texture-border rectangle",
+    "cycle_repeat_ticks": [
+      352,
+      1072
+    ],
+    "cycle_repeat_seconds": 12,
+    "cycle_repeat_rgb_exact": true,
+    "fresh_crafting": "PASS",
+    "fuel_starvation_recovery": "PASS",
+    "save_reload": "PASS",
+    "full_priest_runtime": "not_staged"
+  },
+  "owner_visual_acceptance": "Owner selected the exact V07 model for integration; new native screenshot acceptance is not inferred."
+}

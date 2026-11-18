@@ -1,0 +1,3687 @@
+{
+  "source_sha256": "00d047b9aa80e13bd148b1dcbd2e5440b4a5e0414d744b446f273b0fc741845d",
+  "profile": {
+    "camera_policy": "fmpl.factorio45.v1",
+    "capture_kind": "entity",
+    "orientation_policy": "rotatable",
+    "directions": [
+      0,
+      90,
+      180,
+      270
+    ],
+    "source_size": 256,
+    "states": {
+      "idle": [
+        0
+      ],
+      "working": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20,
+        22,
+        24,
+        26,
+        28,
+        30,
+        32,
+        34,
+        36,
+        38,
+        40,
+        42,
+        44,
+        46,
+        48,
+        50,
+        52,
+        54,
+        56,
+        58,
+        60,
+        62,
+        64,
+        66,
+        68,
+        70,
+        72,
+        74,
+        76,
+        78,
+        80,
+        82,
+        84,
+        86,
+        88,
+        90,
+        92,
+        94,
+        96,
+        98,
+        100,
+        102,
+        104,
+        106,
+        108,
+        110,
+        112,
+        114,
+        116,
+        118,
+        120,
+        122,
+        124,
+        126,
+        128,
+        130,
+        132,
+        134,
+        136,
+        138,
+        140,
+        142,
+        144,
+        146,
+        148,
+        150,
+        152,
+        154,
+        156,
+        158,
+        160,
+        162,
+        164,
+        166,
+        168,
+        170,
+        172,
+        174,
+        176,
+        178,
+        180,
+        182,
+        184,
+        186,
+        188,
+        190,
+        192,
+        194,
+        196,
+        198,
+        200,
+        202,
+        204,
+        206,
+        208,
+        210,
+        212,
+        214,
+        216,
+        218,
+        220,
+        222,
+        224,
+        226,
+        228,
+        230,
+        232,
+        234,
+        236,
+        238,
+        240,
+        242,
+        244,
+        246,
+        248,
+        250,
+        252,
+        254,
+        256,
+        258,
+        260,
+        262,
+        264,
+        266,
+        268,
+        270,
+        272,
+        274,
+        276,
+        278,
+        280,
+        282,
+        284,
+        286
+      ]
+    },
+    "camera_override": {
+      "type": "ORTHO",
+      "elevation_deg": 45,
+      "azimuth_deg": 0,
+      "distance": 4,
+      "target": [
+        -0.01,
+        -0.105,
+        0.3
+      ],
+      "ortho_scale": 1.5,
+      "shift_x": 0,
+      "shift_y": 0
+    }
+  },
+  "render_settings": {
+    "engine": "CYCLES",
+    "samples": 24,
+    "device": "GPU",
+    "denoising": true
+  },
+  "camera": {
+    "name": "FMPL_CAPTURE_CAMERA",
+    "matrix_world": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        -0.009999999776482582
+      ],
+      [
+        0.0,
+        0.7071068286895752,
+        -0.7071067094802856,
+        -2.933427095413208
+      ],
+      [
+        0.0,
+        0.7071067094802856,
+        0.7071068286895752,
+        3.128427028656006
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "type": "ORTHO",
+    "ortho_scale": 1.5,
+    "shift_x": 0.0,
+    "shift_y": 0.0,
+    "resolution": [
+      256,
+      256
+    ]
+  },
+  "records": [
+    {
+      "direction": 0,
+      "frame": 0,
+      "file": "d0-f000.png",
+      "seconds": 2.0939999999827705
+    },
+    {
+      "direction": 0,
+      "frame": 2,
+      "file": "d0-f002.png",
+      "seconds": 1.2660000000032596
+    },
+    {
+      "direction": 0,
+      "frame": 4,
+      "file": "d0-f004.png",
+      "seconds": 1.2809999999881256
+    },
+    {
+      "direction": 0,
+      "frame": 6,
+      "file": "d0-f006.png",
+      "seconds": 1.2650000000139698
+    },
+    {
+      "direction": 0,
+      "frame": 8,
+      "file": "d0-f008.png",
+      "seconds": 1.2660000000032596
+    },
+    {
+      "direction": 0,
+      "frame": 10,
+      "file": "d0-f010.png",
+      "seconds": 1.25
+    },
+    {
+      "direction": 0,
+      "frame": 12,
+      "file": "d0-f012.png",
+      "seconds": 1.7969999999913853
+    },
+    {
+      "direction": 0,
+      "frame": 14,
+      "file": "d0-f014.png",
+      "seconds": 2.687000000005355
+    },
+    {
+      "direction": 0,
+      "frame": 16,
+      "file": "d0-f016.png",
+      "seconds": 1.9849999999860302
+    },
+    {
+      "direction": 0,
+      "frame": 18,
+      "file": "d0-f018.png",
+      "seconds": 1.9060000000172295
+    },
+    {
+      "direction": 0,
+      "frame": 20,
+      "file": "d0-f020.png",
+      "seconds": 1.7030000000086147
+    },
+    {
+      "direction": 0,
+      "frame": 22,
+      "file": "d0-f022.png",
+      "seconds": 1.702999999979511
+    },
+    {
+      "direction": 0,
+      "frame": 24,
+      "file": "d0-f024.png",
+      "seconds": 1.312000000005355
+    },
+    {
+      "direction": 0,
+      "frame": 26,
+      "file": "d0-f026.png",
+      "seconds": 1.2660000000032596
+    },
+    {
+      "direction": 0,
+      "frame": 28,
+      "file": "d0-f028.png",
+      "seconds": 1.2969999999913853
+    },
+    {
+      "direction": 0,
+      "frame": 30,
+      "file": "d0-f030.png",
+      "seconds": 1.3440000000118744
+    },
+    {
+      "direction": 0,
+      "frame": 32,
+      "file": "d0-f032.png",
+      "seconds": 1.4219999999913853
+    },
+    {
+      "direction": 0,
+      "frame": 34,
+      "file": "d0-f034.png",
+      "seconds": 1.2809999999881256
+    },
+    {
+      "direction": 0,
+      "frame": 36,
+      "file": "d0-f036.png",
+      "seconds": 1.2810000000172295
+    },
+    {
+      "direction": 0,
+      "frame": 38,
+      "file": "d0-f038.png",
+      "seconds": 1.312999999994645
+    },
+    {
+      "direction": 0,
+      "frame": 40,
+      "file": "d0-f040.png",
+      "seconds": 1.375
+    },
+    {
+      "direction": 0,
+      "frame": 42,
+      "file": "d0-f042.png",
+      "seconds": 1.312000000005355
+    },
+    {
+      "direction": 0,
+      "frame": 44,
+      "file": "d0-f044.png",
+      "seconds": 1.2809999999881256
+    },
+    {
+      "direction": 0,
+      "frame": 46,
+      "file": "d0-f046.png",
+      "seconds": 1.2820000000065193
+    },
+    {
+      "direction": 0,
+      "frame": 48,
+      "file": "d0-f048.png",
+      "seconds": 1.4530000000086147
+    },
+    {
+      "direction": 0,
+      "frame": 50,
+      "file": "d0-f050.png",
+      "seconds": 1.264999999984866
+    },
+    {
+      "direction": 0,
+      "frame": 52,
+      "file": "d0-f052.png",
+      "seconds": 1.2810000000172295
+    },
+    {
+      "direction": 0,
+      "frame": 54,
+      "file": "d0-f054.png",
+      "seconds": 1.25
+    },
+    {
+      "direction": 0,
+      "frame": 56,
+      "file": "d0-f056.png",
+      "seconds": 1.25
+    },
+    {
+      "direction": 0,
+      "frame": 58,
+      "file": "d0-f058.png",
+      "seconds": 1.2349999999860302
+    },
+    {
+      "direction": 0,
+      "frame": 60,
+      "file": "d0-f060.png",
+      "seconds": 1.25
+    },
+    {
+      "direction": 0,
+      "frame": 62,
+      "file": "d0-f062.png",
+      "seconds": 1.2659999999741558
+    },
+    {
+      "direction": 0,
+      "frame": 64,
+      "file": "d0-f064.png",
+      "seconds": 1.2650000000139698
+    },
+    {
+      "direction": 0,
+      "frame": 66,
+      "file": "d0-f066.png",
+      "seconds": 1.2660000000032596
+    },
+    {
+      "direction": 0,
+      "frame": 68,
+      "file": "d0-f068.png",
+      "seconds": 1.2809999999881256
+    },
+    {
+      "direction": 0,
+      "frame": 70,
+      "file": "d0-f070.png",
+      "seconds": 1.2810000000172295
+    },
+    {
+      "direction": 0,
+      "frame": 72,
+      "file": "d0-f072.png",
+      "seconds": 1.2659999999741558
+    },
+    {
+      "direction": 0,
+      "frame": 74,
+      "file": "d0-f074.png",
+      "seconds": 1.2810000000172295
+    },
+    {
+      "direction": 0,
+      "frame": 76,
+      "file": "d0-f076.png",
+      "seconds": 1.2969999999913853
+    },
+    {
+      "direction": 0,
+      "frame": 78,
+      "file": "d0-f078.png",
+      "seconds": 1.2660000000032596
+    },
+    {
+      "direction": 0,
+      "frame": 80,
+      "file": "d0-f080.png",
+      "seconds": 1.25
+    },
+    {
+      "direction": 0,
+      "frame": 82,
+      "file": "d0-f082.png",
+      "seconds": 1.2659999999741558
+    },
+    {
+      "direction": 0,
+      "frame": 84,
+      "file": "d0-f084.png",
+      "seconds": 1.3280000000086147
+    },
+    {
+      "direction": 0,
+      "frame": 86,
+      "file": "d0-f086.png",
+      "seconds": 1.2969999999913853
+    },
+    {
+      "direction": 0,
+      "frame": 88,
+      "file": "d0-f088.png",
+      "seconds": 1.422000000020489
+    },
+    {
+      "direction": 0,
+      "frame": 90,
+      "file": "d0-f090.png",
+      "seconds": 1.389999999984866
+    },
+    {
+      "direction": 0,
+      "frame": 92,
+      "file": "d0-f092.png",
+      "seconds": 1.312999999994645
+    },
+    {
+      "direction": 0,
+      "frame": 94,
+      "file": "d0-f094.png",
+      "seconds": 1.2810000000172295
+    },
+    {
+      "direction": 0,
+      "frame": 96,
+      "file": "d0-f096.png",
+      "seconds": 1.2969999999913853
+    },
+    {
+      "direction": 0,
+      "frame": 98,
+      "file": "d0-f098.png",
+      "seconds": 1.312000000005355
+    },
+    {
+      "direction": 0,
+      "frame": 100,
+      "file": "d0-f100.png",
+      "seconds": 1.375
+    },
+    {
+      "direction": 0,
+      "frame": 102,
+      "file": "d0-f102.png",
+      "seconds": 1.3910000000032596
+    },
+    {
+      "direction": 0,
+      "frame": 104,
+      "file": "d0-f104.png",
+      "seconds": 1.2969999999913853
+    },
+    {
+      "direction": 0,
+      "frame": 106,
+      "file": "d0-f106.png",
+      "seconds": 1.312000000005355
+    },
+    {
+      "direction": 0,
+      "frame": 108,
+      "file": "d0-f108.png",
+      "seconds": 1.2969999999913853
+    },
+    {
+      "direction": 0,
+      "frame": 110,
+      "file": "d0-f110.png",
+      "seconds": 1.3440000000118744
+    },
+    {
+      "direction": 0,
+      "frame": 112,
+      "file": "d0-f112.png",
+      "seconds": 1.3589999999967404
+    },
+    {
+      "direction": 0,
+      "frame": 114,
+      "file": "d0-f114.png",
+      "seconds": 1.4539999999979045
+    },
+    {
+      "direction": 0,
+      "frame": 116,
+      "file": "d0-f116.png",
+      "seconds": 1.312999999994645
+    },
+    {
+      "direction": 0,
+      "frame": 118,
+      "file": "d0-f118.png",
+      "seconds": 1.327999999979511
+    },
+    {
+      "direction": 0,
+      "frame": 120,
+      "file": "d0-f120.png",
+      "seconds": 1.312000000005355
+    },
+    {
+      "direction": 0,
+      "frame": 122,
+      "file": "d0-f122.png",
+      "seconds": 1.312999999994645
+    },
+    {
+      "direction": 0,
+      "frame": 124,
+      "file": "d0-f124.png",
+      "seconds": 1.3590000000258442
+    },
+    {
+      "direction": 0,
+      "frame": 126,
+      "file": "d0-f126.png",
+      "seconds": 1.2969999999913853
+    },
+    {
+      "direction": 0,
+      "frame": 128,
+      "file": "d0-f128.png",
+      "seconds": 1.4059999999881256
+    },
+    {
+      "direction": 0,
+      "frame": 130,
+      "file": "d0-f130.png",
+      "seconds": 1.297000000020489
+    },
+    {
+      "direction": 0,
+      "frame": 132,
+      "file": "d0-f132.png",
+      "seconds": 1.312999999994645
+    },
+    {
+      "direction": 0,
+      "frame": 134,
+      "file": "d0-f134.png",
+      "seconds": 1.4219999999913853
+    },
+    {
+      "direction": 0,
+      "frame": 136,
+      "file": "d0-f136.png",
+      "seconds": 1.937999999994645
+    },
+    {
+      "direction": 0,
+      "frame": 138,
+      "file": "d0-f138.png",
+      "seconds": 1.9070000000065193
+    },
+    {
+      "direction": 0,
+      "frame": 140,
+      "file": "d0-f140.png",
+      "seconds": 1.7339999999967404
+    },
+    {
+      "direction": 0,
+      "frame": 142,
+      "file": "d0-f142.png",
+      "seconds": 1.6089999999967404
+    },
+    {
+      "direction": 0,
+      "frame": 144,
+      "file": "d0-f144.png",
+      "seconds": 1.4690000000118744
+    },
+    {
+      "direction": 0,
+      "frame": 146,
+      "file": "d0-f146.png",
+      "seconds": 1.4839999999967404
+    },
+    {
+      "direction": 0,
+      "frame": 148,
+      "file": "d0-f148.png",
+      "seconds": 1.4530000000086147
+    },
+    {
+      "direction": 0,
+      "frame": 150,
+      "file": "d0-f150.png",
+      "seconds": 1.6090000000258442
+    },
+    {
+      "direction": 0,
+      "frame": 152,
+      "file": "d0-f152.png",
+      "seconds": 1.2969999999913853
+    },
+    {
+      "direction": 0,
+      "frame": 154,
+      "file": "d0-f154.png",
+      "seconds": 1.2969999999913853
+    },
+    {
+      "direction": 0,
+      "frame": 156,
+      "file": "d0-f156.png",
+      "seconds": 1.2810000000172295
+    },
+    {
+      "direction": 0,
+      "frame": 158,
+      "file": "d0-f158.png",
+      "seconds": 1.2810000000172295
+    },
+    {
+      "direction": 0,
+      "frame": 160,
+      "file": "d0-f160.png",
+      "seconds": 1.2809999999881256
+    },
+    {
+      "direction": 0,
+      "frame": 162,
+      "file": "d0-f162.png",
+      "seconds": 1.2820000000065193
+    },
+    {
+      "direction": 0,
+      "frame": 164,
+      "file": "d0-f164.png",
+      "seconds": 1.2809999999881256
+    },
+    {
+      "direction": 0,
+      "frame": 166,
+      "file": "d0-f166.png",
+      "seconds": 1.2810000000172295
+    },
+    {
+      "direction": 0,
+      "frame": 168,
+      "file": "d0-f168.png",
+      "seconds": 1.2809999999881256
+    },
+    {
+      "direction": 0,
+      "frame": 170,
+      "file": "d0-f170.png",
+      "seconds": 1.297000000020489
+    },
+    {
+      "direction": 0,
+      "frame": 172,
+      "file": "d0-f172.png",
+      "seconds": 1.2809999999881256
+    },
+    {
+      "direction": 0,
+      "frame": 174,
+      "file": "d0-f174.png",
+      "seconds": 1.2969999999913853
+    },
+    {
+      "direction": 0,
+      "frame": 176,
+      "file": "d0-f176.png",
+      "seconds": 1.2820000000065193
+    },
+    {
+      "direction": 0,
+      "frame": 178,
+      "file": "d0-f178.png",
+      "seconds": 1.2809999999881256
+    },
+    {
+      "direction": 0,
+      "frame": 180,
+      "file": "d0-f180.png",
+      "seconds": 1.2820000000065193
+    },
+    {
+      "direction": 0,
+      "frame": 182,
+      "file": "d0-f182.png",
+      "seconds": 1.2809999999881256
+    },
+    {
+      "direction": 0,
+      "frame": 184,
+      "file": "d0-f184.png",
+      "seconds": 1.2969999999913853
+    },
+    {
+      "direction": 0,
+      "frame": 186,
+      "file": "d0-f186.png",
+      "seconds": 1.2340000000258442
+    },
+    {
+      "direction": 0,
+      "frame": 188,
+      "file": "d0-f188.png",
+      "seconds": 1.25
+    },
+    {
+      "direction": 0,
+      "frame": 190,
+      "file": "d0-f190.png",
+      "seconds": 1.312999999994645
+    },
+    {
+      "direction": 0,
+      "frame": 192,
+      "file": "d0-f192.png",
+      "seconds": 1.2339999999967404
+    },
+    {
+      "direction": 0,
+      "frame": 194,
+      "file": "d0-f194.png",
+      "seconds": 1.264999999984866
+    },
+    {
+      "direction": 0,
+      "frame": 196,
+      "file": "d0-f196.png",
+      "seconds": 1.2660000000032596
+    },
+    {
+      "direction": 0,
+      "frame": 198,
+      "file": "d0-f198.png",
+      "seconds": 1.2660000000032596
+    },
+    {
+      "direction": 0,
+      "frame": 200,
+      "file": "d0-f200.png",
+      "seconds": 1.2650000000139698
+    },
+    {
+      "direction": 0,
+      "frame": 202,
+      "file": "d0-f202.png",
+      "seconds": 1.25
+    },
+    {
+      "direction": 0,
+      "frame": 204,
+      "file": "d0-f204.png",
+      "seconds": 1.2659999999741558
+    },
+    {
+      "direction": 0,
+      "frame": 206,
+      "file": "d0-f206.png",
+      "seconds": 1.2810000000172295
+    },
+    {
+      "direction": 0,
+      "frame": 208,
+      "file": "d0-f208.png",
+      "seconds": 1.2660000000032596
+    },
+    {
+      "direction": 0,
+      "frame": 210,
+      "file": "d0-f210.png",
+      "seconds": 1.25
+    },
+    {
+      "direction": 0,
+      "frame": 212,
+      "file": "d0-f212.png",
+      "seconds": 1.2809999999881256
+    },
+    {
+      "direction": 0,
+      "frame": 214,
+      "file": "d0-f214.png",
+      "seconds": 1.2660000000032596
+    },
+    {
+      "direction": 0,
+      "frame": 216,
+      "file": "d0-f216.png",
+      "seconds": 1.25
+    },
+    {
+      "direction": 0,
+      "frame": 218,
+      "file": "d0-f218.png",
+      "seconds": 1.2960000000020955
+    },
+    {
+      "direction": 0,
+      "frame": 220,
+      "file": "d0-f220.png",
+      "seconds": 1.25
+    },
+    {
+      "direction": 0,
+      "frame": 222,
+      "file": "d0-f222.png",
+      "seconds": 1.2660000000032596
+    },
+    {
+      "direction": 0,
+      "frame": 224,
+      "file": "d0-f224.png",
+      "seconds": 1.2969999999913853
+    },
+    {
+      "direction": 0,
+      "frame": 226,
+      "file": "d0-f226.png",
+      "seconds": 1.2660000000032596
+    },
+    {
+      "direction": 0,
+      "frame": 228,
+      "file": "d0-f228.png",
+      "seconds": 1.2650000000139698
+    },
+    {
+      "direction": 0,
+      "frame": 230,
+      "file": "d0-f230.png",
+      "seconds": 1.327999999979511
+    },
+    {
+      "direction": 0,
+      "frame": 232,
+      "file": "d0-f232.png",
+      "seconds": 2.0
+    },
+    {
+      "direction": 0,
+      "frame": 234,
+      "file": "d0-f234.png",
+      "seconds": 1.2660000000032596
+    },
+    {
+      "direction": 0,
+      "frame": 236,
+      "file": "d0-f236.png",
+      "seconds": 1.2810000000172295
+    },
+    {
+      "direction": 0,
+      "frame": 238,
+      "file": "d0-f238.png",
+      "seconds": 1.2659999999741558
+    },
+    {
+      "direction": 0,
+      "frame": 240,
+      "file": "d0-f240.png",
+      "seconds": 1.2650000000139698
+    },
+    {
+      "direction": 0,
+      "frame": 242,
+      "file": "d0-f242.png",
+      "seconds": 1.2660000000032596
+    },
+    {
+      "direction": 0,
+      "frame": 244,
+      "file": "d0-f244.png",
+      "seconds": 1.25
+    },
+    {
+      "direction": 0,
+      "frame": 246,
+      "file": "d0-f246.png",
+      "seconds": 1.2660000000032596
+    },
+    {
+      "direction": 0,
+      "frame": 248,
+      "file": "d0-f248.png",
+      "seconds": 1.25
+    },
+    {
+      "direction": 0,
+      "frame": 250,
+      "file": "d0-f250.png",
+      "seconds": 1.2339999999967404
+    },
+    {
+      "direction": 0,
+      "frame": 252,
+      "file": "d0-f252.png",
+      "seconds": 1.25
+    },
+    {
+      "direction": 0,
+      "frame": 254,
+      "file": "d0-f254.png",
+      "seconds": 1.2660000000032596
+    },
+    {
+      "direction": 0,
+      "frame": 256,
+      "file": "d0-f256.png",
+      "seconds": 1.25
+    },
+    {
+      "direction": 0,
+      "frame": 258,
+      "file": "d0-f258.png",
+      "seconds": 1.25
+    },
+    {
+      "direction": 0,
+      "frame": 260,
+      "file": "d0-f260.png",
+      "seconds": 1.2339999999967404
+    },
+    {
+      "direction": 0,
+      "frame": 262,
+      "file": "d0-f262.png",
+      "seconds": 1.2660000000032596
+    },
+    {
+      "direction": 0,
+      "frame": 264,
+      "file": "d0-f264.png",
+      "seconds": 1.2809999999881256
+    },
+    {
+      "direction": 0,
+      "frame": 266,
+      "file": "d0-f266.png",
+      "seconds": 1.25
+    },
+    {
+      "direction": 0,
+      "frame": 268,
+      "file": "d0-f268.png",
+      "seconds": 1.25
+    },
+    {
+      "direction": 0,
+      "frame": 270,
+      "file": "d0-f270.png",
+      "seconds": 1.2339999999967404
+    },
+    {
+      "direction": 0,
+      "frame": 272,
+      "file": "d0-f272.png",
+      "seconds": 1.25
+    },
+    {
+      "direction": 0,
+      "frame": 274,
+      "file": "d0-f274.png",
+      "seconds": 1.25
+    },
+    {
+      "direction": 0,
+      "frame": 276,
+      "file": "d0-f276.png",
+      "seconds": 1.2660000000032596
+    },
+    {
+      "direction": 0,
+      "frame": 278,
+      "file": "d0-f278.png",
+      "seconds": 1.25
+    },
+    {
+      "direction": 0,
+      "frame": 280,
+      "file": "d0-f280.png",
+      "seconds": 1.25
+    },
+    {
+      "direction": 0,
+      "frame": 282,
+      "file": "d0-f282.png",
+      "seconds": 1.2650000000139698
+    },
+    {
+      "direction": 0,
+      "frame": 284,
+      "file": "d0-f284.png",
+      "seconds": 1.25
+    },
+    {
+      "direction": 0,
+      "frame": 286,
+      "file": "d0-f286.png",
+      "seconds": 1.25
+    },
+    {
+      "direction": 1,
+      "frame": 0,
+      "file": "d1-f000.png",
+      "seconds": 1.2810000000172295
+    },
+    {
+      "direction": 1,
+      "frame": 2,
+      "file": "d1-f002.png",
+      "seconds": 1.25
+    },
+    {
+      "direction": 1,
+      "frame": 4,
+      "file": "d1-f004.png",
+      "seconds": 1.2660000000032596
+    },
+    {
+      "direction": 1,
+      "frame": 6,
+      "file": "d1-f006.png",
+      "seconds": 1.25
+    },
+    {
+      "direction": 1,
+      "frame": 8,
+      "file": "d1-f008.png",
+      "seconds": 1.2339999999967404
+    },
+    {
+      "direction": 1,
+      "frame": 10,
+      "file": "d1-f010.png",
+      "seconds": 1.25
+    },
+    {
+      "direction": 1,
+      "frame": 12,
+      "file": "d1-f012.png",
+      "seconds": 1.25
+    },
+    {
+      "direction": 1,
+      "frame": 14,
+      "file": "d1-f014.png",
+      "seconds": 1.25
+    },
+    {
+      "direction": 1,
+      "frame": 16,
+      "file": "d1-f016.png",
+      "seconds": 1.25
+    },
+    {
+      "direction": 1,
+      "frame": 18,
+      "file": "d1-f018.png",
+      "seconds": 1.25
+    },
+    {
+      "direction": 1,
+      "frame": 20,
+      "file": "d1-f020.png",
+      "seconds": 1.264999999984866
+    },
+    {
+      "direction": 1,
+      "frame": 22,
+      "file": "d1-f022.png",
+      "seconds": 1.375
+    },
+    {
+      "direction": 1,
+      "frame": 24,
+      "file": "d1-f024.png",
+      "seconds": 1.2660000000032596
+    },
+    {
+      "direction": 1,
+      "frame": 26,
+      "file": "d1-f026.png",
+      "seconds": 1.25
+    },
+    {
+      "direction": 1,
+      "frame": 28,
+      "file": "d1-f028.png",
+      "seconds": 1.2960000000020955
+    },
+    {
+      "direction": 1,
+      "frame": 30,
+      "file": "d1-f030.png",
+      "seconds": 1.3440000000118744
+    },
+    {
+      "direction": 1,
+      "frame": 32,
+      "file": "d1-f032.png",
+      "seconds": 1.2659999999741558
+    },
+    {
+      "direction": 1,
+      "frame": 34,
+      "file": "d1-f034.png",
+      "seconds": 1.297000000020489
+    },
+    {
+      "direction": 1,
+      "frame": 36,
+      "file": "d1-f036.png",
+      "seconds": 1.4059999999881256
+    },
+    {
+      "direction": 1,
+      "frame": 38,
+      "file": "d1-f038.png",
+      "seconds": 1.2810000000172295
+    },
+    {
+      "direction": 1,
+      "frame": 40,
+      "file": "d1-f040.png",
+      "seconds": 1.327999999979511
+    },
+    {
+      "direction": 1,
+      "frame": 42,
+      "file": "d1-f042.png",
+      "seconds": 1.2820000000065193
+    },
+    {
+      "direction": 1,
+      "frame": 44,
+      "file": "d1-f044.png",
+      "seconds": 1.2650000000139698
+    },
+    {
+      "direction": 1,
+      "frame": 46,
+      "file": "d1-f046.png",
+      "seconds": 1.327999999979511
+    },
+    {
+      "direction": 1,
+      "frame": 48,
+      "file": "d1-f048.png",
+      "seconds": 1.2820000000065193
+    },
+    {
+      "direction": 1,
+      "frame": 50,
+      "file": "d1-f050.png",
+      "seconds": 1.2650000000139698
+    },
+    {
+      "direction": 1,
+      "frame": 52,
+      "file": "d1-f052.png",
+      "seconds": 1.25
+    },
+    {
+      "direction": 1,
+      "frame": 54,
+      "file": "d1-f054.png",
+      "seconds": 1.2809999999881256
+    },
+    {
+      "direction": 1,
+      "frame": 56,
+      "file": "d1-f056.png",
+      "seconds": 1.312999999994645
+    },
+    {
+      "direction": 1,
+      "frame": 58,
+      "file": "d1-f058.png",
+      "seconds": 1.2810000000172295
+    },
+    {
+      "direction": 1,
+      "frame": 60,
+      "file": "d1-f060.png",
+      "seconds": 1.2659999999741558
+    },
+    {
+      "direction": 1,
+      "frame": 62,
+      "file": "d1-f062.png",
+      "seconds": 1.25
+    },
+    {
+      "direction": 1,
+      "frame": 64,
+      "file": "d1-f064.png",
+      "seconds": 1.437000000005355
+    },
+    {
+      "direction": 1,
+      "frame": 66,
+      "file": "d1-f066.png",
+      "seconds": 1.2820000000065193
+    },
+    {
+      "direction": 1,
+      "frame": 68,
+      "file": "d1-f068.png",
+      "seconds": 1.25
+    },
+    {
+      "direction": 1,
+      "frame": 70,
+      "file": "d1-f070.png",
+      "seconds": 1.2809999999881256
+    },
+    {
+      "direction": 1,
+      "frame": 72,
+      "file": "d1-f072.png",
+      "seconds": 1.2810000000172295
+    },
+    {
+      "direction": 1,
+      "frame": 74,
+      "file": "d1-f074.png",
+      "seconds": 1.2809999999881256
+    },
+    {
+      "direction": 1,
+      "frame": 76,
+      "file": "d1-f076.png",
+      "seconds": 1.2820000000065193
+    },
+    {
+      "direction": 1,
+      "frame": 78,
+      "file": "d1-f078.png",
+      "seconds": 1.2650000000139698
+    },
+    {
+      "direction": 1,
+      "frame": 80,
+      "file": "d1-f080.png",
+      "seconds": 1.2809999999881256
+    },
+    {
+      "direction": 1,
+      "frame": 82,
+      "file": "d1-f082.png",
+      "seconds": 1.3289999999979045
+    },
+    {
+      "direction": 1,
+      "frame": 84,
+      "file": "d1-f084.png",
+      "seconds": 1.2969999999913853
+    },
+    {
+      "direction": 1,
+      "frame": 86,
+      "file": "d1-f086.png",
+      "seconds": 1.2809999999881256
+    },
+    {
+      "direction": 1,
+      "frame": 88,
+      "file": "d1-f088.png",
+      "seconds": 1.297000000020489
+    },
+    {
+      "direction": 1,
+      "frame": 90,
+      "file": "d1-f090.png",
+      "seconds": 1.2650000000139698
+    },
+    {
+      "direction": 1,
+      "frame": 92,
+      "file": "d1-f092.png",
+      "seconds": 1.2969999999913853
+    },
+    {
+      "direction": 1,
+      "frame": 94,
+      "file": "d1-f094.png",
+      "seconds": 1.2820000000065193
+    },
+    {
+      "direction": 1,
+      "frame": 96,
+      "file": "d1-f096.png",
+      "seconds": 1.2960000000020955
+    },
+    {
+      "direction": 1,
+      "frame": 98,
+      "file": "d1-f098.png",
+      "seconds": 1.3440000000118744
+    },
+    {
+      "direction": 1,
+      "frame": 100,
+      "file": "d1-f100.png",
+      "seconds": 1.2969999999913853
+    },
+    {
+      "direction": 1,
+      "frame": 102,
+      "file": "d1-f102.png",
+      "seconds": 1.3439999999827705
+    },
+    {
+      "direction": 1,
+      "frame": 104,
+      "file": "d1-f104.png",
+      "seconds": 1.297000000020489
+    },
+    {
+      "direction": 1,
+      "frame": 106,
+      "file": "d1-f106.png",
+      "seconds": 1.327999999979511
+    },
+    {
+      "direction": 1,
+      "frame": 108,
+      "file": "d1-f108.png",
+      "seconds": 1.297000000020489
+    },
+    {
+      "direction": 1,
+      "frame": 110,
+      "file": "d1-f110.png",
+      "seconds": 1.2809999999881256
+    },
+    {
+      "direction": 1,
+      "frame": 112,
+      "file": "d1-f112.png",
+      "seconds": 1.3589999999967404
+    },
+    {
+      "direction": 1,
+      "frame": 114,
+      "file": "d1-f114.png",
+      "seconds": 1.312999999994645
+    },
+    {
+      "direction": 1,
+      "frame": 116,
+      "file": "d1-f116.png",
+      "seconds": 1.3280000000086147
+    },
+    {
+      "direction": 1,
+      "frame": 118,
+      "file": "d1-f118.png",
+      "seconds": 1.312000000005355
+    },
+    {
+      "direction": 1,
+      "frame": 120,
+      "file": "d1-f120.png",
+      "seconds": 1.312999999994645
+    },
+    {
+      "direction": 1,
+      "frame": 122,
+      "file": "d1-f122.png",
+      "seconds": 1.3589999999967404
+    },
+    {
+      "direction": 1,
+      "frame": 124,
+      "file": "d1-f124.png",
+      "seconds": 1.3280000000086147
+    },
+    {
+      "direction": 1,
+      "frame": 126,
+      "file": "d1-f126.png",
+      "seconds": 1.3280000000086147
+    },
+    {
+      "direction": 1,
+      "frame": 128,
+      "file": "d1-f128.png",
+      "seconds": 1.2969999999913853
+    },
+    {
+      "direction": 1,
+      "frame": 130,
+      "file": "d1-f130.png",
+      "seconds": 1.2809999999881256
+    },
+    {
+      "direction": 1,
+      "frame": 132,
+      "file": "d1-f132.png",
+      "seconds": 1.2969999999913853
+    },
+    {
+      "direction": 1,
+      "frame": 134,
+      "file": "d1-f134.png",
+      "seconds": 1.3280000000086147
+    },
+    {
+      "direction": 1,
+      "frame": 136,
+      "file": "d1-f136.png",
+      "seconds": 1.3440000000118744
+    },
+    {
+      "direction": 1,
+      "frame": 138,
+      "file": "d1-f138.png",
+      "seconds": 1.327999999979511
+    },
+    {
+      "direction": 1,
+      "frame": 140,
+      "file": "d1-f140.png",
+      "seconds": 1.3440000000118744
+    },
+    {
+      "direction": 1,
+      "frame": 142,
+      "file": "d1-f142.png",
+      "seconds": 1.3280000000086147
+    },
+    {
+      "direction": 1,
+      "frame": 144,
+      "file": "d1-f144.png",
+      "seconds": 1.3589999999967404
+    },
+    {
+      "direction": 1,
+      "frame": 146,
+      "file": "d1-f146.png",
+      "seconds": 1.3280000000086147
+    },
+    {
+      "direction": 1,
+      "frame": 148,
+      "file": "d1-f148.png",
+      "seconds": 1.312999999994645
+    },
+    {
+      "direction": 1,
+      "frame": 150,
+      "file": "d1-f150.png",
+      "seconds": 1.3280000000086147
+    },
+    {
+      "direction": 1,
+      "frame": 152,
+      "file": "d1-f152.png",
+      "seconds": 1.3599999999860302
+    },
+    {
+      "direction": 1,
+      "frame": 154,
+      "file": "d1-f154.png",
+      "seconds": 1.297000000020489
+    },
+    {
+      "direction": 1,
+      "frame": 156,
+      "file": "d1-f156.png",
+      "seconds": 1.2809999999881256
+    },
+    {
+      "direction": 1,
+      "frame": 158,
+      "file": "d1-f158.png",
+      "seconds": 1.2969999999913853
+    },
+    {
+      "direction": 1,
+      "frame": 160,
+      "file": "d1-f160.png",
+      "seconds": 1.2810000000172295
+    },
+    {
+      "direction": 1,
+      "frame": 162,
+      "file": "d1-f162.png",
+      "seconds": 1.3589999999967404
+    },
+    {
+      "direction": 1,
+      "frame": 164,
+      "file": "d1-f164.png",
+      "seconds": 1.2969999999913853
+    },
+    {
+      "direction": 1,
+      "frame": 166,
+      "file": "d1-f166.png",
+      "seconds": 1.2969999999913853
+    },
+    {
+      "direction": 1,
+      "frame": 168,
+      "file": "d1-f168.png",
+      "seconds": 1.375
+    },
+    {
+      "direction": 1,
+      "frame": 170,
+      "file": "d1-f170.png",
+      "seconds": 1.437999999994645
+    },
+    {
+      "direction": 1,
+      "frame": 172,
+      "file": "d1-f172.png",
+      "seconds": 1.3280000000086147
+    },
+    {
+      "direction": 1,
+      "frame": 174,
+      "file": "d1-f174.png",
+      "seconds": 1.312999999994645
+    },
+    {
+      "direction": 1,
+      "frame": 176,
+      "file": "d1-f176.png",
+      "seconds": 1.312000000005355
+    },
+    {
+      "direction": 1,
+      "frame": 178,
+      "file": "d1-f178.png",
+      "seconds": 1.2969999999913853
+    },
+    {
+      "direction": 1,
+      "frame": 180,
+      "file": "d1-f180.png",
+      "seconds": 1.3440000000118744
+    },
+    {
+      "direction": 1,
+      "frame": 182,
+      "file": "d1-f182.png",
+      "seconds": 1.327999999979511
+    },
+    {
+      "direction": 1,
+      "frame": 184,
+      "file": "d1-f184.png",
+      "seconds": 1.3440000000118744
+    },
+    {
+      "direction": 1,
+      "frame": 186,
+      "file": "d1-f186.png",
+      "seconds": 1.3429999999934807
+    },
+    {
+      "direction": 1,
+      "frame": 188,
+      "file": "d1-f188.png",
+      "seconds": 1.4690000000118744
+    },
+    {
+      "direction": 1,
+      "frame": 190,
+      "file": "d1-f190.png",
+      "seconds": 1.2809999999881256
+    },
+    {
+      "direction": 1,
+      "frame": 192,
+      "file": "d1-f192.png",
+      "seconds": 1.3280000000086147
+    },
+    {
+      "direction": 1,
+      "frame": 194,
+      "file": "d1-f194.png",
+      "seconds": 1.2660000000032596
+    },
+    {
+      "direction": 1,
+      "frame": 196,
+      "file": "d1-f196.png",
+      "seconds": 1.3440000000118744
+    },
+    {
+      "direction": 1,
+      "frame": 198,
+      "file": "d1-f198.png",
+      "seconds": 1.312999999994645
+    },
+    {
+      "direction": 1,
+      "frame": 200,
+      "file": "d1-f200.png",
+      "seconds": 1.2960000000020955
+    },
+    {
+      "direction": 1,
+      "frame": 202,
+      "file": "d1-f202.png",
+      "seconds": 1.3439999999827705
+    },
+    {
+      "direction": 1,
+      "frame": 204,
+      "file": "d1-f204.png",
+      "seconds": 1.3590000000258442
+    },
+    {
+      "direction": 1,
+      "frame": 206,
+      "file": "d1-f206.png",
+      "seconds": 1.312999999994645
+    },
+    {
+      "direction": 1,
+      "frame": 208,
+      "file": "d1-f208.png",
+      "seconds": 1.312000000005355
+    },
+    {
+      "direction": 1,
+      "frame": 210,
+      "file": "d1-f210.png",
+      "seconds": 1.2659999999741558
+    },
+    {
+      "direction": 1,
+      "frame": 212,
+      "file": "d1-f212.png",
+      "seconds": 1.2650000000139698
+    },
+    {
+      "direction": 1,
+      "frame": 214,
+      "file": "d1-f214.png",
+      "seconds": 1.2660000000032596
+    },
+    {
+      "direction": 1,
+      "frame": 216,
+      "file": "d1-f216.png",
+      "seconds": 1.2660000000032596
+    },
+    {
+      "direction": 1,
+      "frame": 218,
+      "file": "d1-f218.png",
+      "seconds": 1.2969999999913853
+    },
+    {
+      "direction": 1,
+      "frame": 220,
+      "file": "d1-f220.png",
+      "seconds": 1.312000000005355
+    },
+    {
+      "direction": 1,
+      "frame": 222,
+      "file": "d1-f222.png",
+      "seconds": 1.2660000000032596
+    },
+    {
+      "direction": 1,
+      "frame": 224,
+      "file": "d1-f224.png",
+      "seconds": 1.264999999984866
+    },
+    {
+      "direction": 1,
+      "frame": 226,
+      "file": "d1-f226.png",
+      "seconds": 1.235000000015134
+    },
+    {
+      "direction": 1,
+      "frame": 228,
+      "file": "d1-f228.png",
+      "seconds": 1.2339999999967404
+    },
+    {
+      "direction": 1,
+      "frame": 230,
+      "file": "d1-f230.png",
+      "seconds": 1.25
+    },
+    {
+      "direction": 1,
+      "frame": 232,
+      "file": "d1-f232.png",
+      "seconds": 1.25
+    },
+    {
+      "direction": 1,
+      "frame": 234,
+      "file": "d1-f234.png",
+      "seconds": 1.25
+    },
+    {
+      "direction": 1,
+      "frame": 236,
+      "file": "d1-f236.png",
+      "seconds": 1.2339999999967404
+    },
+    {
+      "direction": 1,
+      "frame": 238,
+      "file": "d1-f238.png",
+      "seconds": 1.2660000000032596
+    },
+    {
+      "direction": 1,
+      "frame": 240,
+      "file": "d1-f240.png",
+      "seconds": 1.25
+    },
+    {
+      "direction": 1,
+      "frame": 242,
+      "file": "d1-f242.png",
+      "seconds": 1.25
+    },
+    {
+      "direction": 1,
+      "frame": 244,
+      "file": "d1-f244.png",
+      "seconds": 1.2969999999913853
+    },
+    {
+      "direction": 1,
+      "frame": 246,
+      "file": "d1-f246.png",
+      "seconds": 1.2810000000172295
+    },
+    {
+      "direction": 1,
+      "frame": 248,
+      "file": "d1-f248.png",
+      "seconds": 1.2809999999881256
+    },
+    {
+      "direction": 1,
+      "frame": 250,
+      "file": "d1-f250.png",
+      "seconds": 1.2820000000065193
+    },
+    {
+      "direction": 1,
+      "frame": 252,
+      "file": "d1-f252.png",
+      "seconds": 1.25
+    },
+    {
+      "direction": 1,
+      "frame": 254,
+      "file": "d1-f254.png",
+      "seconds": 1.327999999979511
+    },
+    {
+      "direction": 1,
+      "frame": 256,
+      "file": "d1-f256.png",
+      "seconds": 1.2650000000139698
+    },
+    {
+      "direction": 1,
+      "frame": 258,
+      "file": "d1-f258.png",
+      "seconds": 1.2349999999860302
+    },
+    {
+      "direction": 1,
+      "frame": 260,
+      "file": "d1-f260.png",
+      "seconds": 1.2340000000258442
+    },
+    {
+      "direction": 1,
+      "frame": 262,
+      "file": "d1-f262.png",
+      "seconds": 1.3599999999860302
+    },
+    {
+      "direction": 1,
+      "frame": 264,
+      "file": "d1-f264.png",
+      "seconds": 1.4059999999881256
+    },
+    {
+      "direction": 1,
+      "frame": 266,
+      "file": "d1-f266.png",
+      "seconds": 1.5940000000118744
+    },
+    {
+      "direction": 1,
+      "frame": 268,
+      "file": "d1-f268.png",
+      "seconds": 1.562999999994645
+    },
+    {
+      "direction": 1,
+      "frame": 270,
+      "file": "d1-f270.png",
+      "seconds": 1.5929999999934807
+    },
+    {
+      "direction": 1,
+      "frame": 272,
+      "file": "d1-f272.png",
+      "seconds": 1.4539999999979045
+    },
+    {
+      "direction": 1,
+      "frame": 274,
+      "file": "d1-f274.png",
+      "seconds": 1.625
+    },
+    {
+      "direction": 1,
+      "frame": 276,
+      "file": "d1-f276.png",
+      "seconds": 1.5780000000086147
+    },
+    {
+      "direction": 1,
+      "frame": 278,
+      "file": "d1-f278.png",
+      "seconds": 1.7339999999967404
+    },
+    {
+      "direction": 1,
+      "frame": 280,
+      "file": "d1-f280.png",
+      "seconds": 1.4219999999913853
+    },
+    {
+      "direction": 1,
+      "frame": 282,
+      "file": "d1-f282.png",
+      "seconds": 1.562000000005355
+    },
+    {
+      "direction": 1,
+      "frame": 284,
+      "file": "d1-f284.png",
+      "seconds": 1.5940000000118744
+    },
+    {
+      "direction": 1,
+      "frame": 286,
+      "file": "d1-f286.png",
+      "seconds": 1.577999999979511
+    },
+    {
+      "direction": 2,
+      "frame": 0,
+      "file": "d2-f000.png",
+      "seconds": 1.5940000000118744
+    },
+    {
+      "direction": 2,
+      "frame": 2,
+      "file": "d2-f002.png",
+      "seconds": 1.375
+    },
+    {
+      "direction": 2,
+      "frame": 4,
+      "file": "d2-f004.png",
+      "seconds": 1.3280000000086147
+    },
+    {
+      "direction": 2,
+      "frame": 6,
+      "file": "d2-f006.png",
+      "seconds": 1.5940000000118744
+    },
+    {
+      "direction": 2,
+      "frame": 8,
+      "file": "d2-f008.png",
+      "seconds": 1.375
+    },
+    {
+      "direction": 2,
+      "frame": 10,
+      "file": "d2-f010.png",
+      "seconds": 1.327999999979511
+    },
+    {
+      "direction": 2,
+      "frame": 12,
+      "file": "d2-f012.png",
+      "seconds": 1.312999999994645
+    },
+    {
+      "direction": 2,
+      "frame": 14,
+      "file": "d2-f014.png",
+      "seconds": 1.3910000000032596
+    },
+    {
+      "direction": 2,
+      "frame": 16,
+      "file": "d2-f016.png",
+      "seconds": 1.3589999999967404
+    },
+    {
+      "direction": 2,
+      "frame": 18,
+      "file": "d2-f018.png",
+      "seconds": 1.375
+    },
+    {
+      "direction": 2,
+      "frame": 20,
+      "file": "d2-f020.png",
+      "seconds": 1.3289999999979045
+    },
+    {
+      "direction": 2,
+      "frame": 22,
+      "file": "d2-f022.png",
+      "seconds": 1.4530000000086147
+    },
+    {
+      "direction": 2,
+      "frame": 24,
+      "file": "d2-f024.png",
+      "seconds": 1.389999999984866
+    },
+    {
+      "direction": 2,
+      "frame": 26,
+      "file": "d2-f026.png",
+      "seconds": 1.4690000000118744
+    },
+    {
+      "direction": 2,
+      "frame": 28,
+      "file": "d2-f028.png",
+      "seconds": 1.4059999999881256
+    },
+    {
+      "direction": 2,
+      "frame": 30,
+      "file": "d2-f030.png",
+      "seconds": 1.375
+    },
+    {
+      "direction": 2,
+      "frame": 32,
+      "file": "d2-f032.png",
+      "seconds": 1.4070000000065193
+    },
+    {
+      "direction": 2,
+      "frame": 34,
+      "file": "d2-f034.png",
+      "seconds": 1.3589999999967404
+    },
+    {
+      "direction": 2,
+      "frame": 36,
+      "file": "d2-f036.png",
+      "seconds": 1.4219999999913853
+    },
+    {
+      "direction": 2,
+      "frame": 38,
+      "file": "d2-f038.png",
+      "seconds": 1.375
+    },
+    {
+      "direction": 2,
+      "frame": 40,
+      "file": "d2-f040.png",
+      "seconds": 1.3590000000258442
+    },
+    {
+      "direction": 2,
+      "frame": 42,
+      "file": "d2-f042.png",
+      "seconds": 1.3599999999860302
+    },
+    {
+      "direction": 2,
+      "frame": 44,
+      "file": "d2-f044.png",
+      "seconds": 1.375
+    },
+    {
+      "direction": 2,
+      "frame": 46,
+      "file": "d2-f046.png",
+      "seconds": 1.4059999999881256
+    },
+    {
+      "direction": 2,
+      "frame": 48,
+      "file": "d2-f048.png",
+      "seconds": 1.3590000000258442
+    },
+    {
+      "direction": 2,
+      "frame": 50,
+      "file": "d2-f050.png",
+      "seconds": 1.4059999999881256
+    },
+    {
+      "direction": 2,
+      "frame": 52,
+      "file": "d2-f052.png",
+      "seconds": 1.3599999999860302
+    },
+    {
+      "direction": 2,
+      "frame": 54,
+      "file": "d2-f054.png",
+      "seconds": 1.312000000005355
+    },
+    {
+      "direction": 2,
+      "frame": 56,
+      "file": "d2-f056.png",
+      "seconds": 1.3440000000118744
+    },
+    {
+      "direction": 2,
+      "frame": 58,
+      "file": "d2-f058.png",
+      "seconds": 1.3439999999827705
+    },
+    {
+      "direction": 2,
+      "frame": 60,
+      "file": "d2-f060.png",
+      "seconds": 1.3590000000258442
+    },
+    {
+      "direction": 2,
+      "frame": 62,
+      "file": "d2-f062.png",
+      "seconds": 1.3439999999827705
+    },
+    {
+      "direction": 2,
+      "frame": 64,
+      "file": "d2-f064.png",
+      "seconds": 1.3440000000118744
+    },
+    {
+      "direction": 2,
+      "frame": 66,
+      "file": "d2-f066.png",
+      "seconds": 1.375
+    },
+    {
+      "direction": 2,
+      "frame": 68,
+      "file": "d2-f068.png",
+      "seconds": 1.577999999979511
+    },
+    {
+      "direction": 2,
+      "frame": 70,
+      "file": "d2-f070.png",
+      "seconds": 1.375
+    },
+    {
+      "direction": 2,
+      "frame": 72,
+      "file": "d2-f072.png",
+      "seconds": 1.3440000000118744
+    },
+    {
+      "direction": 2,
+      "frame": 74,
+      "file": "d2-f074.png",
+      "seconds": 1.5
+    },
+    {
+      "direction": 2,
+      "frame": 76,
+      "file": "d2-f076.png",
+      "seconds": 1.375
+    },
+    {
+      "direction": 2,
+      "frame": 78,
+      "file": "d2-f078.png",
+      "seconds": 1.3429999999934807
+    },
+    {
+      "direction": 2,
+      "frame": 80,
+      "file": "d2-f080.png",
+      "seconds": 1.437999999994645
+    },
+    {
+      "direction": 2,
+      "frame": 82,
+      "file": "d2-f082.png",
+      "seconds": 1.375
+    },
+    {
+      "direction": 2,
+      "frame": 84,
+      "file": "d2-f084.png",
+      "seconds": 1.3440000000118744
+    },
+    {
+      "direction": 2,
+      "frame": 86,
+      "file": "d2-f086.png",
+      "seconds": 1.4679999999934807
+    },
+    {
+      "direction": 2,
+      "frame": 88,
+      "file": "d2-f088.png",
+      "seconds": 1.4070000000065193
+    },
+    {
+      "direction": 2,
+      "frame": 90,
+      "file": "d2-f090.png",
+      "seconds": 1.3900000000139698
+    },
+    {
+      "direction": 2,
+      "frame": 92,
+      "file": "d2-f092.png",
+      "seconds": 1.452999999979511
+    },
+    {
+      "direction": 2,
+      "frame": 94,
+      "file": "d2-f094.png",
+      "seconds": 1.4690000000118744
+    },
+    {
+      "direction": 2,
+      "frame": 96,
+      "file": "d2-f096.png",
+      "seconds": 1.5
+    },
+    {
+      "direction": 2,
+      "frame": 98,
+      "file": "d2-f098.png",
+      "seconds": 1.5160000000032596
+    },
+    {
+      "direction": 2,
+      "frame": 100,
+      "file": "d2-f100.png",
+      "seconds": 1.4839999999967404
+    },
+    {
+      "direction": 2,
+      "frame": 102,
+      "file": "d2-f102.png",
+      "seconds": 1.5160000000032596
+    },
+    {
+      "direction": 2,
+      "frame": 104,
+      "file": "d2-f104.png",
+      "seconds": 1.389999999984866
+    },
+    {
+      "direction": 2,
+      "frame": 106,
+      "file": "d2-f106.png",
+      "seconds": 1.4690000000118744
+    },
+    {
+      "direction": 2,
+      "frame": 108,
+      "file": "d2-f108.png",
+      "seconds": 1.5160000000032596
+    },
+    {
+      "direction": 2,
+      "frame": 110,
+      "file": "d2-f110.png",
+      "seconds": 1.5160000000032596
+    },
+    {
+      "direction": 2,
+      "frame": 112,
+      "file": "d2-f112.png",
+      "seconds": 1.5
+    },
+    {
+      "direction": 2,
+      "frame": 114,
+      "file": "d2-f114.png",
+      "seconds": 1.6410000000032596
+    },
+    {
+      "direction": 2,
+      "frame": 116,
+      "file": "d2-f116.png",
+      "seconds": 1.4839999999967404
+    },
+    {
+      "direction": 2,
+      "frame": 118,
+      "file": "d2-f118.png",
+      "seconds": 1.625
+    },
+    {
+      "direction": 2,
+      "frame": 120,
+      "file": "d2-f120.png",
+      "seconds": 1.7810000000172295
+    },
+    {
+      "direction": 2,
+      "frame": 122,
+      "file": "d2-f122.png",
+      "seconds": 1.9219999999913853
+    },
+    {
+      "direction": 2,
+      "frame": 124,
+      "file": "d2-f124.png",
+      "seconds": 1.7809999999881256
+    },
+    {
+      "direction": 2,
+      "frame": 126,
+      "file": "d2-f126.png",
+      "seconds": 2.0160000000032596
+    },
+    {
+      "direction": 2,
+      "frame": 128,
+      "file": "d2-f128.png",
+      "seconds": 1.625
+    },
+    {
+      "direction": 2,
+      "frame": 130,
+      "file": "d2-f130.png",
+      "seconds": 1.437000000005355
+    },
+    {
+      "direction": 2,
+      "frame": 132,
+      "file": "d2-f132.png",
+      "seconds": 1.7039999999979045
+    },
+    {
+      "direction": 2,
+      "frame": 134,
+      "file": "d2-f134.png",
+      "seconds": 1.4679999999934807
+    },
+    {
+      "direction": 2,
+      "frame": 136,
+      "file": "d2-f136.png",
+      "seconds": 1.4690000000118744
+    },
+    {
+      "direction": 2,
+      "frame": 138,
+      "file": "d2-f138.png",
+      "seconds": 1.577999999979511
+    },
+    {
+      "direction": 2,
+      "frame": 140,
+      "file": "d2-f140.png",
+      "seconds": 1.4690000000118744
+    },
+    {
+      "direction": 2,
+      "frame": 142,
+      "file": "d2-f142.png",
+      "seconds": 1.5309999999881256
+    },
+    {
+      "direction": 2,
+      "frame": 144,
+      "file": "d2-f144.png",
+      "seconds": 1.5
+    },
+    {
+      "direction": 2,
+      "frame": 146,
+      "file": "d2-f146.png",
+      "seconds": 1.562999999994645
+    },
+    {
+      "direction": 2,
+      "frame": 148,
+      "file": "d2-f148.png",
+      "seconds": 1.5780000000086147
+    },
+    {
+      "direction": 2,
+      "frame": 150,
+      "file": "d2-f150.png",
+      "seconds": 1.4689999999827705
+    },
+    {
+      "direction": 2,
+      "frame": 152,
+      "file": "d2-f152.png",
+      "seconds": 1.5780000000086147
+    },
+    {
+      "direction": 2,
+      "frame": 154,
+      "file": "d2-f154.png",
+      "seconds": 1.5460000000020955
+    },
+    {
+      "direction": 2,
+      "frame": 156,
+      "file": "d2-f156.png",
+      "seconds": 1.4849999999860302
+    },
+    {
+      "direction": 2,
+      "frame": 158,
+      "file": "d2-f158.png",
+      "seconds": 1.5
+    },
+    {
+      "direction": 2,
+      "frame": 160,
+      "file": "d2-f160.png",
+      "seconds": 1.5150000000139698
+    },
+    {
+      "direction": 2,
+      "frame": 162,
+      "file": "d2-f162.png",
+      "seconds": 1.4059999999881256
+    },
+    {
+      "direction": 2,
+      "frame": 164,
+      "file": "d2-f164.png",
+      "seconds": 1.4690000000118744
+    },
+    {
+      "direction": 2,
+      "frame": 166,
+      "file": "d2-f166.png",
+      "seconds": 1.437999999994645
+    },
+    {
+      "direction": 2,
+      "frame": 168,
+      "file": "d2-f168.png",
+      "seconds": 1.6559999999881256
+    },
+    {
+      "direction": 2,
+      "frame": 170,
+      "file": "d2-f170.png",
+      "seconds": 1.5
+    },
+    {
+      "direction": 2,
+      "frame": 172,
+      "file": "d2-f172.png",
+      "seconds": 1.4840000000258442
+    },
+    {
+      "direction": 2,
+      "frame": 174,
+      "file": "d2-f174.png",
+      "seconds": 1.4219999999913853
+    },
+    {
+      "direction": 2,
+      "frame": 176,
+      "file": "d2-f176.png",
+      "seconds": 1.6559999999881256
+    },
+    {
+      "direction": 2,
+      "frame": 178,
+      "file": "d2-f178.png",
+      "seconds": 1.8280000000086147
+    },
+    {
+      "direction": 2,
+      "frame": 180,
+      "file": "d2-f180.png",
+      "seconds": 1.5160000000032596
+    },
+    {
+      "direction": 2,
+      "frame": 182,
+      "file": "d2-f182.png",
+      "seconds": 1.514999999984866
+    },
+    {
+      "direction": 2,
+      "frame": 184,
+      "file": "d2-f184.png",
+      "seconds": 1.5320000000065193
+    },
+    {
+      "direction": 2,
+      "frame": 186,
+      "file": "d2-f186.png",
+      "seconds": 1.4849999999860302
+    },
+    {
+      "direction": 2,
+      "frame": 188,
+      "file": "d2-f188.png",
+      "seconds": 1.5309999999881256
+    },
+    {
+      "direction": 2,
+      "frame": 190,
+      "file": "d2-f190.png",
+      "seconds": 1.547000000020489
+    },
+    {
+      "direction": 2,
+      "frame": 192,
+      "file": "d2-f192.png",
+      "seconds": 1.4070000000065193
+    },
+    {
+      "direction": 2,
+      "frame": 194,
+      "file": "d2-f194.png",
+      "seconds": 1.4059999999881256
+    },
+    {
+      "direction": 2,
+      "frame": 196,
+      "file": "d2-f196.png",
+      "seconds": 1.4840000000258442
+    },
+    {
+      "direction": 2,
+      "frame": 198,
+      "file": "d2-f198.png",
+      "seconds": 1.3909999999741558
+    },
+    {
+      "direction": 2,
+      "frame": 200,
+      "file": "d2-f200.png",
+      "seconds": 1.3900000000139698
+    },
+    {
+      "direction": 2,
+      "frame": 202,
+      "file": "d2-f202.png",
+      "seconds": 1.4690000000118744
+    },
+    {
+      "direction": 2,
+      "frame": 204,
+      "file": "d2-f204.png",
+      "seconds": 1.3909999999741558
+    },
+    {
+      "direction": 2,
+      "frame": 206,
+      "file": "d2-f206.png",
+      "seconds": 1.375
+    },
+    {
+      "direction": 2,
+      "frame": 208,
+      "file": "d2-f208.png",
+      "seconds": 1.4690000000118744
+    },
+    {
+      "direction": 2,
+      "frame": 210,
+      "file": "d2-f210.png",
+      "seconds": 1.4059999999881256
+    },
+    {
+      "direction": 2,
+      "frame": 212,
+      "file": "d2-f212.png",
+      "seconds": 1.4060000000172295
+    },
+    {
+      "direction": 2,
+      "frame": 214,
+      "file": "d2-f214.png",
+      "seconds": 1.375
+    },
+    {
+      "direction": 2,
+      "frame": 216,
+      "file": "d2-f216.png",
+      "seconds": 1.4689999999827705
+    },
+    {
+      "direction": 2,
+      "frame": 218,
+      "file": "d2-f218.png",
+      "seconds": 1.5150000000139698
+    },
+    {
+      "direction": 2,
+      "frame": 220,
+      "file": "d2-f220.png",
+      "seconds": 1.5160000000032596
+    },
+    {
+      "direction": 2,
+      "frame": 222,
+      "file": "d2-f222.png",
+      "seconds": 1.6410000000032596
+    },
+    {
+      "direction": 2,
+      "frame": 224,
+      "file": "d2-f224.png",
+      "seconds": 1.562000000005355
+    },
+    {
+      "direction": 2,
+      "frame": 226,
+      "file": "d2-f226.png",
+      "seconds": 1.577999999979511
+    },
+    {
+      "direction": 2,
+      "frame": 228,
+      "file": "d2-f228.png",
+      "seconds": 1.610000000015134
+    },
+    {
+      "direction": 2,
+      "frame": 230,
+      "file": "d2-f230.png",
+      "seconds": 1.687000000005355
+    },
+    {
+      "direction": 2,
+      "frame": 232,
+      "file": "d2-f232.png",
+      "seconds": 1.5940000000118744
+    },
+    {
+      "direction": 2,
+      "frame": 234,
+      "file": "d2-f234.png",
+      "seconds": 1.5929999999934807
+    },
+    {
+      "direction": 2,
+      "frame": 236,
+      "file": "d2-f236.png",
+      "seconds": 1.7030000000086147
+    },
+    {
+      "direction": 2,
+      "frame": 238,
+      "file": "d2-f238.png",
+      "seconds": 1.562999999994645
+    },
+    {
+      "direction": 2,
+      "frame": 240,
+      "file": "d2-f240.png",
+      "seconds": 1.5780000000086147
+    },
+    {
+      "direction": 2,
+      "frame": 242,
+      "file": "d2-f242.png",
+      "seconds": 1.5780000000086147
+    },
+    {
+      "direction": 2,
+      "frame": 244,
+      "file": "d2-f244.png",
+      "seconds": 1.375
+    },
+    {
+      "direction": 2,
+      "frame": 246,
+      "file": "d2-f246.png",
+      "seconds": 1.3439999999827705
+    },
+    {
+      "direction": 2,
+      "frame": 248,
+      "file": "d2-f248.png",
+      "seconds": 1.4060000000172295
+    },
+    {
+      "direction": 2,
+      "frame": 250,
+      "file": "d2-f250.png",
+      "seconds": 1.577999999979511
+    },
+    {
+      "direction": 2,
+      "frame": 252,
+      "file": "d2-f252.png",
+      "seconds": 1.562999999994645
+    },
+    {
+      "direction": 2,
+      "frame": 254,
+      "file": "d2-f254.png",
+      "seconds": 1.547000000020489
+    },
+    {
+      "direction": 2,
+      "frame": 256,
+      "file": "d2-f256.png",
+      "seconds": 1.4219999999913853
+    },
+    {
+      "direction": 2,
+      "frame": 258,
+      "file": "d2-f258.png",
+      "seconds": 1.312000000005355
+    },
+    {
+      "direction": 2,
+      "frame": 260,
+      "file": "d2-f260.png",
+      "seconds": 1.312999999994645
+    },
+    {
+      "direction": 2,
+      "frame": 262,
+      "file": "d2-f262.png",
+      "seconds": 1.3900000000139698
+    },
+    {
+      "direction": 2,
+      "frame": 264,
+      "file": "d2-f264.png",
+      "seconds": 1.375
+    },
+    {
+      "direction": 2,
+      "frame": 266,
+      "file": "d2-f266.png",
+      "seconds": 1.3440000000118744
+    },
+    {
+      "direction": 2,
+      "frame": 268,
+      "file": "d2-f268.png",
+      "seconds": 1.312999999994645
+    },
+    {
+      "direction": 2,
+      "frame": 270,
+      "file": "d2-f270.png",
+      "seconds": 1.4059999999881256
+    },
+    {
+      "direction": 2,
+      "frame": 272,
+      "file": "d2-f272.png",
+      "seconds": 1.4060000000172295
+    },
+    {
+      "direction": 2,
+      "frame": 274,
+      "file": "d2-f274.png",
+      "seconds": 1.437999999994645
+    },
+    {
+      "direction": 2,
+      "frame": 276,
+      "file": "d2-f276.png",
+      "seconds": 1.375
+    },
+    {
+      "direction": 2,
+      "frame": 278,
+      "file": "d2-f278.png",
+      "seconds": 1.360000000015134
+    },
+    {
+      "direction": 2,
+      "frame": 280,
+      "file": "d2-f280.png",
+      "seconds": 1.3589999999967404
+    },
+    {
+      "direction": 2,
+      "frame": 282,
+      "file": "d2-f282.png",
+      "seconds": 1.5309999999881256
+    },
+    {
+      "direction": 2,
+      "frame": 284,
+      "file": "d2-f284.png",
+      "seconds": 1.360000000015134
+    },
+    {
+      "direction": 2,
+      "frame": 286,
+      "file": "d2-f286.png",
+      "seconds": 1.4070000000065193
+    },
+    {
+      "direction": 3,
+      "frame": 0,
+      "file": "d3-f000.png",
+      "seconds": 1.4210000000020955
+    },
+    {
+      "direction": 3,
+      "frame": 2,
+      "file": "d3-f002.png",
+      "seconds": 1.3599999999860302
+    },
+    {
+      "direction": 3,
+      "frame": 4,
+      "file": "d3-f004.png",
+      "seconds": 1.422000000020489
+    },
+    {
+      "direction": 3,
+      "frame": 6,
+      "file": "d3-f006.png",
+      "seconds": 1.375
+    },
+    {
+      "direction": 3,
+      "frame": 8,
+      "file": "d3-f008.png",
+      "seconds": 1.3589999999967404
+    },
+    {
+      "direction": 3,
+      "frame": 10,
+      "file": "d3-f010.png",
+      "seconds": 1.375
+    },
+    {
+      "direction": 3,
+      "frame": 12,
+      "file": "d3-f012.png",
+      "seconds": 1.327999999979511
+    },
+    {
+      "direction": 3,
+      "frame": 14,
+      "file": "d3-f014.png",
+      "seconds": 1.3440000000118744
+    },
+    {
+      "direction": 3,
+      "frame": 16,
+      "file": "d3-f016.png",
+      "seconds": 1.3429999999934807
+    },
+    {
+      "direction": 3,
+      "frame": 18,
+      "file": "d3-f018.png",
+      "seconds": 1.375
+    },
+    {
+      "direction": 3,
+      "frame": 20,
+      "file": "d3-f020.png",
+      "seconds": 1.3910000000032596
+    },
+    {
+      "direction": 3,
+      "frame": 22,
+      "file": "d3-f022.png",
+      "seconds": 1.4219999999913853
+    },
+    {
+      "direction": 3,
+      "frame": 24,
+      "file": "d3-f024.png",
+      "seconds": 1.3440000000118744
+    },
+    {
+      "direction": 3,
+      "frame": 26,
+      "file": "d3-f026.png",
+      "seconds": 1.3589999999967404
+    },
+    {
+      "direction": 3,
+      "frame": 28,
+      "file": "d3-f028.png",
+      "seconds": 1.375
+    },
+    {
+      "direction": 3,
+      "frame": 30,
+      "file": "d3-f030.png",
+      "seconds": 1.3589999999967404
+    },
+    {
+      "direction": 3,
+      "frame": 32,
+      "file": "d3-f032.png",
+      "seconds": 1.3910000000032596
+    },
+    {
+      "direction": 3,
+      "frame": 34,
+      "file": "d3-f034.png",
+      "seconds": 1.3440000000118744
+    },
+    {
+      "direction": 3,
+      "frame": 36,
+      "file": "d3-f036.png",
+      "seconds": 1.3589999999967404
+    },
+    {
+      "direction": 3,
+      "frame": 38,
+      "file": "d3-f038.png",
+      "seconds": 1.4219999999913853
+    },
+    {
+      "direction": 3,
+      "frame": 40,
+      "file": "d3-f040.png",
+      "seconds": 1.4219999999913853
+    },
+    {
+      "direction": 3,
+      "frame": 42,
+      "file": "d3-f042.png",
+      "seconds": 1.4530000000086147
+    },
+    {
+      "direction": 3,
+      "frame": 44,
+      "file": "d3-f044.png",
+      "seconds": 1.375
+    },
+    {
+      "direction": 3,
+      "frame": 46,
+      "file": "d3-f046.png",
+      "seconds": 1.4219999999913853
+    },
+    {
+      "direction": 3,
+      "frame": 48,
+      "file": "d3-f048.png",
+      "seconds": 1.375
+    },
+    {
+      "direction": 3,
+      "frame": 50,
+      "file": "d3-f050.png",
+      "seconds": 1.3280000000086147
+    },
+    {
+      "direction": 3,
+      "frame": 52,
+      "file": "d3-f052.png",
+      "seconds": 1.375
+    },
+    {
+      "direction": 3,
+      "frame": 54,
+      "file": "d3-f054.png",
+      "seconds": 1.3589999999967404
+    },
+    {
+      "direction": 3,
+      "frame": 56,
+      "file": "d3-f056.png",
+      "seconds": 1.3280000000086147
+    },
+    {
+      "direction": 3,
+      "frame": 58,
+      "file": "d3-f058.png",
+      "seconds": 1.437999999994645
+    },
+    {
+      "direction": 3,
+      "frame": 60,
+      "file": "d3-f060.png",
+      "seconds": 1.437000000005355
+    },
+    {
+      "direction": 3,
+      "frame": 62,
+      "file": "d3-f062.png",
+      "seconds": 1.4690000000118744
+    },
+    {
+      "direction": 3,
+      "frame": 64,
+      "file": "d3-f064.png",
+      "seconds": 1.327999999979511
+    },
+    {
+      "direction": 3,
+      "frame": 66,
+      "file": "d3-f066.png",
+      "seconds": 1.3280000000086147
+    },
+    {
+      "direction": 3,
+      "frame": 68,
+      "file": "d3-f068.png",
+      "seconds": 1.4219999999913853
+    },
+    {
+      "direction": 3,
+      "frame": 70,
+      "file": "d3-f070.png",
+      "seconds": 1.4070000000065193
+    },
+    {
+      "direction": 3,
+      "frame": 72,
+      "file": "d3-f072.png",
+      "seconds": 1.3900000000139698
+    },
+    {
+      "direction": 3,
+      "frame": 74,
+      "file": "d3-f074.png",
+      "seconds": 1.3909999999741558
+    },
+    {
+      "direction": 3,
+      "frame": 76,
+      "file": "d3-f076.png",
+      "seconds": 1.375
+    },
+    {
+      "direction": 3,
+      "frame": 78,
+      "file": "d3-f078.png",
+      "seconds": 1.3440000000118744
+    },
+    {
+      "direction": 3,
+      "frame": 80,
+      "file": "d3-f080.png",
+      "seconds": 1.3599999999860302
+    },
+    {
+      "direction": 3,
+      "frame": 82,
+      "file": "d3-f082.png",
+      "seconds": 1.3599999999860302
+    },
+    {
+      "direction": 3,
+      "frame": 84,
+      "file": "d3-f084.png",
+      "seconds": 1.3599999999860302
+    },
+    {
+      "direction": 3,
+      "frame": 86,
+      "file": "d3-f086.png",
+      "seconds": 1.375
+    },
+    {
+      "direction": 3,
+      "frame": 88,
+      "file": "d3-f088.png",
+      "seconds": 1.375
+    },
+    {
+      "direction": 3,
+      "frame": 90,
+      "file": "d3-f090.png",
+      "seconds": 1.4059999999881256
+    },
+    {
+      "direction": 3,
+      "frame": 92,
+      "file": "d3-f092.png",
+      "seconds": 1.5940000000118744
+    },
+    {
+      "direction": 3,
+      "frame": 94,
+      "file": "d3-f094.png",
+      "seconds": 1.5150000000139698
+    },
+    {
+      "direction": 3,
+      "frame": 96,
+      "file": "d3-f096.png",
+      "seconds": 1.5469999999913853
+    },
+    {
+      "direction": 3,
+      "frame": 98,
+      "file": "d3-f098.png",
+      "seconds": 1.6089999999967404
+    },
+    {
+      "direction": 3,
+      "frame": 100,
+      "file": "d3-f100.png",
+      "seconds": 1.9070000000065193
+    },
+    {
+      "direction": 3,
+      "frame": 102,
+      "file": "d3-f102.png",
+      "seconds": 2.0
+    },
+    {
+      "direction": 3,
+      "frame": 104,
+      "file": "d3-f104.png",
+      "seconds": 1.639999999984866
+    },
+    {
+      "direction": 3,
+      "frame": 106,
+      "file": "d3-f106.png",
+      "seconds": 1.610000000015134
+    },
+    {
+      "direction": 3,
+      "frame": 108,
+      "file": "d3-f108.png",
+      "seconds": 1.5
+    },
+    {
+      "direction": 3,
+      "frame": 110,
+      "file": "d3-f110.png",
+      "seconds": 1.687000000005355
+    },
+    {
+      "direction": 3,
+      "frame": 112,
+      "file": "d3-f112.png",
+      "seconds": 1.6409999999741558
+    },
+    {
+      "direction": 3,
+      "frame": 114,
+      "file": "d3-f114.png",
+      "seconds": 1.562000000005355
+    },
+    {
+      "direction": 3,
+      "frame": 116,
+      "file": "d3-f116.png",
+      "seconds": 1.5320000000065193
+    },
+    {
+      "direction": 3,
+      "frame": 118,
+      "file": "d3-f118.png",
+      "seconds": 1.4059999999881256
+    },
+    {
+      "direction": 3,
+      "frame": 120,
+      "file": "d3-f120.png",
+      "seconds": 1.422000000020489
+    },
+    {
+      "direction": 3,
+      "frame": 122,
+      "file": "d3-f122.png",
+      "seconds": 1.437000000005355
+    },
+    {
+      "direction": 3,
+      "frame": 124,
+      "file": "d3-f124.png",
+      "seconds": 1.375
+    },
+    {
+      "direction": 3,
+      "frame": 126,
+      "file": "d3-f126.png",
+      "seconds": 1.375
+    },
+    {
+      "direction": 3,
+      "frame": 128,
+      "file": "d3-f128.png",
+      "seconds": 1.5150000000139698
+    },
+    {
+      "direction": 3,
+      "frame": 130,
+      "file": "d3-f130.png",
+      "seconds": 1.3910000000032596
+    },
+    {
+      "direction": 3,
+      "frame": 132,
+      "file": "d3-f132.png",
+      "seconds": 1.4219999999913853
+    },
+    {
+      "direction": 3,
+      "frame": 134,
+      "file": "d3-f134.png",
+      "seconds": 1.3589999999967404
+    },
+    {
+      "direction": 3,
+      "frame": 136,
+      "file": "d3-f136.png",
+      "seconds": 1.375
+    },
+    {
+      "direction": 3,
+      "frame": 138,
+      "file": "d3-f138.png",
+      "seconds": 1.4219999999913853
+    },
+    {
+      "direction": 3,
+      "frame": 140,
+      "file": "d3-f140.png",
+      "seconds": 1.4690000000118744
+    },
+    {
+      "direction": 3,
+      "frame": 142,
+      "file": "d3-f142.png",
+      "seconds": 1.437999999994645
+    },
+    {
+      "direction": 3,
+      "frame": 144,
+      "file": "d3-f144.png",
+      "seconds": 1.4059999999881256
+    },
+    {
+      "direction": 3,
+      "frame": 146,
+      "file": "d3-f146.png",
+      "seconds": 1.4060000000172295
+    },
+    {
+      "direction": 3,
+      "frame": 148,
+      "file": "d3-f148.png",
+      "seconds": 1.3909999999741558
+    },
+    {
+      "direction": 3,
+      "frame": 150,
+      "file": "d3-f150.png",
+      "seconds": 1.3440000000118744
+    },
+    {
+      "direction": 3,
+      "frame": 152,
+      "file": "d3-f152.png",
+      "seconds": 1.375
+    },
+    {
+      "direction": 3,
+      "frame": 154,
+      "file": "d3-f154.png",
+      "seconds": 1.3589999999967404
+    },
+    {
+      "direction": 3,
+      "frame": 156,
+      "file": "d3-f156.png",
+      "seconds": 1.375
+    },
+    {
+      "direction": 3,
+      "frame": 158,
+      "file": "d3-f158.png",
+      "seconds": 1.312000000005355
+    },
+    {
+      "direction": 3,
+      "frame": 160,
+      "file": "d3-f160.png",
+      "seconds": 1.2820000000065193
+    },
+    {
+      "direction": 3,
+      "frame": 162,
+      "file": "d3-f162.png",
+      "seconds": 1.264999999984866
+    },
+    {
+      "direction": 3,
+      "frame": 164,
+      "file": "d3-f164.png",
+      "seconds": 1.2810000000172295
+    },
+    {
+      "direction": 3,
+      "frame": 166,
+      "file": "d3-f166.png",
+      "seconds": 1.2659999999741558
+    },
+    {
+      "direction": 3,
+      "frame": 168,
+      "file": "d3-f168.png",
+      "seconds": 1.297000000020489
+    },
+    {
+      "direction": 3,
+      "frame": 170,
+      "file": "d3-f170.png",
+      "seconds": 1.3910000000032596
+    },
+    {
+      "direction": 3,
+      "frame": 172,
+      "file": "d3-f172.png",
+      "seconds": 1.8589999999967404
+    },
+    {
+      "direction": 3,
+      "frame": 174,
+      "file": "d3-f174.png",
+      "seconds": 1.2810000000172295
+    },
+    {
+      "direction": 3,
+      "frame": 176,
+      "file": "d3-f176.png",
+      "seconds": 1.2809999999881256
+    },
+    {
+      "direction": 3,
+      "frame": 178,
+      "file": "d3-f178.png",
+      "seconds": 1.312999999994645
+    },
+    {
+      "direction": 3,
+      "frame": 180,
+      "file": "d3-f180.png",
+      "seconds": 1.2810000000172295
+    },
+    {
+      "direction": 3,
+      "frame": 182,
+      "file": "d3-f182.png",
+      "seconds": 1.2809999999881256
+    },
+    {
+      "direction": 3,
+      "frame": 184,
+      "file": "d3-f184.png",
+      "seconds": 1.2820000000065193
+    },
+    {
+      "direction": 3,
+      "frame": 186,
+      "file": "d3-f186.png",
+      "seconds": 1.264999999984866
+    },
+    {
+      "direction": 3,
+      "frame": 188,
+      "file": "d3-f188.png",
+      "seconds": 1.312999999994645
+    },
+    {
+      "direction": 3,
+      "frame": 190,
+      "file": "d3-f190.png",
+      "seconds": 1.297000000020489
+    },
+    {
+      "direction": 3,
+      "frame": 192,
+      "file": "d3-f192.png",
+      "seconds": 1.2660000000032596
+    },
+    {
+      "direction": 3,
+      "frame": 194,
+      "file": "d3-f194.png",
+      "seconds": 1.2810000000172295
+    },
+    {
+      "direction": 3,
+      "frame": 196,
+      "file": "d3-f196.png",
+      "seconds": 1.2659999999741558
+    },
+    {
+      "direction": 3,
+      "frame": 198,
+      "file": "d3-f198.png",
+      "seconds": 1.2810000000172295
+    },
+    {
+      "direction": 3,
+      "frame": 200,
+      "file": "d3-f200.png",
+      "seconds": 1.2660000000032596
+    },
+    {
+      "direction": 3,
+      "frame": 202,
+      "file": "d3-f202.png",
+      "seconds": 1.2969999999913853
+    },
+    {
+      "direction": 3,
+      "frame": 204,
+      "file": "d3-f204.png",
+      "seconds": 1.2809999999881256
+    },
+    {
+      "direction": 3,
+      "frame": 206,
+      "file": "d3-f206.png",
+      "seconds": 1.2810000000172295
+    },
+    {
+      "direction": 3,
+      "frame": 208,
+      "file": "d3-f208.png",
+      "seconds": 1.2809999999881256
+    },
+    {
+      "direction": 3,
+      "frame": 210,
+      "file": "d3-f210.png",
+      "seconds": 1.2660000000032596
+    },
+    {
+      "direction": 3,
+      "frame": 212,
+      "file": "d3-f212.png",
+      "seconds": 1.2660000000032596
+    },
+    {
+      "direction": 3,
+      "frame": 214,
+      "file": "d3-f214.png",
+      "seconds": 1.2659999999741558
+    },
+    {
+      "direction": 3,
+      "frame": 216,
+      "file": "d3-f216.png",
+      "seconds": 1.2650000000139698
+    },
+    {
+      "direction": 3,
+      "frame": 218,
+      "file": "d3-f218.png",
+      "seconds": 1.3289999999979045
+    },
+    {
+      "direction": 3,
+      "frame": 220,
+      "file": "d3-f220.png",
+      "seconds": 1.2650000000139698
+    },
+    {
+      "direction": 3,
+      "frame": 222,
+      "file": "d3-f222.png",
+      "seconds": 1.312999999994645
+    },
+    {
+      "direction": 3,
+      "frame": 224,
+      "file": "d3-f224.png",
+      "seconds": 1.2969999999913853
+    },
+    {
+      "direction": 3,
+      "frame": 226,
+      "file": "d3-f226.png",
+      "seconds": 1.3589999999967404
+    },
+    {
+      "direction": 3,
+      "frame": 228,
+      "file": "d3-f228.png",
+      "seconds": 1.2810000000172295
+    },
+    {
+      "direction": 3,
+      "frame": 230,
+      "file": "d3-f230.png",
+      "seconds": 1.2809999999881256
+    },
+    {
+      "direction": 3,
+      "frame": 232,
+      "file": "d3-f232.png",
+      "seconds": 1.2660000000032596
+    },
+    {
+      "direction": 3,
+      "frame": 234,
+      "file": "d3-f234.png",
+      "seconds": 1.312999999994645
+    },
+    {
+      "direction": 3,
+      "frame": 236,
+      "file": "d3-f236.png",
+      "seconds": 1.2650000000139698
+    },
+    {
+      "direction": 3,
+      "frame": 238,
+      "file": "d3-f238.png",
+      "seconds": 1.2659999999741558
+    },
+    {
+      "direction": 3,
+      "frame": 240,
+      "file": "d3-f240.png",
+      "seconds": 1.312000000005355
+    },
+    {
+      "direction": 3,
+      "frame": 242,
+      "file": "d3-f242.png",
+      "seconds": 1.312999999994645
+    },
+    {
+      "direction": 3,
+      "frame": 244,
+      "file": "d3-f244.png",
+      "seconds": 1.2810000000172295
+    },
+    {
+      "direction": 3,
+      "frame": 246,
+      "file": "d3-f246.png",
+      "seconds": 1.2660000000032596
+    },
+    {
+      "direction": 3,
+      "frame": 248,
+      "file": "d3-f248.png",
+      "seconds": 1.25
+    },
+    {
+      "direction": 3,
+      "frame": 250,
+      "file": "d3-f250.png",
+      "seconds": 1.327999999979511
+    },
+    {
+      "direction": 3,
+      "frame": 252,
+      "file": "d3-f252.png",
+      "seconds": 1.25
+    },
+    {
+      "direction": 3,
+      "frame": 254,
+      "file": "d3-f254.png",
+      "seconds": 1.25
+    },
+    {
+      "direction": 3,
+      "frame": 256,
+      "file": "d3-f256.png",
+      "seconds": 1.2650000000139698
+    },
+    {
+      "direction": 3,
+      "frame": 258,
+      "file": "d3-f258.png",
+      "seconds": 1.2660000000032596
+    },
+    {
+      "direction": 3,
+      "frame": 260,
+      "file": "d3-f260.png",
+      "seconds": 1.2339999999967404
+    },
+    {
+      "direction": 3,
+      "frame": 262,
+      "file": "d3-f262.png",
+      "seconds": 1.2660000000032596
+    },
+    {
+      "direction": 3,
+      "frame": 264,
+      "file": "d3-f264.png",
+      "seconds": 1.2660000000032596
+    },
+    {
+      "direction": 3,
+      "frame": 266,
+      "file": "d3-f266.png",
+      "seconds": 1.2969999999913853
+    },
+    {
+      "direction": 3,
+      "frame": 268,
+      "file": "d3-f268.png",
+      "seconds": 1.3280000000086147
+    },
+    {
+      "direction": 3,
+      "frame": 270,
+      "file": "d3-f270.png",
+      "seconds": 1.2809999999881256
+    },
+    {
+      "direction": 3,
+      "frame": 272,
+      "file": "d3-f272.png",
+      "seconds": 1.25
+    },
+    {
+      "direction": 3,
+      "frame": 274,
+      "file": "d3-f274.png",
+      "seconds": 1.2660000000032596
+    },
+    {
+      "direction": 3,
+      "frame": 276,
+      "file": "d3-f276.png",
+      "seconds": 1.25
+    },
+    {
+      "direction": 3,
+      "frame": 278,
+      "file": "d3-f278.png",
+      "seconds": 1.25
+    },
+    {
+      "direction": 3,
+      "frame": 280,
+      "file": "d3-f280.png",
+      "seconds": 1.2349999999860302
+    },
+    {
+      "direction": 3,
+      "frame": 282,
+      "file": "d3-f282.png",
+      "seconds": 1.2809999999881256
+    },
+    {
+      "direction": 3,
+      "frame": 284,
+      "file": "d3-f284.png",
+      "seconds": 1.25
+    },
+    {
+      "direction": 3,
+      "frame": 286,
+      "file": "d3-f286.png",
+      "seconds": 1.25
+    }
+  ],
+  "renderer_only_changes": [
+    "Complete-model facing parent around foundation center (-.01,-.105,0)",
+    "Steam billboard facing constrained to capture camera",
+    "Real per-frame Cycles ground shadow catcher"
+  ],
+  "source_geometry_changed": false
+}

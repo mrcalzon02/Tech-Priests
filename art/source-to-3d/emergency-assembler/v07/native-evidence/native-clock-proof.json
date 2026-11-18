@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "ticks": [
+    352,
+    1072
+  ],
+  "delta_ticks": 720,
+  "simulation_seconds": 12,
+  "comparison": "Exact full native PNG bytes",
+  "anchor_sha256": "a0f08a043b99d7c80900600dc252f3140a78eead8d1d476e168dd0a5eb77e1fe",
+  "repeat_sha256": "a0f08a043b99d7c80900600dc252f3140a78eead8d1d476e168dd0a5eb77e1fe",
+  "continuous_crafting_at_both_anchors": true
+}

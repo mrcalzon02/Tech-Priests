@@ -1,0 +1,59 @@
+{
+  "final_status": "PASS",
+  "final_study": "native-20261117-232654",
+  "native_clock_proof_sha256": "64d8eba2b033364703ad1250c754c3f76fb19d1fd0836828cbf62040137d6d24",
+  "earlier_studies": [
+    {
+      "study": "native-20261117-201003",
+      "status": "superseded",
+      "reason": "Fixture incorrectly required electronics in a native registry without that category; corrected to actual registered categories.",
+      "source-manifest.json_sha256": "5894f5d2f21905eb87f4f704d794dd8890c77318bba8a8f355026c54b9581fe0",
+      "create.log_sha256": "ab29633017d57ab9b0436c9e46df9a3efc35dc78d3368811932c661e251a989e"
+    },
+    {
+      "study": "native-20261117-201039",
+      "status": "superseded",
+      "reason": "Engine rejected idle frame count; final integration repeats the single idle frame 144 times.",
+      "source-manifest.json_sha256": "b42a87118f6d5d2e0c59cad2f3944153c7380844ea9a9ae20c28064074f6be08",
+      "create.log_sha256": "32e4012dd9597807f33089e3efdd3b7879f8d1dfa61b495141c1e524a130c73c"
+    },
+    {
+      "study": "native-20261117-201111",
+      "status": "superseded",
+      "reason": "Native square burner assembler ignored non-north facing; final integration uses the measured within-one-tile rectangular collision box.",
+      "source-manifest.json_sha256": "4c124a5d3a1c04fce695e8876d4975762b93ad5ee3e184a27a0ea738c40fde53",
+      "create.log_sha256": "f7eed38fb673bc078c2e9a546bb23bb2dd91e106c81015d08563e4854447c0ac"
+    },
+    {
+      "study": "native-20261117-201259",
+      "status": "superseded",
+      "reason": "Gameplay and server reload passed; superseded graphical work diagnosed freeplay intro modal, headless CLI modes and the old unfixed visual clock.",
+      "source-manifest.json_sha256": "ccd2ebace7e0058286d004d02727eeb33f70fc6fb7bea19c454a60a3cad4ccda",
+      "create.log_sha256": "58c8fa619bb6d25d5deb7515f5ac42da715a2c1264b57d8fadf1b3144b359de3"
+    },
+    {
+      "study": "native-20261117-232344",
+      "status": "superseded",
+      "reason": "Fixture assertion initially read clock controls from graphics_set instead of their native entity fields; corrected.",
+      "source-manifest.json_sha256": "c2cf7fa4bed7e5702602b41a628fff99f4abe0c1c125f12856fc7719e31cac36",
+      "create.log_sha256": "65f7d585ec208f44dcd54863732b08efbce030685b3d974b24a8c0ccd9acc0c0"
+    },
+    {
+      "study": "native-20261117-232401",
+      "status": "superseded",
+      "reason": "Gameplay, reload and graphics passed but the subsequent exact twelve-second anchor check had not yet been added.",
+      "source-manifest.json_sha256": "3edf942382fe2f3df31f744db14a89580c93e6fe63b8bf3b6e1b2e23d08d8184",
+      "create.log_sha256": "0cd956c9f8618fc9bd58ba5830478a32f81cb1633de809606910fe4b6bf907c4",
+      "native-acceptance.json_sha256": "87fc5efc5f872dd13bb883b5caace4e77fe3d64b9fdfb0e0b8ba42726bc9565f"
+    },
+    {
+      "study": "native-20261117-232456",
+      "status": "superseded",
+      "reason": "Gameplay and reload passed; twelve-second anchor images differed because graphics_set.animation_progress still used its .5 default.",
+      "source-manifest.json_sha256": "ba92c638d5ab68bd02ff1e076760247be98f276c91da909d83730196b505118f",
+      "create.log_sha256": "3b627806ff4b92e40b724df8c05404625240c0b6544806a15e9854e68944200c",
+      "native-acceptance.json_sha256": "1f3c4ab2be8e1c39a54b36f380ecaf99cc85cd050d6c9efc71c4f8a9398f20fe"
+    }
+  ],
+  "full_logs": "Retained in build/emergency-assembler-v07; only compact evidence is copied into this asset package."
+}

@@ -1,0 +1,17 @@
+{
+  "schema": "tech-priests.authored-surface-plan.v1",
+  "asset": "emergency-assembler-v07",
+  "source_sha256": "00d047b9aa80e13bd148b1dcbd2e5440b4a5e0414d744b446f273b0fc741845d",
+  "operation": "Preserve the original packed, model-specific V07 surfaces without rebaking",
+  "regions": [
+    {"region": "Foundation, chassis, deck and split hatches", "finish": "Original worn steel and iron image-backed surfaces, restrained machined edges and inset joints", "placement": "Original per-mesh UVs, scale, wear and fastener seating preserved"},
+    {"region": "Twin discharge towers", "finish": "Dark stacked metal insulators, aged gold/brass yokes and machined terminal tips", "placement": "Existing tower-specific material slots and inward tip alignment preserved"},
+    {"region": "Three-link articulated lifting arm and wrist cradle", "finish": "Existing metal beams, hinge pins and retainers", "placement": "Surface placement follows the rigid links; original hinges and animation retained"},
+    {"region": "Thick horizontal capsule", "finish": "Actual rounded egg-crate relief with localized keyed heat emission", "placement": "Original 8320-vertex sidewall and cap/terminal regions preserved"},
+    {"region": "Front control panel", "finish": "Original packed LCD graphic, colored controls and recessed bezel", "placement": "Source-specific texture and UV layout retained"},
+    {"region": "Electrical arcs and vapor", "finish": "Original keyed emissive curves and translucent procedural vapor", "placement": "Arc endpoints remain on real tower/capsule anchors; original opacity and timing preserved"}
+  ],
+  "packed_texture_images": 26,
+  "runtime_surface_delivery": "Cycles-rendered RGBA sprites with source heat, arc and vapor shaders; no procedural PBR export claimed",
+  "source_modified": false
+}
