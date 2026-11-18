@@ -1,0 +1,36 @@
+   0.001 2026-11-18 00:59:19; Factorio 2.1.24 (build 87808, win64, steam, space-age)
+   0.001 Operating system: Windows 11 (build 26200) 
+   0.002 Program arguments: "C:\Program Files (x86)\Steam\steamapps\common\Factorio\bin\x64\factorio.exe" "--config" "C:\Users\Admin\Documents\ChatGPT\Tech priests\_merge-proof\broker-final-skins\default\config.ini" "--mod-directory" "C:\Users\Admin\Documents\ChatGPT\Tech priests\_merge-proof\broker-final-skins\default\mods" "--create" "C:\Users\Admin\Documents\ChatGPT\Tech priests\_merge-proof\broker-final-skins\default\test.zip" 
+   0.002 Config path: C:/Users/Admin/Documents/ChatGPT/Tech priests/_merge-proof/broker-final-skins/default/config.ini
+   0.002 Read data path: C:/Program Files (x86)/Steam/steamapps/common/Factorio/data
+   0.002 Write data path: C:/Users/Admin/Documents/ChatGPT/Tech priests/_merge-proof/broker-final-skins/default/user-data [111153/1906722MB]
+   0.002 Binaries path: C:/Program Files (x86)/Steam/steamapps/common/Factorio/bin
+   0.008 System info: [CPU: Intel(R) Core(TM) i7-14700K, 28 cores, RAM: 21286/32526 MB, page: 31906/43790 MB, virtual: 4299/134217727 MB, extended virtual: 0 MB]
+   0.045 Running in headless mode
+   0.045 Audio is disabled
+   0.047 Info ModManager.cpp:455: FeatureFlag: 
+   0.049 Loading mod settings tech-priests 0.1.687 (settings.lua)
+   0.059 Loading mod settings tech-priests 0.1.687 (settings-final-fixes.lua)
+   0.061 Loading mod core 0.0.0 (data.lua)
+   0.075 Loading mod base 2.1.24 (data.lua)
+   0.334 Loading mod tech-priests 0.1.687 (data.lua)
+   0.345 Loading mod base 2.1.24 (data-updates.lua)
+   0.351 Loading mod tech-priests 0.1.687 (data-final-fixes.lua)
+   0.396 Checksum for core: 3668028660
+   0.396 Checksum of base: 3864816957
+   0.396 Checksum of tech-priests: 555703316
+   0.519 Prototype list checksum: 224416930
+   0.542 Info PlayerData.cpp:566: Cloud player-data.json unavailable
+   0.542 Info PlayerData.cpp:582: Local player-data.json unavailable
+   0.545 Info GlobalContext.cpp:1347: Resetting config.
+   0.545 Factorio initialised
+   0.546 Info Create.cpp:32: Creating new map C:\Users\Admin\Documents\ChatGPT\Tech priests\_merge-proof\broker-final-skins\default\test.zip
+   0.553 Blueprint storage "blueprint-storage-2.dat" was not found, trying to load previous version storage "blueprint-storage.dat"
+   1.211 Loading level.dat: 539588 bytes.
+   1.211 Info Scenario.cpp:152: Map version 2.1.24-1
+   1.218 Blueprint storage "blueprint-storage-2.dat" was not found, trying to load previous version storage "blueprint-storage.dat"
+   1.225 Checksum for script __level__/control.lua: 3368906707
+   1.277 Checksum for script __tech-priests__/control.lua: 1236927827
+   1.282 Script @__tech-priests__/fixture.lua:47: [TP-SKINS-TEST] INITIALIZED ranks=5 native_units=10
+Done.
+   1.449 Goodbye

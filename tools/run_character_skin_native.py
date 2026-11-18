@@ -15,6 +15,7 @@ def main():
  p.add_argument('--full',action='store_true',help='Load the complete source mod rather than the isolated prototype fixture')
  p.add_argument('--output-root',type=Path,default=ROOT/'build/character-skins-native')
  p.add_argument('--headless-only',action='store_true',help='Validate data and native player behavior without graphical capture/reload')
+ p.add_argument('--configuration-reload',action='store_true',help='Also verify configuration migration in a separate native process')
  p.add_argument('--factorio',type=Path,default=Path(r'C:\Program Files (x86)\Steam\steamapps\common\Factorio\bin\x64\factorio.exe'))
  a=p.parse_args()
  out=a.output_root/('full-'+a.case if a.full else a.case)
@@ -31,7 +32,7 @@ def main():
       except PermissionError:shutil.copy2(path,dest)
     else:shutil.copy2(path,dest)
  files=['shared/character_skin_catalog.lua','shared/combat_roster_catalog.lua','prototypes/character_skins.lua','prototypes/character_skin_settings.lua',
-        'scripts/core/character_visuals.lua','scripts/core/character_skin_picker.lua',
+        'scripts/core/runtime_tick_broker.lua','scripts/core/character_visuals.lua','scripts/core/character_skin_picker.lua',
         'scripts/core/character_skin_transfer.lua','scripts/core/runtime_event_registry.lua',
         'locale/en/character-skins.cfg','THIRD-PARTY-NOTICES-GLADIUS.txt']
  for relative in files:
@@ -131,6 +132,14 @@ data:extend(definitions)
  if result.returncode or 'isolated handler failure' in reload or '[TP-SKINS-TEST] RELOAD_PASS ' not in reload:
   print(reload[-6500:]);return 1
  print('PASS separate-process native save/reload')
+ if a.configuration_reload:
+  metadata=mod/'info.json';info=json.loads(metadata.read_text());version=info['version'].split('.');version[-1]=str(int(version[-1])+1);info['version']='.'.join(version);metadata.write_text(json.dumps(info))
+  with (out/'configuration-reload.log').open('w') as handle:
+   result=subprocess.run(common+['--test-save',str(saved.resolve()),'--test-ticks','60'],stdout=handle,stderr=subprocess.STDOUT,timeout=180)
+  text=(out/'configuration-reload.log').read_text(errors='replace')
+  if result.returncode or 'isolated handler failure' in text or '[TP-SKIN-BROKER] CONFIG_PASS ' not in text:
+   print(text[-8000:]);return 1
+  print('PASS separate-process configuration reload and stable broker service count')
  return 0
 
 if __name__=='__main__':raise SystemExit(main())

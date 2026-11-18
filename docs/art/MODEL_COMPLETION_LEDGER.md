@@ -1,3 +1,26 @@
+## Local-only authored content synchronized to main — 2026-11-18
+
+All 69 indexed local-only records are now preserved on main. The 68 ready records
+have runtime integrations: 22 structure/infrastructure families, two fusion drives,
+15 priest/character skins, 25 weapon/supply icons and four factory/material icons.
+Thetazine V06 is an editable animated source and study; V04 remains active.
+Original unfinished combat actor/AAI work is retained unenabled under `wip/`.
+
+Focused shared-file edits preserve canonical event ownership, orbital visuals,
+Emergency Assembler V07, Miner V25, Condenser V24 and other current-main content.
+Character presentation uses the named five-tick broker service with a bounded
+dormant exception; unrelated broker and co-scheduled registry work stays asleep.
+Existing legacy raw-handler behavior is preserved and measured separately.
+Fresh combined Factorio 2.1.24 checks passed full data/load, native skin and factory
+rendering/behavior, infrastructure lifecycle, four-drive flight and save/reload.
+The drive autosave matched uninterrupted state exactly; 99 original armory/factory
+prototypes compared without differences. All 5,843 tested runtime files are bound
+in the retained combined proofs. Specific technical verification and final owner
+visual acceptance remain separate. No package version or release workflow changed.
+
+See `docs/art/local-content-20261118/index.json` for all 69 dispositions and exact
+source/runtime refs; `merge-validation.json` and `native-combined/` retain evidence.
+
 ## Emergency Assembler V07 source and native integration — 2026-11-17
 
 The exact owner-supplied V07 animated Blender scene is archived unchanged at

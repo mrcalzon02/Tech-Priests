@@ -2272,3 +2272,26 @@ tech-priests_src/graphics/entity/emergency-assembler-v07/* -text whitespace=cr-a
 "tech-priests_src/scripts/core/runtime_tick_broker.lua" -text whitespace=cr-at-eol
 "tech-priests_src/scripts/core/efficiency_economy_0595.lua" -text whitespace=cr-at-eol
 "tech-priests_src/scripts/core/runtime_event_registry.lua" -text whitespace=cr-at-eol
+
+# Configuration-reload and baseline comparison proof.
+"docs/art/local-content-20261118/broker-supplement/raw5-baseline-create.log" -text -whitespace
+"docs/art/local-content-20261118/broker-supplement/raw5-baseline-native.log" -text -whitespace
+"docs/art/local-content-20261118/broker-supplement/raw5-baseline.json" -text whitespace=cr-at-eol
+"docs/art/local-content-20261118/broker-supplement/raw5-revised-create.log" -text -whitespace
+"docs/art/local-content-20261118/broker-supplement/raw5-revised-native.log" -text -whitespace
+"docs/art/local-content-20261118/broker-supplement/raw5-revised.json" -text whitespace=cr-at-eol
+"docs/art/local-content-20261118/broker-supplement/skins-create.log" -text -whitespace
+"docs/art/local-content-20261118/broker-supplement/skins-native-player.log" -text -whitespace
+"docs/art/local-content-20261118/broker-supplement/skins-graphical.log" -text -whitespace
+"docs/art/local-content-20261118/broker-supplement/skins-reload.log" -text -whitespace
+"docs/art/local-content-20261118/broker-supplement/skins-configuration-reload.log" -text -whitespace
+"docs/art/local-content-20261118/broker-supplement/skins-result.json" -text whitespace=cr-at-eol
+"docs/art/local-content-20261118/broker-supplement/skins-native-picker.png" -text whitespace=cr-at-eol
+"docs/art/local-content-20261118/broker-supplement/skins-native-ranks.png" -text whitespace=cr-at-eol
+"docs/art/local-content-20261118/broker-supplement/isolated-create.log" -text -whitespace
+"docs/art/local-content-20261118/broker-supplement/isolated-native-player.log" -text -whitespace
+"docs/art/local-content-20261118/broker-supplement/isolated-skins-result.json" -text whitespace=cr-at-eol
+"tools/run_character_skin_native.py" -text whitespace=cr-at-eol
+"tests/scenarios/character-skins/fixture.lua" -text whitespace=cr-at-eol
+"docs/art/local-content-20261118/broker-supplement/result.json" -text whitespace=cr-at-eol
+"docs/art/local-content-20261118/broker-supplement/README.md" -text whitespace=cr-at-eol

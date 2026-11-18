@@ -1,0 +1,2689 @@
+{
+  "status": "PASS",
+  "base": "65df59078652022e71df89931772a89158dd2ad5",
+  "runtime_commit": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+  "unique_bindings": 383,
+  "verified": [
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/conclave-center/v08-martian-central-emblem/conclave-center-v08.blend",
+      "git_blob": "d146dc5ab6d9861c8c5f7a34d8e6f4895a54a8b7",
+      "sha256": "39c74555ccc30ea25683985a14dc743c848563a32f3ad5b52795e283bcab3436",
+      "bytes": 19654537
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/conclave-center/v08-martian-central-emblem/conclave-center-v08.glb",
+      "git_blob": "ccb6fc84ebc8af4d6da739709e8252eb307b037a",
+      "sha256": "d09646f59b3982ea4fbf1d3fbbad4818c317aed4bdd537b0efc96870fcf9d3d6",
+      "bytes": 38770788
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/conclave-center/v08-martian-central-emblem/central-emblem.json",
+      "git_blob": "9cbc04c1ea523f118f37b9c9194b2b01c4fd2a5e",
+      "sha256": "faa0171dd2e7734aa16aeb175e6a7158ea6ca7e5fb9cec99cd777f714475bfe5",
+      "bytes": 5639
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/conclave-center/v08-martian-central-emblem/inspection.json",
+      "git_blob": "8fe4b4d1e068dd2e645b9c930f87f05536750ec7",
+      "sha256": "183c02bdf3842a7aae69b3f4a7c4ad92e1dd0839caba0c720ab18a68f55cd037",
+      "bytes": 369544
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/conclave-center/v08-martian-central-emblem/independent-motion-audit.json",
+      "git_blob": "d837b83bc26d3a06e657d48e61c82ca120ec10cb",
+      "sha256": "9ecdd22d30910440ef08df27c410939a28c6aa78dd3f6a38e9890446c624387a",
+      "bytes": 12546
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/conclave-center/v08-martian-central-emblem/native-evidence/native-review.json",
+      "git_blob": "301876f71cfadb543cb9a893e5718fea728cd3b1",
+      "sha256": "9b623be6cb63d512877c2c0e0ca66aacf95681299abae39f33137a816b97a86d",
+      "bytes": 3143
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/conclave-center/v08-martian-central-emblem/approved-integration-evidence/layout-validation.json",
+      "git_blob": "251dfec22063bdb4092fbc455a91baf62dbe3b74",
+      "sha256": "1113762c18f90651097560f5d6fc3391b147704a49432d04a6a472c848cc5ac0",
+      "bytes": 15559
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/conclave-center/v08-martian-central-emblem/integration.json",
+      "git_blob": "cec9532a1cfe3c5a18d2c5c79f8f58df99687945",
+      "sha256": "c0d965f5c0d7e3d19c348291b92b6b3c4167fc12f1bd83693356a0cb8864dc1e",
+      "bytes": 1054
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/conclave-center/v08-martian-central-emblem/owner-approval.json",
+      "git_blob": "75c80818bb24c740e69d5884418174e5c18e9563",
+      "sha256": "ae200c89fafef67f6114dc8becb9b50e5a77b876b2004ea0d332134305fc966b",
+      "bytes": 611
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "docs/art/local-content-20261118/merge-validation.json",
+      "git_blob": "98786fab33393648199be85699d44c78e4758657",
+      "sha256": "19265efbb50070d3da10479f0c7ec14a4ba952995d92f9e5d090c772c19bceaf",
+      "bytes": 4950
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/prototypes/conclave_center_0558.lua",
+      "git_blob": "41910a073ccc3c0fc64606a20dc3c7b934617f51",
+      "sha256": "2228cdcc4073d69dbf7bf6c1607fb5d7f463c0b9c0320e206801a3ad47b2cb7e",
+      "bytes": 5995
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/conclave-center-v08/ambient-effects.png",
+      "git_blob": "4fc5be489a1c76ea46777cbe3a9250b4e7f8caf6",
+      "sha256": "c81b60683e271da744adb5e597c76356f8c186afecd4932e595a7c327d3df201",
+      "bytes": 13203044
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/conclave-center-v08/ambient-light.png",
+      "git_blob": "7596f711f4e25bbf23aa359c958fcefb23f4bf95",
+      "sha256": "6d37c1d3f982e15b1236e71f81f2ab0d1ad9dec4480840fc766b1430f60ef084",
+      "bytes": 2583953
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/conclave-center-v08/icon.png",
+      "git_blob": "a733539f91ae631c2a471698433e9666173f1248",
+      "sha256": "389733e8df4f375a2cf239ba9e9a3fb34e6dd87cfa0c55195981e09e51c80b2a",
+      "bytes": 25336
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/conclave-center-v08/placement-base.png",
+      "git_blob": "3a61ff373b0cf152b2774f244ef638fc4d97970a",
+      "sha256": "3e53acf2b2a95fdaf0b6f98f8c84c1a3e49ffa3da4e625a38bf39b46a0d35629",
+      "bytes": 284641
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/conclave-center-v08/shadow.png",
+      "git_blob": "9f2e245cd07490dea7f37f9d6e7e8a589ae57b96",
+      "sha256": "834d620af01c33a7edbae5e80943c4fc9504a433232e0103920bd75eff24ec1e",
+      "bytes": 126454
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/martian-stone-cache/v01/martian-stone-cache-v01.blend",
+      "git_blob": "a5b7dde46b0fca750d059423b04d51fc552361dd",
+      "sha256": "66655f50c8f16ceb0bd71c8f5bfb07abaa74daf029a1b948e1c3425fd1c1968e",
+      "bytes": 26511446
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/martian-stone-cache/v01/martian-stone-cache-v01.glb",
+      "git_blob": "84b123ab00399efccad57986ce3d8e9f836e46bb",
+      "sha256": "bbd711c07bfbb8517e91d1d46a00683c430c099b316cbd7ec7c45efc9055ab0d",
+      "bytes": 28492700
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/martian-stone-cache/v01/contract.json",
+      "git_blob": "961ee3b7a414303a3236b0a6ce21e0ef942aeca3",
+      "sha256": "5e5f907d6009db573ff218b92c9ab0f5e591b9e47b212f13bfc5af0aa54b76e0",
+      "bytes": 10926
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/martian-stone-cache/v01/inspection.json",
+      "git_blob": "c58f56a2121c04f4135ddd6174650e07b4d4c964",
+      "sha256": "69de596977be89c2aa732a88f104b3c98411d7c2c80bfdccca6ff85316d44e16",
+      "bytes": 57741
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/martian-stone-cache/v01/wall-and-tie-audit.json",
+      "git_blob": "add2749befe559cadf7b6d012e8993b045772436",
+      "sha256": "91a24984be591da970e3decdf1b0060952efc3403a5290c03e11ab4e9a6c2e58",
+      "bytes": 28524
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/martian-stone-cache/v01/native-evidence/review.json",
+      "git_blob": "2e1044c74d36ed8948c00b02825141591e893660",
+      "sha256": "04c07074994b21d533d1e23201ff5b170c7f6242354ad4b332e485bc875db369",
+      "bytes": 3713
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/martian-stone-cache/v01/integration.json",
+      "git_blob": "767435304c5d0dd1b22d79109c67717a3ef98017",
+      "sha256": "26690981216c373a5647c0ffff8a2931038486493ccb712e0c7e843110e6998a",
+      "bytes": 800
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/martian-stone-cache/v01/visual-review.json",
+      "git_blob": "2e555ac1b522da98e9a38fe360a4915e07111daa",
+      "sha256": "26e1ab8c4982e5c69737c4797b91cfcdf2b8c70c51219ae33445ad04eebb5537",
+      "bytes": 1920
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/prototypes/martian_stone_cache.lua",
+      "git_blob": "888548371e33940d3005009995e23125f427c44b",
+      "sha256": "39479248ceb0644c34e398092ce91e5e57e5ccadabd905b4886d23fe8784ee71",
+      "bytes": 36010
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/martian-stone-cache-v01/body.png",
+      "git_blob": "87c92a69f4857e80b83ae1a1310e12529d80087d",
+      "sha256": "6f5b204dbe4a1902ee735146e74ad6bdf9208a438cdfdc4838f4b8ef9c96014f",
+      "bytes": 219925
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/martian-stone-cache-v01/icon.png",
+      "git_blob": "87ff74371e32f3624e080a242227a387eb29f263",
+      "sha256": "c9613c063db09f516abe2fe63a6471156826007c0ebad992242001a5b4fbbe83",
+      "bytes": 7942
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/martian-stone-cache-v01/shadow.png",
+      "git_blob": "958ca3d0019f5c2be2b3d25f328450e425ae4d0b",
+      "sha256": "6727e2701c7e7a862d793c0f3888786e3cc09a6cbdba5586c506af949d07f4b0",
+      "bytes": 75805
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/item-vault/v01/item-vault-v01.blend",
+      "git_blob": "0296eff32227547ef4b5a52100104b5e802a5566",
+      "sha256": "370f65a287b78427f13d3128c5e7796fe644ee30a259bab5b28ca83272f2ee62",
+      "bytes": 29905772
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/item-vault/v01/item-vault-v01.glb",
+      "git_blob": "c5a4ef7a385447f5b583e2f70058555e5616f5c7",
+      "sha256": "6a4a0b2bf8dd50715aab260cd7f8ebdb4046ef129961460fd3e371ca6f244ada",
+      "bytes": 24177244
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/item-vault/v01/contract.json",
+      "git_blob": "2521676a36e8345286c3482c8bc11660fc5c60bf",
+      "sha256": "aeeff9b452d669a3008e16b6eeb87ad6764058f9401e00ecfd4daebf7df039e0",
+      "bytes": 11089
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/item-vault/v01/construction.json",
+      "git_blob": "5a746c10f1582122d48e58906a2debd40095e781",
+      "sha256": "0daf5c6c1ed700460bb51a9e6628f4a3ff94b4d28fd9f2815aa8351efd3f4aa9",
+      "bytes": 34601
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/item-vault/v01/inspection.json",
+      "git_blob": "26865669ff2599900f4e297c5c08ff5785cf3af4",
+      "sha256": "6038454961fb2e009d0054870f271ac4b30b4694880f6ebeb16e4cc00bb966e3",
+      "bytes": 51674
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/item-vault/v01/seat-audit.json",
+      "git_blob": "8fd433353ece412feb51528da0480c4d2ea7278d",
+      "sha256": "3e54c2de8a1cbd063fd517308b97076f1c3fdadaa8160f923dd4df5b90fd4b75",
+      "bytes": 10474
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/item-vault/v01/native-evidence/review.json",
+      "git_blob": "9efeeddee4b375c6b13b7951f476e3226a79e480",
+      "sha256": "57529e053c09607e247970e7642cfcb4b2913ae51b9aed01c42e2c668c7fa900",
+      "bytes": 3819
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/item-vault/v01/integration.json",
+      "git_blob": "c7dcfc7dd8accf2b1297fce7abe08cab5ec4b3f6",
+      "sha256": "9dbca85c2a23df21c376be8494225ca17be28db84d7ddb7860a52c520ce7ad31",
+      "bytes": 781
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/item-vault/v01/visual-review.json",
+      "git_blob": "56dd80e08b816a4a11c311e67630370d74bc7a51",
+      "sha256": "f46f52519ae5abbd0957c11977b8d437b5e0587874fe5fe8e7ecd8ca9dd04c0f",
+      "bytes": 1969
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/item-vault-v01/body.png",
+      "git_blob": "477e7be33cf67316967fe649e9404635c70cef4f",
+      "sha256": "e95f491a5910694d591388a2d5e40ce1165a6af0e9084c914045985629a97104",
+      "bytes": 210548
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/item-vault-v01/icon.png",
+      "git_blob": "19dab084ed5e8c0b4cb3dbfce70e6e56382c4801",
+      "sha256": "1ad228d6957f050c031fe53a85be464aae45211f0c8ad699bcdeb9209a76dbad",
+      "bytes": 7874
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/item-vault-v01/shadow.png",
+      "git_blob": "93e50fd1bb33d1becf736704d1dd18b90a74983a",
+      "sha256": "a1d30450c20dd63fd8de76f1791abc58414e9c55585c0b31a6569cc30394628d",
+      "bytes": 75792
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/primitive-battery-bank/v01/primitive-battery-bank-v01.blend",
+      "git_blob": "6c12c507dd3348fa7088d60e89414b9b79088ae2",
+      "sha256": "84ac195d708b4fbea5d5306acec9eaaa7d1d2682a22c96665ab14aef6843b407",
+      "bytes": 35169748
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/primitive-battery-bank/v01/primitive-battery-bank-v01.glb",
+      "git_blob": "ad6e959ab6d331efc198dc964341bbb6ccbe8ebd",
+      "sha256": "8e68144d0caeeacf612f6d890096f7f92441903c8e837c5f728c6cc756e9204b",
+      "bytes": 30094016
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/primitive-battery-bank/v01/contract.json",
+      "git_blob": "3e71f64c72f5d6078cf33120aa3a40b9a5002b51",
+      "sha256": "0771bec23d8382ef497d34207bf37dd9195a7957ce1039f7d5d0f46aed50a508",
+      "bytes": 14299
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/primitive-battery-bank/v01/construction.json",
+      "git_blob": "18f1d5471b772db9fa5fd715408146448dbc75a8",
+      "sha256": "ab3960815ba754b13ccdfadc26286c2ce08d79f5a69f974d73ed28c8eba533c6",
+      "bytes": 25629
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/primitive-battery-bank/v01/inspection.json",
+      "git_blob": "0b8a24f6892bca6da70f2dc86762d703e4f189c9",
+      "sha256": "f70a3167a49691ff73fa0e2daac7efc50fe165ea16de892cf63207ba26fddc9f",
+      "bytes": 74862
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/primitive-battery-bank/v01/route-audit.json",
+      "git_blob": "e1c4bb981840c0f21032c871ecc3ed89e6ad4f51",
+      "sha256": "48946a11968a4702e623710d91cfffabd821f42bd825f310ada61cab33a70a75",
+      "bytes": 3304
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/primitive-battery-bank/v01/native-evidence/review.json",
+      "git_blob": "cb8252dc525f27cfe7d2e762283e20320542d385",
+      "sha256": "afd5121ac90622c3c7c4c9d8e0bd2e7c79d0d8945cf7581dd089daf1a7edfdc8",
+      "bytes": 14568
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/primitive-battery-bank/v01/FMPL_MODEL.json",
+      "git_blob": "e409df76bd0eef8be3329862e942bdf345a4c9af",
+      "sha256": "9b4939546a992335017345ed8c0b495f31f51772aea56acf25c820c093d170d3",
+      "bytes": 1246
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/primitive-battery-bank/v01/integration.json",
+      "git_blob": "a72e164a7f631d4e87c2125449829913b7226d61",
+      "sha256": "a2f186973c45e73b5892b0480b2761de4e9e2e44dfa32509f7cc34baf0145fb4",
+      "bytes": 1119
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/primitive-battery-bank/v01/visual-review.json",
+      "git_blob": "cfb8e391c9113b20d2556b15fdf305ccfd5a1818",
+      "sha256": "79dac3a50bdcf23a310d410146502bc0426345dc578c0cdd18b1c9305dfddd69",
+      "bytes": 1949
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/primitive-battery-bank-v01/body.png",
+      "git_blob": "66447259a7ce90c9c2d6ccdc01133b952c223f49",
+      "sha256": "7611a5361e81489728ba5e4ed7e3e0dbc5a59d7e1a6aff0d696b140dabd5ff21",
+      "bytes": 216503
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/primitive-battery-bank-v01/charge.png",
+      "git_blob": "6d0add855e0ad0c5617dfc08bc26e5595e71c69f",
+      "sha256": "5dd251a89da879a273fd9f15ed5fc33545fd4df1271a41b262ac08d125fffeba",
+      "bytes": 130293
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/primitive-battery-bank-v01/discharge.png",
+      "git_blob": "8aad1f34df38ff54e08a4deb4e0ce354ad4c0002",
+      "sha256": "14f333d81974adcacf3c27b3746b6d34ccc95538539af7230d046a11204427b4",
+      "bytes": 130547
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/primitive-battery-bank-v01/icon.png",
+      "git_blob": "6368d863326bb0b57138b13e80ea369f469259b3",
+      "sha256": "338fb7e363097da63a3f0db133522100123a2259aa06b2de441de4158ab73904",
+      "bytes": 8230
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/primitive-battery-bank-v01/shadow.png",
+      "git_blob": "ef3e708edc9fb9ed711af5cfcd17d0598acbda6a",
+      "sha256": "367da1ae109768ed1a96529d4c986080f6cc5e34ec62dee5be05db7e35c19904",
+      "bytes": 79996
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/pressurized-fluid-vault/v01/pressurized-fluid-vault-v01.blend",
+      "git_blob": "f5526a8173011233882ab6c4031fb24d8ac606b9",
+      "sha256": "8594eba97100ac8ed558d88317200d6102576da6538d6af73e05957a06a8513a",
+      "bytes": 35027337
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/pressurized-fluid-vault/v01/pressurized-fluid-vault-v01.glb",
+      "git_blob": "9432dd4c5653c706cdfd872d11565a9b5717f2ed",
+      "sha256": "3c7f49f18b337eb7d649482ec2ec9eefb6763a06989dd0b13d500342f82a826d",
+      "bytes": 30378196
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/pressurized-fluid-vault/v01/contract.json",
+      "git_blob": "ebab51d615c0a66de1a7e234c5af2315b75cddd0",
+      "sha256": "52003ebb04641cd278993a30b43ce03324d16a018c1a58cb62943243c1f71564",
+      "bytes": 22567
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/pressurized-fluid-vault/v01/native-preflight.json",
+      "git_blob": "ef74297e146fa9e0c8ebf39922c346a0c2ea23c9",
+      "sha256": "070c12c5030e9dd3701cecda92489b40155d9ac96559cfaaa1300af66630f5b6",
+      "bytes": 784
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/pressurized-fluid-vault/v01/inspection.json",
+      "git_blob": "a12d33eed45bc844f7d48db626682a2db4c99137",
+      "sha256": "5e232e1217dbb4e62eea5f610d8fcb3592eb7e085c5ef2d9382f17ac33d8dbaf",
+      "bytes": 63773
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/pressurized-fluid-vault/v01/port-audit.json",
+      "git_blob": "7e0a17405be1f56cb60aaf2d0e19e6e4d57517b5",
+      "sha256": "f009efbb599c794753abf0c525e6c348fbc72465695a809f6cf180198eb1b648",
+      "bytes": 10345
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/pressurized-fluid-vault/v01/integration.json",
+      "git_blob": "d6b17bb6e81d6e732619854ec5b72e2792ec7fd3",
+      "sha256": "5dfd56671e07c62dfa59bc0a314c1462dc80096411fbc6854e2dc450ab2db2e7",
+      "bytes": 4166
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/pressurized-fluid-vault/v01/native-evidence/review.json",
+      "git_blob": "116242f3ebba51fe128849b3af4a1ff2a3c9e4e0",
+      "sha256": "a54a1fd412514a6359cddc53940bd584dc12f8ae50cfd55e9f8e74d418a1cb54",
+      "bytes": 18388
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/pressurized-fluid-vault/v01/FMPL_MODEL.json",
+      "git_blob": "19fdc7b5f022fd72906584d0bbf0ada0c43e6ca1",
+      "sha256": "6f3dfef374c34ae8baba7cb5c395edb2280f835ed6df3d93de1f9cae6e85893e",
+      "bytes": 1600
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/pressurized-fluid-vault/v01/visual-review.json",
+      "git_blob": "f2c168c2e177ad6ea071e7c2ae475eb00aa40b5c",
+      "sha256": "9e2c9f8a8d5da47c3fc9a81b322acabfcfa77003b1c2f7852647f4c5e4e34abb",
+      "bytes": 2406
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/pressurized-fluid-vault-v01/east-shadow.png",
+      "git_blob": "13d358a0e0b89a91dd05df490e3613cafce0475b",
+      "sha256": "5c85aed96366f422babdac2a45038692a7ae8ea7bc30bfaa066406e39b51fbdc",
+      "bytes": 81389
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/pressurized-fluid-vault-v01/east.png",
+      "git_blob": "b47326fc1c1f99657f11ab46cfe3034b0ab6da57",
+      "sha256": "cf76584166b5b29660306a1abebd8f62afc9d416d652f2b807951b9e0392fbe2",
+      "bytes": 203186
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/pressurized-fluid-vault-v01/icon.png",
+      "git_blob": "a33726234b51efdae0088a75b14586703c75f5ff",
+      "sha256": "fd4df39044b1b914907f3476684656b92028578c8fb6343f411a9d5d4c5dd610",
+      "bytes": 6638
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/pressurized-fluid-vault-v01/north-shadow.png",
+      "git_blob": "e3fb0c62211dc8ee66d45a698995c19045d83c1e",
+      "sha256": "4868768b920f592ded3d7b332544afea0cab27e6c690b3560138e30cb2324ee8",
+      "bytes": 90651
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/pressurized-fluid-vault-v01/north.png",
+      "git_blob": "7b672450fa3b71c9b8bd94eca614e0129820c408",
+      "sha256": "7fb23107fe73d43ef1625a60e44f5286b3c7fb99bc38f74f11941455c46abc39",
+      "bytes": 212189
+    },
+    {
+      "ref": "65df59078652022e71df89931772a89158dd2ad5",
+      "path": "art/source-to-3d/space-cargo-inventories/v01/basic/basic-space-cargo-v01.blend",
+      "git_blob": "abb9bc3b7e3a904c8ec37fdc4e9693c0fc9530ac",
+      "sha256": "e8b0dbe39f95808792e10009ec940edf7a2d47b244d418911ae7b94dcad4d7cb",
+      "bytes": 43718769
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/space-cargo-inventories/v01/basic/basic-space-cargo-v01.glb",
+      "git_blob": "4683476532be2f8f2340c6fcad580f6b6d924c3f",
+      "sha256": "33257eefc64739e3cffec01890dd42a3c44b172b902cacdff5f7c19de8690efa",
+      "bytes": 19084876
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/space-cargo-inventories/v01/basic/contract.json",
+      "git_blob": "22991ab97c4d20322da7a7f858432c167710c68e",
+      "sha256": "d1b2f8e043b8ee42fea088fe7b8f73e0c92ebfdd2d07c036eab5b3e4b1736d74",
+      "bytes": 10763
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/space-cargo-inventories/v01/basic/inspection.json",
+      "git_blob": "53425ac764e376d0e5cdbbc9da3b1857f7dc19cc",
+      "sha256": "92d5a9bebced8b60f406487ec97a86e658cee44f302addd64642fddcc39ce304",
+      "bytes": 117181
+    },
+    {
+      "ref": "65df59078652022e71df89931772a89158dd2ad5",
+      "path": "art/source-to-3d/space-cargo-inventories/v01/basic/occlusion.json",
+      "git_blob": "420aecad34ec704ebb641f09e5d5658763a59527",
+      "sha256": "86a280c850e38c6289b290702f8dd22cde66c49e7e31b7c7ec826d6437c02a6f",
+      "bytes": 1155
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/space-cargo-inventories/v01/basic/integration.json",
+      "git_blob": "5bc3914bb6c8007a790d161e54de5867767757cf",
+      "sha256": "eb2316b557e3aeec6b2a0294c392bd9fba612bf09cba211488c8b58d411549a6",
+      "bytes": 4604
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/space-cargo-inventories/v01/basic/native-evidence/review.json",
+      "git_blob": "f93355c639e50ec0d99fd58804b74e7df10e68dc",
+      "sha256": "566d161986aed0c3f62f36234f6a1448f1a0173d181d5958c554bfba4f54c56d",
+      "bytes": 7917
+    },
+    {
+      "ref": "65df59078652022e71df89931772a89158dd2ad5",
+      "path": "art/source-to-3d/space-cargo-inventories/v01/basic/owner-approval.json",
+      "git_blob": "539b3ae68cff227f5c2c571d5cf558728008225b",
+      "sha256": "807f2b9718b74e1a974be808a267da5e06d77ae897b4178f1c729c3f1364d379",
+      "bytes": 773
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/space-cargo-inventories/v01/basic/visual-review.json",
+      "git_blob": "9014983393ea0ca6283ad2712f0ce15299818736",
+      "sha256": "4a18d95ee24475f169b8c8b5597cfd5e717d5fb01faa3742fe8f762bc02a1fd3",
+      "bytes": 4941
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/basic-space-cargo-v01/body-d0.png",
+      "git_blob": "65c492557d093a2bc0f5cd96e377a05974f5ee4f",
+      "sha256": "0f564e1106e4e19d8aad6a92431555caea700e058a78b647d4a761c3e2dd4828",
+      "bytes": 530320
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/basic-space-cargo-v01/body-d1.png",
+      "git_blob": "ec8badcdce52569ef719a7c9444622e84c65e22e",
+      "sha256": "70ff71a9e802d3ac05871691ead05f75fe6ff7835a9e0804c4d5368d3fb8af34",
+      "bytes": 600775
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/basic-space-cargo-v01/body-d2.png",
+      "git_blob": "b4ad8073837f17d8fc711024f610da5e12d3dc6b",
+      "sha256": "bf51df5f99d70adb3ef4c3e52ba8086c814acfb4f6cd37844dd2e157ab51d4f3",
+      "bytes": 524281
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/basic-space-cargo-v01/body-d3.png",
+      "git_blob": "1d93ba5964785773395c23fb7a41664c8c9cce5c",
+      "sha256": "5ecadd033c2d66119b6ad63df5cb3b7d1870c5d1bb13b6379ddc724e3d56ef06",
+      "bytes": 597078
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/basic-space-cargo-v01/body.png",
+      "git_blob": "941c070a0d83ab552f99bd032f22dc5cbbb70dc2",
+      "sha256": "cc13f2ff36cefdf4c4fd2415a32727fb6ea4af786b6b46fc03d31986ac8c59ae",
+      "bytes": 506825
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/basic-space-cargo-v01/icon.png",
+      "git_blob": "d1e6f0aab2f7b825ac4e52a7771393c007844636",
+      "sha256": "8509bab6c6cb202c2ee1d1d78310bf9d653de17e3868e80b4a0c883780fff63b",
+      "bytes": 4853
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/basic-space-cargo-v01/shadow-d0.png",
+      "git_blob": "f7a83c39432cec936774f00c13b48f0d536f40a1",
+      "sha256": "91eaf94adc2da71c11e0bc054c135f0a41b8452e37fc60aedc7ac6cc70ff8a62",
+      "bytes": 279609
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/basic-space-cargo-v01/shadow-d1.png",
+      "git_blob": "65e33d925b1b98bfdb9d592cab971588936d56e7",
+      "sha256": "0be4b9ee191aad8913032e2c039956b8edbc7c69796a55f02b7809d218b23a5a",
+      "bytes": 323783
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/basic-space-cargo-v01/shadow-d2.png",
+      "git_blob": "4c74b1347b02f3fabb2ea6e520edc0fb9030b88f",
+      "sha256": "f9672f9e7d1a1f8f50ecb61bd30b99108cf9061c0f4a0d086dc2354846fbc005",
+      "bytes": 279569
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/basic-space-cargo-v01/shadow-d3.png",
+      "git_blob": "a5861add2dff8d0514ed12b0c0dc29244c22d96f",
+      "sha256": "331e66c4f107762ed9fe9e5d22aaca0fb69fdff8097a6bb0faa1f01a93aef288",
+      "bytes": 323873
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/basic-space-cargo-v01/shadow.png",
+      "git_blob": "fe1cd89f9572598cc4cfb011eb57b1a8b82d1f2f",
+      "sha256": "1b67ccbbcf749d4d503c99488b69bf30c5a0f664dc7b9d320b63bb1d80bb353c",
+      "bytes": 279321
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/coal/filtered-cache-coal-v01.blend",
+      "git_blob": "eec56f49b9bab91a27b43805b1e0520c89f8e48e",
+      "sha256": "ff41c79bbf144e3dbc09ea32712de3109f243def45d500c8ae3ac1be9b0f5405",
+      "bytes": 41231019
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/coal/filtered-cache-coal-v01.glb",
+      "git_blob": "881eaf3e0c2d1cfd02c2685d17025bb3045de81c",
+      "sha256": "0e01a12c5b4fe1f967f0ec5063d119b326990902e374b6af90ce401905d70097",
+      "bytes": 21104056
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/coal/contract.json",
+      "git_blob": "7c6c35cfd1b33c21436be48b9213480063036fff",
+      "sha256": "8dd562e7d1fcc4355c81a9464a519720deb9bcefd18aaa123058b80430ebe68e",
+      "bytes": 10368
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/coal/construction.json",
+      "git_blob": "214035c5e6a201068f7ddc91815dd0d97ec239e8",
+      "sha256": "a0a673a7256ce10caae439f47c8e4faa659b03ca4bb25eba5814c607ea814d7f",
+      "bytes": 1163
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/coal/inspection.json",
+      "git_blob": "2b465e52f1ffd5e46d4abeaca7832bbd4e7c1a21",
+      "sha256": "c1e5866b8d9346b5b25a0c39fe507df5f099bef5f5c9c646dcc177515b9336ec",
+      "bytes": 43253
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/coal/integration.json",
+      "git_blob": "e72bdf328a7a66cf4efaffc6904595375736ed08",
+      "sha256": "51d2e9462e6bca35e9d9ea06cf5696e082f8ca599510f9b4eedbdeb24b12c0ba",
+      "bytes": 749
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/coal/native-evidence/review.json",
+      "git_blob": "8feeb0ff144584ec7db5d071bb7da81f46577aec",
+      "sha256": "a3caa07d7d35241420e302aaf0aca90276efc9a2459358d1e4747dbdc92c2e0c",
+      "bytes": 3637
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/coal/FMPL_MODEL.json",
+      "git_blob": "2e0526c0077f4dddb30fb55b91cc86d74836776d",
+      "sha256": "d88c62c3b180300162dab5dc537542790203f19753c07eadc062626652ed007f",
+      "bytes": 1138
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/coal/visual-review.json",
+      "git_blob": "280363a98b4abd7e622ad04ccbde4ada8d18f6c5",
+      "sha256": "d30b90465c51088b6e079b6a41dfe1bcee77c60339fbabe34d37b6e0ea993262",
+      "bytes": 1730
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/filtered-stone-caches-v01/coal-body.png",
+      "git_blob": "11e8cc4caf3a2373971c2b04cef932ba5c1e3ab7",
+      "sha256": "7918085a7608c40b1d6e1aba0a0d56ab31696e5abb8f8864d2b2373caf97d239",
+      "bytes": 208631
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/filtered-stone-caches-v01/coal-icon.png",
+      "git_blob": "466c6d76183b2e40a41cb4457cbfaa7e96efc975",
+      "sha256": "eef2b2361f4b66b5619ac4edd2928fd0675331f98632330c13784b6084e25285",
+      "bytes": 7818
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/filtered-stone-caches-v01/coal-shadow.png",
+      "git_blob": "421e3e39086f397ed243b45c77e33774b3d7d052",
+      "sha256": "a5fef3bcf38c4079c7921bcd54d509e99626445012f41ddbe6f0790d74c214a2",
+      "bytes": 75813
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/filtered-stone-caches-v01/copper-cable-body.png",
+      "git_blob": "50ef04e1f1c9c9d06676dee516f44cbbfb2fe103",
+      "sha256": "cb620b3ec3fab55e26348859587c8333f9af1d3396c3c178a5068b829bb17d12",
+      "bytes": 218193
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/filtered-stone-caches-v01/copper-cable-icon.png",
+      "git_blob": "9df733e3f97a04e347ede200bbc289d823d77b7a",
+      "sha256": "5c41a286b1d3ed398222cec42bc5f68e41cea5b95bdee7d0e4fb98e4bc290cae",
+      "bytes": 7963
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/filtered-stone-caches-v01/copper-cable-shadow.png",
+      "git_blob": "2497d34870e1198dbd0ea6fdc035c1146db00e1f",
+      "sha256": "36587ec455e7bb44e486d0045de4134733004cc6251ae4d1fb62a819dea5e8b2",
+      "bytes": 75833
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/filtered-stone-caches-v01/copper-ore-body.png",
+      "git_blob": "93c0ef3bd36afcf045224d3becddb04fc5912dc0",
+      "sha256": "d47a30a7ad1c2bc2bf1eeca21297089095e87971ded5172ebce9ed4d0f84dbfd",
+      "bytes": 219729
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/filtered-stone-caches-v01/copper-ore-icon.png",
+      "git_blob": "60ae1664e1cd56e2f9b3076dc83d2180f7399d60",
+      "sha256": "af34b5dcd4a23303fb88d9696efd050c4585692a1f096bfdbbacbf8217704101",
+      "bytes": 8034
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/filtered-stone-caches-v01/copper-ore-shadow.png",
+      "git_blob": "3207d6b80004f91528f819fcbd9358bf261b916a",
+      "sha256": "2e6754345f2292856f7ce91fc74bbbd64168814c4ac567c6f50c6227d55193a9",
+      "bytes": 75825
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/filtered-stone-caches-v01/copper-plate-body.png",
+      "git_blob": "825f7c946574b67e08c3e2f8a11a29366d5c4b1c",
+      "sha256": "133fced40a7e8c25d7768a31d2fc72f881057df1bf3e597210a4aaa20cd406f0",
+      "bytes": 212023
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/filtered-stone-caches-v01/copper-plate-icon.png",
+      "git_blob": "6d25762c92f33bf613cbad4ab9b511dc1e1e014e",
+      "sha256": "ba2f4e000698fd7f57d78e6dd7d2d04871dc961907aacc7038836c094b8a4ea3",
+      "bytes": 8007
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/filtered-stone-caches-v01/copper-plate-shadow.png",
+      "git_blob": "835ae9472e40acbc782c44f6dac6b80b97920c43",
+      "sha256": "c583dfe9ebc07f5a98be98456f5ebbb4b466876bd8f6f1287d4a5d2b148635b9",
+      "bytes": 75833
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/filtered-stone-caches-v01/iron-gear-wheel-body.png",
+      "git_blob": "cb7a3e93c5620cde34dc3c2a195c93cf7a0f00a5",
+      "sha256": "0ad4c99d904ca9bc7f59fd5666dd79be831d1a9b4067b81a4c66bc5728eeb902",
+      "bytes": 210237
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/filtered-stone-caches-v01/iron-gear-wheel-icon.png",
+      "git_blob": "e9463bc6efae32131de9f88fc341bd62f49c9837",
+      "sha256": "80597936328b202e479f16a4c5c4d7c0b4bfbc02d736336e4fe77c93fe8f02c1",
+      "bytes": 7994
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/filtered-stone-caches-v01/iron-gear-wheel-shadow.png",
+      "git_blob": "d5b7e91d3625712cdf5b7d7b7d1a3ec807a4c10b",
+      "sha256": "19fb831d907a8e517214fb5666f32bf27072da2e7d7182f7e564349a11736d61",
+      "bytes": 75835
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/filtered-stone-caches-v01/iron-ore-body.png",
+      "git_blob": "6e6ba60020ab899e6f38fee536426aa6fdea0a1d",
+      "sha256": "551b5b7ae7224516595e7def5919ef2c8a5da95e53d37c66cb63cbee18722c8c",
+      "bytes": 209722
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/filtered-stone-caches-v01/iron-ore-icon.png",
+      "git_blob": "5f86e520c3179df2b8b432856e95727d37b35d6d",
+      "sha256": "23aaf4c34dc591a33645f102acebbba8ef273d9e9c2ba4e67fb67ca7fd116ebe",
+      "bytes": 7874
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/filtered-stone-caches-v01/iron-ore-shadow.png",
+      "git_blob": "2f3eb0414e8c8c3dd9b6e5bee9c8bb02d65852f5",
+      "sha256": "89892cffecbc6950e5db55fd26bd8d7df4ed4ea1819af9295b78e7706526631c",
+      "bytes": 75829
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/filtered-stone-caches-v01/iron-plate-body.png",
+      "git_blob": "9a38feb9fcc5c7b19828139e40ed31859180b605",
+      "sha256": "73d5718c8a87ea0b41c35b917373297dc5900b57347ffe3cfbdfc59d620327da",
+      "bytes": 206553
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/filtered-stone-caches-v01/iron-plate-icon.png",
+      "git_blob": "2cb79807eb5fb9966d38014aa37622145b9ce146",
+      "sha256": "54fcf6b2f2e7d55c0884054e042ebb1213f3ca943e98ba822bf552ff168fa798",
+      "bytes": 7805
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/filtered-stone-caches-v01/iron-plate-shadow.png",
+      "git_blob": "c24a1c02bb583970af96c2d45f3506b0e52287c3",
+      "sha256": "078399e0081bb05ef7816b8eff6da35c0b6b3c1cb55d8b7ea6352182696a985b",
+      "bytes": 75825
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/filtered-stone-caches-v01/iron-stick-body.png",
+      "git_blob": "3cfbc3ec2e10928a25795b94f808081b88d14342",
+      "sha256": "7f3c6ffc84f8ee7fc9e6efa49fa3b648082fc67148e925285240d890478dce98",
+      "bytes": 205511
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/filtered-stone-caches-v01/iron-stick-icon.png",
+      "git_blob": "8b37de44486dda6e7f68fb02639a4c4434dc4813",
+      "sha256": "ddb8a521924145f5564204b19fca348d19578fb47e58557baf880600114cdd80",
+      "bytes": 7733
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/filtered-stone-caches-v01/iron-stick-shadow.png",
+      "git_blob": "4e49f1deab7eb4b3349f45fcb95b11c5306f8e88",
+      "sha256": "079c0f391059a58ecf12de11e079e0dd2d23df46b86b11e8cbe0bee7b52b50a6",
+      "bytes": 75829
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/filtered-stone-caches-v01/stone-body.png",
+      "git_blob": "7e721c57fe5d1ee4a7b040b7a5429c763005551f",
+      "sha256": "e117bd1767ff7816c1cf46f30f308cd53f089c3c46217c365d2560a87b5f2c46",
+      "bytes": 209576
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/filtered-stone-caches-v01/stone-icon.png",
+      "git_blob": "043b6c15088eba5627a1c731585f2e2142ffed13",
+      "sha256": "6ec231bed29a4f57b83067b1b691c5134a8e7603c06c73ecd90c8bff225c45cc",
+      "bytes": 7780
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/filtered-stone-caches-v01/stone-shadow.png",
+      "git_blob": "92c21bf6676b64fc52086043ad6d740f3e53c749",
+      "sha256": "32c6b6a703ceec94bb0b2ccfb713b29ce4412b6264cca2892cef738f70133ca5",
+      "bytes": 75819
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/filtered-stone-caches-v01/wood-body.png",
+      "git_blob": "ee174d956a757e92697521d97f4239de0c1b74d1",
+      "sha256": "79f4c241dd84cfbdfc8a30ffc54ae2bf8c5262935eae623a40446d6d9046b895",
+      "bytes": 206592
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/filtered-stone-caches-v01/wood-icon.png",
+      "git_blob": "44f858f12b89edeca8fcf4a49ef0e7b841835a86",
+      "sha256": "9dc58bd0a11b6b2f2f88d1a5754b55db99f02e4fce0e56e53e30e5fff2e08c56",
+      "bytes": 7756
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/filtered-stone-caches-v01/wood-shadow.png",
+      "git_blob": "d77cfb7466ef27831ecbc1a1e1a8f7530e127ad5",
+      "sha256": "919208824cc83d908ebde383d59af9b8a96735326bdf09a5d0705cd27d2b4fc5",
+      "bytes": 75818
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/copper-ore/filtered-cache-copper-ore-v01.blend",
+      "git_blob": "3870ec8b272e5a5d8b4193f358a1a585c6c7d4ad",
+      "sha256": "a49e88451a24eebe7685991cd9ad4dbe15effe9cbf8a220230104e0c8e0e0b7a",
+      "bytes": 41225835
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/copper-ore/filtered-cache-copper-ore-v01.glb",
+      "git_blob": "7eadc402a4f3d24fd25c1b200abd3987d9f81495",
+      "sha256": "ceffb462b3ddfa43feba71f0590b9e921ce5845c9b8d3c9a786094ac67b33444",
+      "bytes": 22403420
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/copper-ore/contract.json",
+      "git_blob": "bfcc9ce6e3efebf89614a5888f1ad912aeeb62e7",
+      "sha256": "b81767dbeba89800a11c8aad7586cc3cf743534e57bf4693031f8b6733f202ce",
+      "bytes": 10518
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/copper-ore/construction.json",
+      "git_blob": "adef1812c0171cabf9e092308fa0e9ea1c27a64c",
+      "sha256": "b6383475ecd8478965d181bde3c9dc8f7d348ecedca330096adecc5588ea070b",
+      "bytes": 1038
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/copper-ore/inspection.json",
+      "git_blob": "849e5440507c25dc12ad4cc61dd8474d0b25b524",
+      "sha256": "913be1bd18b1d9ea204f63ab70e79659c9c27a90b814b190ec4c231379eb6002",
+      "bytes": 41592
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/copper-ore/integration.json",
+      "git_blob": "0e7f3b89845637e2af99a3007c1469538506f9a8",
+      "sha256": "fe7b5bab030d294dc942b6edf90cbdb60f26efa890814160ae5c561f5eab68bf",
+      "bytes": 773
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/copper-ore/native-evidence/review.json",
+      "git_blob": "2ce98edb533aaf3dbfc94a5a7d91a8ad51594f41",
+      "sha256": "bbb7a5a1e603eba0975b4d5038083d2b12f086287f7dead6f4844aba810152e6",
+      "bytes": 3643
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/copper-ore/FMPL_MODEL.json",
+      "git_blob": "5528a6eaeeb61c808dc7077b70b8605142b43ca8",
+      "sha256": "565ca5711e64578cedeb995338111a223519f88140c08803218de2c65f162dd7",
+      "bytes": 1174
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/copper-ore/visual-review.json",
+      "git_blob": "a52b6131a609f681a8efc8ae5715727f45ac1098",
+      "sha256": "b6161212ed50945c8c805186f9fa45bddfc7b3787d2213eb30c9ab89330e79e9",
+      "bytes": 1736
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/copper-plate/filtered-cache-copper-plate-v01.blend",
+      "git_blob": "9ed1c7f001d5275dc8d042192572090204602999",
+      "sha256": "69d11e982f2ac1035fd8d009cda8bc07326d8c8b71ceabb038719df55ee9e3de",
+      "bytes": 41235244
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/copper-plate/filtered-cache-copper-plate-v01.glb",
+      "git_blob": "46922fa7c21efa021b49668e2a7e972d68f27271",
+      "sha256": "c9d9cfec35f4764393b29a2bf95b72e84aed508426a065ba812dce9faf33a7fc",
+      "bytes": 23555656
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/copper-plate/contract.json",
+      "git_blob": "7ec7e2e0c7fd7e5d2cef285e9e7949172f482867",
+      "sha256": "3a128742635b437f1443db805331eca170dadd8d05fd960a309a3ab127600609",
+      "bytes": 10568
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/copper-plate/construction.json",
+      "git_blob": "9953dfccdec3c4d5c87fdda27b096db803431035",
+      "sha256": "54eff1d121826e82c678c0ae425d92c0c1eee9ce02204f81f014cf4054ee98c4",
+      "bytes": 1627
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/copper-plate/inspection.json",
+      "git_blob": "0c357bfae6cc568ab03bc3e4fa8afd2018c04f05",
+      "sha256": "bedc98fc5921906a48e1ad9feca71a61df4fa85fb28c1a5b5c5fde03eb50c2db",
+      "bytes": 45064
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/copper-plate/integration.json",
+      "git_blob": "fc23ecf1f5a7d77550712f3039b69b16c71b2b5f",
+      "sha256": "77a0019fa6d1d73ea766c8eb281a6bdad6eff2ec1276e2c77bc9e60b75600984",
+      "bytes": 781
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/copper-plate/native-evidence/review.json",
+      "git_blob": "4a87eb2a9b609ae7fd41831bea7bc06411bc60d5",
+      "sha256": "4c04206db44ec2acf637d5b12ef3e7736a53943d81c2acccd9690e95e895e308",
+      "bytes": 3637
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/copper-plate/FMPL_MODEL.json",
+      "git_blob": "8bae856bb96a229b3215f2ea6408477485339d74",
+      "sha256": "2d80d7a3260f1d9836b5a5f2d9e7a2171a8a396c66d222dc1c77d2941b6f54e7",
+      "bytes": 1186
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/copper-plate/visual-review.json",
+      "git_blob": "7d3bfc3d2ef20918a25bab2c5beff72c3b6dc5fa",
+      "sha256": "bc6e93212e56bb86b30320901487506c4f4a744cb0e6b6ec3db2b6406c4263e6",
+      "bytes": 1738
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/copper-cable/filtered-cache-copper-cable-v01.blend",
+      "git_blob": "92e40ca3f681e0d31e0a182b5ade019feacb8c6f",
+      "sha256": "9cad54591ca42ff523ae8db9d271dad429d716252adb28ea748070f81140654e",
+      "bytes": 41343530
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/copper-cable/filtered-cache-copper-cable-v01.glb",
+      "git_blob": "004698d958e2f97824339dc8b674d0146207923f",
+      "sha256": "9bf2910ac8194f6c76ade53ad264fd122a9aab917840eb225fc12b5cc3794f7f",
+      "bytes": 23597264
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/copper-cable/contract.json",
+      "git_blob": "21bd38a8c1e8935c1bf96a2fe1043ea8306d3ae8",
+      "sha256": "abbbe63d772ddb4358363a8afc2851ca903925f9329ea8ff3c101b0686d25ac1",
+      "bytes": 10569
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/copper-cable/construction.json",
+      "git_blob": "89334f5a00660d27061fdfc14cf68f036544d01d",
+      "sha256": "7050085ca72f2f8daee9ac216048a631ef47bdc92778f295f2a801e07b95424e",
+      "bytes": 505
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/copper-cable/inspection.json",
+      "git_blob": "f9ebbc9ff8288c716c8cda9a822982769cb4ba1f",
+      "sha256": "f76d656c57658cc45be729b6d2bbd7ac4fb874ab283df656cdc111c3a274bf69",
+      "bytes": 38399
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/copper-cable/integration.json",
+      "git_blob": "92fffba0e1c0d4fa6ec377ed4ed690177112c495",
+      "sha256": "2eacf1bed80daab429c2985fe6e21da640a4d1f212b1470949b3b761d04d333f",
+      "bytes": 781
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/copper-cable/native-evidence/review.json",
+      "git_blob": "daba044bd7484147aee3edf6c781ecebd7be4d67",
+      "sha256": "2f2f4b1ef0bc086f5c3736a7885f301fe58d932293967c1b184fe13e1a48f833",
+      "bytes": 3646
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/copper-cable/FMPL_MODEL.json",
+      "git_blob": "57b26a02f089900b6e5106db874fd4bf22033045",
+      "sha256": "8d6f9f0e9d8c50845f9ed4eeb66aca655da70d6042fc7a373ef534bff27ce0eb",
+      "bytes": 1186
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/copper-cable/visual-review.json",
+      "git_blob": "9b1cc33fadeb7054883ae9acaad0c95654a6351e",
+      "sha256": "88699de312b80a56093f81c97b1bb84d5aa0971eea9af071cbf56117a12222dd",
+      "bytes": 1738
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/iron-gear-wheel/filtered-cache-iron-gear-wheel-v01.blend",
+      "git_blob": "175b5b7aa6ffee74c0aa5a8d389555232536da99",
+      "sha256": "e1674f5fbd455b647aa29f67ee1cb28d913d27b8e62fee3fc1e1f995c4f04f98",
+      "bytes": 41444689
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/iron-gear-wheel/filtered-cache-iron-gear-wheel-v01.glb",
+      "git_blob": "b924724940dc29eb1c1ac43429b9c899dda167f3",
+      "sha256": "088da7ad0c686f924ede8002e53c8667cbade038de3ca62303acb3979b87f072",
+      "bytes": 24765936
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/iron-gear-wheel/contract.json",
+      "git_blob": "3d9bb8fb80a954d3ba2b5834af1a334df25c01ad",
+      "sha256": "1e94703e884f1de5bdcd7ba64c0f39e08bb997f81bbc3a947c2650dbbed455fe",
+      "bytes": 10643
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/iron-gear-wheel/construction.json",
+      "git_blob": "2a04b2a08c4fdcbcd98872f1c615eda62e5b1ed1",
+      "sha256": "2239400d5c8c224ad100a32f422ef3bad9c81ad13f2c2ac7595ecac5064e2a0c",
+      "bytes": 778
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/iron-gear-wheel/inspection.json",
+      "git_blob": "92b8f24c0a6383560b97e9b9af2aa9b0ef7bdba8",
+      "sha256": "91c8d2594fdc32ca3a8e9bbbfe0857ce92278c56fd85c6628380a1b1698a506b",
+      "bytes": 40100
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/iron-gear-wheel/integration.json",
+      "git_blob": "7bd7e45db42308b1f552d835957606b511102fcd",
+      "sha256": "09b8e009fc30613c3c7c05389b8180a39e7d4ac2d127ed0a8595359e1e8b654c",
+      "bytes": 793
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/iron-gear-wheel/native-evidence/review.json",
+      "git_blob": "f3574534771f882ee690b7a9aab8d8b76ef48c4f",
+      "sha256": "39637ffb91ea228907dc9bdc79948fd3311a6ee70f6af7ed89ed46da3a98bf44",
+      "bytes": 3648
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/iron-gear-wheel/FMPL_MODEL.json",
+      "git_blob": "5d0f47d3fe11a6d0d80c057442691cde492b82de",
+      "sha256": "502e69403a3ff5269d71cc485b3b6397a8d0c26bdb99ca758213dca8dcf6787a",
+      "bytes": 1204
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/iron-gear-wheel/visual-review.json",
+      "git_blob": "3904a32d9e2df92042a98ed4f52e6eed3ffc1b00",
+      "sha256": "38e8430c5408a4249521c8721d6f5411c4ca5c0be88f3a39977e2a18dc6c2f63",
+      "bytes": 1741
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/iron-ore/filtered-cache-iron-ore-v01.blend",
+      "git_blob": "447d103ee26fa397df49732e99770700d6242378",
+      "sha256": "db1a9b9ff52a6a4b69fad2156fc3ef37c0a86d27dfcc199f70654e47fc6ecfbc",
+      "bytes": 41242652
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/iron-ore/filtered-cache-iron-ore-v01.glb",
+      "git_blob": "c40f0b1889ed9804903fb22f59b4c60178a5f28b",
+      "sha256": "d007dad89fbdd874371206f8e1190ccbe2dbde5ad93b3272dfb480eec50a5aa3",
+      "bytes": 21726720
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/iron-ore/contract.json",
+      "git_blob": "8e7dc42d02b83e09d5d5f289da986f3f21490e2e",
+      "sha256": "8c7853052bf5a77b0a26e7285efda3f49c1b09d0751363313edeee9db889f992",
+      "bytes": 10468
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/iron-ore/construction.json",
+      "git_blob": "e9af2971cda5e458f1650d8b78e4665682310da8",
+      "sha256": "040b14ac8d8c7657bdc0c8dd616e76b656901505627c599c6e9b7d870be03419",
+      "bytes": 998
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/iron-ore/inspection.json",
+      "git_blob": "ce549c17978c0d3099c60747bdc121279dc64a44",
+      "sha256": "953177ed968e3156185a5eb302a1446d9ba0df2ed8db6ec4189afa230b1d50d1",
+      "bytes": 41512
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/iron-ore/integration.json",
+      "git_blob": "2c3058d75dba25a7bc1ce2e61ed628276fba2cab",
+      "sha256": "7b99a71b8d531ef2a03788fb7a300bec591d6b05fac8921c98fdf4d1937ca12f",
+      "bytes": 765
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/iron-ore/native-evidence/review.json",
+      "git_blob": "f328368e5f67135c22746526415d2e478644ae61",
+      "sha256": "6ccec0b1b655b3089ecc092775bd17affb66e4f7a6beca2cbf7d5984ab6ea15c",
+      "bytes": 3641
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/iron-ore/FMPL_MODEL.json",
+      "git_blob": "943d1a8ceb954ee3f103dbb8ba38d0eeb75df086",
+      "sha256": "3f397f96a2140b7f1e1d85c30744c294330862bb6e7c14254d2e79b99414819f",
+      "bytes": 1162
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/iron-ore/visual-review.json",
+      "git_blob": "e28435de96ce3368011bd030fb4bb8985fe44b34",
+      "sha256": "0a677fbbd4841f7e847218ca13ed71f95658cea96b692e273b15a597bdfef277",
+      "bytes": 1734
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/iron-plate/filtered-cache-iron-plate-v01.blend",
+      "git_blob": "d6183c9df9dda07203ee079e5d330791ef167d85",
+      "sha256": "3da3942099d019ebb3e37a590fa0cc4f1dcbc1ce947ae7b3b1997e08479fe593",
+      "bytes": 41233301
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/iron-plate/filtered-cache-iron-plate-v01.glb",
+      "git_blob": "5a9d3ce93a965c2a0ec6757eb587e14a0efdc83b",
+      "sha256": "d75ea35d23c9aa480eba82cc27d151ef377985d55f2c8fcc5ec397979cbdaffb",
+      "bytes": 23558804
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/iron-plate/contract.json",
+      "git_blob": "23de43d0c8044af08c9ecfb74f42c45268e6739b",
+      "sha256": "3fa52a55625b8ca91a9026a73a380c92464dcf698224395582612df16fa5181f",
+      "bytes": 10518
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/iron-plate/construction.json",
+      "git_blob": "de1dc8333c075679888c9669eac1b23e0a8be403",
+      "sha256": "a9cb12b92bd53e96e0e8ab555b60914bb12ab2d99d571e653767781324d72a95",
+      "bytes": 1561
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/iron-plate/inspection.json",
+      "git_blob": "c5f8f994e2c020f54a706aa5b821e78121bd624c",
+      "sha256": "f0db3899760ff87e0beea623023a109cf68237ac2613f66c7189a6a2952ede0b",
+      "bytes": 44938
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/iron-plate/integration.json",
+      "git_blob": "95ff243c14697706b3a111f5ca3af593d3cdcd73",
+      "sha256": "891cf616c90723c6362646632d9b59c22b3c5bf049bfd6fca719d920be250391",
+      "bytes": 773
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/iron-plate/native-evidence/review.json",
+      "git_blob": "8149b20dc421526e9bfb92187b8e0f77a4cde26c",
+      "sha256": "22562a3aa65c6c1df4f64a1be34db3312a57dcff174bdc8919c3629f1bddd85d",
+      "bytes": 3643
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/iron-plate/FMPL_MODEL.json",
+      "git_blob": "a8f09fa7b947bfa9b520d54ff0069abd995c45b3",
+      "sha256": "1498f7d092751938effd63a862f9f9a868c27eb5e12453e83f0870c8cf833994",
+      "bytes": 1174
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/iron-plate/visual-review.json",
+      "git_blob": "e0041749d950014e85894ac4475c02b19b789627",
+      "sha256": "efff64dd2b4b94d7a7ea9504dc5da56cc5c18fed7339c3ee093d894da95fe51a",
+      "bytes": 1736
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/iron-stick/filtered-cache-iron-stick-v01.blend",
+      "git_blob": "c5a6ef21973e825a8f7840fa5e90a5761672a09e",
+      "sha256": "5d7fc7793ac256d34b71d23c1b933714d8f9eb17775723a2900c5ab8b6e8ea16",
+      "bytes": 41251112
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/iron-stick/filtered-cache-iron-stick-v01.glb",
+      "git_blob": "12621fb9753839c017078838afb1be5758585150",
+      "sha256": "2978e5918dcab5437114728668ecc95338460bc910b6bcd1868e7d55329d477f",
+      "bytes": 23891568
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/iron-stick/contract.json",
+      "git_blob": "3f7a30523748ee473eb2ba044e1313adef972af0",
+      "sha256": "44b9d049c219fc411cf757a19d5313d24d80d432c228b95571ef4a58da046b88",
+      "bytes": 10519
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/iron-stick/construction.json",
+      "git_blob": "a3ed1503428a5f03679a47d94db1b381d5757df9",
+      "sha256": "ba1c77637bcee1afbebf45602c48daaeb014464ac6a8d5c30c8cd1fbf10e6f5e",
+      "bytes": 2204
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/iron-stick/inspection.json",
+      "git_blob": "10845c5b39229ecad175d0a287bf7edfda793f78",
+      "sha256": "087c4d7db1a5b7f7ad4abecae9a942e89161ef9696c408a8fc9dca936713ace7",
+      "bytes": 50912
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/iron-stick/integration.json",
+      "git_blob": "aa7b88f92e5bc333bdd29037f7c4229fae4bd356",
+      "sha256": "6ae986877e0cbf69f5471459fd61ad9b6f53b09c9584b0d83250e8e6427cf35a",
+      "bytes": 773
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/iron-stick/native-evidence/review.json",
+      "git_blob": "cddf0d696b7a13d62e2a4ec064dd7c8ec98e5ccd",
+      "sha256": "7129141cbce30b46ad312e5e71395fa11f2357393bb3ca6c4fedda174f92c1d8",
+      "bytes": 3643
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/iron-stick/FMPL_MODEL.json",
+      "git_blob": "cda1b261ecf54435d7d8a42bcb653e4f83e1ce8e",
+      "sha256": "f662294b41d81d97fe5a23db7eb37acf29c5f770528cafed59c08238e30a1e06",
+      "bytes": 1174
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/iron-stick/visual-review.json",
+      "git_blob": "270e5cbf1bc2c12d280e537b6d9f630048b4e1f0",
+      "sha256": "38fa434a43ca140ce08edc0cb90d15fd8de8bfffafb4efbdd611b6fb9a5f2752",
+      "bytes": 1736
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/stone/filtered-cache-stone-v01.blend",
+      "git_blob": "a6e366453e848e86206e7aa32a32e06e36c5edcc",
+      "sha256": "cc9c98ffcd8d4bd0e8fdbc956762530ec4082e26595b7c02cf80696d092b48c5",
+      "bytes": 41239236
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/stone/filtered-cache-stone-v01.glb",
+      "git_blob": "66b0de8606c85de0952635e3c56e518a1e412f67",
+      "sha256": "0809ae8e64581e854a72f2a2d155156195e6f8fd82d7a1770f12ee7df7f6295a",
+      "bytes": 21705304
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/stone/contract.json",
+      "git_blob": "2d228c717605e3ddd620ceb14dee6548f12055e5",
+      "sha256": "7c42b8013a0c9f57249c355ec57eb2f9416e66ae07b0f88d201d8562e2cb33c0",
+      "bytes": 10302
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/stone/construction.json",
+      "git_blob": "5e7ff561d0d9c29af800ff7906fed801eb225a26",
+      "sha256": "c531ff341692c91537674b77cb4a555b7a3480ab041a23aed4d0685f025f9c9d",
+      "bytes": 938
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/stone/inspection.json",
+      "git_blob": "c9eef9bba83b627dc41947539f0803cd9e3d6311",
+      "sha256": "e59e9ff36375b8744ebcafb7cae02c08a7af7330acc2e6ceea251bf6138f33f8",
+      "bytes": 41404
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/stone/integration.json",
+      "git_blob": "76f68eee51a8752dd7a16efa2b362f179294ce4a",
+      "sha256": "caea78d54c043f925da8a3b64770ec7ceda4ed65cbb45a385e1b550788a7c3a8",
+      "bytes": 753
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/stone/native-evidence/review.json",
+      "git_blob": "d64ba6e9ece6809e4e4db08b1208fe0f1e09ee7c",
+      "sha256": "54dfab1c6356031a68663d1a659958083d4e3733a1cf1612bfa62434cbb75a2a",
+      "bytes": 3638
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/stone/FMPL_MODEL.json",
+      "git_blob": "5338e4cdc9c7f99b6bd75a4ac205df549a8a8e9c",
+      "sha256": "71fb2bd9f42b24ffad897e26451065116cb4539fbd7bb918f052bb046ab48f65",
+      "bytes": 1144
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/stone/visual-review.json",
+      "git_blob": "0207aa453e05cb100c1147099f1c7dc9eb50a2e7",
+      "sha256": "a8166bbab13ceb66bdb47bba703f00e9d5ebd1ce35a39cc4bbd0424639a95842",
+      "bytes": 1731
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/wood/filtered-cache-wood-v01.blend",
+      "git_blob": "20e42b79a295db904c6edb10f02406f4b863ec00",
+      "sha256": "ab403f443f6671b3640b57f08b1d92b7cf71af60d237f6b10fd932d4a1c88e77",
+      "bytes": 41219293
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/wood/filtered-cache-wood-v01.glb",
+      "git_blob": "e8e00d35501d123402d0590dd2542203e9f86b6e",
+      "sha256": "f652573cf6b249ccfdced9c85d9129b525befd9dcb8085f8623995f39612b475",
+      "bytes": 23576860
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/wood/contract.json",
+      "git_blob": "1b395f6b858965c0a53c7026f0d353fd0828e013",
+      "sha256": "3b4cffbad176cbb5060930a8a57950e85b22e42f5972a48eb163d3ff3bb8761b",
+      "bytes": 10368
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/wood/construction.json",
+      "git_blob": "9da27720fa8be0ca243a211808516ffad85c73d3",
+      "sha256": "fa947c21c86dcd495f2bd238dea593373c999a0efecc01e133469aa3729f7326",
+      "bytes": 677
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/wood/inspection.json",
+      "git_blob": "32f63360a8db2ce8094b347dc52c9bbed0df4a14",
+      "sha256": "990373048b1391f4a39309ec3cf3d3d3dd85ab80a8d0896995f45c8c4712293a",
+      "bytes": 39545
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/wood/integration.json",
+      "git_blob": "9e9fc2d1f96c3ef62d3a064853ca532f1367f069",
+      "sha256": "61f36dd6ab94f114c62bf708d1589289e3169cfa565a50f60ce9db18adc3de3b",
+      "bytes": 749
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/wood/native-evidence/review.json",
+      "git_blob": "a060a39cb84b0cf41c42de7ef78a715a9a56cde3",
+      "sha256": "69a3c4f418403a33aadf4e51159d1be916b0f4148065e180ac83faee74cb33df",
+      "bytes": 3637
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/wood/FMPL_MODEL.json",
+      "git_blob": "70633d6d4d2a9d3eb63ba6f55409069328c738e4",
+      "sha256": "4b2472a0dbd76158047f618f8e904ca88e7df91c36d635f102e6dc54925f0c9e",
+      "bytes": 1138
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/filtered-stone-caches/v01/wood/visual-review.json",
+      "git_blob": "a24c22547b771466336cdd71d6298c5895b77cd4",
+      "sha256": "9be2d04b56781e285810c106fcf4fc8273d60615696420e914a5d75e579fb1ae",
+      "bytes": 1730
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/martian-infrastructure/power-1/power-1.blend",
+      "git_blob": "4317749aa9252f76f73d49279c92823a91b83c59",
+      "sha256": "097abee7e913afcb5970736800af5bb6ab336d6d1a5dd0d7432d4b485448ca9c",
+      "bytes": 1619995
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/martian-infrastructure/power-1/power-1.glb",
+      "git_blob": "8fbcff231818657d4f21c285023ec895c1930c15",
+      "sha256": "a1a5bfdc0800f023c001d2d37748679317a06680bcf91e8a71d8b83191e55429",
+      "bytes": 2112172
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "docs/art/martian-infrastructure/production.json",
+      "git_blob": "76c03078ffe9184d7c710eff27497711fe505bab",
+      "sha256": "ab7996d093a7aafd274cda9a6890c353415a8f5cefbb4b73a34eba769c8ed416",
+      "bytes": 14559
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "docs/art/martian-infrastructure/packaged-new-save-proof.json",
+      "git_blob": "764a343ecfa51a2ab97b9cf57e908e4c5199f550",
+      "sha256": "da5894fd99ea3660a3a58f7fd9f4ed62a50edf50f57d92e7281ca4203637759e",
+      "bytes": 3537
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "docs/art/martian-infrastructure/packaged-reload-proof.json",
+      "git_blob": "4064e642df9998279e24409c486da2d2cb7e0a35",
+      "sha256": "c6d41a2de5882484067d58e86d46cd19ecc6d6554cf60519753ccc7822529bc1",
+      "bytes": 3536
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/prototypes/martian_infrastructure.lua",
+      "git_blob": "97f03d8ef1861e1917a7d475fc6c8f5e4d8d1c52",
+      "sha256": "a5a684cc98725456996a66d489fc0903a7245987149141ce220bfdfbac4b755b",
+      "bytes": 9461
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/martian-infrastructure/power-1-icon.png",
+      "git_blob": "2762121da098d1fb607d19f353e58c67fc7642ae",
+      "sha256": "47a014782e06496ec154fbe83fa01cb2f29409d542b60d6c2e41c8718ee7e960",
+      "bytes": 3593
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/martian-infrastructure/power-1-shadow.png",
+      "git_blob": "21ed24030f8a144d4ea998067c11f916acc6f9bb",
+      "sha256": "6086e93f07257047c13484bfc7618ee32b0ca6915ef979da25b00dd9ef065bce",
+      "bytes": 18579
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/martian-infrastructure/power-2/power-2.blend",
+      "git_blob": "a9c1ca18051f60db32678e6a8a9bb702e5f1480d",
+      "sha256": "a6c601ad81612e8058747d763b8d5ec32691b9f010c1b3b1c9d4996887a2140e",
+      "bytes": 1622679
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/martian-infrastructure/power-2/power-2.glb",
+      "git_blob": "f71b46c912a2f62c89e35d6501c602098e2668a8",
+      "sha256": "a51a80b248418e94e0843e3b2dbac9143cb19041b120c449a04d8d306de72eb7",
+      "bytes": 2133924
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/martian-infrastructure/power-2-icon.png",
+      "git_blob": "b84fc3d0c84f455791c2df7eb4bf2b8609cd2725",
+      "sha256": "c56fbc255775d85b1f5576de7a7ec23d0f19d994cb069d8390409ba4a6d148c2",
+      "bytes": 4713
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/martian-infrastructure/power-2-shadow.png",
+      "git_blob": "030be1ea3d72084884f3c1ad6a9d7a1db83989ad",
+      "sha256": "84d412f5af7b5a04ea1d79c2d9509d6b8d92ee0d51cef814993da5cab7b3b192",
+      "bytes": 52146
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/martian-infrastructure/power-3/power-3.blend",
+      "git_blob": "9b22e4fc9ae1770f998e73e51b4f020341ab6351",
+      "sha256": "f1181a79ef5dff78adcff702712d173ee994b75cbc4348c2e160e7151218e25a",
+      "bytes": 1646024
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/martian-infrastructure/power-3/power-3.glb",
+      "git_blob": "181dc2b21bf614ae4da6f8f2a9d2c4d6afcbebd1",
+      "sha256": "77c0f091783aeb60548f7c132517e0bbadd5160bbc82841e0449fafaecce9c7a",
+      "bytes": 2408604
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/martian-infrastructure/power-3-icon.png",
+      "git_blob": "6a126fbad30ea58d8b711f7af94219a6c048c0ea",
+      "sha256": "23eaf7b7a08fbbe983ba57910c2a7c5c0ff8af49497de1fcbe7c816868993d63",
+      "bytes": 4934
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/martian-infrastructure/power-3-shadow.png",
+      "git_blob": "2dfcff7ed181a7b833ecbdff92a2a6b1525e17d3",
+      "sha256": "d641139b71070d429a71fbcd1808e32815ecc762504a68e4f18e9aa370cfecf1",
+      "bytes": 95397
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/martian-infrastructure/comms-1/comms-1.blend",
+      "git_blob": "c904567bec02e0a006e7ae6120c72fc6b2fcef4f",
+      "sha256": "cef435471f77c4b0933fe2f25158b3a7b8365e4a19dc5c7badf1e2a067f7597b",
+      "bytes": 1639897
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/martian-infrastructure/comms-1/comms-1.glb",
+      "git_blob": "015f01c6650883fa4ed4dd93e84ed632c7d38aad",
+      "sha256": "b6fcf1eb62b5e06629c48f1d539c89c71d6553f6510b86aeba6a8e1c093f4448",
+      "bytes": 2309916
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/martian-infrastructure/comms-1-icon.png",
+      "git_blob": "de55439602f774d478b7ce6efb9502e2e7be832d",
+      "sha256": "e044477688df4fda98849df3521bda5a8def829592e15736c7a183c3047335c4",
+      "bytes": 3320
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/martian-infrastructure/comms-1-shadow.png",
+      "git_blob": "e5a56d30deef1c374191dc2035b8986005076c16",
+      "sha256": "62f36849b4ab200893b398d5530fcb80dacc1eeef276ffaf54f0b1756d6c436b",
+      "bytes": 18858
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/martian-infrastructure/comms-2/comms-2.blend",
+      "git_blob": "5b05968cbf98581e0407bfbab62edde69884bcb3",
+      "sha256": "08fdd9ff55831098fb334135a560f645ff4c7fcb934dcc5ab397ad405acf7512",
+      "bytes": 1716812
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/martian-infrastructure/comms-2/comms-2.glb",
+      "git_blob": "b6972b45ff9bed6379d660080c260e7ca94480bd",
+      "sha256": "3b8fb09663e998c7409301a27a380691b8c1ef1d0dd1f5211ac6a5124795814e",
+      "bytes": 2724320
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/martian-infrastructure/comms-2-dish-beauty.png",
+      "git_blob": "ab8d765906a4886b5d402eab1791ddd7beb6b946",
+      "sha256": "fe83e5bd5e40301d0cf584f689285a73d1d63dddd1f3cc8124684c93b9ab61a3",
+      "bytes": 885386
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/martian-infrastructure/comms-2-dish-shadow.png",
+      "git_blob": "c0c27480560a3643fcf65e0e194e7a61186a1f9b",
+      "sha256": "e74aad3a1f2f0add4c7b6f1d11934333ff76fed2479c8db449e618e48302b3f3",
+      "bytes": 910903
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/martian-infrastructure/comms-2-icon.png",
+      "git_blob": "f5db9639da966e680ca7e5a261a4bc4f58ec8f10",
+      "sha256": "5f1abfe15adfbdf9259ba163bbfbd57ba88109bbcefedfe0268501bb90274d4e",
+      "bytes": 3965
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/martian-infrastructure/comms-2-shadow.png",
+      "git_blob": "acecaae648565b7e304f0d37bf97309848c1993f",
+      "sha256": "ceea6acd347439473ba29a628a735bd20bcb51fc62ee716dc1464ec13e209bb7",
+      "bytes": 46059
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/martian-infrastructure/comms-3/comms-3.blend",
+      "git_blob": "2f18a309976ce0af174e273c1bd074a0d69a2280",
+      "sha256": "55dd6661a5f13e33e39420aa59d1efefb29f6c4f43d9867efba7c36a955fe078",
+      "bytes": 1745186
+    },
+    {
+      "ref": "0fc000dcd82f71dc3e3a5eefe65093784689cde5",
+      "path": "art/source-to-3d/martian-infrastructure/comms-3/comms-3.glb",
+      "git_blob": "667d56a34636f5a46128b86d1fdc5a452e3d8704",
+      "sha256": "49fa3025efbb6fc543c3067af34bd473f0d960330aa7e4ccfb2c29e81a57d19b",
+      "bytes": 2919412
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/martian-infrastructure/comms-3-dish-beauty.png",
+      "git_blob": "aea0e87ef226b2eada0a77968526d224f598a1ae",
+      "sha256": "c2206c91a635e3ebbd52bdfc8c722ba45e303019d95a78ddb8fa8a8c96401159",
+      "bytes": 1549463
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/martian-infrastructure/comms-3-dish-shadow.png",
+      "git_blob": "a09801165753639cece1f5da295742d7ca9dea58",
+      "sha256": "60cbc1ba82a7d94931c1a53e49501e94f2404f2c60670b6263cd48687efc6471",
+      "bytes": 1800473
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/martian-infrastructure/comms-3-icon.png",
+      "git_blob": "4ac53afff8cc523e74e16a6881850e1d54b18f5b",
+      "sha256": "b168205020d3d33c90958aa0e8c4487af3c73941cde6dbc875b28f393b895a71",
+      "bytes": 4198
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/martian-infrastructure/comms-3-shadow.png",
+      "git_blob": "9d8756b4674e65d4fb50bcafef1bc2bd5792904c",
+      "sha256": "5712d85f2ef8a2d17cd742e9e32d2a0ffd57415a58c2bd3560e231019aafb864",
+      "bytes": 89427
+    },
+    {
+      "ref": "4c6d232cfacc45856da6c3b7b85225c73be58ba6",
+      "path": "art/source-to-3d/space-platform-engines/void-fusion-thruster/v11-detailed-opaque-core/void-fusion-v11.blend",
+      "git_blob": "5b10aae16628b0776c9ccb357d1c75525843bd94",
+      "sha256": "61e9a02667e2c6124fbd738adfb48fb3b4180ba9b59da86165117b0a76b28d4d",
+      "bytes": 20962030
+    },
+    {
+      "ref": "4c6d232cfacc45856da6c3b7b85225c73be58ba6",
+      "path": "art/source-to-3d/space-platform-engines/void-fusion-thruster/v11-detailed-opaque-core/void-fusion-v11.glb",
+      "git_blob": "78b15f16b40841e8e7bb371e895bbea1084b8828",
+      "sha256": "2b1f7164dc6df970aef9c9f1367bf8cf30f82ba3471d1eb9fcf6e84821d3d137",
+      "bytes": 37892196
+    },
+    {
+      "ref": "4c6d232cfacc45856da6c3b7b85225c73be58ba6",
+      "path": "art/source-to-3d/space-platform-engines/fusion-fx/universe-v01/narrow/capture-master.blend",
+      "git_blob": "beb1f9a052012da89e2ec8394b5456336e4dffb1",
+      "sha256": "54e77d6f539ba29f60d1880f067230158501f0e9db770f21f9ec15528f10e1e0",
+      "bytes": 26304972
+    },
+    {
+      "ref": "4c6d232cfacc45856da6c3b7b85225c73be58ba6",
+      "path": "docs/art/thruster-resumption-20261117/animation-capture/universe-v01-integration.json",
+      "git_blob": "91b366b9ca3e375944d85a13a6a63cdf8926f3e3",
+      "sha256": "f2aea18ed2612322d29c46e88e22858916cf3ff7a2352f432c0115be3cfa32ea",
+      "bytes": 13624
+    },
+    {
+      "ref": "4c6d232cfacc45856da6c3b7b85225c73be58ba6",
+      "path": "docs/art/thruster-resumption-20261117/animation-capture/native-power/validation.json",
+      "git_blob": "a651beaa00cc7cb670a32e4c0581085183e4f98a",
+      "sha256": "9f35e365635b40d37a7bcde6b1f54aa6c21c8bf902f4d365e1431f0cc17cf9e7",
+      "bytes": 10707
+    },
+    {
+      "ref": "4c6d232cfacc45856da6c3b7b85225c73be58ba6",
+      "path": "art/source-to-3d/space-platform-engines/fusion-fx/universe-v01/narrow/advecting-capture-validation.json",
+      "git_blob": "e704ee4a4fc8e209b175501f0ed5ba03bebba480",
+      "sha256": "92ef1c1ae393e00217a48967dc403d61c243d163b694faed9931fd3806c67732",
+      "bytes": 4508
+    },
+    {
+      "ref": "4c6d232cfacc45856da6c3b7b85225c73be58ba6",
+      "path": "art/source-to-3d/space-platform-engines/fusion-fx/universe-v01/narrow/external-source-pins.json",
+      "git_blob": "202a08755d23d8f4cf73ecb91aa3176f07cd305f",
+      "sha256": "450692814cfa2ca3210399dd331d9b93c2df5a2fa0f4a5fad5d31bfada4093e6",
+      "bytes": 4195
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/prototypes/generated_graphics/void-fusion-thrusters-v01.lua",
+      "git_blob": "c1532fc8a2d767203393c9304035c8c6a3be2324",
+      "sha256": "6369e78d8f67085f6ab12dd94c741e032063c8a208278c842c3f7b14fe7584b8",
+      "bytes": 6425
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/void-fusion-thrusters-v01/void-fusion-thruster/cold_body.png",
+      "git_blob": "cfe921136d7e88a46a2572e377fdd2dab78dd1f0",
+      "sha256": "8713018714c1083413040d60a0f2f598f3425474167d4dd6cc9b13fdb094f30a",
+      "bytes": 121869
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/void-fusion-thrusters-v01/void-fusion-thruster/deck_shadow.png",
+      "git_blob": "f0b4ec4ad15156ba2f61bb0b5ff8eceb4cc0a423",
+      "sha256": "fe14627dce69b97908274b6866bd96cc7d59c0c856c603876d2bfd88c4e505d6",
+      "bytes": 5155
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/void-fusion-thrusters-v01/void-fusion-thruster/field_candidate-1.png",
+      "git_blob": "00da74311b7c3d6753bb540de05bd133e8838c79",
+      "sha256": "08b233a50e6fab0e6308c04870bf30875ae4bde53a9adb54d2aec4d93de3045f",
+      "bytes": 3018593
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/void-fusion-thrusters-v01/void-fusion-thruster/field_candidate-2.png",
+      "git_blob": "0ad8e883f4128a4661d86bd0217443e087c3a073",
+      "sha256": "59a16589e6793bb10e58c07864de5e62761b3bfc68c0edf9a6522c0357dd19b7",
+      "bytes": 3068043
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/void-fusion-thrusters-v01/void-fusion-thruster/service_underlay.png",
+      "git_blob": "add197fb1d14fa69414a24f6d3f2201d6d4cea37",
+      "sha256": "a07db5e4b47cc77fadb0082f47d2c6aee2efeb39591fb3ae6f9b6d25e17955d8",
+      "bytes": 39389
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/void-fusion-thrusters-v01/void-fusion-thruster/working_light-1.png",
+      "git_blob": "dc33f757d8d54b049adeadea3b3642d9e81ac26a",
+      "sha256": "9bc16269af151731961dfcf9f9b02dbee90672e181bc159f078956109fe27b77",
+      "bytes": 2037062
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/void-fusion-thrusters-v01/void-fusion-thruster/working_light-2.png",
+      "git_blob": "dd426be7b644d1a4e7920de627ca84e59b24796a",
+      "sha256": "176ee0f145168face26d3093c92f427401aa81e3da784716a7e0096d951a5e71",
+      "bytes": 2072531
+    },
+    {
+      "ref": "4c6d232cfacc45856da6c3b7b85225c73be58ba6",
+      "path": "art/source-to-3d/space-platform-engines/large-void-fusion-thruster/v18g-elongated-functional-core/large-void-fusion-v01.blend",
+      "git_blob": "ff964600de28f2bfd1c7200f8a8455148f2b5485",
+      "sha256": "954c7ed2ef3f3d91e8f09c8427708cd5c42e784523ccbb832bf36a26f01b14bd",
+      "bytes": 20746074
+    },
+    {
+      "ref": "4c6d232cfacc45856da6c3b7b85225c73be58ba6",
+      "path": "art/source-to-3d/space-platform-engines/large-void-fusion-thruster/v18g-elongated-functional-core/large-void-fusion-v01.glb",
+      "git_blob": "e837498d0ad79e20a7cc4e22ded2feedc80085d2",
+      "sha256": "4d9ef76ab5452728437d399af5456fbaa2b3626381da548dfb06de1b47d713de",
+      "bytes": 27771956
+    },
+    {
+      "ref": "4c6d232cfacc45856da6c3b7b85225c73be58ba6",
+      "path": "art/source-to-3d/space-platform-engines/fusion-fx/universe-v01/wide/capture-master.blend",
+      "git_blob": "d78edbb15bacde9666ccd171969c13f2a55cc1d6",
+      "sha256": "dd05d1a70a609279e7fdc77b17b263739926dabd87ed88810460b62b897a0096",
+      "bytes": 25995085
+    },
+    {
+      "ref": "4c6d232cfacc45856da6c3b7b85225c73be58ba6",
+      "path": "art/source-to-3d/space-platform-engines/fusion-fx/universe-v01/wide/advecting-capture-validation.json",
+      "git_blob": "5d0e859db62e9cf71b0c1a2d4a03b6c388d1b1e4",
+      "sha256": "910be1c06cb5a0cd1fea36e99b78980dd4482a985db74fa1d3baa0dd20888b6c",
+      "bytes": 4566
+    },
+    {
+      "ref": "4c6d232cfacc45856da6c3b7b85225c73be58ba6",
+      "path": "art/source-to-3d/space-platform-engines/fusion-fx/universe-v01/wide/external-source-pins.json",
+      "git_blob": "e4037b08762bd4a4bf7acddd79ad5168e1f0fffa",
+      "sha256": "8330696d9cb674c28c333937a7acc5827ed0d07fd779155add8af1f40aa3f968",
+      "bytes": 3545
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/void-fusion-thrusters-v01/large-void-fusion-thruster/cold_body.png",
+      "git_blob": "c6c42e05d1e2e3919c197b1e1725f92673c2d194",
+      "sha256": "efdf8b95ced8aca53a5a8834c314fb0af84373d0373cf49de5141aaea6a541fc",
+      "bytes": 205243
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/void-fusion-thrusters-v01/large-void-fusion-thruster/deck_shadow.png",
+      "git_blob": "6316a80f6242c2726b9e0011bb6be391fd21e647",
+      "sha256": "9606b302d2733518f9d6d349b9e3a1df9d0db61cf81d890e33b95fd7666fc350",
+      "bytes": 8931
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/void-fusion-thrusters-v01/large-void-fusion-thruster/field_candidate-1.png",
+      "git_blob": "011e9d9b034c4ff4e05d8d0e5931308f9dcb6e16",
+      "sha256": "66753746464981111253680995a789bdb5e0af287e34e89cbfff6a8cdf810496",
+      "bytes": 2753944
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/void-fusion-thrusters-v01/large-void-fusion-thruster/field_candidate-2.png",
+      "git_blob": "ba2f7d51a933ad7006504171d842388c6bf472dc",
+      "sha256": "0b5e645a30a09b87fc8f146cbc2629765ba0c667e58e981f03c001245774bc3e",
+      "bytes": 2788034
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/void-fusion-thrusters-v01/large-void-fusion-thruster/service_underlay.png",
+      "git_blob": "c605956595a8daac1c44c9738f9eeead78c841a1",
+      "sha256": "7814ba07dd1abe432697bb37a0ebd39e79cb51368c53ba49fd73e12f197d8c97",
+      "bytes": 35710
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/void-fusion-thrusters-v01/large-void-fusion-thruster/working_light-1.png",
+      "git_blob": "ab1135b3ac419eb6f977832568a6533fb0d24129",
+      "sha256": "aabcbad89a895a59662d273bb9f726318e4f2c73cd925e46ad86eb30543c793d",
+      "bytes": 1691881
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/void-fusion-thrusters-v01/large-void-fusion-thruster/working_light-2.png",
+      "git_blob": "45025ebf05b4b17131ef669a809f7976f525f28c",
+      "sha256": "0742ff8fd5acaad4e3f6a3a4cdb312db893212d6aa1fe00e92ea273521f8f338",
+      "bytes": 1678267
+    },
+    {
+      "ref": "4c6d232cfacc45856da6c3b7b85225c73be58ba6",
+      "path": "art/source-to-3d/space-platform-engines/thetazine-thruster/v06-articulated-core/thetazine-v06-articulated-core.blend",
+      "git_blob": "eb96cf40735fc955e876e3238e47938baf099004",
+      "sha256": "35c4f470ad92015b70d056086b7f6e53573f4ccabbecab6af346ab382734871e",
+      "bytes": 23451026
+    },
+    {
+      "ref": "4c6d232cfacc45856da6c3b7b85225c73be58ba6",
+      "path": "art/source-to-3d/space-platform-engines/thetazine-thruster/v06-articulated-core/thetazine-v06-articulated-core.glb",
+      "git_blob": "3bb9b48c24c95031ca412168fb287d569376a002",
+      "sha256": "77892d382fe0b1f39f28d84082d6c68dbb3b00c26f1476a3963cac97b9fce074",
+      "bytes": 58201192
+    },
+    {
+      "ref": "4c6d232cfacc45856da6c3b7b85225c73be58ba6",
+      "path": "art/source-to-3d/space-platform-engines/thetazine-thruster/v06-articulated-core/canonical-manifest.json",
+      "git_blob": "2070e8d38660340ce1fdd4ae3466bb7ff6ad8a42",
+      "sha256": "4475d6b7f430ba8b61a628be6f40770afe795d7b120fe46259b3eac4bae627b2",
+      "bytes": 26402
+    },
+    {
+      "ref": "4c6d232cfacc45856da6c3b7b85225c73be58ba6",
+      "path": "art/source-to-3d/space-platform-engines/thetazine-thruster/v06-articulated-core/evidence/motion-export-validation.json",
+      "git_blob": "afd83f7ed3d7c7f11a898f8fbb488cc1331b0f2f",
+      "sha256": "c7c1358c5a6096f1a60ad8a7bfc3d243bf4c1b6ccb690337fc2b16d32bb40bed",
+      "bytes": 12134961
+    },
+    {
+      "ref": "4c6d232cfacc45856da6c3b7b85225c73be58ba6",
+      "path": "docs/art/thetazine-thruster-v06/CONTINUATION.json",
+      "git_blob": "2d8221cd1091d85372936f3cb50e0c8021222264",
+      "sha256": "bf7f08426747f93b4a9a8d37c0de46ece023c71803f3ea983246deb47fa90f7a",
+      "bytes": 4345
+    },
+    {
+      "ref": "65df59078652022e71df89931772a89158dd2ad5",
+      "path": "tech-priests_src/prototypes/generated_graphics/thetazine-thruster-v04.lua",
+      "git_blob": "45d38ab36d58055a0b15172d6e3bfd16be24863d",
+      "sha256": "c0f83f99cb8f27b2c1093deef3c8ef94e0717ad83b577268661b663478897659",
+      "bytes": 2627
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "tech-priests_src/shared/character_skin_catalog.lua",
+      "git_blob": "78502a2de09329894f6bd5a2a69726d60057da49",
+      "sha256": "d01e828ff36315f49032a5b96dc404035569fdb0ffbfeb72e456ec6ce3d9711a",
+      "bytes": 11190
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "docs/art/local-content-20261118/source-evidence/character-skins-full-default.json",
+      "git_blob": "1266564597c7ec9631557dc7e95323f62ef8b510",
+      "sha256": "ad0a7c52adc5d89686ce9eae0d144849a9dbf24247c471b039c9e9e80faa87f4",
+      "bytes": 92
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/gladius-donors/Battle-Sister/idle.png",
+      "git_blob": "a671a63469e831efa9fe6dbac287938a67d21929",
+      "sha256": "46a11c729d7e168a6bd982d5d011cf5c43eba4dc8799e6093d07ca148145ea80",
+      "bytes": 3740944
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/gladius-donors/Canoness/idle.png",
+      "git_blob": "2afd73c2937f807e45c40b14a10761cf761ad09a",
+      "sha256": "904d68d977a4f0375e161b5842707dcc3c7f187b09f2a59175a535984867f8b3",
+      "bytes": 3710197
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/gladius-donors/Cybernetica-Datasmith/idle.png",
+      "git_blob": "a5b97ef58b5ba6eff8e75ce8caac26e93d451dd0",
+      "sha256": "a4b0ad637a6caf3bdc852a3237664f6083e85571199f3799cf4d7549440c7c82",
+      "bytes": 4621161
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/gladius-donors/Dialogus/idle.png",
+      "git_blob": "fbecec36bf0c9a5572705dcf782d54f8d31ebbfd",
+      "sha256": "77d636ff5f170e661506b2df2fc3a62d3203d811c7625eaa362113931e8a8ebd",
+      "bytes": 4376593
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/gladius-donors/Guardsman/idle.png",
+      "git_blob": "2ceb590461384ebb8027db23e84f1ba00f666fc0",
+      "sha256": "dab0e4dcbced626b9fb5ba5f7c972e224f943fea5662fbd643db8f302da5892b",
+      "bytes": 3774311
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/gladius-donors/Imperial-Officer/idle.png",
+      "git_blob": "9f8312c3e920c2b494c8bbb86a3a2741d5589f58",
+      "sha256": "6ea1d0266ced3a0b2a5f930765a7beb567a103f0e14af75199929ebc5a5cd33f",
+      "bytes": 4175299
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/gladius-donors/Kataphron-Breacher/idle.png",
+      "git_blob": "c319866f4558b765b3cd9708576b8f954854a18b",
+      "sha256": "c08c39323e627d52b0aeca002ec1c44d422d96ccffaafa900dba4bfed584b80b",
+      "bytes": 5505832
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/gladius-donors/Kataphron-Destroyer/idle.png",
+      "git_blob": "b72dee1638cf79481712e906dbae35719a57f402",
+      "sha256": "a66040308c1d7997533544c5c2c1038ffb5dd4404a90bfc5a6eaa12540ee6ef0",
+      "bytes": 5340722
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/gladius-donors/Lord-Commissar/idle.png",
+      "git_blob": "b821d029cdb50d62ebd8e279c5436f0a6dade23f",
+      "sha256": "00c89fb0c4c8909326a6c89cb833d8d6a494dca6ff6fa14434dd0d5b3d3778cc",
+      "bytes": 4125774
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/gladius-donors/Skitarii-Marshal/idle.png",
+      "git_blob": "b6eb2c5c4d33d6030c5baf4831883ff415772614",
+      "sha256": "cb4bb66c8ed1b11d91ba1b73f72e52ae489726336795f91f57b4057544e12b1d",
+      "bytes": 4421398
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/gladius-donors/Skitarii-Ranger/idle.png",
+      "git_blob": "8dbbfa4a0c135ad451fc4001caddcbfdd3fcd270",
+      "sha256": "f75258b0f2b3d9f371f87f469e1995b7076f4478fa3a0e637fe85c16926adc5f",
+      "bytes": 4061914
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/gladius-donors/Skitarii-Vanguard/idle.png",
+      "git_blob": "891b8b803f79d7fcec1a48fc97302e249250c591",
+      "sha256": "fd3494dc3b81d82288496612ad6a744bbe7c3910e69dd6affaf8530e96e92c79",
+      "bytes": 4147122
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/gladius-donors/Tech-Priest-Dominus/idle.png",
+      "git_blob": "7f05e33c145043017faf78cc6296234e444fbde0",
+      "sha256": "4c34b62eb6f755fe7fcaa40d6a4cc050906dbe2b45a04c9d41b255a53e0a4a93",
+      "bytes": 4506544
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/gladius-donors/Tech-Priest-Enginseer/idle.png",
+      "git_blob": "d7e3e6520c5c42683091751bad42559b3e102b39",
+      "sha256": "a7974c00f24327716995eced13d00abbf5467d0582d652f5436d81c96fd22807",
+      "bytes": 3982894
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/entity/gladius-donors/Tech-Priest-Manipulus/idle.png",
+      "git_blob": "aaa27b8c8d6d7e8a970cdd0b6f9929482d7c74ff",
+      "sha256": "5d34834e8b16d4e991c9a4f84b7476b99c8397dfb11137a97723cc78ddee61a5",
+      "bytes": 4704541
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "docs/art/local-content-20261118/source-evidence/reused-arsenal-integration.json",
+      "git_blob": "a21f4da6a0fc7e242db54b4ac3604b44c1180516",
+      "sha256": "3848d8f12d57d8ceb6242639ff3dae020aa973551f8b30d8c27c0f862d648c81",
+      "bytes": 6669
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "docs/art/local-content-20261118/source-evidence/arsenal-icon-only-native-validation.json",
+      "git_blob": "69fd1eac1ad2c68b8afa26aa3fb83c448bdbe8fa",
+      "sha256": "ebb175f6fc3251d638b4944fc6224279fdcf119a8cdf61fd24576946c7f71bf5",
+      "bytes": 2195
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/unit-arsenal/v08-selected-c-icons/galvanic-rifle/authored.blend",
+      "git_blob": "669b28b19284002f9744d0e47d9d6921616cc455",
+      "sha256": "0a5487e6aef42fec6d7282d01d0ea93477b5c19b2ff5206a6e3a59fc60995f7d",
+      "bytes": 4198077
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/unit-arsenal/v08-selected-c-icons/galvanic-rifle/model.glb",
+      "git_blob": "115255770178845faade492c52b577997f82b8d7",
+      "sha256": "f78400b7a0dd8d95929cfe8b217a9c1099323cd15abaf9937689edbefc5caf84",
+      "bytes": 674160
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/icons/unit-arsenal-v02/galvanic-rifle.png",
+      "git_blob": "217d669ce1d23c9e3c1d27bf49e55931e24fddb2",
+      "sha256": "3b7b961ee867337234592be3c51e3097f5562915a80c6d339b7fe3d54933b683",
+      "bytes": 3002
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/unit-arsenal/v08-selected-c-icons/lasgun/authored.blend",
+      "git_blob": "88ae91ebaab7d47d8d2f76828f854c7a5fa63fb0",
+      "sha256": "3e094693399864e13c409e9675af1377295310c4471e5543eaf14e461cbb6921",
+      "bytes": 1523426
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/unit-arsenal/v08-selected-c-icons/lasgun/model.glb",
+      "git_blob": "3dc16ba44c42c8b8aa7276bf47a2c8823cb54cf2",
+      "sha256": "0f09aee2750850a8a74911316e19967dc6aab8761b364e819207c8696999dcf1",
+      "bytes": 1186392
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/icons/unit-arsenal-v02/lasgun.png",
+      "git_blob": "d26c3d3718d6855948604559cc75f29ca1bfc1aa",
+      "sha256": "9be394d5baa2b3abcc81f93b65c88561861b0bb5e882062d1508653c425e66fe",
+      "bytes": 2400
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/unit-arsenal/v08-selected-c-icons/power-axe/authored.blend",
+      "git_blob": "a7c1a197ab70f513811213d8ebf7cec44ac4a11d",
+      "sha256": "01dbd164948cd4e30a7f2eb3922df2e34330cd2c49afd1b0ac33bc93349c817b",
+      "bytes": 2807364
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/unit-arsenal/v08-selected-c-icons/power-axe/model.glb",
+      "git_blob": "ee886607f9f93287db9786cee3b02cb6114624dd",
+      "sha256": "4cc884a51a1900204745c55d83f87be4dc6bf8ac34c7d7f09885985ce16098d3",
+      "bytes": 265568
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/icons/unit-arsenal-v02/power-axe.png",
+      "git_blob": "2d99a04af670b86347dd9bff1b2870d9211594b8",
+      "sha256": "11b57b3b41936fa5925905bc2342083f715c43fe7954638241b76b048b269cfe",
+      "bytes": 2589
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/unit-arsenal/v08-selected-c-icons/laspistol/authored.blend",
+      "git_blob": "37f2828d144491243c1a0fbfa56205ea694cda9b",
+      "sha256": "486ae9f7729e8820aad51316718b368e61e0e01603048a05a6e5ee4eaa2c1821",
+      "bytes": 1524123
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/unit-arsenal/v08-selected-c-icons/laspistol/model.glb",
+      "git_blob": "141a3d2b99f90ebc61ea3af8d5575cd6657a0feb",
+      "sha256": "b2c214475a9a8d07acddd2a503a46fc244d484f8518d73ec012f1cbc0e1f933f",
+      "bytes": 1186544
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/icons/unit-arsenal-v02/laspistol.png",
+      "git_blob": "c341ff51f031ee08fe7d1e85378ce3add669845e",
+      "sha256": "69a7ef20c52d61344980a34206abb20396beb1fac5d03332a5e5f771fe906b9f",
+      "bytes": 3091
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/unit-arsenal/v08-selected-c-icons/bolt-pistol/authored.blend",
+      "git_blob": "46ff24634169286de0806ee78dce19fcb77e78a5",
+      "sha256": "8f3d8df58814a2b796697dec3ffa229993c75f385bf3b1f5af0d7942b59b77ae",
+      "bytes": 2112580
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/unit-arsenal/v08-selected-c-icons/bolt-pistol/model.glb",
+      "git_blob": "24391fd10eaf77e34114201a85a2d86293739318",
+      "sha256": "6a25283ba8b53ed92d6284c5c4032dc285116b7548847be8c4fbdd75368e35bc",
+      "bytes": 1195872
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/icons/unit-arsenal-v02/bolt-pistol.png",
+      "git_blob": "3cc1675bd35ac1a5760269f8067e6730886c3b1d",
+      "sha256": "a7e7c58c7bca5212c01d395eadb6a7d4cf15b589df34fae7cf6f1d6605abf1bf",
+      "bytes": 5208
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/unit-arsenal/v08-selected-c-icons/radium-carbine/authored.blend",
+      "git_blob": "0a2b9faccf88732d1d1cbe3e8c72fe79a98363ce",
+      "sha256": "12efb77109abfd33d377e383989418c1d0b46c7082a96d6047479f93bb920ea7",
+      "bytes": 4203262
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/unit-arsenal/v08-selected-c-icons/radium-carbine/model.glb",
+      "git_blob": "4b795a249c5e6fd4da32c66121acccf3a65ad477",
+      "sha256": "d919205bde4cb4900385ae99d7b790d9e4b5b2de9a1cff068f03ab314efd7951",
+      "bytes": 468568
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/icons/unit-arsenal-v02/radium-carbine.png",
+      "git_blob": "05e872c71078d74a890f38c33d5aead4cf222c1e",
+      "sha256": "3d6aab8e2fe5d434f0d6da8080256b23859d09015d85a948b72c3d3617f0da14",
+      "bytes": 3340
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/unit-arsenal/v08-selected-c-icons/radium-serpenta/authored.blend",
+      "git_blob": "98bd2699ec663ae733544af2fb1e8bc902204b36",
+      "sha256": "b94a151347fbbc59e2545230fc475d1cb53d22cf853187e21334bca010f2b79f",
+      "bytes": 5753630
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/unit-arsenal/v08-selected-c-icons/radium-serpenta/model.glb",
+      "git_blob": "7c620307cf2c326c87e12ef6bc65a4feafa3aeca",
+      "sha256": "78c990adc67f77ee1665f5ff68f888f6abbdd6bcebb76aa86cf19baf8f003aac",
+      "bytes": 434520
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/icons/unit-arsenal-v02/radium-serpenta.png",
+      "git_blob": "e9c6c90a16c3c185514af4604611c777863b3434",
+      "sha256": "bd9cfd206a28731771fb933c10b6a5b85b379be08953915cb1d467b5f71924ba",
+      "bytes": 3665
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/unit-arsenal/v08-selected-c-icons/gamma-pistol/authored.blend",
+      "git_blob": "7d36f99ab804180b6844dc3692625e08076a0180",
+      "sha256": "edac894d98bb03ba72859d3339011c58cdbb5e412ad4dca0fc88f45b9927bcfa",
+      "bytes": 8097143
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/unit-arsenal/v08-selected-c-icons/gamma-pistol/model.glb",
+      "git_blob": "e8f49153cbf48cd15ee547250f5c21de386c533e",
+      "sha256": "616d9216cf5b8bd941ce32fb11ad16001c5c2692e2d41b66221415c726cc0f1f",
+      "bytes": 316060
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/icons/unit-arsenal-v02/gamma-pistol.png",
+      "git_blob": "920b19b53a7d28b3d5d496d3642e8f0f1bc37e15",
+      "sha256": "5739d335143f67321540962ac3778b949f5f1101ad7279736b0e82b1de9544bb",
+      "bytes": 4382
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/unit-arsenal/v08-selected-c-icons/boltgun/authored.blend",
+      "git_blob": "abe865a787fec25c68b1b0f1de23915c7e902f1f",
+      "sha256": "fd141c04782b9e93fd8082d74a5748716563aea898ca517e9d5af19cd658b900",
+      "bytes": 4039969
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/unit-arsenal/v08-selected-c-icons/boltgun/model.glb",
+      "git_blob": "7cfcf4c764ad7f458778ff11067b301dd6b23903",
+      "sha256": "fe80cf5e86c079c256ce245c32823ca526fc905f70ac4ce98bdaabe782a00fc8",
+      "bytes": 262388
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/icons/unit-arsenal-v02/boltgun.png",
+      "git_blob": "b7ce2207efc067d1d0dfef9f3b3f9430e95a0e17",
+      "sha256": "8ccd15de7019fff5e37f989e7dac988f5d5532fd22557cb11b5b583288814690",
+      "bytes": 4861
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/unit-arsenal/v08-selected-c-icons/dialogus-staff/authored.blend",
+      "git_blob": "46738df8574e3e0fe4a1eccb3b3cd5b098d977ee",
+      "sha256": "925398253f7398f9fdc70395c61255809c1fbaa2b44430fb9e65c0b527b997dd",
+      "bytes": 6756660
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/unit-arsenal/v08-selected-c-icons/dialogus-staff/model.glb",
+      "git_blob": "6cedd29653b1ce8fc7fe1b5ebc539cdb8a99e4fc",
+      "sha256": "a2da2fa2538086b43db54157373287b6762499d86a567537744d8e94055d79b7",
+      "bytes": 325724
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/icons/unit-arsenal-v02/dialogus-staff.png",
+      "git_blob": "52795b0d6e6eae02b05aa998a3591bb0669c2f00",
+      "sha256": "b44658694b476c14bc9cb5df3f7bacdc7fd1559037ec67806d4e37a194f4f2e2",
+      "bytes": 2488
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/unit-arsenal/v08-selected-c-icons/condemnor-boltgun/authored.blend",
+      "git_blob": "517ac5c1ac8fb8c0ec8200693aa17ffdc20e3070",
+      "sha256": "f4e085974f5f28bb49f6816efd940b7d0b42662af8f392b323d3a9ca2b4b50ce",
+      "bytes": 7017756
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/unit-arsenal/v08-selected-c-icons/condemnor-boltgun/model.glb",
+      "git_blob": "d2a63afd2ea1af53aa58b18d7c5b258d251321df",
+      "sha256": "db5b4665a4788eac3ab015fb3c47853b855a5d8cddbc73482a04c6d5589e7ed2",
+      "bytes": 644080
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/icons/unit-arsenal-v02/condemnor-boltgun.png",
+      "git_blob": "11db401e49d2a4e9379e84503b4342e2544b4cf6",
+      "sha256": "e9f8e8cacbd17124b7fe0613918d0c032396a014841642198dd211aaceede0a3",
+      "bytes": 4338
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/unit-arsenal/v08-selected-c-icons/magnarail-lance/authored.blend",
+      "git_blob": "dc05efbb03a4bf250b1e3bc90472fa2c908081e3",
+      "sha256": "e2dda3b5148822e6ef228bdd55ef3a16d01ee60fed860804d18d15bf067c5c50",
+      "bytes": 9351309
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/unit-arsenal/v08-selected-c-icons/magnarail-lance/model.glb",
+      "git_blob": "f4bfb6f79f70378b3650aa7000f63278fa8ceafb",
+      "sha256": "f5bdf691fc42be1c0b0715595b66b6fe36809dbe3d68aab47f03307f1d46a6fb",
+      "bytes": 437788
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/icons/unit-arsenal-v02/magnarail-lance.png",
+      "git_blob": "d574db9b67c19c240b8ffab0b8a9786e1df03437",
+      "sha256": "d91ee1150aaf5a127ba01167c6fdf8b9dbbe889b2e10fdb5f3532679e3da35cd",
+      "bytes": 4212
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/unit-arsenal/v08-selected-c-icons/volkite-blaster/authored.blend",
+      "git_blob": "752d9338b2ff78ede7aae007e0c436bb6e008e0c",
+      "sha256": "28b4563cd52368fa0a386c32485ff1b1b337628823bb6bce9d6d5c1a50df99fe",
+      "bytes": 7122174
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/unit-arsenal/v08-selected-c-icons/volkite-blaster/model.glb",
+      "git_blob": "8347956dc53f48027d60d5c4462d3bf750439c02",
+      "sha256": "74c0700440e935436bfe53009fbf0624a9b14d5036d67cba20ac700d06d870e7",
+      "bytes": 432396
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/icons/unit-arsenal-v02/volkite-blaster.png",
+      "git_blob": "a4fc5f9719323489358c9f5ef18a461ba5c13030",
+      "sha256": "a283ebd378c84da340c4f1a45d067848426ee996bbe39157bd97c36cd420b9a3",
+      "bytes": 5532
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/unit-arsenal/v08-selected-c-icons/heavy-arc-rifle/authored.blend",
+      "git_blob": "5d261ee1511d1aeea1ea762e40adce5d7700e827",
+      "sha256": "ffe54b1df8cc739fc7475906de97b1f9614ab03231c4c48956da578393f9a35a",
+      "bytes": 2515638
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/unit-arsenal/v08-selected-c-icons/heavy-arc-rifle/model.glb",
+      "git_blob": "e6c97e926656021dc5bb6ee526571a05f961d129",
+      "sha256": "c5484e8ec26772e32dfcf9427e1a1ba89eb86360849a15ac936c6626db6c2596",
+      "bytes": 480904
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/icons/unit-arsenal-v02/heavy-arc-rifle.png",
+      "git_blob": "4bc2e93121cff2478359c6f4f52ea4730538e569",
+      "sha256": "a2023393bc6f1b1344dfd71180b5902602879ed77f03d0c3a68b2ba3e73de1a9",
+      "bytes": 4023
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/unit-arsenal/v08-selected-c-icons/heavy-grav-cannon/authored.blend",
+      "git_blob": "f2277e3f8cc7831ceacc93653202e9f651afacce",
+      "sha256": "fb0c1fc363bbcead76737b892c1ec95ae06a00e79fb7cf265e3685b4ad72c341",
+      "bytes": 2675140
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/unit-arsenal/v08-selected-c-icons/heavy-grav-cannon/model.glb",
+      "git_blob": "f573cb304f2358c20d1f337824b54a3ae381cdff",
+      "sha256": "16e59cc70b7fad63e531ed62a49a5db1b04908bd77474175cadd1d57c8ea2d6c",
+      "bytes": 402280
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/icons/unit-arsenal-v02/heavy-grav-cannon.png",
+      "git_blob": "4f38bac53b094bc22c5e9b06618202452b3fbfcf",
+      "sha256": "c1c71ea4dbf18699a1595b1f2dd7dc4a59f20bac204b48883c1e8a9ae159fe6a",
+      "bytes": 3698
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/unit-arsenal/supplies/v02-reuse-imports/galvanic-clips/authored.blend",
+      "git_blob": "ebfea5211372f31f542f457de744c60cb489b8da",
+      "sha256": "4122b91def45f5c66c76988f27c2f4235c0687b3a3857636c2bd44a4b7b5cf42",
+      "bytes": 628444
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/unit-arsenal/supplies/v02-reuse-imports/galvanic-clips/model.glb",
+      "git_blob": "a10205e3957fd2a4157e264de1684043c57eda3f",
+      "sha256": "1c827666b35b0ea6a16b2c974787dcb3344d4e5b7d611a4c87e01fe186d0f597",
+      "bytes": 1777148
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/icons/unit-arsenal-v02/galvanic-clips.png",
+      "git_blob": "4cff1fa01853fd4137df4f917190fe793b34c44b",
+      "sha256": "47bf15b22e005a9e5d8b5012439e8a746e10cdc2dcdbda18f2d66bc30d3ba768",
+      "bytes": 2528
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/unit-arsenal/supplies/v02-reuse-imports/las-charge-cells/authored.blend",
+      "git_blob": "1c58bcad1ab85dc9b363299aa8a82b0ef137d269",
+      "sha256": "0c76037f9cf10bf2b91b4a6942d5eb0843fbfdc8b192497437d02f33fd127b22",
+      "bytes": 1229267
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/unit-arsenal/supplies/v02-reuse-imports/las-charge-cells/model.glb",
+      "git_blob": "7b2e95c371d5fadb5c2337688feb8869f635e806",
+      "sha256": "2ea0350a556455a1c58595b27671994554d6debf4087fb2b93a2c56900899e0d",
+      "bytes": 1163336
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/icons/unit-arsenal-v02/las-charge-cells.png",
+      "git_blob": "04973ccb03ad5f4b19be99944cc690a30723b23f",
+      "sha256": "2d8590ea96cb20e806088f7c360afa6d7f5894fa3082706dc3fea2f3d1fd363f",
+      "bytes": 2833
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/unit-arsenal/supplies/v02-reuse-imports/tool-charges/authored.blend",
+      "git_blob": "787b4c390b67359fc05c4925879f60fb2036042d",
+      "sha256": "268c8bb685ab2fc09aa8cdddd1ded93dc74f5eef0197b5564f908516156a23e8",
+      "bytes": 405613
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/unit-arsenal/supplies/v02-reuse-imports/tool-charges/model.glb",
+      "git_blob": "ec4f5f47a2f584f7c7135935b90f4050a0b0baac",
+      "sha256": "fafd5aca099626807acb9491e565492c76a137972b372faddf668c9298b6c860",
+      "bytes": 1503668
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/icons/unit-arsenal-v02/tool-charges.png",
+      "git_blob": "72883feb4db001782a57002cbd7f40f4bcf01f8a",
+      "sha256": "80f2c28400e9d1b5574f5b895f470ebe44289fd67f610b80f7af4a3c0891fccf",
+      "bytes": 4274
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/unit-arsenal/supplies/v02-reuse-imports/bolt-magazines/authored.blend",
+      "git_blob": "aff221e12436dece72bf10eb9e2d937772ca8b87",
+      "sha256": "4663d231a2753124dd013e89c72c2a80ded4adc1b6eee8ade379f758f1b0d7f3",
+      "bytes": 208555
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/unit-arsenal/supplies/v02-reuse-imports/bolt-magazines/model.glb",
+      "git_blob": "3d0f82f8a11821f9c7d8b3ec1bb4172b60042ea3",
+      "sha256": "fe3b0623dbe1ca42b5ab1228dab34b92bd81e376cee0425c771e9b17f162588c",
+      "bytes": 179976
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/icons/unit-arsenal-v02/bolt-magazines.png",
+      "git_blob": "8162323978d0d826a1c692c6ff63d7d853473f26",
+      "sha256": "db807aecdbc8e4f9585a69b48c8ea2529cde6faa1f543d606f1049517ce791c8",
+      "bytes": 3449
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/unit-arsenal/supplies/v02-reuse-imports/radium-magazines/authored.blend",
+      "git_blob": "3fcb7a205de762dc4a39c30ef919a1bc959ecf9a",
+      "sha256": "a9f0bc07357269f84b668ed6f9a54d9f4bc746baf9236bcc8fa56a6d48801e01",
+      "bytes": 403968
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/unit-arsenal/supplies/v02-reuse-imports/radium-magazines/model.glb",
+      "git_blob": "9c35915972a8ccec3a5b36305bf370641759cfb7",
+      "sha256": "52e65aa885efc507858f4da8e17aa106b890ae85bc8ac58095bb8fed676689d7",
+      "bytes": 366608
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/icons/unit-arsenal-v02/radium-magazines.png",
+      "git_blob": "f6875eda2db1cdd914171f86bd9a57f26d284109",
+      "sha256": "dbaeb840b569a17c478c193556fc224d75c0bf08fda80b0783169a6c47765a36",
+      "bytes": 4555
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/unit-arsenal/supplies/v02-reuse-imports/gamma-cells/authored.blend",
+      "git_blob": "ee0018ee7c695205a950b52d6b6f31cf3358fdd3",
+      "sha256": "40498abc7d8bfc515993644f0f4c9671f6acc43b4522ad2206b69a7894a3d19e",
+      "bytes": 293620
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/unit-arsenal/supplies/v02-reuse-imports/gamma-cells/model.glb",
+      "git_blob": "734d6115339911fe4cf7adf0ec34c27b13176cb0",
+      "sha256": "98aa3f408bfbaa3adbb45277bc10ac0b8655e58ba921d712fdb5c3f3910c8619",
+      "bytes": 1447940
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/icons/unit-arsenal-v02/gamma-cells.png",
+      "git_blob": "47f3ab9a0d9e2a0fbeb768b0a31642a771b8b2ac",
+      "sha256": "fc2c7fb2492a53db6568756b9e9f55857dce3e927fe345de1281d6a9e3178e99",
+      "bytes": 3628
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/unit-arsenal/supplies/v03-visible-slugs/magnarail-slug-packs/authored.blend",
+      "git_blob": "e6b2974e585abffc74e2ee6515eacb8c188a5030",
+      "sha256": "94a1dd3cd84e16991f842079bbdcc8dd6be95edf6f86d18f89683e819bd2cccd",
+      "bytes": 234239
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/unit-arsenal/supplies/v03-visible-slugs/magnarail-slug-packs/model.glb",
+      "git_blob": "bdca08459192abcde684ce7984a0406477939be5",
+      "sha256": "acacb1ae9fa9879791cc3f6eb99de8d156801f69d887a4c854482e2a5a9ba24f",
+      "bytes": 1420560
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/icons/unit-arsenal-v02/magnarail-slug-packs.png",
+      "git_blob": "d201d3637a69b778fbd4c5eb1bc94ab102fbb95b",
+      "sha256": "e27a18f880d13f435af224920d6914c86fb8f32aa27f610ea304849e247062a9",
+      "bytes": 3212
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/unit-arsenal/supplies/v02-reuse-imports/volkite-cells/authored.blend",
+      "git_blob": "94fb4d7031d97c98f5290106658923078054d647",
+      "sha256": "eaa4c2c12bf5cbe2ce7561b7e9741636ce16b839e96670ec59c26bb622c4712c",
+      "bytes": 721893
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/unit-arsenal/supplies/v02-reuse-imports/volkite-cells/model.glb",
+      "git_blob": "6a99b907302af433ee64a34802d04bdabcc79513",
+      "sha256": "28a46f01e58cbbe526dc5a3afc115914f72d0ac52594e4d136ee15c03e77ef78",
+      "bytes": 1782456
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/icons/unit-arsenal-v02/volkite-cells.png",
+      "git_blob": "666f4339afdfcaf333cf4b2c18bc574bb428ca3c",
+      "sha256": "311fbe2ec742d65b32b30f2c16925a2d366bea4da8a335e2607ffb3810d70945",
+      "bytes": 3481
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/unit-arsenal/supplies/v02-reuse-imports/heavy-arc-cells/authored.blend",
+      "git_blob": "ec30ef23c2038b4af6e437702a48fc59232a993b",
+      "sha256": "f28ee6509a6380d7b190bce1e5d53ac1246ab2807f05a631c9230271008b9fc8",
+      "bytes": 388174
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/unit-arsenal/supplies/v02-reuse-imports/heavy-arc-cells/model.glb",
+      "git_blob": "b229869501424f11ed9211afeb75b07fbb189256",
+      "sha256": "2aa77e6398d2641ba5a1efba88036a2abc73e1f59755eaa5dde65cab3bb54cbd",
+      "bytes": 353364
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/icons/unit-arsenal-v02/heavy-arc-cells.png",
+      "git_blob": "a9b032602928a5be2b1dddd43be431b65b00bd17",
+      "sha256": "0b37060406699ffe7b77b339fca719bc8674e5656a851c54e7d8384bfdac5fc0",
+      "bytes": 3854
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/unit-arsenal/supplies/v02-reuse-imports/graviton-charges/authored.blend",
+      "git_blob": "02856da2f113c7dc640be34b52d67680c928b047",
+      "sha256": "790751b9473555830bb3e4f0ad784ef686825f50a2fc7af78b360f686fba0abb",
+      "bytes": 352747
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/unit-arsenal/supplies/v02-reuse-imports/graviton-charges/model.glb",
+      "git_blob": "29f971b3bca28a99f79b6850a57396ce6e108f62",
+      "sha256": "3ecceb3c6f017894f52b2d797f9c8ad148944985c265aa09a95b1c4844fc5054",
+      "bytes": 310768
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/icons/unit-arsenal-v02/graviton-charges.png",
+      "git_blob": "e7f10484a6d908861a5b7928e3435aec57c7501c",
+      "sha256": "3bbc5164aa1b87fd27cdd1352e632ceca19189a3f74e39b276839d47c48cd37d",
+      "bytes": 3473
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "docs/art/local-content-20261118/source-evidence/material-integration.json",
+      "git_blob": "243f57f33a1920d3aa492807d1746946f9218222",
+      "sha256": "e18b0910a702069b795628e0b1f21a4a618c6afec2bd790ce91ba84272e161a2",
+      "bytes": 45238
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "docs/art/local-content-20261118/source-evidence/full-icon-only-native-validation.json",
+      "git_blob": "066dd377d06249c3d402f69e504fe16f38b546df",
+      "sha256": "6e1caf486ba3364653860c0e9e872e09a6ba375a238f8420ea4dd244522025ff",
+      "bytes": 28885
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/material-icons/v01/field-supply-pack/authored.blend",
+      "git_blob": "16bc7643094dfeb91f82caba4279de40cac14520",
+      "sha256": "14179561ce5b7735998b5ad2a7281ed5769f4b8e25c5c4eb92c852b7a01211c3",
+      "bytes": 224559
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/material-icons/v01/field-supply-pack/model.glb",
+      "git_blob": "3015f2b806a47eeca3818a43b1f4cf2c1cf2e3ab",
+      "sha256": "0a1540cb5880674aab192206075b32389e41ae6b08dfc12ebc79e16a6e863b34",
+      "bytes": 1066312
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/icons/material-icons-v01/field-supply-pack.png",
+      "git_blob": "2ecbff29f318029c5802177ba00a3ef6b4129b4a",
+      "sha256": "6ee39659bc79489fd02e7acd66c8467e5c6a276de4a65566245d2190e0662d82",
+      "bytes": 4271
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/material-icons/v01/martian-manufactorum/authored.blend",
+      "git_blob": "fcae3686b7e746add2bfbc757f2a20ba58ef3b0f",
+      "sha256": "890816a08426343b7a668f4ae1b6a741d37ba378d654624fb97ddc0b11a0af09",
+      "bytes": 8950887
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/material-icons/v01/martian-manufactorum/model.glb",
+      "git_blob": "dbd0aeafbde8dd9314acea1d62f4de469c20e3fd",
+      "sha256": "72464ca3b58b2890442532aa70bc1df139e2d8468762eff6555cf41bcf083855",
+      "bytes": 12017624
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/icons/material-icons-v01/martian-manufactorum.png",
+      "git_blob": "4d21d52cf27d2e7275d0df5e68ddacd4070163b5",
+      "sha256": "f333b2793bd658d80c5e779ffc5cc4db27a8a7b8e816424db640ff0e4e99f987",
+      "bytes": 4523
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/material-icons/v01/guard-muster-hall/authored.blend",
+      "git_blob": "95b71e698ec718e54b86c73db2feffe84c85f47b",
+      "sha256": "d7b142571bc50ed61331d91a94365e49bbd9911a6005d36ad2b40ac4e05033b1",
+      "bytes": 8119748
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/material-icons/v01/guard-muster-hall/model.glb",
+      "git_blob": "fde4ab5e2a7aeabc90350969b2ad8aecffd1f5c2",
+      "sha256": "d3212d2147e45ced07b5b9cb615e0573c3dfe3cf8147e7b3232fe1f06b084ec2",
+      "bytes": 10406192
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/icons/material-icons-v01/guard-muster-hall.png",
+      "git_blob": "7a235ac2604322e44163ac8d2b1c969abbe77fb4",
+      "sha256": "fd4f233ddee6f17a42a669fecdd958688b10bcf5f7e131605380ee0a238a16cc",
+      "bytes": 4596
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/material-icons/v01/sororitas-convent/authored.blend",
+      "git_blob": "5fcff2556721ae816a6d32f7f25611633c4ed8c7",
+      "sha256": "5235451bd7623f28cc937f8f2871c08a510bc6632c4c5b4326dff93b5a1d7c25",
+      "bytes": 10647164
+    },
+    {
+      "ref": "304ea1934435c54ba5d60ddcd9f2f87b2c0adbe0",
+      "path": "art/source-to-3d/material-icons/v01/sororitas-convent/model.glb",
+      "git_blob": "7543153148edf773eaa4306af89703a548b1443b",
+      "sha256": "8871e5f33830a2c1bef345aace1ff50128191565e3e6507d4729a341de7e1341",
+      "bytes": 17653320
+    },
+    {
+      "ref": "a86e8e1e40fdf4f06b490fd4fadaa9c4345277c7",
+      "path": "tech-priests_src/graphics/icons/material-icons-v01/sororitas-convent.png",
+      "git_blob": "cb0598f82aaa30bba1e15f47de5dfb92e33cedb5",
+      "sha256": "3f86147dabff648df97b1ba0d20d381603a6ba6efe438710e716a32a1b7e5871",
+      "bytes": 4733
+    }
+  ]
+}

@@ -1,4 +1,5 @@
 local Registry=require("scripts.core.runtime_event_registry")
+local Broker=require("scripts.core.runtime_tick_broker")
 local Picker=require("scripts.core.character_skin_picker")
 local Visuals=require("scripts.core.character_visuals")
 local Catalog=require("shared.character_skin_catalog")
@@ -13,7 +14,7 @@ local function check(ok,message)
 end
 local function close(a,b) return math.abs(a-b)<0.0001 end
 local function initialize()
-  storage.skin_test={start=nil,stage=0,npcs={}}
+  storage.skin_test={start=nil,stage=0,npcs={},broker_service_count=Broker.service_count()}
   local surface=game.surfaces[1]
   surface.daytime=0;surface.freeze_daytime=true
   surface.request_to_generate_chunks({0,0},2);surface.force_generate_chunk_requests()
@@ -144,6 +145,10 @@ local function tick(event)
       local t=storage.skin_test
       local player=game.get_player(t.player)
       check(player.character.unit_number==t.saved_unit,"physical character identity survives separate-process reload")
+      check(Broker.service_count()==t.broker_service_count,"broker service count survives separate-process reload")
+      local found=0
+      for _,service in ipairs(Broker.services) do if service.name=="character_visuals_presentation" then found=found+1 end end
+      check(found==1,"exactly one named presentation service survives reload")
       inventory_checks(player)
       if not t.disabled then
         check(Picker.selected(player)=="enginseer","selected appearance survives reload")
@@ -260,6 +265,13 @@ local function tick(event)
     game.auto_save("character-skins")
   end
 end
+Registry.on_configuration_changed(function()
+  local t=storage.skin_test
+  if t then
+    check(Broker.service_count()==t.broker_service_count,"configuration preserves broker service count")
+    log("[TP-SKIN-BROKER] CONFIG_PASS stable service count="..Broker.service_count())
+  end
+end,{owner="character-skin-native-test",route="broker-configuration",priority=2000})
 Registry.on_init(initialize,{owner="character-skin-native-test",route="fixture",priority=1000})
 Registry.on_event(defines.events.on_tick,tick,nil,{owner="character-skin-native-test",route="native-assertions",priority=2000})
 return true
