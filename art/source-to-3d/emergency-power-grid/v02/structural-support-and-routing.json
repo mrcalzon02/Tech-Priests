@@ -1,0 +1,65 @@
+{
+  "passed": true,
+  "source_and_runtime": [
+    {
+      "artifact": "power-grid-v02.blend",
+      "sha256": "c2eff12f7a2e552186c0fc3589874810996e4554594ed95ad21f596ed20bce35",
+      "all92meshes_physically_grounded": true,
+      "moving_meshes": 0,
+      "all_three_electrical_routes_checked_against_all_seven_timber_members": true,
+      "only_designated_gland_entry_contacts": [
+        {
+          "lead": "POWER GRID | attached closed electrical lead",
+          "timber": "POWER GRID | longitudinal timber post",
+          "measured_intersections": 27,
+          "maximum_distance_from_designated_closed_gland_entry": 0.011000007484274994
+        },
+        {
+          "lead": "POWER GRID | attached closed electrical lead.001",
+          "timber": "POWER GRID | longitudinal timber post.001",
+          "measured_intersections": 26,
+          "maximum_distance_from_designated_closed_gland_entry": 0.01099997771897696
+        },
+        {
+          "lead": "POWER GRID | attached closed electrical lead.002",
+          "timber": "POWER GRID | longitudinal timber post.002",
+          "measured_intersections": 48,
+          "maximum_distance_from_designated_closed_gland_entry": 0.011000007484274994
+        }
+      ],
+      "three_separate_leads_do_not_intersect_each_other": true,
+      "exhaustive_static_contact_adjudication": false
+    },
+    {
+      "artifact": "power-grid-v02.glb",
+      "sha256": "e7d869fa648e4a82d8e52ff34c6b2eb14e5bfd71f153e2d9d9b25c50a3c4ee31",
+      "all92meshes_physically_grounded": true,
+      "moving_meshes": 0,
+      "all_three_electrical_routes_checked_against_all_seven_timber_members": true,
+      "only_designated_gland_entry_contacts": [
+        {
+          "lead": "POWER GRID | attached closed electrical lead",
+          "timber": "POWER GRID | longitudinal timber post",
+          "measured_intersections": 27,
+          "maximum_distance_from_designated_closed_gland_entry": 0.011000007484274994
+        },
+        {
+          "lead": "POWER GRID | attached closed electrical lead.001",
+          "timber": "POWER GRID | longitudinal timber post.001",
+          "measured_intersections": 26,
+          "maximum_distance_from_designated_closed_gland_entry": 0.01099997771897696
+        },
+        {
+          "lead": "POWER GRID | attached closed electrical lead.002",
+          "timber": "POWER GRID | longitudinal timber post.002",
+          "measured_intersections": 48,
+          "maximum_distance_from_designated_closed_gland_entry": 0.011000007484274994
+        }
+      ],
+      "three_separate_leads_do_not_intersect_each_other": true,
+      "exhaustive_static_contact_adjudication": false
+    }
+  ],
+  "scope": "All92 fixed parts physically connect to the founded slab. External leads clear every timber except their designated seated entry, and do not intersect one another. Central lead is offset around the mast/brace sweep space. Static fitted-joint inventory is not exhaustive overlap adjudication. Native passive pole has no moving mechanism.",
+  "owner_visual_approved": false
+}

@@ -1,0 +1,939 @@
+{
+  "artifact": "power-grid-v02.blend",
+  "artifact_sha256": "c2eff12f7a2e552186c0fc3589874810996e4554594ed95ad21f596ed20bce35",
+  "tolerance_tiles": 0.0001,
+  "root_foundation_meshes": [
+    "POWER GRID | dressed stone footing"
+  ],
+  "mesh_count": 92,
+  "physically_connected_to_foundation": 92,
+  "unattached_components": [],
+  "measured_edges": [
+    {
+      "a": "POWER GRID | dressed stone footing",
+      "b": "POWER GRID | founded iron post shoe",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | dressed stone footing",
+      "b": "POWER GRID | founded iron post shoe.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | dressed stone footing",
+      "b": "POWER GRID | founded iron post shoe.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | dressed stone footing",
+      "b": "POWER GRID | junction box founded foot",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | dressed stone footing",
+      "b": "POWER GRID | foundation anchor seat",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | dressed stone footing",
+      "b": "POWER GRID | foundation anchor seat.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | dressed stone footing",
+      "b": "POWER GRID | foundation anchor seat.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | dressed stone footing",
+      "b": "POWER GRID | foundation anchor seat.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | founded iron post shoe",
+      "b": "POWER GRID | longitudinal timber post",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | founded iron post shoe",
+      "b": "POWER GRID | retained shoe top band",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | founded iron post shoe",
+      "b": "POWER GRID | shoe seated cross bolt",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | founded iron post shoe",
+      "b": "POWER GRID | shoe seated cross bolt.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | founded iron post shoe",
+      "b": "POWER GRID | founded diagonal timber brace",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | longitudinal timber post",
+      "b": "POWER GRID | retained shoe top band",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | longitudinal timber post",
+      "b": "POWER GRID | sealed timber end cap",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | longitudinal timber post",
+      "b": "POWER GRID | shoe seated cross bolt",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | longitudinal timber post",
+      "b": "POWER GRID | shoe seated cross bolt.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | longitudinal timber post",
+      "b": "POWER GRID | crossarm retained joining strap",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | longitudinal timber post",
+      "b": "POWER GRID | crossarm retained joining strap.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | longitudinal timber post",
+      "b": "POWER GRID | founded diagonal timber brace",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | longitudinal timber post",
+      "b": "POWER GRID | continuous red ceramic insulator",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | longitudinal timber post",
+      "b": "POWER GRID | attached closed electrical lead",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | longitudinal timber post",
+      "b": "POWER GRID | closed lead post gland",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | retained shoe top band",
+      "b": "POWER GRID | shoe seated cross bolt.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | sealed timber end cap",
+      "b": "POWER GRID | continuous red ceramic insulator",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | founded iron post shoe.001",
+      "b": "POWER GRID | longitudinal timber post.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | founded iron post shoe.001",
+      "b": "POWER GRID | retained shoe top band.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | founded iron post shoe.001",
+      "b": "POWER GRID | shoe seated cross bolt.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | founded iron post shoe.001",
+      "b": "POWER GRID | shoe seated cross bolt.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | longitudinal timber post.001",
+      "b": "POWER GRID | retained shoe top band.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | longitudinal timber post.001",
+      "b": "POWER GRID | sealed timber end cap.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | longitudinal timber post.001",
+      "b": "POWER GRID | shoe seated cross bolt.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | longitudinal timber post.001",
+      "b": "POWER GRID | shoe seated cross bolt.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | longitudinal timber post.001",
+      "b": "POWER GRID | crossarm retained joining strap.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | longitudinal timber post.001",
+      "b": "POWER GRID | crossarm retained joining strap.004",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | longitudinal timber post.001",
+      "b": "POWER GRID | founded diagonal timber brace",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | longitudinal timber post.001",
+      "b": "POWER GRID | founded diagonal timber brace.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | longitudinal timber post.001",
+      "b": "POWER GRID | continuous copper ceramic insulator",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | longitudinal timber post.001",
+      "b": "POWER GRID | attached closed electrical lead.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | longitudinal timber post.001",
+      "b": "POWER GRID | closed lead post gland.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | retained shoe top band.001",
+      "b": "POWER GRID | shoe seated cross bolt.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | sealed timber end cap.001",
+      "b": "POWER GRID | continuous copper ceramic insulator",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | shoe seated cross bolt.002",
+      "b": "POWER GRID | junction box founded foot",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | shoe seated cross bolt.003",
+      "b": "POWER GRID | junction box founded foot",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | founded iron post shoe.002",
+      "b": "POWER GRID | longitudinal timber post.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | founded iron post shoe.002",
+      "b": "POWER GRID | retained shoe top band.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | founded iron post shoe.002",
+      "b": "POWER GRID | shoe seated cross bolt.004",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | founded iron post shoe.002",
+      "b": "POWER GRID | shoe seated cross bolt.005",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | founded iron post shoe.002",
+      "b": "POWER GRID | founded diagonal timber brace.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | longitudinal timber post.002",
+      "b": "POWER GRID | retained shoe top band.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | longitudinal timber post.002",
+      "b": "POWER GRID | sealed timber end cap.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | longitudinal timber post.002",
+      "b": "POWER GRID | shoe seated cross bolt.004",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | longitudinal timber post.002",
+      "b": "POWER GRID | shoe seated cross bolt.005",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | longitudinal timber post.002",
+      "b": "POWER GRID | crossarm retained joining strap.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | longitudinal timber post.002",
+      "b": "POWER GRID | crossarm retained joining strap.005",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | longitudinal timber post.002",
+      "b": "POWER GRID | founded diagonal timber brace.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | longitudinal timber post.002",
+      "b": "POWER GRID | continuous green ceramic insulator",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | longitudinal timber post.002",
+      "b": "POWER GRID | attached closed electrical lead.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | longitudinal timber post.002",
+      "b": "POWER GRID | closed lead post gland.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | retained shoe top band.002",
+      "b": "POWER GRID | shoe seated cross bolt.005",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | sealed timber end cap.002",
+      "b": "POWER GRID | continuous green ceramic insulator",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | retained timber crossarm",
+      "b": "POWER GRID | crossarm retained joining strap",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | retained timber crossarm",
+      "b": "POWER GRID | crossarm strap fitted bolt",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | retained timber crossarm",
+      "b": "POWER GRID | crossarm strap fitted bolt.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | retained timber crossarm",
+      "b": "POWER GRID | crossarm retained joining strap.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | retained timber crossarm",
+      "b": "POWER GRID | crossarm strap fitted bolt.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | retained timber crossarm",
+      "b": "POWER GRID | crossarm strap fitted bolt.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | retained timber crossarm",
+      "b": "POWER GRID | crossarm retained joining strap.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | retained timber crossarm",
+      "b": "POWER GRID | crossarm strap fitted bolt.004",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | retained timber crossarm",
+      "b": "POWER GRID | crossarm strap fitted bolt.005",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | retained timber crossarm",
+      "b": "POWER GRID | crossarm endgrain metal cap",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | retained timber crossarm",
+      "b": "POWER GRID | crossarm endgrain metal cap.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | retained timber crossarm",
+      "b": "POWER GRID | sealed timber junction board",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | crossarm retained joining strap",
+      "b": "POWER GRID | crossarm strap fitted bolt",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | crossarm retained joining strap",
+      "b": "POWER GRID | crossarm strap fitted bolt.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | crossarm retained joining strap.001",
+      "b": "POWER GRID | crossarm strap fitted bolt.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | crossarm retained joining strap.001",
+      "b": "POWER GRID | crossarm strap fitted bolt.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | crossarm retained joining strap.002",
+      "b": "POWER GRID | crossarm strap fitted bolt.004",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | crossarm retained joining strap.002",
+      "b": "POWER GRID | crossarm strap fitted bolt.005",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | retained timber crossarm.001",
+      "b": "POWER GRID | crossarm retained joining strap.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | retained timber crossarm.001",
+      "b": "POWER GRID | crossarm strap fitted bolt.006",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | retained timber crossarm.001",
+      "b": "POWER GRID | crossarm strap fitted bolt.007",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | retained timber crossarm.001",
+      "b": "POWER GRID | crossarm retained joining strap.004",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | retained timber crossarm.001",
+      "b": "POWER GRID | crossarm strap fitted bolt.008",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | retained timber crossarm.001",
+      "b": "POWER GRID | crossarm strap fitted bolt.009",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | retained timber crossarm.001",
+      "b": "POWER GRID | crossarm retained joining strap.005",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | retained timber crossarm.001",
+      "b": "POWER GRID | crossarm strap fitted bolt.010",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | retained timber crossarm.001",
+      "b": "POWER GRID | crossarm strap fitted bolt.011",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | retained timber crossarm.001",
+      "b": "POWER GRID | crossarm endgrain metal cap.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | retained timber crossarm.001",
+      "b": "POWER GRID | crossarm endgrain metal cap.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | crossarm retained joining strap.003",
+      "b": "POWER GRID | crossarm strap fitted bolt.006",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | crossarm retained joining strap.003",
+      "b": "POWER GRID | crossarm strap fitted bolt.007",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | crossarm retained joining strap.004",
+      "b": "POWER GRID | crossarm strap fitted bolt.008",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | crossarm retained joining strap.004",
+      "b": "POWER GRID | crossarm strap fitted bolt.009",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | crossarm retained joining strap.005",
+      "b": "POWER GRID | crossarm strap fitted bolt.010",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | crossarm retained joining strap.005",
+      "b": "POWER GRID | crossarm strap fitted bolt.011",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | founded diagonal timber brace",
+      "b": "POWER GRID | founded diagonal timber brace.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | continuous red ceramic insulator",
+      "b": "POWER GRID | red fitted terminal lower crown",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | red fitted terminal lower crown",
+      "b": "POWER GRID | red retained conductor cap",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | red retained conductor cap",
+      "b": "POWER GRID | red fixed wire contact button",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | continuous copper ceramic insulator",
+      "b": "POWER GRID | copper fitted terminal lower crown",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | copper fitted terminal lower crown",
+      "b": "POWER GRID | copper retained conductor cap",
+      "basis": "measured near-surface fitted seat",
+      "surface_distance": 1.1920928955078125e-07
+    },
+    {
+      "a": "POWER GRID | copper retained conductor cap",
+      "b": "POWER GRID | copper fixed wire contact button",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | continuous green ceramic insulator",
+      "b": "POWER GRID | green fitted terminal lower crown",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | green fitted terminal lower crown",
+      "b": "POWER GRID | green retained conductor cap",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | green retained conductor cap",
+      "b": "POWER GRID | green fixed wire contact button",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | junction box founded foot",
+      "b": "POWER GRID | sealed timber junction board",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | junction box founded foot",
+      "b": "POWER GRID | legend retained upright",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | junction box founded foot",
+      "b": "POWER GRID | legend retained upright.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | junction box founded foot",
+      "b": "POWER GRID | legend retained sill lintel",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | sealed timber junction board",
+      "b": "POWER GRID | legend seated dark backing",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | sealed timber junction board",
+      "b": "POWER GRID | legend retained upright",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | sealed timber junction board",
+      "b": "POWER GRID | legend retained upright.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | sealed timber junction board",
+      "b": "POWER GRID | legend retained sill lintel",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | sealed timber junction board",
+      "b": "POWER GRID | legend retained sill lintel.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | sealed timber junction board",
+      "b": "POWER GRID | attached closed electrical lead",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | sealed timber junction board",
+      "b": "POWER GRID | closed lead junction gland",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | sealed timber junction board",
+      "b": "POWER GRID | attached closed electrical lead.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | sealed timber junction board",
+      "b": "POWER GRID | closed lead junction gland.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | sealed timber junction board",
+      "b": "POWER GRID | attached closed electrical lead.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | sealed timber junction board",
+      "b": "POWER GRID | closed lead junction gland.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | legend seated dark backing",
+      "b": "POWER GRID | fixed lacquered green legend",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | legend seated dark backing",
+      "b": "POWER GRID | legend retained upright",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | legend seated dark backing",
+      "b": "POWER GRID | legend retained upright.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | legend seated dark backing",
+      "b": "POWER GRID | legend retained sill lintel",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | legend seated dark backing",
+      "b": "POWER GRID | legend retained sill lintel.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | fixed lacquered green legend",
+      "b": "POWER GRID | legend seated circuit trace",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | fixed lacquered green legend",
+      "b": "POWER GRID | legend seated circuit trace.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | fixed lacquered green legend",
+      "b": "POWER GRID | legend seated circuit trace.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | legend retained upright",
+      "b": "POWER GRID | legend retained sill lintel",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | legend retained upright",
+      "b": "POWER GRID | legend retained sill lintel.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | legend retained upright",
+      "b": "POWER GRID | legend retained corner head",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | legend retained upright",
+      "b": "POWER GRID | legend retained corner head.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | legend retained upright.001",
+      "b": "POWER GRID | legend retained sill lintel",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | legend retained upright.001",
+      "b": "POWER GRID | legend retained sill lintel.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | legend retained upright.001",
+      "b": "POWER GRID | legend retained corner head.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | legend retained upright.001",
+      "b": "POWER GRID | legend retained corner head.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | legend retained sill lintel",
+      "b": "POWER GRID | legend retained corner head",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | legend retained sill lintel",
+      "b": "POWER GRID | legend retained corner head.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | legend retained sill lintel.001",
+      "b": "POWER GRID | legend retained corner head.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | legend retained sill lintel.001",
+      "b": "POWER GRID | legend retained corner head.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | legend seated circuit trace",
+      "b": "POWER GRID | legend terminal witness",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | legend seated circuit trace.001",
+      "b": "POWER GRID | legend terminal witness.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | legend seated circuit trace.002",
+      "b": "POWER GRID | legend terminal witness.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | attached closed electrical lead",
+      "b": "POWER GRID | closed lead post gland",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | attached closed electrical lead",
+      "b": "POWER GRID | closed lead junction gland",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | attached closed electrical lead.001",
+      "b": "POWER GRID | closed lead post gland.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | attached closed electrical lead.001",
+      "b": "POWER GRID | closed lead junction gland.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | attached closed electrical lead.002",
+      "b": "POWER GRID | closed lead post gland.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | attached closed electrical lead.002",
+      "b": "POWER GRID | closed lead junction gland.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | foundation anchor seat",
+      "b": "POWER GRID | foundation seated retained head",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | foundation anchor seat.001",
+      "b": "POWER GRID | foundation seated retained head.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | foundation anchor seat.002",
+      "b": "POWER GRID | foundation seated retained head.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "POWER GRID | foundation anchor seat.003",
+      "b": "POWER GRID | foundation seated retained head.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    }
+  ],
+  "passed_without_manual_exclusions": true,
+  "note": "Raw support graph. Volume contacts still require intended-interface review; a contact is not proof that two unrelated components should intersect. Bearings need clearance and explicit support design."
+}

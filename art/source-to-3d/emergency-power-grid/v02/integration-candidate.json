@@ -1,0 +1,15 @@
+{
+  "base_commit": "9c872855ee6b1c0f670ed542a7324605ecbff08e",
+  "source_sha256": "c2eff12f7a2e552186c0fc3589874810996e4554594ed95ad21f596ed20bce35",
+  "runtime_sha256": "e7d869fa648e4a82d8e52ff34c6b2eb14e5bfd71f153e2d9d9b25c50a3c4ee31",
+  "sprites": {
+    "body.png": "fa97175f8860475221145bc5e3d822a47ecb3c487f7145accd72668b06908af2",
+    "icon.png": "3bf70c0a6e960b429dbc164ed63db53b8f12976dcb81c6f5c0f0e0b0d0e376de",
+    "shadow.png": "087b33e3002d1baeaafdce4e0976760edcc7215819e94bda6ef19c74b89690ae"
+  },
+  "native_verification_pending": true,
+  "production_repository_integrated": false,
+  "only_visual_prototype_fields_changed": true,
+  "supply_radius_wire_reach_and_passive_pole_gameplay_preserved": true,
+  "owner_visual_approved": false
+}

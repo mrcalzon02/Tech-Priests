@@ -1,0 +1,20 @@
+{
+  "source_sha256": "c2eff12f7a2e552186c0fc3589874810996e4554594ed95ad21f596ed20bce35",
+  "runtime_sha256": "e7d869fa648e4a82d8e52ff34c6b2eb14e5bfd71f153e2d9d9b25c50a3c4ee31",
+  "mesh_count": 92,
+  "triangles": 17812,
+  "source_runtime_bounds_error": 2.9802322387695312e-08,
+  "packed_source_images": 27,
+  "unpacked_source_images": [],
+  "runtime_embedded_images": 27,
+  "runtime_external_images": [],
+  "bad_meshes": {},
+  "materials_missing_pbr_maps": [],
+  "native_directions": [
+    0
+  ],
+  "animation_clips": 0,
+  "passive_fixed_pole_by_actual_native_contract": true,
+  "owner_visual_approved": false,
+  "technical_checks_passed": true
+}

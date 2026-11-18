@@ -1,0 +1,99 @@
+00:00.922  blend            | Read blend: "C:\Users\Admin\Documents\ChatGPT\Tech priests\tanks-structure-production\build\tp-emergency-power-grid-main01\authored-v02\power-grid-v02.blend"
+17:52:59 | INFO: Data are loaded, start creating Blender stuff
+17:52:59 | INFO: Blender create Mesh node POWER GRID | attached closed electrical lead
+17:52:59 | INFO: Blender create Mesh node POWER GRID | attached closed electrical lead.001
+17:52:59 | INFO: Blender create Mesh node POWER GRID | attached closed electrical lead.002
+17:52:59 | INFO: Blender create Mesh node POWER GRID | closed lead junction gland
+17:52:59 | INFO: Blender create Mesh node POWER GRID | closed lead junction gland.001
+17:52:59 | INFO: Blender create Mesh node POWER GRID | closed lead junction gland.002
+17:52:59 | INFO: Blender create Mesh node POWER GRID | closed lead post gland
+17:52:59 | INFO: Blender create Mesh node POWER GRID | closed lead post gland.001
+17:52:59 | INFO: Blender create Mesh node POWER GRID | closed lead post gland.002
+17:52:59 | INFO: Blender create Mesh node POWER GRID | continuous copper ceramic insulator
+17:52:59 | INFO: Blender create Mesh node POWER GRID | continuous green ceramic insulator
+17:52:59 | INFO: Blender create Mesh node POWER GRID | continuous red ceramic insulator
+17:52:59 | INFO: Blender create Mesh node POWER GRID | copper fitted terminal lower crown
+17:52:59 | INFO: Blender create Mesh node POWER GRID | copper fixed wire contact button
+17:52:59 | INFO: Blender create Mesh node POWER GRID | copper retained conductor cap
+17:52:59 | INFO: Blender create Mesh node POWER GRID | crossarm endgrain metal cap
+17:52:59 | INFO: Blender create Mesh node POWER GRID | crossarm endgrain metal cap.001
+17:52:59 | INFO: Blender create Mesh node POWER GRID | crossarm endgrain metal cap.002
+17:52:59 | INFO: Blender create Mesh node POWER GRID | crossarm endgrain metal cap.003
+17:52:59 | INFO: Blender create Mesh node POWER GRID | crossarm retained joining strap.006
+17:52:59 | INFO: Blender create Mesh node POWER GRID | crossarm retained joining strap.007
+17:52:59 | INFO: Blender create Mesh node POWER GRID | crossarm retained joining strap.008
+17:52:59 | INFO: Blender create Mesh node POWER GRID | crossarm retained joining strap.009
+17:52:59 | INFO: Blender create Mesh node POWER GRID | crossarm retained joining strap.010
+17:52:59 | INFO: Blender create Mesh node POWER GRID | crossarm retained joining strap.011
+17:52:59 | INFO: Blender create Mesh node POWER GRID | crossarm strap fitted bolt
+17:52:59 | INFO: Blender create Mesh node POWER GRID | crossarm strap fitted bolt.001
+17:52:59 | INFO: Blender create Mesh node POWER GRID | crossarm strap fitted bolt.002
+17:52:59 | INFO: Blender create Mesh node POWER GRID | crossarm strap fitted bolt.003
+17:52:59 | INFO: Blender create Mesh node POWER GRID | crossarm strap fitted bolt.004
+17:52:59 | INFO: Blender create Mesh node POWER GRID | crossarm strap fitted bolt.005
+17:52:59 | INFO: Blender create Mesh node POWER GRID | crossarm strap fitted bolt.006
+17:52:59 | INFO: Blender create Mesh node POWER GRID | crossarm strap fitted bolt.007
+17:52:59 | INFO: Blender create Mesh node POWER GRID | crossarm strap fitted bolt.008
+17:52:59 | INFO: Blender create Mesh node POWER GRID | crossarm strap fitted bolt.009
+17:52:59 | INFO: Blender create Mesh node POWER GRID | crossarm strap fitted bolt.010
+17:52:59 | INFO: Blender create Mesh node POWER GRID | crossarm strap fitted bolt.011
+17:52:59 | INFO: Blender create Mesh node POWER GRID | dressed stone footing.001
+17:52:59 | INFO: Blender create Mesh node POWER GRID | fixed lacquered green legend.001
+17:52:59 | INFO: Blender create Mesh node POWER GRID | foundation anchor seat.004
+17:52:59 | INFO: Blender create Mesh node POWER GRID | foundation anchor seat.005
+17:52:59 | INFO: Blender create Mesh node POWER GRID | foundation anchor seat.006
+17:52:59 | INFO: Blender create Mesh node POWER GRID | foundation anchor seat.007
+17:52:59 | INFO: Blender create Mesh node POWER GRID | foundation seated retained head
+17:52:59 | INFO: Blender create Mesh node POWER GRID | foundation seated retained head.001
+17:52:59 | INFO: Blender create Mesh node POWER GRID | foundation seated retained head.002
+17:52:59 | INFO: Blender create Mesh node POWER GRID | foundation seated retained head.003
+17:52:59 | INFO: Blender create Mesh node POWER GRID | founded diagonal timber brace
+17:52:59 | INFO: Blender create Mesh node POWER GRID | founded diagonal timber brace.001
+17:52:59 | INFO: Blender create Mesh node POWER GRID | founded iron post shoe
+17:52:59 | INFO: Blender create Mesh node POWER GRID | founded iron post shoe.001
+17:52:59 | INFO: Blender create Mesh node POWER GRID | founded iron post shoe.002
+17:52:59 | INFO: Blender create Mesh node POWER GRID | green fitted terminal lower crown
+17:52:59 | INFO: Blender create Mesh node POWER GRID | green fixed wire contact button
+17:52:59 | INFO: Blender create Mesh node POWER GRID | green retained conductor cap
+17:52:59 | INFO: Blender create Mesh node POWER GRID | junction box founded foot.001
+17:52:59 | INFO: Blender create Mesh node POWER GRID | legend retained corner head
+17:52:59 | INFO: Blender create Mesh node POWER GRID | legend retained corner head.001
+17:52:59 | INFO: Blender create Mesh node POWER GRID | legend retained corner head.002
+17:52:59 | INFO: Blender create Mesh node POWER GRID | legend retained corner head.003
+17:52:59 | INFO: Blender create Mesh node POWER GRID | legend retained sill lintel.002
+17:52:59 | INFO: Blender create Mesh node POWER GRID | legend retained sill lintel.003
+17:52:59 | INFO: Blender create Mesh node POWER GRID | legend retained upright.002
+17:52:59 | INFO: Blender create Mesh node POWER GRID | legend retained upright.003
+17:52:59 | INFO: Blender create Mesh node POWER GRID | legend seated circuit trace.003
+17:52:59 | INFO: Blender create Mesh node POWER GRID | legend seated circuit trace.004
+17:52:59 | INFO: Blender create Mesh node POWER GRID | legend seated circuit trace.005
+17:52:59 | INFO: Blender create Mesh node POWER GRID | legend seated dark backing.001
+17:52:59 | INFO: Blender create Mesh node POWER GRID | legend terminal witness
+17:52:59 | INFO: Blender create Mesh node POWER GRID | legend terminal witness.001
+17:52:59 | INFO: Blender create Mesh node POWER GRID | legend terminal witness.002
+17:52:59 | INFO: Blender create Mesh node POWER GRID | longitudinal timber post
+17:52:59 | INFO: Blender create Mesh node POWER GRID | longitudinal timber post.001
+17:52:59 | INFO: Blender create Mesh node POWER GRID | longitudinal timber post.002
+17:52:59 | INFO: Blender create Mesh node POWER GRID | red fitted terminal lower crown
+17:52:59 | INFO: Blender create Mesh node POWER GRID | red fixed wire contact button
+17:52:59 | INFO: Blender create Mesh node POWER GRID | red retained conductor cap
+17:52:59 | INFO: Blender create Mesh node POWER GRID | retained shoe top band
+17:52:59 | INFO: Blender create Mesh node POWER GRID | retained shoe top band.001
+17:52:59 | INFO: Blender create Mesh node POWER GRID | retained shoe top band.002
+17:52:59 | INFO: Blender create Mesh node POWER GRID | retained timber crossarm
+17:52:59 | INFO: Blender create Mesh node POWER GRID | retained timber crossarm.001
+17:52:59 | INFO: Blender create Mesh node POWER GRID | sealed timber end cap
+17:52:59 | INFO: Blender create Mesh node POWER GRID | sealed timber end cap.001
+17:52:59 | INFO: Blender create Mesh node POWER GRID | sealed timber end cap.002
+17:52:59 | INFO: Blender create Mesh node POWER GRID | sealed timber junction board.001
+17:52:59 | INFO: Blender create Mesh node POWER GRID | shoe seated cross bolt
+17:52:59 | INFO: Blender create Mesh node POWER GRID | shoe seated cross bolt.001
+17:52:59 | INFO: Blender create Mesh node POWER GRID | shoe seated cross bolt.002
+17:52:59 | INFO: Blender create Mesh node POWER GRID | shoe seated cross bolt.003
+17:52:59 | INFO: Blender create Mesh node POWER GRID | shoe seated cross bolt.004
+17:52:59 | INFO: Blender create Mesh node POWER GRID | shoe seated cross bolt.005
+17:52:59 | INFO: glTF import finished in 0.06s
+POWER_GRID_SUPPORT_AND_ROUTE_PASS
+Blender 5.0.0 (hash a37564c4df7a built 2025-11-18 11:06:54)
+
+Blender quit

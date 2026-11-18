@@ -1,0 +1,34 @@
+{
+  "source_sha256": "c2eff12f7a2e552186c0fc3589874810996e4554594ed95ad21f596ed20bce35",
+  "runtime_sha256": "e7d869fa648e4a82d8e52ff34c6b2eb14e5bfd71f153e2d9d9b25c50a3c4ee31",
+  "reference_sha256": "9209a929b615bd6473e73e56f494fb20d924571baeaabc8cf54ca6f34265d402",
+  "render_sha256": {
+    "actual-glb-front.png": "5baffb43ce6ea31c67052188a57b7173bb7c189f2e1209943838b61af7b89de5",
+    "actual-glb-detail.png": "565770018eb3807e3c3c1c6e33a223e8353f59385c7b59c8a3f89ad04732ac68",
+    "actual-glb-rear.png": "e7fad241d78c5e7e03a01bdd11989324acfb40705c6ba5074caf8a670dd6e83a",
+    "actual-glb-clay.png": "3a4e7a5f1322153f7701a0e8a92e50e3b67171545c2bd2e965459ad334943dd0"
+  },
+  "native_image_sha256": {
+    "unwired-close.png": "3033047dd8ed1d2c971929b4fc56a13f3f48f5190583ba27994e184be30d5430",
+    "wired-contacts-close.png": "4c71d7cee85c028a20fb2a37cc11248be9d165d6f1c2f6ddad46a613cf31c8ce",
+    "restored-night-coverage.png": "f8fdc98bb71f07758bc213457e648efd62cadc344bdde57a28902a0cac2a7161",
+    "copper-cut-wide.png": "5a81349f0de20adeb686e167b043788f2a4691602c39321ffbbd0f49563a55b5"
+  },
+  "scored_review_out_of_five": {
+    "actual_passive_pole_purpose": 5,
+    "supported_construction": 4,
+    "model_specific_fmpl_surfaces": 4,
+    "fixed_socket_alignment": 4,
+    "native_integration": 4
+  },
+  "reasoning": "Braced timber frame and continuous ceramic insulators retain the reference three-terminal silhouette. Metal boots, seated crossarm straps, retained contact buttons and founded diagram board explain construction. Actual FMPL cedar preset was baked to image albedo/normal/ORM with grain following beam length; original indexed metal/ceramic maps remain intact. All92 parts are grounded. All three electrical leads clear timbers except their designated seated entry and do not intersect each other. Actual native close views show copper/red/green wires meeting the three measured fixed contacts. Coverage/cut/reconnect/source restoration and real circuit signals are verified in the actual engine.",
+  "animation_applicability": "Passive pole has fixed native RotatedSprite and no moving processing cycle. Source geometry and sockets stay rigid; native wire/network changes provide live operating states. No mechanical loop, generation or powered indicator is invented.",
+  "delegated_operational_close_enough": true,
+  "owner_visual_approved": false,
+  "limits": [
+    "Static contact inventory is not exhaustive static-overlap adjudication.",
+    "Native captures use medium graphics; delivered sprites retain full resolution.",
+    "Full user mod pack and portal release were not verified.",
+    "Native operational checks use normal quality."
+  ]
+}

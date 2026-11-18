@@ -1,0 +1,43 @@
+{
+  "material_id": "power-grid-cedar-original-fmpl",
+  "source_preset": "cedar-rough",
+  "source_catalog": "tools/fmpl/surfaces/catalog.json",
+  "source_catalog_sha256": "8b65456ea6922ad1891d3b0f0a0ab51d58c4182621c81c398e31e701879c357a",
+  "source_builder": "tools/fmpl/surfaces/build_library.py",
+  "source_builder_sha256": "a63ff5845b107a02316912e8806750cdec9ab9cae76fdbbd25893b5e80f83050",
+  "source_repository": "mrcalzon02/Tech-Priests",
+  "source_commit": "9c872855ee6b1c0f670ed542a7324605ecbff08e",
+  "model_specific_mapping_scale": [
+    18,
+    1.2,
+    1.2
+  ],
+  "grain_direction": "UV.V follows local longitudinalZ of every timber. 1.8tile full image height; metal boots cover end grain.",
+  "bake_resolution": [
+    1024,
+    1024
+  ],
+  "actual_cycles_bake": true,
+  "baked_maps": {
+    "albedo": {
+      "file": "textures/grid-cedar-albedo.png",
+      "sha256": "905b8b87fb6a3a5866004538af57cc3ac05651a973cc5257b2e7e3ff14febf9e",
+      "color_space": "sRGB"
+    },
+    "normal": {
+      "file": "textures/grid-cedar-normal.png",
+      "sha256": "ea31535ef51076c3e3410b0782d0405882f86f46aec5ea6acec7552da4f506db",
+      "color_space": "Non-Color"
+    },
+    "orm": {
+      "file": "textures/grid-cedar-orm.png",
+      "sha256": "9e1441faef188469585c608fd1dc6fd57313773299d9c0b70ba7c3116c6a8c49",
+      "color_space": "Non-Color"
+    }
+  },
+  "orm_channels": "R=1 AO;G=baked native roughness;B=original preset metallic0",
+  "source_preset_owner_approval_not_claimed": true,
+  "external_files_imported": 0,
+  "owner_visual_approved": false,
+  "source_normalization_verification": "fmpl-cedar-provenance-check.json"
+}

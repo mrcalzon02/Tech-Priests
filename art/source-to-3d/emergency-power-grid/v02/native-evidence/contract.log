@@ -1,0 +1,337 @@
+   0.001 2026-11-17 17:24:29; Factorio 2.1.24 (build 87808, win64, steam, space-age)
+   0.001 Operating system: Windows 11 (build 26200) 
+   0.001 Program arguments: "C:/Program Files (x86)/Steam/steamapps/common/Factorio/bin/x64/factorio.exe" "--config" "C:\Users\Admin\Documents\ChatGPT\Tech priests\tanks-structure-production\build\tp-emergency-power-grid-main01\config.ini" "--mod-directory" "C:\Users\Admin\Documents\ChatGPT\Tech priests\tanks-structure-production\build\tp-sterling-contract-main01\mods" "--create" "C:\Users\Admin\Documents\ChatGPT\Tech priests\tanks-structure-production\build\tp-emergency-power-grid-main01\power-grid-contract.zip" 
+   0.001 Config path: C:/Users/Admin/Documents/ChatGPT/Tech priests/tanks-structure-production/build/tp-emergency-power-grid-main01/config.ini
+   0.001 Read data path: C:/Program Files (x86)/Steam/steamapps/common/Factorio/data
+   0.001 Write data path: C:/Users/Admin/Documents/ChatGPT/Tech priests/tanks-structure-production/build/tp-emergency-power-grid-main01/runtime [182706/1906722MB]
+   0.001 Binaries path: C:/Program Files (x86)/Steam/steamapps/common/Factorio/bin
+   0.007 System info: [CPU: Intel(R) Core(TM) i7-14700K, 28 cores, RAM: 19212/32526 MB, page: 27734/43790 MB, virtual: 4304/134217727 MB, extended virtual: 0 MB]
+   0.063 Memory info:
+   0.063  [0]: Corsair CMH32GX5M2E6000C36 16384 MB 6000 MHz 1.35 v 64|64
+   0.063  [1]: Corsair CMH32GX5M2E6000C36 16384 MB 6000 MHz 1.35 v 64|64
+   0.090 Running in headless mode
+   0.090 Audio is disabled
+   0.092 Info ModManager.cpp:455: FeatureFlag: expansion, expansion-shaders, freezing, quality, rail-bridges, segmented-units, space-travel, spoiling
+   0.093 Loading mod settings tech-priests 0.1.687 (settings.lua)
+   0.094 Loading mod settings tech-priests 0.1.687 (settings-updates.lua)
+   0.094 Loading mod settings tech-priests 0.1.687 (settings-final-fixes.lua)
+   0.096 Loading mod core 0.0.0 (data.lua)
+   0.106 Loading mod base 2.1.24 (data.lua)
+   0.249 Loading mod elevated-rails 2.1.24 (data.lua)
+   0.270 Loading mod recycler 2.1.24 (data.lua)
+   0.278 Loading mod quality 2.1.24 (data.lua)
+   0.284 Loading mod space-age 2.1.24 (data.lua)
+   0.542 Loading mod tech-priests 0.1.687 (data.lua)
+   0.591 Loading mod base 2.1.24 (data-updates.lua)
+   0.600 Loading mod recycler 2.1.24 (data-updates.lua)
+   0.614 Loading mod quality 2.1.24 (data-updates.lua)
+   0.622 Loading mod space-age 2.1.24 (data-updates.lua)
+   0.630 Loading mod tech-priests 0.1.687 (data-updates.lua)
+   0.640 Loading mod tech-priests 0.1.687 (data-final-fixes.lua)
+   0.644 Script @__tech-priests__/prototypes/bunker_family.lua:189: [BUNKER-FAMILY] GRENADE_TYPES cluster-grenade,grenade,sacred-incense-grenade
+   0.657 Loading mod power-grid-contract 0.0.1 (data-final-fixes.lua)
+   0.658 Script @__power-grid-contract__/data-final-fixes.lua:2: POWER_GRID_FINAL_PROTOTYPE_VISUALS {connection_points = {{shadow = {copper = {0.22000000000000002, -0.22000000000000002}, green = {0.37999999999999998, -0.17999999999999998}, red = {0.06, -0.17999999999999998}}, wire = {copper = {0, -0.47999999999999998}, green = {0.16000000000000001, -0.42000000000000002}, red = {-0.16000000000000001, -0.42000000000000002}}}}, flags = {"placeable-neutral", "player-creation"}, pictures = {layers = {{direction_count = 1, draw_as_shadow = true, filename = "__tech-priests__/graphics/entity/martian-micro/tech-priests-emergency-power-grid-shadow.png", height = 1254, line_length = 1, priority = "high", scale = 0.034000000000000004, shift = {0, 0}, width = 1254}, {direction_count = 1, filename = "__tech-priests__/graphics/entity/martian-micro/tech-priests-emergency-power-grid.png", height = 1254, line_length = 1, priority = "high", scale = 0.034000000000000004, shift = {0, 0}, width = 1254}}}}
+   0.723 Checksum for core: 3668028660
+   0.723 Checksum of base: 3864816957
+   0.723 Checksum of elevated-rails: 1429039930
+   0.723 Checksum of recycler: 3293728126
+   0.723 Checksum of quality: 4220722184
+   0.723 Checksum of space-age: 3636981730
+   0.723 Checksum of tech-priests: 4172175020
+   0.723 Checksum of power-grid-contract: 1867371093
+   1.045 Prototype list checksum: 347758953
+   1.088 Info PlayerData.cpp:566: Cloud player-data.json unavailable
+   1.088 Info PlayerData.cpp:582: Local player-data.json unavailable
+   1.089 Info GlobalContext.cpp:1347: Resetting config.
+   1.089 Factorio initialised
+   1.089 Info Create.cpp:32: Creating new map C:\Users\Admin\Documents\ChatGPT\Tech priests\tanks-structure-production\build\tp-emergency-power-grid-main01\power-grid-contract.zip
+   1.103 Blueprint storage "blueprint-storage-2.dat" was not found, trying to load previous version storage "blueprint-storage.dat"
+   1.702 Loading level.dat: 1023551 bytes.
+   1.702 Info Scenario.cpp:152: Map version 2.1.24-1
+   1.714 Blueprint storage "blueprint-storage-2.dat" was not found, trying to load previous version storage "blueprint-storage.dat"
+   1.717 Checksum for script __level__/control.lua: 2385776952
+   1.723 Script @__tech-priests__/scripts/core/proxy_turret_alignment.lua:372: [Tech-Priests 0.1.674-dev] broker-owned hidden-proxy alignment and combat sustain installed
+   1.731 Script @__tech-priests__/scripts/core/consecration/machine_trait_taxonomy_0524.lua:471: [Tech-Priests 0.1.524] machine-spirit trait taxonomy installed
+   1.731 Script @__tech-priests__/scripts/core/consecration/machine_traits_0523.lua:305: [Tech-Priests 0.1.524] machine-spirit trait/flaw milestone ledger installed with taxonomy-aware rolls
+   1.745 Script @__tech-priests__/scripts/generated/control_legacy_part_013.lua:996: [Tech-Priests 0.1.246] control.lua loaded; final diagnostic wrapper installed; idle priority quarantine default active.
+   1.746 Script @__tech-priests__/scripts/generated/control_legacy_part_013.lua:996: [Tech-Priests 0.1.246] 0.1.248 control.lua priority doctrine repair loaded
+   1.747 Script @__tech-priests__/scripts/generated/control_legacy_part_014.lua:540: [Tech Priests 0.1.252 assignments] ranked emergency assignment delegation loaded
+   1.747 Script @__tech-priests__/scripts/generated/control_legacy_part_014.lua:1059: [Tech Priests 0.1.255 Magos planner] Planetary Magos standard-industry degradation planner loaded
+   1.759 Script @__tech-priests__/scripts/magos_station_expansion.lua:73: [Tech Priests 0.1.256 station expansion] ranked station ghost expansion doctrine loaded
+   1.760 Script @__tech-priests__/scripts/magos_ratio_planning.lua:26: [Tech Priests 0.1.257 Magos ratio planner] Planetary Magos ratio-aware recipe planner loaded
+   1.761 Script @__tech-priests__/scripts/generated/control_legacy_part_013.lua:996: [Tech-Priests 0.1.246] 0.1.258 placement contamination safety + machine detritus jam clearing loaded
+   1.762 Script @__tech-priests__/scripts/generated/control_legacy_part_013.lua:996: [Tech-Priests 0.1.246] 0.1.259 defense perimeter planner loaded with 0.1.260 turret support validation
+   1.770 Script @__tech-priests__/scripts/resource_expansion.lua:24: [Tech Priests 0.1.259 resource expansion] resource-directed station expansion doctrine loaded
+   1.772 Script @__tech-priests__/scripts/generated/control_legacy_part_014.lua:1435: [Tech-Priests 0.1.687][tick 0] 0.1.264 emergency arbiter loaded; script-output diagnostics enabled
+   1.775 Script @__tech-priests__/scripts/generated/control_legacy_part_015.lua:161: [Tech-Priests 0.1.266][tick 0] survival bootstrap + expanded overhead task status loaded
+   1.775 Script @__tech-priests__/scripts/generated/control_legacy_part_014.lua:1435: [Tech-Priests 0.1.687][tick 0] [Tech-Priests 0.1.266][tick 0] survival bootstrap + expanded overhead task status loaded
+   1.777 Script @__tech-priests__/scripts/generated/control_legacy_part_014.lua:1435: [Tech-Priests 0.1.687][tick 0] 0.1.267 five-second survey escape + robust survival item discovery loaded
+   1.779 Script @__tech-priests__/scripts/generated/control_legacy_part_014.lua:1435: [Tech-Priests 0.1.687][tick 0] 0.1.268 fast debug timers + assignment movement service repair loaded
+   1.781 Script @__tech-priests__/scripts/generated/control_legacy_part_015.lua:830: [Tech-Priests 0.1.269][tick 0] 0.1.269 raw-resource fallback + no-resources-here + dirt scraping loaded
+   1.783 Script @__tech-priests__/scripts/generated/control_legacy_part_014.lua:1435: [Tech-Priests 0.1.687][tick 0] 0.1.270 mouse-over order refresh + direct nil-candidate raw fallback loaded
+   1.786 Script @__tech-priests__/scripts/generated/control_legacy_part_015.lua:1289: [Tech-Priests 0.1.271][tick 0] 0.1.271 no-resources escalation ledger + top-chain dirt fallback loaded
+   1.788 Script @__tech-priests__/scripts/generated/control_legacy_part_016.lua:223: [Tech Priests 0.1.272 subordinates] 0.1.272 subordinate liveness watcher + command overview subordinate roster loaded
+   1.788 Script @__tech-priests__/scripts/generated/control_legacy_part_014.lua:1435: [Tech-Priests 0.1.687][tick 0] 0.1.273 direct emergency gather/mining worker override loaded
+   1.790 Script @__tech-priests__/scripts/generated/control_legacy_part_014.lua:1435: [Tech-Priests 0.1.687][tick 0] 0.1.276 stalled direct gather now replans instead of remote-completing loaded
+   1.795 Script @__tech-priests__/scripts/generated/control_legacy_part_018.lua:392: [Tech Priests 0.1.286] cumulative recipe fanout + canonical scheduler ledger + governor reconciliation loaded
+   1.795 Script @__tech-priests__/scripts/generated/control_legacy_part_014.lua:1435: [Tech-Priests 0.1.687][tick 0] [0.1.287] 0.1.287 emergency recipe pass + active acquisition watchdog loaded
+   1.797 Script @__tech-priests__/scripts/generated/control_legacy_part_014.lua:1435: [Tech-Priests 0.1.687][tick 0] [0.1.290] 0.1.290 emergency device footprint + active station craft layer loaded
+   1.799 Script @__tech-priests__/scripts/generated/control_legacy_part_014.lua:1435: [Tech-Priests 0.1.687][tick 0] [0.1.291] 0.1.291 local ground-stockpile scavenging + emergency micro visual tune loaded
+   1.801 Script @__tech-priests__/scripts/generated/control_legacy_part_014.lua:1435: [Tech-Priests 0.1.687][tick 0] [0.1.292] 0.1.292 combat/proxy-turret scheduler refactor loaded
+   1.805 Script @__tech-priests__/scripts/generated/control_legacy_part_014.lua:1435: [Tech-Priests 0.1.687][tick 0] [0.1.293] 0.1.293 combat hard-lock guard + proxy cadence limiter loaded
+   1.807 Script @__tech-priests__/scripts/generated/control_legacy_part_014.lua:1435: [Tech-Priests 0.1.687][tick 0] [0.1.294] 0.1.294 combat cadence loosened + low-health retreat doctrine loaded
+   1.809 Script @__tech-priests__/scripts/generated/control_legacy_part_014.lua:1435: [Tech-Priests 0.1.687][tick 0] [0.1.295] 0.1.295 retreat/no-ammo swarm crash guard loaded
+   1.811 Script @__tech-priests__/scripts/generated/control_legacy_part_014.lua:1435: [Tech-Priests 0.1.687][tick 0] [0.1.296] invalid symbolic supply item crash guard loaded
+   1.813 Script @__tech-priests__/scripts/generated/control_legacy_part_014.lua:1435: [Tech-Priests 0.1.687][tick 0] [0.1.297] armor sub-equipment resistance mirror loaded
+   1.817 Script @__tech-priests__/scripts/generated/control_legacy_part_020.lua:225: [Tech-Priests 0.1.299] station-bound priest re-imprinting respawn module loaded
+   1.817 Script @__tech-priests__/scripts/generated/control_legacy_part_020.lua:231: [Tech-Priests 0.1.299] 0.1.299 locale duplicate key repair package loaded
+   1.817 Script @__tech-priests__/scripts/generated/control_legacy_part_020.lua:238: [Tech-Priests 0.1.300] armor mirror priest-name map crash guard loaded
+   1.817 Script @__tech-priests__/scripts/generated/control_legacy_part_020.lua:527: [Tech-Priests 0.1.301] permanent named Cogitator cell preservation loaded
+   1.817 Script @__tech-priests__/scripts/generated/control_legacy_part_014.lua:1435: [Tech-Priests 0.1.687][tick 0] [0.1.302] independent priest health + fixed rank armor profiles loaded
+   1.819 Script @__tech-priests__/scripts/generated/control_legacy_part_014.lua:1435: [Tech-Priests 0.1.687][tick 0] [0.1.305] Cogitator-hosted sub-equipment manager loaded
+   1.822 Script @__tech-priests__/scripts/generated/control_legacy_part_014.lua:1435: [Tech-Priests 0.1.687][tick 0] [0.1.306] visible Cogitator equipment grid + honest direct mining damage loaded
+   1.824 Script @__tech-priests__/scripts/generated/control_legacy_part_021.lua:26: [Tech-Priests 0.1.307] ambient white priest glow + mode-colored operating aura loaded
+   1.824 Script @__tech-priests__/scripts/generated/control_legacy_part_021.lua:213: [Tech-Priests 0.1.308] LuaRendering-safe glow destroy guard loaded
+   1.824 Script @__tech-priests__/scripts/generated/control_legacy_part_021.lua:219: [Tech-Priests 0.1.309] LuaRendering destroy/clear guard loaded
+   1.824 Script @__tech-priests__/scripts/generated/control_legacy_part_021.lua:232: [Tech-Priests 0.1.310] station inventory + side equipment grid GUI chain, ranked priest names, daytime glow shim, and station-damage guard loaded
+   1.824 Script @__tech-priests__/scripts/generated/control_legacy_part_014.lua:1435: [Tech-Priests 0.1.687][tick 0] [0.1.312] mining laser fallback weapon + preserved item display labels loaded
+   1.826 Script @__tech-priests__/scripts/generated/control_legacy_part_021.lua:856: [Tech-Priests 0.1.313] equipment-grid experiment disabled; station inventory only; research-unlocked priest bonuses active
+   1.826 Script @__tech-priests__/scripts/generated/control_legacy_part_014.lua:1435: [Tech-Priests 0.1.687][tick 0] [0.1.315] canonical 0312 movement-locked mining beam active; 0315 wrappers retired
+   1.828 Script @__tech-priests__/scripts/generated/control_legacy_part_022.lua:18: [Tech-Priests 0.1.316] canonical mining service loaded; local-variable-limit marker retained
+   1.831 Script @__tech-priests__/scripts/core/bootstrap_runtime.lua:75: [Tech-Priests 0.1.321] canonical scheduler/action pipeline spine + supply resolver shim migration pass 1 loaded with main-chunk local-limit repair
+   1.831 Script @__tech-priests__/scripts/core/combat_safety.lua:206: [Tech-Priests 0.1.674-dev] observer-only friendly-fire predicates installed; command routing remains movement-controller-owned
+   1.832 Script @__tech-priests__/scripts/core/bootstrap_runtime.lua:108: [Tech-Priests 0.1.323] subordinate-aware assignment + visible work-state feedback loaded
+   1.833 Script @__tech-priests__/scripts/core/inventory_target_safety.lua:75: [Tech-Priests 0.1.324] inventory scan player/character target safety installed
+   1.833 Script @__tech-priests__/scripts/core/startup_provisioning.lua:219: [Tech-Priests 0.1.324] startup provisioning/player-awareness module installed
+   1.833 Script @__tech-priests__/scripts/core/bootstrap_runtime.lua:126: [Tech-Priests 0.1.324] startup provisioning + inventory target safety loaded
+   1.833 Script @__tech-priests__/scripts/core/resource_doctrine.lua:334: [Tech-Priests 0.1.333] resource doctrine fall-forward acquisition chain loaded with Factorio 2.0 prototype guards
+   1.833 Script @__tech-priests__/scripts/core/bootstrap_runtime.lua:142: [Tech-Priests 0.1.325] source doctrine acquisition chain installed
+   1.835 Script @__tech-priests__/scripts/core/station_catalog.lua:913: [Tech-Priests 0.1.674-dev] station catalog installed with registry-owned scanning and destruction cleanup; Work State owns GUI routing
+   1.835 Script @__tech-priests__/scripts/core/emergency_cascade.lua:158: [Tech-Priests 0.1.326] emergency cascade doctrine installed
+   1.835 Script @__tech-priests__/scripts/core/bootstrap_runtime.lua:160: [Tech-Priests 0.1.326] station catalog + emergency cascade installed
+   1.835 Script @__tech-priests__/scripts/core/gui_bus.lua:24: [Tech-Priests 0.1.674-dev] route-free GUI bus compatibility shim loaded; late 0465 bootstrap owns router installation
+   1.835 Script @__tech-priests__/scripts/core/bootstrap_runtime.lua:177: [Tech-Priests 0.1.327] radar-sweep station catalog + resource tags + GUI bus installed
+   1.836 Script @__tech-priests__/scripts/core/network_visuals.lua:627: [Tech-Priests 0.1.674-dev] legacy network visuals loaded as a route-free compatibility API; 0474 owns scheduling and rendering
+   1.837 Script @__tech-priests__/scripts/core/radar_afterglow.lua:186: [Tech-Priests 0.1.465] radar RADARSweeper afterglow restored; full-radius station-light remains suppressed
+   1.837 Script @__tech-priests__/scripts/core/bootstrap_runtime.lua:210: [Tech-Priests 0.1.330] radar afterglow + hierarchy visuals + belt catalog guardrails loaded
+   1.840 Script @__tech-priests__/scripts/core/chatter.lua:951: [Tech-Priests 0.1.674-dev] background chatter installed through canonical cadence ownership; selection tap remains in the final bootstrap selection chain
+   1.840 Script @__tech-priests__/scripts/core/glow_boost.lua:97: [Tech-Priests 0.1.331] boosted nighttime glow wrapper installed
+   1.840 Script @__tech-priests__/scripts/core/bootstrap_runtime.lua:230: [Tech-Priests 0.1.331] background chatter + lower-right radar afterglow anchor + peer dashed lines + glow boost loaded
+   1.841 Script @__tech-priests__/scripts/core/bootstrap_runtime.lua:249: [Tech-Priests 0.1.332] chatter work-safety + direct tap + radar alignment + visual stability repair loaded
+   1.841 Script @__tech-priests__/scripts/core/acquisition_repair.lua:313: [Tech-Priests 0.1.507] acquisition repair installed once via runtime registry
+   1.841 Script @__tech-priests__/scripts/core/bootstrap_runtime.lua:268: [Tech-Priests 0.1.333] visual marker + chatter catalog + acquisition prototype repair loaded
+   1.842 Script @__tech-priests__/scripts/core/conversation_audit.lua:172: [Tech-Priests 0.1.335] conversation pointer audit + technology topic resolver installed
+   1.842 Script @__tech-priests__/scripts/core/acquisition_unstick.lua:164: [Tech-Priests 0.1.507] acquisition unstick watchdog installed once via runtime registry
+   1.842 Script @__tech-priests__/scripts/core/bootstrap_runtime.lua:289: [Tech-Priests 0.1.336] conversation tech audit + acquisition unstick loaded
+   1.843 Script @__tech-priests__/scripts/core/acquisition_executor.lua:387: [Tech-Priests 0.1.507] direct acquisition executor installed once via runtime registry
+   1.843 Script @__tech-priests__/scripts/core/bootstrap_runtime.lua:309: [Tech-Priests 0.1.336] direct acquisition executor + anti-loiter mining worker loaded
+   1.843 Script @__tech-priests__/scripts/core/crafting_executor.lua:340: [Tech-Priests 0.1.507] station-anchored crafting executor installed once via runtime registry
+   1.843 Script @__tech-priests__/scripts/core/bootstrap_runtime.lua:332: [Tech-Priests 0.1.337] station-anchored crafting executor + progress/success diagnostics loaded
+   1.846 Script @__tech-priests__/scripts/core/construction_planner.lua:2987: [Tech-Priests recovery] dispatcher-owned construction planner armed; defense effectiveness and exact custody enabled
+   1.846 Script @__tech-priests__/scripts/core/bootstrap_runtime.lua:350: [Tech-Priests 0.1.338] construction planner physical build scaffold loaded
+   1.848 Script @__tech-priests__/scripts/core/emergency_facility_doctrine.lua:1925: [Tech-Priests 0.1.357] Martian emergency facility doctrine station-bound inventory source lookup loaded
+   1.848 Script @__tech-priests__/scripts/core/bootstrap_runtime.lua:361: [Tech-Priests 0.1.342] emergency facility doctrine installer complete
+   1.848 Script @__tech-priests__/scripts/core/bootstrap_runtime.lua:460: [Tech-Priests 0.1.348] consecration held-item application repair installed
+   1.848 Script @__tech-priests__/scripts/core/bootstrap_runtime.lua:542: [Tech-Priests 0.1.351] explicit Sacred Machine Oil capsule-use handler loaded
+   1.849 Script @__tech-priests__/scripts/core/station_network_overlay.lua:396: [Tech-Priests 0.1.674-dev] legacy station network overlay loaded as a route-free compatibility API; 0474 owns scheduling and rendering
+   1.849 Script @__tech-priests__/scripts/core/bootstrap_runtime.lua:558: [Tech-Priests 0.1.354] protected station network overlay repair loaded
+   1.849 Script @__tech-priests__/scripts/core/inventory_steward.lua:363: [Tech-Priests 0.1.674-dev] inventory steward not installed: canonical storage authority unavailable
+   1.849 Script @__tech-priests__/scripts/core/bootstrap_runtime.lua:573: [Tech-Priests 0.1.357] station-bound inventory steward repair loaded
+   1.853 Script @__tech-priests__/scripts/core/station_work_inventory.lua:2852: [Tech-Priests 0.1.674-dev] station-bound Work-State Reliquary installed through the canonical GUI router
+   1.853 Script @__tech-priests__/scripts/core/bootstrap_runtime.lua:589: [Tech-Priests 0.1.358] station-bound work doctrine audit panel loaded
+   1.855 Script @__tech-priests__/scripts/core/arterial_planner.lua:568: [Tech-Priests 0.1.360] arterial science/factory ghost-planning scaffold loaded
+   1.855 Script @__tech-priests__/scripts/core/bootstrap_runtime.lua:606: [Tech-Priests 0.1.360] arterial factory planning scaffold loaded
+   1.856 Script @__tech-priests__/scripts/core/scheduler_behavior_tree.lua:421: [Tech-Priests 0.1.361] scheduler behavior tree / ownership map loaded
+   1.856 Script @__tech-priests__/scripts/core/bootstrap_runtime.lua:623: [Tech-Priests 0.1.361] scheduler behavior tree / ownership map audit loaded
+   1.857 Script @__tech-priests__/scripts/core/station_pair_state.lua:509: [Tech-Priests 0.1.362] station pair state ledger installed
+   1.857 Script @__tech-priests__/scripts/core/bootstrap_runtime.lua:639: [Tech-Priests 0.1.362] station pair state ledger loaded
+   1.857 Script @__tech-priests__/scripts/core/doctrine_argument.lua:1103: [Tech-Priests 0.1.674-dev] doctrine argument services and GUI clients installed through canonical registries
+   1.857 Script @__tech-priests__/scripts/core/bootstrap_runtime.lua:662: [Tech-Priests 0.1.371] doctrine argument social module and embedded Conclave Statistics tab loaded
+   1.857 Script @__tech-priests__/scripts/core/bootstrap_runtime.lua:798: [Tech-Priests 0.1.674-dev] bootstrap consecration build/remove/selection/watchdog chains installed through canonical registry ownership
+   1.857 Script @__tech-priests__/scripts/core/bootstrap_runtime.lua:829: [Tech-Priests 0.1.409] consecration visibility watchdog and emergency grid radius follow-up loaded
+   1.857 Script @__tech-priests__/scripts/core/bootstrap_runtime.lua:860: [Tech-Priests 0.1.412] ground priest conversation lock no longer teleports; direct gather repath/stall cadence slowed for tree/rock movement observation
+   1.857 Script @__tech-priests__/scripts/core/bootstrap_runtime.lua:892: [Tech-Priests 0.1.413] assembler sanctification decay now watches products_finished; technology icons swept to in-mod Tech Priests doctrine icons
+   1.857 Script @__tech-priests__/scripts/core/bootstrap_runtime.lua:904: [Tech-Priests 0.1.419] legacy movement hammer not installed; movement_controller is sole ground movement authority
+   1.857 Script @__tech-priests__/scripts/core/movement_controller.lua:2615: [Tech-Priests recovery] canonical movement controller installed; ground envelope enforcement integrated and void backend delegated
+   1.857 Script @__tech-priests__/scripts/core/bootstrap_runtime.lua:916: [Tech-Priests 0.1.418] unified movement controller pass loaded
+   1.857 Script @__tech-priests__/scripts/core/movement_authority_audit.lua:128: [Tech-Priests 0.1.419] movement authority audit installed; stale legacy hammer state cleared if present
+   1.857 Script @__tech-priests__/scripts/core/bootstrap_runtime.lua:929: [Tech-Priests 0.1.419] movement sovereignty audit + scheduler authority diagnostics loaded
+   1.858 Script @__tech-priests__/scripts/core/combat_movement_leftovers.lua:90: [Tech-Priests 0.1.429] combat/movement leftover diagnostic installed
+   1.858 Script @__tech-priests__/scripts/core/bootstrap_runtime.lua:941: [Tech-Priests 0.1.429] combat/movement leftover audit loaded
+   1.858 Script @__tech-priests__/scripts/core/hover_movement_stability.lua:111: [Tech-Priests 0.1.444] hover movement stability installed; mouse-over/radar refresh no longer hammers movement each tick
+   1.858 Script @__tech-priests__/scripts/core/bootstrap_runtime.lua:954: [Tech-Priests 0.1.444] hover-selection movement stability pass loaded
+   1.858 Script @__tech-priests__/scripts/core/task_transition_governor.lua:450: [Tech-Priests 0.1.448] task-transition governor installed; ordinary retarget churn displays as cogitation without freezing current route
+   1.858 Script @__tech-priests__/scripts/core/bootstrap_runtime.lua:966: [Tech-Priests 0.1.445] task-transition cogitation governor loaded
+   1.858 Script @__tech-priests__/scripts/core/bootstrap_runtime.lua:978: [Tech-Priests 0.1.448] stale combat/status sanity layer loaded
+   1.859 Script @__tech-priests__/scripts/core/consecration/history_gui.lua:687: [Tech-Priests 0.1.526] Machine-Spirit State Ledger GUI installed with named header and diegetic tabbed ledger
+   1.859 Script @__tech-priests__/scripts/core/bootstrap_runtime.lua:990: [Tech-Priests 0.1.422] consecration current/max display + machine-open history graph loaded
+   1.859 Script @__tech-priests__/scripts/core/pair_lifecycle.lua:32: [Tech-Priests 0.1.674-dev] pair lifecycle facade installed without retired 0426 death wrapper
+   1.859 Script @__tech-priests__/scripts/core/bootstrap_runtime.lua:1005: [Tech-Priests 0.1.674-dev] station/priest lifecycle facade loaded without retired 0426 death wrapper
+   1.860 Script @__tech-priests__/scripts/core/duplicate_behavior_family_guard.lua:103: [Tech-Priests 0.1.428] duplicate behavior family guard installed; deletion is staged behind authority map
+   1.860 Script @__tech-priests__/scripts/core/bootstrap_runtime.lua:1017: [Tech-Priests 0.1.428] duplicate behavior family guard + authority map loaded
+   1.860 Script @__tech-priests__/scripts/core/debug/pair_dump_0457.lua:404: [Tech-Priests 0.1.463] pair dump command install ok1=true err1=nil ok2=true err2=nil
+   1.860 Script @__tech-priests__/scripts/core/status_display_authority_0459.lua:118: [Tech-Priests 0.1.459] overhead status display authority installed
+   1.861 Script @__tech-priests__/scripts/core/workstate_gui_radar_recovery_0465.lua:22: [Tech-Priests 0.1.674-dev] late canonical GUI router bootstrap installed; 0465 duplicate handlers remain retired
+   1.861 Script @__tech-priests__/scripts/core/behavior_mutex_0466.lua:340: [Tech-Priests 0.1.466] combat/acquisition behavior mutex installed
+   1.862 Script @__tech-priests__/scripts/core/startup_catalog_authority_0467.lua:155: [Tech-Priests 0.1.467] startup inventory and standalone catalog-window authority installed
+   1.862 Script @__tech-priests__/scripts/core/diagnostics_behavior_authority_0468.lua:63: [Tech-Priests 0.1.468][tick 0] PAIR-DUMP-0468 reason=install interval=7200
+   1.862 Script @__tech-priests__/scripts/generated/control_legacy_part_014.lua:1435: [Tech-Priests 0.1.687][tick 0] PAIR-DUMP-0468 reason=install interval=7200
+   1.864 Script @__tech-priests__/scripts/core/diagnostics_behavior_authority_0468.lua:63: [Tech-Priests 0.1.468][tick 0] PAIR-DUMP-0468 BEGIN pair_count=0 valid_stations=0 valid_priests=0
+   1.864 Script @__tech-priests__/scripts/generated/control_legacy_part_014.lua:1435: [Tech-Priests 0.1.687][tick 0] PAIR-DUMP-0468 BEGIN pair_count=0 valid_stations=0 valid_priests=0
+   1.866 Script @__tech-priests__/scripts/core/diagnostics_behavior_authority_0468.lua:63: [Tech-Priests 0.1.468][tick 0] PAIR-DUMP-0468 END
+   1.867 Script @__tech-priests__/scripts/generated/control_legacy_part_014.lua:1435: [Tech-Priests 0.1.687][tick 0] PAIR-DUMP-0468 END
+   1.869 Script @__tech-priests__/scripts/core/diagnostics_behavior_authority_0468.lua:338: [Tech-Priests 0.1.468] diagnostics pair dump + boulder fallback laser guard installed
+   1.872 Script @__tech-priests__/scripts/core/direct_acquisition_physical_guard_0649.lua:172: [Tech-Priests 0.1.653] direct acquisition physical guard installed
+   1.872 Script @__tech-priests__/scripts/core/proxy_ammo_hardener_0649.lua:101: [Tech-Priests 0.1.674-dev] broker-owned proxy ammo hardener installed
+   1.873 Script @__tech-priests__/scripts/core/visual_intent_line_authority_0657.lua:79: [Tech-Priests 0.1.674-dev] canonical visual intent line authority installed
+   1.874 Script @__tech-priests__/scripts/core/storage_role_authority_0686.lua:923: [Tech-Priests 0.1.674-dev] container-only generic storage authority armed
+   1.874 Script @__tech-priests__/scripts/core/inventory_steward.lua:403: [Tech-Priests 0.1.674-dev] canonical station-bound inventory steward installed with persistent remove-before-credit custody
+   1.875 Script @__tech-priests__/scripts/core/fluid_network_doctrine_0689.lua:164: [Tech-Priests recovery] read-only standard fluid doctrine armed; item logistics remain separate
+   1.876 Script @__tech-priests__/scripts/core/fluid_connection_planner_0691.lua:109: [Tech-Priests recovery] wrapper-free standard fluid route coordinator armed
+   1.878 Script @__tech-priests__/scripts/core/item_family_logistics_0702.lua:1471: [Tech-Priests recovery] dispatcher-owned visible item-family logistics installed; proxy ammunition remains with 0649
+   1.879 Script @__tech-priests__/scripts/core/energy_family_readiness_0705.lua:393: [Tech-Priests recovery] canonical read-only energy readiness installed
+   1.880 Script @__tech-priests__/scripts/core/energy_family_logistics_0707.lua:286: [Tech-Priests recovery] dispatcher-owned energy-family logistics installed
+   1.881 Script @__tech-priests__/scripts/core/rocket_silo_readiness_0709.lua:458: [Tech-Priests recovery] canonical read-only rocket-silo readiness installed
+   1.882 Script @__tech-priests__/scripts/core/rocket_silo_logistics_0710.lua:464: [Tech-Priests recovery] dispatcher-owned rocket-silo logistics installed
+   1.882 Script @__tech-priests__/scripts/core/artillery_readiness_0712.lua:223: [Tech-Priests recovery] canonical read-only artillery readiness installed
+   1.883 Script @__tech-priests__/scripts/core/artillery_logistics_0713.lua:171: [Tech-Priests recovery] dispatcher-owned artillery logistics installed
+   1.883 Script @__tech-priests__/scripts/core/roboport_readiness_0714.lua:51: [Tech-Priests recovery] read-only roboport readiness armed; placement and robot population remain external
+   1.884 Script @__tech-priests__/scripts/core/roboport_repair_pack_logistics_0715.lua:66: [Tech-Priests recovery] dispatcher-owned roboport repair-pack logistics armed; placement and robot population remain external
+   1.885 Script @__tech-priests__/scripts/core/fluid_turret_readiness_0716.lua:70: [Tech-Priests recovery] corrected read-only fluid turret readiness armed
+   1.885 Script @__tech-priests__/scripts/core/fluid_turret_connection_proposals_0717.lua:80: [Tech-Priests recovery] safe read-only fluid turret proposals armed; 0718 integrity integrated
+   1.886 Script @__tech-priests__/scripts/core/fluid_turret_connection_planner_0719.lua:108: [Tech-Priests recovery] wrapper-free fluid turret route coordinator armed
+   1.887 Script @__tech-priests__/scripts/core/development_integration_audit_0721.lua:548: [Tech-Priests 0.1.674-dev] read-only development-candidate integration audit armed
+   1.887 Script @__tech-priests__/scripts/core/runtime_command_cleanup_0720.lua:349: [Tech-Priests 0.1.674-dev] commandless runtime authority armed diagnostics=true broker=true
+   1.888 Script @__tech-priests__/scripts/core/migration_pair_integrity_0734.lua:260: [Tech-Priests 0.1.674-dev] migration pair integrity audit armed diagnostics=true broker=true control_storage_writes=0 mutations=0
+   1.888 Script @__tech-priests__/scripts/core/development_lifecycle_checkpoint_0733.lua:344: [Tech-Priests 0.1.674-dev] development lifecycle checkpoint armed init=true configuration=true diagnostics=true broker=true control_storage_writes=0 on_load_writes=0
+   1.888 Script @__tech-priests__/scripts/core/broker_registry_integrity_0725.lua:345: [Tech-Priests 0.1.674-dev] broker registry integrity audit armed diagnostics=true broker=true control_storage_writes=0
+   1.889 Script @__tech-priests__/scripts/core/migration_lifecycle_assertion_0735.lua:120: [Tech-Priests 0.1.674-dev] migration lifecycle assertion armed lifecycle=true broker=true mutations=0 timing_authorities=0
+   1.890 Script @__tech-priests__/scripts/core/hardener_installation_audit_0723.lua:76: [Tech-Priests recovery] hardener audit armed quarantine=true finalizer=true diagnostics=true broker=true reason=nil
+   1.892 Script @__tech-priests__/scripts/core/order_queue_0469.lua:646: [Tech-Priests 0.1.674-dev] truthful order queue recovery armed
+   1.893 Script @__tech-priests__/scripts/core/magos_planning_queue_0471.lua:302: [Tech-Priests 0.1.471] Planetary Magos strategic planning queue installed
+   1.893 Script @__tech-priests__/scripts/core/overhead_status_governor_0471.lua:401: [Tech-Priests 0.1.473] canonical one-slot overhead status governor installed
+   1.894 Script @__tech-priests__/scripts/core/overhead_text_authority_0473.lua:186: [Tech-Priests 0.1.473] single-slot overhead text authority installed
+   1.895 Script @__tech-priests__/scripts/core/alt_writ_visual_stability_0474.lua:707: [Tech-Priests 0.1.474] stable Cogitator overlay + Alt-mode station writ icon authority installed
+   1.895 Script @__tech-priests__/scripts/core/sound_manager_0475.lua:694: [Tech-Priests 0.1.475] unified task/writ sound manager installed
+   1.896 Script @__tech-priests__/scripts/core/task_retention_visual_lease_0476.lua:478: [Tech-Priests 0.1.674-dev] task retention and slow writ cadence authority installed; visual lease ownership is consolidated into 0474
+   1.897 Script @__tech-priests__/scripts/core/task_execution_sound_governor_0477.lua:366: [Tech-Priests 0.1.477] active-order execution watchdog and task-switch audio governor installed
+   1.897 Script @__tech-priests__/scripts/core/task_lifecycle_authority_0478.lua:391: [Tech-Priests 0.1.478] task lifecycle authority installed; remote mining beams require movement and stocked writs can complete
+   1.898 Script @__tech-priests__/scripts/core/behavior_contracts_0479.lua:354: [Tech-Priests 0.1.479] behavior contracts installed; distant non-hostile acquisition must move before beams
+   1.899 Script @__tech-priests__/scripts/core/command_hierarchy_0480.lua:741: [Tech-Priests 0.1.674-dev] broker-owned command hierarchy and direct-subordinate territory installed
+   1.899 Script @__tech-priests__/scripts/core/gui_asset_framework_0482.lua:62: [Tech-Priests 0.1.487] retained GUI utility/portrait asset registry installed; sliced Cogitator frame 0.1.536 registered
+   1.900 Script @__tech-priests__/scripts/core/station_range_authority_0680.lua:299: [Tech-Priests 0.1.663] station range authority installed; +5 flat operating radius applied to all Cogitators
+   1.901 Script @__tech-priests__/scripts/core/alt_resource_field_overlay_0679.lua:793: [Tech-Priests 0.1.663] ALT claimed-resource field overlay installed; all station claims aggregate into glowing field edges
+   1.901 Script @__tech-priests__/scripts/core/visual_lease_cleanup_0487.lua:213: [Tech-Priests 0.1.663] visual lease cleanup installed; aggregate ALT resource fields and +5 station range authority active
+   1.902 Script @__tech-priests__/scripts/core/action_state_arbiter_0488.lua:553: [Tech-Priests recovery] pure action classifier installed; construction aware; no scheduler or movement ownership
+   1.902 Script @__tech-priests__/scripts/core/self_station_scan_visual_authority_0489.lua:294: [Tech-Priests 0.1.489] own-station scan suppression and visual lease hardening installed
+   1.903 Script @__tech-priests__/scripts/core/direct_mining_safety_0490.lua:262: [Tech-Priests 0.1.674-dev] legacy direct-mining safety installed without lifecycle recovery or periodic authority
+   1.903 Script @__tech-priests__/scripts/core/consecration/mining_sensor_0495.lua:283: [Tech-Priests 0.1.544] consecration mining sensor installed; mining drills use products_finished/output/progress accumulator operation counters
+   1.904 Script @__tech-priests__/scripts/core/emergency_supply_reserve_0497.lua:709: [Tech-Priests 0.1.674-dev] emergency supply reserve installed through canonical registry ownership
+   1.905 Script @__tech-priests__/scripts/core/priest_lifecycle_authority_0499.lua:81: [Tech-Priests 0.1.674-dev] disabled-acquisition-repair-watchdog station=nil priest=nil storage.acquisition_repair_0337.enabled=false
+   1.905 Script @__tech-priests__/scripts/core/priest_lifecycle_authority_0499.lua:81: [Tech-Priests 0.1.674-dev] disabled-execution-watchdog station=nil priest=nil storage.task_execution_sound_governor_0477.enabled=false
+   1.905 Script @__tech-priests__/scripts/core/priest_lifecycle_authority_0499.lua:766: [Tech-Priests 0.1.674-dev] broker-owned lifecycle and re-imprint observation installed; only one-shot 0503 recovery leases are authorized
+   1.905 Script @__tech-priests__/scripts/core/priest_recovery_safety_0503.lua:222: [Tech-Priests 0.1.674-dev] broker-owned controlled missing-priest and completed re-imprint recovery installed
+   1.906 Script @__tech-priests__/scripts/core/action_stack_contract_0507.lua:171: [Tech-Priests 0.1.507] authoritative action stack contract installed; duplicate acquisition GUI pulse removed
+   1.906 Script @__tech-priests__/scripts/core/behavior_stack_cleanup_0509.lua:222: [Tech-Priests 0.1.674-dev] broker-owned passive behavior-stack maintenance installed
+   1.907 Script @__tech-priests__/scripts/core/single_dispatcher_0510.lua:986: [Tech-Priests recovery] canonical dispatcher installed; construction, artillery, and roboport aware
+   1.908 Script @__tech-priests__/scripts/core/scheduler_contract_0512.lua:446: [Tech-Priests 0.1.512] scheduler contract installed; active orders leased, passive refresh churn held, strategic cascade cooldown enabled
+   1.908 Script @__tech-priests__/scripts/core/direct_acquisition_executor_0513.lua:396: [Tech-Priests 0.1.674-dev] direct acquisition physical-custody recovery armed
+   1.909 Script @__tech-priests__/scripts/core/emergency_production_executor_0514.lua:289: [Tech-Priests 0.1.674-dev] emergency production recovery armed
+   1.910 Script @__tech-priests__/scripts/core/consecration_executor_0515.lua:502: [Tech-Priests 0.1.674-dev] consecration lifecycle recovery armed
+   1.911 Script @__tech-priests__/scripts/core/repair_executor_0516.lua:102: [Tech-Priests 0.1.674-dev] sole physical repair authority installed
+   1.911 Script @__tech-priests__/scripts/core/combat_repair_doctrine_0517.lua:726: [Tech-Priests 0.1.674-dev] dispatcher-owned combat repair doctrine installed; tactical selection separated from physical repair
+   1.912 Script @__tech-priests__/scripts/core/logistics_construction_contract_0519.lua:442: [Tech-Priests 0.1.519] logistics/construction physical-access contract loaded
+   1.913 Script @__tech-priests__/scripts/core/portrait_assignment_0520.lua:262: [Tech-Priests 0.1.520] persistent portrait assignment installed; portrait cells now bind to Cogitator identity plaques
+   1.913 Script @__tech-priests__/scripts/core/priest_identity_background_0525.lua:410: [Tech-Priests 0.1.525] expanded priest identity background variety installed
+   1.914 Script @__tech-priests__/scripts/core/logistics_fetch_executor_0527.lua:501: [Tech-Priests 0.1.659] universal physical logistics fetch executor loaded; broadened nearby inventory scavenging replaces duplicate 0658
+   1.916 Script @__tech-priests__/scripts/core/logistics_machine_fulfillment_0528.lua:2197: [Tech-Priests 0.1.674-dev] consolidated dispatcher-owned machine logistics installed
+   1.916 Script @__tech-priests__/scripts/core/scan_beam_controller_0529.lua:291: [Tech-Priests 0.1.529] unified scan/beam controller loaded; mining/world damage beams now share one smoky authority
+   1.917 Script @__tech-priests__/scripts/core/ground_item_hoover_0529.lua:480: [Tech-Priests 0.1.529] loose ground item hoover/storage doctrine loaded; priests physically collect dropped items and avoid dumping overflow
+   1.918 Script @__tech-priests__/scripts/core/conversation_voice_0530.lua:302: [Tech-Priests 0.1.530] conversation voice bark audio installed
+   1.919 Script @__tech-priests__/scripts/core/operational_sounds_0531.lua:328: [Tech-Priests 0.1.531] operational/mechanical sound reporter installed
+   1.919 Script @__tech-priests__/scripts/core/status_churn_damper_0532.lua:409: [Tech-Priests 0.1.532] status/task churn damper installed; active writs hold visual state, passive refreshes are debounced, duplicate heartbeats are filtered, and overhead text has a short lease
+   1.920 Script @__tech-priests__/scripts/core/placeholder_audio_0533.lua:377: [Tech-Priests 0.1.533] placeholder functional audio reporter installed
+   1.921 Script @__tech-priests__/scripts/core/stone_cache_filter_0534.lua:295: [Tech-Priests 0.1.674-dev] filtered cache steward installed with physical no-spill rerouting
+   1.922 Script @__tech-priests__/scripts/core/efficiency_economy_0556.lua:301: [Tech-Priests 0.1.556] efficiency economy governor installed; passive refreshes, repeated rejection loops, duplicate submissions, diagnostics, and legacy service pulses are cooldown-governed
+   1.922 Script @__tech-priests__/scripts/core/efficiency_economy_0557.lua:218: [Tech-Priests 0.1.557] efficiency economy review installed; radar detections are memoized and resource expansion ghosts are shared/deduplicated across nearby station networks
+   1.924 Script @__tech-priests__/scripts/core/conclave_center_0558.lua:1549: [Tech-Priests 0.1.592] surface-scoped schisms, stocked emergency stand-down timers, and doctrine relation memory loaded
+   1.925 Script @__tech-priests__/scripts/core/sanctioned_order_history_0561.lua:242: [Tech-Priests 0.1.562] sanctioned order history compact authority ledger installed
+   1.925 Script @__tech-priests__/scripts/core/void_movement_authority_0630.lua:270: [Tech-Priests 0.1.674-dev] broker-only Void movement backend installed; public movement API remains movement_controller-owned
+   1.926 Script @__tech-priests__/scripts/core/direct_acquisition_pulse_0631.lua:107: [Tech-Priests 0.1.674-dev] broker-only active direct-acquisition pulse installed; 0632 recall wrapper retired
+   1.926 Script @__tech-priests__/scripts/core/station_area_change_invalidator_0634.lua:227: [Tech-Priests 0.1.674-dev] station area change invalidator installed through canonical registry ownership
+   1.927 Script @__tech-priests__/scripts/core/gui_nested_frame_repair_0635.lua:172: [Tech-Priests 0.1.635] nested GUI frame structural repair installed; inner menus flattened after outer reliquary shell
+   1.927 Script @__tech-priests__/scripts/core/inventory_deposit_safety_0638.lua:180: [Tech-Priests 0.1.638] generic inventory deposit safety installed; arbitrary deposits are chest/container-only
+   1.928 Script @__tech-priests__/scripts/core/station_supply_satisfaction_0639.lua:435: [Tech-Priests 0.1.674-dev] station supply satisfaction installed through canonical owners
+   1.931 Script @__tech-priests__/scripts/core/infrastructure_first_governor_0640.lua:2198: [Tech-Priests 0.1.647] infrastructure-first behavior governor installed via runtime-tick-broker; central Martian bootstrap and recipe-backed construction requests active
+   1.931 Script @__tech-priests__/scripts/core/emergency_facility_placement_bridge_0643.lua:377: [Tech-Priests] emergency facility network shortage assessment installed
+   1.932 Script @__tech-priests__/scripts/core/behavior_tree_monitor_0642.lua:134: [Tech-Priests 0.1.653] behavior tree monitor installed via runtime-tick-broker
+   1.932 Script @__tech-priests__/scripts/core/bootstrap_resource_governor_0637.lua:634: [Tech-Priests 0.1.638] bootstrap resource governor installed disabled by default
+   1.933 Script @__tech-priests__/scripts/core/efficiency_economy_0568.lua:363: [Tech-Priests 0.1.568] economy governor installed; registry-owned cache pruning, compact diagnostics, rate-limited heartbeat/order-refresh logging, phased resource-expansion scans, and selected staggered services enabled
+   1.934 Script @__tech-priests__/scripts/core/efficiency_economy_0569.lua:305: [Tech-Priests 0.1.569] budgeted economy governor installed; registry-owned dirty-region pruning, dispatcher buckets, background service buckets, and dirty-region cache scaffold enabled
+   1.934 Script @__tech-priests__/scripts/core/efficiency_economy_0570.lua:200: [Tech-Priests 0.1.570] dirty-aware scan economy installed; registry-owned negative-cache pruning, resource doctrine cooldowns, and station-catalog clean reuse helper enabled
+   1.935 Script @__tech-priests__/scripts/core/efficiency_economy_0571.lua:275: [Tech-Priests 0.1.571] maintenance scan economy installed; registry-owned maintenance pruning, repair/consecration no-work cooldowns, and damage dirty-region marks enabled
+   1.935 Script @__tech-priests__/scripts/core/authority_corridor_logistics_0573.lua:301: [Tech-Priests 0.1.573] authority corridor logistics/crafting scaffold loaded
+   1.936 Script @__tech-priests__/scripts/core/authority_corridor_pathing_0574.lua:63: [Tech-Priests 0.1.574] install station=nil priest=nil observer-only corridor route planner installed
+   1.936 Script @__tech-priests__/scripts/core/authority_corridor_pathing_0574.lua:288: [Tech-Priests 0.1.674-dev] observer-only Cogitator corridor route planner installed
+   1.936 Script @__tech-priests__/scripts/core/efficiency_economy_0575.lua:86: [Tech-Priests 0.1.575] install corridor cache economy installed
+   1.936 Script @__tech-priests__/scripts/core/efficiency_economy_0575.lua:277: [Tech-Priests 0.1.575] registry-owned corridor cache economy installed
+   1.937 Script @__tech-priests__/scripts/core/efficiency_economy_0576.lua:255: [Tech-Priests 0.1.576] registry-owned diagnostics/budget/machine-reservation economy installed
+   1.937 Script @__tech-priests__/scripts/core/efficiency_economy_0578.lua:84: [Tech-Priests 0.1.578] registry-owned catalog prototype-cache economy installed
+   1.938 Script @__tech-priests__/scripts/core/efficiency_economy_0579.lua:326: [Tech-Priests 0.1.579] registry-owned event-indexed catalog economy installed
+   1.938 Script @__tech-priests__/scripts/core/efficiency_economy_0580.lua:362: [Tech-Priests 0.1.580] consecration economy installed; machine-spirit updates are budgeted and dirty-aware
+   1.939 Script @__tech-priests__/scripts/core/efficiency_economy_0581.lua:288: [Tech-Priests 0.1.581] legacy wrapper economy installed; wrapped=3
+   1.940 Script @__tech-priests__/scripts/core/efficiency_economy_0582.lua:294: [Tech-Priests 0.1.582] registry-owned behavior-tree idle/cache economy installed
+   1.941 Script @__tech-priests__/scripts/core/efficiency_economy_0583.lua:205: [Tech-Priests 0.1.583] visual/render economy installed; wrapped=0 rendering functions
+   1.941 Script @__tech-priests__/scripts/core/obstacle_attack_guard_0584.lua:57: [Tech-Priests 0.1.584] install station=nil priest=nil obstacle attack guard installed
+   1.941 Script @__tech-priests__/scripts/core/obstacle_attack_guard_0584.lua:243: [Tech-Priests 0.1.584] obstacle attack guard installed
+   1.941 Script @__tech-priests__/scripts/core/efficiency_economy_0585.lua:239: [Tech-Priests 0.1.585] registry-owned dirty/event coalescing economy installed
+   1.942 Script @__tech-priests__/scripts/core/efficiency_economy_0587.lua:337: [Tech-Priests 0.1.587] logistics/supply cache economy loaded
+   1.945 Script @__tech-priests__/scripts/core/efficiency_economy_0595.lua:281: [Tech-Priests 0.1.595] dormant runtime gate installed with registry-owned build/remove/research wake routes
+   1.946 Script @__tech-priests__/scripts/core/order_orchestrator_0597.lua:440: [Tech-Priests 0.1.597] order orchestrator installed; resource tile reservations and station/item source caching active
+   1.949 Script @__tech-priests__/scripts/core/construction_bootstrap_ghost_planner_0645.lua:457: [Tech-Priests 0.1.653] construction bootstrap ghost planner installed via runtime-tick-broker
+   1.949 Script @__tech-priests__/scripts/core/master_infrastructure_plan_0644.lua:526: [Tech-Priests 0.1.653] master infrastructure planner installed via runtime-tick-broker
+   1.949 Script @__tech-priests__/scripts/core/task_auspex_0622.lua:543: [Tech-Priests 0.1.644] Conclave Task Auspex debug readout tab installed; master infrastructure planner loader invoked
+   1.949 Script @__tech-priests__/scripts/core/direct_acquisition_physical_guard_0649.lua:172: [Tech-Priests 0.1.653] direct acquisition physical guard installed
+   1.949 Script @__tech-priests__/scripts/core/proxy_ammo_hardener_0649.lua:101: [Tech-Priests 0.1.674-dev] broker-owned proxy ammo hardener installed
+   1.950 Script @__tech-priests__/scripts/core/visual_intent_line_authority_0657.lua:79: [Tech-Priests 0.1.674-dev] canonical visual intent line authority installed
+   1.950 Script @__tech-priests__/scripts/core/fluid_network_doctrine_0689.lua:164: [Tech-Priests recovery] read-only standard fluid doctrine armed; item logistics remain separate
+   1.950 Script @__tech-priests__/scripts/core/fluid_connection_planner_0691.lua:109: [Tech-Priests recovery] wrapper-free standard fluid route coordinator armed
+   1.950 Script @__tech-priests__/scripts/core/item_family_logistics_0702.lua:1471: [Tech-Priests recovery] dispatcher-owned visible item-family logistics installed; proxy ammunition remains with 0649
+   1.950 Script @__tech-priests__/scripts/core/energy_family_readiness_0705.lua:393: [Tech-Priests recovery] canonical read-only energy readiness installed
+   1.950 Script @__tech-priests__/scripts/core/energy_family_logistics_0707.lua:286: [Tech-Priests recovery] dispatcher-owned energy-family logistics installed
+   1.950 Script @__tech-priests__/scripts/core/rocket_silo_readiness_0709.lua:458: [Tech-Priests recovery] canonical read-only rocket-silo readiness installed
+   1.950 Script @__tech-priests__/scripts/core/rocket_silo_logistics_0710.lua:464: [Tech-Priests recovery] dispatcher-owned rocket-silo logistics installed
+   1.950 Script @__tech-priests__/scripts/core/artillery_readiness_0712.lua:223: [Tech-Priests recovery] canonical read-only artillery readiness installed
+   1.950 Script @__tech-priests__/scripts/core/artillery_logistics_0713.lua:171: [Tech-Priests recovery] dispatcher-owned artillery logistics installed
+   1.950 Script @__tech-priests__/scripts/core/roboport_readiness_0714.lua:51: [Tech-Priests recovery] read-only roboport readiness armed; placement and robot population remain external
+   1.950 Script @__tech-priests__/scripts/core/roboport_repair_pack_logistics_0715.lua:66: [Tech-Priests recovery] dispatcher-owned roboport repair-pack logistics armed; placement and robot population remain external
+   1.950 Script @__tech-priests__/scripts/core/fluid_turret_readiness_0716.lua:70: [Tech-Priests recovery] corrected read-only fluid turret readiness armed
+   1.950 Script @__tech-priests__/scripts/core/fluid_turret_connection_proposals_0717.lua:80: [Tech-Priests recovery] safe read-only fluid turret proposals armed; 0718 integrity integrated
+   1.950 Script @__tech-priests__/scripts/core/fluid_turret_connection_planner_0719.lua:108: [Tech-Priests recovery] wrapper-free fluid turret route coordinator armed
+   1.950 Script @__tech-priests__/scripts/core/development_integration_audit_0721.lua:548: [Tech-Priests 0.1.674-dev] read-only development-candidate integration audit armed
+   1.951 Script @__tech-priests__/scripts/core/runtime_command_cleanup_0720.lua:349: [Tech-Priests 0.1.674-dev] commandless runtime authority armed diagnostics=true broker=true
+   1.951 Script @__tech-priests__/scripts/core/migration_pair_integrity_0734.lua:260: [Tech-Priests 0.1.674-dev] migration pair integrity audit armed diagnostics=true broker=true control_storage_writes=0 mutations=0
+   1.951 Script @__tech-priests__/scripts/core/development_lifecycle_checkpoint_0733.lua:344: [Tech-Priests 0.1.674-dev] development lifecycle checkpoint armed init=true configuration=true diagnostics=true broker=true control_storage_writes=0 on_load_writes=0
+   1.951 Script @__tech-priests__/scripts/core/broker_registry_integrity_0725.lua:345: [Tech-Priests 0.1.674-dev] broker registry integrity audit armed diagnostics=true broker=true control_storage_writes=0
+   1.951 Script @__tech-priests__/scripts/core/migration_lifecycle_assertion_0735.lua:120: [Tech-Priests 0.1.674-dev] migration lifecycle assertion armed lifecycle=true broker=true mutations=0 timing_authorities=0
+   1.951 Script @__tech-priests__/scripts/core/hardener_installation_audit_0723.lua:76: [Tech-Priests recovery] hardener audit armed quarantine=true finalizer=true diagnostics=true broker=true reason=nil
+   1.951 Script @__tech-priests__/scripts/core/planning_constraints_0646.lua:211: [Tech-Priests recovery] final hardener installation attempted=26 passed=26 failed=0 phase=complete broker=installed
+   1.952 Script @__tech-priests__/scripts/core/runtime_event_registry.lua:224: [Tech Priests event registry] rebound canonical event=120
+   1.956 Script @__tech-priests__/scripts/core/runtime_event_registry.lua:224: [Tech Priests event registry] rebound canonical event=6
+   1.956 Script @__tech-priests__/scripts/core/runtime_event_registry.lua:224: [Tech Priests event registry] rebound canonical event=18
+   1.956 Script @__tech-priests__/scripts/core/runtime_event_registry.lua:224: [Tech Priests event registry] rebound canonical event=94
+   1.956 Script @__tech-priests__/scripts/core/runtime_event_registry.lua:224: [Tech Priests event registry] rebound canonical event=76
+   1.956 Script @__tech-priests__/scripts/core/runtime_event_registry.lua:224: [Tech Priests event registry] rebound canonical event=75
+   1.956 Script @__tech-priests__/scripts/core/runtime_event_registry.lua:224: [Tech Priests event registry] rebound canonical event=4
+   1.956 Script @__tech-priests__/scripts/core/runtime_event_registry.lua:224: [Tech Priests event registry] rebound canonical event=95
+   1.957 Script @__tech-priests__/scripts/core/runtime_event_registry.lua:224: [Tech Priests event registry] rebound canonical event=22
+   1.958 Script @__tech-priests__/scripts/core/fluid_network_doctrine_0689.lua:164: [Tech-Priests recovery] read-only standard fluid doctrine armed; item logistics remain separate
+   1.958 Script @__tech-priests__/scripts/core/fluid_connection_planner_0691.lua:109: [Tech-Priests recovery] wrapper-free standard fluid route coordinator armed
+   1.958 Script @__tech-priests__/scripts/core/energy_family_readiness_0705.lua:393: [Tech-Priests recovery] canonical read-only energy readiness installed
+   1.958 Script @__tech-priests__/scripts/core/energy_family_logistics_0707.lua:286: [Tech-Priests recovery] dispatcher-owned energy-family logistics installed
+   1.963 Script @__tech-priests__/scripts/core/runtime_event_registry.lua:224: [Tech Priests event registry] rebound canonical event=96
+   1.966 Checksum for script __tech-priests__/control.lua: 507755899
+   1.968 Checksum for script __power-grid-contract__/control.lua: 444634087
+   1.980 Script @__power-grid-contract__/control.lua:8: POWER_GRID_ACTUAL_CONTRACT_CAPTURED
+Done.
+   2.151 Goodbye

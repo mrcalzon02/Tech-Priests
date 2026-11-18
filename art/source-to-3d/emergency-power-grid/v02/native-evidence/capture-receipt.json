@@ -1,0 +1,153 @@
+{
+  "genuine_native_capture": true,
+  "separate_task_desktop": true,
+  "default_desktop_untouched": true,
+  "capture": {
+    "passed": true,
+    "frames": [
+      {
+        "file": "unwired-close.png",
+        "tick": 1561
+      },
+      {
+        "file": "unwired-wide.png",
+        "tick": 1561
+      },
+      {
+        "file": "wired-contacts-close.png",
+        "tick": 1591
+      },
+      {
+        "file": "powered-chain-wide.png",
+        "tick": 1591
+      },
+      {
+        "file": "copper-cut-circuits-retained.png",
+        "tick": 1801
+      },
+      {
+        "file": "copper-cut-wide.png",
+        "tick": 1801
+      },
+      {
+        "file": "restored-night-coverage.png",
+        "tick": 2011
+      },
+      {
+        "file": "restored-contacts-night.png",
+        "tick": 2011
+      }
+    ],
+    "wide": {},
+    "samples": [
+      {
+        "tick": 1561,
+        "copper_connected": true,
+        "networkA": 3,
+        "networkB": 3,
+        "red": 0,
+        "green": 0
+      },
+      {
+        "tick": 1561,
+        "copper_connected": true,
+        "networkA": 3,
+        "networkB": 3,
+        "red": 0,
+        "green": 0
+      },
+      {
+        "tick": 1591,
+        "copper_connected": true,
+        "networkA": 3,
+        "networkB": 3,
+        "red": 2,
+        "green": 2
+      },
+      {
+        "tick": 1591,
+        "copper_connected": true,
+        "networkA": 3,
+        "networkB": 3,
+        "red": 2,
+        "green": 2
+      },
+      {
+        "tick": 1801,
+        "copper_connected": false,
+        "networkA": 7,
+        "networkB": 3,
+        "red": 1,
+        "green": 1
+      },
+      {
+        "tick": 1801,
+        "copper_connected": false,
+        "networkA": 7,
+        "networkB": 3,
+        "red": 2,
+        "green": 2
+      },
+      {
+        "tick": 2011,
+        "copper_connected": true,
+        "networkA": 7,
+        "networkB": 7,
+        "red": 2,
+        "green": 2
+      },
+      {
+        "tick": 2011,
+        "copper_connected": true,
+        "networkA": 7,
+        "networkB": 7,
+        "red": 2,
+        "green": 2
+      }
+    ],
+    "actual_operated_save_loaded": true,
+    "actual_crafted_mined_item_reused": true,
+    "actual_unwired_wired_copper_cut_and_restored_states": true,
+    "native_directions": [
+      0
+    ],
+    "passive_static_pole_native_wire_states": true,
+    "no_false_generation_or_mechanical_cycle_added": true,
+    "screenshots": [
+      {
+        "file": "unwired-close.png",
+        "sha256": "3033047dd8ed1d2c971929b4fc56a13f3f48f5190583ba27994e184be30d5430"
+      },
+      {
+        "file": "unwired-wide.png",
+        "sha256": "f6eaa819faa51c6c3ee78a892f7f01e48f0cdb18587ea2a76b4d92c8e34f253a"
+      },
+      {
+        "file": "wired-contacts-close.png",
+        "sha256": "4c71d7cee85c028a20fb2a37cc11248be9d165d6f1c2f6ddad46a613cf31c8ce"
+      },
+      {
+        "file": "powered-chain-wide.png",
+        "sha256": "3bb460eca7a2d8e008e0cf1211125de4b30f0400c557afa6912616144bef3d29"
+      },
+      {
+        "file": "copper-cut-circuits-retained.png",
+        "sha256": "b38104bcf6f80887742ff3143a2f7cf1ab86b4a62fe73e9e5ad5c9c04294e45b"
+      },
+      {
+        "file": "copper-cut-wide.png",
+        "sha256": "5a81349f0de20adeb686e167b043788f2a4691602c39321ffbbd0f49563a55b5"
+      },
+      {
+        "file": "restored-night-coverage.png",
+        "sha256": "f8fdc98bb71f07758bc213457e648efd62cadc344bdde57a28902a0cac2a7161"
+      },
+      {
+        "file": "restored-contacts-night.png",
+        "sha256": "54eef4e6d41cd441dec3c4890a1e50c99adf72c2dc63aaff7e612856e36a753c"
+      }
+    ]
+  },
+  "engine_graphics_quality": "medium",
+  "owner_visual_approved": false
+}

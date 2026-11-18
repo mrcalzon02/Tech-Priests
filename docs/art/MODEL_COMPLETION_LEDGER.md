@@ -1,3 +1,20 @@
+## 2026-11-17 - Emergency Power Grid operational delivery
+
+Passive1x1 timber/ceramic three-terminal distribution pole.7x7 supply and
+9tile copper/red/green reach retained. Reopened packed editable source,
+inspected static GLB, actual original-FMPL cedar image bakes and unchanged
+indexed metal/ceramic maps. All92 fixed parts physically grounded; external
+leads route around timbers and do not intersect each other. Measured wire
+contacts align in genuine native close views. Fixed native RotatedSprite
+appropriate to this passive pole; no mechanical cycle or generator invented.
+Actual inside/outside supply boundary,9tile link/10tile rejection, remote
+crafting load, copper cut/reconnect, real source loss/restoration, red/green
+17-to23 signals, actual craft/place/mine and operated-save reload pass.
+Eight genuine native unwired/wired/cut/restored/night PNGs retained.
+Delegated operational close-enough delivery; owner visual approval not claimed.
+Evidence:art/source-to-3d/emergency-power-grid/v02/FMPL_MODEL.json.
+Accepted/closed assets and concurrent work preserved.
+
 ## 2026-11-17 - Emergency Laboratorium operational delivery
 
 Closed1x1 burner-heated study cabinet, retained console/conduits, arched brow

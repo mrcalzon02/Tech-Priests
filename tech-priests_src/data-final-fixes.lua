@@ -641,3 +641,5 @@ require("prototypes.generated_graphics.orbital-trader-v1")
 require("prototypes.generated_graphics.emergency-smelter-v1")
 
 require("prototypes.generated_graphics.emergency-laboratorium-v1")
+
+require("prototypes.generated_graphics.emergency-power-grid-v1")

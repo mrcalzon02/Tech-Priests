@@ -1,0 +1,28 @@
+{
+  "source_sha256": "c2eff12f7a2e552186c0fc3589874810996e4554594ed95ad21f596ed20bce35",
+  "runtime_sha256": "e7d869fa648e4a82d8e52ff34c6b2eb14e5bfd71f153e2d9d9b25c50a3c4ee31",
+  "genuine_actual_glb_body_frames": 1,
+  "files": {
+    "body.png": "fa97175f8860475221145bc5e3d822a47ecb3c487f7145accd72668b06908af2",
+    "icon.png": "3bf70c0a6e960b429dbc164ed63db53b8f12976dcb81c6f5c0f0e0b0d0e376de",
+    "shadow.png": "087b33e3002d1baeaafdce4e0976760edcc7215819e94bda6ef19c74b89690ae"
+  },
+  "native_directions": [
+    0
+  ],
+  "body_sprite_scale": 0.175,
+  "shadow_sprite_scale": 0.35,
+  "sprite_shift": [
+    0,
+    -0.42426406871192845
+  ],
+  "all_pngs_read_back": true,
+  "wire_contact_position_errors_tiles": {
+    "red": 8.106231685900411e-08,
+    "copper": 1.907348634588857e-08,
+    "green": 8.106231685900411e-08
+  },
+  "animation_applicability": "Passive pole: fixed RotatedSprite, no mechanical cycle. Actual native copper/circuit wires and network behavior supply operational states. No authored motion or generator function is invented.",
+  "actual_shadow_catcher_render": true,
+  "owner_visual_approved": false
+}

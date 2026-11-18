@@ -1,0 +1,152 @@
+{
+  "entity": {
+    "name": "tech-priests-emergency-power-grid",
+    "type": "electric-pole",
+    "footprint": [
+      1,
+      1
+    ],
+    "collision_box": {
+      "left_top": {
+        "y": -0.34765625,
+        "x": -0.34765625
+      },
+      "right_bottom": {
+        "y": 0.34765625,
+        "x": 0.34765625
+      }
+    },
+    "selection_box": {
+      "left_top": {
+        "y": -0.5,
+        "x": -0.5
+      },
+      "right_bottom": {
+        "y": 0.5,
+        "x": 0.5
+      }
+    },
+    "max_health": 55,
+    "supply_area_radius": 3.5,
+    "copper_wire_reach": 9,
+    "circuit_wire_reach": 9,
+    "auto_connect_up_to_n_wires": 5,
+    "burner": false,
+    "fluid_storage_count": 0,
+    "wire_connectors": [
+      {
+        "id": 1,
+        "real_connections": 0
+      },
+      {
+        "id": 2,
+        "real_connections": 0
+      },
+      {
+        "id": 5,
+        "real_connections": 0
+      }
+    ],
+    "initial_isolated_electric_network_id": 1,
+    "surface_conditions": [
+      {
+        "property": "pressure",
+        "min": 1,
+        "max": 1.7976931348623155e+308
+      },
+      {
+        "property": "gravity",
+        "min": 1,
+        "max": 1.7976931348623155e+308
+      }
+    ]
+  },
+  "item": {
+    "name": "tech-priests-emergency-power-grid",
+    "place_result": "tech-priests-emergency-power-grid",
+    "stack_size": 20,
+    "weight": 50000
+  },
+  "building_recipe": {
+    "enabled": true,
+    "seconds": 1,
+    "categories": [
+      "crafting"
+    ],
+    "ingredients": [
+      {
+        "type": "item",
+        "name": "wood",
+        "amount": 1
+      },
+      {
+        "type": "item",
+        "name": "copper-plate",
+        "amount": 1
+      }
+    ],
+    "products": [
+      {
+        "independent_probability": 1,
+        "shared_probability": {
+          "min": 0,
+          "max": 1
+        },
+        "type": "item",
+        "name": "tech-priests-emergency-power-grid",
+        "amount": 1,
+        "affected_by_quality": true
+      },
+      {
+        "independent_probability": 0,
+        "shared_probability": {
+          "min": 0,
+          "max": 1
+        },
+        "type": "item",
+        "name": "mechanical-detritus",
+        "amount": 1,
+        "ignored_by_stats": 1,
+        "ignored_by_productivity": 1,
+        "affected_by_quality": true
+      }
+    ]
+  },
+  "processing_recipes": {},
+  "building_unlocks": {},
+  "native_directions": [
+    {
+      "requested": 0,
+      "actual": 0,
+      "rotate": false,
+      "can_place": true
+    },
+    {
+      "requested": 4,
+      "actual": 0,
+      "rotate": false,
+      "can_place": true
+    },
+    {
+      "requested": 8,
+      "actual": 0,
+      "rotate": false,
+      "can_place": true
+    },
+    {
+      "requested": 12,
+      "actual": 0,
+      "rotate": false,
+      "can_place": true
+    }
+  ],
+  "normal_nauvis_placement": true,
+  "prototype_overrides": false,
+  "construction_intent": {
+    "form": "Passive three-terminal timber distribution frame: braced wooden posts, metal boots, ceramic insulators and separate copper/red/green top contacts.",
+    "reference": "Retain original three-insulator silhouette and grounded green legend box.",
+    "animation_applicability": "Native electric-pole uses one fixed RotatedSprite and has no moving processing cycle. Pole and sockets stay rigid; actual native wire connections and live electrical/circuit networks show operation. No mechanical animation or false generation is added.",
+    "actual_functions": "Distribute electricity over7x7tiles with9tile copper/circuit reach; no fuel, processing recipes or fluid ports.",
+    "timber_texture": "Original FMPL cedar-rough preset baked into actual albedo/normal/ORM image maps with model-specific longitudinal mapping. Covered end grain."
+  }
+}

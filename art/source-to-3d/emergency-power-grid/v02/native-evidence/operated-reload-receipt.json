@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "actual_operated_save": "power-grid-operated.zip",
+  "save_sha256": "2014f51a29683272cf94db5ffcccb42c37b50515b50a49fd6d92ce6913b19962",
+  "actual_reload_test_ticks": 600,
+  "reload_exit_code": 0,
+  "reload_log_sha256": "b7050e85b9e7de074c333bb8afbb1ece0e18212c098dbcc99d47fc6a8c341790",
+  "actual_supply_reach_network_and_operating_modes_passed": true,
+  "passive_pole_gameplay_preserved": true,
+  "no_target_or_accumulator_energy_assignments": true
+}

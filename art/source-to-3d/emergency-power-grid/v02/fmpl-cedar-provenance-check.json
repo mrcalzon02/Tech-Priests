@@ -1,0 +1,22 @@
+{
+  "passed": true,
+  "source_commit": "9c872855ee6b1c0f670ed542a7324605ecbff08e",
+  "source_repository": "mrcalzon02/Tech-Priests",
+  "files": [
+    {
+      "kind": "catalog",
+      "path": "tools/fmpl/surfaces/catalog.json",
+      "working_copy_sha256": "8b65456ea6922ad1891d3b0f0a0ab51d58c4182621c81c398e31e701879c357a",
+      "committed_git_bytes_sha256": "3f41b9d812c1afa2d5301f0ccbe1ccd2ebe969ecb66fec855efb466e43452073",
+      "identical_after_git_checkout_CRLF_normalization": true
+    },
+    {
+      "kind": "builder",
+      "path": "tools/fmpl/surfaces/build_library.py",
+      "working_copy_sha256": "a63ff5845b107a02316912e8806750cdec9ab9cae76fdbbd25893b5e80f83050",
+      "committed_git_bytes_sha256": "5a1eef3baed30a7a913183870c02cdef82157991f3a7e94b06b7a99e220dba51",
+      "identical_after_git_checkout_CRLF_normalization": true
+    }
+  ],
+  "note": "The actual baker read the source-indexed working checkout. Git checkout CRLF conversion changes byte hashes only; source content matches the committed source after LF normalization. No preset logic was changed except the declared per-model grain mapping."
+}
