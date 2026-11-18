@@ -1,0 +1,137 @@
+{
+  "profile": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\capture-wide-universe-v01\\profile-input.json",
+  "profile_sha256": "8b467c1ad44d68e20a1308c2ee94f33bea8c6ae1540b6bf57ccccbf6e825f44a",
+  "tooling": {
+    "capture.py": "ff8570bfc0a9d19a4b57089fb7139dd278debc10251cd03e7b99c836daaea6c3",
+    "package.py": "3ccb7451eb2bd43823c8f3f1981f9b4a3b59cfbc0399f0dda1efdd696005299f",
+    "particle_plume.py": "8c38721803118475f3a2ebacb75125ab773665eea2ba239946567a033e0d6f7d",
+    "electric_arcs.py": "dabfc6a32e53d9fb3c0d5b195c6787c78157d38c877323686bb2993a775dec4c",
+    "emitter_energy.py": "b064b8672b3faa638a3300579308fd175e824192b954b1af5568cd46b792f9f5",
+    "run_capture.py": "eb778a515bc4eb2e962bf1abaf59c1eed6b56934521ae55548d883b3f5211b52"
+  },
+  "fresh_process_per_lane": true,
+  "steps": [
+    {
+      "phase": "prepare",
+      "argv": [
+        "C:\\Program Files\\Blender Foundation\\Blender 5.0\\blender.exe",
+        "--factory-startup",
+        "--background",
+        "--threads",
+        "2",
+        "--python-exit-code",
+        "12",
+        "--python",
+        "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\thruster_resumption\\animation\\capture.py",
+        "--",
+        "prepare",
+        "--profile",
+        "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\capture-wide-universe-v01\\profile-input.json",
+        "--out",
+        "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\capture-wide-universe-v01\\output"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 19.45299999997951,
+      "log": "runner-logs/20261117T214007225177Z/prepare.log",
+      "log_sha256": "021bdc6be1a2360890159e9ce1ac75b9c1f536057579b2d4824e2793e85b8b42"
+    },
+    {
+      "phase": "static",
+      "argv": [
+        "C:\\Program Files\\Blender Foundation\\Blender 5.0\\blender.exe",
+        "--factory-startup",
+        "--background",
+        "--threads",
+        "2",
+        "--python-exit-code",
+        "12",
+        "--python",
+        "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\thruster_resumption\\animation\\capture.py",
+        "--",
+        "capture",
+        "--profile",
+        "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\capture-wide-universe-v01\\profile-input.json",
+        "--out",
+        "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\capture-wide-universe-v01\\output",
+        "--frames",
+        "0,1,2,3,4,5,6,7,16,32,48,64",
+        "--layers",
+        "cold_body,cold_light,shadow,underlay"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 72.76500000001397,
+      "log": "runner-logs/20261117T214007225177Z/static.log",
+      "log_sha256": "03c6b4378190bc50d3c4e651563bec2889f7ba42ab3cfc23741a8f8a99ace56c"
+    },
+    {
+      "phase": "energy",
+      "argv": [
+        "C:\\Program Files\\Blender Foundation\\Blender 5.0\\blender.exe",
+        "--factory-startup",
+        "--background",
+        "--threads",
+        "2",
+        "--python-exit-code",
+        "12",
+        "--python",
+        "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\thruster_resumption\\animation\\capture.py",
+        "--",
+        "capture",
+        "--profile",
+        "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\capture-wide-universe-v01\\profile-input.json",
+        "--out",
+        "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\capture-wide-universe-v01\\output",
+        "--frames",
+        "0,1,2,3,4,5,6,7,16,32,48,64",
+        "--layers",
+        "working_light"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 78.09400000001187,
+      "log": "runner-logs/20261117T214007225177Z/energy.log",
+      "log_sha256": "cc045261f87305cb601dc58e3a37f2e1a4bb27a31668839c01a36e0e795d07ae"
+    },
+    {
+      "phase": "field",
+      "argv": [
+        "C:\\Program Files\\Blender Foundation\\Blender 5.0\\blender.exe",
+        "--factory-startup",
+        "--background",
+        "--threads",
+        "2",
+        "--python-exit-code",
+        "12",
+        "--python",
+        "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\thruster_resumption\\animation\\capture.py",
+        "--",
+        "capture",
+        "--profile",
+        "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\capture-wide-universe-v01\\profile-input.json",
+        "--out",
+        "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\capture-wide-universe-v01\\output",
+        "--frames",
+        "0,1,2,3,4,5,6,7,16,32,48,64",
+        "--layers",
+        "field"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 42.07799999997951,
+      "log": "runner-logs/20261117T214007225177Z/field.log",
+      "log_sha256": "124a965a5e5c8091d2384c680666cee7a0350dd6190b5e9674f518baaee0f1f8"
+    },
+    {
+      "phase": "package",
+      "argv": [
+        "C:\\Users\\Admin\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\thruster_resumption\\animation\\package.py",
+        "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\capture-wide-universe-v01\\output",
+        "--allow-partial"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 1.9690000000118744,
+      "log": "runner-logs/20261117T214007225177Z/package.log",
+      "log_sha256": "1fce47aa1cd352bdaab3a4156a78e8a07d04034cdf38273dc92d3eeefced7d93"
+    }
+  ],
+  "status": "COMPLETED_SELECTED_PILOT_STAGES_REQUIRES_REVIEW"
+}

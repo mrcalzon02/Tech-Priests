@@ -1,0 +1,771 @@
+{
+  "schema": "authored_source_canonical_promotion_v1",
+  "status": "PASS_BYTE_EXACT_CANONICAL_SOURCE_DURABILITY",
+  "created_utc": "2026-11-17T21:28:35.195370+00:00",
+  "prototype": "void-fusion-thruster",
+  "canonical_root": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\art\\source-to-3d\\space-platform-engines\\void-fusion-thruster\\v11-detailed-opaque-core",
+  "original_staging": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail",
+  "stage": "4/5 capture-quality local production checkpoint; actual native narrow fit/state passed; owner artistic approval and release separate",
+  "source_blend_sha256": "61e9a02667e2c6124fbd738adfb48fb3b4180ba9b59da86165117b0a76b28d4d",
+  "body_glb_sha256": "2b1f7164dc6df970aef9c9f1367bf8cf30f82ba3471d1eb9fcf6e84821d3d137",
+  "deep_well_glb_sha256": "b3c083952cec501d375875f30a4780b07fa2d840bd0a1f873c4e6d3250123276",
+  "copied_file_count": 87,
+  "copied_bytes": 140782924,
+  "manifested_file_count_excluding_manifest": 93,
+  "total_manifested_bytes_excluding_manifest": 141016369,
+  "all_copied_files_match_promotion_snapshot_hashes": true,
+  "source_reopened_from_canonical_no_resave": true,
+  "all_74_source_images_packed_and_loaded": true,
+  "handoff_zip_crc_pass": true,
+  "canonical_body_source_well_not_gitignored": true,
+  "capture_input_paths_unchanged": true,
+  "source_or_export_resave": false,
+  "ordinary_runtime_or_git_mutations": false,
+  "historical_receipt_policy": "Copied receipt/source-contract contents, original path strings and then-current gate wording preserved byte-exact. Current pointers and this manifest provide canonical mapping; native proof copies document later passing source-bound pixel/fit/state review. Pre-promotion current-doc snapshots retain their original hashes while the live current pointers now identify this canonical copy.",
+  "remaining_gates": [
+    "Final owner artistic acceptance",
+    "Normal-profile installation/release",
+    "Icons and remnants",
+    "Real background refraction is not implemented or claimed"
+  ],
+  "files": [
+    {
+      "path": "actual-axial-guide-detail.png",
+      "bytes": 846225,
+      "sha256": "1704a6e5355dc2f7a829f3dc9330c96ab0337a0820ecadbf60b20a419ceb20af",
+      "role": "actual_export_review_image",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\actual-axial-guide-detail.png"
+    },
+    {
+      "path": "actual-core-magenta-background.png",
+      "bytes": 874299,
+      "sha256": "3586c97d5fd175b88c9643def47ca43be1b3c161ac6e6a9f10e6f092f36323b9",
+      "role": "actual_export_review_image",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\actual-core-magenta-background.png"
+    },
+    {
+      "path": "actual-core-transparent-alpha.png",
+      "bytes": 709583,
+      "sha256": "77035cb47d16bf72c5c87d5518951dbaa7d887f91f7d42b5ddb50569e3f36118",
+      "role": "actual_export_review_image",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\actual-core-transparent-alpha.png"
+    },
+    {
+      "path": "actual-field-guide-detail.png",
+      "bytes": 800590,
+      "sha256": "4cb88b54a4385604150c43782db7bd4cfee852bd1490bb46c1ee589446b7ebfa",
+      "role": "actual_export_review_image",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\actual-field-guide-detail.png"
+    },
+    {
+      "path": "actual-new-cover-guide-detail.png",
+      "bytes": 879435,
+      "sha256": "f7376daca486b7747381aa82683ff5580b578cc1d685b3ca27b9c520eb972f1f",
+      "role": "actual_export_review_image",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\actual-new-cover-guide-detail.png"
+    },
+    {
+      "path": "actual-new-whole-body.png",
+      "bytes": 1140675,
+      "sha256": "e8ffae51b29fde766bff891c69f788d31b88d42365f1d49e6980095fc000e286",
+      "role": "actual_export_review_image",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\actual-new-whole-body.png"
+    },
+    {
+      "path": "aperture-measurement.json",
+      "bytes": 1343,
+      "sha256": "faf3f98d998efd4e306389d473d3accdec6ddf9165f1f56b3d538425a1898dad",
+      "role": "validated_source_export_or_receipt",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\aperture-measurement.json"
+    },
+    {
+      "path": "archive-receipt.json",
+      "bytes": 840,
+      "sha256": "83df7ac5c954519412ad46e28eb6c9beda6dabb3c79864eb416a904526c35d54",
+      "role": "validated_source_export_or_receipt",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\archive-receipt.json"
+    },
+    {
+      "path": "ATTRIBUTION.txt",
+      "bytes": 704,
+      "sha256": "ac76dcc86bc9a5422b176f8acb8a20971ef0af335e28d63461c724c703e80ba2",
+      "role": "validated_source_export_or_receipt",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\ATTRIBUTION.txt"
+    },
+    {
+      "path": "canonical-packed-source-audit.json",
+      "bytes": 84405,
+      "sha256": "29d290e595cce09abdd76ae9087fe530a536015d0aae68eda95284113e9cebff",
+      "role": "promotion_metadata_generated_without_source_changes",
+      "byte_exact_copy": false
+    },
+    {
+      "path": "canonical-packed-source-audit.log",
+      "bytes": 549,
+      "sha256": "c9021d42aadb7794c2f9a5d0701c16e0b341070058889821c63b216845f485f0",
+      "role": "promotion_metadata_generated_without_source_changes",
+      "byte_exact_copy": false
+    },
+    {
+      "path": "capture-handoff.json",
+      "bytes": 2277,
+      "sha256": "ae47717de3bf5cc19f448793919ea139ae5231e4679615031a9b84c28cbcce90",
+      "role": "validated_source_export_or_receipt",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\capture-handoff.json"
+    },
+    {
+      "path": "copy-verification.json",
+      "bytes": 40967,
+      "sha256": "42511571ea0aa793ffc69f8768e5e0e09f09396c05b8f02e5d5e7d003fa36964",
+      "role": "promotion_metadata_generated_without_source_changes",
+      "byte_exact_copy": false
+    },
+    {
+      "path": "core-opacity-render-receipt.json",
+      "bytes": 577,
+      "sha256": "57fe50dc4573046f40976f4c2971016c4b70465cd86d6eaa4795ea5821b8baad",
+      "role": "validated_source_export_or_receipt",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\core-opacity-render-receipt.json"
+    },
+    {
+      "path": "detail-review-render-receipt.json",
+      "bytes": 1259,
+      "sha256": "eb5c5468ebe762928cd0fe9fcbd60fd4b951c193f400e40560c6dbedfdbd3396",
+      "role": "validated_source_export_or_receipt",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\detail-review-render-receipt.json"
+    },
+    {
+      "path": "evidence/native-narrow-v11e/native-power-art-validation.json",
+      "bytes": 704391,
+      "sha256": "67d32f6c1c6f54ef3f9e473df512bf116a6441bad257d4cdb7e086cfd7335fc1",
+      "role": "actual_native_review_or_control_proof",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\docs\\art\\thruster-resumption-20261117\\animation-capture\\native-narrow-v11e\\native-power-art-validation.json"
+    },
+    {
+      "path": "evidence/native-narrow-v11e/visual-fit-review.json",
+      "bytes": 2289,
+      "sha256": "0cc1314643269a75c6307e835aabb2ab7edd882bba3974ccb26ef3af19002cea",
+      "role": "actual_native_review_or_control_proof",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\docs\\art\\thruster-resumption-20261117\\animation-capture\\native-narrow-v11e\\visual-fit-review.json"
+    },
+    {
+      "path": "evidence/native-narrow-v11e/void-fusion-thruster-idle.png",
+      "bytes": 858005,
+      "sha256": "6535478fa874f66725e8b5c934df819ee4c68a497a91a2189bedf6f3922c4e6a",
+      "role": "actual_native_review_or_control_proof",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\docs\\art\\thruster-resumption-20261117\\animation-capture\\native-narrow-v11e\\void-fusion-thruster-idle.png"
+    },
+    {
+      "path": "evidence/native-narrow-v11e/void-fusion-thruster-native-power-working.gif",
+      "bytes": 8029420,
+      "sha256": "4c19e5d210425525757b4aca73d69c248d931f7c89fe28c73d65fa5f61d468f9",
+      "role": "actual_native_review_or_control_proof",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\docs\\art\\thruster-resumption-20261117\\animation-capture\\native-narrow-v11e\\void-fusion-thruster-native-power-working.gif"
+    },
+    {
+      "path": "evidence/native-narrow-v11e/void-fusion-thruster-night.png",
+      "bytes": 504348,
+      "sha256": "0b2922a94f35c4e257c2c0ee04c4f547ba94cb03aa29a3af5a58f4b7d23b5b1c",
+      "role": "actual_native_review_or_control_proof",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\docs\\art\\thruster-resumption-20261117\\animation-capture\\native-narrow-v11e\\void-fusion-thruster-night.png"
+    },
+    {
+      "path": "evidence/native-narrow-v11e/void-fusion-thruster-paused-powered.png",
+      "bytes": 854915,
+      "sha256": "4a6728c603049f1935d04e8a624fa541512620fc259683a21c78e48fa69676ab",
+      "role": "actual_native_review_or_control_proof",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\docs\\art\\thruster-resumption-20261117\\animation-capture\\native-narrow-v11e\\void-fusion-thruster-paused-powered.png"
+    },
+    {
+      "path": "evidence/native-narrow-v11e/void-fusion-thruster-restart.png",
+      "bytes": 855666,
+      "sha256": "d8f6e3ff9f6b03090bab265c7ab85349951d08eee454c8b2a4e9221c626642f2",
+      "role": "actual_native_review_or_control_proof",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\docs\\art\\thruster-resumption-20261117\\animation-capture\\native-narrow-v11e\\void-fusion-thruster-restart.png"
+    },
+    {
+      "path": "evidence/native-narrow-v11e/void-fusion-thruster-startup.png",
+      "bytes": 759084,
+      "sha256": "e5d08e16d080ca1dc89f67c6cf807e30db31787ba328bd00b2ba1588c1f7ee31",
+      "role": "actual_native_review_or_control_proof",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\docs\\art\\thruster-resumption-20261117\\animation-capture\\native-narrow-v11e\\void-fusion-thruster-startup.png"
+    },
+    {
+      "path": "evidence/native-narrow-v11e/void-fusion-thruster-working.png",
+      "bytes": 850092,
+      "sha256": "1957f3f6cb276f3031e0274a1e0a173c3f3c634f0996bfa276b6b29d927603df",
+      "role": "actual_native_review_or_control_proof",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\docs\\art\\thruster-resumption-20261117\\animation-capture\\native-narrow-v11e\\void-fusion-thruster-working.png"
+    },
+    {
+      "path": "evidence/pre-promotion-handoff/CHECKPOINT.json",
+      "bytes": 6140,
+      "sha256": "f68274efef9dc71b3afc19bddf251f2039346c109fab05c25db73c928dd2c9f8",
+      "role": "historical_original_current_checkpoint_before_canonical_promotion",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\docs\\art\\void-fusion-thruster-v01\\CHECKPOINT.json"
+    },
+    {
+      "path": "evidence/pre-promotion-handoff/CURRENT.json",
+      "bytes": 6140,
+      "sha256": "f68274efef9dc71b3afc19bddf251f2039346c109fab05c25db73c928dd2c9f8",
+      "role": "historical_original_current_checkpoint_before_canonical_promotion",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\docs\\art\\void-fusion-thruster-v01\\CURRENT.json"
+    },
+    {
+      "path": "evidence/pre-promotion-handoff/CURRENT_V11.md",
+      "bytes": 7194,
+      "sha256": "2056a7c854de99338dd1bde07382443f98c782fb3352aaae0825a87e291a9967",
+      "role": "historical_original_current_checkpoint_before_canonical_promotion",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\docs\\art\\void-fusion-thruster-v01\\CURRENT_V11.md"
+    },
+    {
+      "path": "evidence/pre-promotion-handoff/visual-review.json",
+      "bytes": 2185,
+      "sha256": "64d5857d982ee6cb3f1455137b748a6718292f9f3b4c8b35018216a06762d0a8",
+      "role": "historical_original_current_checkpoint_before_canonical_promotion",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\docs\\art\\void-fusion-thruster-v01\\visual-review.json"
+    },
+    {
+      "path": "functional-detail-export-validation.json",
+      "bytes": 9549,
+      "sha256": "4b273cf17f0025c13e642f601252b66781fae6de70caff6bff0dab49d75a15e3",
+      "role": "validated_source_export_or_receipt",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\functional-detail-export-validation.json"
+    },
+    {
+      "path": "guide-cover-export-validation.json",
+      "bytes": 52948,
+      "sha256": "538ce78989c8f7b3739290fd539719691a0cb559321291b652a86d291fe7511c",
+      "role": "validated_source_export_or_receipt",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\guide-cover-export-validation.json"
+    },
+    {
+      "path": "narrow-void-fusion-v11-detailed-capture-handoff.zip",
+      "bytes": 47429688,
+      "sha256": "d0885d79186f10284f8e9399cf832540fbcbd3e99c475621fd488325db1ca244",
+      "role": "historical_byte_exact_capture_handoff_archive",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\narrow-void-fusion-v11-detailed-capture-handoff.zip"
+    },
+    {
+      "path": "noctilith-reference.json",
+      "bytes": 5241,
+      "sha256": "9a89fd36f0367d96df98857f66389711c815f64e846908f9b3339f51bd1a41bf",
+      "role": "validated_source_export_or_receipt",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\noctilith-reference.json"
+    },
+    {
+      "path": "orphan-diagnosis.json",
+      "bytes": 2412,
+      "sha256": "5978edb670fc563f5e2064c7a3303901d00fe45115b3bcaed558f2aae4331148",
+      "role": "preserved_historical_diagnostic",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\orphan-diagnosis.json"
+    },
+    {
+      "path": "pipette-export-validation.json",
+      "bytes": 54684,
+      "sha256": "78d88fe8257645b365023b9d7dbdf66c4747b42caf3d04ddfef1c04509bdbc44",
+      "role": "validated_source_export_or_receipt",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\pipette-export-validation.json"
+    },
+    {
+      "path": "README.md",
+      "bytes": 4993,
+      "sha256": "efccdcb5e4254bd7e466f165e075a907230d104e730f4b7d2149ec4c82136d9a",
+      "role": "promotion_metadata_generated_without_source_changes",
+      "byte_exact_copy": false
+    },
+    {
+      "path": "reference-feature-mapping.json",
+      "bytes": 2078,
+      "sha256": "1de7aea6000bd24fec1aa97e143aad8652ea8d19fcc2b180c6998f93b732e670",
+      "role": "validated_source_export_or_receipt",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\reference-feature-mapping.json"
+    },
+    {
+      "path": "roundtrip-validation.json",
+      "bytes": 2943935,
+      "sha256": "a9e1e15390df52aeb0265eea46d9d5d75af7bfa5cb7f760badd456d9b686954e",
+      "role": "validated_source_export_or_receipt",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\roundtrip-validation.json"
+    },
+    {
+      "path": "service-underlay-receipt.json",
+      "bytes": 15428,
+      "sha256": "7d7fa307c126fac71daacafde76ef8625de4d2e7938fe934a2cf6301647c6c98",
+      "role": "validated_source_export_or_receipt",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\service-underlay-receipt.json"
+    },
+    {
+      "path": "service-well-v10/narrow-service-well-v10.blend",
+      "bytes": 89481,
+      "sha256": "2308796e18b4ad6a88faf3901c2ae081a8f2e67af2da77e9f7c55a2fd3590092",
+      "role": "packed_editable_source",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\service-well-v10\\narrow-service-well-v10.blend"
+    },
+    {
+      "path": "service-well-v10/narrow-service-well-v10.glb",
+      "bytes": 12700,
+      "sha256": "b3c083952cec501d375875f30a4780b07fa2d840bd0a1f873c4e6d3250123276",
+      "role": "independently_verified_interchange_export",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\service-well-v10\\narrow-service-well-v10.glb"
+    },
+    {
+      "path": "service-well-v10/service-well-receipt.json",
+      "bytes": 15428,
+      "sha256": "7d7fa307c126fac71daacafde76ef8625de4d2e7938fe934a2cf6301647c6c98",
+      "role": "validated_source_export_or_receipt",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\service-well-v10\\service-well-receipt.json"
+    },
+    {
+      "path": "source-contract.json",
+      "bytes": 10125002,
+      "sha256": "2e2dc9e4057b0f8150726021ef5923dfdad9ce886d1e015c4444b76cba801f43",
+      "role": "validated_source_export_or_receipt",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\source-contract.json"
+    },
+    {
+      "path": "stacked-dish-reference.json",
+      "bytes": 3538,
+      "sha256": "1223ef41321f55f87ed3ac22490b6f3fb9cc0fb8eedafd8c15ff0e1498faa8c0",
+      "role": "validated_source_export_or_receipt",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\stacked-dish-reference.json"
+    },
+    {
+      "path": "supplied-skull-reuse.json",
+      "bytes": 1197,
+      "sha256": "3a32a567b3ed084f78008d869dcb2756031d6e4092c1315d55367fbcb9cbb07f",
+      "role": "validated_source_export_or_receipt",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\supplied-skull-reuse.json"
+    },
+    {
+      "path": "supporting-toolchain/authored-driver-snapshot/bake_surface_atlas.py",
+      "bytes": 12608,
+      "sha256": "75884d71058050f9d0e33200d0239be2b6159f487757fa3bbbbb844745c81c29",
+      "role": "hash_pinned_asset_driver_dependency",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\void_fusion_thruster_v01\\bake_surface_atlas.py"
+    },
+    {
+      "path": "supporting-toolchain/authored-driver-snapshot/build_deep_service_well_v10.py",
+      "bytes": 6073,
+      "sha256": "5ef3e625cd6d060855b429dd773b4857504c3ce9231749f19cb3f0b727d72548",
+      "role": "hash_pinned_asset_driver_dependency",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\void_fusion_thruster_v01\\build_deep_service_well_v10.py"
+    },
+    {
+      "path": "supporting-toolchain/authored-driver-snapshot/build_model.py",
+      "bytes": 14190,
+      "sha256": "b4008e5eb9321e4a71acb986d228b5956173ba9bdecbc7b7e1359b28000b29e6",
+      "role": "hash_pinned_asset_driver_dependency",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\void_fusion_thruster_v01\\build_model.py"
+    },
+    {
+      "path": "supporting-toolchain/authored-driver-snapshot/build_service_underlay.py",
+      "bytes": 7366,
+      "sha256": "f82f52c284fbd5f7fed503a65fa59dd2f0607c4311b1590cbf7e296c26cea50e",
+      "role": "hash_pinned_asset_driver_dependency",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\void_fusion_thruster_v01\\build_service_underlay.py"
+    },
+    {
+      "path": "supporting-toolchain/authored-driver-snapshot/checkpoint_v09.py",
+      "bytes": 7364,
+      "sha256": "84bcb91c99171a02b1cf0f6d918921fad5601eba3e9a9cecb868f42deda21cae",
+      "role": "hash_pinned_asset_driver_dependency",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\void_fusion_thruster_v01\\checkpoint_v09.py"
+    },
+    {
+      "path": "supporting-toolchain/authored-driver-snapshot/checkpoint_v11.py",
+      "bytes": 5045,
+      "sha256": "44784f9edc42faae319d6603619e4a7c42c2b17ef33ba9a696fa3f99c68a3279",
+      "role": "hash_pinned_asset_driver_dependency",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\void_fusion_thruster_v01\\checkpoint_v11.py"
+    },
+    {
+      "path": "supporting-toolchain/authored-driver-snapshot/complete_lowered_v09.py",
+      "bytes": 17112,
+      "sha256": "d24f5fa507524080875b0744399cd6c02cab563736ad2855c7affb2beaee59b7",
+      "role": "hash_pinned_asset_driver_dependency",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\void_fusion_thruster_v01\\complete_lowered_v09.py"
+    },
+    {
+      "path": "supporting-toolchain/authored-driver-snapshot/detail_finish_v11.py",
+      "bytes": 14430,
+      "sha256": "f4d54182a46859ed6474d4011ed2c4daa67fd75b7e3ef0b8d89004854bc36746",
+      "role": "hash_pinned_asset_driver_dependency",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\void_fusion_thruster_v01\\detail_finish_v11.py"
+    },
+    {
+      "path": "supporting-toolchain/authored-driver-snapshot/detail_v10.py",
+      "bytes": 14238,
+      "sha256": "7384553eb8daecbe72c4b9b8197008099e9eb8d45ab7ad6bb505d575607aa143",
+      "role": "hash_pinned_asset_driver_dependency",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\void_fusion_thruster_v01\\detail_v10.py"
+    },
+    {
+      "path": "supporting-toolchain/authored-driver-snapshot/finish_handoff_v09.py",
+      "bytes": 5646,
+      "sha256": "25c36b9fde1385772538d071eee1b8238ee8d85272b8d933e24dbab284387e86",
+      "role": "hash_pinned_asset_driver_dependency",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\void_fusion_thruster_v01\\finish_handoff_v09.py"
+    },
+    {
+      "path": "supporting-toolchain/authored-driver-snapshot/handoff_detail_v11.py",
+      "bytes": 5989,
+      "sha256": "4c3ec846f923e5634907b0f46be57dfe792d87de653775aad5369ad989034bbb",
+      "role": "hash_pinned_asset_driver_dependency",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\void_fusion_thruster_v01\\handoff_detail_v11.py"
+    },
+    {
+      "path": "supporting-toolchain/authored-driver-snapshot/inspect_terminal_sliver.py",
+      "bytes": 663,
+      "sha256": "311819df794447f91041717d4ddd98d09329cc35868f135b039026670aacafdd",
+      "role": "hash_pinned_asset_driver_dependency",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\void_fusion_thruster_v01\\inspect_terminal_sliver.py"
+    },
+    {
+      "path": "supporting-toolchain/authored-driver-snapshot/lowered_housing_pilot_v09.py",
+      "bytes": 20018,
+      "sha256": "88a416ba885a2d56de859ffab463f668ca85b68c085ac9bff27a475bba4b551f",
+      "role": "hash_pinned_asset_driver_dependency",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\void_fusion_thruster_v01\\lowered_housing_pilot_v09.py"
+    },
+    {
+      "path": "supporting-toolchain/authored-driver-snapshot/pipette_power_terminal.py",
+      "bytes": 17223,
+      "sha256": "b75260953bf32a27ae81f6c57152ff1ab3efb8590b8ca2814766dd8100d5df9b",
+      "role": "hash_pinned_asset_driver_dependency",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\void_fusion_thruster_v01\\pipette_power_terminal.py"
+    },
+    {
+      "path": "supporting-toolchain/authored-driver-snapshot/refine_authored_v06.py",
+      "bytes": 18571,
+      "sha256": "e4d53a8cb6573a1863618be7433cd8653ac5a853d91f26404044fa2ac1ccd0d8",
+      "role": "hash_pinned_asset_driver_dependency",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\void_fusion_thruster_v01\\refine_authored_v06.py"
+    },
+    {
+      "path": "supporting-toolchain/authored-driver-snapshot/refine_authored_v07.py",
+      "bytes": 11531,
+      "sha256": "ac4c66da65db55b01294cb3af3b88ba208e953cfb9c25f54be209ab294f0014f",
+      "role": "hash_pinned_asset_driver_dependency",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\void_fusion_thruster_v01\\refine_authored_v07.py"
+    },
+    {
+      "path": "supporting-toolchain/authored-driver-snapshot/refine_finish_v08.py",
+      "bytes": 11810,
+      "sha256": "0643e7375daff3288048c53f448c43c0fc0c027895e14e3000077a1143301da9",
+      "role": "hash_pinned_asset_driver_dependency",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\void_fusion_thruster_v01\\refine_finish_v08.py"
+    },
+    {
+      "path": "supporting-toolchain/authored-driver-snapshot/refine_noctilith.py",
+      "bytes": 13619,
+      "sha256": "4e64265d9f7a6a958224e271cbcf1a31fada4fbdec6dab9328aa5b0f53a7b22b",
+      "role": "hash_pinned_asset_driver_dependency",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\void_fusion_thruster_v01\\refine_noctilith.py"
+    },
+    {
+      "path": "supporting-toolchain/authored-driver-snapshot/refine_stacked_dishes.py",
+      "bytes": 11642,
+      "sha256": "4e6783337e140b42df8d1259b4472a2041fe770de22a60f0de50607e45cde82b",
+      "role": "hash_pinned_asset_driver_dependency",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\void_fusion_thruster_v01\\refine_stacked_dishes.py"
+    },
+    {
+      "path": "supporting-toolchain/authored-driver-snapshot/refine_v02.py",
+      "bytes": 14808,
+      "sha256": "a9f9c431735483621f20bb7ed460b418cc5a6f5b37e1addeebf5105b853ef384",
+      "role": "hash_pinned_asset_driver_dependency",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\void_fusion_thruster_v01\\refine_v02.py"
+    },
+    {
+      "path": "supporting-toolchain/authored-driver-snapshot/render_handoff_v09.py",
+      "bytes": 4652,
+      "sha256": "be851bb28cef191d286df998280629939a91e4ba91f44f88343e10a10cbf7286",
+      "role": "hash_pinned_asset_driver_dependency",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\void_fusion_thruster_v01\\render_handoff_v09.py"
+    },
+    {
+      "path": "supporting-toolchain/authored-driver-snapshot/render_lowered_pilot.py",
+      "bytes": 2108,
+      "sha256": "e7fc8ac2fb2b0e794bd46fdd0673e11f0473bcd8467e773f775f5a85c1b685ca",
+      "role": "hash_pinned_asset_driver_dependency",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\void_fusion_thruster_v01\\render_lowered_pilot.py"
+    },
+    {
+      "path": "supporting-toolchain/authored-driver-snapshot/repair_v11_cases.py",
+      "bytes": 3942,
+      "sha256": "cdc51014b5a2cc4b82353f159f9ee690e9df70eddefb240e00249b193662a02c",
+      "role": "hash_pinned_asset_driver_dependency",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\void_fusion_thruster_v01\\repair_v11_cases.py"
+    },
+    {
+      "path": "supporting-toolchain/authored-driver-snapshot/verify_and_render.py",
+      "bytes": 17958,
+      "sha256": "206021d2d4c8b54d58377d9ac58c5a1e522450593b7388308d58c3a86bfc6aca",
+      "role": "hash_pinned_asset_driver_dependency",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\void_fusion_thruster_v01\\verify_and_render.py"
+    },
+    {
+      "path": "supporting-toolchain/authored-driver-snapshot/verify_detail_v10.py",
+      "bytes": 7830,
+      "sha256": "81dfe0ddba562caf60ecd6fc3b8542f6e09422b353d2544de1a11b64d207069e",
+      "role": "hash_pinned_asset_driver_dependency",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\void_fusion_thruster_v01\\verify_detail_v10.py"
+    },
+    {
+      "path": "supporting-toolchain/authored-driver-snapshot/verify_guides_v11.py",
+      "bytes": 4065,
+      "sha256": "6792610ea015af670c34adad21235261afd7c24a0b89df685f24c07c9494c4e5",
+      "role": "hash_pinned_asset_driver_dependency",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\void_fusion_thruster_v01\\verify_guides_v11.py"
+    },
+    {
+      "path": "supporting-toolchain/authored-driver-snapshot/verify_pipette_v09.py",
+      "bytes": 6858,
+      "sha256": "0781d62456c0618aa1b9f0773d635b7a3b704bf8076149e95df7017897eb4f4b",
+      "role": "hash_pinned_asset_driver_dependency",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\void_fusion_thruster_v01\\verify_pipette_v09.py"
+    },
+    {
+      "path": "supporting-toolchain/pipette-detail-fitting-snapshot/architecture_catalog.v1.json",
+      "bytes": 115783,
+      "sha256": "121cbadeb3f42912b25635a700a00a9bb22c5bd5a37050f4d6071225d978db98",
+      "role": "hash_pinned_34_guide_fitting_Pipette_dependency",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\art\\source-to-3d\\space-platform-engines\\void-fusion-thruster\\v11-detailed-opaque-core\\narrow-void-fusion-v11-detailed-capture-handoff.zip::pipette-detail-source-snapshot/architecture_catalog.v1.json"
+    },
+    {
+      "path": "supporting-toolchain/pipette-detail-fitting-snapshot/joint_catalog.v1.json",
+      "bytes": 24299,
+      "sha256": "0c389feba51038dcd7d207adbe463f1f0b8de475b715325e4102250c706294c2",
+      "role": "hash_pinned_34_guide_fitting_Pipette_dependency",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\art\\source-to-3d\\space-platform-engines\\void-fusion-thruster\\v11-detailed-opaque-core\\narrow-void-fusion-v11-detailed-capture-handoff.zip::pipette-detail-source-snapshot/joint_catalog.v1.json"
+    },
+    {
+      "path": "supporting-toolchain/pipette-detail-fitting-snapshot/library_fittings.py",
+      "bytes": 19681,
+      "sha256": "3a6f75821350980c5080dc7c651cd4773f402424a8ac113c2d52943296804df7",
+      "role": "hash_pinned_34_guide_fitting_Pipette_dependency",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\art\\source-to-3d\\space-platform-engines\\void-fusion-thruster\\v11-detailed-opaque-core\\narrow-void-fusion-v11-detailed-capture-handoff.zip::pipette-detail-source-snapshot/library_fittings.py"
+    },
+    {
+      "path": "supporting-toolchain/pipette-detail-fitting-snapshot/library_geometry.py",
+      "bytes": 35265,
+      "sha256": "36daec4fcdbf5d333b04e26f5e592ca9ecece0f159b5e4ef86a110a102c5b48e",
+      "role": "hash_pinned_34_guide_fitting_Pipette_dependency",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\art\\source-to-3d\\space-platform-engines\\void-fusion-thruster\\v11-detailed-opaque-core\\narrow-void-fusion-v11-detailed-capture-handoff.zip::pipette-detail-source-snapshot/library_geometry.py"
+    },
+    {
+      "path": "supporting-toolchain/pipette-original-route-snapshot/architecture_catalog.v1.json",
+      "bytes": 115783,
+      "sha256": "121cbadeb3f42912b25635a700a00a9bb22c5bd5a37050f4d6071225d978db98",
+      "role": "hash_pinned_original_38_route_Pipette_dependency",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v09\\pipette-source-snapshot\\architecture_catalog.v1.json"
+    },
+    {
+      "path": "supporting-toolchain/pipette-original-route-snapshot/blender_adapter.py",
+      "bytes": 21728,
+      "sha256": "724c1964fee8916b43dc86c0ff0185ec1646c1964662b2af1ea6ecbfbed68a1d",
+      "role": "hash_pinned_original_38_route_Pipette_dependency",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v09\\pipette-source-snapshot\\blender_adapter.py"
+    },
+    {
+      "path": "supporting-toolchain/pipette-original-route-snapshot/core.py",
+      "bytes": 20633,
+      "sha256": "9a991dea7dd646faad8766326ef60e67c0618c283a81dbf297119ee6ec3761c7",
+      "role": "hash_pinned_original_38_route_Pipette_dependency",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v09\\pipette-source-snapshot\\core.py"
+    },
+    {
+      "path": "supporting-toolchain/pipette-original-route-snapshot/library_fittings.py",
+      "bytes": 19681,
+      "sha256": "3a6f75821350980c5080dc7c651cd4773f402424a8ac113c2d52943296804df7",
+      "role": "hash_pinned_original_38_route_Pipette_dependency",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v09\\pipette-source-snapshot\\library_fittings.py"
+    },
+    {
+      "path": "supporting-toolchain/pipette-original-route-snapshot/library_geometry.py",
+      "bytes": 35265,
+      "sha256": "36daec4fcdbf5d333b04e26f5e592ca9ecece0f159b5e4ef86a110a102c5b48e",
+      "role": "hash_pinned_original_38_route_Pipette_dependency",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v09\\pipette-source-snapshot\\library_geometry.py"
+    },
+    {
+      "path": "supporting-toolchain/pipette-original-route-snapshot/PIPETTE_STANDARD.md",
+      "bytes": 12615,
+      "sha256": "540a244a9192d2514c0c8ae97b657f0b896b8dddb170e5c51fb6d0f9554096be",
+      "role": "hash_pinned_original_38_route_Pipette_dependency",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v09\\pipette-source-snapshot\\PIPETTE_STANDARD.md"
+    },
+    {
+      "path": "supporting-toolchain/pipette-original-route-snapshot/README.md",
+      "bytes": 10534,
+      "sha256": "f243e88a68fbdccdb70b828e72cae8109f401380d97e70d65bc02b35b30e850d",
+      "role": "hash_pinned_original_38_route_Pipette_dependency",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v09\\pipette-source-snapshot\\README.md"
+    },
+    {
+      "path": "surface-plan.json",
+      "bytes": 98643,
+      "sha256": "89d855cadf8dbd05467fe947c2a41156781c86f78acb2573e6dfd6d3e7221ec3",
+      "role": "promotion_metadata_generated_without_source_changes",
+      "byte_exact_copy": false
+    },
+    {
+      "path": "surface-plan.md",
+      "bytes": 3888,
+      "sha256": "773aed9639cf79e9185b18a1cf6a22b87df8fcfef79d402737151c50e0fc552c",
+      "role": "promotion_metadata_generated_without_source_changes",
+      "byte_exact_copy": false
+    },
+    {
+      "path": "textures/V11 closed-receiver-machining-surfaces-basecolor.png",
+      "bytes": 463557,
+      "sha256": "77372ebd787e9448609f4454d9f2e5f96ee43d6fab08afdd9a58338e7a185175",
+      "role": "current_external_baked_image",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\textures\\V11 closed-receiver-machining-surfaces-basecolor.png"
+    },
+    {
+      "path": "textures/V11 closed-receiver-machining-surfaces-crushed.png",
+      "bytes": 181260,
+      "sha256": "06710a0dbafe342f5477b09a4daa07ecd7c6bce83a340cf6016447dafe3dcc93",
+      "role": "current_external_baked_image",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\textures\\V11 closed-receiver-machining-surfaces-crushed.png"
+    },
+    {
+      "path": "textures/V11 closed-receiver-machining-surfaces-emission.png",
+      "bytes": 11970,
+      "sha256": "50c58d18e5b1161d8bb13a8f4e97f2d4eed8a29ee2b630858531fdf7106445ed",
+      "role": "current_external_baked_image",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\textures\\V11 closed-receiver-machining-surfaces-emission.png"
+    },
+    {
+      "path": "textures/V11 closed-receiver-machining-surfaces-grain.png",
+      "bytes": 424097,
+      "sha256": "22daec9b38e268dbb67aaea8a95aacf9fc9766801d9ff4f09d30ffc2e9397e2a",
+      "role": "current_external_baked_image",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\textures\\V11 closed-receiver-machining-surfaces-grain.png"
+    },
+    {
+      "path": "textures/V11 closed-receiver-machining-surfaces-metalrough.png",
+      "bytes": 377464,
+      "sha256": "5775b820f1b968008082f3623e119a9f569db6a0accbda6d91734ccc822495e0",
+      "role": "current_external_baked_image",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\textures\\V11 closed-receiver-machining-surfaces-metalrough.png"
+    },
+    {
+      "path": "textures/V11 closed-receiver-machining-surfaces-normal.png",
+      "bytes": 276955,
+      "sha256": "dc07dfd732afebae8c146a024a6dfe8ce1a662b904b919a99e04025bd9548744",
+      "role": "current_external_baked_image",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\textures\\V11 closed-receiver-machining-surfaces-normal.png"
+    },
+    {
+      "path": "textures/V11 closed-receiver-machining-surfaces-pressure.png",
+      "bytes": 23784,
+      "sha256": "5406661bf752ead3c91b4d979304badbf29c18222d189ab517993c0d64d1afc1",
+      "role": "current_external_baked_image",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\textures\\V11 closed-receiver-machining-surfaces-pressure.png"
+    },
+    {
+      "path": "void-fusion-v11.blend",
+      "bytes": 20962030,
+      "sha256": "61e9a02667e2c6124fbd738adfb48fb3b4180ba9b59da86165117b0a76b28d4d",
+      "role": "packed_editable_source",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\void-fusion-v11.blend"
+    },
+    {
+      "path": "void-fusion-v11.glb",
+      "bytes": 37892196,
+      "sha256": "2b1f7164dc6df970aef9c9f1367bf8cf30f82ba3471d1eb9fcf6e84821d3d137",
+      "role": "independently_verified_interchange_export",
+      "byte_exact_copy": true,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\void-fusion-v11.glb"
+    }
+  ]
+}

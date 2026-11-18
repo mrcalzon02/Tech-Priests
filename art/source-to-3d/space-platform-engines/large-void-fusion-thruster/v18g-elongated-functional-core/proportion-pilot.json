@@ -1,0 +1,2661 @@
+{
+  "status": "PROPORTIONS_PILOT_NOT_PROMOTED_REQUIRES_ACTUAL_CANONICAL_VIEW_AND_FIT_CHECKS",
+  "source_body_sha256": "b185e0dfb2814fd43d93f04f5680f50f1812ea49b2c08c20d9bb48649061e0e0",
+  "source_sha256": "22ea19c088b939bd0b81fa7b2cd2bf73545fd1651670f79a825f72b38aac5e78",
+  "glb_sha256": "1a137ab6350ac5ab6a9dc5e93aab253988ab51fdff7fb380eeae52dc12947cd0",
+  "script_sha256": "61baec6d35a80dbce0154081d999bbd58b94ebd1203631c65e669d2d95a49596",
+  "core_station_scale": 1.65,
+  "rigid_head_station": 1.1,
+  "rigid_head_translation": [
+    0.0,
+    -0.5996494293212891,
+    -0.38941690325737
+  ],
+  "rigid_hardware_checks": [
+    {
+      "mesh": "Shaped upper portal bearing casting -1",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Shaped upper portal bearing casting 1",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Broad rolled top load crossmember",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Sealed electric service hatch",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Service hatch captive screw",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Service hatch captive screw.001",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Service hatch captive screw.002",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Service hatch captive screw.003",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Service hatch recessed seal marker",
+      "translation_only_max_vertex_error": 2.4027400458748785e-07
+    },
+    {
+      "mesh": "Service hatch recessed seal marker.001",
+      "translation_only_max_vertex_error": 2.4027400458748785e-07
+    },
+    {
+      "mesh": "Service hatch recessed seal marker.002",
+      "translation_only_max_vertex_error": 2.4027400458748785e-07
+    },
+    {
+      "mesh": "Mechanical Noctilith retaining hoop",
+      "translation_only_max_vertex_error": 8.429369702178807e-08
+    },
+    {
+      "mesh": "Clamp radial locking head",
+      "translation_only_max_vertex_error": 8.429369702178807e-08
+    },
+    {
+      "mesh": "Clamp radial locking head.001",
+      "translation_only_max_vertex_error": 8.429369702178807e-08
+    },
+    {
+      "mesh": "Clamp radial locking head.002",
+      "translation_only_max_vertex_error": 8.429369702178807e-08
+    },
+    {
+      "mesh": "Clamp radial locking head.003",
+      "translation_only_max_vertex_error": 5.960464477539063e-08
+    },
+    {
+      "mesh": "Clamp radial locking head.004",
+      "translation_only_max_vertex_error": 8.429369702178807e-08
+    },
+    {
+      "mesh": "Clamp radial locking head.005",
+      "translation_only_max_vertex_error": 8.429369702178807e-08
+    },
+    {
+      "mesh": "Clamp radial locking head.006",
+      "translation_only_max_vertex_error": 8.429369702178807e-08
+    },
+    {
+      "mesh": "Clamp radial locking head.007",
+      "translation_only_max_vertex_error": 5.960464477539063e-08
+    },
+    {
+      "mesh": "Clamp radial locking head.008",
+      "translation_only_max_vertex_error": 5.960464477539063e-08
+    },
+    {
+      "mesh": "Clamp radial locking head.009",
+      "translation_only_max_vertex_error": 5.960464477539063e-08
+    },
+    {
+      "mesh": "Clamp radial locking head.010",
+      "translation_only_max_vertex_error": 5.960464477539063e-08
+    },
+    {
+      "mesh": "Clamp radial locking head.011",
+      "translation_only_max_vertex_error": 5.960464477539063e-08
+    },
+    {
+      "mesh": "Clamp radial locking head.012",
+      "translation_only_max_vertex_error": 6.006850114687196e-08
+    },
+    {
+      "mesh": "Clamp radial locking head.013",
+      "translation_only_max_vertex_error": 5.21540641784668e-08
+    },
+    {
+      "mesh": "Clamp radial locking head.014",
+      "translation_only_max_vertex_error": 5.21540641784668e-08
+    },
+    {
+      "mesh": "Clamp radial locking head.015",
+      "translation_only_max_vertex_error": 5.268356063861754e-08
+    },
+    {
+      "mesh": "Clamp radial locking head.016",
+      "translation_only_max_vertex_error": 5.21540641784668e-08
+    },
+    {
+      "mesh": "Clamp radial locking head.017",
+      "translation_only_max_vertex_error": 5.21540641784668e-08
+    },
+    {
+      "mesh": "Clamp radial locking head.018",
+      "translation_only_max_vertex_error": 6.006850114687196e-08
+    },
+    {
+      "mesh": "Clamp radial locking head.019",
+      "translation_only_max_vertex_error": 6.006850114687196e-08
+    },
+    {
+      "mesh": "Clamp radial locking head.020",
+      "translation_only_max_vertex_error": 6.006850114687196e-08
+    },
+    {
+      "mesh": "Clamp radial locking head.021",
+      "translation_only_max_vertex_error": 6.006850114687196e-08
+    },
+    {
+      "mesh": "Clamp radial locking head.022",
+      "translation_only_max_vertex_error": 6.006850114687196e-08
+    },
+    {
+      "mesh": "Clamp radial locking head.023",
+      "translation_only_max_vertex_error": 6.006850114687196e-08
+    },
+    {
+      "mesh": "Mechanical Noctilith retaining hoop.002",
+      "translation_only_max_vertex_error": 3.332000937312528e-08
+    },
+    {
+      "mesh": "Clamp radial locking head.024",
+      "translation_only_max_vertex_error": 3.332000937312528e-08
+    },
+    {
+      "mesh": "Clamp radial locking head.025",
+      "translation_only_max_vertex_error": 3.332000937312528e-08
+    },
+    {
+      "mesh": "Clamp radial locking head.026",
+      "translation_only_max_vertex_error": 3.332000937312528e-08
+    },
+    {
+      "mesh": "Clamp radial locking head.027",
+      "translation_only_max_vertex_error": 3.332000937312528e-08
+    },
+    {
+      "mesh": "Clamp radial locking head.028",
+      "translation_only_max_vertex_error": 3.332000937312528e-08
+    },
+    {
+      "mesh": "Clamp radial locking head.029",
+      "translation_only_max_vertex_error": 3.332000937312528e-08
+    },
+    {
+      "mesh": "Clamp radial locking head.030",
+      "translation_only_max_vertex_error": 3.332000937312528e-08
+    },
+    {
+      "mesh": "Clamp radial locking head.031",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Clamp radial locking head.032",
+      "translation_only_max_vertex_error": 3.332000937312528e-08
+    },
+    {
+      "mesh": "Clamp radial locking head.033",
+      "translation_only_max_vertex_error": 3.332000937312528e-08
+    },
+    {
+      "mesh": "Clamp radial locking head.034",
+      "translation_only_max_vertex_error": 3.332000937312528e-08
+    },
+    {
+      "mesh": "Clamp radial locking head.035",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Mechanical Noctilith retaining hoop.003",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Clamp radial locking head.036",
+      "translation_only_max_vertex_error": 4.2146848510894035e-08
+    },
+    {
+      "mesh": "Clamp radial locking head.037",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Clamp radial locking head.038",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Clamp radial locking head.039",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Clamp radial locking head.040",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Clamp radial locking head.041",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Clamp radial locking head.042",
+      "translation_only_max_vertex_error": 4.2146848510894035e-08
+    },
+    {
+      "mesh": "Clamp radial locking head.043",
+      "translation_only_max_vertex_error": 4.2146848510894035e-08
+    },
+    {
+      "mesh": "Clamp radial locking head.044",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Clamp radial locking head.045",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Clamp radial locking head.046",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Clamp radial locking head.047",
+      "translation_only_max_vertex_error": 4.2146848510894035e-08
+    },
+    {
+      "mesh": "Shoe retained cast yoke",
+      "translation_only_max_vertex_error": 5.960464477539063e-08
+    },
+    {
+      "mesh": "Shoe screw thrust seat",
+      "translation_only_max_vertex_error": 5.960464477539063e-08
+    },
+    {
+      "mesh": "Shoe compression locking screw",
+      "translation_only_max_vertex_error": 5.960464477539063e-08
+    },
+    {
+      "mesh": "Shoe retained cast yoke.001",
+      "translation_only_max_vertex_error": 5.3726900748371916e-08
+    },
+    {
+      "mesh": "Shoe screw thrust seat.001",
+      "translation_only_max_vertex_error": 5.3726900748371916e-08
+    },
+    {
+      "mesh": "Shoe compression locking screw.001",
+      "translation_only_max_vertex_error": 5.3726900748371916e-08
+    },
+    {
+      "mesh": "Shoe retained cast yoke.002",
+      "translation_only_max_vertex_error": 5.302011830755918e-08
+    },
+    {
+      "mesh": "Shoe screw thrust seat.002",
+      "translation_only_max_vertex_error": 5.302011830755918e-08
+    },
+    {
+      "mesh": "Shoe compression locking screw.002",
+      "translation_only_max_vertex_error": 5.302011830755918e-08
+    },
+    {
+      "mesh": "Shoe retained cast yoke.003",
+      "translation_only_max_vertex_error": 5.268356063861754e-08
+    },
+    {
+      "mesh": "Shoe screw thrust seat.003",
+      "translation_only_max_vertex_error": 5.268356063861754e-08
+    },
+    {
+      "mesh": "Shoe compression locking screw.003",
+      "translation_only_max_vertex_error": 5.268356063861754e-08
+    },
+    {
+      "mesh": "Shoe retained cast yoke.004",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Shoe screw thrust seat.004",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Shoe compression locking screw.004",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Shoe retained cast yoke.005",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Shoe screw thrust seat.005",
+      "translation_only_max_vertex_error": 4.2146848510894035e-08
+    },
+    {
+      "mesh": "Shoe compression locking screw.005",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Tower retained ring",
+      "translation_only_max_vertex_error": 5.960464477539063e-08
+    },
+    {
+      "mesh": "Tower retained ring.001",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Tower retained ring.002",
+      "translation_only_max_vertex_error": 3.332000937312528e-08
+    },
+    {
+      "mesh": "Tower retained ring.003",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Ceramic rib isolator",
+      "translation_only_max_vertex_error": 8.429369702178807e-08
+    },
+    {
+      "mesh": "Ceramic rib isolator.001",
+      "translation_only_max_vertex_error": 6.006850114687196e-08
+    },
+    {
+      "mesh": "Ceramic rib isolator.002",
+      "translation_only_max_vertex_error": 5.686408848491962e-08
+    },
+    {
+      "mesh": "Ceramic rib isolator.003",
+      "translation_only_max_vertex_error": 2.5876693407911442e-08
+    },
+    {
+      "mesh": "Tower frame saddle",
+      "translation_only_max_vertex_error": 1.3328003749250113e-07
+    },
+    {
+      "mesh": "Tower saddle retainer",
+      "translation_only_max_vertex_error": 5.960464477539063e-08
+    },
+    {
+      "mesh": "Tower saddle retainer.001",
+      "translation_only_max_vertex_error": 5.960464477539063e-08
+    },
+    {
+      "mesh": "Tower frame saddle.001",
+      "translation_only_max_vertex_error": 3.332000937312528e-08
+    },
+    {
+      "mesh": "Tower saddle retainer.002",
+      "translation_only_max_vertex_error": 5.3726900748371916e-08
+    },
+    {
+      "mesh": "Tower saddle retainer.003",
+      "translation_only_max_vertex_error": 5.3726900748371916e-08
+    },
+    {
+      "mesh": "Tower frame saddle.002",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Tower saddle retainer.004",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Tower saddle retainer.005",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Tower axial cap",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Tower axial cap.001",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Tower retained ring.004",
+      "translation_only_max_vertex_error": 5.960464477539063e-08
+    },
+    {
+      "mesh": "Tower retained ring.005",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Tower retained ring.006",
+      "translation_only_max_vertex_error": 3.332000937312528e-08
+    },
+    {
+      "mesh": "Tower retained ring.007",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Ceramic rib isolator.004",
+      "translation_only_max_vertex_error": 8.429369702178807e-08
+    },
+    {
+      "mesh": "Ceramic rib isolator.005",
+      "translation_only_max_vertex_error": 6.006850114687196e-08
+    },
+    {
+      "mesh": "Ceramic rib isolator.006",
+      "translation_only_max_vertex_error": 5.686408848491962e-08
+    },
+    {
+      "mesh": "Ceramic rib isolator.007",
+      "translation_only_max_vertex_error": 2.5876693407911442e-08
+    },
+    {
+      "mesh": "Tower frame saddle.003",
+      "translation_only_max_vertex_error": 1.3328003749250113e-07
+    },
+    {
+      "mesh": "Tower saddle retainer.006",
+      "translation_only_max_vertex_error": 5.960464477539063e-08
+    },
+    {
+      "mesh": "Tower saddle retainer.007",
+      "translation_only_max_vertex_error": 5.960464477539063e-08
+    },
+    {
+      "mesh": "Tower frame saddle.004",
+      "translation_only_max_vertex_error": 3.332000937312528e-08
+    },
+    {
+      "mesh": "Tower saddle retainer.008",
+      "translation_only_max_vertex_error": 5.3726900748371916e-08
+    },
+    {
+      "mesh": "Tower saddle retainer.009",
+      "translation_only_max_vertex_error": 5.3726900748371916e-08
+    },
+    {
+      "mesh": "Tower frame saddle.005",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Tower saddle retainer.010",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Tower saddle retainer.011",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Tower axial cap.002",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Tower axial cap.003",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Containment lower transverse cradle",
+      "translation_only_max_vertex_error": 5.960464477539063e-08
+    },
+    {
+      "mesh": "Containment cradle cheek",
+      "translation_only_max_vertex_error": 1.1920928955078125e-07
+    },
+    {
+      "mesh": "Containment cradle cheek.001",
+      "translation_only_max_vertex_error": 1.1920928955078125e-07
+    },
+    {
+      "mesh": "Containment lower transverse cradle.001",
+      "translation_only_max_vertex_error": 4.2146848510894035e-08
+    },
+    {
+      "mesh": "Containment cradle cheek.002",
+      "translation_only_max_vertex_error": 4.2146848510894035e-08
+    },
+    {
+      "mesh": "Containment cradle cheek.003",
+      "translation_only_max_vertex_error": 4.2146848510894035e-08
+    },
+    {
+      "mesh": "Armored shallow dish stage 0",
+      "translation_only_max_vertex_error": 8.940696716308594e-08
+    },
+    {
+      "mesh": "Dish tier bolted rim band 0",
+      "translation_only_max_vertex_error": 8.940696716308594e-08
+    },
+    {
+      "mesh": "Segmented dish armor tier 0 panel 0",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Dish armor band locking head",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Dish rim axial retainer",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Segmented dish armor tier 0 panel 1",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Dish armor band locking head.001",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Dish rim axial retainer.001",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Segmented dish armor tier 0 panel 2",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Dish armor band locking head.002",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Dish rim axial retainer.002",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Segmented dish armor tier 0 panel 3",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Dish armor band locking head.003",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Dish rim axial retainer.003",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Segmented dish armor tier 0 panel 4",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Dish armor band locking head.004",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Dish rim axial retainer.004",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Segmented dish armor tier 0 panel 5",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Dish armor band locking head.005",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Dish rim axial retainer.005",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Segmented dish armor tier 0 panel 6",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Dish armor band locking head.006",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Dish rim axial retainer.006",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Segmented dish armor tier 0 panel 7",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Dish armor band locking head.007",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Dish rim axial retainer.007",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Segmented dish armor tier 0 panel 8",
+      "translation_only_max_vertex_error": 8.940696716308594e-08
+    },
+    {
+      "mesh": "Dish armor band locking head.008",
+      "translation_only_max_vertex_error": 8.940696716308594e-08
+    },
+    {
+      "mesh": "Dish rim axial retainer.008",
+      "translation_only_max_vertex_error": 8.940696716308594e-08
+    },
+    {
+      "mesh": "Segmented dish armor tier 0 panel 9",
+      "translation_only_max_vertex_error": 8.940696716308594e-08
+    },
+    {
+      "mesh": "Dish armor band locking head.009",
+      "translation_only_max_vertex_error": 8.940696716308594e-08
+    },
+    {
+      "mesh": "Dish rim axial retainer.009",
+      "translation_only_max_vertex_error": 8.940696716308594e-08
+    },
+    {
+      "mesh": "Segmented dish armor tier 0 panel 10",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Dish armor band locking head.010",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Dish rim axial retainer.010",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Segmented dish armor tier 0 panel 11",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Dish armor band locking head.011",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Dish rim axial retainer.011",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Recessed green dish electrode track",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Recessed green dish electrode track.001",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Recessed green dish electrode track.002",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Profile-seated dished rib 0 0",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Flared rib root retaining head",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Profile-seated dished rib 0 1",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Flared rib root retaining head.001",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Profile-seated dished rib 0 2",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Flared rib root retaining head.002",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Profile-seated dished rib 0 3",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Flared rib root retaining head.003",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Armored shallow dish stage 1",
+      "translation_only_max_vertex_error": 8.940696716308594e-08
+    },
+    {
+      "mesh": "Dish tier bolted rim band 1",
+      "translation_only_max_vertex_error": 1.0745380149674383e-07
+    },
+    {
+      "mesh": "Segmented dish armor tier 1 panel 0",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Dish armor band locking head.012",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Dish rim axial retainer.012",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Segmented dish armor tier 1 panel 1",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Dish armor band locking head.013",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Dish rim axial retainer.013",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Segmented dish armor tier 1 panel 2",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Dish armor band locking head.014",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Dish rim axial retainer.014",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Segmented dish armor tier 1 panel 3",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Dish armor band locking head.015",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Dish rim axial retainer.015",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Segmented dish armor tier 1 panel 4",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Dish armor band locking head.016",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Dish rim axial retainer.016",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Segmented dish armor tier 1 panel 5",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Dish armor band locking head.017",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Dish rim axial retainer.017",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Segmented dish armor tier 1 panel 6",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Dish armor band locking head.018",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Dish rim axial retainer.018",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Segmented dish armor tier 1 panel 7",
+      "translation_only_max_vertex_error": 8.940696716308594e-08
+    },
+    {
+      "mesh": "Dish armor band locking head.019",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Dish rim axial retainer.019",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Segmented dish armor tier 1 panel 8",
+      "translation_only_max_vertex_error": 1.0745380149674383e-07
+    },
+    {
+      "mesh": "Dish armor band locking head.020",
+      "translation_only_max_vertex_error": 1.0745380149674383e-07
+    },
+    {
+      "mesh": "Dish rim axial retainer.020",
+      "translation_only_max_vertex_error": 1.0745380149674383e-07
+    },
+    {
+      "mesh": "Segmented dish armor tier 1 panel 9",
+      "translation_only_max_vertex_error": 1.0745380149674383e-07
+    },
+    {
+      "mesh": "Dish armor band locking head.021",
+      "translation_only_max_vertex_error": 1.0745380149674383e-07
+    },
+    {
+      "mesh": "Dish rim axial retainer.021",
+      "translation_only_max_vertex_error": 1.0745380149674383e-07
+    },
+    {
+      "mesh": "Segmented dish armor tier 1 panel 10",
+      "translation_only_max_vertex_error": 8.940696716308594e-08
+    },
+    {
+      "mesh": "Dish armor band locking head.022",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Dish rim axial retainer.022",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Segmented dish armor tier 1 panel 11",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Dish armor band locking head.023",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Dish rim axial retainer.023",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Recessed green dish electrode track.003",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Recessed green dish electrode track.004",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Recessed green dish electrode track.005",
+      "translation_only_max_vertex_error": 8.940696716308594e-08
+    },
+    {
+      "mesh": "Profile-seated dished rib 1 0",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Flared rib root retaining head.004",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Profile-seated dished rib 1 1",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Flared rib root retaining head.005",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Profile-seated dished rib 1 2",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Flared rib root retaining head.006",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Profile-seated dished rib 1 3",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Flared rib root retaining head.007",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Armored shallow dish stage 2",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Dish tier bolted rim band 2",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Segmented dish armor tier 2 panel 0",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Dish armor band locking head.024",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Dish rim axial retainer.024",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Segmented dish armor tier 2 panel 1",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Dish armor band locking head.025",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Dish rim axial retainer.025",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Segmented dish armor tier 2 panel 2",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Dish armor band locking head.026",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Dish rim axial retainer.026",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Segmented dish armor tier 2 panel 3",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Dish armor band locking head.027",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Dish rim axial retainer.027",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Segmented dish armor tier 2 panel 4",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Dish armor band locking head.028",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Dish rim axial retainer.028",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Segmented dish armor tier 2 panel 5",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Dish armor band locking head.029",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Dish rim axial retainer.029",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Segmented dish armor tier 2 panel 6",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Dish armor band locking head.030",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Dish rim axial retainer.030",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Segmented dish armor tier 2 panel 7",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Dish armor band locking head.031",
+      "translation_only_max_vertex_error": 8.940696716308594e-08
+    },
+    {
+      "mesh": "Dish rim axial retainer.031",
+      "translation_only_max_vertex_error": 8.940696716308594e-08
+    },
+    {
+      "mesh": "Segmented dish armor tier 2 panel 8",
+      "translation_only_max_vertex_error": 8.940696716308594e-08
+    },
+    {
+      "mesh": "Dish armor band locking head.032",
+      "translation_only_max_vertex_error": 1.0745380149674383e-07
+    },
+    {
+      "mesh": "Dish rim axial retainer.032",
+      "translation_only_max_vertex_error": 8.940696716308594e-08
+    },
+    {
+      "mesh": "Segmented dish armor tier 2 panel 9",
+      "translation_only_max_vertex_error": 8.940696716308594e-08
+    },
+    {
+      "mesh": "Dish armor band locking head.033",
+      "translation_only_max_vertex_error": 1.0745380149674383e-07
+    },
+    {
+      "mesh": "Dish rim axial retainer.033",
+      "translation_only_max_vertex_error": 8.940696716308594e-08
+    },
+    {
+      "mesh": "Segmented dish armor tier 2 panel 10",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Dish armor band locking head.034",
+      "translation_only_max_vertex_error": 8.940696716308594e-08
+    },
+    {
+      "mesh": "Dish rim axial retainer.034",
+      "translation_only_max_vertex_error": 8.940696716308594e-08
+    },
+    {
+      "mesh": "Segmented dish armor tier 2 panel 11",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Dish armor band locking head.035",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Dish rim axial retainer.035",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Recessed green dish electrode track.006",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Recessed green dish electrode track.007",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Recessed green dish electrode track.008",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Profile-seated dished rib 2 0",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Flared rib root retaining head.008",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Profile-seated dished rib 2 1",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Flared rib root retaining head.009",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Profile-seated dished rib 2 2",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Flared rib root retaining head.010",
+      "translation_only_max_vertex_error": 1.0745380149674383e-07
+    },
+    {
+      "mesh": "Profile-seated dished rib 2 3",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Flared rib root retaining head.011",
+      "translation_only_max_vertex_error": 1.0745380149674383e-07
+    },
+    {
+      "mesh": "Armored shallow dish stage 3",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Dish tier bolted rim band 3",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Segmented dish armor tier 3 panel 0",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Dish armor band locking head.036",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Dish rim axial retainer.036",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Segmented dish armor tier 3 panel 1",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Dish armor band locking head.037",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Dish rim axial retainer.037",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Segmented dish armor tier 3 panel 2",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Dish armor band locking head.038",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Dish rim axial retainer.038",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Segmented dish armor tier 3 panel 3",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Dish armor band locking head.039",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Dish rim axial retainer.039",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Segmented dish armor tier 3 panel 4",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Dish armor band locking head.040",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Dish rim axial retainer.040",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Segmented dish armor tier 3 panel 5",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Dish armor band locking head.041",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Dish rim axial retainer.041",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Segmented dish armor tier 3 panel 6",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Dish armor band locking head.042",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Dish rim axial retainer.042",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Segmented dish armor tier 3 panel 7",
+      "translation_only_max_vertex_error": 8.940696716308594e-08
+    },
+    {
+      "mesh": "Dish armor band locking head.043",
+      "translation_only_max_vertex_error": 8.940696716308594e-08
+    },
+    {
+      "mesh": "Dish rim axial retainer.043",
+      "translation_only_max_vertex_error": 8.940696716308594e-08
+    },
+    {
+      "mesh": "Segmented dish armor tier 3 panel 8",
+      "translation_only_max_vertex_error": 8.940696716308594e-08
+    },
+    {
+      "mesh": "Dish armor band locking head.044",
+      "translation_only_max_vertex_error": 8.940696716308594e-08
+    },
+    {
+      "mesh": "Dish rim axial retainer.044",
+      "translation_only_max_vertex_error": 8.940696716308594e-08
+    },
+    {
+      "mesh": "Segmented dish armor tier 3 panel 9",
+      "translation_only_max_vertex_error": 8.940696716308594e-08
+    },
+    {
+      "mesh": "Dish armor band locking head.045",
+      "translation_only_max_vertex_error": 8.940696716308594e-08
+    },
+    {
+      "mesh": "Dish rim axial retainer.045",
+      "translation_only_max_vertex_error": 8.940696716308594e-08
+    },
+    {
+      "mesh": "Segmented dish armor tier 3 panel 10",
+      "translation_only_max_vertex_error": 8.940696716308594e-08
+    },
+    {
+      "mesh": "Dish armor band locking head.046",
+      "translation_only_max_vertex_error": 8.940696716308594e-08
+    },
+    {
+      "mesh": "Dish rim axial retainer.046",
+      "translation_only_max_vertex_error": 8.940696716308594e-08
+    },
+    {
+      "mesh": "Segmented dish armor tier 3 panel 11",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Dish armor band locking head.047",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Dish rim axial retainer.047",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Recessed green dish electrode track.009",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Recessed green dish electrode track.010",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Recessed green dish electrode track.011",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Profile-seated dished rib 3 0",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Flared rib root retaining head.012",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Profile-seated dished rib 3 1",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Flared rib root retaining head.013",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Profile-seated dished rib 3 2",
+      "translation_only_max_vertex_error": 8.940696716308594e-08
+    },
+    {
+      "mesh": "Flared rib root retaining head.014",
+      "translation_only_max_vertex_error": 8.940696716308594e-08
+    },
+    {
+      "mesh": "Profile-seated dished rib 3 3",
+      "translation_only_max_vertex_error": 8.940696716308594e-08
+    },
+    {
+      "mesh": "Flared rib root retaining head.015",
+      "translation_only_max_vertex_error": 8.940696716308594e-08
+    },
+    {
+      "mesh": "Stepped dish brace root",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Stepped dish brace receiving end",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Stepped ceramic inter-tier insulator",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Insulator retained metal end ferrule",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Insulator retained metal end ferrule.001",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Retained inter-tier conductor seat",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Stepped dish brace root.001",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Stepped dish brace receiving end.001",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Stepped ceramic inter-tier insulator.001",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Insulator retained metal end ferrule.002",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Insulator retained metal end ferrule.003",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Retained inter-tier conductor seat.001",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Stepped dish brace root.002",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Stepped dish brace receiving end.002",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Stepped ceramic inter-tier insulator.002",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Insulator retained metal end ferrule.004",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Insulator retained metal end ferrule.005",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Retained inter-tier conductor seat.002",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Stepped dish brace root.003",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Stepped dish brace receiving end.003",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Stepped ceramic inter-tier insulator.003",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Insulator retained metal end ferrule.006",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Insulator retained metal end ferrule.007",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Retained inter-tier conductor seat.003",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Stepped dish brace root.004",
+      "translation_only_max_vertex_error": 8.940696716308594e-08
+    },
+    {
+      "mesh": "Stepped dish brace receiving end.004",
+      "translation_only_max_vertex_error": 1.0745380149674383e-07
+    },
+    {
+      "mesh": "Stepped ceramic inter-tier insulator.004",
+      "translation_only_max_vertex_error": 1.0745380149674383e-07
+    },
+    {
+      "mesh": "Insulator retained metal end ferrule.008",
+      "translation_only_max_vertex_error": 8.940696716308594e-08
+    },
+    {
+      "mesh": "Insulator retained metal end ferrule.009",
+      "translation_only_max_vertex_error": 1.0745380149674383e-07
+    },
+    {
+      "mesh": "Retained inter-tier conductor seat.004",
+      "translation_only_max_vertex_error": 8.940696716308594e-08
+    },
+    {
+      "mesh": "Stepped dish brace root.005",
+      "translation_only_max_vertex_error": 8.940696716308594e-08
+    },
+    {
+      "mesh": "Stepped dish brace receiving end.005",
+      "translation_only_max_vertex_error": 1.0745380149674383e-07
+    },
+    {
+      "mesh": "Stepped ceramic inter-tier insulator.005",
+      "translation_only_max_vertex_error": 1.0745380149674383e-07
+    },
+    {
+      "mesh": "Insulator retained metal end ferrule.010",
+      "translation_only_max_vertex_error": 8.940696716308594e-08
+    },
+    {
+      "mesh": "Insulator retained metal end ferrule.011",
+      "translation_only_max_vertex_error": 1.0745380149674383e-07
+    },
+    {
+      "mesh": "Retained inter-tier conductor seat.005",
+      "translation_only_max_vertex_error": 8.940696716308594e-08
+    },
+    {
+      "mesh": "Stepped dish brace root.006",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Stepped dish brace receiving end.006",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Stepped ceramic inter-tier insulator.006",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Insulator retained metal end ferrule.012",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Insulator retained metal end ferrule.013",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Retained inter-tier conductor seat.006",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Stepped dish brace root.007",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Stepped dish brace receiving end.007",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Stepped ceramic inter-tier insulator.007",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Insulator retained metal end ferrule.014",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Insulator retained metal end ferrule.015",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Retained inter-tier conductor seat.007",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Stepped dish brace root.008",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Stepped dish brace receiving end.008",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Stepped ceramic inter-tier insulator.008",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Insulator retained metal end ferrule.016",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Insulator retained metal end ferrule.017",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Retained inter-tier conductor seat.008",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Stepped dish brace root.009",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Stepped dish brace receiving end.009",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Stepped ceramic inter-tier insulator.009",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Insulator retained metal end ferrule.018",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Insulator retained metal end ferrule.019",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Retained inter-tier conductor seat.009",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Stepped dish brace root.010",
+      "translation_only_max_vertex_error": 1.0745380149674383e-07
+    },
+    {
+      "mesh": "Stepped dish brace receiving end.010",
+      "translation_only_max_vertex_error": 1.0745380149674383e-07
+    },
+    {
+      "mesh": "Stepped ceramic inter-tier insulator.010",
+      "translation_only_max_vertex_error": 1.0745380149674383e-07
+    },
+    {
+      "mesh": "Insulator retained metal end ferrule.020",
+      "translation_only_max_vertex_error": 1.0745380149674383e-07
+    },
+    {
+      "mesh": "Insulator retained metal end ferrule.021",
+      "translation_only_max_vertex_error": 1.0745380149674383e-07
+    },
+    {
+      "mesh": "Retained inter-tier conductor seat.010",
+      "translation_only_max_vertex_error": 1.0745380149674383e-07
+    },
+    {
+      "mesh": "Stepped dish brace root.011",
+      "translation_only_max_vertex_error": 1.0745380149674383e-07
+    },
+    {
+      "mesh": "Stepped dish brace receiving end.011",
+      "translation_only_max_vertex_error": 1.0745380149674383e-07
+    },
+    {
+      "mesh": "Stepped ceramic inter-tier insulator.011",
+      "translation_only_max_vertex_error": 1.0745380149674383e-07
+    },
+    {
+      "mesh": "Insulator retained metal end ferrule.022",
+      "translation_only_max_vertex_error": 1.0745380149674383e-07
+    },
+    {
+      "mesh": "Insulator retained metal end ferrule.023",
+      "translation_only_max_vertex_error": 1.0745380149674383e-07
+    },
+    {
+      "mesh": "Retained inter-tier conductor seat.011",
+      "translation_only_max_vertex_error": 1.0745380149674383e-07
+    },
+    {
+      "mesh": "Stepped dish brace root.012",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Stepped dish brace receiving end.012",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Stepped ceramic inter-tier insulator.012",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Insulator retained metal end ferrule.024",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Insulator retained metal end ferrule.025",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Retained inter-tier conductor seat.012",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Stepped dish brace root.013",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Stepped dish brace receiving end.013",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Stepped ceramic inter-tier insulator.013",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Insulator retained metal end ferrule.026",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Insulator retained metal end ferrule.027",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Retained inter-tier conductor seat.013",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Stepped dish brace root.014",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Stepped dish brace receiving end.014",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Stepped ceramic inter-tier insulator.014",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Insulator retained metal end ferrule.028",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Insulator retained metal end ferrule.029",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Retained inter-tier conductor seat.014",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Stepped dish brace root.015",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Stepped dish brace receiving end.015",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Stepped ceramic inter-tier insulator.015",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Insulator retained metal end ferrule.030",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Insulator retained metal end ferrule.031",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Retained inter-tier conductor seat.015",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Stepped dish brace root.016",
+      "translation_only_max_vertex_error": 1.0745380149674383e-07
+    },
+    {
+      "mesh": "Stepped dish brace receiving end.016",
+      "translation_only_max_vertex_error": 8.940696716308594e-08
+    },
+    {
+      "mesh": "Stepped ceramic inter-tier insulator.016",
+      "translation_only_max_vertex_error": 1.0745380149674383e-07
+    },
+    {
+      "mesh": "Insulator retained metal end ferrule.032",
+      "translation_only_max_vertex_error": 1.0745380149674383e-07
+    },
+    {
+      "mesh": "Insulator retained metal end ferrule.033",
+      "translation_only_max_vertex_error": 1.0745380149674383e-07
+    },
+    {
+      "mesh": "Retained inter-tier conductor seat.016",
+      "translation_only_max_vertex_error": 1.0745380149674383e-07
+    },
+    {
+      "mesh": "Stepped dish brace root.017",
+      "translation_only_max_vertex_error": 1.0745380149674383e-07
+    },
+    {
+      "mesh": "Stepped dish brace receiving end.017",
+      "translation_only_max_vertex_error": 8.940696716308594e-08
+    },
+    {
+      "mesh": "Stepped ceramic inter-tier insulator.017",
+      "translation_only_max_vertex_error": 1.0745380149674383e-07
+    },
+    {
+      "mesh": "Insulator retained metal end ferrule.034",
+      "translation_only_max_vertex_error": 1.0745380149674383e-07
+    },
+    {
+      "mesh": "Insulator retained metal end ferrule.035",
+      "translation_only_max_vertex_error": 1.0745380149674383e-07
+    },
+    {
+      "mesh": "Retained inter-tier conductor seat.017",
+      "translation_only_max_vertex_error": 1.0745380149674383e-07
+    },
+    {
+      "mesh": "Emitter axial anode shaft",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Central emitter ceramic isolation",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Central green extraction aperture",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Stepped segmented emitter hub",
+      "translation_only_max_vertex_error": 1.4901161193847656e-07
+    },
+    {
+      "mesh": "Emitter hub keyed socket",
+      "translation_only_max_vertex_error": 1.3328003749250113e-07
+    },
+    {
+      "mesh": "Emitter hub keyed socket.001",
+      "translation_only_max_vertex_error": 1.3328003749250113e-07
+    },
+    {
+      "mesh": "Emitter hub keyed socket.002",
+      "translation_only_max_vertex_error": 1.3328003749250113e-07
+    },
+    {
+      "mesh": "Emitter hub keyed socket.003",
+      "translation_only_max_vertex_error": 1.3328003749250113e-07
+    },
+    {
+      "mesh": "Emitter hub keyed socket.004",
+      "translation_only_max_vertex_error": 1.4901161193847656e-07
+    },
+    {
+      "mesh": "Emitter hub keyed socket.005",
+      "translation_only_max_vertex_error": 1.4901161193847656e-07
+    },
+    {
+      "mesh": "Shaped socketed emitter guard 0",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Guard root bearing washer",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Guard root seated locking head",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Shaped socketed emitter guard 1",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Guard root bearing washer.001",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Guard root seated locking head.001",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Shaped socketed emitter guard 2",
+      "translation_only_max_vertex_error": 1.4901161193847656e-07
+    },
+    {
+      "mesh": "Guard root bearing washer.002",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Guard root seated locking head.002",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Shaped socketed emitter guard 3",
+      "translation_only_max_vertex_error": 1.4901161193847656e-07
+    },
+    {
+      "mesh": "Guard root bearing washer.003",
+      "translation_only_max_vertex_error": 8.940696716308594e-08
+    },
+    {
+      "mesh": "Guard root seated locking head.003",
+      "translation_only_max_vertex_error": 8.940696716308594e-08
+    },
+    {
+      "mesh": "Seal supported armor plinth 0",
+      "translation_only_max_vertex_error": 2.682209014892578e-07
+    },
+    {
+      "mesh": "Upper seal shoulder anchor -1",
+      "translation_only_max_vertex_error": 1.9082797281243946e-07
+    },
+    {
+      "mesh": "Upper seal shoulder anchor 1",
+      "translation_only_max_vertex_error": 1.9082797281243946e-07
+    },
+    {
+      "mesh": "Embossed contained-field medallion",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Medallion raised rim",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Seal cog tooth",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Seal cog tooth.001",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Seal cog tooth.002",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Seal cog tooth.003",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Seal cog tooth.004",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Seal cog tooth.005",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Seal cog tooth.006",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Seal cog tooth.007",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Seal cog tooth.008",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Seal cog tooth.009",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Seal cog tooth.010",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Seal cog tooth.011",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Seal wing feather",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Seal wing feather.001",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Seal wing feather.002",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Seal wing feather.003",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Seal wing feather.004",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Seal wing feather.005",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Supplied original low-poly skull seal 0",
+      "translation_only_max_vertex_error": 2.9351883535969567e-07
+    },
+    {
+      "mesh": "Seal supported armor plinth 1",
+      "translation_only_max_vertex_error": 8.429369702178807e-08
+    },
+    {
+      "mesh": "Embossed contained-field medallion.001",
+      "translation_only_max_vertex_error": 8.429369702178807e-08
+    },
+    {
+      "mesh": "Medallion raised rim.001",
+      "translation_only_max_vertex_error": 8.429369702178807e-08
+    },
+    {
+      "mesh": "Seal cog tooth.012",
+      "translation_only_max_vertex_error": 1.3328003749250113e-07
+    },
+    {
+      "mesh": "Seal cog tooth.013",
+      "translation_only_max_vertex_error": 8.429369702178807e-08
+    },
+    {
+      "mesh": "Seal cog tooth.014",
+      "translation_only_max_vertex_error": 8.429369702178807e-08
+    },
+    {
+      "mesh": "Seal cog tooth.015",
+      "translation_only_max_vertex_error": 8.429369702178807e-08
+    },
+    {
+      "mesh": "Seal cog tooth.016",
+      "translation_only_max_vertex_error": 8.429369702178807e-08
+    },
+    {
+      "mesh": "Seal cog tooth.017",
+      "translation_only_max_vertex_error": 8.429369702178807e-08
+    },
+    {
+      "mesh": "Seal cog tooth.018",
+      "translation_only_max_vertex_error": 1.3328003749250113e-07
+    },
+    {
+      "mesh": "Seal cog tooth.019",
+      "translation_only_max_vertex_error": 8.429369702178807e-08
+    },
+    {
+      "mesh": "Seal cog tooth.020",
+      "translation_only_max_vertex_error": 8.429369702178807e-08
+    },
+    {
+      "mesh": "Seal cog tooth.021",
+      "translation_only_max_vertex_error": 1.3328003749250113e-07
+    },
+    {
+      "mesh": "Seal cog tooth.022",
+      "translation_only_max_vertex_error": 8.429369702178807e-08
+    },
+    {
+      "mesh": "Seal cog tooth.023",
+      "translation_only_max_vertex_error": 8.429369702178807e-08
+    },
+    {
+      "mesh": "Seal wing feather.006",
+      "translation_only_max_vertex_error": 8.429369702178807e-08
+    },
+    {
+      "mesh": "Seal wing feather.007",
+      "translation_only_max_vertex_error": 8.429369702178807e-08
+    },
+    {
+      "mesh": "Seal wing feather.008",
+      "translation_only_max_vertex_error": 8.429369702178807e-08
+    },
+    {
+      "mesh": "Seal wing feather.009",
+      "translation_only_max_vertex_error": 8.429369702178807e-08
+    },
+    {
+      "mesh": "Seal wing feather.010",
+      "translation_only_max_vertex_error": 8.429369702178807e-08
+    },
+    {
+      "mesh": "Seal wing feather.011",
+      "translation_only_max_vertex_error": 8.429369702178807e-08
+    },
+    {
+      "mesh": "Supplied original low-poly skull seal 1",
+      "translation_only_max_vertex_error": 1.3328003749250113e-07
+    },
+    {
+      "mesh": "Fitted mitred termination Open cage formed retaining channel1",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Fitted mitred termination Open cage formed retaining channel-1",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Fitted mitred termination Open cage formed retaining channel.0011",
+      "translation_only_max_vertex_error": 5.960464477539063e-08
+    },
+    {
+      "mesh": "Fitted mitred termination Open cage formed retaining channel.001-1",
+      "translation_only_max_vertex_error": 4.2146848510894035e-08
+    },
+    {
+      "mesh": "Fitted mitred termination Open cage formed retaining channel.0021",
+      "translation_only_max_vertex_error": 5.960464477539063e-08
+    },
+    {
+      "mesh": "Fitted mitred termination Open cage formed retaining channel.002-1",
+      "translation_only_max_vertex_error": 4.2146848510894035e-08
+    },
+    {
+      "mesh": "Fitted mitred termination Open cage formed retaining channel.0031",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Fitted mitred termination Open cage formed retaining channel.003-1",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Fitted mitred termination Open cage formed retaining channel.0041",
+      "translation_only_max_vertex_error": 8.429369702178807e-08
+    },
+    {
+      "mesh": "Fitted mitred termination Open cage formed retaining channel.004-1",
+      "translation_only_max_vertex_error": 1.1920928955078125e-07
+    },
+    {
+      "mesh": "Fitted mitred termination Open cage formed retaining channel.0051",
+      "translation_only_max_vertex_error": 8.429369702178807e-08
+    },
+    {
+      "mesh": "Fitted mitred termination Open cage formed retaining channel.005-1",
+      "translation_only_max_vertex_error": 1.1920928955078125e-07
+    },
+    {
+      "mesh": "Fitted mitred termination Broad rolled top load crossmember1",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Fitted mitred termination Broad rolled top load crossmember-1",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Pilot hinged retaining strap upper",
+      "translation_only_max_vertex_error": 6.006850114687196e-08
+    },
+    {
+      "mesh": "Pilot hinged retaining strap lower",
+      "translation_only_max_vertex_error": 6.006850114687196e-08
+    },
+    {
+      "mesh": "Rolled hinge knuckle 0",
+      "translation_only_max_vertex_error": 6.006850114687196e-08
+    },
+    {
+      "mesh": "Rolled hinge knuckle 1",
+      "translation_only_max_vertex_error": 6.006850114687196e-08
+    },
+    {
+      "mesh": "Rolled hinge knuckle 2",
+      "translation_only_max_vertex_error": 6.006850114687196e-08
+    },
+    {
+      "mesh": "Retaining band hinge through-pin",
+      "translation_only_max_vertex_error": 6.006850114687196e-08
+    },
+    {
+      "mesh": "Forged take-up receiving eye -1",
+      "translation_only_max_vertex_error": 5.4241045484546706e-08
+    },
+    {
+      "mesh": "Forged take-up receiving eye 1",
+      "translation_only_max_vertex_error": 5.4241045484546706e-08
+    },
+    {
+      "mesh": "Band take-up shoulder screw",
+      "translation_only_max_vertex_error": 5.268356063861754e-08
+    },
+    {
+      "mesh": "Take-up screw thread crest",
+      "translation_only_max_vertex_error": 5.268356063861754e-08
+    },
+    {
+      "mesh": "Take-up screw thread crest.001",
+      "translation_only_max_vertex_error": 5.268356063861754e-08
+    },
+    {
+      "mesh": "Take-up screw thread crest.002",
+      "translation_only_max_vertex_error": 5.268356063861754e-08
+    },
+    {
+      "mesh": "Take-up screw thread crest.003",
+      "translation_only_max_vertex_error": 5.268356063861754e-08
+    },
+    {
+      "mesh": "Take-up screw thread crest.004",
+      "translation_only_max_vertex_error": 5.268356063861754e-08
+    },
+    {
+      "mesh": "Take-up screw thread crest.005",
+      "translation_only_max_vertex_error": 5.268356063861754e-08
+    },
+    {
+      "mesh": "Take-up screw thread crest.006",
+      "translation_only_max_vertex_error": 5.268356063861754e-08
+    },
+    {
+      "mesh": "Take-up screw thread crest.007",
+      "translation_only_max_vertex_error": 5.268356063861754e-08
+    },
+    {
+      "mesh": "Take-up screw thread crest.008",
+      "translation_only_max_vertex_error": 5.268356063861754e-08
+    },
+    {
+      "mesh": "Take-up screw thread crest.009",
+      "translation_only_max_vertex_error": 5.268356063861754e-08
+    },
+    {
+      "mesh": "Take-up screw thread crest.010",
+      "translation_only_max_vertex_error": 5.268356063861754e-08
+    },
+    {
+      "mesh": "Take-up screw thread crest.011",
+      "translation_only_max_vertex_error": 5.268356063861754e-08
+    },
+    {
+      "mesh": "Bay bearing receiving shoe 0",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Bay bearing receiving shoe 1",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Bay bearing receiving shoe 2",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Bay bearing receiving shoe 3",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Bay bearing receiving shoe 4",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Bay bearing receiving shoe 5",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Pipette retained ceramic terminal coil--1-0-start",
+      "translation_only_max_vertex_error": 8.33000234328132e-09
+    },
+    {
+      "mesh": "Pipette annular power entry coil--1-0-start",
+      "translation_only_max_vertex_error": 8.33000234328132e-09
+    },
+    {
+      "mesh": "Pipette retained ceramic terminal coil--1-0-end",
+      "translation_only_max_vertex_error": 3.332000937312528e-08
+    },
+    {
+      "mesh": "Pipette annular power entry coil--1-0-end",
+      "translation_only_max_vertex_error": 3.332000937312528e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-winding--1-0 start 0",
+      "translation_only_max_vertex_error": 8.33000234328132e-09
+    },
+    {
+      "mesh": "Pipette library gland wide-winding--1-0 start 1",
+      "translation_only_max_vertex_error": 8.33000234328132e-09
+    },
+    {
+      "mesh": "Pipette library gland wide-winding--1-0 start 2",
+      "translation_only_max_vertex_error": 3.725290298461914e-09
+    },
+    {
+      "mesh": "Pipette library gland wide-winding--1-0 end 0",
+      "translation_only_max_vertex_error": 3.332000937312528e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-winding--1-0 end 1",
+      "translation_only_max_vertex_error": 3.332000937312528e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-winding--1-0 end 2",
+      "translation_only_max_vertex_error": 3.332000937312528e-08
+    },
+    {
+      "mesh": "Pipette retained ceramic terminal coil--1-1-start",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Pipette annular power entry coil--1-1-start",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Pipette retained ceramic terminal coil--1-1-end",
+      "translation_only_max_vertex_error": 5.960464477539063e-08
+    },
+    {
+      "mesh": "Pipette annular power entry coil--1-1-end",
+      "translation_only_max_vertex_error": 5.960464477539063e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-winding--1-1 start 0",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-winding--1-1 start 1",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-winding--1-1 start 2",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-winding--1-1 end 0",
+      "translation_only_max_vertex_error": 5.960464477539063e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-winding--1-1 end 1",
+      "translation_only_max_vertex_error": 5.960464477539063e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-winding--1-1 end 2",
+      "translation_only_max_vertex_error": 5.960464477539063e-08
+    },
+    {
+      "mesh": "Pipette retained ceramic terminal rock-feed--1-0",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Pipette annular power entry rock-feed--1-0",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Pipette retained ceramic terminal rock-shoe--1-0",
+      "translation_only_max_vertex_error": 5.960464477539063e-08
+    },
+    {
+      "mesh": "Pipette annular power entry rock-shoe--1-0",
+      "translation_only_max_vertex_error": 5.960464477539063e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-shoe-power--1-0 start 0",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-shoe-power--1-0 start 1",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-shoe-power--1-0 start 2",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-shoe-power--1-0 end 0",
+      "translation_only_max_vertex_error": 1.0848209096909341e-07
+    },
+    {
+      "mesh": "Pipette library gland wide-shoe-power--1-0 end 1",
+      "translation_only_max_vertex_error": 1.0848209096909341e-07
+    },
+    {
+      "mesh": "Pipette library gland wide-shoe-power--1-0 end 2",
+      "translation_only_max_vertex_error": 3.332000937312528e-08
+    },
+    {
+      "mesh": "Pipette retained ceramic terminal rock-feed--1-1",
+      "translation_only_max_vertex_error": 3.332000937312528e-08
+    },
+    {
+      "mesh": "Pipette annular power entry rock-feed--1-1",
+      "translation_only_max_vertex_error": 3.332000937312528e-08
+    },
+    {
+      "mesh": "Pipette retained ceramic terminal rock-shoe--1-1",
+      "translation_only_max_vertex_error": 5.302011830755918e-08
+    },
+    {
+      "mesh": "Pipette annular power entry rock-shoe--1-1",
+      "translation_only_max_vertex_error": 5.302011830755918e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-shoe-power--1-1 start 0",
+      "translation_only_max_vertex_error": 3.332000937312528e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-shoe-power--1-1 start 1",
+      "translation_only_max_vertex_error": 3.332000937312528e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-shoe-power--1-1 start 2",
+      "translation_only_max_vertex_error": 3.332000937312528e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-shoe-power--1-1 end 0",
+      "translation_only_max_vertex_error": 5.302011830755918e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-shoe-power--1-1 end 1",
+      "translation_only_max_vertex_error": 5.302011830755918e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-shoe-power--1-1 end 2",
+      "translation_only_max_vertex_error": 5.302011830755918e-08
+    },
+    {
+      "mesh": "Pipette retained ceramic terminal rock-feed--1-2",
+      "translation_only_max_vertex_error": 5.960464477539063e-08
+    },
+    {
+      "mesh": "Pipette annular power entry rock-feed--1-2",
+      "translation_only_max_vertex_error": 5.960464477539063e-08
+    },
+    {
+      "mesh": "Pipette retained ceramic terminal rock-shoe--1-2",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Pipette annular power entry rock-shoe--1-2",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-shoe-power--1-2 start 0",
+      "translation_only_max_vertex_error": 5.960464477539063e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-shoe-power--1-2 start 1",
+      "translation_only_max_vertex_error": 5.960464477539063e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-shoe-power--1-2 start 2",
+      "translation_only_max_vertex_error": 5.960464477539063e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-shoe-power--1-2 end 0",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-shoe-power--1-2 end 1",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-shoe-power--1-2 end 2",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Pipette retained ceramic terminal main-feed-hatch--1",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Pipette annular power entry main-feed-hatch--1",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Pipette retained ceramic terminal main-feed-tower--1",
+      "translation_only_max_vertex_error": 5.960464477539063e-08
+    },
+    {
+      "mesh": "Pipette annular power entry main-feed-tower--1",
+      "translation_only_max_vertex_error": 5.960464477539063e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-internal-main-power--1 start 0",
+      "translation_only_max_vertex_error": 8.429369702178807e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-internal-main-power--1 start 1",
+      "translation_only_max_vertex_error": 8.429369702178807e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-internal-main-power--1 start 2",
+      "translation_only_max_vertex_error": 8.429369702178807e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-internal-main-power--1 end 0",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-internal-main-power--1 end 1",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-internal-main-power--1 end 2",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Pipette retained ceramic terminal coil-1-0-start",
+      "translation_only_max_vertex_error": 8.33000234328132e-09
+    },
+    {
+      "mesh": "Pipette annular power entry coil-1-0-start",
+      "translation_only_max_vertex_error": 8.33000234328132e-09
+    },
+    {
+      "mesh": "Pipette retained ceramic terminal coil-1-0-end",
+      "translation_only_max_vertex_error": 3.332000937312528e-08
+    },
+    {
+      "mesh": "Pipette annular power entry coil-1-0-end",
+      "translation_only_max_vertex_error": 3.332000937312528e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-winding-1-0 start 0",
+      "translation_only_max_vertex_error": 8.33000234328132e-09
+    },
+    {
+      "mesh": "Pipette library gland wide-winding-1-0 start 1",
+      "translation_only_max_vertex_error": 8.33000234328132e-09
+    },
+    {
+      "mesh": "Pipette library gland wide-winding-1-0 start 2",
+      "translation_only_max_vertex_error": 3.725290298461914e-09
+    },
+    {
+      "mesh": "Pipette library gland wide-winding-1-0 end 0",
+      "translation_only_max_vertex_error": 3.332000937312528e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-winding-1-0 end 1",
+      "translation_only_max_vertex_error": 3.332000937312528e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-winding-1-0 end 2",
+      "translation_only_max_vertex_error": 3.332000937312528e-08
+    },
+    {
+      "mesh": "Pipette retained ceramic terminal coil-1-1-start",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Pipette annular power entry coil-1-1-start",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Pipette retained ceramic terminal coil-1-1-end",
+      "translation_only_max_vertex_error": 5.960464477539063e-08
+    },
+    {
+      "mesh": "Pipette annular power entry coil-1-1-end",
+      "translation_only_max_vertex_error": 5.960464477539063e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-winding-1-1 start 0",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-winding-1-1 start 1",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-winding-1-1 start 2",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-winding-1-1 end 0",
+      "translation_only_max_vertex_error": 5.960464477539063e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-winding-1-1 end 1",
+      "translation_only_max_vertex_error": 5.960464477539063e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-winding-1-1 end 2",
+      "translation_only_max_vertex_error": 5.960464477539063e-08
+    },
+    {
+      "mesh": "Pipette retained ceramic terminal rock-feed-1-0",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Pipette annular power entry rock-feed-1-0",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Pipette retained ceramic terminal rock-shoe-1-0",
+      "translation_only_max_vertex_error": 5.3726900748371916e-08
+    },
+    {
+      "mesh": "Pipette annular power entry rock-shoe-1-0",
+      "translation_only_max_vertex_error": 5.3726900748371916e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-shoe-power-1-0 start 0",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-shoe-power-1-0 start 1",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-shoe-power-1-0 start 2",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-shoe-power-1-0 end 0",
+      "translation_only_max_vertex_error": 5.3726900748371916e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-shoe-power-1-0 end 1",
+      "translation_only_max_vertex_error": 5.3726900748371916e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-shoe-power-1-0 end 2",
+      "translation_only_max_vertex_error": 5.3726900748371916e-08
+    },
+    {
+      "mesh": "Pipette retained ceramic terminal rock-feed-1-1",
+      "translation_only_max_vertex_error": 3.332000937312528e-08
+    },
+    {
+      "mesh": "Pipette annular power entry rock-feed-1-1",
+      "translation_only_max_vertex_error": 3.332000937312528e-08
+    },
+    {
+      "mesh": "Pipette retained ceramic terminal rock-shoe-1-1",
+      "translation_only_max_vertex_error": 5.268356063861754e-08
+    },
+    {
+      "mesh": "Pipette annular power entry rock-shoe-1-1",
+      "translation_only_max_vertex_error": 5.268356063861754e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-shoe-power-1-1 start 0",
+      "translation_only_max_vertex_error": 3.332000937312528e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-shoe-power-1-1 start 1",
+      "translation_only_max_vertex_error": 3.332000937312528e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-shoe-power-1-1 start 2",
+      "translation_only_max_vertex_error": 3.332000937312528e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-shoe-power-1-1 end 0",
+      "translation_only_max_vertex_error": 6.006850114687196e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-shoe-power-1-1 end 1",
+      "translation_only_max_vertex_error": 6.006850114687196e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-shoe-power-1-1 end 2",
+      "translation_only_max_vertex_error": 6.006850114687196e-08
+    },
+    {
+      "mesh": "Pipette retained ceramic terminal rock-feed-1-2",
+      "translation_only_max_vertex_error": 5.960464477539063e-08
+    },
+    {
+      "mesh": "Pipette annular power entry rock-feed-1-2",
+      "translation_only_max_vertex_error": 5.960464477539063e-08
+    },
+    {
+      "mesh": "Pipette retained ceramic terminal rock-shoe-1-2",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Pipette annular power entry rock-shoe-1-2",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-shoe-power-1-2 start 0",
+      "translation_only_max_vertex_error": 5.960464477539063e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-shoe-power-1-2 start 1",
+      "translation_only_max_vertex_error": 5.960464477539063e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-shoe-power-1-2 start 2",
+      "translation_only_max_vertex_error": 5.960464477539063e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-shoe-power-1-2 end 0",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-shoe-power-1-2 end 1",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-shoe-power-1-2 end 2",
+      "translation_only_max_vertex_error": 6.664001874625056e-08
+    },
+    {
+      "mesh": "Pipette retained ceramic terminal main-feed-hatch-1",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Pipette annular power entry main-feed-hatch-1",
+      "translation_only_max_vertex_error": 1.228781230931777e-07
+    },
+    {
+      "mesh": "Pipette retained ceramic terminal main-feed-tower-1",
+      "translation_only_max_vertex_error": 5.960464477539063e-08
+    },
+    {
+      "mesh": "Pipette annular power entry main-feed-tower-1",
+      "translation_only_max_vertex_error": 5.960464477539063e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-internal-main-power-1 start 0",
+      "translation_only_max_vertex_error": 8.429369702178807e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-internal-main-power-1 start 1",
+      "translation_only_max_vertex_error": 8.429369702178807e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-internal-main-power-1 start 2",
+      "translation_only_max_vertex_error": 8.429369702178807e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-internal-main-power-1 end 0",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-internal-main-power-1 end 1",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    },
+    {
+      "mesh": "Pipette library gland wide-internal-main-power-1 end 2",
+      "translation_only_max_vertex_error": 2.9802322387695312e-08
+    }
+  ],
+  "pipette_routes_rebuilt": 12,
+  "pipette_shared_module_hashes": {
+    "core.py": "9a991dea7dd646faad8766326ef60e67c0618c283a81dbf297119ee6ec3761c7",
+    "blender_adapter.py": "724c1964fee8916b43dc86c0ff0185ec1646c1964662b2af1ea6ecbfbed68a1d",
+    "library_fittings.py": "3a6f75821350980c5080dc7c651cd4773f402424a8ac113c2d52943296804df7",
+    "type_registry.json": "42e220db26a981956741a7ce268c8e74172382497cacf54a9a0b23691085e654"
+  },
+  "foundation_xyz_unchanged": true,
+  "source_deck_edge_y": 0,
+  "source_deck_z": 0,
+  "not_claimed": [
+    "final proportion approval",
+    "runtime registration",
+    "newwell fit",
+    "Pipette route envelope acceptance",
+    "rebaked mineral physical grain scale"
+  ]
+}

@@ -1,0 +1,886 @@
+{
+  "status": "PASS_COMMITTED_ASSET_AND_IMPORT_AUDIT",
+  "created_utc": "2026-11-17T16:41:13.608932+00:00",
+  "repository": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production",
+  "head": "991d558ea52ef34d75c29103b232e929f351ded4",
+  "local_origin_main": "9b17b3c9bc2b4f71f16bc430fb4e594534ee02f6",
+  "remote_verification": "No fetch or remote publication verification performed.",
+  "scope": "Committed artifact identity, sparse-source recovery, runtime PNG decode and textual late imports. Native data-stage/propulsion checks are separate; this is not final art acceptance.",
+  "recover_sources": true,
+  "recovered_files": [
+    "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/README.md",
+    "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/build_model.py",
+    "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/exported-passes/hydrogen-thruster-v01-idle-emission.png",
+    "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/hydrogen-thruster-v01.blend",
+    "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/hydrogen-thruster-v01.glb",
+    "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/make_textures.py",
+    "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/source-manifest.json",
+    "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/bell-basecolor.png",
+    "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/bell-metalrough.png",
+    "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/bell-normal.png",
+    "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/brass-basecolor.png",
+    "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/brass-metalrough.png",
+    "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/brass-normal.png",
+    "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/cast-basecolor.png",
+    "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/cast-metalrough.png",
+    "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/cast-normal.png",
+    "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/dark-basecolor.png",
+    "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/dark-metalrough.png",
+    "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/dark-normal.png",
+    "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/manifest.json",
+    "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/steel-basecolor.png",
+    "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/steel-metalrough.png",
+    "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/steel-normal.png",
+    "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/tank-basecolor.png",
+    "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/tank-metalrough.png",
+    "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/tank-normal.png",
+    "art/source-to-3d/space-platform-engines/thetazine-thruster/v04-regenerative-study/source-export-plan.json",
+    "art/source-to-3d/space-platform-engines/thetazine-thruster/v04-regenerative-study/source-manifest.json",
+    "art/source-to-3d/space-platform-engines/thetazine-thruster/v04-regenerative-study/source-package/body-1.png",
+    "art/source-to-3d/space-platform-engines/thetazine-thruster/v04-regenerative-study/source-package/body-2.png",
+    "art/source-to-3d/space-platform-engines/thetazine-thruster/v04-regenerative-study/source-package/heat-glow-1.png",
+    "art/source-to-3d/space-platform-engines/thetazine-thruster/v04-regenerative-study/source-package/heat-glow-2.png",
+    "art/source-to-3d/space-platform-engines/thetazine-thruster/v04-regenerative-study/source-package/idle-body.png",
+    "art/source-to-3d/space-platform-engines/thetazine-thruster/v04-regenerative-study/source-package/idle-heat-glow.png",
+    "art/source-to-3d/space-platform-engines/thetazine-thruster/v04-regenerative-study/source-package/idle-shadow.png",
+    "art/source-to-3d/space-platform-engines/thetazine-thruster/v04-regenerative-study/source-package/projected-shadow-captures.zip",
+    "art/source-to-3d/space-platform-engines/thetazine-thruster/v04-regenerative-study/source-package/separated-body-heat-captures.zip",
+    "art/source-to-3d/space-platform-engines/thetazine-thruster/v04-regenerative-study/source-package/shadow-1.png",
+    "art/source-to-3d/space-platform-engines/thetazine-thruster/v04-regenerative-study/source-package/shadow-2.png",
+    "art/source-to-3d/space-platform-engines/thetazine-thruster/v04-regenerative-study/source-package/underlay.png",
+    "art/source-to-3d/space-platform-engines/thetazine-thruster/v04-regenerative-study/textures/refractory-heat-provenance.json",
+    "art/source-to-3d/space-platform-engines/thetazine-thruster/v04-regenerative-study/textures/refractory-regenerative-heat.png",
+    "art/source-to-3d/space-platform-engines/thetazine-thruster/v04-regenerative-study/thetazine-v04-regenerative-study.blend",
+    "art/source-to-3d/space-platform-engines/thetazine-thruster/v04-regenerative-study/thetazine-v04-regenerative-study.glb"
+  ],
+  "late_imports": {
+    "hydrogen-thruster": true,
+    "thetazine-thruster": true
+  },
+  "families": {
+    "hydrogen-thruster": {
+      "footprint": [
+        4,
+        4
+      ],
+      "source": "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01",
+      "runtime": "tech-priests_src/graphics/entity/hydrogen-thruster-v01",
+      "module": "tech-priests_src/prototypes/generated_graphics/hydrogen-thruster-v01.lua",
+      "evidence": "docs/art/hydrogen-thruster-v01/validation.json",
+      "art_state": "Integrated V01; static physical GLB and seven light-only poses. Full mechanical animation remains open.",
+      "files": [
+        {
+          "path": "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/README.md",
+          "git_blob": "a47f3735a68ed95cf0024032651f1861714cd93b",
+          "committed_sha256": "15ab4e09f4ac9b52af7cfe5ffd719d0895ac6349b7c2fab352dcd21482a60af9",
+          "committed_bytes": 859,
+          "present_before_recovery": false,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true
+        },
+        {
+          "path": "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/build_model.py",
+          "git_blob": "d915860cc2428ce617594f5412ae01c4e355f0c5",
+          "committed_sha256": "af389f531a2d7777f659fb891fdcd40a2164f8c1192b02b1ceecca9f9028cc98",
+          "committed_bytes": 18926,
+          "present_before_recovery": false,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true
+        },
+        {
+          "path": "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/exported-passes/hydrogen-thruster-v01-idle-emission.png",
+          "git_blob": "33398703f0d0c0a29a03a6fe53f72530ff73a60d",
+          "committed_sha256": "18a1b202fc766a7c8237c285b4308815cd7166f90a39c6a7d5867845ee40fca2",
+          "committed_bytes": 218307,
+          "present_before_recovery": false,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true
+        },
+        {
+          "path": "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/hydrogen-thruster-v01.blend",
+          "git_blob": "3fa10610ced013425aef5d6566ff45b72fb5faf8",
+          "committed_sha256": "396690cccd81487d1bb2a8e05325a3ccbfc0c52e72332449f10bb8fe567fc27e",
+          "committed_bytes": 7157067,
+          "present_before_recovery": false,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true
+        },
+        {
+          "path": "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/hydrogen-thruster-v01.glb",
+          "git_blob": "8861fbf762de9243003124bf04bd7fb1feead1be",
+          "committed_sha256": "302afbedb000f75987f9474ef042299f6f44e99b3f63758720f68f0c1c7417ea",
+          "committed_bytes": 8911048,
+          "present_before_recovery": false,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true
+        },
+        {
+          "path": "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/make_textures.py",
+          "git_blob": "0654130032a8ee84f2b5ca2d436a911c98ce3408",
+          "committed_sha256": "56a1104a53018f653c355d017abbbc861f1675af9e06078ba6e36eec98a4ab23",
+          "committed_bytes": 2439,
+          "present_before_recovery": false,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true
+        },
+        {
+          "path": "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/source-manifest.json",
+          "git_blob": "0ebe0db8499353903b89ee7d82f5f2619fd06361",
+          "committed_sha256": "8ee0768e9ee3956bce58a5354d0356cb13016e1529d4d3c54bf5ce68fe6560d4",
+          "committed_bytes": 43082,
+          "present_before_recovery": false,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true
+        },
+        {
+          "path": "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/bell-basecolor.png",
+          "git_blob": "889577503efd1f0428bab540531e30fdbd82ab26",
+          "committed_sha256": "6d5601fdf7ea346dbb49a37b4a6578bfbb525847ad397de18e6fcc52dacdfb95",
+          "committed_bytes": 482756,
+          "present_before_recovery": false,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true
+        },
+        {
+          "path": "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/bell-metalrough.png",
+          "git_blob": "97d375062fed7a313d1eb17406142a2767ef2be2",
+          "committed_sha256": "8e0e838d487c83c743ac0c047bf97002a85c7d0c7b41c8413b2a7d813a9ea81e",
+          "committed_bytes": 172171,
+          "present_before_recovery": false,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true
+        },
+        {
+          "path": "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/bell-normal.png",
+          "git_blob": "3f8a3c8d5f16dc44137c247b212e51e85804672e",
+          "committed_sha256": "9824b2c7c054af1245cae4bc4976f816d41b0431a33a4792d7bb2df59e3f729d",
+          "committed_bytes": 464432,
+          "present_before_recovery": false,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true
+        },
+        {
+          "path": "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/brass-basecolor.png",
+          "git_blob": "335f996c0805563e9d251a89167f93fc67b4529e",
+          "committed_sha256": "869d66660140979c9a99c758425c520205856c29decdf76d4bb7f21a2963519c",
+          "committed_bytes": 508224,
+          "present_before_recovery": false,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true
+        },
+        {
+          "path": "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/brass-metalrough.png",
+          "git_blob": "cdf0f180e52878a0e21197ab3ecd55e655df2d78",
+          "committed_sha256": "7f5712279cc43a2c4dc1df2a1b0471965c56486a8fa88c688578192688321967",
+          "committed_bytes": 271145,
+          "present_before_recovery": false,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true
+        },
+        {
+          "path": "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/brass-normal.png",
+          "git_blob": "3f8a3c8d5f16dc44137c247b212e51e85804672e",
+          "committed_sha256": "9824b2c7c054af1245cae4bc4976f816d41b0431a33a4792d7bb2df59e3f729d",
+          "committed_bytes": 464432,
+          "present_before_recovery": false,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true
+        },
+        {
+          "path": "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/cast-basecolor.png",
+          "git_blob": "f912e81a8da7489c727ccf0802f36ffc7547f5a4",
+          "committed_sha256": "4f4c6d065ba863b3512226db5f5746357cc8e384bbe3360cb3acaf390e79ecb8",
+          "committed_bytes": 427003,
+          "present_before_recovery": false,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true
+        },
+        {
+          "path": "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/cast-metalrough.png",
+          "git_blob": "8c919a0d5f96af0913c720f30060d8c80c30375c",
+          "committed_sha256": "1034cd11e130cbf89649ac61bdd582b0c6fa3cba2e2b3878ee36e69b83480e14",
+          "committed_bytes": 271230,
+          "present_before_recovery": false,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true
+        },
+        {
+          "path": "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/cast-normal.png",
+          "git_blob": "3f8a3c8d5f16dc44137c247b212e51e85804672e",
+          "committed_sha256": "9824b2c7c054af1245cae4bc4976f816d41b0431a33a4792d7bb2df59e3f729d",
+          "committed_bytes": 464432,
+          "present_before_recovery": false,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true
+        },
+        {
+          "path": "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/dark-basecolor.png",
+          "git_blob": "93137299387991f1e522c8ebd3e7cc27c871d5d8",
+          "committed_sha256": "5706c4c4f00aa1efac62500bf1298279717a936d1190aaef76945fa5c768692f",
+          "committed_bytes": 206960,
+          "present_before_recovery": false,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true
+        },
+        {
+          "path": "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/dark-metalrough.png",
+          "git_blob": "6a359dcb8704116625a3d95565dd92e558d1cd90",
+          "committed_sha256": "4193712c8926992e21763a12a3a2159f434b5d02eebf0b303182f0b9ded92c41",
+          "committed_bytes": 271090,
+          "present_before_recovery": false,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true
+        },
+        {
+          "path": "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/dark-normal.png",
+          "git_blob": "3f8a3c8d5f16dc44137c247b212e51e85804672e",
+          "committed_sha256": "9824b2c7c054af1245cae4bc4976f816d41b0431a33a4792d7bb2df59e3f729d",
+          "committed_bytes": 464432,
+          "present_before_recovery": false,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true
+        },
+        {
+          "path": "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/manifest.json",
+          "git_blob": "68e15d28b8d4123e2b0c5d26550a3ea17cfadb0d",
+          "committed_sha256": "31ed1ad2ae393ce5426fe17e65b9f724686ddef0fb70d282aa85033b9e655f9e",
+          "committed_bytes": 4506,
+          "present_before_recovery": false,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true
+        },
+        {
+          "path": "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/steel-basecolor.png",
+          "git_blob": "3f3777f1cd92efa0f1580afa23a9f006ff6c8d77",
+          "committed_sha256": "394c94747c66e95de541b1b6019cc6fb42c40975b59149248d7908ae5fd21a16",
+          "committed_bytes": 410724,
+          "present_before_recovery": false,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true
+        },
+        {
+          "path": "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/steel-metalrough.png",
+          "git_blob": "9975ecc41ab5ba9bc57e290e4e14a0f3b99cfd34",
+          "committed_sha256": "80345ba8983e3dc6c005a0e1242afdff5f55630b542ccd7b9f0aa28893f6b2ef",
+          "committed_bytes": 271419,
+          "present_before_recovery": false,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true
+        },
+        {
+          "path": "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/steel-normal.png",
+          "git_blob": "3f8a3c8d5f16dc44137c247b212e51e85804672e",
+          "committed_sha256": "9824b2c7c054af1245cae4bc4976f816d41b0431a33a4792d7bb2df59e3f729d",
+          "committed_bytes": 464432,
+          "present_before_recovery": false,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true
+        },
+        {
+          "path": "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/tank-basecolor.png",
+          "git_blob": "4f27187aa3d00ad537c69f9441cb55ffc68943ee",
+          "committed_sha256": "c26d9b42c55ed8ba2a76b374752ab29a4dbe83c0187d1cdc5a1f73182f781663",
+          "committed_bytes": 408488,
+          "present_before_recovery": false,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true
+        },
+        {
+          "path": "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/tank-metalrough.png",
+          "git_blob": "e849d012d4b1eaac719fb5fef4e165b80e04f147",
+          "committed_sha256": "ad601a09c14c1b138210e7fdb3ae40882006904b718462d991c9071c474fdeca",
+          "committed_bytes": 271431,
+          "present_before_recovery": false,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true
+        },
+        {
+          "path": "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/tank-normal.png",
+          "git_blob": "3f8a3c8d5f16dc44137c247b212e51e85804672e",
+          "committed_sha256": "9824b2c7c054af1245cae4bc4976f816d41b0431a33a4792d7bb2df59e3f729d",
+          "committed_bytes": 464432,
+          "present_before_recovery": false,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true
+        },
+        {
+          "path": "docs/art/hydrogen-thruster-v01/validation.json",
+          "git_blob": "18b439e2989e19ac23b7024f211a037fb8274693",
+          "committed_sha256": "9fd6bf1d7ee638c4e5c70085deb8c539868a74ce63aa97e4127bb707447ca66e",
+          "committed_bytes": 9582,
+          "present_before_recovery": true,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true
+        },
+        {
+          "path": "tech-priests_src/graphics/entity/hydrogen-thruster-v01/hydrogen-thruster-v01-idle.png",
+          "git_blob": "263a3ac1cd2735a6355bbaca9f1ad6c023e547e1",
+          "committed_sha256": "6769eac7b445da20856fb723c9ac4cc0fd4621824a4579e79c7f261b14b8b7ac",
+          "committed_bytes": 472260,
+          "present_before_recovery": true,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true,
+          "png": {
+            "size": [
+              3584,
+              768
+            ],
+            "mode": "RGBA"
+          }
+        },
+        {
+          "path": "tech-priests_src/graphics/entity/hydrogen-thruster-v01/hydrogen-thruster-v01-run-emission.png",
+          "git_blob": "a2a0a8bca388d49e8e122d6d5225beef4a43c1cf",
+          "committed_sha256": "0b429230f52a9823ce8f58dea6e4f52d6a533975f4e7e6dc831297fa827e410e",
+          "committed_bytes": 230868,
+          "present_before_recovery": true,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true,
+          "png": {
+            "size": [
+              3584,
+              768
+            ],
+            "mode": "RGBA"
+          }
+        },
+        {
+          "path": "tech-priests_src/graphics/entity/hydrogen-thruster-v01/hydrogen-thruster-v01-run.png",
+          "git_blob": "bc2979bad92025dd747ba2372f503c8b06daf642",
+          "committed_sha256": "2dd51726ec5ee193546696bd2c4d58d73134c8778b72128446878d4e023eaa73",
+          "committed_bytes": 682963,
+          "present_before_recovery": true,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true,
+          "png": {
+            "size": [
+              3584,
+              768
+            ],
+            "mode": "RGBA"
+          }
+        },
+        {
+          "path": "tech-priests_src/graphics/entity/hydrogen-thruster-v01/hydrogen-thruster-v01-shadow.png",
+          "git_blob": "3b0bc76f665b8330fb43244b585f1c9505c6a199",
+          "committed_sha256": "eea192d313ac7394d6bcfcbfbc975fee6ffdc16823b6be1e68b53992f7e1b139",
+          "committed_bytes": 186783,
+          "present_before_recovery": true,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true,
+          "png": {
+            "size": [
+              768,
+              1024
+            ],
+            "mode": "RGBA"
+          }
+        },
+        {
+          "path": "tech-priests_src/prototypes/generated_graphics/hydrogen-thruster-v01.lua",
+          "git_blob": "8e72083afc7cbad7a52636ab393371105aa45029",
+          "committed_sha256": "c5e3115e94b64309dfa5925b2a812760ef719bea7a7e31619519bf66540d5e4d",
+          "committed_bytes": 1601,
+          "present_before_recovery": true,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true
+        }
+      ]
+    },
+    "thetazine-thruster": {
+      "footprint": [
+        5,
+        5
+      ],
+      "source": "art/source-to-3d/space-platform-engines/thetazine-thruster/v04-regenerative-study",
+      "runtime": "tech-priests_src/graphics/entity/thetazine-thruster-v04",
+      "module": "tech-priests_src/prototypes/generated_graphics/thetazine-thruster-v04.lua",
+      "evidence": "docs/art/thetazine-thruster-v04/CHECKPOINT.json",
+      "art_state": "Integrated source35; 64-frame body/heat/projected shadow and native state evidence. Final owner appearance and bespoke remnant/icon remain open.",
+      "files": [
+        {
+          "path": "art/source-to-3d/space-platform-engines/thetazine-thruster/v04-regenerative-study/source-export-plan.json",
+          "git_blob": "5c870e39ed1d7f656457ea1da12ed5fbdb370508",
+          "committed_sha256": "7a62508f87e803b12c776646501f5fa17171fa527b50b1e56aeed74efc24132d",
+          "committed_bytes": 9460,
+          "present_before_recovery": false,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true
+        },
+        {
+          "path": "art/source-to-3d/space-platform-engines/thetazine-thruster/v04-regenerative-study/source-manifest.json",
+          "git_blob": "9a09ab7cfb0977b35ca47b3c455ba912b8567dd0",
+          "committed_sha256": "561f11fadd9105d7cd1bfe8ebbf975686a3c3515277fabf14c2392e7e70ff25e",
+          "committed_bytes": 812297,
+          "present_before_recovery": false,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true
+        },
+        {
+          "path": "art/source-to-3d/space-platform-engines/thetazine-thruster/v04-regenerative-study/source-package/body-1.png",
+          "git_blob": "f95ee06f9b86b22c0162ca7b3a07ff331c8208aa",
+          "committed_sha256": "91ae265e583f1598418075dd5571c69307284a6e913efa08a895c5576f810b8c",
+          "committed_bytes": 5854372,
+          "present_before_recovery": false,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true
+        },
+        {
+          "path": "art/source-to-3d/space-platform-engines/thetazine-thruster/v04-regenerative-study/source-package/body-2.png",
+          "git_blob": "79c7cf9d6acc2ab997ca1df631de08e593bc8c54",
+          "committed_sha256": "d9216415aa0d4bc18e8ccc38fd544bbe54f7cbb5144740f37bfb3a7231d90550",
+          "committed_bytes": 5876607,
+          "present_before_recovery": false,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true
+        },
+        {
+          "path": "art/source-to-3d/space-platform-engines/thetazine-thruster/v04-regenerative-study/source-package/heat-glow-1.png",
+          "git_blob": "98b13302fcf680ec70bfaa7e09b9a453fbf53255",
+          "committed_sha256": "33cc847ee0af5d96d044ff3ffacc520dd56dea98a6c530fe64985796511cc5fe",
+          "committed_bytes": 3198096,
+          "present_before_recovery": false,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true
+        },
+        {
+          "path": "art/source-to-3d/space-platform-engines/thetazine-thruster/v04-regenerative-study/source-package/heat-glow-2.png",
+          "git_blob": "ae9ba1542476c22b5b2de626117bc373f4752b6b",
+          "committed_sha256": "11ceca5e64abc886de5e845312580a667640fcfd463018530fc2f0d8ed798cdb",
+          "committed_bytes": 3126727,
+          "present_before_recovery": false,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true
+        },
+        {
+          "path": "art/source-to-3d/space-platform-engines/thetazine-thruster/v04-regenerative-study/source-package/idle-body.png",
+          "git_blob": "0a845fd0da4e74961b58cf749c9511bed968cda2",
+          "committed_sha256": "0480cbb665e5e5eaa425d9f6b6e98e13678bac97f42817780d0264e59b3cbd3b",
+          "committed_bytes": 381149,
+          "present_before_recovery": false,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true
+        },
+        {
+          "path": "art/source-to-3d/space-platform-engines/thetazine-thruster/v04-regenerative-study/source-package/idle-heat-glow.png",
+          "git_blob": "a43cc7e72d0096daff76bab8058e350af7a2221d",
+          "committed_sha256": "c423905bac86efd940e4bccc3bf1c1995621e91b73f9cf836c0f29c74ee234af",
+          "committed_bytes": 111176,
+          "present_before_recovery": false,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true
+        },
+        {
+          "path": "art/source-to-3d/space-platform-engines/thetazine-thruster/v04-regenerative-study/source-package/idle-shadow.png",
+          "git_blob": "0bb6ba5b12483bf152688f285999d23e2fab440f",
+          "committed_sha256": "e25d582975a02da93afe99e716e86ca2528d724d4817e70d148eaf4fa02b101f",
+          "committed_bytes": 22327,
+          "present_before_recovery": false,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true
+        },
+        {
+          "path": "art/source-to-3d/space-platform-engines/thetazine-thruster/v04-regenerative-study/source-package/projected-shadow-captures.zip",
+          "git_blob": "f02bedb551f14a0a764afe8720b324537186b525",
+          "committed_sha256": "35211b694f9b8c2d6ce38ac4398f903d84954f71ca999069e8ed3a7c8dfa14e9",
+          "committed_bytes": 16880316,
+          "present_before_recovery": false,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true
+        },
+        {
+          "path": "art/source-to-3d/space-platform-engines/thetazine-thruster/v04-regenerative-study/source-package/separated-body-heat-captures.zip",
+          "git_blob": "ff0e12dd7df7d663c3bd5ba3ef68901266063707",
+          "committed_sha256": "49756e3b0a553797add2acb059dd27fef5f010175753c23bfe06a049f845fa74",
+          "committed_bytes": 49961660,
+          "present_before_recovery": false,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true
+        },
+        {
+          "path": "art/source-to-3d/space-platform-engines/thetazine-thruster/v04-regenerative-study/source-package/shadow-1.png",
+          "git_blob": "d3e5e0d1aefa953dbb362e01b408b181b4b894d9",
+          "committed_sha256": "be98cd781b0c0d3a88c76ce83e628e154de29955fc1f65b5188cbc156f81f4eb",
+          "committed_bytes": 242512,
+          "present_before_recovery": false,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true
+        },
+        {
+          "path": "art/source-to-3d/space-platform-engines/thetazine-thruster/v04-regenerative-study/source-package/shadow-2.png",
+          "git_blob": "99654d956abdb03fee9724ce62fee0ea05459417",
+          "committed_sha256": "b3a71fb78a914c6343a5b703a25d0fe1057c38b9baa77910c7522d7130ed4083",
+          "committed_bytes": 247521,
+          "present_before_recovery": false,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true
+        },
+        {
+          "path": "art/source-to-3d/space-platform-engines/thetazine-thruster/v04-regenerative-study/source-package/underlay.png",
+          "git_blob": "42d5212bd3f3490590ebb9b164bc8070876d1134",
+          "committed_sha256": "7f060236d5330d83ae7b0eb522fd771417f95e34a81c7c0124ad9159d920dae9",
+          "committed_bytes": 229170,
+          "present_before_recovery": false,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true
+        },
+        {
+          "path": "art/source-to-3d/space-platform-engines/thetazine-thruster/v04-regenerative-study/textures/refractory-heat-provenance.json",
+          "git_blob": "7d793b5dcd744aba892e7cc86342a885aff7db83",
+          "committed_sha256": "636dbf429164a212ebb8c4033b7c8068c6249efed2c301b37f05e8df3182df47",
+          "committed_bytes": 632,
+          "present_before_recovery": false,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true
+        },
+        {
+          "path": "art/source-to-3d/space-platform-engines/thetazine-thruster/v04-regenerative-study/textures/refractory-regenerative-heat.png",
+          "git_blob": "08ae967cb847b6c17021226c22420a501ea0a197",
+          "committed_sha256": "f7cce25915977c9a74cbd7d6e68a08bdebe0b9c8f58a8416e788bcdb2e755890",
+          "committed_bytes": 761907,
+          "present_before_recovery": false,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true
+        },
+        {
+          "path": "art/source-to-3d/space-platform-engines/thetazine-thruster/v04-regenerative-study/thetazine-v04-regenerative-study.blend",
+          "git_blob": "9b3a098269c1f98e24a1e65cfba611afb623683a",
+          "committed_sha256": "539d6cef7d8e00d5e13967d26817578c1d654ad1cdb7df373dabbe352f659583",
+          "committed_bytes": 21738229,
+          "present_before_recovery": false,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true
+        },
+        {
+          "path": "art/source-to-3d/space-platform-engines/thetazine-thruster/v04-regenerative-study/thetazine-v04-regenerative-study.glb",
+          "git_blob": "b047531d6c5408b1f6ca4e21a3ca9b515befe3c9",
+          "committed_sha256": "c63deaf26877005cf2cff55dfa75428bdd5ab5a0d78107e901f689b14a9b0946",
+          "committed_bytes": 51696524,
+          "present_before_recovery": false,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true
+        },
+        {
+          "path": "docs/art/thetazine-thruster-v04/CHECKPOINT.json",
+          "git_blob": "eadf3f830fdc6b5a232854af81d8973b29ab7c74",
+          "committed_sha256": "e2b5463c3f6268d87be536eceffcf40f0c0edbfddf42885880741fbd3098a09b",
+          "committed_bytes": 23896,
+          "present_before_recovery": true,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true
+        },
+        {
+          "path": "tech-priests_src/graphics/entity/thetazine-thruster-v04/body-1.png",
+          "git_blob": "f95ee06f9b86b22c0162ca7b3a07ff331c8208aa",
+          "committed_sha256": "91ae265e583f1598418075dd5571c69307284a6e913efa08a895c5576f810b8c",
+          "committed_bytes": 5854372,
+          "present_before_recovery": true,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true,
+          "png": {
+            "size": [
+              4096,
+              5120
+            ],
+            "mode": "RGBA"
+          }
+        },
+        {
+          "path": "tech-priests_src/graphics/entity/thetazine-thruster-v04/body-2.png",
+          "git_blob": "79c7cf9d6acc2ab997ca1df631de08e593bc8c54",
+          "committed_sha256": "d9216415aa0d4bc18e8ccc38fd544bbe54f7cbb5144740f37bfb3a7231d90550",
+          "committed_bytes": 5876607,
+          "present_before_recovery": true,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true,
+          "png": {
+            "size": [
+              4096,
+              5120
+            ],
+            "mode": "RGBA"
+          }
+        },
+        {
+          "path": "tech-priests_src/graphics/entity/thetazine-thruster-v04/heat-glow-1.png",
+          "git_blob": "98b13302fcf680ec70bfaa7e09b9a453fbf53255",
+          "committed_sha256": "33cc847ee0af5d96d044ff3ffacc520dd56dea98a6c530fe64985796511cc5fe",
+          "committed_bytes": 3198096,
+          "present_before_recovery": true,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true,
+          "png": {
+            "size": [
+              4096,
+              5120
+            ],
+            "mode": "RGBA"
+          }
+        },
+        {
+          "path": "tech-priests_src/graphics/entity/thetazine-thruster-v04/heat-glow-2.png",
+          "git_blob": "ae9ba1542476c22b5b2de626117bc373f4752b6b",
+          "committed_sha256": "11ceca5e64abc886de5e845312580a667640fcfd463018530fc2f0d8ed798cdb",
+          "committed_bytes": 3126727,
+          "present_before_recovery": true,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true,
+          "png": {
+            "size": [
+              4096,
+              5120
+            ],
+            "mode": "RGBA"
+          }
+        },
+        {
+          "path": "tech-priests_src/graphics/entity/thetazine-thruster-v04/idle-body.png",
+          "git_blob": "0a845fd0da4e74961b58cf749c9511bed968cda2",
+          "committed_sha256": "0480cbb665e5e5eaa425d9f6b6e98e13678bac97f42817780d0264e59b3cbd3b",
+          "committed_bytes": 381149,
+          "present_before_recovery": true,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true,
+          "png": {
+            "size": [
+              512,
+              1280
+            ],
+            "mode": "RGBA"
+          }
+        },
+        {
+          "path": "tech-priests_src/graphics/entity/thetazine-thruster-v04/idle-shadow.png",
+          "git_blob": "0bb6ba5b12483bf152688f285999d23e2fab440f",
+          "committed_sha256": "e25d582975a02da93afe99e716e86ca2528d724d4817e70d148eaf4fa02b101f",
+          "committed_bytes": 22327,
+          "present_before_recovery": true,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true,
+          "png": {
+            "size": [
+              398,
+              394
+            ],
+            "mode": "RGBA"
+          }
+        },
+        {
+          "path": "tech-priests_src/graphics/entity/thetazine-thruster-v04/shadow-1.png",
+          "git_blob": "d3e5e0d1aefa953dbb362e01b408b181b4b894d9",
+          "committed_sha256": "be98cd781b0c0d3a88c76ce83e628e154de29955fc1f65b5188cbc156f81f4eb",
+          "committed_bytes": 242512,
+          "present_before_recovery": true,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true,
+          "png": {
+            "size": [
+              3184,
+              1576
+            ],
+            "mode": "RGBA"
+          }
+        },
+        {
+          "path": "tech-priests_src/graphics/entity/thetazine-thruster-v04/shadow-2.png",
+          "git_blob": "99654d956abdb03fee9724ce62fee0ea05459417",
+          "committed_sha256": "b3a71fb78a914c6343a5b703a25d0fe1057c38b9baa77910c7522d7130ed4083",
+          "committed_bytes": 247521,
+          "present_before_recovery": true,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true,
+          "png": {
+            "size": [
+              3184,
+              1576
+            ],
+            "mode": "RGBA"
+          }
+        },
+        {
+          "path": "tech-priests_src/graphics/entity/thetazine-thruster-v04/underlay.png",
+          "git_blob": "42d5212bd3f3490590ebb9b164bc8070876d1134",
+          "committed_sha256": "7f060236d5330d83ae7b0eb522fd771417f95e34a81c7c0124ad9159d920dae9",
+          "committed_bytes": 229170,
+          "present_before_recovery": true,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true,
+          "png": {
+            "size": [
+              512,
+              1280
+            ],
+            "mode": "RGBA"
+          }
+        },
+        {
+          "path": "tech-priests_src/prototypes/generated_graphics/thetazine-thruster-v04.lua",
+          "git_blob": "45d38ab36d58055a0b15172d6e3bfd16be24863d",
+          "committed_sha256": "c0f83f99cb8f27b2c1093deef3c8ef94e0717ad83b577268661b663478897659",
+          "committed_bytes": 2627,
+          "present_before_recovery": true,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true
+        }
+      ]
+    },
+    "void-fusion-thruster": {
+      "footprint": [
+        1,
+        9
+      ],
+      "runtime": "tech-priests_src/graphics/entity/void-fusion-thruster",
+      "runtime_names": [
+        "void-fusion-thruster-idle.png",
+        "void-fusion-thruster-run.png"
+      ],
+      "art_state": "Legacy sprites; independent narrow authored construction and animation remain open.",
+      "files": [
+        {
+          "path": "tech-priests_src/graphics/entity/void-fusion-thruster/void-fusion-thruster-idle.png",
+          "git_blob": "1ca6ad1325fa0d79a825ec4dad33403c7851723a",
+          "committed_sha256": "947148be59b0fee357d8db8e9bcb31ac5a30797aa128e208cec187d0041aebc6",
+          "committed_bytes": 21334,
+          "present_before_recovery": true,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true,
+          "png": {
+            "size": [
+              384,
+              576
+            ],
+            "mode": "P"
+          }
+        },
+        {
+          "path": "tech-priests_src/graphics/entity/void-fusion-thruster/void-fusion-thruster-run.png",
+          "git_blob": "5cdc704127509f00c73775af332a6fa776c57882",
+          "committed_sha256": "3e4bb73224b7d0ddc4447d185dda4ff497cc68eb9dec0326d97b3f14a1600ea7",
+          "committed_bytes": 38652,
+          "present_before_recovery": true,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true,
+          "png": {
+            "size": [
+              384,
+              576
+            ],
+            "mode": "P"
+          }
+        }
+      ]
+    },
+    "large-void-fusion-thruster": {
+      "footprint": [
+        4,
+        4
+      ],
+      "runtime": "tech-priests_src/graphics/entity/void-fusion-thruster",
+      "runtime_names": [
+        "void-fusion-thruster-wide-idle.png",
+        "void-fusion-thruster-wide-run.png"
+      ],
+      "art_state": "Legacy wide sprites; independent wide authored construction and animation remain open.",
+      "files": [
+        {
+          "path": "tech-priests_src/graphics/entity/void-fusion-thruster/void-fusion-thruster-wide-idle.png",
+          "git_blob": "409b556352797c5bcd6de46273d1f239392c91f6",
+          "committed_sha256": "3b7b6d743220a516fcfae11162b9ad2e5cff713338f5f7c549664c260a35df16",
+          "committed_bytes": 43594,
+          "present_before_recovery": true,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true,
+          "png": {
+            "size": [
+              384,
+              512
+            ],
+            "mode": "P"
+          }
+        },
+        {
+          "path": "tech-priests_src/graphics/entity/void-fusion-thruster/void-fusion-thruster-wide-run.png",
+          "git_blob": "77f1969a7963c7a72578dcab3829ed9462fc042e",
+          "committed_sha256": "daa696918c1dd7e35a1eb4bc8ae84102d23bc559100cefcb25488d92f5f2f045",
+          "committed_bytes": 49192,
+          "present_before_recovery": true,
+          "present_now": true,
+          "matches_commit": true,
+          "local_origin_main_has_same_blob": true,
+          "png": {
+            "size": [
+              384,
+              512
+            ],
+            "mode": "P"
+          }
+        }
+      ]
+    }
+  },
+  "failures": []
+}

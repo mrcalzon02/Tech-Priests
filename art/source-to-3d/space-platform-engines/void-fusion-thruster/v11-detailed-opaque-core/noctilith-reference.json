@@ -1,0 +1,202 @@
+{
+  "status": "EXISTING_SPRITE_AND_ICON_REFERENCE_PINNED_REQUIRES_MODEL_COMPARISON",
+  "references": [
+    {
+      "path": "tech-priests_src/graphics/icons/blackstone.png",
+      "sha256": "6a2d82dc8d0b187168ef98b479828bf1983911a1d53ff365db95f1ad2b9f603b",
+      "source_size": [
+        64,
+        64
+      ],
+      "crop_xyxy": null,
+      "opaque_srgb_byte_quantiles_10_50_90": [
+        [
+          8,
+          8,
+          3
+        ],
+        [
+          25,
+          27,
+          16
+        ],
+        [
+          67,
+          68,
+          48
+        ]
+      ],
+      "scope": "Blackstone mineral identity"
+    },
+    {
+      "path": "tech-priests_src/graphics/icons/blackstone-fragment.png",
+      "sha256": "54300bccc49bb78fb8d96b92a08c254e4a61802bb61562e34b23228dcf562937",
+      "source_size": [
+        64,
+        64
+      ],
+      "crop_xyxy": null,
+      "opaque_srgb_byte_quantiles_10_50_90": [
+        [
+          7,
+          9,
+          3
+        ],
+        [
+          26,
+          28,
+          14
+        ],
+        [
+          70,
+          73,
+          50
+        ]
+      ],
+      "scope": "Broken mineral faces"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/void-fusion-thruster/void-fusion-thruster-wide-idle.png",
+      "sha256": "3b7b6d743220a516fcfae11162b9ad2e5cff713338f5f7c549664c260a35df16",
+      "source_size": [
+        384,
+        512
+      ],
+      "crop_xyxy": [
+        147,
+        134,
+        217,
+        175
+      ],
+      "opaque_srgb_byte_quantiles_10_50_90": [
+        [
+          8,
+          6,
+          3
+        ],
+        [
+          24,
+          20,
+          13
+        ],
+        [
+          73,
+          58,
+          40
+        ]
+      ],
+      "scope": "Wide cold rock, upper window"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/void-fusion-thruster/void-fusion-thruster-wide-idle.png",
+      "sha256": "3b7b6d743220a516fcfae11162b9ad2e5cff713338f5f7c549664c260a35df16",
+      "source_size": [
+        384,
+        512
+      ],
+      "crop_xyxy": [
+        146,
+        190,
+        216,
+        232
+      ],
+      "opaque_srgb_byte_quantiles_10_50_90": [
+        [
+          8,
+          6,
+          3
+        ],
+        [
+          24,
+          20,
+          13
+        ],
+        [
+          73,
+          58,
+          40
+        ]
+      ],
+      "scope": "Wide cold rock, middle window"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/void-fusion-thruster/void-fusion-thruster-wide-run.png",
+      "sha256": "daa696918c1dd7e35a1eb4bc8ae84102d23bc559100cefcb25488d92f5f2f045",
+      "source_size": [
+        384,
+        512
+      ],
+      "crop_xyxy": [
+        147,
+        134,
+        217,
+        175
+      ],
+      "opaque_srgb_byte_quantiles_10_50_90": [
+        [
+          8,
+          6,
+          2
+        ],
+        [
+          23,
+          20,
+          10
+        ],
+        [
+          82,
+          69,
+          48
+        ]
+      ],
+      "scope": "Wide working rock, upper window"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/void-fusion-thruster/void-fusion-thruster-wide-run.png",
+      "sha256": "daa696918c1dd7e35a1eb4bc8ae84102d23bc559100cefcb25488d92f5f2f045",
+      "source_size": [
+        384,
+        512
+      ],
+      "crop_xyxy": [
+        146,
+        190,
+        216,
+        232
+      ],
+      "opaque_srgb_byte_quantiles_10_50_90": [
+        [
+          8,
+          6,
+          2
+        ],
+        [
+          23,
+          20,
+          10
+        ],
+        [
+          82,
+          69,
+          48
+        ]
+      ],
+      "scope": "Wide working rock, middle window"
+    }
+  ],
+  "board_sha256": "18e138a11069eabd5840c6b03e249db9b1a0b8d14e53555ca7d5b1f542a6a5ce",
+  "interpretation": [
+    "Dark olive/charcoal irregular mineral faces with broad tonal variation, fractured grain, pale/ochre seams and chipped edge planes.",
+    "The mineral is dielectric; pale mineral seams must not turn every rock into metal.",
+    "Cold stone remains legible independently of green energized recesses and contacts.",
+    "Sprite lighting and sprite metal restraints contaminate simple color statistics; quantiles are descriptive, not PBR albedo targets.",
+    "Do not project sprite crops onto the model: author model-specific surface masks, useful UVs and real exported base/normal/roughness maps.",
+    "The gray asteroid-chunk icon is a different visual treatment and is excluded from the chosen Noctilith family reference."
+  ],
+  "acceptance": [
+    "Rock-only material revision preserves current mesh geometry, bounds, receiving surfaces, sockets, cage geometry and mounting datum.",
+    "Inspect cold and working actual-GLB renders at the fixed production camera and an inspection detail.",
+    "At game scale, stone reads as fractured mineral instead of featureless black or shiny metal; green light does not erase the mineral faces.",
+    "Reopen packed Blender source and independently import GLB; verify decoded exported maps and material bindings."
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "status": "AUTHOR_DECLARED_MECHANICAL_ROLES_REQUIRES_INDEPENDENT_LOCAL_CONTACT_PROOF",
+  "baseline_source_sha256": "f02f30ad740636d6fa7906a01c6b86af45d90cf1eb940a7c7fc627ed065a2f34",
+  "current_source_sha256": "35c4f470ad92015b70d056086b7f6e53573f4ccabbecab6af346ab382734871e",
+  "current_glb_sha256": "77892d382fe0b1f39f28d84082d6c68dbb3b00c26f1476a3963cac97b9fce074",
+  "units": "BU; no real-world scale inferred",
+  "functional_replacements": [
+    {"new_name": "V06 giant actuator sliding rod -1", "baseline_name": "Outer actuator body -1", "role": "Rigid aft sliding segment of the same original shaft corridor"},
+    {"new_name": "V06 giant actuator sliding rod 1", "baseline_name": "Outer actuator body 1", "role": "Rigid aft sliding segment of the same original shaft corridor"}
+  ],
+  "intentional_pivot_pairs": [
+    {"member": "Outer actuator body -1", "host": "Clevis fixed pin", "role": "Fixed fore pivot pin through the retained fore mounting assembly"},
+    {"member": "Outer actuator body 1", "host": "Clevis fixed pin.002", "role": "Fixed fore pivot pin through the retained fore mounting assembly"},
+    {"member": "V06 giant actuator sliding rod -1", "host": "Clevis fixed pin.001", "role": "Moving aft pivot pin in the same rigid sliding assembly"},
+    {"member": "V06 giant actuator sliding rod 1", "host": "Clevis fixed pin.003", "role": "Moving aft pivot pin in the same rigid sliding assembly"}
+  ],
+  "fore_loadpath_adjacency": [
+    {"member": "Outer actuator body -1", "host": "V04 guide-rail fore structural web fuel", "role": "Same fore clevis mounting assembly; source web joins the clevis datum to actual diagonal shoulder"},
+    {"member": "Outer actuator body 1", "host": "V04 guide-rail fore structural web water", "role": "Same fore clevis mounting assembly; source web joins the clevis datum to actual diagonal shoulder"}
+  ],
+  "source_construction_reference": "Recovered thruster-v04/tank_refinement.py lines57-58; original shaft and retained collars measured directly in canonical V05",
+  "axis_correction_clarification": "The preliminary derivative used an incorrect hardcoded shaft datum. Final shaft surfaces match the actual canonical shaft axis; the original source shaft/collars were aligned. The 0.050 BU correction repaired the derivative, not a legacy source defect.",
+  "acceptance_limits": "These declarations do not approve unrelated contacts. Independently prove current shaft geometry stays in the retargeted actual legacy shaft corridor and contact remains on the same original part/local region. Flag previously-clear hosts, new out-of-corridor intrusions and unrelated mid-span interference. Existing closed clevis/cradle representations do not imply drilled bores or universal CAD collision freedom."
+}

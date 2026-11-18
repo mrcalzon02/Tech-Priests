@@ -1,0 +1,129 @@
+{
+  "status": "ACTUAL_GLB_PROPORTION_PILOT_REQUIRES_CONTACT_ROUTE_WELL_REVIEW",
+  "source_sha256": "954c7ed2ef3f3d91e8f09c8427708cd5c42e784523ccbb832bf36a26f01b14bd",
+  "glb_sha256": "4d9ef76ab5452728437d399af5456fbaa2b3626381da548dfb06de1b47d713de",
+  "camera": {
+    "name": "FMPL_CAPTURE_CAMERA",
+    "matrix_world": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.32019054889678955
+      ],
+      [
+        0.0,
+        0.7071067690849304,
+        -0.7071067690849304,
+        -14.47154426574707
+      ],
+      [
+        0.0,
+        0.7071067690849304,
+        0.7071067690849304,
+        14.472244262695312
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "type": "ORTHO",
+    "ortho_scale": 8.231695175170898,
+    "shift_x": 0.0,
+    "shift_y": 0.0,
+    "resolution": [
+      512,
+      512
+    ]
+  },
+  "camera_unchanged": true,
+  "source_bounds": [
+    [
+      -1.894121527671814,
+      -2.3299221992492676,
+      -1.265803337097168
+    ],
+    [
+      1.894121527671814,
+      2.3663904666900635,
+      2.7596521377563477
+    ]
+  ],
+  "whole_assembly_fore_y_bound_fraction": 0.5038826490094332,
+  "silhouettes": [
+    {
+      "label": "Legacy wide",
+      "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tech-priests_src\\graphics\\entity\\void-fusion-thruster\\void-fusion-thruster-wide-idle.png",
+      "sha256": "3b7b6d743220a516fcfae11162b9ad2e5cff713338f5f7c549664c260a35df16",
+      "alpha_threshold": 128,
+      "opaque_bbox": [
+        61,
+        18,
+        323,
+        494
+      ],
+      "opaque_size": [
+        262,
+        476
+      ],
+      "width_height_ratio": 0.5504201680672269
+    },
+    {
+      "label": "V15b current",
+      "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\capture-wide15b-final\\output\\frames\\cold_body\\000.png",
+      "sha256": "e374565cf3430ef87ae60badf695cbc5589e69d471080b6692e29e953019ad28",
+      "alpha_threshold": 128,
+      "opaque_bbox": [
+        128,
+        105,
+        344,
+        359
+      ],
+      "opaque_size": [
+        216,
+        254
+      ],
+      "width_height_ratio": 0.8503937007874016
+    },
+    {
+      "label": "V17 axial pilot",
+      "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\large-void-fusion-v01\\detail-18g-actual-clip-face-seats\\review\\canonical-cold-body.png",
+      "sha256": "2af4135c7d4ac8fb65b85722b9cf56973cc44803ee0e2a374f5221ff00a3d4e4",
+      "alpha_threshold": 128,
+      "opaque_bbox": [
+        128,
+        57,
+        344,
+        402
+      ],
+      "opaque_size": [
+        216,
+        345
+      ],
+      "width_height_ratio": 0.6260869565217392
+    }
+  ],
+  "target_width_height_ratio": [
+    0.6,
+    0.65
+  ],
+  "actual_pilot_in_target": true,
+  "height_gain_at_equal_width": 0.3582677165354333,
+  "render": "Independent actual GLB; exact same canonical45 camera and512canvas; Cycles64samples+denoise; cold body emission disabled.",
+  "comparison": "Masks uniformly rescaled to equal display width only in diagnostic comparison; authored meshes/production sprite pixels are not2Dstretched.",
+  "render_sha256": {
+    "canonical-cold-body.png": "2af4135c7d4ac8fb65b85722b9cf56973cc44803ee0e2a374f5221ff00a3d4e4",
+    "canonical-mounted-pilot.png": "5651f475a569f9af8a2469f10dcceff47455ca0a0cb789a38c9b42ec527f7ec8",
+    "functional-core-detail.png": "a2eae2ab6016543a61ec88aae885b9d1057d40c652e2c0f33ce2aa69a8e251ae",
+    "silhouette-comparison.png": "0252a5e7f6dc34685ba9973ebbb827106d8fe4d12b2f38e6b0e86e1d17e420da"
+  },
+  "not_claimed": [
+    "native registration",
+    "newwell fit",
+    "route clearance acceptance",
+    "final source promotion"
+  ]
+}

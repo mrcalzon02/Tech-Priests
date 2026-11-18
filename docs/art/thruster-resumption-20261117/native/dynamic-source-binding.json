@@ -1,0 +1,12 @@
+{
+  "original_binding": "source-binding.json",
+  "updated_files": {
+    "prototypes/compatibility/space-age.lua": "552f13dd5c7d70edd85e4f74ad8eda619a22ea34249892eed5c571d382ddb49f",
+    "scripts/generated/control_legacy_part_001.lua": "cf8bc54bdb04e9afc861fb682474ae66aa4ef3e8e54982d9aac95732aa32cee1",
+    "scripts/generated/control_legacy_part_002.lua": "8c98025ceac1cf735d6b1d69ea768d8c6832e644d81e99e61d327defa6a6d7f3",
+    "scripts/generated/control_legacy_part_004.lua": "d37208ed9014f05acaf94314821f952bb0311ceb44fd656509add4e80d9a23d9",
+    "scripts/core/efficiency_economy_0595.lua": "bb01ea11fa82484c5f02dda2bd837b1280b7ca52d423d23a47fafc2631545034",
+    "scripts/core/efficiency_economy_0596.lua": "7e0720910fcb3e626806981ee774cc339a43bfed7bc1cecf2fd90319b2ba408a",
+    "scripts/core/void_fusion_operation.lua": "493741097327ef5b16aacb6541928251cc08c2629b02872bda4bce859b9f7f12"
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "status": "V06_MODEL_ANIMATION_ARCHIVED_NATIVE_SPRITE_INTEGRATION_OPEN",
+  "owner_requests": [
+    "Continue Thetazine mechanical and animation work after ending the general greeble pass.",
+    "Add localized passive details on side mounting brackets and their crossbar connections.",
+    "Give the central body visible axial sine motion with mild smooth noise.",
+    "Make the two large side actuators extend and swivel with the body.",
+    "Add a small sinusoidal twist about the thrust axis.",
+    "Keep the mounting frame, platform feet, tanks and external interfaces in their original positions."
+  ],
+  "archive": "art/source-to-3d/space-platform-engines/thetazine-thruster/v06-articulated-core",
+  "canonical_manifest_sha256": "4475d6b7f430ba8b61a628be6f40770afe795d7b120fe46259b3eac4bae627b2",
+  "native": {
+    "file": "thetazine-v06-articulated-core.blend",
+    "sha256": "35c4f470ad92015b70d056086b7f6e53573f4ccabbecab6af346ab382734871e"
+  },
+  "glb": {
+    "file": "thetazine-v06-articulated-core.glb",
+    "sha256": "77892d382fe0b1f39f28d84082d6c68dbb3b00c26f1476a3963cac97b9fce074"
+  },
+  "preserved_baseline": "art/source-to-3d/space-platform-engines/thetazine-thruster/v05-mechanical-detail",
+  "motion": {
+    "fps": 30,
+    "cold": 0,
+    "working": [
+      1,
+      64
+    ],
+    "wrap": 65,
+    "added_axial_range_bu": [
+      -0.14468159188752258,
+      0.14530948011807018
+    ],
+    "added_torsion_range_degrees": [
+      -0.7778387201547832,
+      1.1419242846900615
+    ],
+    "noise": "Seeded periodic Fourier noise, with the original occasional core knocks retained.",
+    "fixed_assembly": "Frame, tanks, feet and native ports keep their original placement. Eight original cyclic internal parts preserve their earlier motion."
+  },
+  "completed": [
+    "Central axial stroke, small torsion and actual pin-driven rigid side actuators.",
+    "Hollow fore barrels, rigid stepped sliding rods, matching retained 48-sided collars and positive rod overlap.",
+    "Twenty-four leaf-flex objects re-owned by the core without double-applying old motion.",
+    "Eight boundary hoses rebound using actual Pipette socket contracts while preserving tube cross sections, UVs, topology and existing fittings.",
+    "Four injector support pieces follow their actual core receivers; four pumpbed support pieces correctly remain fixed.",
+    "110 localized fixed bracket details with access around retained old fasteners and actual seated crossbar ties.",
+    "All 66 source/actual-GLB poses, bit-exact working loop, actual pin/collar/bore/overlap/clevis fits and original data preservation verified.",
+    "Core against original frame/machinery, restored fixed pumpbed pieces, new brackets against moving geometry and all 32 affected actuator/span parts checked.",
+    "Full-color video, GIF, four-pose board and four actual GLB views reviewed.",
+    "Canonical source reopened successfully: 27 packed material images loaded and both model hashes unchanged."
+  ],
+  "evidence": {
+    "motion_export": "evidence/motion-export-validation.json",
+    "final_scoped_acceptance": "evidence/actuator-interface-nonmates.json",
+    "final_scoped_receipt_sha256": "f5b5e28d748ce70632fa03bb712acafda109ac8a46a7297b1b23d3e170aeefc0",
+    "reopened_package": "package-verification.json",
+    "visual_review": "provenance/visual-review.json"
+  },
+  "retained_contact_limits": "Original joint-region overlap remains documented. The left related terminal-neck touch, right positive near-gap and original whole-bolt containment have independent source/export proofs; they are not described as clear or unchanged.",
+  "runtime": "Ordinary graphics remain V04/source35. No V06 native sprite integration or new graphical-client test is claimed.",
+  "next": [
+    "Capture V06 native body/heat/shadow/cold/underlay/caps through the established Factorio assembly contract when that integration stage resumes.",
+    "Keep final owner appearance feedback and source-specific remnant/icon work open."
+  ],
+  "history": "Raw stages, repaired studies, checker-only bookkeeping reports and exact source-construction provenance remain in build/thruster-resume-20261117/thetazine-v06-motion. The frozen Blender source is byte-exact final08; the GLB is complete-range hierarchical export10."
+}

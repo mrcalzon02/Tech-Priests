@@ -1,0 +1,6 @@
+{
+  "updated_files": {
+    "prototypes/compatibility/thruster-mounting-visuals.lua": "f740e972f7797183c169143be551e194f47aa2d33db20664f54f510355eba90e"
+  },
+  "scope": "Exact additional native half-mount source change after initial frozen working-copy snapshot."
+}

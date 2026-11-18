@@ -1,0 +1,34 @@
+{
+  "status": "FOUR_SHAFTS_MATCH_UNCHANGED48FACET_COLLARS_PENDING_INDEPENDENT66_CHECK",
+  "input": {
+    "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\core07-collar-aligned\\thetazine-v06-collar-aligned-motion.blend",
+    "sha256": "e1b22e8fc7123d85eeedc379bf3d46eea7a246a7923ee23720ac4405c00717f8"
+  },
+  "native": {
+    "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\core08-matched-collar-facets\\thetazine-v06-matched-collar-motion.blend",
+    "sha256": "35c4f470ad92015b70d056086b7f6e53573f4ccabbecab6af346ab382734871e"
+  },
+  "glb": {
+    "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\core08-matched-collar-facets\\thetazine-v06-matched-collar-motion.glb",
+    "sha256": "30ce4267b842af57f327e34db8ddba9dd4e9c2f3c9caf5482ad56fdb14b0984c"
+  },
+  "changed_meshes_only": [
+    "Outer actuator body -1",
+    "V06 giant actuator sliding rod -1",
+    "Outer actuator body 1",
+    "V06 giant actuator sliding rod 1"
+  ],
+  "angular_sides": 48,
+  "angular_u": [
+    1.0,
+    0.0,
+    0.0
+  ],
+  "angular_v": [
+    0.0,
+    -0.4226182699203491,
+    0.9063078165054321
+  ],
+  "script_sha256": "c595ac2f4681b3f47db9ee8021ab691234b6aa63eec032ac049b3c8d49ca2643",
+  "reason": "Match exact unchanged source collar bores; no axis/dimension/action change and no seating tolerance relaxation."
+}

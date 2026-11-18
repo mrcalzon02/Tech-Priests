@@ -1,0 +1,75 @@
+{
+  "status": "PASS_INHERITED_FINITE_SOURCE_AND_ACTUAL_GLB_CONTAINMENT",
+  "source_sha256": "35c4f470ad92015b70d056086b7f6e53573f4ccabbecab6af346ab382734871e",
+  "glb_sha256": "77892d382fe0b1f39f28d84082d6c68dbb3b00c26f1476a3963cac97b9fce074",
+  "input_screen_sha256": "eea0b7489fa2aac269f60fd39916603ad70e8d24d4651fc18542c80c02ca9090",
+  "rows": [
+    {
+      "frame": 48,
+      "a": "V04 injector bridge support 1 actual seated riser",
+      "b": "V04 seated union 029 through flange bolt",
+      "canonical_cold_state": {
+        "triangle_intersections": 0,
+        "closed_solid_containment": true,
+        "actual_bidirectional_vertex_surface_gap": 0.0,
+        "surface_gap_measurement": "EXACT_CROSSING_OR_CONTAINMENT",
+        "clearance_margin": 0.0005
+      },
+      "all_old_part_vertices_inside_old_host": true,
+      "actual_source_and_export_regions": [
+        {
+          "phase": "SOURCE",
+          "state": {
+            "triangle_intersections": 0,
+            "closed_solid_containment": true,
+            "actual_bidirectional_vertex_surface_gap": 0.0,
+            "surface_gap_measurement": "EXACT_CROSSING_OR_CONTAINMENT",
+            "clearance_margin": 0.0005
+          },
+          "all_same_original_part_vertices_inside_same_host": true,
+          "old_nearest_host_source_vertices": [
+            10,
+            12,
+            13
+          ],
+          "current_nearest_host_source_vertices": [
+            12,
+            14,
+            15
+          ],
+          "finite_source_face_vertex_overlap": 1,
+          "witness_within_exact_finite_source_union": true,
+          "physical_source_export_witness_error": 0.0,
+          "nearest_host_surface_distance": 0.032759688794612885
+        },
+        {
+          "phase": "ACTUAL_GLB",
+          "state": {
+            "triangle_intersections": 0,
+            "closed_solid_containment": true,
+            "actual_bidirectional_vertex_surface_gap": 0.0,
+            "surface_gap_measurement": "EXACT_CROSSING_OR_CONTAINMENT",
+            "clearance_margin": 0.0005
+          },
+          "all_same_original_part_vertices_inside_same_host": true,
+          "old_nearest_host_source_vertices": [
+            10,
+            12,
+            13
+          ],
+          "current_nearest_host_source_vertices": [
+            12,
+            14,
+            15
+          ],
+          "finite_source_face_vertex_overlap": 1,
+          "witness_within_exact_finite_source_union": true,
+          "physical_source_export_witness_error": 1.2202813740193247e-07,
+          "nearest_host_surface_distance": 0.03275975584983826
+        }
+      ],
+      "classification": "RETAINED_SAME_WHOLE_FINITE_ORIGINAL_SUBPART_CONTAINMENT_AND_ADJACENT_SOURCE_FACE_REGION"
+    }
+  ],
+  "scope": "Retains documented containment of the same old finite original subpart in the same old host. This is not a claim of clearance, new drilling, or a redesigned CAD assembly."
+}

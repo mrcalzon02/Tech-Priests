@@ -1,0 +1,54 @@
+{
+  "status": "PASS_EXACT_BOUND_TOOL_VERSIONS_COPIED",
+  "bindings": [
+    {
+      "repo_path": "tools/art/thruster_resumption/animation/capture.py",
+      "sha256": "ff8570bfc0a9d19a4b57089fb7139dd278debc10251cd03e7b99c836daaea6c3",
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\capture-wide-universe-v01\\output\\runner-logs\\20261117T214007225177Z\\tooling\\capture.py",
+      "binding": "capture_binding"
+    },
+    {
+      "repo_path": "tools/art/thruster_resumption/animation/particle_plume.py",
+      "sha256": "8c38721803118475f3a2ebacb75125ab773665eea2ba239946567a033e0d6f7d",
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\capture-wide-universe-v01\\output\\runner-logs\\20261117T214007225177Z\\tooling\\particle_plume.py",
+      "binding": "capture_binding"
+    },
+    {
+      "repo_path": "tools/art/thruster_resumption/animation/electric_arcs.py",
+      "sha256": "dabfc6a32e53d9fb3c0d5b195c6787c78157d38c877323686bb2993a775dec4c",
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\capture-wide-universe-v01\\output\\runner-logs\\20261117T214007225177Z\\tooling\\electric_arcs.py",
+      "binding": "capture_binding"
+    },
+    {
+      "repo_path": "tools/art/thruster_resumption/animation/emitter_energy.py",
+      "sha256": "b064b8672b3faa638a3300579308fd175e824192b954b1af5568cd46b792f9f5",
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\capture-wide-universe-v01\\output\\runner-logs\\20261117T214007225177Z\\tooling\\emitter_energy.py",
+      "binding": "capture_binding"
+    },
+    {
+      "repo_path": "tools/fmpl/blender_camera_guard.py",
+      "sha256": "35da2d58084a1e648022f558d757a7bbb54965de54ccc74a0a32b983621adbc4",
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\fmpl\\blender_camera_guard.py",
+      "binding": "capture_binding"
+    },
+    {
+      "repo_path": "tools/fmpl/capture_policy.py",
+      "sha256": "70c08ee79c53a7efa0205393de11c8168ed8f467cf2e059eee2bc629fccfb9f0",
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\fmpl\\capture_policy.py",
+      "binding": "capture_binding"
+    },
+    {
+      "repo_path": "tools/art/thruster_resumption/animation/package.py",
+      "sha256": "99059b825a943a6f628d4b069b47446e465a804cff3ac6b7cfb2e24670431834",
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\capture-wide-universe-v01\\output\\runner-logs\\20261117T214622705656Z\\tooling\\package.py",
+      "binding": "passing_package_verifier"
+    },
+    {
+      "repo_path": "tools/art/thruster_resumption/animation/verify_capture.py",
+      "sha256": "086889a629aa4067aaa69421188ac0caf37c7fa2e6092e1405f2197f4abaeac1",
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\thruster_resumption\\animation\\verify_capture.py",
+      "binding": "passing_final64_verifier"
+    }
+  ],
+  "note": "Wide capture.py recovered by hash from original runner snapshot, not substituted with current narrow depth-repair script. Runner evidence preserves all original launcher/package versions separately."
+}

@@ -1,0 +1,174 @@
+{
+  "status": "AUTHOR_DECLARED_MECHANICAL_ROLES_REQUIRES_INDEPENDENT_LOCAL_CONTACT_PROOF",
+  "baseline_source_sha256": "f02f30ad740636d6fa7906a01c6b86af45d90cf1eb940a7c7fc627ed065a2f34",
+  "current_source_sha256": "35c4f470ad92015b70d056086b7f6e53573f4ccabbecab6af346ab382734871e",
+  "current_glb_sha256": "77892d382fe0b1f39f28d84082d6c68dbb3b00c26f1476a3963cac97b9fce074",
+  "units": "BU; no real-world scale inferred",
+  "functional_replacements": [
+    {
+      "new_name": "V06 giant actuator sliding rod -1",
+      "baseline_name": "Outer actuator body -1",
+      "role": "Rigid aft sliding segment of the same original shaft corridor"
+    },
+    {
+      "new_name": "V06 giant actuator sliding rod 1",
+      "baseline_name": "Outer actuator body 1",
+      "role": "Rigid aft sliding segment of the same original shaft corridor"
+    }
+  ],
+  "intentional_pivot_pairs": [
+    {
+      "member": "Outer actuator body -1",
+      "host": "Clevis fixed pin",
+      "role": "Fixed fore pivot pin through the retained fore mounting assembly"
+    },
+    {
+      "member": "Outer actuator body 1",
+      "host": "Clevis fixed pin.002",
+      "role": "Fixed fore pivot pin through the retained fore mounting assembly"
+    },
+    {
+      "member": "V06 giant actuator sliding rod -1",
+      "host": "Clevis fixed pin.001",
+      "role": "Moving aft pivot pin in the same rigid sliding assembly"
+    },
+    {
+      "member": "V06 giant actuator sliding rod 1",
+      "host": "Clevis fixed pin.003",
+      "role": "Moving aft pivot pin in the same rigid sliding assembly"
+    }
+  ],
+  "fore_loadpath_adjacency": [
+    {
+      "member": "Outer actuator body -1",
+      "host": "V04 guide-rail fore structural web fuel",
+      "role": "Same fore clevis mounting assembly; source web joins the clevis datum to actual diagonal shoulder"
+    },
+    {
+      "member": "Outer actuator body 1",
+      "host": "V04 guide-rail fore structural web water",
+      "role": "Same fore clevis mounting assembly; source web joins the clevis datum to actual diagonal shoulder"
+    }
+  ],
+  "source_construction_reference": "Recovered thruster-v04/tank_refinement.py lines57-58; original shaft and retained collars measured directly in canonical V05",
+  "axis_correction_clarification": "The preliminary derivative used an incorrect hardcoded shaft datum. Final shaft surfaces match the actual canonical shaft axis; the original source shaft/collars were aligned. The 0.050 BU correction repaired the derivative, not a legacy source defect.",
+  "acceptance_limits": "These declarations do not approve unrelated contacts. Independently prove current shaft geometry stays in the retargeted actual legacy shaft corridor and contact remains on the same original part/local region. Flag previously-clear hosts, new out-of-corridor intrusions and unrelated mid-span interference. Existing closed clevis/cradle representations do not imply drilled bores or universal CAD collision freedom.",
+  "inherited_union_assembly_regions": [
+    {
+      "member": "V04 injector bridge support -1 actual seated riser",
+      "union_prefix": "V04 seated union 023 ",
+      "source_joint_index": 23,
+      "source_joint": {
+        "pipe": "V04 cold bulk radial feed fuel 1",
+        "side": "end",
+        "host": "V04 cold radial injector sector fuel",
+        "host_surface_point": [
+          -0.4246436655521393,
+          -2.0715646743774414,
+          -0.10845685005187988
+        ],
+        "host_port_center": [
+          -0.4246436655521393,
+          -2.0715646743774414,
+          -0.10845685005187988
+        ],
+        "host_surface_normal": [
+          -0.5225210785865784,
+          -0.36033496260643005,
+          0.7727422118186951
+        ],
+        "original_endpoint_gap": 0.04421283311874783,
+        "socket_axis": [
+          -0.5225210785865784,
+          -0.36033496260643005,
+          0.7727422118186951
+        ],
+        "socket_boss_seat": [
+          -0.40749844908714294,
+          -2.059741258621216,
+          -0.13381245732307434
+        ],
+        "pipe_endpoint_inside_union": [
+          -0.5054711103439331,
+          -2.1273040771484375,
+          0.011076703667640686
+        ],
+        "bolt_count": 6,
+        "joint": "continuous socket stem, touching paired flanges/gasket/union, explicit bore-axis contract where required"
+      },
+      "exact_retained_components": [
+        "V04 seated union 023 captured gasket",
+        "V04 seated union 023 compression union nut",
+        "V04 seated union 023 mating flange",
+        "V04 seated union 023 mating flange.001",
+        "V04 seated union 023 through flange bolt",
+        "V04 seated union 023 through flange bolt.001",
+        "V04 seated union 023 through flange bolt.002",
+        "V04 seated union 023 through flange bolt.003",
+        "V04 seated union 023 through flange bolt.004",
+        "V04 seated union 023 through flange bolt.005",
+        "V04 seated union 023 welded socket boss"
+      ],
+      "reason": "Owner accepts documented old local assembly roughness while adding animation. This riser already fouls the same original joint assembly; moving contact may reach another retained bolt/subpart only inside its finite original region and the same already-fouled riser source-face region. Record the new SUBPART contact and measured drift distinctly; do not label it clear or unchanged."
+    },
+    {
+      "member": "V04 injector bridge support 1 actual seated riser",
+      "union_prefix": "V04 seated union 029 ",
+      "source_joint_index": 29,
+      "source_joint": {
+        "pipe": "V04 cold bulk radial feed water 1",
+        "side": "end",
+        "host": "V04 cold radial injector sector water",
+        "host_surface_point": [
+          0.4246436357498169,
+          -2.0715646743774414,
+          -0.10845690965652466
+        ],
+        "host_port_center": [
+          0.4246436357498169,
+          -2.0715646743774414,
+          -0.10845690965652466
+        ],
+        "host_surface_normal": [
+          0.5225210785865784,
+          -0.36033496260643005,
+          0.7727422118186951
+        ],
+        "original_endpoint_gap": 0.04421276795030837,
+        "socket_axis": [
+          0.5225210785865784,
+          -0.36033496260643005,
+          0.7727422118186951
+        ],
+        "socket_boss_seat": [
+          0.40749841928482056,
+          -2.059741258621216,
+          -0.13381251692771912
+        ],
+        "pipe_endpoint_inside_union": [
+          0.5054711103439331,
+          -2.1273040771484375,
+          0.01107664406299591
+        ],
+        "bolt_count": 6,
+        "joint": "continuous socket stem, touching paired flanges/gasket/union, explicit bore-axis contract where required"
+      },
+      "exact_retained_components": [
+        "V04 seated union 029 captured gasket",
+        "V04 seated union 029 compression union nut",
+        "V04 seated union 029 mating flange",
+        "V04 seated union 029 mating flange.001",
+        "V04 seated union 029 through flange bolt",
+        "V04 seated union 029 through flange bolt.001",
+        "V04 seated union 029 through flange bolt.002",
+        "V04 seated union 029 through flange bolt.003",
+        "V04 seated union 029 through flange bolt.004",
+        "V04 seated union 029 through flange bolt.005",
+        "V04 seated union 029 welded socket boss"
+      ],
+      "reason": "Owner accepts documented old local assembly roughness while adding animation. This riser already fouls the same original joint assembly; moving contact may reach another retained bolt/subpart only inside its finite original region and the same already-fouled riser source-face region. Record the new SUBPART contact and measured drift distinctly; do not label it clear or unchanged."
+    }
+  ],
+  "canonical_joint_provenance_sha256": "561f11fadd9105d7cd1bfe8ebbf975686a3c3515277fabf14c2392e7e70ff25e",
+  "assembly_acceptance_limits": "Only these two exact old joint assemblies. Independently require actual current triangle-edge crossing points within the finite source union envelope and overlapping member source-face region already contacting its retained components. Reject unrelated unions, previously-clear unrelated assemblies, genuinely different local regions and out-of-shaft-corridor interference. This records inherited approximation; it does not claim CAD collision freedom."
+}

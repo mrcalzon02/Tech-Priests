@@ -1,0 +1,42 @@
+{
+  "stage": "V11_DETAILED_CAPTURE_HANDOFF",
+  "glb_sha256": "2b1f7164dc6df970aef9c9f1367bf8cf30f82ba3471d1eb9fcf6e84821d3d137",
+  "render_reviews": [
+    {
+      "file": "actual-core-transparent-alpha.png",
+      "sha256": "77035cb47d16bf72c5c87d5518951dbaa7d887f91f7d42b5ddb50569e3f36118",
+      "actually_viewed": true
+    },
+    {
+      "file": "actual-core-magenta-background.png",
+      "sha256": "3586c97d5fd175b88c9643def47ca43be1b3c161ac6e6a9f10e6f092f36323b9",
+      "actually_viewed": true
+    },
+    {
+      "file": "actual-new-cover-guide-detail.png",
+      "sha256": "f7376daca486b7747381aa82683ff5580b578cc1d685b3ca27b9c520eb972f1f",
+      "scope": "Actual imported GLB, emission disabled cold or neutral-clay construction review; U-bay deck only where explicitly named.",
+      "actually_viewed": true
+    },
+    {
+      "file": "actual-axial-guide-detail.png",
+      "sha256": "1704a6e5355dc2f7a829f3dc9330c96ab0337a0820ecadbf60b20a419ceb20af",
+      "scope": "Actual imported GLB, emission disabled cold or neutral-clay construction review; U-bay deck only where explicitly named.",
+      "actually_viewed": true
+    },
+    {
+      "file": "actual-field-guide-detail.png",
+      "sha256": "4cb88b54a4385604150c43782db7bd4cfee852bd1490bb46c1ee589446b7ebfa",
+      "scope": "Actual imported GLB, emission disabled cold or neutral-clay construction review; U-bay deck only where explicitly named.",
+      "actually_viewed": true
+    },
+    {
+      "file": "actual-new-whole-body.png",
+      "sha256": "e8ffae51b29fde766bff891c69f788d31b88d42365f1d49e6980095fc000e286",
+      "scope": "Actual imported GLB, emission disabled cold or neutral-clay construction review; U-bay deck only where explicitly named.",
+      "actually_viewed": true
+    }
+  ],
+  "review": "Actual source/export construction witnesses viewed. Eight explicit brace repairs; new case/guide/fastener solids and opaque-core behavior passed. No aesthetic-score hold or4/5 claim.",
+  "remaining_gates": "Final768/64 capture, combined FX/actualdraw envelope, native pixel/registration/layer proof and final owner acceptance; this is not installed/released art."
+}

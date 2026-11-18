@@ -1,0 +1,7 @@
+{
+  "status": "PASS_EXISTING_SAVE_WITH_LOW_CHEEK_FORE_LEDGE_GUARDS",
+  "input_save_sha256": "dbdc3efbe3206aa13678ceebec8c6115efc134d8f9c9709175ecec98d28ba80c",
+  "all_four_original_entity_ids_preserved": true,
+  "all_four_operation_readbacks_pass": true,
+  "scope": "Real pre-mount-correction full-support save loaded under the final surrounding-ledge guard prototypes. No tile carving or source migration."
+}

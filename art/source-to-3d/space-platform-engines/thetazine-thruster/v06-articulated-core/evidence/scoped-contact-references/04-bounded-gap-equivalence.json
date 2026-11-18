@@ -1,0 +1,161 @@
+{
+  "status": "PASS_EQUIVALENT_SAME_MARGIN_REPRESENTATIVE_PROCESSED_PAIRS",
+  "checker_sha256": "732ec4d5d5b09f74f3ec32119fcc60083edbce4e54e662ceadba4ce5a3874c18",
+  "margin": 0.0005,
+  "rows": [
+    {
+      "kind": "clear",
+      "phase": "base",
+      "frame": 0,
+      "a": "Outer actuator body -1",
+      "b": "V04 seated union 021 welded socket boss",
+      "old": {
+        "triangle_intersections": 0,
+        "closed_solid_containment": false,
+        "actual_bidirectional_vertex_surface_gap": 0.020091461017727852
+      },
+      "bounded": {
+        "triangle_intersections": 0,
+        "closed_solid_containment": false,
+        "actual_bidirectional_vertex_surface_gap": 0.0005,
+        "surface_gap_measurement": "CONSERVATIVE_VERTEX_SURFACE_LOWER_BOUND_AT_SAME_MARGIN",
+        "clearance_margin": 0.0005
+      },
+      "equivalent": true,
+      "old_seconds": 0.0002971000212710351,
+      "bounded_seconds": 0.00015770000754855573
+    },
+    {
+      "kind": "under-margin",
+      "phase": "base",
+      "frame": 0,
+      "a": "Source actuator helical thread 1",
+      "b": "V04 seated union 027 through flange bolt.004",
+      "old": {
+        "triangle_intersections": 0,
+        "closed_solid_containment": false,
+        "actual_bidirectional_vertex_surface_gap": 0.0004163794219493866
+      },
+      "bounded": {
+        "triangle_intersections": 0,
+        "closed_solid_containment": false,
+        "actual_bidirectional_vertex_surface_gap": 0.0004163794219493866,
+        "surface_gap_measurement": "EXACT_UNDER_MARGIN_VERTEX_SURFACE_MINIMUM",
+        "clearance_margin": 0.0005
+      },
+      "equivalent": true,
+      "old_seconds": 0.002789999998640269,
+      "bounded_seconds": 0.0019294999947305769
+    },
+    {
+      "kind": "touch",
+      "phase": "source",
+      "frame": 4,
+      "a": "V04 injector bridge support -1 seated weld collar",
+      "b": "Pressure chamber retaining band",
+      "old": {
+        "triangle_intersections": 0,
+        "closed_solid_containment": false,
+        "actual_bidirectional_vertex_surface_gap": 0.0
+      },
+      "bounded": {
+        "triangle_intersections": 0,
+        "closed_solid_containment": false,
+        "actual_bidirectional_vertex_surface_gap": 0.0,
+        "surface_gap_measurement": "EXACT_UNDER_MARGIN_VERTEX_SURFACE_MINIMUM",
+        "clearance_margin": 0.0005
+      },
+      "equivalent": true,
+      "old_seconds": 0.00048309998237527907,
+      "bounded_seconds": 0.0002617000136524439
+    },
+    {
+      "kind": "contained",
+      "phase": "base",
+      "frame": 2,
+      "a": "V04 injector bridge support 1 actual seated riser",
+      "b": "V04 seated union 029 through flange bolt",
+      "old": {
+        "triangle_intersections": 0,
+        "closed_solid_containment": true,
+        "actual_bidirectional_vertex_surface_gap": 0.0
+      },
+      "bounded": {
+        "triangle_intersections": 0,
+        "closed_solid_containment": true,
+        "actual_bidirectional_vertex_surface_gap": 0.0,
+        "surface_gap_measurement": "EXACT_CROSSING_OR_CONTAINMENT",
+        "clearance_margin": 0.0005
+      },
+      "equivalent": true,
+      "old_seconds": 5.7199998991563916e-05,
+      "bounded_seconds": 3.6600016755983233e-05
+    },
+    {
+      "kind": "intersecting",
+      "phase": "source",
+      "frame": 0,
+      "a": "V04 injector bridge support -1 actual seated riser",
+      "b": "V04 seated union 023 welded socket boss",
+      "old": {
+        "triangle_intersections": 112,
+        "closed_solid_containment": false,
+        "actual_bidirectional_vertex_surface_gap": 0.0
+      },
+      "bounded": {
+        "triangle_intersections": 112,
+        "closed_solid_containment": false,
+        "actual_bidirectional_vertex_surface_gap": 0.0,
+        "surface_gap_measurement": "EXACT_CROSSING_OR_CONTAINMENT",
+        "clearance_margin": 0.0005
+      },
+      "equivalent": true,
+      "old_seconds": 0.03303950000554323,
+      "bounded_seconds": 0.032896799995796755
+    },
+    {
+      "kind": "new-current-contact",
+      "phase": "source",
+      "frame": 12,
+      "a": "Actuator support clevis.001",
+      "b": "V04 restraint hydraulic feed 6",
+      "old": {
+        "triangle_intersections": 6,
+        "closed_solid_containment": false,
+        "actual_bidirectional_vertex_surface_gap": 0.0
+      },
+      "bounded": {
+        "triangle_intersections": 6,
+        "closed_solid_containment": false,
+        "actual_bidirectional_vertex_surface_gap": 0.0,
+        "surface_gap_measurement": "EXACT_CROSSING_OR_CONTAINMENT",
+        "clearance_margin": 0.0005
+      },
+      "equivalent": true,
+      "old_seconds": 0.0018274000030942261,
+      "bounded_seconds": 0.0017764999938663095
+    },
+    {
+      "kind": "new-current-replacement-contact",
+      "phase": "source",
+      "frame": 12,
+      "a": "V06 giant actuator sliding rod -1",
+      "b": "V04 seated union 021 welded socket boss",
+      "old": {
+        "triangle_intersections": 18,
+        "closed_solid_containment": false,
+        "actual_bidirectional_vertex_surface_gap": 0.0
+      },
+      "bounded": {
+        "triangle_intersections": 18,
+        "closed_solid_containment": false,
+        "actual_bidirectional_vertex_surface_gap": 0.0,
+        "surface_gap_measurement": "EXACT_CROSSING_OR_CONTAINMENT",
+        "clearance_margin": 0.0005
+      },
+      "equivalent": true,
+      "old_seconds": 0.005307999992510304,
+      "bounded_seconds": 0.0052915000123903155
+    }
+  ]
+}

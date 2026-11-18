@@ -1,0 +1,205 @@
+{
+  "status": "PASS_FOUR_NATIVE_DRIVES_DYNAMIC_FUSION_AND_EXACT_SAVE_RELOAD",
+  "verified_at_utc": "2026-11-17T16:56:07.239726+00:00",
+  "engine": "Factorio 2.1.24 build 87808, Steam win64, base/Space Age/Quality/Elevated Rails",
+  "seed": 17112026,
+  "native_rows": [
+    {
+      "name": "hydrogen-thruster",
+      "placement_legal": true,
+      "movement": true,
+      "passed": true,
+      "platform_weight_kg": 84800,
+      "native_consumption": true,
+      "connected_ports": true,
+      "working_sample": {
+        "tick": 600,
+        "platform_speed": 0.4429696896147096,
+        "platform_distance": 0.01765121508819354,
+        "connection": "nauvis-vulcanus",
+        "fluid1": {
+          "name": "liquid-hydrogen",
+          "amount": 217.55651342868805,
+          "temperature": -253
+        },
+        "fluid2": {
+          "name": "liquid-oxygen",
+          "amount": 217.55651342868805,
+          "temperature": -183
+        }
+      }
+    },
+    {
+      "name": "thetazine-thruster",
+      "placement_legal": true,
+      "movement": true,
+      "passed": true,
+      "platform_weight_kg": 84800,
+      "native_consumption": true,
+      "connected_ports": true,
+      "working_sample": {
+        "tick": 600,
+        "platform_speed": 11.373511909097004,
+        "platform_distance": 0.5820963002220382,
+        "connection": "nauvis-vulcanus",
+        "fluid1": {
+          "name": "thetazine-fuel",
+          "amount": 217.55651342868805,
+          "temperature": 15
+        },
+        "fluid2": {
+          "name": "water",
+          "amount": 217.55651342868805,
+          "temperature": 15
+        }
+      }
+    },
+    {
+      "name": "void-fusion-thruster",
+      "placement_legal": true,
+      "movement": true,
+      "passed": true,
+      "platform_weight_kg": 20800,
+      "unpowered_refusal": true,
+      "powered_service": true,
+      "no_visible_ports": true,
+      "power_cut_refusal": true,
+      "power_recovery": true,
+      "sink_replaced": true,
+      "native_cycle": true,
+      "power_bounds": true,
+      "significant_variation": true,
+      "minimum_power_watts": 6171157.411455284,
+      "maximum_power_watts": 17681295.032367375,
+      "minimum_fluid": 301.97778725624084,
+      "maximum_fluid": 864.0647515654564,
+      "first_recorded_departure": {
+        "tick": 140,
+        "platform_speed": 0.008610868390574332,
+        "platform_distance": 5.0481901972805315e-06,
+        "connection": "nauvis-vulcanus"
+      },
+      "cycle_samples": 150,
+      "initial_native_sink_power_watts": 12000000
+    },
+    {
+      "name": "large-void-fusion-thruster",
+      "placement_legal": true,
+      "movement": true,
+      "passed": true,
+      "platform_weight_kg": 86600,
+      "unpowered_refusal": true,
+      "powered_service": true,
+      "no_visible_ports": true,
+      "power_cut_refusal": true,
+      "power_recovery": true,
+      "sink_replaced": true,
+      "native_cycle": true,
+      "power_bounds": true,
+      "significant_variation": true,
+      "minimum_power_watts": 6981558.400953378,
+      "maximum_power_watts": 16721559.3196775,
+      "minimum_fluid": 341.41134387254715,
+      "maximum_fluid": 805.7005037069321,
+      "first_recorded_departure": {
+        "tick": 140,
+        "platform_speed": 0.041156434121079395,
+        "platform_distance": 1.5354846116550497e-05,
+        "connection": "nauvis-vulcanus"
+      },
+      "cycle_samples": 150,
+      "initial_native_sink_power_watts": 12000000
+    }
+  ],
+  "independent_fusion_phase": true,
+  "saved_tick": 1500,
+  "compared_tick": 1560,
+  "exact_uninterrupted_reload_match": true,
+  "source_snapshot": {
+    "original_file_count": 5406,
+    "final_updated_files": {
+      "prototypes/compatibility/space-age.lua": "552f13dd5c7d70edd85e4f74ad8eda619a22ea34249892eed5c571d382ddb49f",
+      "scripts/generated/control_legacy_part_001.lua": "cf8bc54bdb04e9afc861fb682474ae66aa4ef3e8e54982d9aac95732aa32cee1",
+      "scripts/generated/control_legacy_part_002.lua": "8c98025ceac1cf735d6b1d69ea768d8c6832e644d81e99e61d327defa6a6d7f3",
+      "scripts/generated/control_legacy_part_004.lua": "d37208ed9014f05acaf94314821f952bb0311ceb44fd656509add4e80d9a23d9",
+      "scripts/core/efficiency_economy_0595.lua": "bb01ea11fa82484c5f02dda2bd837b1280b7ca52d423d23a47fafc2631545034",
+      "scripts/core/efficiency_economy_0596.lua": "7e0720910fcb3e626806981ee774cc339a43bfed7bc1cecf2fd90319b2ba408a",
+      "scripts/core/void_fusion_operation.lua": "493741097327ef5b16aacb6541928251cc08c2629b02872bda4bce859b9f7f12"
+    },
+    "source_binding": "source-binding.json",
+    "dynamic_binding": "dynamic-source-binding.json"
+  },
+  "native_interpretation": [
+    "Read actual LuaEntity power_usage times60, actual native fluid stores and real platform connection/distance; nonzero speed alone does not prove departure.",
+    "Narrow precision-drive flight uses a20.8-ton hub/corridor/spine platform; other bodies use84.8\u201386.6-ton disposable platforms. These are functional checks, not comparative balance measurements.",
+    "The eight-second operating cycle runs throughout the powered and unpowered periods;150 ten-tick native samples span more than three complete periods.",
+    "A newly rebuilt electrical sink needs one service interval to recharge. Its power phase is checked immediately; fluid-target tolerance resumes after that interval.",
+    "Power-cut no-refill proof waits for the real30MJ sink to drain, clears residual hidden working fluid, and observes60ticks with no native refill before recovery.",
+    "The test electrical source is a private native100MW electric-energy-interface on each fusion platform; ordinary thruster prototypes and runtime services are exercised."
+  ],
+  "limits": [
+    "No ordinary personal save/profile or installed mod was changed.",
+    "No owner visual acceptance or final authored fusion-model completion is inferred.",
+    "Optional third-party compatibility and final balance/energy economy remain separate."
+  ],
+  "evidence": {
+    "user-data/script-output/thruster-resume/continuous-results.json": {
+      "sha256": "5ff8196baf9bfd77d598a7e4ff499230f36a23dafdcced6b6879a36e6c5c6999",
+      "bytes": 263842
+    },
+    "user-data/script-output/thruster-resume/native-results.json": {
+      "sha256": "51cab4fb41afaca1f450cbd0509eee5355baf86cdf906f220d5cae4ddc50c4a3",
+      "bytes": 265997
+    },
+    "user-data/script-output/thruster-resume/reload-results.json": {
+      "sha256": "5ff8196baf9bfd77d598a7e4ff499230f36a23dafdcced6b6879a36e6c5c6999",
+      "bytes": 263842
+    },
+    "user-data/saves/_autosave-thruster-resume-complete.zip": {
+      "sha256": "dbdc3efbe3206aa13678ceebec8c6115efc134d8f9c9709175ecec98d28ba80c",
+      "bytes": 835427
+    },
+    "create.log": {
+      "sha256": "953a12ab75638aae56f0340045d0b237ed68b7afbce23f2bb91ee054cef10234",
+      "bytes": 54156
+    },
+    "test.log": {
+      "sha256": "7bceecb687030061600f519076d64546f501370a37af8ce26c9e3898b7e5dae7",
+      "bytes": 54570
+    },
+    "server.log": {
+      "sha256": "f135876faf5a0ba9f4e86383c7fa69c773339bd075409550752b3c74d832a0e4",
+      "bytes": 55201
+    },
+    "reload.log": {
+      "sha256": "2bf725dd7635c9c388e8c2882fb8442377a29f14a9347efcad4732708d67c084",
+      "bytes": 54177
+    },
+    "source-binding.json": {
+      "sha256": "f0e5cc99d313fe605af99bd57b7ad9bd68fbf0a8e21fd6e3b74879e18b9a4d39",
+      "bytes": 708822
+    },
+    "dynamic-source-binding.json": {
+      "sha256": "54a9f482135afe0ae8254e66d0de39be4fcb2ccd8bdedefecefbc7392b663a8a",
+      "bytes": 906
+    },
+    "run.py": {
+      "sha256": "ca7208e0470971efcf42f1500df56c556c5d953c1d34cdaa139b2ad6881c2471",
+      "bytes": 5528
+    },
+    "control.lua": {
+      "sha256": "67853db244c645c1f05bda94295d2b6e16ea8ff6258a70fa3c748c8e0d8f64e5",
+      "bytes": 10071
+    },
+    "data.lua": {
+      "sha256": "7713a331cb6696734b607b1e2d9e01007aba53def483c9834e75dd2c97a04569",
+      "bytes": 579
+    },
+    "verify.py": {
+      "sha256": "eb1cc62443fac8e7bfdc1799909be5c06c0217b3770aa7190f43ae97740a81c2",
+      "bytes": 5726
+    }
+  },
+  "private_server_shutdown": "The runner terminated its own private server after the CRC-verified completed autosave and waited for process exit; no other process was controlled. The server stop was deliberate, not a clean-exit acceptance condition.",
+  "current_shared_final_files_match_tested_hashes": true
+}

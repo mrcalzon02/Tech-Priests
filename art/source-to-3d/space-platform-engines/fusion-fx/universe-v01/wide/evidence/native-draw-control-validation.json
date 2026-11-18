@@ -1,0 +1,296 @@
+{
+  "status": "PASS_NATIVE_REAL_VISUAL_POWER_RGBA_LIFECYCLE_AND_SAVE_RELOAD",
+  "profile": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\local-validation\\thruster-visual-power-native-20261117",
+  "preparation_sha256": "ec9e765c2c707b590d52f421107a864b5850b07a0589a91b31bd4a7b7c6a8a20",
+  "updated_runtime_source_hashes": {
+    "scripts/generated/control_legacy_part_002.lua": "746d5f243bd66476db36b35e43d9ec66b867cfbd21d691ca55641bf7dfe365ee",
+    "scripts/core/void_fusion_visuals.lua": "85655201cad15acf802d0d360ec3f948415244d17da148b132c63351067bfe1e"
+  },
+  "actual_native_reports": [
+    {
+      "file": "continuous-results.json",
+      "sha256": "a42881ee9785e779dbab5457eaa7c0f9b6f621db89875473092a29dea16a4b2c",
+      "actual_reloaded": false,
+      "maximum_actual_RGBA_error_to_operation_factor_over1_5": 2.9740056750604538e-08,
+      "maximum_same_operation_sink_watt_error": 1.862645149230957e-09,
+      "independent_phase_max_factor_difference": 0.8476922124093439,
+      "rows": [
+        {
+          "prototype": "void-fusion-thruster",
+          "unit": 2,
+          "powered_samples": 127,
+          "visible_plume_samples": 39,
+          "factor_range": [
+            0.5478579530595107,
+            1.480880284277844
+          ],
+          "stable_native_plume_gate_checks": 159,
+          "native_gate_transition_witnesses": [
+            {
+              "tick": 10,
+              "actual_status": 29,
+              "actual_platform_state": 3,
+              "actual_platform_paused": false,
+              "actual_plume_visible": false,
+              "last_service_tick": 0
+            },
+            {
+              "tick": 550,
+              "actual_status": 1,
+              "actual_platform_state": 2,
+              "actual_platform_paused": false,
+              "actual_plume_visible": false,
+              "last_service_tick": 540
+            },
+            {
+              "tick": 760,
+              "actual_status": 1,
+              "actual_platform_state": 3,
+              "actual_platform_paused": false,
+              "actual_plume_visible": true,
+              "last_service_tick": 750
+            },
+            {
+              "tick": 1160,
+              "actual_status": 1,
+              "actual_platform_state": 2,
+              "actual_platform_paused": false,
+              "actual_plume_visible": false,
+              "last_service_tick": 1150
+            },
+            {
+              "tick": 1210,
+              "actual_status": 1,
+              "actual_platform_state": 3,
+              "actual_platform_paused": false,
+              "actual_plume_visible": true,
+              "last_service_tick": 1200
+            },
+            {
+              "tick": 1520,
+              "actual_status": 1,
+              "actual_platform_state": 2,
+              "actual_platform_paused": false,
+              "actual_plume_visible": false,
+              "last_service_tick": 1510
+            }
+          ],
+          "sink_repair_ids_preserved": true,
+          "save_reload_ids_preserved": true,
+          "power_cut_hidden_zero_rgba": true,
+          "pause_energy_on_plume_off": true,
+          "entity_removal_clean": true
+        },
+        {
+          "prototype": "large-void-fusion-thruster",
+          "unit": 6,
+          "powered_samples": 123,
+          "visible_plume_samples": 116,
+          "factor_range": [
+            0.6127629251385796,
+            1.4097738400282789
+          ],
+          "stable_native_plume_gate_checks": 159,
+          "native_gate_transition_witnesses": [
+            {
+              "tick": 10,
+              "actual_status": 29,
+              "actual_platform_state": 3,
+              "actual_platform_paused": false,
+              "actual_plume_visible": false,
+              "last_service_tick": 0
+            },
+            {
+              "tick": 140,
+              "actual_status": 1,
+              "actual_platform_state": 2,
+              "actual_platform_paused": false,
+              "actual_plume_visible": false,
+              "last_service_tick": 130
+            },
+            {
+              "tick": 1110,
+              "actual_status": 29,
+              "actual_platform_state": 2,
+              "actual_platform_paused": false,
+              "actual_plume_visible": false,
+              "last_service_tick": 1100
+            },
+            {
+              "tick": 1160,
+              "actual_status": 1,
+              "actual_platform_state": 2,
+              "actual_platform_paused": false,
+              "actual_plume_visible": true,
+              "last_service_tick": 1150
+            },
+            {
+              "tick": 1330,
+              "actual_status": 43,
+              "actual_platform_state": 7,
+              "actual_platform_paused": true,
+              "actual_plume_visible": false,
+              "last_service_tick": 1320
+            },
+            {
+              "tick": 1390,
+              "actual_status": 1,
+              "actual_platform_state": 2,
+              "actual_platform_paused": false,
+              "actual_plume_visible": true,
+              "last_service_tick": 1380
+            }
+          ],
+          "sink_repair_ids_preserved": true,
+          "save_reload_ids_preserved": true,
+          "power_cut_hidden_zero_rgba": true,
+          "pause_energy_on_plume_off": true,
+          "entity_removal_clean": true
+        }
+      ]
+    },
+    {
+      "file": "reload-results.json",
+      "sha256": "3aa138eb378d530c1b70e9bdca5b44976ca3afbf7f3632d8418607225263c5f4",
+      "actual_reloaded": true,
+      "maximum_actual_RGBA_error_to_operation_factor_over1_5": 2.9740056750604538e-08,
+      "maximum_same_operation_sink_watt_error": 1.862645149230957e-09,
+      "independent_phase_max_factor_difference": 0.8476922124093439,
+      "rows": [
+        {
+          "prototype": "void-fusion-thruster",
+          "unit": 2,
+          "powered_samples": 127,
+          "visible_plume_samples": 39,
+          "factor_range": [
+            0.5478579530595107,
+            1.480880284277844
+          ],
+          "stable_native_plume_gate_checks": 159,
+          "native_gate_transition_witnesses": [
+            {
+              "tick": 10,
+              "actual_status": 29,
+              "actual_platform_state": 3,
+              "actual_platform_paused": false,
+              "actual_plume_visible": false,
+              "last_service_tick": 0
+            },
+            {
+              "tick": 550,
+              "actual_status": 1,
+              "actual_platform_state": 2,
+              "actual_platform_paused": false,
+              "actual_plume_visible": false,
+              "last_service_tick": 540
+            },
+            {
+              "tick": 760,
+              "actual_status": 1,
+              "actual_platform_state": 3,
+              "actual_platform_paused": false,
+              "actual_plume_visible": true,
+              "last_service_tick": 750
+            },
+            {
+              "tick": 1160,
+              "actual_status": 1,
+              "actual_platform_state": 2,
+              "actual_platform_paused": false,
+              "actual_plume_visible": false,
+              "last_service_tick": 1150
+            },
+            {
+              "tick": 1210,
+              "actual_status": 1,
+              "actual_platform_state": 3,
+              "actual_platform_paused": false,
+              "actual_plume_visible": true,
+              "last_service_tick": 1200
+            },
+            {
+              "tick": 1520,
+              "actual_status": 1,
+              "actual_platform_state": 2,
+              "actual_platform_paused": false,
+              "actual_plume_visible": false,
+              "last_service_tick": 1510
+            }
+          ],
+          "sink_repair_ids_preserved": true,
+          "save_reload_ids_preserved": true,
+          "power_cut_hidden_zero_rgba": true,
+          "pause_energy_on_plume_off": true,
+          "entity_removal_clean": true
+        },
+        {
+          "prototype": "large-void-fusion-thruster",
+          "unit": 6,
+          "powered_samples": 123,
+          "visible_plume_samples": 116,
+          "factor_range": [
+            0.6127629251385796,
+            1.4097738400282789
+          ],
+          "stable_native_plume_gate_checks": 159,
+          "native_gate_transition_witnesses": [
+            {
+              "tick": 10,
+              "actual_status": 29,
+              "actual_platform_state": 3,
+              "actual_platform_paused": false,
+              "actual_plume_visible": false,
+              "last_service_tick": 0
+            },
+            {
+              "tick": 140,
+              "actual_status": 1,
+              "actual_platform_state": 2,
+              "actual_platform_paused": false,
+              "actual_plume_visible": false,
+              "last_service_tick": 130
+            },
+            {
+              "tick": 1110,
+              "actual_status": 29,
+              "actual_platform_state": 2,
+              "actual_platform_paused": false,
+              "actual_plume_visible": false,
+              "last_service_tick": 1100
+            },
+            {
+              "tick": 1160,
+              "actual_status": 1,
+              "actual_platform_state": 2,
+              "actual_platform_paused": false,
+              "actual_plume_visible": true,
+              "last_service_tick": 1150
+            },
+            {
+              "tick": 1330,
+              "actual_status": 43,
+              "actual_platform_state": 7,
+              "actual_platform_paused": true,
+              "actual_plume_visible": false,
+              "last_service_tick": 1320
+            },
+            {
+              "tick": 1390,
+              "actual_status": 1,
+              "actual_platform_state": 2,
+              "actual_platform_paused": false,
+              "actual_plume_visible": true,
+              "last_service_tick": 1380
+            }
+          ],
+          "sink_repair_ids_preserved": true,
+          "save_reload_ids_preserved": true,
+          "power_cut_hidden_zero_rgba": true,
+          "pause_energy_on_plume_off": true,
+          "entity_removal_clean": true
+        }
+      ]
+    }
+  ],
+  "scope": "Actual Factorio2.1.24 headless LuaRenderObjects and ordinary registered thrusters/sinks/fluids. Private1px animation stubs exercise API and lifecycle only; no FX pixel appearance, shader, plume shape or final art installation acceptance."
+}

@@ -1,0 +1,80 @@
+{
+  "source_sha256": "35c4f470ad92015b70d056086b7f6e53573f4ccabbecab6af346ab382734871e",
+  "glb_sha256": "77892d382fe0b1f39f28d84082d6c68dbb3b00c26f1476a3963cac97b9fce074",
+  "script_sha256": "c8d6f3e13167a0fba138b7a7c5d67d6cbf54a6c2e8c7feffd9d9b04c74fc36d5",
+  "rendered": [
+    {
+      "file": "actual-v06-whole.png",
+      "sha256": "cf264af5ca510ea41873b144f1af7d070dffc2f0af76ec4b1a5b2bef09a049e2",
+      "frame": 17,
+      "location": [
+        0,
+        -13,
+        13
+      ],
+      "target": [
+        0,
+        -1.7,
+        -0.5
+      ],
+      "ortho_scale": 11.8,
+      "clay": false,
+      "scope": "Actual reimported physical GLB; no source-only exhaust volume."
+    },
+    {
+      "file": "actual-v06-side-actuator.png",
+      "sha256": "a0634716ff06146e8061aa6609753f5d3428b7e5774ab72765d21977499cfbfc",
+      "frame": 17,
+      "location": [
+        4,
+        -3.8,
+        2.8
+      ],
+      "target": [
+        1.1,
+        -1.7,
+        -0.65
+      ],
+      "ortho_scale": 3.3,
+      "clay": false,
+      "scope": "Actual reimported physical GLB; no source-only exhaust volume."
+    },
+    {
+      "file": "actual-v06-rear.png",
+      "sha256": "e28514b9585514cc62fa5d6564eacd1270a42cd15e5f36686f050e278d007745",
+      "frame": 33,
+      "location": [
+        6,
+        7,
+        5
+      ],
+      "target": [
+        0,
+        -1.7,
+        -0.5
+      ],
+      "ortho_scale": 10.8,
+      "clay": false,
+      "scope": "Actual reimported physical GLB; no source-only exhaust volume."
+    },
+    {
+      "file": "actual-v06-rear-clay.png",
+      "sha256": "26ae9c7364edb60b48da0be11da15cf9a42a0b223ca8e733f380f7387a206e04",
+      "frame": 33,
+      "location": [
+        6,
+        7,
+        5
+      ],
+      "target": [
+        0,
+        -1.7,
+        -0.5
+      ],
+      "ortho_scale": 10.8,
+      "clay": true,
+      "scope": "Actual reimported physical GLB; no source-only exhaust volume."
+    }
+  ],
+  "status": "ACTUAL_GLB_VIEWS_REQUIRE_REVIEW"
+}

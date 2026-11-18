@@ -1,0 +1,84 @@
+{
+  "stage": "V14_ACTUAL_PIPETTE_TYPED_POWER_ROUTE_BUILD",
+  "module_hashes_before": {
+    "README.md": "f243e88a68fbdccdb70b828e72cae8109f401380d97e70d65bc02b35b30e850d",
+    "PIPETTE_STANDARD.md": "540a244a9192d2514c0c8ae97b657f0b896b8dddb170e5c51fb6d0f9554096be",
+    "core.py": "9a991dea7dd646faad8766326ef60e67c0618c283a81dbf297119ee6ec3761c7",
+    "blender_adapter.py": "724c1964fee8916b43dc86c0ff0185ec1646c1964662b2af1ea6ecbfbed68a1d",
+    "type_registry.json": "42e220db26a981956741a7ce268c8e74172382497cacf54a9a0b23691085e654",
+    "library_fittings.py": "3a6f75821350980c5080dc7c651cd4773f402424a8ac113c2d52943296804df7",
+    "library_geometry.py": "36daec4fcdbf5d333b04e26f5e592ca9ecece0f159b5e4ef86a110a102c5b48e",
+    "architecture_catalog.v1.json": "121cbadeb3f42912b25635a700a00a9bb22c5bd5a37050f4d6071225d978db98"
+  },
+  "module_hashes_after": {
+    "README.md": "f243e88a68fbdccdb70b828e72cae8109f401380d97e70d65bc02b35b30e850d",
+    "PIPETTE_STANDARD.md": "540a244a9192d2514c0c8ae97b657f0b896b8dddb170e5c51fb6d0f9554096be",
+    "core.py": "9a991dea7dd646faad8766326ef60e67c0618c283a81dbf297119ee6ec3761c7",
+    "blender_adapter.py": "724c1964fee8916b43dc86c0ff0185ec1646c1964662b2af1ea6ecbfbed68a1d",
+    "type_registry.json": "42e220db26a981956741a7ce268c8e74172382497cacf54a9a0b23691085e654",
+    "library_fittings.py": "3a6f75821350980c5080dc7c651cd4773f402424a8ac113c2d52943296804df7",
+    "library_geometry.py": "36daec4fcdbf5d333b04e26f5e592ca9ecece0f159b5e4ef86a110a102c5b48e",
+    "architecture_catalog.v1.json": "121cbadeb3f42912b25635a700a00a9bb22c5bd5a37050f4d6071225d978db98"
+  },
+  "shared_module_edited": false,
+  "route_count": 12,
+  "removed_manual_route_parts": [
+    "Retained shoe feed ceramic terminal",
+    "Shoe feed copper lug seat",
+    "Terminated contact insulated copper lead",
+    "Retained shoe feed ceramic terminal.001",
+    "Shoe feed copper lug seat.001",
+    "Terminated contact insulated copper lead.001",
+    "Retained shoe feed ceramic terminal.002",
+    "Shoe feed copper lug seat.002",
+    "Terminated contact insulated copper lead.002",
+    "Retained shoe feed ceramic terminal.003",
+    "Shoe feed copper lug seat.003",
+    "Terminated contact insulated copper lead.003",
+    "Retained shoe feed ceramic terminal.004",
+    "Shoe feed copper lug seat.004",
+    "Terminated contact insulated copper lead.004",
+    "Retained shoe feed ceramic terminal.005",
+    "Shoe feed copper lug seat.005",
+    "Terminated contact insulated copper lead.005",
+    "Continuous induction winding -1",
+    "Continuous induction winding -1.001",
+    "Sealed upper induction bus -1",
+    "Protected red induction return -1",
+    "Conductor ceramic retaining ferrule",
+    "Conductor ceramic retaining ferrule.001",
+    "Conductor ceramic retaining ferrule.002",
+    "Continuous induction winding 1",
+    "Continuous induction winding 1.001",
+    "Sealed upper induction bus 1",
+    "Protected red induction return 1",
+    "Conductor ceramic retaining ferrule.003",
+    "Conductor ceramic retaining ferrule.004",
+    "Conductor ceramic retaining ferrule.005"
+  ],
+  "script_sha256": "f5414c80d066a462361d3056ace3a58004cefea309cee140f591e5fdd0558be7",
+  "role_exclusions": [
+    "Rock green insets are field emission, not wires.",
+    "Take-up screw thread crests are fastener threads, not power coils."
+  ],
+  "pending": "Historical V14 creation text only. Current V18g measured closure is in power-bay-validation.json and functional-detail-validation.json; HANDOFF_COMPLETE.json binds final well.",
+  "build_source_sha256": "3f429b974163892f6a7d3dd0cb11effa0d87ab3a290f8bb7234fd2faacce1fd0",
+  "build_glb_sha256": "f4db5f136cb134aa1e240aea5bfac475ba014f7b3c1882afe0e51a8251589863",
+  "current_material_only_derivative": {
+    "source_sha256": "54ad01494fab44648c5d0b5e23f04db5d18819947f49266744dad0a031662c64",
+    "glb_sha256": "b185e0dfb2814fd43d93f04f5680f50f1812ea49b2c08c20d9bb48649061e0e0",
+    "route_geometry_uv_preserved": true,
+    "validation": "power-bay-validation.json"
+  },
+  "historical_creation_receipt": true,
+  "current_derivative": {
+    "source_sha256": "954c7ed2ef3f3d91e8f09c8427708cd5c42e784523ccbb832bf36a26f01b14bd",
+    "glb_sha256": "4d9ef76ab5452728437d399af5456fbaa2b3626381da548dfb06de1b47d713de",
+    "route_history": "V17 regenerated all12 tube bodies through actual Pipette with unchanged round diameters after axial station redistribution. Existing fittings remained rigid; V18 added actual Pipette cable guides.",
+    "technical_validation": [
+      "power-bay-validation.json",
+      "functional-detail-validation.json"
+    ],
+    "module_edits": false
+  }
+}

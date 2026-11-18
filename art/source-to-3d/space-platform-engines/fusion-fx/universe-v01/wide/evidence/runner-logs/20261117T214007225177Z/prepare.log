@@ -1,0 +1,965 @@
+12:40:09 | INFO: Data are loaded, start creating Blender stuff
+12:40:09 | INFO: Blender create Mesh node Armored shallow dish stage 0
+12:40:09 | INFO: Blender create Mesh node Armored shallow dish stage 1
+12:40:09 | INFO: Blender create Mesh node Armored shallow dish stage 2
+12:40:09 | INFO: Blender create Mesh node Armored shallow dish stage 3
+12:40:09 | INFO: Blender create Mesh node Band take-up shoulder screw
+12:40:09 | INFO: Blender create Mesh node Bay bearing receiving shoe 0
+12:40:09 | INFO: Blender create Mesh node Bay bearing receiving shoe 1
+12:40:09 | INFO: Blender create Mesh node Bay bearing receiving shoe 2
+12:40:09 | INFO: Blender create Mesh node Bay bearing receiving shoe 3
+12:40:09 | INFO: Blender create Mesh node Bay bearing receiving shoe 4
+12:40:09 | INFO: Blender create Mesh node Bay bearing receiving shoe 5
+12:40:09 | INFO: Blender create Mesh node Broad rolled top load crossmember
+12:40:09 | INFO: Blender create Mesh node Central emitter ceramic isolation
+12:40:09 | INFO: Blender create Mesh node Central green extraction aperture
+12:40:09 | INFO: Blender create Mesh node Ceramic rib isolator
+12:40:09 | INFO: Blender create Mesh node Ceramic rib isolator.001
+12:40:09 | INFO: Blender create Mesh node Ceramic rib isolator.002
+12:40:09 | INFO: Blender create Mesh node Ceramic rib isolator.003
+12:40:09 | INFO: Blender create Mesh node Ceramic rib isolator.004
+12:40:09 | INFO: Blender create Mesh node Ceramic rib isolator.005
+12:40:09 | INFO: Blender create Mesh node Ceramic rib isolator.006
+12:40:09 | INFO: Blender create Mesh node Ceramic rib isolator.007
+12:40:09 | INFO: Blender create Mesh node Clamp radial locking head
+12:40:09 | INFO: Blender create Mesh node Clamp radial locking head.001
+12:40:09 | INFO: Blender create Mesh node Clamp radial locking head.002
+12:40:09 | INFO: Blender create Mesh node Clamp radial locking head.003
+12:40:09 | INFO: Blender create Mesh node Clamp radial locking head.004
+12:40:09 | INFO: Blender create Mesh node Clamp radial locking head.005
+12:40:09 | INFO: Blender create Mesh node Clamp radial locking head.006
+12:40:09 | INFO: Blender create Mesh node Clamp radial locking head.007
+12:40:09 | INFO: Blender create Mesh node Clamp radial locking head.008
+12:40:09 | INFO: Blender create Mesh node Clamp radial locking head.009
+12:40:09 | INFO: Blender create Mesh node Clamp radial locking head.010
+12:40:09 | INFO: Blender create Mesh node Clamp radial locking head.011
+12:40:09 | INFO: Blender create Mesh node Clamp radial locking head.012
+12:40:09 | INFO: Blender create Mesh node Clamp radial locking head.013
+12:40:09 | INFO: Blender create Mesh node Clamp radial locking head.014
+12:40:09 | INFO: Blender create Mesh node Clamp radial locking head.015
+12:40:09 | INFO: Blender create Mesh node Clamp radial locking head.016
+12:40:09 | INFO: Blender create Mesh node Clamp radial locking head.017
+12:40:09 | INFO: Blender create Mesh node Clamp radial locking head.018
+12:40:09 | INFO: Blender create Mesh node Clamp radial locking head.019
+12:40:09 | INFO: Blender create Mesh node Clamp radial locking head.020
+12:40:09 | INFO: Blender create Mesh node Clamp radial locking head.021
+12:40:09 | INFO: Blender create Mesh node Clamp radial locking head.022
+12:40:09 | INFO: Blender create Mesh node Clamp radial locking head.023
+12:40:09 | INFO: Blender create Mesh node Clamp radial locking head.024
+12:40:09 | INFO: Blender create Mesh node Clamp radial locking head.025
+12:40:09 | INFO: Blender create Mesh node Clamp radial locking head.026
+12:40:09 | INFO: Blender create Mesh node Clamp radial locking head.027
+12:40:09 | INFO: Blender create Mesh node Clamp radial locking head.028
+12:40:09 | INFO: Blender create Mesh node Clamp radial locking head.029
+12:40:09 | INFO: Blender create Mesh node Clamp radial locking head.030
+12:40:09 | INFO: Blender create Mesh node Clamp radial locking head.031
+12:40:09 | INFO: Blender create Mesh node Clamp radial locking head.032
+12:40:09 | INFO: Blender create Mesh node Clamp radial locking head.033
+12:40:09 | INFO: Blender create Mesh node Clamp radial locking head.034
+12:40:09 | INFO: Blender create Mesh node Clamp radial locking head.035
+12:40:09 | INFO: Blender create Mesh node Clamp radial locking head.036
+12:40:09 | INFO: Blender create Mesh node Clamp radial locking head.037
+12:40:09 | INFO: Blender create Mesh node Clamp radial locking head.038
+12:40:09 | INFO: Blender create Mesh node Clamp radial locking head.039
+12:40:09 | INFO: Blender create Mesh node Clamp radial locking head.040
+12:40:09 | INFO: Blender create Mesh node Clamp radial locking head.041
+12:40:09 | INFO: Blender create Mesh node Clamp radial locking head.042
+12:40:09 | INFO: Blender create Mesh node Clamp radial locking head.043
+12:40:09 | INFO: Blender create Mesh node Clamp radial locking head.044
+12:40:09 | INFO: Blender create Mesh node Clamp radial locking head.045
+12:40:09 | INFO: Blender create Mesh node Clamp radial locking head.046
+12:40:09 | INFO: Blender create Mesh node Clamp radial locking head.047
+12:40:09 | INFO: Blender create Mesh node Cube.017
+12:40:09 | INFO: Blender create Mesh node Cube.018
+12:40:09 | INFO: Blender create Mesh node Cube.020
+12:40:09 | INFO: Blender create Mesh node Cube.021
+12:40:09 | INFO: Blender create Mesh node Cube.016
+12:40:09 | INFO: Blender create Mesh node Cube.019
+12:40:09 | INFO: Blender create Mesh node Core V18 bolted interbay access cover 0
+12:40:09 | INFO: Blender create Mesh node Core V18 bolted interbay access cover 1
+12:40:09 | INFO: Blender create Mesh node Core V18 cage joint 0 -1 -0.025 retained shaft
+12:40:09 | INFO: Blender create Mesh node Core V18 cage joint 0 -1 -0.025 seated bearing washer
+12:40:09 | INFO: Blender create Mesh node Core V18 cage joint 0 -1 -0.025 six-flat captive head
+12:40:09 | INFO: Blender create Mesh node Core V18 cage joint 0 -1 0.025 retained shaft
+12:40:09 | INFO: Blender create Mesh node Core V18 cage joint 0 -1 0.025 seated bearing washer
+12:40:09 | INFO: Blender create Mesh node Core V18 cage joint 0 -1 0.025 six-flat captive head
+12:40:09 | INFO: Blender create Mesh node Core V18 cage joint 0 1 -0.025 retained shaft
+12:40:09 | INFO: Blender create Mesh node Core V18 cage joint 0 1 -0.025 seated bearing washer
+12:40:09 | INFO: Blender create Mesh node Core V18 cage joint 0 1 -0.025 six-flat captive head
+12:40:09 | INFO: Blender create Mesh node Core V18 cage joint 0 1 0.025 retained shaft
+12:40:09 | INFO: Blender create Mesh node Core V18 cage joint 0 1 0.025 seated bearing washer
+12:40:09 | INFO: Blender create Mesh node Core V18 cage joint 0 1 0.025 six-flat captive head
+12:40:09 | INFO: Blender create Mesh node Core V18 cage joint 1 -1 -0.025 retained shaft
+12:40:09 | INFO: Blender create Mesh node Core V18 cage joint 1 -1 -0.025 seated bearing washer
+12:40:09 | INFO: Blender create Mesh node Core V18 cage joint 1 -1 -0.025 six-flat captive head
+12:40:09 | INFO: Blender create Mesh node Core V18 cage joint 1 -1 0.025 retained shaft
+12:40:09 | INFO: Blender create Mesh node Core V18 cage joint 1 -1 0.025 seated bearing washer
+12:40:09 | INFO: Blender create Mesh node Core V18 cage joint 1 -1 0.025 six-flat captive head
+12:40:09 | INFO: Blender create Mesh node Core V18 cage joint 1 1 -0.025 retained shaft
+12:40:09 | INFO: Blender create Mesh node Core V18 cage joint 1 1 -0.025 seated bearing washer
+12:40:09 | INFO: Blender create Mesh node Core V18 cage joint 1 1 -0.025 six-flat captive head
+12:40:09 | INFO: Blender create Mesh node Core V18 cage joint 1 1 0.025 retained shaft
+12:40:09 | INFO: Blender create Mesh node Core V18 cage joint 1 1 0.025 seated bearing washer
+12:40:09 | INFO: Blender create Mesh node Core V18 cage joint 1 1 0.025 six-flat captive head
+12:40:09 | INFO: Blender create Mesh node Core V18 cage-to-crosshead captive plate 0 -1
+12:40:09 | INFO: Blender create Mesh node Core V18 cage-to-crosshead captive plate 0 1
+12:40:09 | INFO: Blender create Mesh node Core V18 cage-to-crosshead captive plate 1 -1
+12:40:09 | INFO: Blender create Mesh node Core V18 cage-to-crosshead captive plate 1 1
+12:40:09 | INFO: Blender create Mesh node Core V18 fitted ceramic stone receiver 0 0 0
+12:40:09 | INFO: Blender create Mesh node Core V18 fitted ceramic stone receiver 0 0 1
+12:40:09 | INFO: Blender create Mesh node Core V18 fitted ceramic stone receiver 0 1 0
+12:40:09 | INFO: Blender create Mesh node Core V18 fitted ceramic stone receiver 0 1 1
+12:40:09 | INFO: Blender create Mesh node Core V18 fitted ceramic stone receiver 1 0 0
+12:40:09 | INFO: Blender create Mesh node Core V18 fitted ceramic stone receiver 1 0 1
+12:40:09 | INFO: Blender create Mesh node Core V18 fitted ceramic stone receiver 1 1 0
+12:40:09 | INFO: Blender create Mesh node Core V18 fitted ceramic stone receiver 1 1 1
+12:40:09 | INFO: Blender create Mesh node Core V18 interbay cover 0 -0.48 -0.045 retained shaft
+12:40:09 | INFO: Blender create Mesh node Core V18 interbay cover 0 -0.48 -0.045 seated bearing washer
+12:40:09 | INFO: Blender create Mesh node Core V18 interbay cover 0 -0.48 -0.045 six-flat captive head
+12:40:09 | INFO: Blender create Mesh node Core V18 interbay cover 0 -0.48 0.045 retained shaft
+12:40:09 | INFO: Blender create Mesh node Core V18 interbay cover 0 -0.48 0.045 seated bearing washer
+12:40:09 | INFO: Blender create Mesh node Core V18 interbay cover 0 -0.48 0.045 six-flat captive head
+12:40:09 | INFO: Blender create Mesh node Core V18 interbay cover 0 0.48 -0.045 retained shaft
+12:40:09 | INFO: Blender create Mesh node Core V18 interbay cover 0 0.48 -0.045 seated bearing washer
+12:40:09 | INFO: Blender create Mesh node Core V18 interbay cover 0 0.48 -0.045 six-flat captive head
+12:40:09 | INFO: Blender create Mesh node Core V18 interbay cover 0 0.48 0.045 retained shaft
+12:40:09 | INFO: Blender create Mesh node Core V18 interbay cover 0 0.48 0.045 seated bearing washer
+12:40:09 | INFO: Blender create Mesh node Core V18 interbay cover 0 0.48 0.045 six-flat captive head
+12:40:09 | INFO: Blender create Mesh node Core V18 interbay cover 1 -0.48 -0.045 retained shaft
+12:40:09 | INFO: Blender create Mesh node Core V18 interbay cover 1 -0.48 -0.045 seated bearing washer
+12:40:09 | INFO: Blender create Mesh node Core V18 interbay cover 1 -0.48 -0.045 six-flat captive head
+12:40:09 | INFO: Blender create Mesh node Core V18 interbay cover 1 -0.48 0.045 retained shaft
+12:40:09 | INFO: Blender create Mesh node Core V18 interbay cover 1 -0.48 0.045 seated bearing washer
+12:40:09 | INFO: Blender create Mesh node Core V18 interbay cover 1 -0.48 0.045 six-flat captive head
+12:40:09 | INFO: Blender create Mesh node Core V18 interbay cover 1 0.48 -0.045 retained shaft
+12:40:09 | INFO: Blender create Mesh node Core V18 interbay cover 1 0.48 -0.045 seated bearing washer
+12:40:09 | INFO: Blender create Mesh node Core V18 interbay cover 1 0.48 -0.045 six-flat captive head
+12:40:09 | INFO: Blender create Mesh node Core V18 interbay cover 1 0.48 0.045 retained shaft
+12:40:09 | INFO: Blender create Mesh node Core V18 interbay cover 1 0.48 0.045 seated bearing washer
+12:40:09 | INFO: Blender create Mesh node Core V18 interbay cover 1 0.48 0.045 six-flat captive head
+12:40:09 | INFO: Blender create Mesh node Core V18 retained deep backing pan
+12:40:09 | INFO: Blender create Mesh node Core V18 shaped inter-stone machine crosshead 0
+12:40:09 | INFO: Blender create Mesh node Core V18 shaped inter-stone machine crosshead 1
+12:40:09 | INFO: Blender create Mesh node Dish armor band locking head
+12:40:09 | INFO: Blender create Mesh node Dish armor band locking head.001
+12:40:09 | INFO: Blender create Mesh node Dish armor band locking head.002
+12:40:09 | INFO: Blender create Mesh node Dish armor band locking head.003
+12:40:09 | INFO: Blender create Mesh node Dish armor band locking head.004
+12:40:09 | INFO: Blender create Mesh node Dish armor band locking head.005
+12:40:09 | INFO: Blender create Mesh node Dish armor band locking head.006
+12:40:09 | INFO: Blender create Mesh node Dish armor band locking head.007
+12:40:09 | INFO: Blender create Mesh node Dish armor band locking head.008
+12:40:09 | INFO: Blender create Mesh node Dish armor band locking head.009
+12:40:09 | INFO: Blender create Mesh node Dish armor band locking head.010
+12:40:09 | INFO: Blender create Mesh node Dish armor band locking head.011
+12:40:09 | INFO: Blender create Mesh node Dish armor band locking head.012
+12:40:09 | INFO: Blender create Mesh node Dish armor band locking head.013
+12:40:09 | INFO: Blender create Mesh node Dish armor band locking head.014
+12:40:09 | INFO: Blender create Mesh node Dish armor band locking head.015
+12:40:09 | INFO: Blender create Mesh node Dish armor band locking head.016
+12:40:09 | INFO: Blender create Mesh node Dish armor band locking head.017
+12:40:09 | INFO: Blender create Mesh node Dish armor band locking head.018
+12:40:09 | INFO: Blender create Mesh node Dish armor band locking head.019
+12:40:09 | INFO: Blender create Mesh node Dish armor band locking head.020
+12:40:09 | INFO: Blender create Mesh node Dish armor band locking head.021
+12:40:09 | INFO: Blender create Mesh node Dish armor band locking head.022
+12:40:09 | INFO: Blender create Mesh node Dish armor band locking head.023
+12:40:09 | INFO: Blender create Mesh node Dish armor band locking head.024
+12:40:09 | INFO: Blender create Mesh node Dish armor band locking head.025
+12:40:09 | INFO: Blender create Mesh node Dish armor band locking head.026
+12:40:09 | INFO: Blender create Mesh node Dish armor band locking head.027
+12:40:09 | INFO: Blender create Mesh node Dish armor band locking head.028
+12:40:09 | INFO: Blender create Mesh node Dish armor band locking head.029
+12:40:09 | INFO: Blender create Mesh node Dish armor band locking head.030
+12:40:09 | INFO: Blender create Mesh node Dish armor band locking head.031
+12:40:09 | INFO: Blender create Mesh node Dish armor band locking head.032
+12:40:09 | INFO: Blender create Mesh node Dish armor band locking head.033
+12:40:09 | INFO: Blender create Mesh node Dish armor band locking head.034
+12:40:09 | INFO: Blender create Mesh node Dish armor band locking head.035
+12:40:09 | INFO: Blender create Mesh node Dish armor band locking head.036
+12:40:09 | INFO: Blender create Mesh node Dish armor band locking head.037
+12:40:09 | INFO: Blender create Mesh node Dish armor band locking head.038
+12:40:09 | INFO: Blender create Mesh node Dish armor band locking head.039
+12:40:09 | INFO: Blender create Mesh node Dish armor band locking head.040
+12:40:09 | INFO: Blender create Mesh node Dish armor band locking head.041
+12:40:09 | INFO: Blender create Mesh node Dish armor band locking head.042
+12:40:09 | INFO: Blender create Mesh node Dish armor band locking head.043
+12:40:09 | INFO: Blender create Mesh node Dish armor band locking head.044
+12:40:09 | INFO: Blender create Mesh node Dish armor band locking head.045
+12:40:09 | INFO: Blender create Mesh node Dish armor band locking head.046
+12:40:09 | INFO: Blender create Mesh node Dish armor band locking head.047
+12:40:09 | INFO: Blender create Mesh node Dish rim axial retainer
+12:40:09 | INFO: Blender create Mesh node Dish rim axial retainer.001
+12:40:09 | INFO: Blender create Mesh node Dish rim axial retainer.002
+12:40:09 | INFO: Blender create Mesh node Dish rim axial retainer.003
+12:40:09 | INFO: Blender create Mesh node Dish rim axial retainer.004
+12:40:09 | INFO: Blender create Mesh node Dish rim axial retainer.005
+12:40:09 | INFO: Blender create Mesh node Dish rim axial retainer.006
+12:40:09 | INFO: Blender create Mesh node Dish rim axial retainer.007
+12:40:09 | INFO: Blender create Mesh node Dish rim axial retainer.008
+12:40:09 | INFO: Blender create Mesh node Dish rim axial retainer.009
+12:40:09 | INFO: Blender create Mesh node Dish rim axial retainer.010
+12:40:09 | INFO: Blender create Mesh node Dish rim axial retainer.011
+12:40:09 | INFO: Blender create Mesh node Dish rim axial retainer.012
+12:40:09 | INFO: Blender create Mesh node Dish rim axial retainer.013
+12:40:09 | INFO: Blender create Mesh node Dish rim axial retainer.014
+12:40:09 | INFO: Blender create Mesh node Dish rim axial retainer.015
+12:40:09 | INFO: Blender create Mesh node Dish rim axial retainer.016
+12:40:09 | INFO: Blender create Mesh node Dish rim axial retainer.017
+12:40:09 | INFO: Blender create Mesh node Dish rim axial retainer.018
+12:40:09 | INFO: Blender create Mesh node Dish rim axial retainer.019
+12:40:09 | INFO: Blender create Mesh node Dish rim axial retainer.020
+12:40:09 | INFO: Blender create Mesh node Dish rim axial retainer.021
+12:40:09 | INFO: Blender create Mesh node Dish rim axial retainer.022
+12:40:09 | INFO: Blender create Mesh node Dish rim axial retainer.023
+12:40:09 | INFO: Blender create Mesh node Dish rim axial retainer.024
+12:40:09 | INFO: Blender create Mesh node Dish rim axial retainer.025
+12:40:09 | INFO: Blender create Mesh node Dish rim axial retainer.026
+12:40:09 | INFO: Blender create Mesh node Dish rim axial retainer.027
+12:40:09 | INFO: Blender create Mesh node Dish rim axial retainer.028
+12:40:09 | INFO: Blender create Mesh node Dish rim axial retainer.029
+12:40:09 | INFO: Blender create Mesh node Dish rim axial retainer.030
+12:40:09 | INFO: Blender create Mesh node Dish rim axial retainer.031
+12:40:09 | INFO: Blender create Mesh node Dish rim axial retainer.032
+12:40:09 | INFO: Blender create Mesh node Dish rim axial retainer.033
+12:40:09 | INFO: Blender create Mesh node Dish rim axial retainer.034
+12:40:09 | INFO: Blender create Mesh node Dish rim axial retainer.035
+12:40:09 | INFO: Blender create Mesh node Dish rim axial retainer.036
+12:40:09 | INFO: Blender create Mesh node Dish rim axial retainer.037
+12:40:09 | INFO: Blender create Mesh node Dish rim axial retainer.038
+12:40:09 | INFO: Blender create Mesh node Dish rim axial retainer.039
+12:40:09 | INFO: Blender create Mesh node Dish rim axial retainer.040
+12:40:09 | INFO: Blender create Mesh node Dish rim axial retainer.041
+12:40:09 | INFO: Blender create Mesh node Dish rim axial retainer.042
+12:40:09 | INFO: Blender create Mesh node Dish rim axial retainer.043
+12:40:09 | INFO: Blender create Mesh node Dish rim axial retainer.044
+12:40:09 | INFO: Blender create Mesh node Dish rim axial retainer.045
+12:40:09 | INFO: Blender create Mesh node Dish rim axial retainer.046
+12:40:09 | INFO: Blender create Mesh node Dish rim axial retainer.047
+12:40:09 | INFO: Blender create Mesh node Dish tier bolted rim band 0
+12:40:09 | INFO: Blender create Mesh node Dish tier bolted rim band 1
+12:40:09 | INFO: Blender create Mesh node Dish tier bolted rim band 2
+12:40:09 | INFO: Blender create Mesh node Dish tier bolted rim band 3
+12:40:09 | INFO: Blender create Mesh node Embossed contained-field medallion
+12:40:09 | INFO: Blender create Mesh node Embossed contained-field medallion.001
+12:40:09 | INFO: Blender create Mesh node Emitter axial anode shaft
+12:40:09 | INFO: Blender create Mesh node Cube.022
+12:40:09 | INFO: Blender create Mesh node Cube.023
+12:40:09 | INFO: Blender create Mesh node Cube.024
+12:40:09 | INFO: Blender create Mesh node Cube.025
+12:40:09 | INFO: Blender create Mesh node Cube.026
+12:40:09 | INFO: Blender create Mesh node Cube.027
+12:40:09 | INFO: Blender create Mesh node Fitted mineral contact shoe 0 -1
+12:40:09 | INFO: Blender create Mesh node Fitted mineral contact shoe 0 1
+12:40:09 | INFO: Blender create Mesh node Fitted mineral contact shoe 1 -1
+12:40:09 | INFO: Blender create Mesh node Fitted mineral contact shoe 1 1
+12:40:09 | INFO: Blender create Mesh node Fitted mineral contact shoe 2 -1
+12:40:09 | INFO: Blender create Mesh node Fitted mineral contact shoe 2 1
+12:40:09 | INFO: Blender create Mesh node Fitted mitred termination Broad rolled top load crossmember-1
+12:40:09 | INFO: Blender create Mesh node Fitted mitred termination Broad rolled top load crossmember1
+12:40:09 | INFO: Blender create Mesh node Fitted mitred termination Open cage formed retaining channel-1
+12:40:09 | INFO: Blender create Mesh node Fitted mitred termination Open cage formed retaining channel.001-1
+12:40:09 | INFO: Blender create Mesh node Fitted mitred termination Open cage formed retaining channel.0011
+12:40:09 | INFO: Blender create Mesh node Fitted mitred termination Open cage formed retaining channel.002-1
+12:40:09 | INFO: Blender create Mesh node Fitted mitred termination Open cage formed retaining channel.0021
+12:40:09 | INFO: Blender create Mesh node Fitted mitred termination Open cage formed retaining channel.003-1
+12:40:09 | INFO: Blender create Mesh node Fitted mitred termination Open cage formed retaining channel.0031
+12:40:09 | INFO: Blender create Mesh node Fitted mitred termination Open cage formed retaining channel.004-1
+12:40:09 | INFO: Blender create Mesh node Fitted mitred termination Open cage formed retaining channel.0041
+12:40:09 | INFO: Blender create Mesh node Fitted mitred termination Open cage formed retaining channel.005-1
+12:40:09 | INFO: Blender create Mesh node Fitted mitred termination Open cage formed retaining channel.0051
+12:40:09 | INFO: Blender create Mesh node Fitted mitred termination Open cage formed retaining channel1
+12:40:09 | INFO: Blender create Mesh node Flared rib root retaining head
+12:40:09 | INFO: Blender create Mesh node Flared rib root retaining head.001
+12:40:09 | INFO: Blender create Mesh node Flared rib root retaining head.002
+12:40:09 | INFO: Blender create Mesh node Flared rib root retaining head.003
+12:40:09 | INFO: Blender create Mesh node Flared rib root retaining head.004
+12:40:09 | INFO: Blender create Mesh node Flared rib root retaining head.005
+12:40:09 | INFO: Blender create Mesh node Flared rib root retaining head.006
+12:40:09 | INFO: Blender create Mesh node Flared rib root retaining head.007
+12:40:09 | INFO: Blender create Mesh node Flared rib root retaining head.008
+12:40:09 | INFO: Blender create Mesh node Flared rib root retaining head.009
+12:40:09 | INFO: Blender create Mesh node Flared rib root retaining head.010
+12:40:09 | INFO: Blender create Mesh node Flared rib root retaining head.011
+12:40:09 | INFO: Blender create Mesh node Flared rib root retaining head.012
+12:40:09 | INFO: Blender create Mesh node Flared rib root retaining head.013
+12:40:09 | INFO: Blender create Mesh node Flared rib root retaining head.014
+12:40:09 | INFO: Blender create Mesh node Flared rib root retaining head.015
+12:40:09 | INFO: Blender create Mesh node FMPL | PIPETTE | wide-internal-main-power--1 | continuous visible route | mesh.001
+12:40:09 | INFO: Blender create Mesh node FMPL | PIPETTE | wide-internal-main-power-1 | continuous visible route | mesh.001
+12:40:09 | INFO: Blender create Mesh node FMPL | PIPETTE | wide-shoe-power--1-0 | continuous visible route | mesh.001
+12:40:09 | INFO: Blender create Mesh node FMPL | PIPETTE | wide-shoe-power--1-1 | continuous visible route | mesh.001
+12:40:09 | INFO: Blender create Mesh node FMPL | PIPETTE | wide-shoe-power--1-2 | continuous visible route | mesh.001
+12:40:09 | INFO: Blender create Mesh node FMPL | PIPETTE | wide-shoe-power-1-0 | continuous visible route | mesh.001
+12:40:09 | INFO: Blender create Mesh node FMPL | PIPETTE | wide-shoe-power-1-1 | continuous visible route | mesh.001
+12:40:09 | INFO: Blender create Mesh node FMPL | PIPETTE | wide-shoe-power-1-2 | continuous visible route | mesh.001
+12:40:09 | INFO: Blender create Mesh node FMPL | PIPETTE | wide-winding--1-0 | continuous visible route | mesh.001
+12:40:09 | INFO: Blender create Mesh node FMPL | PIPETTE | wide-winding--1-1 | continuous visible route | mesh.001
+12:40:09 | INFO: Blender create Mesh node FMPL | PIPETTE | wide-winding-1-0 | continuous visible route | mesh.001
+12:40:09 | INFO: Blender create Mesh node FMPL | PIPETTE | wide-winding-1-1 | continuous visible route | mesh.001
+12:40:09 | INFO: Blender create Mesh node Forged take-up receiving eye -1
+12:40:09 | INFO: Blender create Mesh node Forged take-up receiving eye 1
+12:40:09 | INFO: Blender create Mesh node Authored fracture mineral
+12:40:09 | INFO: Blender create Mesh node Authored fracture mineral.001
+12:40:09 | INFO: Blender create Mesh node Authored fracture mineral.002
+12:40:09 | INFO: Blender create Mesh node Guard root bearing washer
+12:40:09 | INFO: Blender create Mesh node Guard root bearing washer.001
+12:40:09 | INFO: Blender create Mesh node Guard root bearing washer.002
+12:40:09 | INFO: Blender create Mesh node Guard root bearing washer.003
+12:40:09 | INFO: Blender create Mesh node Guard root seated locking head
+12:40:09 | INFO: Blender create Mesh node Guard root seated locking head.001
+12:40:09 | INFO: Blender create Mesh node Guard root seated locking head.002
+12:40:09 | INFO: Blender create Mesh node Guard root seated locking head.003
+12:40:09 | INFO: Blender create Mesh node Guide V18 actual Pipette wide-internal-main-power--1 0
+12:40:09 | INFO: Blender create Mesh node Guide V18 actual Pipette wide-internal-main-power--1 1
+12:40:09 | INFO: Blender create Mesh node Guide V18 actual Pipette wide-internal-main-power--1 2
+12:40:09 | INFO: Blender create Mesh node Guide V18 actual Pipette wide-internal-main-power-1 0
+12:40:09 | INFO: Blender create Mesh node Guide V18 actual Pipette wide-internal-main-power-1 1
+12:40:09 | INFO: Blender create Mesh node Guide V18 actual Pipette wide-internal-main-power-1 2
+12:40:09 | INFO: Blender create Mesh node Guide V18 actual Pipette wide-shoe-power--1-0 0
+12:40:09 | INFO: Blender create Mesh node Guide V18 actual Pipette wide-shoe-power--1-0 1
+12:40:09 | INFO: Blender create Mesh node Guide V18 actual Pipette wide-shoe-power--1-0 2
+12:40:09 | INFO: Blender create Mesh node Guide V18 actual Pipette wide-shoe-power--1-1 0
+12:40:09 | INFO: Blender create Mesh node Guide V18 actual Pipette wide-shoe-power--1-1 1
+12:40:09 | INFO: Blender create Mesh node Guide V18 actual Pipette wide-shoe-power--1-1 2
+12:40:09 | INFO: Blender create Mesh node Guide V18 actual Pipette wide-shoe-power--1-2 0
+12:40:09 | INFO: Blender create Mesh node Guide V18 actual Pipette wide-shoe-power--1-2 1
+12:40:09 | INFO: Blender create Mesh node Guide V18 actual Pipette wide-shoe-power--1-2 2
+12:40:09 | INFO: Blender create Mesh node Guide V18 actual Pipette wide-shoe-power-1-0 0
+12:40:09 | INFO: Blender create Mesh node Guide V18 actual Pipette wide-shoe-power-1-0 1
+12:40:09 | INFO: Blender create Mesh node Guide V18 actual Pipette wide-shoe-power-1-0 2
+12:40:09 | INFO: Blender create Mesh node Guide V18 actual Pipette wide-shoe-power-1-1 0
+12:40:09 | INFO: Blender create Mesh node Guide V18 actual Pipette wide-shoe-power-1-1 1
+12:40:09 | INFO: Blender create Mesh node Guide V18 actual Pipette wide-shoe-power-1-1 2
+12:40:09 | INFO: Blender create Mesh node Guide V18 mounting fastener wide-internal-main-power--1 -0.023 retained shaft
+12:40:09 | INFO: Blender create Mesh node Guide V18 mounting fastener wide-internal-main-power--1 -0.023 seated bearing washer
+12:40:09 | INFO: Blender create Mesh node Guide V18 mounting fastener wide-internal-main-power--1 -0.023 six-flat captive head
+12:40:09 | INFO: Blender create Mesh node Guide V18 mounting fastener wide-internal-main-power--1 0.023 retained shaft
+12:40:09 | INFO: Blender create Mesh node Guide V18 mounting fastener wide-internal-main-power--1 0.023 seated bearing washer
+12:40:09 | INFO: Blender create Mesh node Guide V18 mounting fastener wide-internal-main-power--1 0.023 six-flat captive head
+12:40:09 | INFO: Blender create Mesh node Guide V18 mounting fastener wide-internal-main-power-1 -0.023 retained shaft
+12:40:09 | INFO: Blender create Mesh node Guide V18 mounting fastener wide-internal-main-power-1 -0.023 seated bearing washer
+12:40:09 | INFO: Blender create Mesh node Guide V18 mounting fastener wide-internal-main-power-1 -0.023 six-flat captive head
+12:40:09 | INFO: Blender create Mesh node Guide V18 mounting fastener wide-internal-main-power-1 0.023 retained shaft
+12:40:09 | INFO: Blender create Mesh node Guide V18 mounting fastener wide-internal-main-power-1 0.023 seated bearing washer
+12:40:09 | INFO: Blender create Mesh node Guide V18 mounting fastener wide-internal-main-power-1 0.023 six-flat captive head
+12:40:09 | INFO: Blender create Mesh node Guide V18 mounting fastener wide-shoe-power--1-0 -0.023 retained shaft
+12:40:09 | INFO: Blender create Mesh node Guide V18 mounting fastener wide-shoe-power--1-0 -0.023 seated bearing washer
+12:40:09 | INFO: Blender create Mesh node Guide V18 mounting fastener wide-shoe-power--1-0 -0.023 six-flat captive head
+12:40:09 | INFO: Blender create Mesh node Guide V18 mounting fastener wide-shoe-power--1-0 0.023 retained shaft
+12:40:09 | INFO: Blender create Mesh node Guide V18 mounting fastener wide-shoe-power--1-0 0.023 seated bearing washer
+12:40:09 | INFO: Blender create Mesh node Guide V18 mounting fastener wide-shoe-power--1-0 0.023 six-flat captive head
+12:40:09 | INFO: Blender create Mesh node Guide V18 mounting fastener wide-shoe-power--1-1 -0.023 retained shaft
+12:40:09 | INFO: Blender create Mesh node Guide V18 mounting fastener wide-shoe-power--1-1 -0.023 seated bearing washer
+12:40:09 | INFO: Blender create Mesh node Guide V18 mounting fastener wide-shoe-power--1-1 -0.023 six-flat captive head
+12:40:09 | INFO: Blender create Mesh node Guide V18 mounting fastener wide-shoe-power--1-1 0.023 retained shaft
+12:40:09 | INFO: Blender create Mesh node Guide V18 mounting fastener wide-shoe-power--1-1 0.023 seated bearing washer
+12:40:09 | INFO: Blender create Mesh node Guide V18 mounting fastener wide-shoe-power--1-1 0.023 six-flat captive head
+12:40:09 | INFO: Blender create Mesh node Guide V18 mounting fastener wide-shoe-power--1-2 -0.023 retained shaft
+12:40:09 | INFO: Blender create Mesh node Guide V18 mounting fastener wide-shoe-power--1-2 -0.023 seated bearing washer
+12:40:09 | INFO: Blender create Mesh node Guide V18 mounting fastener wide-shoe-power--1-2 -0.023 six-flat captive head
+12:40:09 | INFO: Blender create Mesh node Guide V18 mounting fastener wide-shoe-power--1-2 0.023 retained shaft
+12:40:09 | INFO: Blender create Mesh node Guide V18 mounting fastener wide-shoe-power--1-2 0.023 seated bearing washer
+12:40:09 | INFO: Blender create Mesh node Guide V18 mounting fastener wide-shoe-power--1-2 0.023 six-flat captive head
+12:40:09 | INFO: Blender create Mesh node Guide V18 mounting fastener wide-shoe-power-1-0 -0.023 retained shaft
+12:40:09 | INFO: Blender create Mesh node Guide V18 mounting fastener wide-shoe-power-1-0 -0.023 seated bearing washer
+12:40:09 | INFO: Blender create Mesh node Guide V18 mounting fastener wide-shoe-power-1-0 -0.023 six-flat captive head
+12:40:09 | INFO: Blender create Mesh node Guide V18 mounting fastener wide-shoe-power-1-0 0.023 retained shaft
+12:40:09 | INFO: Blender create Mesh node Guide V18 mounting fastener wide-shoe-power-1-0 0.023 seated bearing washer
+12:40:09 | INFO: Blender create Mesh node Guide V18 mounting fastener wide-shoe-power-1-0 0.023 six-flat captive head
+12:40:09 | INFO: Blender create Mesh node Guide V18 mounting fastener wide-shoe-power-1-1 -0.023 retained shaft
+12:40:09 | INFO: Blender create Mesh node Guide V18 mounting fastener wide-shoe-power-1-1 -0.023 seated bearing washer
+12:40:09 | INFO: Blender create Mesh node Guide V18 mounting fastener wide-shoe-power-1-1 -0.023 six-flat captive head
+12:40:09 | INFO: Blender create Mesh node Guide V18 mounting fastener wide-shoe-power-1-1 0.023 retained shaft
+12:40:09 | INFO: Blender create Mesh node Guide V18 mounting fastener wide-shoe-power-1-1 0.023 seated bearing washer
+12:40:09 | INFO: Blender create Mesh node Guide V18 mounting fastener wide-shoe-power-1-1 0.023 six-flat captive head
+12:40:09 | INFO: Blender create Mesh node Guide V18 surface-seated foot wide-internal-main-power--1
+12:40:09 | INFO: Blender create Mesh node Guide V18 surface-seated foot wide-internal-main-power-1
+12:40:09 | INFO: Blender create Mesh node Guide V18 surface-seated foot wide-shoe-power--1-0
+12:40:09 | INFO: Blender create Mesh node Guide V18 surface-seated foot wide-shoe-power--1-1
+12:40:09 | INFO: Blender create Mesh node Guide V18 surface-seated foot wide-shoe-power--1-2
+12:40:09 | INFO: Blender create Mesh node Guide V18 surface-seated foot wide-shoe-power-1-0
+12:40:09 | INFO: Blender create Mesh node Guide V18 surface-seated foot wide-shoe-power-1-1
+12:40:09 | INFO: Blender create Mesh node Guide V18 tapered retained cantilever wide-internal-main-power--1.001
+12:40:09 | INFO: Blender create Mesh node Guide V18 tapered retained cantilever wide-internal-main-power-1.001
+12:40:09 | INFO: Blender create Mesh node Guide V18 tapered retained cantilever wide-shoe-power--1-0.001
+12:40:09 | INFO: Blender create Mesh node Guide V18 tapered retained cantilever wide-shoe-power--1-1.001
+12:40:09 | INFO: Blender create Mesh node Guide V18 tapered retained cantilever wide-shoe-power--1-2.001
+12:40:09 | INFO: Blender create Mesh node Guide V18 tapered retained cantilever wide-shoe-power-1-0.001
+12:40:09 | INFO: Blender create Mesh node Guide V18 tapered retained cantilever wide-shoe-power-1-1.001
+12:40:09 | INFO: Blender create Mesh node Induction tower iron core -1
+12:40:09 | INFO: Blender create Mesh node Induction tower iron core 1
+12:40:09 | INFO: Blender create Mesh node Installation bay foundation landing 0
+12:40:09 | INFO: Blender create Mesh node Installation bay foundation landing 1
+12:40:09 | INFO: Blender create Mesh node Installation bay foundation landing 2
+12:40:09 | INFO: Blender create Mesh node Installation bay foundation landing 3
+12:40:09 | INFO: Blender create Mesh node Installation bay foundation landing 4
+12:40:09 | INFO: Blender create Mesh node Installation bay foundation landing 5
+12:40:09 | INFO: Blender create Mesh node Insulator retained metal end ferrule
+12:40:09 | INFO: Blender create Mesh node Insulator retained metal end ferrule.001
+12:40:09 | INFO: Blender create Mesh node Insulator retained metal end ferrule.002
+12:40:09 | INFO: Blender create Mesh node Insulator retained metal end ferrule.003
+12:40:09 | INFO: Blender create Mesh node Insulator retained metal end ferrule.004
+12:40:09 | INFO: Blender create Mesh node Insulator retained metal end ferrule.005
+12:40:09 | INFO: Blender create Mesh node Insulator retained metal end ferrule.006
+12:40:09 | INFO: Blender create Mesh node Insulator retained metal end ferrule.007
+12:40:09 | INFO: Blender create Mesh node Insulator retained metal end ferrule.008
+12:40:09 | INFO: Blender create Mesh node Insulator retained metal end ferrule.009
+12:40:09 | INFO: Blender create Mesh node Insulator retained metal end ferrule.010
+12:40:09 | INFO: Blender create Mesh node Insulator retained metal end ferrule.011
+12:40:09 | INFO: Blender create Mesh node Insulator retained metal end ferrule.012
+12:40:09 | INFO: Blender create Mesh node Insulator retained metal end ferrule.013
+12:40:09 | INFO: Blender create Mesh node Insulator retained metal end ferrule.014
+12:40:09 | INFO: Blender create Mesh node Insulator retained metal end ferrule.015
+12:40:09 | INFO: Blender create Mesh node Insulator retained metal end ferrule.016
+12:40:09 | INFO: Blender create Mesh node Insulator retained metal end ferrule.017
+12:40:09 | INFO: Blender create Mesh node Insulator retained metal end ferrule.018
+12:40:09 | INFO: Blender create Mesh node Insulator retained metal end ferrule.019
+12:40:09 | INFO: Blender create Mesh node Insulator retained metal end ferrule.020
+12:40:09 | INFO: Blender create Mesh node Insulator retained metal end ferrule.021
+12:40:09 | INFO: Blender create Mesh node Insulator retained metal end ferrule.022
+12:40:09 | INFO: Blender create Mesh node Insulator retained metal end ferrule.023
+12:40:09 | INFO: Blender create Mesh node Insulator retained metal end ferrule.024
+12:40:09 | INFO: Blender create Mesh node Insulator retained metal end ferrule.025
+12:40:09 | INFO: Blender create Mesh node Insulator retained metal end ferrule.026
+12:40:09 | INFO: Blender create Mesh node Insulator retained metal end ferrule.027
+12:40:09 | INFO: Blender create Mesh node Insulator retained metal end ferrule.028
+12:40:09 | INFO: Blender create Mesh node Insulator retained metal end ferrule.029
+12:40:09 | INFO: Blender create Mesh node Insulator retained metal end ferrule.030
+12:40:09 | INFO: Blender create Mesh node Insulator retained metal end ferrule.031
+12:40:09 | INFO: Blender create Mesh node Insulator retained metal end ferrule.032
+12:40:09 | INFO: Blender create Mesh node Insulator retained metal end ferrule.033
+12:40:09 | INFO: Blender create Mesh node Insulator retained metal end ferrule.034
+12:40:09 | INFO: Blender create Mesh node Insulator retained metal end ferrule.035
+12:40:09 | INFO: Blender create Mesh node Low curved cast seat Low surrounding-platform diagonal 0.001
+12:40:09 | INFO: Blender create Mesh node Low curved cast seat Low surrounding-platform diagonal 1.001
+12:40:09 | INFO: Blender create Mesh node Low curved cast seat Low surrounding-platform diagonal 2.001
+12:40:09 | INFO: Blender create Mesh node Low curved cast seat Low surrounding-platform diagonal 3.001
+12:40:09 | INFO: Blender create Mesh node Low curved cast seat Low surrounding-platform diagonal 4.001
+12:40:09 | INFO: Blender create Mesh node Low curved cast seat Low surrounding-platform diagonal 5.001
+12:40:09 | INFO: Blender create Mesh node Low surrounding-platform diagonal 0.001
+12:40:09 | INFO: Blender create Mesh node Low surrounding-platform diagonal 1.001
+12:40:09 | INFO: Blender create Mesh node Low surrounding-platform diagonal 2.001
+12:40:09 | INFO: Blender create Mesh node Low surrounding-platform diagonal 3.001
+12:40:09 | INFO: Blender create Mesh node Low surrounding-platform diagonal 4.001
+12:40:09 | INFO: Blender create Mesh node Low surrounding-platform diagonal 5.001
+12:40:09 | INFO: Blender create Mesh node Mechanical Noctilith retaining hoop
+12:40:09 | INFO: Blender create Mesh node Mechanical Noctilith retaining hoop.002
+12:40:09 | INFO: Blender create Mesh node Mechanical Noctilith retaining hoop.003
+12:40:09 | INFO: Blender create Mesh node Medallion raised rim
+12:40:09 | INFO: Blender create Mesh node Medallion raised rim.001
+12:40:09 | INFO: Blender create Mesh node Mount V18 captive cast-root retaining plate 4
+12:40:09 | INFO: Blender create Mesh node Mount V18 captive cast-root retaining plate 5
+12:40:09 | INFO: Blender create Mesh node Mount V18 retained root 4 -0.022 retained shaft
+12:40:09 | INFO: Blender create Mesh node Mount V18 retained root 4 -0.022 seated bearing washer
+12:40:09 | INFO: Blender create Mesh node Mount V18 retained root 4 -0.022 six-flat captive head
+12:40:09 | INFO: Blender create Mesh node Mount V18 retained root 4 0.022 retained shaft
+12:40:09 | INFO: Blender create Mesh node Mount V18 retained root 4 0.022 seated bearing washer
+12:40:09 | INFO: Blender create Mesh node Mount V18 retained root 4 0.022 six-flat captive head
+12:40:09 | INFO: Blender create Mesh node Mount V18 retained root 5 -0.022 retained shaft
+12:40:09 | INFO: Blender create Mesh node Mount V18 retained root 5 -0.022 seated bearing washer
+12:40:09 | INFO: Blender create Mesh node Mount V18 retained root 5 -0.022 six-flat captive head
+12:40:09 | INFO: Blender create Mesh node Mount V18 retained root 5 0.022 retained shaft
+12:40:09 | INFO: Blender create Mesh node Mount V18 retained root 5 0.022 seated bearing washer
+12:40:09 | INFO: Blender create Mesh node Mount V18 retained root 5 0.022 six-flat captive head
+12:40:09 | INFO: Blender create Mesh node Open cage formed retaining channel
+12:40:09 | INFO: Blender create Mesh node Open cage formed retaining channel.001
+12:40:09 | INFO: Blender create Mesh node Open cage formed retaining channel.002
+12:40:09 | INFO: Blender create Mesh node Open cage formed retaining channel.003
+12:40:09 | INFO: Blender create Mesh node Open cage formed retaining channel.004
+12:40:09 | INFO: Blender create Mesh node Open cage formed retaining channel.005
+12:40:09 | INFO: Blender create Mesh node Pilot hinged retaining strap lower
+12:40:09 | INFO: Blender create Mesh node Pilot hinged retaining strap upper
+12:40:09 | INFO: Blender create Mesh node Pipette annular power entry coil--1-0-end
+12:40:09 | INFO: Blender create Mesh node Pipette annular power entry coil--1-0-start
+12:40:09 | INFO: Blender create Mesh node Pipette annular power entry coil--1-1-end
+12:40:09 | INFO: Blender create Mesh node Pipette annular power entry coil--1-1-start
+12:40:09 | INFO: Blender create Mesh node Pipette annular power entry coil-1-0-end
+12:40:09 | INFO: Blender create Mesh node Pipette annular power entry coil-1-0-start
+12:40:09 | INFO: Blender create Mesh node Pipette annular power entry coil-1-1-end
+12:40:09 | INFO: Blender create Mesh node Pipette annular power entry coil-1-1-start
+12:40:09 | INFO: Blender create Mesh node Pipette annular power entry main-feed-hatch--1
+12:40:09 | INFO: Blender create Mesh node Pipette annular power entry main-feed-hatch-1
+12:40:09 | INFO: Blender create Mesh node Pipette annular power entry main-feed-tower--1
+12:40:09 | INFO: Blender create Mesh node Pipette annular power entry main-feed-tower-1
+12:40:09 | INFO: Blender create Mesh node Pipette annular power entry rock-feed--1-0
+12:40:09 | INFO: Blender create Mesh node Pipette annular power entry rock-feed--1-1
+12:40:09 | INFO: Blender create Mesh node Pipette annular power entry rock-feed--1-2
+12:40:09 | INFO: Blender create Mesh node Pipette annular power entry rock-feed-1-0
+12:40:09 | INFO: Blender create Mesh node Pipette annular power entry rock-feed-1-1
+12:40:09 | INFO: Blender create Mesh node Pipette annular power entry rock-feed-1-2
+12:40:09 | INFO: Blender create Mesh node Pipette annular power entry rock-shoe--1-0
+12:40:09 | INFO: Blender create Mesh node Pipette annular power entry rock-shoe--1-1
+12:40:09 | INFO: Blender create Mesh node Pipette annular power entry rock-shoe--1-2
+12:40:09 | INFO: Blender create Mesh node Pipette annular power entry rock-shoe-1-0
+12:40:09 | INFO: Blender create Mesh node Pipette annular power entry rock-shoe-1-1
+12:40:09 | INFO: Blender create Mesh node Pipette annular power entry rock-shoe-1-2
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-internal-main-power--1 end 0
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-internal-main-power--1 end 1
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-internal-main-power--1 end 2
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-internal-main-power--1 start 0
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-internal-main-power--1 start 1
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-internal-main-power--1 start 2
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-internal-main-power-1 end 0
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-internal-main-power-1 end 1
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-internal-main-power-1 end 2
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-internal-main-power-1 start 0
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-internal-main-power-1 start 1
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-internal-main-power-1 start 2
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-shoe-power--1-0 end 0
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-shoe-power--1-0 end 1
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-shoe-power--1-0 end 2
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-shoe-power--1-0 start 0
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-shoe-power--1-0 start 1
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-shoe-power--1-0 start 2
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-shoe-power--1-1 end 0
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-shoe-power--1-1 end 1
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-shoe-power--1-1 end 2
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-shoe-power--1-1 start 0
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-shoe-power--1-1 start 1
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-shoe-power--1-1 start 2
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-shoe-power--1-2 end 0
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-shoe-power--1-2 end 1
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-shoe-power--1-2 end 2
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-shoe-power--1-2 start 0
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-shoe-power--1-2 start 1
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-shoe-power--1-2 start 2
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-shoe-power-1-0 end 0
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-shoe-power-1-0 end 1
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-shoe-power-1-0 end 2
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-shoe-power-1-0 start 0
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-shoe-power-1-0 start 1
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-shoe-power-1-0 start 2
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-shoe-power-1-1 end 0
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-shoe-power-1-1 end 1
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-shoe-power-1-1 end 2
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-shoe-power-1-1 start 0
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-shoe-power-1-1 start 1
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-shoe-power-1-1 start 2
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-shoe-power-1-2 end 0
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-shoe-power-1-2 end 1
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-shoe-power-1-2 end 2
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-shoe-power-1-2 start 0
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-shoe-power-1-2 start 1
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-shoe-power-1-2 start 2
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-winding--1-0 end 0
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-winding--1-0 end 1
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-winding--1-0 end 2
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-winding--1-0 start 0
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-winding--1-0 start 1
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-winding--1-0 start 2
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-winding--1-1 end 0
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-winding--1-1 end 1
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-winding--1-1 end 2
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-winding--1-1 start 0
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-winding--1-1 start 1
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-winding--1-1 start 2
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-winding-1-0 end 0
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-winding-1-0 end 1
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-winding-1-0 end 2
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-winding-1-0 start 0
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-winding-1-0 start 1
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-winding-1-0 start 2
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-winding-1-1 end 0
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-winding-1-1 end 1
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-winding-1-1 end 2
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-winding-1-1 start 0
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-winding-1-1 start 1
+12:40:09 | INFO: Blender create Mesh node Pipette library gland wide-winding-1-1 start 2
+12:40:09 | INFO: Blender create Mesh node Pipette retained ceramic terminal coil--1-0-end
+12:40:09 | INFO: Blender create Mesh node Pipette retained ceramic terminal coil--1-0-start
+12:40:09 | INFO: Blender create Mesh node Pipette retained ceramic terminal coil--1-1-end
+12:40:09 | INFO: Blender create Mesh node Pipette retained ceramic terminal coil--1-1-start
+12:40:09 | INFO: Blender create Mesh node Pipette retained ceramic terminal coil-1-0-end
+12:40:09 | INFO: Blender create Mesh node Pipette retained ceramic terminal coil-1-0-start
+12:40:09 | INFO: Blender create Mesh node Pipette retained ceramic terminal coil-1-1-end
+12:40:09 | INFO: Blender create Mesh node Pipette retained ceramic terminal coil-1-1-start
+12:40:09 | INFO: Blender create Mesh node Pipette retained ceramic terminal main-feed-hatch--1
+12:40:09 | INFO: Blender create Mesh node Pipette retained ceramic terminal main-feed-hatch-1
+12:40:09 | INFO: Blender create Mesh node Pipette retained ceramic terminal main-feed-tower--1
+12:40:09 | INFO: Blender create Mesh node Pipette retained ceramic terminal main-feed-tower-1
+12:40:09 | INFO: Blender create Mesh node Pipette retained ceramic terminal rock-feed--1-0
+12:40:09 | INFO: Blender create Mesh node Pipette retained ceramic terminal rock-feed--1-1
+12:40:09 | INFO: Blender create Mesh node Pipette retained ceramic terminal rock-feed--1-2
+12:40:09 | INFO: Blender create Mesh node Pipette retained ceramic terminal rock-feed-1-0
+12:40:09 | INFO: Blender create Mesh node Pipette retained ceramic terminal rock-feed-1-1
+12:40:09 | INFO: Blender create Mesh node Pipette retained ceramic terminal rock-feed-1-2
+12:40:09 | INFO: Blender create Mesh node Pipette retained ceramic terminal rock-shoe--1-0
+12:40:09 | INFO: Blender create Mesh node Pipette retained ceramic terminal rock-shoe--1-1
+12:40:09 | INFO: Blender create Mesh node Pipette retained ceramic terminal rock-shoe--1-2
+12:40:09 | INFO: Blender create Mesh node Pipette retained ceramic terminal rock-shoe-1-0
+12:40:09 | INFO: Blender create Mesh node Pipette retained ceramic terminal rock-shoe-1-1
+12:40:09 | INFO: Blender create Mesh node Pipette retained ceramic terminal rock-shoe-1-2
+12:40:09 | INFO: Blender create Mesh node Pipette surface-fitted terminal foot coil--1-0-end
+12:40:09 | INFO: Blender create Mesh node Pipette surface-fitted terminal foot coil--1-0-start
+12:40:09 | INFO: Blender create Mesh node Pipette surface-fitted terminal foot coil--1-1-end
+12:40:09 | INFO: Blender create Mesh node Pipette surface-fitted terminal foot coil--1-1-start
+12:40:09 | INFO: Blender create Mesh node Pipette surface-fitted terminal foot coil-1-0-end
+12:40:09 | INFO: Blender create Mesh node Pipette surface-fitted terminal foot coil-1-0-start
+12:40:09 | INFO: Blender create Mesh node Pipette surface-fitted terminal foot coil-1-1-end
+12:40:09 | INFO: Blender create Mesh node Pipette surface-fitted terminal foot coil-1-1-start
+12:40:09 | INFO: Blender create Mesh node Pipette surface-fitted terminal foot main-feed-hatch--1
+12:40:09 | INFO: Blender create Mesh node Pipette surface-fitted terminal foot main-feed-hatch-1
+12:40:09 | INFO: Blender create Mesh node Pipette surface-fitted terminal foot main-feed-tower--1
+12:40:09 | INFO: Blender create Mesh node Pipette surface-fitted terminal foot main-feed-tower-1
+12:40:09 | INFO: Blender create Mesh node Pipette surface-fitted terminal foot rock-feed--1-0
+12:40:09 | INFO: Blender create Mesh node Pipette surface-fitted terminal foot rock-feed--1-1
+12:40:09 | INFO: Blender create Mesh node Pipette surface-fitted terminal foot rock-feed--1-2
+12:40:09 | INFO: Blender create Mesh node Pipette surface-fitted terminal foot rock-feed-1-0
+12:40:09 | INFO: Blender create Mesh node Pipette surface-fitted terminal foot rock-feed-1-1
+12:40:09 | INFO: Blender create Mesh node Pipette surface-fitted terminal foot rock-feed-1-2
+12:40:09 | INFO: Blender create Mesh node Pipette surface-fitted terminal foot rock-shoe--1-0
+12:40:09 | INFO: Blender create Mesh node Pipette surface-fitted terminal foot rock-shoe--1-1
+12:40:09 | INFO: Blender create Mesh node Pipette surface-fitted terminal foot rock-shoe--1-2
+12:40:09 | INFO: Blender create Mesh node Pipette surface-fitted terminal foot rock-shoe-1-0
+12:40:09 | INFO: Blender create Mesh node Pipette surface-fitted terminal foot rock-shoe-1-1
+12:40:09 | INFO: Blender create Mesh node Pipette surface-fitted terminal foot rock-shoe-1-2
+12:40:09 | INFO: Blender create Mesh node Profile-seated dished rib 0 0
+12:40:09 | INFO: Blender create Mesh node Profile-seated dished rib 0 1
+12:40:09 | INFO: Blender create Mesh node Profile-seated dished rib 0 2
+12:40:09 | INFO: Blender create Mesh node Profile-seated dished rib 0 3
+12:40:09 | INFO: Blender create Mesh node Profile-seated dished rib 1 0
+12:40:09 | INFO: Blender create Mesh node Profile-seated dished rib 1 1
+12:40:09 | INFO: Blender create Mesh node Profile-seated dished rib 1 2
+12:40:09 | INFO: Blender create Mesh node Profile-seated dished rib 1 3
+12:40:09 | INFO: Blender create Mesh node Profile-seated dished rib 2 0
+12:40:09 | INFO: Blender create Mesh node Profile-seated dished rib 2 1
+12:40:09 | INFO: Blender create Mesh node Profile-seated dished rib 2 2
+12:40:09 | INFO: Blender create Mesh node Profile-seated dished rib 2 3
+12:40:09 | INFO: Blender create Mesh node Profile-seated dished rib 3 0
+12:40:09 | INFO: Blender create Mesh node Profile-seated dished rib 3 1
+12:40:09 | INFO: Blender create Mesh node Profile-seated dished rib 3 2
+12:40:09 | INFO: Blender create Mesh node Profile-seated dished rib 3 3
+12:40:09 | INFO: Blender create Mesh node Recessed green dish electrode track
+12:40:09 | INFO: Blender create Mesh node Recessed green dish electrode track.001
+12:40:09 | INFO: Blender create Mesh node Recessed green dish electrode track.002
+12:40:09 | INFO: Blender create Mesh node Recessed green dish electrode track.003
+12:40:09 | INFO: Blender create Mesh node Recessed green dish electrode track.004
+12:40:09 | INFO: Blender create Mesh node Recessed green dish electrode track.005
+12:40:09 | INFO: Blender create Mesh node Recessed green dish electrode track.006
+12:40:09 | INFO: Blender create Mesh node Recessed green dish electrode track.007
+12:40:09 | INFO: Blender create Mesh node Recessed green dish electrode track.008
+12:40:09 | INFO: Blender create Mesh node Recessed green dish electrode track.009
+12:40:09 | INFO: Blender create Mesh node Recessed green dish electrode track.010
+12:40:09 | INFO: Blender create Mesh node Recessed green dish electrode track.011
+12:40:09 | INFO: Blender create Mesh node Recessed green mineral seam 0 tapered recessed inset
+12:40:09 | INFO: Blender create Mesh node Recessed green mineral seam 1 tapered recessed inset
+12:40:09 | INFO: Blender create Mesh node Recessed green mineral seam 2 tapered recessed inset
+12:40:09 | INFO: Blender create Mesh node Recessed green mineral seam 20 tapered recessed inset
+12:40:09 | INFO: Blender create Mesh node Recessed green mineral seam 21 tapered recessed inset
+12:40:09 | INFO: Blender create Mesh node Recessed green mineral seam 22 tapered recessed inset
+12:40:09 | INFO: Blender create Mesh node Recessed green mineral seam 23 tapered recessed inset
+12:40:09 | INFO: Blender create Mesh node Recessed green mineral seam 24 tapered recessed inset
+12:40:09 | INFO: Blender create Mesh node Recessed green mineral seam 25 tapered recessed inset
+12:40:09 | INFO: Blender create Mesh node Recessed green mineral seam 26 tapered recessed inset
+12:40:09 | INFO: Blender create Mesh node Recessed green mineral seam 27 tapered recessed inset
+12:40:09 | INFO: Blender create Mesh node Recessed green mineral seam 3 tapered recessed inset
+12:40:09 | INFO: Blender create Mesh node Recessed green mineral seam 4 tapered recessed inset
+12:40:09 | INFO: Blender create Mesh node Recessed green mineral seam 40 tapered recessed inset
+12:40:09 | INFO: Blender create Mesh node Recessed green mineral seam 41 tapered recessed inset
+12:40:09 | INFO: Blender create Mesh node Recessed green mineral seam 42 tapered recessed inset
+12:40:09 | INFO: Blender create Mesh node Recessed green mineral seam 43 tapered recessed inset
+12:40:09 | INFO: Blender create Mesh node Recessed green mineral seam 44 tapered recessed inset
+12:40:09 | INFO: Blender create Mesh node Recessed green mineral seam 45 tapered recessed inset
+12:40:09 | INFO: Blender create Mesh node Recessed green mineral seam 46 tapered recessed inset
+12:40:09 | INFO: Blender create Mesh node Recessed green mineral seam 47 tapered recessed inset
+12:40:09 | INFO: Blender create Mesh node Recessed green mineral seam 5 tapered recessed inset
+12:40:09 | INFO: Blender create Mesh node Recessed green mineral seam 6 tapered recessed inset
+12:40:09 | INFO: Blender create Mesh node Recessed green mineral seam 7 tapered recessed inset
+12:40:09 | INFO: Blender create Mesh node Retained inter-tier conductor seat
+12:40:09 | INFO: Blender create Mesh node Retained inter-tier conductor seat.001
+12:40:09 | INFO: Blender create Mesh node Retained inter-tier conductor seat.002
+12:40:09 | INFO: Blender create Mesh node Retained inter-tier conductor seat.003
+12:40:09 | INFO: Blender create Mesh node Retained inter-tier conductor seat.004
+12:40:09 | INFO: Blender create Mesh node Retained inter-tier conductor seat.005
+12:40:09 | INFO: Blender create Mesh node Retained inter-tier conductor seat.006
+12:40:09 | INFO: Blender create Mesh node Retained inter-tier conductor seat.007
+12:40:09 | INFO: Blender create Mesh node Retained inter-tier conductor seat.008
+12:40:09 | INFO: Blender create Mesh node Retained inter-tier conductor seat.009
+12:40:09 | INFO: Blender create Mesh node Retained inter-tier conductor seat.010
+12:40:09 | INFO: Blender create Mesh node Retained inter-tier conductor seat.011
+12:40:09 | INFO: Blender create Mesh node Retained inter-tier conductor seat.012
+12:40:09 | INFO: Blender create Mesh node Retained inter-tier conductor seat.013
+12:40:09 | INFO: Blender create Mesh node Retained inter-tier conductor seat.014
+12:40:09 | INFO: Blender create Mesh node Retained inter-tier conductor seat.015
+12:40:09 | INFO: Blender create Mesh node Retained inter-tier conductor seat.016
+12:40:09 | INFO: Blender create Mesh node Retained inter-tier conductor seat.017
+12:40:09 | INFO: Blender create Mesh node Retaining band hinge through-pin
+12:40:09 | INFO: Blender create Mesh node Rolled hinge knuckle 0
+12:40:09 | INFO: Blender create Mesh node Rolled hinge knuckle 1
+12:40:09 | INFO: Blender create Mesh node Rolled hinge knuckle 2
+12:40:09 | INFO: Blender create Mesh node Cube.031
+12:40:09 | INFO: Blender create Mesh node Cube.032
+12:40:09 | INFO: Blender create Mesh node Cube.033
+12:40:09 | INFO: Blender create Mesh node Cube.034
+12:40:09 | INFO: Blender create Mesh node Cube.035
+12:40:09 | INFO: Blender create Mesh node Cube.036
+12:40:09 | INFO: Blender create Mesh node Cube.037
+12:40:09 | INFO: Blender create Mesh node Cube.038
+12:40:09 | INFO: Blender create Mesh node Cube.039
+12:40:09 | INFO: Blender create Mesh node Cube.040
+12:40:09 | INFO: Blender create Mesh node Cube.041
+12:40:09 | INFO: Blender create Mesh node Cube.042
+12:40:09 | INFO: Blender create Mesh node Cube.050
+12:40:09 | INFO: Blender create Mesh node Cube.051
+12:40:09 | INFO: Blender create Mesh node Cube.052
+12:40:09 | INFO: Blender create Mesh node Cube.053
+12:40:09 | INFO: Blender create Mesh node Cube.054
+12:40:09 | INFO: Blender create Mesh node Cube.055
+12:40:09 | INFO: Blender create Mesh node Cube.056
+12:40:09 | INFO: Blender create Mesh node Cube.057
+12:40:09 | INFO: Blender create Mesh node Cube.058
+12:40:09 | INFO: Blender create Mesh node Cube.059
+12:40:09 | INFO: Blender create Mesh node Cube.060
+12:40:09 | INFO: Blender create Mesh node Cube.061
+12:40:09 | INFO: Blender create Mesh node Cube.028
+12:40:09 | INFO: Blender create Mesh node Cube.049
+12:40:09 | INFO: Blender create Mesh node Cube.043
+12:40:09 | INFO: Blender create Mesh node Cube.044
+12:40:09 | INFO: Blender create Mesh node Cube.045
+12:40:09 | INFO: Blender create Mesh node Cube.046
+12:40:09 | INFO: Blender create Mesh node Cube.047
+12:40:09 | INFO: Blender create Mesh node Cube.048
+12:40:09 | INFO: Blender create Mesh node Cube.062
+12:40:09 | INFO: Blender create Mesh node Cube.063
+12:40:09 | INFO: Blender create Mesh node Cube.064
+12:40:09 | INFO: Blender create Mesh node Cube.065
+12:40:09 | INFO: Blender create Mesh node Cube.066
+12:40:09 | INFO: Blender create Mesh node Cube.067
+12:40:09 | INFO: Blender create Mesh node Cube.002
+12:40:09 | INFO: Blender create Mesh node Segmented dish armor tier 0 panel 0
+12:40:09 | INFO: Blender create Mesh node Segmented dish armor tier 0 panel 1
+12:40:09 | INFO: Blender create Mesh node Segmented dish armor tier 0 panel 10
+12:40:09 | INFO: Blender create Mesh node Segmented dish armor tier 0 panel 11
+12:40:09 | INFO: Blender create Mesh node Segmented dish armor tier 0 panel 2
+12:40:09 | INFO: Blender create Mesh node Segmented dish armor tier 0 panel 3
+12:40:09 | INFO: Blender create Mesh node Segmented dish armor tier 0 panel 4
+12:40:09 | INFO: Blender create Mesh node Segmented dish armor tier 0 panel 5
+12:40:09 | INFO: Blender create Mesh node Segmented dish armor tier 0 panel 6
+12:40:09 | INFO: Blender create Mesh node Segmented dish armor tier 0 panel 7
+12:40:09 | INFO: Blender create Mesh node Segmented dish armor tier 0 panel 8
+12:40:09 | INFO: Blender create Mesh node Segmented dish armor tier 0 panel 9
+12:40:09 | INFO: Blender create Mesh node Segmented dish armor tier 1 panel 0
+12:40:09 | INFO: Blender create Mesh node Segmented dish armor tier 1 panel 1
+12:40:09 | INFO: Blender create Mesh node Segmented dish armor tier 1 panel 10
+12:40:09 | INFO: Blender create Mesh node Segmented dish armor tier 1 panel 11
+12:40:09 | INFO: Blender create Mesh node Segmented dish armor tier 1 panel 2
+12:40:09 | INFO: Blender create Mesh node Segmented dish armor tier 1 panel 3
+12:40:09 | INFO: Blender create Mesh node Segmented dish armor tier 1 panel 4
+12:40:09 | INFO: Blender create Mesh node Segmented dish armor tier 1 panel 5
+12:40:09 | INFO: Blender create Mesh node Segmented dish armor tier 1 panel 6
+12:40:09 | INFO: Blender create Mesh node Segmented dish armor tier 1 panel 7
+12:40:09 | INFO: Blender create Mesh node Segmented dish armor tier 1 panel 8
+12:40:09 | INFO: Blender create Mesh node Segmented dish armor tier 1 panel 9
+12:40:09 | INFO: Blender create Mesh node Segmented dish armor tier 2 panel 0
+12:40:09 | INFO: Blender create Mesh node Segmented dish armor tier 2 panel 1
+12:40:09 | INFO: Blender create Mesh node Segmented dish armor tier 2 panel 10
+12:40:09 | INFO: Blender create Mesh node Segmented dish armor tier 2 panel 11
+12:40:09 | INFO: Blender create Mesh node Segmented dish armor tier 2 panel 2
+12:40:09 | INFO: Blender create Mesh node Segmented dish armor tier 2 panel 3
+12:40:09 | INFO: Blender create Mesh node Segmented dish armor tier 2 panel 4
+12:40:09 | INFO: Blender create Mesh node Segmented dish armor tier 2 panel 5
+12:40:09 | INFO: Blender create Mesh node Segmented dish armor tier 2 panel 6
+12:40:09 | INFO: Blender create Mesh node Segmented dish armor tier 2 panel 7
+12:40:09 | INFO: Blender create Mesh node Segmented dish armor tier 2 panel 8
+12:40:09 | INFO: Blender create Mesh node Segmented dish armor tier 2 panel 9
+12:40:09 | INFO: Blender create Mesh node Segmented dish armor tier 3 panel 0
+12:40:09 | INFO: Blender create Mesh node Segmented dish armor tier 3 panel 1
+12:40:09 | INFO: Blender create Mesh node Segmented dish armor tier 3 panel 10
+12:40:09 | INFO: Blender create Mesh node Segmented dish armor tier 3 panel 11
+12:40:09 | INFO: Blender create Mesh node Segmented dish armor tier 3 panel 2
+12:40:09 | INFO: Blender create Mesh node Segmented dish armor tier 3 panel 3
+12:40:09 | INFO: Blender create Mesh node Segmented dish armor tier 3 panel 4
+12:40:09 | INFO: Blender create Mesh node Segmented dish armor tier 3 panel 5
+12:40:09 | INFO: Blender create Mesh node Segmented dish armor tier 3 panel 6
+12:40:09 | INFO: Blender create Mesh node Segmented dish armor tier 3 panel 7
+12:40:09 | INFO: Blender create Mesh node Segmented dish armor tier 3 panel 8
+12:40:09 | INFO: Blender create Mesh node Segmented dish armor tier 3 panel 9
+12:40:09 | INFO: Blender create Mesh node Service hatch captive screw
+12:40:09 | INFO: Blender create Mesh node Service hatch captive screw.001
+12:40:09 | INFO: Blender create Mesh node Service hatch captive screw.002
+12:40:09 | INFO: Blender create Mesh node Service hatch captive screw.003
+12:40:09 | INFO: Blender create Mesh node Cube.003
+12:40:09 | INFO: Blender create Mesh node Cube.004
+12:40:09 | INFO: Blender create Mesh node Cube.005
+12:40:09 | INFO: Blender create Mesh node Shaped socketed emitter guard 0
+12:40:09 | INFO: Blender create Mesh node Shaped socketed emitter guard 1
+12:40:09 | INFO: Blender create Mesh node Shaped socketed emitter guard 2
+12:40:09 | INFO: Blender create Mesh node Shaped socketed emitter guard 3
+12:40:09 | INFO: Blender create Mesh node Shaped upper portal bearing casting -1
+12:40:09 | INFO: Blender create Mesh node Shaped upper portal bearing casting 1
+12:40:09 | INFO: Blender create Mesh node Shoe compression locking screw
+12:40:09 | INFO: Blender create Mesh node Shoe compression locking screw.001
+12:40:09 | INFO: Blender create Mesh node Shoe compression locking screw.002
+12:40:09 | INFO: Blender create Mesh node Shoe compression locking screw.003
+12:40:09 | INFO: Blender create Mesh node Shoe compression locking screw.004
+12:40:09 | INFO: Blender create Mesh node Shoe compression locking screw.005
+12:40:09 | INFO: Blender create Mesh node Shoe retained cast yoke
+12:40:09 | INFO: Blender create Mesh node Shoe retained cast yoke.001
+12:40:09 | INFO: Blender create Mesh node Shoe retained cast yoke.002
+12:40:09 | INFO: Blender create Mesh node Shoe retained cast yoke.003
+12:40:09 | INFO: Blender create Mesh node Shoe retained cast yoke.004
+12:40:09 | INFO: Blender create Mesh node Shoe retained cast yoke.005
+12:40:09 | INFO: Blender create Mesh node Shoe screw thrust seat
+12:40:09 | INFO: Blender create Mesh node Shoe screw thrust seat.001
+12:40:09 | INFO: Blender create Mesh node Shoe screw thrust seat.002
+12:40:09 | INFO: Blender create Mesh node Shoe screw thrust seat.003
+12:40:09 | INFO: Blender create Mesh node Shoe screw thrust seat.004
+12:40:09 | INFO: Blender create Mesh node Shoe screw thrust seat.005
+12:40:09 | INFO: Blender create Mesh node Stepped ceramic inter-tier insulator
+12:40:09 | INFO: Blender create Mesh node Stepped ceramic inter-tier insulator.001
+12:40:09 | INFO: Blender create Mesh node Stepped ceramic inter-tier insulator.002
+12:40:09 | INFO: Blender create Mesh node Stepped ceramic inter-tier insulator.003
+12:40:09 | INFO: Blender create Mesh node Stepped ceramic inter-tier insulator.004
+12:40:09 | INFO: Blender create Mesh node Stepped ceramic inter-tier insulator.005
+12:40:09 | INFO: Blender create Mesh node Stepped ceramic inter-tier insulator.006
+12:40:09 | INFO: Blender create Mesh node Stepped ceramic inter-tier insulator.007
+12:40:09 | INFO: Blender create Mesh node Stepped ceramic inter-tier insulator.008
+12:40:09 | INFO: Blender create Mesh node Stepped ceramic inter-tier insulator.009
+12:40:09 | INFO: Blender create Mesh node Stepped ceramic inter-tier insulator.010
+12:40:09 | INFO: Blender create Mesh node Stepped ceramic inter-tier insulator.011
+12:40:09 | INFO: Blender create Mesh node Stepped ceramic inter-tier insulator.012
+12:40:09 | INFO: Blender create Mesh node Stepped ceramic inter-tier insulator.013
+12:40:09 | INFO: Blender create Mesh node Stepped ceramic inter-tier insulator.014
+12:40:09 | INFO: Blender create Mesh node Stepped ceramic inter-tier insulator.015
+12:40:09 | INFO: Blender create Mesh node Stepped ceramic inter-tier insulator.016
+12:40:09 | INFO: Blender create Mesh node Stepped ceramic inter-tier insulator.017
+12:40:09 | INFO: Blender create Mesh node Stepped dish brace receiving end
+12:40:09 | INFO: Blender create Mesh node Stepped dish brace receiving end.001
+12:40:09 | INFO: Blender create Mesh node Stepped dish brace receiving end.002
+12:40:09 | INFO: Blender create Mesh node Stepped dish brace receiving end.003
+12:40:09 | INFO: Blender create Mesh node Stepped dish brace receiving end.004
+12:40:09 | INFO: Blender create Mesh node Stepped dish brace receiving end.005
+12:40:09 | INFO: Blender create Mesh node Stepped dish brace receiving end.006
+12:40:09 | INFO: Blender create Mesh node Stepped dish brace receiving end.007
+12:40:09 | INFO: Blender create Mesh node Stepped dish brace receiving end.008
+12:40:09 | INFO: Blender create Mesh node Stepped dish brace receiving end.009
+12:40:09 | INFO: Blender create Mesh node Stepped dish brace receiving end.010
+12:40:09 | INFO: Blender create Mesh node Stepped dish brace receiving end.011
+12:40:09 | INFO: Blender create Mesh node Stepped dish brace receiving end.012
+12:40:09 | INFO: Blender create Mesh node Stepped dish brace receiving end.013
+12:40:09 | INFO: Blender create Mesh node Stepped dish brace receiving end.014
+12:40:09 | INFO: Blender create Mesh node Stepped dish brace receiving end.015
+12:40:09 | INFO: Blender create Mesh node Stepped dish brace receiving end.016
+12:40:09 | INFO: Blender create Mesh node Stepped dish brace receiving end.017
+12:40:09 | INFO: Blender create Mesh node Stepped dish brace root
+12:40:09 | INFO: Blender create Mesh node Stepped dish brace root.001
+12:40:09 | INFO: Blender create Mesh node Stepped dish brace root.002
+12:40:09 | INFO: Blender create Mesh node Stepped dish brace root.003
+12:40:09 | INFO: Blender create Mesh node Stepped dish brace root.004
+12:40:09 | INFO: Blender create Mesh node Stepped dish brace root.005
+12:40:09 | INFO: Blender create Mesh node Stepped dish brace root.006
+12:40:09 | INFO: Blender create Mesh node Stepped dish brace root.007
+12:40:09 | INFO: Blender create Mesh node Stepped dish brace root.008
+12:40:09 | INFO: Blender create Mesh node Stepped dish brace root.009
+12:40:09 | INFO: Blender create Mesh node Stepped dish brace root.010
+12:40:09 | INFO: Blender create Mesh node Stepped dish brace root.011
+12:40:09 | INFO: Blender create Mesh node Stepped dish brace root.012
+12:40:09 | INFO: Blender create Mesh node Stepped dish brace root.013
+12:40:09 | INFO: Blender create Mesh node Stepped dish brace root.014
+12:40:09 | INFO: Blender create Mesh node Stepped dish brace root.015
+12:40:09 | INFO: Blender create Mesh node Stepped dish brace root.016
+12:40:09 | INFO: Blender create Mesh node Stepped dish brace root.017
+12:40:09 | INFO: Blender create Mesh node Stepped segmented emitter hub
+12:40:09 | INFO: Blender create Mesh node craneo.malla.001
+12:40:09 | INFO: Blender create Mesh node craneo.malla.003
+12:40:09 | INFO: Blender create Mesh node Take-up screw thread crest
+12:40:09 | INFO: Blender create Mesh node Take-up screw thread crest.001
+12:40:09 | INFO: Blender create Mesh node Take-up screw thread crest.002
+12:40:09 | INFO: Blender create Mesh node Take-up screw thread crest.003
+12:40:09 | INFO: Blender create Mesh node Take-up screw thread crest.004
+12:40:09 | INFO: Blender create Mesh node Take-up screw thread crest.005
+12:40:09 | INFO: Blender create Mesh node Take-up screw thread crest.006
+12:40:09 | INFO: Blender create Mesh node Take-up screw thread crest.007
+12:40:09 | INFO: Blender create Mesh node Take-up screw thread crest.008
+12:40:09 | INFO: Blender create Mesh node Take-up screw thread crest.009
+12:40:09 | INFO: Blender create Mesh node Take-up screw thread crest.010
+12:40:09 | INFO: Blender create Mesh node Take-up screw thread crest.011
+12:40:09 | INFO: Blender create Mesh node Tower axial cap
+12:40:09 | INFO: Blender create Mesh node Tower axial cap.001
+12:40:09 | INFO: Blender create Mesh node Tower axial cap.002
+12:40:09 | INFO: Blender create Mesh node Tower axial cap.003
+12:40:09 | INFO: Blender create Mesh node Cube.006
+12:40:09 | INFO: Blender create Mesh node Cube.007
+12:40:09 | INFO: Blender create Mesh node Cube.008
+12:40:09 | INFO: Blender create Mesh node Cube.011
+12:40:09 | INFO: Blender create Mesh node Cube.012
+12:40:09 | INFO: Blender create Mesh node Cube.013
+12:40:09 | INFO: Blender create Mesh node Tower retained ring
+12:40:09 | INFO: Blender create Mesh node Tower retained ring.001
+12:40:09 | INFO: Blender create Mesh node Tower retained ring.002
+12:40:09 | INFO: Blender create Mesh node Tower retained ring.003
+12:40:09 | INFO: Blender create Mesh node Tower retained ring.004
+12:40:09 | INFO: Blender create Mesh node Tower retained ring.005
+12:40:09 | INFO: Blender create Mesh node Tower retained ring.006
+12:40:09 | INFO: Blender create Mesh node Tower retained ring.007
+12:40:09 | INFO: Blender create Mesh node Tower saddle retainer
+12:40:09 | INFO: Blender create Mesh node Tower saddle retainer.001
+12:40:09 | INFO: Blender create Mesh node Tower saddle retainer.002
+12:40:09 | INFO: Blender create Mesh node Tower saddle retainer.003
+12:40:09 | INFO: Blender create Mesh node Tower saddle retainer.004
+12:40:09 | INFO: Blender create Mesh node Tower saddle retainer.005
+12:40:09 | INFO: Blender create Mesh node Tower saddle retainer.006
+12:40:09 | INFO: Blender create Mesh node Tower saddle retainer.007
+12:40:09 | INFO: Blender create Mesh node Tower saddle retainer.008
+12:40:09 | INFO: Blender create Mesh node Tower saddle retainer.009
+12:40:09 | INFO: Blender create Mesh node Tower saddle retainer.010
+12:40:09 | INFO: Blender create Mesh node Tower saddle retainer.011
+12:40:09 | INFO: Blender create Mesh node Cube
+12:40:09 | INFO: Blender create Mesh node Cube.001
+12:40:09 | INFO: Blender create Mesh node Cube.029
+12:40:09 | INFO: Blender create Mesh node Cube.030
+12:40:09 | INFO: glTF import finished in 0.76s
+12:40:10 | INFO: Data are loaded, start creating Blender stuff
+12:40:10 | INFO: Blender create Mesh node Bay bearing receiving shoe 0
+12:40:10 | INFO: Blender create Mesh node Bay bearing receiving shoe 1
+12:40:10 | INFO: Blender create Mesh node Bay bearing receiving shoe 2
+12:40:10 | INFO: Blender create Mesh node Bay bearing receiving shoe 3
+12:40:10 | INFO: Blender create Mesh node Bay bearing receiving shoe 4
+12:40:10 | INFO: Blender create Mesh node Bay bearing receiving shoe 5
+12:40:10 | INFO: Blender create Mesh node Installation bay foundation landing 0
+12:40:10 | INFO: Blender create Mesh node Installation bay foundation landing 1
+12:40:10 | INFO: Blender create Mesh node Installation bay foundation landing 2
+12:40:10 | INFO: Blender create Mesh node Installation bay foundation landing 3
+12:40:10 | INFO: Blender create Mesh node Installation bay foundation landing 4
+12:40:10 | INFO: Blender create Mesh node Installation bay foundation landing 5
+12:40:10 | INFO: Blender create Mesh node Low curved cast seat Low surrounding-platform diagonal 0.001
+12:40:10 | INFO: Blender create Mesh node Low curved cast seat Low surrounding-platform diagonal 1.001
+12:40:10 | INFO: Blender create Mesh node Low curved cast seat Low surrounding-platform diagonal 2.001
+12:40:10 | INFO: Blender create Mesh node Low curved cast seat Low surrounding-platform diagonal 3.001
+12:40:10 | INFO: Blender create Mesh node Low curved cast seat Low surrounding-platform diagonal 4.001
+12:40:10 | INFO: Blender create Mesh node Low curved cast seat Low surrounding-platform diagonal 5.001
+12:40:10 | INFO: Blender create Mesh node Low surrounding-platform diagonal 0.001
+12:40:10 | INFO: Blender create Mesh node Low surrounding-platform diagonal 1.001
+12:40:10 | INFO: Blender create Mesh node Low surrounding-platform diagonal 2.001
+12:40:10 | INFO: Blender create Mesh node Low surrounding-platform diagonal 3.001
+12:40:10 | INFO: Blender create Mesh node Low surrounding-platform diagonal 4.001
+12:40:10 | INFO: Blender create Mesh node Low surrounding-platform diagonal 5.001
+12:40:10 | INFO: Blender create Mesh node Mount V18 captive cast-root retaining plate 4
+12:40:10 | INFO: Blender create Mesh node Mount V18 captive cast-root retaining plate 5
+12:40:10 | INFO: Blender create Mesh node Mount V18 retained root 4 -0.022 retained shaft
+12:40:10 | INFO: Blender create Mesh node Mount V18 retained root 4 -0.022 seated bearing washer
+12:40:10 | INFO: Blender create Mesh node Mount V18 retained root 4 -0.022 six-flat captive head
+12:40:10 | INFO: Blender create Mesh node Mount V18 retained root 4 0.022 retained shaft
+12:40:10 | INFO: Blender create Mesh node Mount V18 retained root 4 0.022 seated bearing washer
+12:40:10 | INFO: Blender create Mesh node Mount V18 retained root 4 0.022 six-flat captive head
+12:40:10 | INFO: Blender create Mesh node Mount V18 retained root 5 -0.022 retained shaft
+12:40:10 | INFO: Blender create Mesh node Mount V18 retained root 5 -0.022 seated bearing washer
+12:40:10 | INFO: Blender create Mesh node Mount V18 retained root 5 -0.022 six-flat captive head
+12:40:10 | INFO: Blender create Mesh node Mount V18 retained root 5 0.022 retained shaft
+12:40:10 | INFO: Blender create Mesh node Mount V18 retained root 5 0.022 seated bearing washer
+12:40:10 | INFO: Blender create Mesh node Mount V18 retained root 5 0.022 six-flat captive head
+12:40:10 | INFO: Blender create Mesh node WIDE BAY V16 open-front floor sidewalls and retained rims
+12:40:10 | INFO: Blender create Mesh node WIDE BAY V16 fore backwall and closed rim
+12:40:10 | INFO: glTF import finished in 0.07s
+C:\Users\Admin\Documents\ChatGPT\Tech priests\model-production\tools\art\thruster_resumption\animation\capture.py:37: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  m=bpy.data.materials.new(name);m.use_fake_user=True;m.use_nodes=True;n=m.node_tree.nodes;n.clear();e=n.new('ShaderNodeEmission');e.inputs['Color'].default_value=(0,0,0,1);out=n.new('ShaderNodeOutputMaterial');m.node_tree.links.new(e.outputs[0],out.inputs['Surface']);return m
+C:\Users\Admin\Documents\ChatGPT\Tech priests\model-production\tools\art\thruster_resumption\animation\capture.py:39: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  m=bpy.data.materials.new('CAPTURE_RECIPROCAL_HOLDOUT');m.use_fake_user=True;m.use_nodes=True;nt=m.node_tree;nt.nodes.clear();h=nt.nodes.new('ShaderNodeHoldout');out=nt.nodes.new('ShaderNodeOutputMaterial');nt.links.new(h.outputs[0],out.inputs['Surface']);return m
+C:\Users\Admin\Documents\ChatGPT\Tech priests\model-production\tools\art\thruster_resumption\animation\capture.py:178: DeprecationWarning: 'World.use_nodes' is expected to be removed in Blender 6.0
+  world=bpy.data.worlds.new('CAPTURE_WORLD');s.world=world;world.use_nodes=True;world.node_tree.nodes['Background'].inputs[0].default_value=(.12,.14,.17,1);world.node_tree.nodes['Background'].inputs[1].default_value=.25
+Info: Saved as "capture-master.blend"
+CAPTURE_MASTER_PREPARED 872 body meshes 37 emissive groups
+Blender 5.0.0 (hash a37564c4df7a built 2025-11-18 11:06:54)
+
+Blender quit

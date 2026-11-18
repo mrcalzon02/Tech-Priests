@@ -1,0 +1,54 @@
+{
+  "status": "ALL66_POSES_AND_PHYSICAL_HIERARCHY_EXPORTED_PENDING_ACTUAL66_CHECK",
+  "input_source": {
+    "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\core09-physical-hierarchy\\thetazine-v06-physical-hierarchy.blend",
+    "sha256": "35c4f470ad92015b70d056086b7f6e53573f4ccabbecab6af346ab382734871e"
+  },
+  "native": {
+    "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\core10-complete-pose-range\\thetazine-v06-complete-motion.blend",
+    "sha256": "35c4f470ad92015b70d056086b7f6e53573f4ccabbecab6af346ab382734871e"
+  },
+  "glb": {
+    "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\core10-complete-pose-range\\thetazine-v06-complete-motion.glb",
+    "sha256": "77892d382fe0b1f39f28d84082d6c68dbb3b00c26f1476a3963cac97b9fce074"
+  },
+  "script_sha256": "558f40602f1598f6a2366404673a91297492c097b0ff9aa7b425fca967205b2e",
+  "source_is_byte_exact_copy": true,
+  "source_saved_scene_range": [
+    1,
+    65
+  ],
+  "temporary_export_range": [
+    0,
+    65
+  ],
+  "fps": 30,
+  "cold_frame": 0,
+  "working_frames": [
+    1,
+    64
+  ],
+  "wrap_frame": 65,
+  "actual_core_timing": [
+    {
+      "path": "translation",
+      "sample_count": 66,
+      "time_min": 0,
+      "time_max": 2.1666666666666665
+    },
+    {
+      "path": "rotation",
+      "sample_count": 66,
+      "time_min": 0,
+      "time_max": 2.1666666666666665
+    }
+  ],
+  "physical_policy": "MESH+EMPTY; tagged render_only_volume excluded; explicit full pose range0..65 without saving source.",
+  "excluded_source_only": [
+    "V04 render-only full-throated combustion volume"
+  ],
+  "actual_meshes": 3202,
+  "actual_nodes": 3223,
+  "actual_empty_nodes": 21,
+  "animation_channels": 150
+}

@@ -1,0 +1,43 @@
+{
+  "status": "PASS_EXTERNAL_CANONICAL_SOURCE_IDENTITIES",
+  "family": "wide",
+  "body": {
+    "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\art\\source-to-3d\\space-platform-engines\\large-void-fusion-thruster\\v18g-elongated-functional-core\\large-void-fusion-v01.glb",
+    "sha256": "4d9ef76ab5452728437d399af5456fbaa2b3626381da548dfb06de1b47d713de"
+  },
+  "service_well": {
+    "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\art\\source-to-3d\\space-platform-engines\\large-void-fusion-thruster\\v18g-elongated-functional-core\\installation-service-underlay.glb",
+    "sha256": "a041d26a3fec886dc644807374342f9e1869735eea5d178ebf6be4f2a17a1946"
+  },
+  "original_body_input": {
+    "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\large-void-fusion-v01\\detail-18g-actual-clip-face-seats\\large-void-fusion-v01.glb",
+    "sha256": "4d9ef76ab5452728437d399af5456fbaa2b3626381da548dfb06de1b47d713de"
+  },
+  "original_underlay_input": {
+    "glb": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\large-void-fusion-v01\\service-underlay-19e-final-tessellation\\installation-service-underlay.glb",
+    "sha256": "a041d26a3fec886dc644807374342f9e1869735eea5d178ebf6be4f2a17a1946"
+  },
+  "source_paths_in_copied_receipts_unchanged": true,
+  "physical_geometry_or_original_master_modified": false,
+  "external_validation_and_aperture_records": [
+    {
+      "role": "body_validation",
+      "canonical_path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\art\\source-to-3d\\space-platform-engines\\large-void-fusion-thruster\\v18g-elongated-functional-core\\export-inspection.json",
+      "sha256": "4bd6baac856d1d1b960a8d601507c46478ca72790fb2ccf01637fc7db2db179f",
+      "original_input_path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\large-void-fusion-v01\\detail-18g-actual-clip-face-seats\\export-inspection.json"
+    },
+    {
+      "role": "aperture_validation",
+      "canonical_path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\art\\source-to-3d\\space-platform-engines\\large-void-fusion-thruster\\v18g-elongated-functional-core\\capture-source-geometry.json",
+      "sha256": "1e8e38618af9685af15bf486cdbe3054aa4fc202ae7061d551258991f6398da5",
+      "original_input_path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\large-void-fusion-v01\\service-underlay-19e-final-tessellation\\capture-source-geometry.json"
+    },
+    {
+      "role": "geometry_handoff",
+      "canonical_path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\art\\source-to-3d\\space-platform-engines\\large-void-fusion-thruster\\v18g-elongated-functional-core\\capture-source-geometry.json",
+      "sha256": "1e8e38618af9685af15bf486cdbe3054aa4fc202ae7061d551258991f6398da5",
+      "original_input_path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\large-void-fusion-v01\\service-underlay-19e-final-tessellation\\capture-source-geometry.json"
+    }
+  ],
+  "remap_policy": "Original receipt/profile paths preserved byte-exact. If staging is absent, use these canonical identical assets/records in a NEW profile/output, earning a new binding. Do not rewrite these frozen receipts."
+}

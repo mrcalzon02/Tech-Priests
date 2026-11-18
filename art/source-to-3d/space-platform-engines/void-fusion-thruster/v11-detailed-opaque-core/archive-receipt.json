@@ -1,0 +1,9 @@
+{
+  "status": "PASS_PACKED_DETAILED_SOURCE_GLb_WELL_AND_RECEIPTS_ARCHIVE_CRC",
+  "archive": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\narrow-void-fusion-v11-detailed-capture-handoff.zip",
+  "sha256": "d0885d79186f10284f8e9399cf832540fbcbd3e99c475621fd488325db1ca244",
+  "byte_size": 47429688,
+  "body_glb_sha256": "2b1f7164dc6df970aef9c9f1367bf8cf30f82ba3471d1eb9fcf6e84821d3d137",
+  "source_sha256": "61e9a02667e2c6124fbd738adfb48fb3b4180ba9b59da86165117b0a76b28d4d",
+  "scope": "Portable editing/capture source with packed images and embedded GLB, proper deep well, independent receipts and actual viewed images. Staged historical rebuild inputs remain in preserved build folders; capture/runtime pixel acceptance remains separate."
+}

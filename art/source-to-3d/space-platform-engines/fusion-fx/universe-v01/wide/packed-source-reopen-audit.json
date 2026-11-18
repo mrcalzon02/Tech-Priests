@@ -1,0 +1,936 @@
+{
+  "status": "PASS_ACTUAL_CANONICAL_PACKED_FX_DERIVATIVE_REOPEN_NO_RESAVE",
+  "master": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\art\\source-to-3d\\space-platform-engines\\fusion-fx\\universe-v01\\wide\\capture-master.blend",
+  "master_sha256": "dd05d1a70a609279e7fdc77b17b263739926dabd87ed88810460b62b897a0096",
+  "loaded_from_canonical_directory": true,
+  "all_image_datablocks_packed_and_loaded": true,
+  "image_count": 40,
+  "images": [
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.07450980693101883,
+        0.08235294371843338,
+        0.08627451211214066,
+        1.0
+      ],
+      "name": "armor-basecolor",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        512,
+        512
+      ],
+      "users": 2,
+      "colorspace": "sRGB",
+      "packed_bytes": 181531,
+      "packed_sha256": "89eda478ebfed275af7b5221ae8cb225d8cd47632ab3b03c74bdc4f515923fb2"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.07450980693101883,
+        0.08235294371843338,
+        0.08627451211214066,
+        1.0
+      ],
+      "name": "armor-basecolor.001",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        512,
+        512
+      ],
+      "users": 2,
+      "colorspace": "sRGB",
+      "packed_bytes": 181531,
+      "packed_sha256": "89eda478ebfed275af7b5221ae8cb225d8cd47632ab3b03c74bdc4f515923fb2"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.4901961088180542,
+        0.4901961088180542,
+        1.0,
+        1.0
+      ],
+      "name": "armor-normal",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        512,
+        512
+      ],
+      "users": 2,
+      "colorspace": "Non-Color",
+      "packed_bytes": 423610,
+      "packed_sha256": "76e6b0a4786ce571339c91243a85de43971f71d2123b52b5208011a0c571b606"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.4901961088180542,
+        0.4901961088180542,
+        1.0,
+        1.0
+      ],
+      "name": "armor-normal.001",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        512,
+        512
+      ],
+      "users": 2,
+      "colorspace": "Non-Color",
+      "packed_bytes": 423610,
+      "packed_sha256": "76e6b0a4786ce571339c91243a85de43971f71d2123b52b5208011a0c571b606"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        1.0,
+        0.5372549295425415,
+        0.6509804129600525,
+        1.0
+      ],
+      "name": "armor-orm",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        512,
+        512
+      ],
+      "users": 2,
+      "colorspace": "Non-Color",
+      "packed_bytes": 284121,
+      "packed_sha256": "b2bf526c9f29b16f50c47b7e017d3792b75ca4f17820e9abd8f696fd370a1a05"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        1.0,
+        0.5372549295425415,
+        0.6509804129600525,
+        1.0
+      ],
+      "name": "armor-orm.001",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        512,
+        512
+      ],
+      "users": 2,
+      "colorspace": "Non-Color",
+      "packed_bytes": 284121,
+      "packed_sha256": "b2bf526c9f29b16f50c47b7e017d3792b75ca4f17820e9abd8f696fd370a1a05"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.24705883860588074,
+        0.1725490242242813,
+        0.0784313753247261,
+        1.0
+      ],
+      "name": "bronze-basecolor",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        512,
+        512
+      ],
+      "users": 4,
+      "colorspace": "sRGB",
+      "packed_bytes": 234105,
+      "packed_sha256": "6445d8c43dae3794486163d4cdfa3a7580d3448b94f1b15c2f50ca1242bd7481"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.24705883860588074,
+        0.1725490242242813,
+        0.0784313753247261,
+        1.0
+      ],
+      "name": "bronze-basecolor.001",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        512,
+        512
+      ],
+      "users": 2,
+      "colorspace": "sRGB",
+      "packed_bytes": 234105,
+      "packed_sha256": "6445d8c43dae3794486163d4cdfa3a7580d3448b94f1b15c2f50ca1242bd7481"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.4901961088180542,
+        0.4901961088180542,
+        1.0,
+        1.0
+      ],
+      "name": "bronze-normal",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        512,
+        512
+      ],
+      "users": 2,
+      "colorspace": "Non-Color",
+      "packed_bytes": 423610,
+      "packed_sha256": "76e6b0a4786ce571339c91243a85de43971f71d2123b52b5208011a0c571b606"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.4901961088180542,
+        0.4901961088180542,
+        1.0,
+        1.0
+      ],
+      "name": "bronze-normal.001",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        512,
+        512
+      ],
+      "users": 2,
+      "colorspace": "Non-Color",
+      "packed_bytes": 423610,
+      "packed_sha256": "76e6b0a4786ce571339c91243a85de43971f71d2123b52b5208011a0c571b606"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        1.0,
+        0.529411792755127,
+        0.7215686440467834,
+        1.0
+      ],
+      "name": "bronze-orm",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        512,
+        512
+      ],
+      "users": 4,
+      "colorspace": "Non-Color",
+      "packed_bytes": 284607,
+      "packed_sha256": "c4a63b2f4781bcb6721564011055be442d807012368b96671e635dfbf9617abb"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        1.0,
+        0.529411792755127,
+        0.7215686440467834,
+        1.0
+      ],
+      "name": "bronze-orm.001",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        512,
+        512
+      ],
+      "users": 2,
+      "colorspace": "Non-Color",
+      "packed_bytes": 284607,
+      "packed_sha256": "c4a63b2f4781bcb6721564011055be442d807012368b96671e635dfbf9617abb"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.10588236153125763,
+        0.11372549831867218,
+        0.12156863510608673,
+        1.0
+      ],
+      "name": "cast-basecolor",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        512,
+        512
+      ],
+      "users": 2,
+      "colorspace": "sRGB",
+      "packed_bytes": 192238,
+      "packed_sha256": "4d0e3a6483d77b81b30d68152922fb7c58458563abdbddff04900bb2dc6b063e"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.10588236153125763,
+        0.11372549831867218,
+        0.12156863510608673,
+        1.0
+      ],
+      "name": "cast-basecolor.001",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        512,
+        512
+      ],
+      "users": 2,
+      "colorspace": "sRGB",
+      "packed_bytes": 192238,
+      "packed_sha256": "4d0e3a6483d77b81b30d68152922fb7c58458563abdbddff04900bb2dc6b063e"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.4901961088180542,
+        0.4901961088180542,
+        1.0,
+        1.0
+      ],
+      "name": "cast-normal",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        512,
+        512
+      ],
+      "users": 2,
+      "colorspace": "Non-Color",
+      "packed_bytes": 423610,
+      "packed_sha256": "76e6b0a4786ce571339c91243a85de43971f71d2123b52b5208011a0c571b606"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.4901961088180542,
+        0.4901961088180542,
+        1.0,
+        1.0
+      ],
+      "name": "cast-normal.001",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        512,
+        512
+      ],
+      "users": 2,
+      "colorspace": "Non-Color",
+      "packed_bytes": 423610,
+      "packed_sha256": "76e6b0a4786ce571339c91243a85de43971f71d2123b52b5208011a0c571b606"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        1.0,
+        0.6705882549285889,
+        0.6196078658103943,
+        1.0
+      ],
+      "name": "cast-orm",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        512,
+        512
+      ],
+      "users": 2,
+      "colorspace": "Non-Color",
+      "packed_bytes": 284661,
+      "packed_sha256": "c61545763c5bab06a2776ab3a6e8837182db35c6b8c8ab8f21789a2ae5894f7a"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        1.0,
+        0.6705882549285889,
+        0.6196078658103943,
+        1.0
+      ],
+      "name": "cast-orm.001",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        512,
+        512
+      ],
+      "users": 2,
+      "colorspace": "Non-Color",
+      "packed_bytes": 284661,
+      "packed_sha256": "c61545763c5bab06a2776ab3a6e8837182db35c6b8c8ab8f21789a2ae5894f7a"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.4745098352432251,
+        0.44705885648727417,
+        0.364705890417099,
+        1.0
+      ],
+      "name": "ceramic-basecolor",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        512,
+        512
+      ],
+      "users": 2,
+      "colorspace": "sRGB",
+      "packed_bytes": 324402,
+      "packed_sha256": "5c3599ef584c2f1f39a7a5ac197ac5886af5e17603220f555c6017ae2e2018d6"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.4901961088180542,
+        0.4901961088180542,
+        1.0,
+        1.0
+      ],
+      "name": "ceramic-normal",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        512,
+        512
+      ],
+      "users": 2,
+      "colorspace": "Non-Color",
+      "packed_bytes": 423610,
+      "packed_sha256": "76e6b0a4786ce571339c91243a85de43971f71d2123b52b5208011a0c571b606"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        1.0,
+        0.6705882549285889,
+        0.05882353335618973,
+        1.0
+      ],
+      "name": "ceramic-orm",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        512,
+        512
+      ],
+      "users": 2,
+      "colorspace": "Non-Color",
+      "packed_bytes": 281619,
+      "packed_sha256": "e51bd53fc6a6136f57c238bc9f50d0b09572dcaff88faeba429628a94d9cadc9"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.22745099663734436,
+        0.0470588281750679,
+        0.027450982481241226,
+        1.0
+      ],
+      "name": "copper-basecolor",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        512,
+        512
+      ],
+      "users": 2,
+      "colorspace": "sRGB",
+      "packed_bytes": 220729,
+      "packed_sha256": "54a5b68a90d631a8ac37f4fdaa53483c58c835ee77fdf2507a5de9e08dba9f10"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.4901961088180542,
+        0.4901961088180542,
+        1.0,
+        1.0
+      ],
+      "name": "copper-normal",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        512,
+        512
+      ],
+      "users": 2,
+      "colorspace": "Non-Color",
+      "packed_bytes": 423610,
+      "packed_sha256": "76e6b0a4786ce571339c91243a85de43971f71d2123b52b5208011a0c571b606"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        1.0,
+        0.5372549295425415,
+        0.6196078658103943,
+        1.0
+      ],
+      "name": "copper-orm",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        512,
+        512
+      ],
+      "users": 2,
+      "colorspace": "Non-Color",
+      "packed_bytes": 283992,
+      "packed_sha256": "023eb98129e39e7d597eba18e2af43027bfa428a045f4c2aa676245fb6332f10"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "dgordillo-sculpt-normal",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        1024,
+        1024
+      ],
+      "users": 2,
+      "colorspace": "Non-Color",
+      "packed_bytes": 1020404,
+      "packed_sha256": "46e6a66303569b6b46d4f22e5260bdd1e7da9dc27aa63cf3667d4b29bf5c279d"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.01568627543747425,
+        0.3333333432674408,
+        0.003921568859368563,
+        1.0
+      ],
+      "name": "green-basecolor",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        512,
+        512
+      ],
+      "users": 39,
+      "colorspace": "sRGB",
+      "packed_bytes": 175152,
+      "packed_sha256": "6ddf14cfb25ca3a8115827d5d77e58a7a8d0eceab266760c0041ad420b33ee98"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.4901961088180542,
+        0.4901961088180542,
+        1.0,
+        1.0
+      ],
+      "name": "green-normal",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        512,
+        512
+      ],
+      "users": 39,
+      "colorspace": "Non-Color",
+      "packed_bytes": 423610,
+      "packed_sha256": "76e6b0a4786ce571339c91243a85de43971f71d2123b52b5208011a0c571b606"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        1.0,
+        0.4274510145187378,
+        0.0784313753247261,
+        1.0
+      ],
+      "name": "green-orm",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        512,
+        512
+      ],
+      "users": 39,
+      "colorspace": "Non-Color",
+      "packed_bytes": 280087,
+      "packed_sha256": "375869a6f3565914c5e48f32066ff434721bc6579f738b7969da9174df24ace6"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "Noctilith-sprite-mineral-00-basecolor",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        1024,
+        1024
+      ],
+      "users": 2,
+      "colorspace": "sRGB",
+      "packed_bytes": 1002834,
+      "packed_sha256": "8d66602a7e577c293bc0687a8ba6284455beaf2522b9b2ee6939512fc4f6f80f"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.501960813999176,
+        0.501960813999176,
+        1.0,
+        1.0
+      ],
+      "name": "Noctilith-sprite-mineral-00-normal",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        1024,
+        1024
+      ],
+      "users": 2,
+      "colorspace": "Non-Color",
+      "packed_bytes": 1534633,
+      "packed_sha256": "3c0a8f3896ad5477b2db55d3550bbc6c1dadd642bd6cb0aceb7eeb0d8e415862"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        1.0,
+        0.8509804606437683,
+        0.0,
+        1.0
+      ],
+      "name": "Noctilith-sprite-mineral-00-orm",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        1024,
+        1024
+      ],
+      "users": 2,
+      "colorspace": "Non-Color",
+      "packed_bytes": 642512,
+      "packed_sha256": "2d879f04ca41484a77b2844a125ae7ad428625317564baf4200da67b7ed43f3b"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "Noctilith-sprite-mineral-01-basecolor",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        1024,
+        1024
+      ],
+      "users": 2,
+      "colorspace": "sRGB",
+      "packed_bytes": 864230,
+      "packed_sha256": "35b06be8c6aad555a4298c3b4831d33207d9b1b08c1552ae3ec550d7b44bd1e4"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.501960813999176,
+        0.501960813999176,
+        1.0,
+        1.0
+      ],
+      "name": "Noctilith-sprite-mineral-01-normal",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        1024,
+        1024
+      ],
+      "users": 2,
+      "colorspace": "Non-Color",
+      "packed_bytes": 1302079,
+      "packed_sha256": "c24c49ae7081f488f1df5ecc758a86c8b78fb7d047fae5f2150b1b1a2c41f75f"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        1.0,
+        0.8509804606437683,
+        0.0,
+        1.0
+      ],
+      "name": "Noctilith-sprite-mineral-01-orm",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        1024,
+        1024
+      ],
+      "users": 2,
+      "colorspace": "Non-Color",
+      "packed_bytes": 566384,
+      "packed_sha256": "c3133fe0ed9e2655c0c179ba533d5c0d4fa47b03bbef94e07c40cc61a5b508f9"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "Noctilith-sprite-mineral-02-basecolor",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        1024,
+        1024
+      ],
+      "users": 2,
+      "colorspace": "sRGB",
+      "packed_bytes": 869541,
+      "packed_sha256": "008d241e6b5f27c275e8e17512d7b56a9a0e9617d351195e5fe37c984169f06f"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.501960813999176,
+        0.501960813999176,
+        1.0,
+        1.0
+      ],
+      "name": "Noctilith-sprite-mineral-02-normal",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        1024,
+        1024
+      ],
+      "users": 2,
+      "colorspace": "Non-Color",
+      "packed_bytes": 1315830,
+      "packed_sha256": "b88577c74cd032dd0ae480e76476f6a00413302a6ed0a0dd44adb39e0e486bbc"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        1.0,
+        0.8509804606437683,
+        0.0,
+        1.0
+      ],
+      "name": "Noctilith-sprite-mineral-02-orm",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        1024,
+        1024
+      ],
+      "users": 2,
+      "colorspace": "Non-Color",
+      "packed_bytes": 566363,
+      "packed_sha256": "a56cb957210c7f6fb5877b6e5516ac3c1611d8d39d3ca5be2da94ea3150c8f9b"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.12156863510608673,
+        0.125490203499794,
+        0.12941177189350128,
+        1.0
+      ],
+      "name": "wide-bay-v16-basecolor",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        256,
+        256
+      ],
+      "users": 2,
+      "colorspace": "sRGB",
+      "packed_bytes": 80764,
+      "packed_sha256": "5b4447621f19c8ff1ce6e1d1b371621f127c7b7ac3f02b81755535484a164064"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.4941176772117615,
+        0.5058823823928833,
+        1.0,
+        1.0
+      ],
+      "name": "wide-bay-v16-normal",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        256,
+        256
+      ],
+      "users": 2,
+      "colorspace": "Non-Color",
+      "packed_bytes": 99333,
+      "packed_sha256": "5ed47b2b481caa851096c34e53297e2582b18aa0e599b46c484cdba45c575411"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        1.0,
+        0.9098039865493774,
+        0.0,
+        1.0
+      ],
+      "name": "wide-bay-v16-orm",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        256,
+        256
+      ],
+      "users": 2,
+      "colorspace": "Non-Color",
+      "packed_bytes": 65664,
+      "packed_sha256": "31cfd8edbc251394e0cfa1e1034a17d902e3038efaff47b180114b01588843f9"
+    }
+  ],
+  "scene_objects": 1174,
+  "physical_meshes_expected": 910,
+  "physical_object_names_present": true,
+  "save_export_or_render_performed": false,
+  "manual_analytic_FX_phase_helpers_preserved": "tooling/tools/art/thruster_resumption/animation",
+  "scope": "Read-only opening confirms portable packed derivative/image loading; final64 source/wrap/coverage checks are byte-preserved separately. No new native pixel proof or owner artistic approval inferred."
+}

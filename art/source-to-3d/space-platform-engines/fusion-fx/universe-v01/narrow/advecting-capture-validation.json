@@ -1,0 +1,135 @@
+{
+  "status": "PASS_FINAL64_ADVECTING_SOURCE_AND_COVERAGE",
+  "prototype": "void-fusion-thruster",
+  "body_glb": {
+    "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\void-fusion-v11.glb",
+    "sha256": "2b1f7164dc6df970aef9c9f1367bf8cf30f82ba3471d1eb9fcf6e84821d3d137"
+  },
+  "capture_receipt_sha256": "38fbbce171d7b9d3a0ec7bc497afa24eb51f5c17f5c54873c9ebcd51bc640cd9",
+  "package_validation_sha256": "3e36fe6aec216ce9f11d7f5a7eac35e990ce24c40427fdc69dcafb982e55fd10",
+  "verifier_sha256": "086889a629aa4067aaa69421188ac0caf37c7fa2e6092e1405f2197f4abaeac1",
+  "master_sha256": "54e77d6f539ba29f60d1880f067230158501f0e9db770f21f9ec15528f10e1e0",
+  "actual_source_pngs_checked": 134,
+  "actual_dynamic_pngs_checked": 130,
+  "actual_rendered_wrap": {
+    "working_light": true,
+    "field": true
+  },
+  "actual_physical_coverage_witness_exact": true,
+  "actual_working_energy_preserves_body_coverage": true,
+  "advecting_objects": 128,
+  "nonrecycled_adjacent_motion_witnesses": 8064,
+  "strict_downstream_displacement_range": [
+    0.026859760284423828,
+    0.20437049865722656
+  ],
+  "strict_acceleration_witnesses": 7812,
+  "strict_acceleration_range": [
+    0.0028162002563476562,
+    0.0028209686279296875
+  ],
+  "actual_surface_arc_count": 72,
+  "maximum_actual_surface_ray_error": 9.06402249678704e-08,
+  "white_clipped_ejecta_pixels": 0,
+  "field_renderer": "BLENDER_EEVEE",
+  "field_renderer_settings": {
+    "taa_render_samples": 64,
+    "volumetric_samples": 128,
+    "volumetric_tile_size": "2",
+    "volumetric_start": 10.0,
+    "volumetric_end": 30.0,
+    "volumetric_sample_distribution": 0.0,
+    "use_volumetric_shadows": false
+  },
+  "registration": {
+    "cell": [
+      288,
+      1304
+    ],
+    "native_pixels_per_source_unit": 32,
+    "scale": 0.31499174267753466,
+    "shift_tiles": [
+      0.024437802561340448,
+      3.57782153840616
+    ],
+    "source_deck_origin": [
+      0,
+      0,
+      0
+    ],
+    "source_deck_pixel": [
+      141.51736450195312,
+      339.32421875
+    ],
+    "native_cut_y": 0.5,
+    "aperture_source": [
+      0.0,
+      -4.224999904632568,
+      0.06000000983476639
+    ],
+    "aperture_pixel": [
+      141.51736450195312,
+      638.5167236328125
+    ],
+    "aperture_native_tiles": [
+      0.0,
+      3.4450990159091845
+    ],
+    "field_origin_source": [
+      0.0,
+      -4.450000190734864,
+      0.06000000983476639
+    ],
+    "field_origin_pixel": [
+      141.51736450195312,
+      654.6796264648438
+    ],
+    "field_origin_native_tiles": [
+      0.0,
+      3.6041984199650967
+    ],
+    "status": "CANDIDATE_REQUIRES_NATIVE_FIT",
+    "original_full_canvas_registration": {
+      "cell": [
+        1536,
+        1536
+      ],
+      "scale": 0.31499174267753466,
+      "shift_tiles": [
+        0.024437802561340448,
+        3.1447078922245497
+      ],
+      "source_deck_pixel": [
+        765.5173645019531,
+        499.32421875
+      ],
+      "aperture_pixel": [
+        765.5173645019531,
+        798.5167236328125
+      ],
+      "field_origin_pixel": [
+        765.5173645019531,
+        814.6796264648438
+      ]
+    },
+    "common_crop_box": [
+      624,
+      160,
+      912,
+      1464
+    ]
+  },
+  "brightness_contract": {
+    "asset_normalization_power_watts": 18000000,
+    "native_multiplier": "L = actual record.operation.factor /1.5; unpowered L=0",
+    "native_premultiplied_color": "{r=L,g=L,b=L,a=L}",
+    "plume_gate": "Powered AND native entity working AND platform on_the_path AND not paused",
+    "global_baked_brightness_sine": false,
+    "scope": "Runtime helper integration and native observations required before claiming synchronization."
+  },
+  "separate_native_draw_control_evidence": {
+    "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\docs\\art\\thruster-resumption-20261117\\animation-capture\\native-power\\validation.json",
+    "sha256": "9f35e365635b40d37a7bcde6b1f54aa6c21c8bf902f4d365e1431f0cc17cf9e7"
+  },
+  "scope": "Complete source-derived 64-cell capture, real wrap/coverage, actual surface anchors and downstream motion. Real electrical control is separately native-proved. Final detailed-body pixels, fit, native assembly and owner appearance acceptance remain separate gates. No physical fluid simulation or background refraction is claimed."
+}

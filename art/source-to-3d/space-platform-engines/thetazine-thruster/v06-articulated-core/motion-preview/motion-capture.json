@@ -1,0 +1,678 @@
+{
+  "status": "CAPTURED64_MECHANICAL_CYCLE_PLUS_COLD_AND_WRAP_REQUIRES_VIEW",
+  "binding": {
+    "source_sha256": "35c4f470ad92015b70d056086b7f6e53573f4ccabbecab6af346ab382734871e",
+    "capture_script_sha256": "e9c80971d77bc40a6bf1cf1ac6e27ae7a7a6e80a01c002acd2548646da900472"
+  },
+  "pid": 41628,
+  "fps": 30,
+  "cold_frame": 0,
+  "working_frames": [
+    1,
+    64
+  ],
+  "wrap_frame": 65,
+  "frames": [
+    {
+      "view": "mechanism",
+      "frame": 0,
+      "file": "mechanism\\00.png",
+      "sha256": "e583a69d3a4f335480e2334d4dd0b68646bf8c8922f2166122462822ddca123c",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 1,
+      "file": "mechanism\\01.png",
+      "sha256": "81a1c8ac1a6af79cd0305876d5a08c1bd523ee56b9a1b5fe2b62a3e35d93a8c1",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 2,
+      "file": "mechanism\\02.png",
+      "sha256": "64e860b179dd2498d3b7af08914540d44405d7afab2877ef33d149b7ee485d81",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 3,
+      "file": "mechanism\\03.png",
+      "sha256": "fad5ab1e89eb93be73b75bfafa0058d3bcd54b0fb460f7ca279d018493802107",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 4,
+      "file": "mechanism\\04.png",
+      "sha256": "b300f445e31af803cf776be1ae6a56585378b40451335bfc5177d04de7fd432f",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 5,
+      "file": "mechanism\\05.png",
+      "sha256": "eea7b6c5574c4891b20867cc85795374f99a40ee358aad9e984e17beb0d8d2cb",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 6,
+      "file": "mechanism\\06.png",
+      "sha256": "bd5bd5f61cb809f639a175b7c5cea248d1284af3b6335720e3cced9397a8e6fe",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 7,
+      "file": "mechanism\\07.png",
+      "sha256": "9c0269e56cf029c81bfb59133225125309299d8727574eea5741d5823c64613c",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 8,
+      "file": "mechanism\\08.png",
+      "sha256": "569a89ba3d46fcd07eb36425cd3a0bee6a5332a74e07bdf9172aac22a9d263fd",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 9,
+      "file": "mechanism\\09.png",
+      "sha256": "42b0b15d4fdd1669c821ba10ea4e65bf1c139958f5f68049e372f22f1bf35db1",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 10,
+      "file": "mechanism\\10.png",
+      "sha256": "ff521f5e693016c9015b8194648e8dec30115927ae8a43c61301fc8bccf28947",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 11,
+      "file": "mechanism\\11.png",
+      "sha256": "ab0c505007241536ecc91102cbcf38d0e68b8f3ab34c45c0371f889c46371adc",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 12,
+      "file": "mechanism\\12.png",
+      "sha256": "d573e681beae7eedab165198d837717e0ff8b7fd181228c1e30e50a5d7fb6a30",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 13,
+      "file": "mechanism\\13.png",
+      "sha256": "6c9eebbc899a8730c0fe092db46ebf26e1c0164e0d3131b226d558e50234a5f4",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 14,
+      "file": "mechanism\\14.png",
+      "sha256": "0fd7193949ce5a8a52f16088746ba7f680e1fd45a6a20b9224659d4aadb65399",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 15,
+      "file": "mechanism\\15.png",
+      "sha256": "5cb2e893ec61143899135de0e18c91a59b5fd4ea8f4a94ce1c5b698a2660421f",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 16,
+      "file": "mechanism\\16.png",
+      "sha256": "ee4cdea384d023d0ed538153eed8359bb71aae1ae5544e6e818c72c146733e49",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 17,
+      "file": "mechanism\\17.png",
+      "sha256": "ad567947419bf249eb5bdbc04afd98f6e083fee3d9c7c20e0df55dba8eaa5b3c",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 18,
+      "file": "mechanism\\18.png",
+      "sha256": "9ff4482b9e5c477e803a513888145b171642206bb843a43bd0f895b10267492b",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 19,
+      "file": "mechanism\\19.png",
+      "sha256": "a25687c74a9084556ceb890a3c413a24200a1a2769d7a2cb14b18e3010c604ac",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 20,
+      "file": "mechanism\\20.png",
+      "sha256": "ef75e177dcd0a3139ddbec4bd13f5305bb482b38a3ae131c1bdef95f8ae0b380",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 21,
+      "file": "mechanism\\21.png",
+      "sha256": "4d65c733c689a47375aaf8cd57ef68a2b962369e4a4efb8fd6d7daf255a9d07f",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 22,
+      "file": "mechanism\\22.png",
+      "sha256": "47f319481194f01ed09e19a9a61171cdc576c5d149e9aff0c64f9b78bb0aba54",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 23,
+      "file": "mechanism\\23.png",
+      "sha256": "aaa35cd26ae97e87f0d6a6e4645558314258ca637d1134280332cd5ff422eaf0",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 24,
+      "file": "mechanism\\24.png",
+      "sha256": "545fcd25bdf471f27763b56e26f6b1e0f51adf89697e37430dce50349dbdefa6",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 25,
+      "file": "mechanism\\25.png",
+      "sha256": "d1340aea4224b9e90d774abe45f4be1bc0f81dd7e4ebf6ff48c0c506d11073af",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 26,
+      "file": "mechanism\\26.png",
+      "sha256": "ccee3ffc8b43a9cd23090c1a88eb5b3cf8a616d846b63a63197f94ec9785eaab",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 27,
+      "file": "mechanism\\27.png",
+      "sha256": "ad9a100b1eded8e41044d67cf3162855965a2fd5627e3796657afe60870b5ed5",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 28,
+      "file": "mechanism\\28.png",
+      "sha256": "0a69713a6bf26ab4f948dc802cf1fa84ae022a3eacb4aaaf32ddf627146a917e",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 29,
+      "file": "mechanism\\29.png",
+      "sha256": "4323ba7ebb0e9912dc7361ea48790418a70b46f9c5fe46edb817178e3b7ce6ea",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 30,
+      "file": "mechanism\\30.png",
+      "sha256": "9b66b14f21d44a04886d94f7e515813ced400b414c1e3c06b1f10d6fb37153f2",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 31,
+      "file": "mechanism\\31.png",
+      "sha256": "83edcde440e91ecb0516ce8ecd8d7a59141b73fb985f35e244088e279208efa7",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 32,
+      "file": "mechanism\\32.png",
+      "sha256": "59ce18ab9ff4959c2f451566a1f8c3b34169fc4114e1aadc8d00461252907df9",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 33,
+      "file": "mechanism\\33.png",
+      "sha256": "b6fd5c535b2d350d37541dcc15c8236299396b598e872c09dde874043d5fe9cd",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 34,
+      "file": "mechanism\\34.png",
+      "sha256": "ce13b21d122c16bb60bfcbe4d957eeed1b72829c98fe3fa7a4a29018deb5c459",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 35,
+      "file": "mechanism\\35.png",
+      "sha256": "bac7f859e8bb38754a57629e5a6852b43f18d3c412e302b7e87b6bb21d29f8a1",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 36,
+      "file": "mechanism\\36.png",
+      "sha256": "e9c20fff6fd169c4d01a6f6e8bf986080d2527fd8bdbe9c2f1e7ef653f8219ed",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 37,
+      "file": "mechanism\\37.png",
+      "sha256": "9c998335c62804903de909305087c9c1b3b020595dad11180a82dce4d0409a71",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 38,
+      "file": "mechanism\\38.png",
+      "sha256": "a2d5818965fef3436865e0a37e2977e37979238a6f71b00226d2e52ba58cb46f",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 39,
+      "file": "mechanism\\39.png",
+      "sha256": "8f37824a8c2d6b7ec0cb9e6be72186df3140a03857ceae085ec3b1c6d241de3a",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 40,
+      "file": "mechanism\\40.png",
+      "sha256": "be122cdb98a6a25d4adca20cc8698a51a512dc934a4cd758d58686073b10ab6c",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 41,
+      "file": "mechanism\\41.png",
+      "sha256": "95a9c36f5096257175cd84f49792d44bc3403aa400fe96d0b818a20b0563cbeb",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 42,
+      "file": "mechanism\\42.png",
+      "sha256": "58b1ee25393097ae02bdb28eae3615570d33dbd4bb9ee2a649564c7ef76654f7",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 43,
+      "file": "mechanism\\43.png",
+      "sha256": "e0e55a5b5a18e16ef734ce26d373c4bdccdb90dbc4e4021623d6e00321e11def",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 44,
+      "file": "mechanism\\44.png",
+      "sha256": "a6d05bf3a7a084897a4800d26214d19d25480c6a507ebe04cbb6664e7149628d",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 45,
+      "file": "mechanism\\45.png",
+      "sha256": "5a55c3f05c41a06835af9b943208c024881dfec19b33b74fcf137aa255819354",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 46,
+      "file": "mechanism\\46.png",
+      "sha256": "27b40674dc43c5066f427c58370f2f8adedba9f13b75b273e176fa671d7bbb61",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 47,
+      "file": "mechanism\\47.png",
+      "sha256": "3e8599622d129674b6d2ef092775064bd40539ff7df927299c9f0552620b848a",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 48,
+      "file": "mechanism\\48.png",
+      "sha256": "7cb8da60f6a9a58a8fa4ed4d03b81655d677754f0cc14c65eea4b4b24d22daac",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 49,
+      "file": "mechanism\\49.png",
+      "sha256": "f2c4611b79cf107d9a08105ada5914fefcaa92396e7cf679f78c2fb2b17d56b1",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 50,
+      "file": "mechanism\\50.png",
+      "sha256": "30fdd200936b6fced55bb3213f6624ec1bfb47ddd6db11a790868c1c66cdbbd6",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 51,
+      "file": "mechanism\\51.png",
+      "sha256": "9798f0cc48366987a0dbd6c1f242de4034a62388a20c723ae77b5ec771f7afa2",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 52,
+      "file": "mechanism\\52.png",
+      "sha256": "72a7eef44e4590ac8106260a0ead69b76329f6f2a7da429e1f657d718ee545e4",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 53,
+      "file": "mechanism\\53.png",
+      "sha256": "3eb99a99b75ca81f69919ad9e0a27d3393d483c547427ebb5f32771ebdd618cd",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 54,
+      "file": "mechanism\\54.png",
+      "sha256": "8972f1f38b8a4cee6ccbefedd181ef489b96100d804ca20440dfaf8e1eb94d19",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 55,
+      "file": "mechanism\\55.png",
+      "sha256": "5a8dc0454ad83584a1b7d000d9ac9caaeb92be419b530b969f23857854b0192b",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 56,
+      "file": "mechanism\\56.png",
+      "sha256": "3720a0823262f171ce67d51df0f445da59cf600ea13a507abf00547985762358",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 57,
+      "file": "mechanism\\57.png",
+      "sha256": "73e9390d0802fd3d7961ff908b00edf5d7d3a1cbe0f55f14871d58bd08c5a862",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 58,
+      "file": "mechanism\\58.png",
+      "sha256": "0c0f8c2caf25bfe949fa28132421ffb6503ac41890509ace913ab7db0412d5cb",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 59,
+      "file": "mechanism\\59.png",
+      "sha256": "53947118d8a18322155e58017866b0e0b8e2863bf7c90e2ac1b84c235edc248a",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 60,
+      "file": "mechanism\\60.png",
+      "sha256": "b8e8bdadecb93fb8f1032d6bb421aac3cd738cda5f7ba77d020ca4fbbc37e38a",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 61,
+      "file": "mechanism\\61.png",
+      "sha256": "c7bc9698f13b9b2543f679ac8e28f490dd28f674a95895d5267a3a8a98b504c0",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 62,
+      "file": "mechanism\\62.png",
+      "sha256": "44fa1a2f8f8327391266cf0ef79faddb87100636fc182107e98fb2ccb82c8fa3",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 63,
+      "file": "mechanism\\63.png",
+      "sha256": "4dd5ab883f1329c473fd8b363d7b775a9febcd84b6a306e6eabd8b8c892f7887",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 64,
+      "file": "mechanism\\64.png",
+      "sha256": "4b74187eaa14b3b75d2df95c9c08dd53c77ec90168b450f0bc2e6a6f9675d4b3",
+      "size": [
+        640,
+        768
+      ]
+    },
+    {
+      "view": "mechanism",
+      "frame": 65,
+      "file": "mechanism\\65.png",
+      "sha256": "2eed866dd7328df9b7eab424a6a69d62e9f673d907200356ba7d38479195ef3d",
+      "size": [
+        640,
+        768
+      ]
+    }
+  ],
+  "scope": "Actual source poses with original mechanisms and host-following new hardware. Source-only combustion is present only in whole view; no native timing/state or new runtime atlas claim."
+}

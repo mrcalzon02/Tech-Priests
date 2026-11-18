@@ -1,0 +1,1390 @@
+[
+  {
+    "id": "wide-winding--1-0",
+    "collection": "FMPL | PIPETTE | wide-winding--1-0",
+    "objects": [
+      "FMPL | PIPETTE | wide-winding--1-0 | continuous visible route",
+      "Pipette library gland wide-winding--1-0 start 0",
+      "Pipette library gland wide-winding--1-0 start 1",
+      "Pipette library gland wide-winding--1-0 start 2",
+      "Pipette library gland wide-winding--1-0 end 0",
+      "Pipette library gland wide-winding--1-0 end 1",
+      "Pipette library gland wide-winding--1-0 end 2"
+    ],
+    "typed_family": "single_wire",
+    "typed_payload": "power",
+    "fittings": {
+      "start": "none",
+      "end": "none"
+    },
+    "actual_library_fittings": [
+      {
+        "terminal": "start",
+        "architecture_id": "wire_mineral_insulated",
+        "joint_id": "cable_gland",
+        "library_build_invoked": true,
+        "diameter_argument": 0.04725000000000001,
+        "objects": [
+          "Pipette library gland wide-winding--1-0 start 0",
+          "Pipette library gland wide-winding--1-0 start 1",
+          "Pipette library gland wide-winding--1-0 start 2"
+        ],
+        "actual_recipe_roles": [
+          "six-flat-retaining-nut",
+          "concentric-insertion-sleeve",
+          "actual-ferrule-or-grommet"
+        ],
+        "generated_nut_backplane_offset_from_port": -0.01004065666347742,
+        "actual_mesh_based_seating_translation": [
+          0.0009844359010457993,
+          -0.0054422225803136826,
+          0.008380209095776081
+        ],
+        "receiving_mount_plane": [
+          -1.2178453207015991,
+          0.10736120492219925,
+          0.9034833312034607
+        ],
+        "port": {
+          "id": "wide-winding--1-0.start",
+          "xyz_bu": [
+            -1.2178453207015991,
+            0.10736120492219925,
+            0.9034833312034607
+          ],
+          "outward_normal": [
+            0.0980449765920639,
+            -0.5420185923576355,
+            0.8346275687217712
+          ]
+        }
+      },
+      {
+        "terminal": "end",
+        "architecture_id": "wire_mineral_insulated",
+        "joint_id": "cable_gland",
+        "library_build_invoked": true,
+        "diameter_argument": 0.04725000000000001,
+        "objects": [
+          "Pipette library gland wide-winding--1-0 end 0",
+          "Pipette library gland wide-winding--1-0 end 1",
+          "Pipette library gland wide-winding--1-0 end 2"
+        ],
+        "actual_recipe_roles": [
+          "six-flat-retaining-nut",
+          "concentric-insertion-sleeve",
+          "actual-ferrule-or-grommet"
+        ],
+        "generated_nut_backplane_offset_from_port": -0.010040654335170984,
+        "actual_mesh_based_seating_translation": [
+          0.0006566554657183588,
+          -0.005456939339637756,
+          0.00840269960463047
+        ],
+        "receiving_mount_plane": [
+          -1.2218900918960571,
+          -0.5452653765678406,
+          0.5754470825195312
+        ],
+        "port": {
+          "id": "wide-winding--1-0.end",
+          "xyz_bu": [
+            -1.2218900918960571,
+            -0.5452653765678406,
+            0.5754470825195312
+          ],
+          "outward_normal": [
+            0.065399669110775,
+            -0.5434844493865967,
+            0.8368678092956543
+          ]
+        }
+      }
+    ],
+    "module_hashes": {
+      "README.md": "f243e88a68fbdccdb70b828e72cae8109f401380d97e70d65bc02b35b30e850d",
+      "PIPETTE_STANDARD.md": "540a244a9192d2514c0c8ae97b657f0b896b8dddb170e5c51fb6d0f9554096be",
+      "core.py": "9a991dea7dd646faad8766326ef60e67c0618c283a81dbf297119ee6ec3761c7",
+      "blender_adapter.py": "724c1964fee8916b43dc86c0ff0185ec1646c1964662b2af1ea6ecbfbed68a1d",
+      "type_registry.json": "42e220db26a981956741a7ce268c8e74172382497cacf54a9a0b23691085e654",
+      "library_fittings.py": "3a6f75821350980c5080dc7c651cd4773f402424a8ac113c2d52943296804df7",
+      "library_geometry.py": "36daec4fcdbf5d333b04e26f5e592ca9ecece0f159b5e4ef86a110a102c5b48e",
+      "architecture_catalog.v1.json": "121cbadeb3f42912b25635a700a00a9bb22c5bd5a37050f4d6071225d978db98"
+    },
+    "warnings": [
+      "large section count may be invisible at standard Factorio camera"
+    ],
+    "proportion_regenerated_plan": true
+  },
+  {
+    "id": "wide-winding--1-1",
+    "collection": "FMPL | PIPETTE | wide-winding--1-1",
+    "objects": [
+      "FMPL | PIPETTE | wide-winding--1-1 | continuous visible route",
+      "Pipette library gland wide-winding--1-1 start 0",
+      "Pipette library gland wide-winding--1-1 start 1",
+      "Pipette library gland wide-winding--1-1 start 2",
+      "Pipette library gland wide-winding--1-1 end 0",
+      "Pipette library gland wide-winding--1-1 end 1",
+      "Pipette library gland wide-winding--1-1 end 2"
+    ],
+    "typed_family": "single_wire",
+    "typed_payload": "power",
+    "fittings": {
+      "start": "none",
+      "end": "none"
+    },
+    "actual_library_fittings": [
+      {
+        "terminal": "start",
+        "architecture_id": "wire_mineral_insulated",
+        "joint_id": "cable_gland",
+        "library_build_invoked": true,
+        "diameter_argument": 0.04725000000000001,
+        "objects": [
+          "Pipette library gland wide-winding--1-1 start 0",
+          "Pipette library gland wide-winding--1-1 start 1",
+          "Pipette library gland wide-winding--1-1 start 2"
+        ],
+        "actual_recipe_roles": [
+          "six-flat-retaining-nut",
+          "concentric-insertion-sleeve",
+          "actual-ferrule-or-grommet"
+        ],
+        "generated_nut_backplane_offset_from_port": -0.010040653171017766,
+        "actual_mesh_based_seating_translation": [
+          0.0009841426508501172,
+          -0.005442209076136351,
+          0.008380246348679066
+        ],
+        "receiving_mount_plane": [
+          -1.2178453207015991,
+          -0.6814082860946655,
+          0.3912504315376282
+        ],
+        "port": {
+          "id": "wide-winding--1-1.start",
+          "xyz_bu": [
+            -1.2178453207015991,
+            -0.6814082860946655,
+            0.3912504315376282
+          ],
+          "outward_normal": [
+            0.09801580756902695,
+            -0.5420174598693848,
+            0.834631621837616
+          ]
+        }
+      },
+      {
+        "terminal": "end",
+        "architecture_id": "wire_mineral_insulated",
+        "joint_id": "cable_gland",
+        "library_build_invoked": true,
+        "diameter_argument": 0.04725000000000001,
+        "objects": [
+          "Pipette library gland wide-winding--1-1 end 0",
+          "Pipette library gland wide-winding--1-1 end 1",
+          "Pipette library gland wide-winding--1-1 end 2"
+        ],
+        "actual_recipe_roles": [
+          "six-flat-retaining-nut",
+          "concentric-insertion-sleeve",
+          "actual-ferrule-or-grommet"
+        ],
+        "generated_nut_backplane_offset_from_port": -0.010040651293820702,
+        "actual_mesh_based_seating_translation": [
+          0.0006566504016518593,
+          -0.005456897430121899,
+          0.00840272381901741
+        ],
+        "receiving_mount_plane": [
+          -1.2218902111053467,
+          -1.500091791152954,
+          -0.04462447762489319
+        ],
+        "port": {
+          "id": "wide-winding--1-1.end",
+          "xyz_bu": [
+            -1.2218902111053467,
+            -1.500091791152954,
+            -0.04462447762489319
+          ],
+          "outward_normal": [
+            0.0653991848230362,
+            -0.5434804558753967,
+            0.8368704319000244
+          ]
+        }
+      }
+    ],
+    "module_hashes": {
+      "README.md": "f243e88a68fbdccdb70b828e72cae8109f401380d97e70d65bc02b35b30e850d",
+      "PIPETTE_STANDARD.md": "540a244a9192d2514c0c8ae97b657f0b896b8dddb170e5c51fb6d0f9554096be",
+      "core.py": "9a991dea7dd646faad8766326ef60e67c0618c283a81dbf297119ee6ec3761c7",
+      "blender_adapter.py": "724c1964fee8916b43dc86c0ff0185ec1646c1964662b2af1ea6ecbfbed68a1d",
+      "type_registry.json": "42e220db26a981956741a7ce268c8e74172382497cacf54a9a0b23691085e654",
+      "library_fittings.py": "3a6f75821350980c5080dc7c651cd4773f402424a8ac113c2d52943296804df7",
+      "library_geometry.py": "36daec4fcdbf5d333b04e26f5e592ca9ecece0f159b5e4ef86a110a102c5b48e",
+      "architecture_catalog.v1.json": "121cbadeb3f42912b25635a700a00a9bb22c5bd5a37050f4d6071225d978db98"
+    },
+    "warnings": [
+      "large section count may be invisible at standard Factorio camera"
+    ],
+    "proportion_regenerated_plan": true
+  },
+  {
+    "id": "wide-shoe-power--1-0",
+    "collection": "FMPL | PIPETTE | wide-shoe-power--1-0",
+    "objects": [
+      "FMPL | PIPETTE | wide-shoe-power--1-0 | continuous visible route",
+      "Pipette library gland wide-shoe-power--1-0 start 0",
+      "Pipette library gland wide-shoe-power--1-0 start 1",
+      "Pipette library gland wide-shoe-power--1-0 start 2",
+      "Pipette library gland wide-shoe-power--1-0 end 0",
+      "Pipette library gland wide-shoe-power--1-0 end 1",
+      "Pipette library gland wide-shoe-power--1-0 end 2"
+    ],
+    "typed_family": "single_wire",
+    "typed_payload": "power",
+    "fittings": {
+      "start": "none",
+      "end": "none"
+    },
+    "actual_library_fittings": [
+      {
+        "terminal": "start",
+        "architecture_id": "wire_mineral_insulated",
+        "joint_id": "cable_gland",
+        "library_build_invoked": true,
+        "diameter_argument": 0.0405,
+        "objects": [
+          "Pipette library gland wide-shoe-power--1-0 start 0",
+          "Pipette library gland wide-shoe-power--1-0 start 1",
+          "Pipette library gland wide-shoe-power--1-0 start 2"
+        ],
+        "actual_recipe_roles": [
+          "six-flat-retaining-nut",
+          "concentric-insertion-sleeve",
+          "actual-ferrule-or-grommet"
+        ],
+        "generated_nut_backplane_offset_from_port": -0.008606306975707412,
+        "actual_mesh_based_seating_translation": [
+          -0.004781574010848999,
+          -0.0038973549380898476,
+          0.006001308560371399
+        ],
+        "receiving_mount_plane": [
+          -1.4288908243179321,
+          1.1211049556732178,
+          1.5843069553375244
+        ],
+        "port": {
+          "id": "wide-shoe-power--1-0.start",
+          "xyz_bu": [
+            -1.4288908243179321,
+            1.1211049556732178,
+            1.5843069553375244
+          ],
+          "outward_normal": [
+            -0.555589497089386,
+            -0.4528487026691437,
+            0.6973151564598083
+          ]
+        }
+      },
+      {
+        "terminal": "end",
+        "architecture_id": "wire_mineral_insulated",
+        "joint_id": "cable_gland",
+        "library_build_invoked": true,
+        "diameter_argument": 0.0405,
+        "objects": [
+          "Pipette library gland wide-shoe-power--1-0 end 0",
+          "Pipette library gland wide-shoe-power--1-0 end 1",
+          "Pipette library gland wide-shoe-power--1-0 end 2"
+        ],
+        "actual_recipe_roles": [
+          "six-flat-retaining-nut",
+          "concentric-insertion-sleeve",
+          "actual-ferrule-or-grommet"
+        ],
+        "generated_nut_backplane_offset_from_port": -0.008606297662481666,
+        "actual_mesh_based_seating_translation": [
+          0.0,
+          -0.004687357693910599,
+          0.0072178286500275135
+        ],
+        "receiving_mount_plane": [
+          -0.2449999749660492,
+          1.034751057624817,
+          1.9784623384475708
+        ],
+        "port": {
+          "id": "wide-shoe-power--1-0.end",
+          "xyz_bu": [
+            -0.2449999749660492,
+            1.034751057624817,
+            1.9784623384475708
+          ],
+          "outward_normal": [
+            0.0,
+            -0.5446427464485168,
+            0.8386682271957397
+          ]
+        }
+      }
+    ],
+    "module_hashes": {
+      "README.md": "f243e88a68fbdccdb70b828e72cae8109f401380d97e70d65bc02b35b30e850d",
+      "PIPETTE_STANDARD.md": "540a244a9192d2514c0c8ae97b657f0b896b8dddb170e5c51fb6d0f9554096be",
+      "core.py": "9a991dea7dd646faad8766326ef60e67c0618c283a81dbf297119ee6ec3761c7",
+      "blender_adapter.py": "724c1964fee8916b43dc86c0ff0185ec1646c1964662b2af1ea6ecbfbed68a1d",
+      "type_registry.json": "42e220db26a981956741a7ce268c8e74172382497cacf54a9a0b23691085e654",
+      "library_fittings.py": "3a6f75821350980c5080dc7c651cd4773f402424a8ac113c2d52943296804df7",
+      "library_geometry.py": "36daec4fcdbf5d333b04e26f5e592ca9ecece0f159b5e4ef86a110a102c5b48e",
+      "architecture_catalog.v1.json": "121cbadeb3f42912b25635a700a00a9bb22c5bd5a37050f4d6071225d978db98"
+    },
+    "warnings": [],
+    "proportion_regenerated_plan": true
+  },
+  {
+    "id": "wide-shoe-power--1-1",
+    "collection": "FMPL | PIPETTE | wide-shoe-power--1-1",
+    "objects": [
+      "FMPL | PIPETTE | wide-shoe-power--1-1 | continuous visible route",
+      "Pipette library gland wide-shoe-power--1-1 start 0",
+      "Pipette library gland wide-shoe-power--1-1 start 1",
+      "Pipette library gland wide-shoe-power--1-1 start 2",
+      "Pipette library gland wide-shoe-power--1-1 end 0",
+      "Pipette library gland wide-shoe-power--1-1 end 1",
+      "Pipette library gland wide-shoe-power--1-1 end 2"
+    ],
+    "typed_family": "single_wire",
+    "typed_payload": "power",
+    "fittings": {
+      "start": "none",
+      "end": "none"
+    },
+    "actual_library_fittings": [
+      {
+        "terminal": "start",
+        "architecture_id": "wire_mineral_insulated",
+        "joint_id": "cable_gland",
+        "library_build_invoked": true,
+        "diameter_argument": 0.0405,
+        "objects": [
+          "Pipette library gland wide-shoe-power--1-1 start 0",
+          "Pipette library gland wide-shoe-power--1-1 start 1",
+          "Pipette library gland wide-shoe-power--1-1 start 2"
+        ],
+        "actual_recipe_roles": [
+          "six-flat-retaining-nut",
+          "concentric-insertion-sleeve",
+          "actual-ferrule-or-grommet"
+        ],
+        "generated_nut_backplane_offset_from_port": -0.008606290910393,
+        "actual_mesh_based_seating_translation": [
+          -0.0047814310528337955,
+          -0.0038973581977188587,
+          0.0060013956390321255
+        ],
+        "receiving_mount_plane": [
+          -1.4288909435272217,
+          -0.5117868185043335,
+          0.5238946676254272
+        ],
+        "port": {
+          "id": "wide-shoe-power--1-1.start",
+          "xyz_bu": [
+            -1.4288909435272217,
+            -0.5117868185043335,
+            0.5238946676254272
+          ],
+          "outward_normal": [
+            -0.5555739998817444,
+            -0.45284995436668396,
+            0.69732666015625
+          ]
+        }
+      },
+      {
+        "terminal": "end",
+        "architecture_id": "wire_mineral_insulated",
+        "joint_id": "cable_gland",
+        "library_build_invoked": true,
+        "diameter_argument": 0.0405,
+        "objects": [
+          "Pipette library gland wide-shoe-power--1-1 end 0",
+          "Pipette library gland wide-shoe-power--1-1 end 1",
+          "Pipette library gland wide-shoe-power--1-1 end 2"
+        ],
+        "actual_recipe_roles": [
+          "six-flat-retaining-nut",
+          "concentric-insertion-sleeve",
+          "actual-ferrule-or-grommet"
+        ],
+        "generated_nut_backplane_offset_from_port": -0.008606298360973597,
+        "actual_mesh_based_seating_translation": [
+          0.0,
+          -0.004687362816184759,
+          0.007217825390398502
+        ],
+        "receiving_mount_plane": [
+          -0.2449999749660492,
+          0.09459585696458817,
+          1.3963894844055176
+        ],
+        "port": {
+          "id": "wide-shoe-power--1-1.end",
+          "xyz_bu": [
+            -0.2449999749660492,
+            0.09459585696458817,
+            1.3963894844055176
+          ],
+          "outward_normal": [
+            0.0,
+            -0.5446433424949646,
+            0.8386678695678711
+          ]
+        }
+      }
+    ],
+    "module_hashes": {
+      "README.md": "f243e88a68fbdccdb70b828e72cae8109f401380d97e70d65bc02b35b30e850d",
+      "PIPETTE_STANDARD.md": "540a244a9192d2514c0c8ae97b657f0b896b8dddb170e5c51fb6d0f9554096be",
+      "core.py": "9a991dea7dd646faad8766326ef60e67c0618c283a81dbf297119ee6ec3761c7",
+      "blender_adapter.py": "724c1964fee8916b43dc86c0ff0185ec1646c1964662b2af1ea6ecbfbed68a1d",
+      "type_registry.json": "42e220db26a981956741a7ce268c8e74172382497cacf54a9a0b23691085e654",
+      "library_fittings.py": "3a6f75821350980c5080dc7c651cd4773f402424a8ac113c2d52943296804df7",
+      "library_geometry.py": "36daec4fcdbf5d333b04e26f5e592ca9ecece0f159b5e4ef86a110a102c5b48e",
+      "architecture_catalog.v1.json": "121cbadeb3f42912b25635a700a00a9bb22c5bd5a37050f4d6071225d978db98"
+    },
+    "warnings": [],
+    "proportion_regenerated_plan": true
+  },
+  {
+    "id": "wide-shoe-power--1-2",
+    "collection": "FMPL | PIPETTE | wide-shoe-power--1-2",
+    "objects": [
+      "FMPL | PIPETTE | wide-shoe-power--1-2 | continuous visible route",
+      "Pipette library gland wide-shoe-power--1-2 start 0",
+      "Pipette library gland wide-shoe-power--1-2 start 1",
+      "Pipette library gland wide-shoe-power--1-2 start 2",
+      "Pipette library gland wide-shoe-power--1-2 end 0",
+      "Pipette library gland wide-shoe-power--1-2 end 1",
+      "Pipette library gland wide-shoe-power--1-2 end 2"
+    ],
+    "typed_family": "single_wire",
+    "typed_payload": "power",
+    "fittings": {
+      "start": "none",
+      "end": "none"
+    },
+    "actual_library_fittings": [
+      {
+        "terminal": "start",
+        "architecture_id": "wire_mineral_insulated",
+        "joint_id": "cable_gland",
+        "library_build_invoked": true,
+        "diameter_argument": 0.0405,
+        "objects": [
+          "Pipette library gland wide-shoe-power--1-2 start 0",
+          "Pipette library gland wide-shoe-power--1-2 start 1",
+          "Pipette library gland wide-shoe-power--1-2 start 2"
+        ],
+        "actual_recipe_roles": [
+          "six-flat-retaining-nut",
+          "concentric-insertion-sleeve",
+          "actual-ferrule-or-grommet"
+        ],
+        "generated_nut_backplane_offset_from_port": -0.008606293238699436,
+        "actual_mesh_based_seating_translation": [
+          -0.004781470168381929,
+          -0.0038972923066467047,
+          0.006001411005854607
+        ],
+        "receiving_mount_plane": [
+          -1.4288908243179321,
+          -1.4666131734848022,
+          -0.09617680311203003
+        ],
+        "port": {
+          "id": "wide-shoe-power--1-2.start",
+          "xyz_bu": [
+            -1.4288908243179321,
+            -1.4666131734848022,
+            -0.09617680311203003
+          ],
+          "outward_normal": [
+            -0.555578351020813,
+            -0.4528421461582184,
+            0.6973282098770142
+          ]
+        }
+      },
+      {
+        "terminal": "end",
+        "architecture_id": "wire_mineral_insulated",
+        "joint_id": "cable_gland",
+        "library_build_invoked": true,
+        "diameter_argument": 0.0405,
+        "objects": [
+          "Pipette library gland wide-shoe-power--1-2 end 0",
+          "Pipette library gland wide-shoe-power--1-2 end 1",
+          "Pipette library gland wide-shoe-power--1-2 end 2"
+        ],
+        "actual_recipe_roles": [
+          "six-flat-retaining-nut",
+          "concentric-insertion-sleeve",
+          "actual-ferrule-or-grommet"
+        ],
+        "generated_nut_backplane_offset_from_port": -0.008606300688772398,
+        "actual_mesh_based_seating_translation": [
+          -4.8864876589505e-08,
+          -0.0046873632818460464,
+          0.007217828184366226
+        ],
+        "receiving_mount_plane": [
+          -0.2449999749660492,
+          -0.8026735782623291,
+          0.8088691234588623
+        ],
+        "port": {
+          "id": "wide-shoe-power--1-2.end",
+          "xyz_bu": [
+            -0.2449999749660492,
+            -0.8026735782623291,
+            0.8088691234588623
+          ],
+          "outward_normal": [
+            -5.677802619175054e-06,
+            -0.544643223285675,
+            0.8386679291725159
+          ]
+        }
+      }
+    ],
+    "module_hashes": {
+      "README.md": "f243e88a68fbdccdb70b828e72cae8109f401380d97e70d65bc02b35b30e850d",
+      "PIPETTE_STANDARD.md": "540a244a9192d2514c0c8ae97b657f0b896b8dddb170e5c51fb6d0f9554096be",
+      "core.py": "9a991dea7dd646faad8766326ef60e67c0618c283a81dbf297119ee6ec3761c7",
+      "blender_adapter.py": "724c1964fee8916b43dc86c0ff0185ec1646c1964662b2af1ea6ecbfbed68a1d",
+      "type_registry.json": "42e220db26a981956741a7ce268c8e74172382497cacf54a9a0b23691085e654",
+      "library_fittings.py": "3a6f75821350980c5080dc7c651cd4773f402424a8ac113c2d52943296804df7",
+      "library_geometry.py": "36daec4fcdbf5d333b04e26f5e592ca9ecece0f159b5e4ef86a110a102c5b48e",
+      "architecture_catalog.v1.json": "121cbadeb3f42912b25635a700a00a9bb22c5bd5a37050f4d6071225d978db98"
+    },
+    "warnings": [],
+    "proportion_regenerated_plan": true
+  },
+  {
+    "id": "wide-internal-main-power--1",
+    "collection": "FMPL | PIPETTE | wide-internal-main-power--1",
+    "objects": [
+      "FMPL | PIPETTE | wide-internal-main-power--1 | continuous visible route",
+      "Pipette library gland wide-internal-main-power--1 start 0",
+      "Pipette library gland wide-internal-main-power--1 start 1",
+      "Pipette library gland wide-internal-main-power--1 start 2",
+      "Pipette library gland wide-internal-main-power--1 end 0",
+      "Pipette library gland wide-internal-main-power--1 end 1",
+      "Pipette library gland wide-internal-main-power--1 end 2"
+    ],
+    "typed_family": "single_wire",
+    "typed_payload": "power",
+    "fittings": {
+      "start": "none",
+      "end": "none"
+    },
+    "actual_library_fittings": [
+      {
+        "terminal": "start",
+        "architecture_id": "wire_mineral_insulated",
+        "joint_id": "cable_gland",
+        "library_build_invoked": true,
+        "diameter_argument": 0.06075,
+        "objects": [
+          "Pipette library gland wide-internal-main-power--1 start 0",
+          "Pipette library gland wide-internal-main-power--1 start 1",
+          "Pipette library gland wide-internal-main-power--1 start 2"
+        ],
+        "actual_recipe_roles": [
+          "six-flat-retaining-nut",
+          "concentric-insertion-sleeve",
+          "actual-ferrule-or-grommet"
+        ],
+        "generated_nut_backplane_offset_from_port": -0.012909412384033203,
+        "actual_mesh_based_seating_translation": [
+          0.0,
+          0.012909412384033203,
+          0.0
+        ],
+        "receiving_mount_plane": [
+          -0.30000001192092896,
+          2.1886491775512695,
+          1.2394169569015503
+        ],
+        "port": {
+          "id": "wide-internal-main-power--1.start",
+          "xyz_bu": [
+            -0.30000001192092896,
+            2.1886491775512695,
+            1.2394169569015503
+          ],
+          "outward_normal": [
+            0.0,
+            1.0,
+            0.0
+          ]
+        }
+      },
+      {
+        "terminal": "end",
+        "architecture_id": "wire_mineral_insulated",
+        "joint_id": "cable_gland",
+        "library_build_invoked": true,
+        "diameter_argument": 0.06075,
+        "objects": [
+          "Pipette library gland wide-internal-main-power--1 end 0",
+          "Pipette library gland wide-internal-main-power--1 end 1",
+          "Pipette library gland wide-internal-main-power--1 end 2"
+        ],
+        "actual_recipe_roles": [
+          "six-flat-retaining-nut",
+          "concentric-insertion-sleeve",
+          "actual-ferrule-or-grommet"
+        ],
+        "generated_nut_backplane_offset_from_port": -0.012909450465826922,
+        "actual_mesh_based_seating_translation": [
+          1.6051116347171046e-07,
+          0.010826959274709225,
+          0.007030710112303495
+        ],
+        "receiving_mount_plane": [
+          -1.2299997806549072,
+          1.791972279548645,
+          1.9099597930908203
+        ],
+        "port": {
+          "id": "wide-internal-main-power--1.end",
+          "xyz_bu": [
+            -1.2299997806549072,
+            1.791972279548645,
+            1.9099597930908203
+          ],
+          "outward_normal": [
+            1.2433616575435735e-05,
+            0.8386847376823425,
+            0.5446172952651978
+          ]
+        }
+      }
+    ],
+    "module_hashes": {
+      "README.md": "f243e88a68fbdccdb70b828e72cae8109f401380d97e70d65bc02b35b30e850d",
+      "PIPETTE_STANDARD.md": "540a244a9192d2514c0c8ae97b657f0b896b8dddb170e5c51fb6d0f9554096be",
+      "core.py": "9a991dea7dd646faad8766326ef60e67c0618c283a81dbf297119ee6ec3761c7",
+      "blender_adapter.py": "724c1964fee8916b43dc86c0ff0185ec1646c1964662b2af1ea6ecbfbed68a1d",
+      "type_registry.json": "42e220db26a981956741a7ce268c8e74172382497cacf54a9a0b23691085e654",
+      "library_fittings.py": "3a6f75821350980c5080dc7c651cd4773f402424a8ac113c2d52943296804df7",
+      "library_geometry.py": "36daec4fcdbf5d333b04e26f5e592ca9ecece0f159b5e4ef86a110a102c5b48e",
+      "architecture_catalog.v1.json": "121cbadeb3f42912b25635a700a00a9bb22c5bd5a37050f4d6071225d978db98"
+    },
+    "warnings": [],
+    "proportion_regenerated_plan": true
+  },
+  {
+    "id": "wide-winding-1-0",
+    "collection": "FMPL | PIPETTE | wide-winding-1-0",
+    "objects": [
+      "FMPL | PIPETTE | wide-winding-1-0 | continuous visible route",
+      "Pipette library gland wide-winding-1-0 start 0",
+      "Pipette library gland wide-winding-1-0 start 1",
+      "Pipette library gland wide-winding-1-0 start 2",
+      "Pipette library gland wide-winding-1-0 end 0",
+      "Pipette library gland wide-winding-1-0 end 1",
+      "Pipette library gland wide-winding-1-0 end 2"
+    ],
+    "typed_family": "single_wire",
+    "typed_payload": "power",
+    "fittings": {
+      "start": "none",
+      "end": "none"
+    },
+    "actual_library_fittings": [
+      {
+        "terminal": "start",
+        "architecture_id": "wire_mineral_insulated",
+        "joint_id": "cable_gland",
+        "library_build_invoked": true,
+        "diameter_argument": 0.04725000000000001,
+        "objects": [
+          "Pipette library gland wide-winding-1-0 start 0",
+          "Pipette library gland wide-winding-1-0 start 1",
+          "Pipette library gland wide-winding-1-0 start 2"
+        ],
+        "actual_recipe_roles": [
+          "six-flat-retaining-nut",
+          "concentric-insertion-sleeve",
+          "actual-ferrule-or-grommet"
+        ],
+        "generated_nut_backplane_offset_from_port": -0.010040647553978488,
+        "actual_mesh_based_seating_translation": [
+          0.0009844298474490643,
+          -0.005442284978926182,
+          0.008380156941711903
+        ],
+        "receiving_mount_plane": [
+          1.2421547174453735,
+          0.10736120492219925,
+          0.9034833312034607
+        ],
+        "port": {
+          "id": "wide-winding-1-0.start",
+          "xyz_bu": [
+            1.2421547174453735,
+            0.10736120492219925,
+            0.9034833312034607
+          ],
+          "outward_normal": [
+            0.09804445505142212,
+            -0.5420253276824951,
+            0.8346231579780579
+          ]
+        }
+      },
+      {
+        "terminal": "end",
+        "architecture_id": "wire_mineral_insulated",
+        "joint_id": "cable_gland",
+        "library_build_invoked": true,
+        "diameter_argument": 0.04725000000000001,
+        "objects": [
+          "Pipette library gland wide-winding-1-0 end 0",
+          "Pipette library gland wide-winding-1-0 end 1",
+          "Pipette library gland wide-winding-1-0 end 2"
+        ],
+        "actual_recipe_roles": [
+          "six-flat-retaining-nut",
+          "concentric-insertion-sleeve",
+          "actual-ferrule-or-grommet"
+        ],
+        "generated_nut_backplane_offset_from_port": -0.010040654335170984,
+        "actual_mesh_based_seating_translation": [
+          0.0006566554657183588,
+          -0.005456939339637756,
+          0.00840269960463047
+        ],
+        "receiving_mount_plane": [
+          1.2381099462509155,
+          -0.5452653765678406,
+          0.5754470825195312
+        ],
+        "port": {
+          "id": "wide-winding-1-0.end",
+          "xyz_bu": [
+            1.2381099462509155,
+            -0.5452653765678406,
+            0.5754470825195312
+          ],
+          "outward_normal": [
+            0.065399669110775,
+            -0.5434844493865967,
+            0.8368678092956543
+          ]
+        }
+      }
+    ],
+    "module_hashes": {
+      "README.md": "f243e88a68fbdccdb70b828e72cae8109f401380d97e70d65bc02b35b30e850d",
+      "PIPETTE_STANDARD.md": "540a244a9192d2514c0c8ae97b657f0b896b8dddb170e5c51fb6d0f9554096be",
+      "core.py": "9a991dea7dd646faad8766326ef60e67c0618c283a81dbf297119ee6ec3761c7",
+      "blender_adapter.py": "724c1964fee8916b43dc86c0ff0185ec1646c1964662b2af1ea6ecbfbed68a1d",
+      "type_registry.json": "42e220db26a981956741a7ce268c8e74172382497cacf54a9a0b23691085e654",
+      "library_fittings.py": "3a6f75821350980c5080dc7c651cd4773f402424a8ac113c2d52943296804df7",
+      "library_geometry.py": "36daec4fcdbf5d333b04e26f5e592ca9ecece0f159b5e4ef86a110a102c5b48e",
+      "architecture_catalog.v1.json": "121cbadeb3f42912b25635a700a00a9bb22c5bd5a37050f4d6071225d978db98"
+    },
+    "warnings": [
+      "large section count may be invisible at standard Factorio camera"
+    ],
+    "proportion_regenerated_plan": true
+  },
+  {
+    "id": "wide-winding-1-1",
+    "collection": "FMPL | PIPETTE | wide-winding-1-1",
+    "objects": [
+      "FMPL | PIPETTE | wide-winding-1-1 | continuous visible route",
+      "Pipette library gland wide-winding-1-1 start 0",
+      "Pipette library gland wide-winding-1-1 start 1",
+      "Pipette library gland wide-winding-1-1 start 2",
+      "Pipette library gland wide-winding-1-1 end 0",
+      "Pipette library gland wide-winding-1-1 end 1",
+      "Pipette library gland wide-winding-1-1 end 2"
+    ],
+    "typed_family": "single_wire",
+    "typed_payload": "power",
+    "fittings": {
+      "start": "none",
+      "end": "none"
+    },
+    "actual_library_fittings": [
+      {
+        "terminal": "start",
+        "architecture_id": "wire_mineral_insulated",
+        "joint_id": "cable_gland",
+        "library_build_invoked": true,
+        "diameter_argument": 0.04725000000000001,
+        "objects": [
+          "Pipette library gland wide-winding-1-1 start 0",
+          "Pipette library gland wide-winding-1-1 start 1",
+          "Pipette library gland wide-winding-1-1 start 2"
+        ],
+        "actual_recipe_roles": [
+          "six-flat-retaining-nut",
+          "concentric-insertion-sleeve",
+          "actual-ferrule-or-grommet"
+        ],
+        "generated_nut_backplane_offset_from_port": -0.010040656721685082,
+        "actual_mesh_based_seating_translation": [
+          0.000984138110652566,
+          -0.005442279856652021,
+          0.008380206301808357
+        ],
+        "receiving_mount_plane": [
+          1.2421547174453735,
+          -0.6814082860946655,
+          0.3912504315376282
+        ],
+        "port": {
+          "id": "wide-winding-1-1.start",
+          "xyz_bu": [
+            1.2421547174453735,
+            -0.6814082860946655,
+            0.3912504315376282
+          ],
+          "outward_normal": [
+            0.09801530838012695,
+            -0.5420243144035339,
+            0.8346273303031921
+          ]
+        }
+      },
+      {
+        "terminal": "end",
+        "architecture_id": "wire_mineral_insulated",
+        "joint_id": "cable_gland",
+        "library_build_invoked": true,
+        "diameter_argument": 0.04725000000000001,
+        "objects": [
+          "Pipette library gland wide-winding-1-1 end 0",
+          "Pipette library gland wide-winding-1-1 end 1",
+          "Pipette library gland wide-winding-1-1 end 2"
+        ],
+        "actual_recipe_roles": [
+          "six-flat-retaining-nut",
+          "concentric-insertion-sleeve",
+          "actual-ferrule-or-grommet"
+        ],
+        "generated_nut_backplane_offset_from_port": -0.010040648397989571,
+        "actual_mesh_based_seating_translation": [
+          0.0006566433585248888,
+          -0.005457032471895218,
+          0.008402632549405098
+        ],
+        "receiving_mount_plane": [
+          1.238109827041626,
+          -1.500091791152954,
+          -0.04462447762489319
+        ],
+        "port": {
+          "id": "wide-winding-1-1.end",
+          "xyz_bu": [
+            1.238109827041626,
+            -1.500091791152954,
+            -0.04462447762489319
+          ],
+          "outward_normal": [
+            0.06539849936962128,
+            -0.5434940457344055,
+            0.8368615508079529
+          ]
+        }
+      }
+    ],
+    "module_hashes": {
+      "README.md": "f243e88a68fbdccdb70b828e72cae8109f401380d97e70d65bc02b35b30e850d",
+      "PIPETTE_STANDARD.md": "540a244a9192d2514c0c8ae97b657f0b896b8dddb170e5c51fb6d0f9554096be",
+      "core.py": "9a991dea7dd646faad8766326ef60e67c0618c283a81dbf297119ee6ec3761c7",
+      "blender_adapter.py": "724c1964fee8916b43dc86c0ff0185ec1646c1964662b2af1ea6ecbfbed68a1d",
+      "type_registry.json": "42e220db26a981956741a7ce268c8e74172382497cacf54a9a0b23691085e654",
+      "library_fittings.py": "3a6f75821350980c5080dc7c651cd4773f402424a8ac113c2d52943296804df7",
+      "library_geometry.py": "36daec4fcdbf5d333b04e26f5e592ca9ecece0f159b5e4ef86a110a102c5b48e",
+      "architecture_catalog.v1.json": "121cbadeb3f42912b25635a700a00a9bb22c5bd5a37050f4d6071225d978db98"
+    },
+    "warnings": [
+      "large section count may be invisible at standard Factorio camera"
+    ],
+    "proportion_regenerated_plan": true
+  },
+  {
+    "id": "wide-shoe-power-1-0",
+    "collection": "FMPL | PIPETTE | wide-shoe-power-1-0",
+    "objects": [
+      "FMPL | PIPETTE | wide-shoe-power-1-0 | continuous visible route",
+      "Pipette library gland wide-shoe-power-1-0 start 0",
+      "Pipette library gland wide-shoe-power-1-0 start 1",
+      "Pipette library gland wide-shoe-power-1-0 start 2",
+      "Pipette library gland wide-shoe-power-1-0 end 0",
+      "Pipette library gland wide-shoe-power-1-0 end 1",
+      "Pipette library gland wide-shoe-power-1-0 end 2"
+    ],
+    "typed_family": "single_wire",
+    "typed_payload": "power",
+    "fittings": {
+      "start": "none",
+      "end": "none"
+    },
+    "actual_library_fittings": [
+      {
+        "terminal": "start",
+        "architecture_id": "wire_mineral_insulated",
+        "joint_id": "cable_gland",
+        "library_build_invoked": true,
+        "diameter_argument": 0.0405,
+        "objects": [
+          "Pipette library gland wide-shoe-power-1-0 start 0",
+          "Pipette library gland wide-shoe-power-1-0 start 1",
+          "Pipette library gland wide-shoe-power-1-0 start 2"
+        ],
+        "actual_recipe_roles": [
+          "six-flat-retaining-nut",
+          "concentric-insertion-sleeve",
+          "actual-ferrule-or-grommet"
+        ],
+        "generated_nut_backplane_offset_from_port": -0.008606321644037962,
+        "actual_mesh_based_seating_translation": [
+          -0.004781557712703943,
+          -0.0038974392227828503,
+          0.00600128760561347
+        ],
+        "receiving_mount_plane": [
+          1.0311092138290405,
+          1.1211049556732178,
+          1.5843069553375244
+        ],
+        "port": {
+          "id": "wide-shoe-power-1-0.start",
+          "xyz_bu": [
+            1.0311092138290405,
+            1.1211049556732178,
+            1.5843069553375244
+          ],
+          "outward_normal": [
+            -0.5555866360664368,
+            -0.45285770297050476,
+            0.697311520576477
+          ]
+        }
+      },
+      {
+        "terminal": "end",
+        "architecture_id": "wire_mineral_insulated",
+        "joint_id": "cable_gland",
+        "library_build_invoked": true,
+        "diameter_argument": 0.0405,
+        "objects": [
+          "Pipette library gland wide-shoe-power-1-0 end 0",
+          "Pipette library gland wide-shoe-power-1-0 end 1",
+          "Pipette library gland wide-shoe-power-1-0 end 2"
+        ],
+        "actual_recipe_roles": [
+          "six-flat-retaining-nut",
+          "concentric-insertion-sleeve",
+          "actual-ferrule-or-grommet"
+        ],
+        "generated_nut_backplane_offset_from_port": -0.008606295567005873,
+        "actual_mesh_based_seating_translation": [
+          0.0,
+          -0.004687316715717316,
+          0.007217852398753166
+        ],
+        "receiving_mount_plane": [
+          0.32499998807907104,
+          0.8206928968429565,
+          1.9293915033340454
+        ],
+        "port": {
+          "id": "wide-shoe-power-1-0.end",
+          "xyz_bu": [
+            0.32499998807907104,
+            0.8206928968429565,
+            1.9293915033340454
+          ],
+          "outward_normal": [
+            0.0,
+            -0.5446380972862244,
+            0.8386711478233337
+          ]
+        }
+      }
+    ],
+    "module_hashes": {
+      "README.md": "f243e88a68fbdccdb70b828e72cae8109f401380d97e70d65bc02b35b30e850d",
+      "PIPETTE_STANDARD.md": "540a244a9192d2514c0c8ae97b657f0b896b8dddb170e5c51fb6d0f9554096be",
+      "core.py": "9a991dea7dd646faad8766326ef60e67c0618c283a81dbf297119ee6ec3761c7",
+      "blender_adapter.py": "724c1964fee8916b43dc86c0ff0185ec1646c1964662b2af1ea6ecbfbed68a1d",
+      "type_registry.json": "42e220db26a981956741a7ce268c8e74172382497cacf54a9a0b23691085e654",
+      "library_fittings.py": "3a6f75821350980c5080dc7c651cd4773f402424a8ac113c2d52943296804df7",
+      "library_geometry.py": "36daec4fcdbf5d333b04e26f5e592ca9ecece0f159b5e4ef86a110a102c5b48e",
+      "architecture_catalog.v1.json": "121cbadeb3f42912b25635a700a00a9bb22c5bd5a37050f4d6071225d978db98"
+    },
+    "warnings": [],
+    "proportion_regenerated_plan": true
+  },
+  {
+    "id": "wide-shoe-power-1-1",
+    "collection": "FMPL | PIPETTE | wide-shoe-power-1-1",
+    "objects": [
+      "FMPL | PIPETTE | wide-shoe-power-1-1 | continuous visible route",
+      "Pipette library gland wide-shoe-power-1-1 start 0",
+      "Pipette library gland wide-shoe-power-1-1 start 1",
+      "Pipette library gland wide-shoe-power-1-1 start 2",
+      "Pipette library gland wide-shoe-power-1-1 end 0",
+      "Pipette library gland wide-shoe-power-1-1 end 1",
+      "Pipette library gland wide-shoe-power-1-1 end 2"
+    ],
+    "typed_family": "single_wire",
+    "typed_payload": "power",
+    "fittings": {
+      "start": "none",
+      "end": "none"
+    },
+    "actual_library_fittings": [
+      {
+        "terminal": "start",
+        "architecture_id": "wire_mineral_insulated",
+        "joint_id": "cable_gland",
+        "library_build_invoked": true,
+        "diameter_argument": 0.0405,
+        "objects": [
+          "Pipette library gland wide-shoe-power-1-1 start 0",
+          "Pipette library gland wide-shoe-power-1-1 start 1",
+          "Pipette library gland wide-shoe-power-1-1 start 2"
+        ],
+        "actual_recipe_roles": [
+          "six-flat-retaining-nut",
+          "concentric-insertion-sleeve",
+          "actual-ferrule-or-grommet"
+        ],
+        "generated_nut_backplane_offset_from_port": -0.008606294868513942,
+        "actual_mesh_based_seating_translation": [
+          -0.004781409166753292,
+          -0.0038974378257989883,
+          0.006001368165016174
+        ],
+        "receiving_mount_plane": [
+          1.031109094619751,
+          -0.5117868781089783,
+          0.5238946676254272
+        ],
+        "port": {
+          "id": "wide-shoe-power-1-1.start",
+          "xyz_bu": [
+            1.031109094619751,
+            -0.5117868781089783,
+            0.5238946676254272
+          ],
+          "outward_normal": [
+            -0.5555711388587952,
+            -0.45285895466804504,
+            0.6973230838775635
+          ]
+        }
+      },
+      {
+        "terminal": "end",
+        "architecture_id": "wire_mineral_insulated",
+        "joint_id": "cable_gland",
+        "library_build_invoked": true,
+        "diameter_argument": 0.0405,
+        "objects": [
+          "Pipette library gland wide-shoe-power-1-1 end 0",
+          "Pipette library gland wide-shoe-power-1-1 end 1",
+          "Pipette library gland wide-shoe-power-1-1 end 2"
+        ],
+        "actual_recipe_roles": [
+          "six-flat-retaining-nut",
+          "concentric-insertion-sleeve",
+          "actual-ferrule-or-grommet"
+        ],
+        "generated_nut_backplane_offset_from_port": -0.008606299292296171,
+        "actual_mesh_based_seating_translation": [
+          0.0,
+          -0.004687346052378416,
+          0.007217838894575834
+        ],
+        "receiving_mount_plane": [
+          0.32499998807907104,
+          -0.10705821216106415,
+          1.3282183408737183
+        ],
+        "port": {
+          "id": "wide-shoe-power-1-1.end",
+          "xyz_bu": [
+            0.32499998807907104,
+            -0.10705821216106415,
+            1.3282183408737183
+          ],
+          "outward_normal": [
+            0.0,
+            -0.5446412563323975,
+            0.8386692404747009
+          ]
+        }
+      }
+    ],
+    "module_hashes": {
+      "README.md": "f243e88a68fbdccdb70b828e72cae8109f401380d97e70d65bc02b35b30e850d",
+      "PIPETTE_STANDARD.md": "540a244a9192d2514c0c8ae97b657f0b896b8dddb170e5c51fb6d0f9554096be",
+      "core.py": "9a991dea7dd646faad8766326ef60e67c0618c283a81dbf297119ee6ec3761c7",
+      "blender_adapter.py": "724c1964fee8916b43dc86c0ff0185ec1646c1964662b2af1ea6ecbfbed68a1d",
+      "type_registry.json": "42e220db26a981956741a7ce268c8e74172382497cacf54a9a0b23691085e654",
+      "library_fittings.py": "3a6f75821350980c5080dc7c651cd4773f402424a8ac113c2d52943296804df7",
+      "library_geometry.py": "36daec4fcdbf5d333b04e26f5e592ca9ecece0f159b5e4ef86a110a102c5b48e",
+      "architecture_catalog.v1.json": "121cbadeb3f42912b25635a700a00a9bb22c5bd5a37050f4d6071225d978db98"
+    },
+    "warnings": [],
+    "proportion_regenerated_plan": true
+  },
+  {
+    "id": "wide-shoe-power-1-2",
+    "collection": "FMPL | PIPETTE | wide-shoe-power-1-2",
+    "objects": [
+      "FMPL | PIPETTE | wide-shoe-power-1-2 | continuous visible route",
+      "Pipette library gland wide-shoe-power-1-2 start 0",
+      "Pipette library gland wide-shoe-power-1-2 start 1",
+      "Pipette library gland wide-shoe-power-1-2 start 2",
+      "Pipette library gland wide-shoe-power-1-2 end 0",
+      "Pipette library gland wide-shoe-power-1-2 end 1",
+      "Pipette library gland wide-shoe-power-1-2 end 2"
+    ],
+    "typed_family": "single_wire",
+    "typed_payload": "power",
+    "fittings": {
+      "start": "none",
+      "end": "none"
+    },
+    "actual_library_fittings": [
+      {
+        "terminal": "start",
+        "architecture_id": "wire_mineral_insulated",
+        "joint_id": "cable_gland",
+        "library_build_invoked": true,
+        "diameter_argument": 0.0405,
+        "objects": [
+          "Pipette library gland wide-shoe-power-1-2 start 0",
+          "Pipette library gland wide-shoe-power-1-2 start 1",
+          "Pipette library gland wide-shoe-power-1-2 start 2"
+        ],
+        "actual_recipe_roles": [
+          "six-flat-retaining-nut",
+          "concentric-insertion-sleeve",
+          "actual-ferrule-or-grommet"
+        ],
+        "generated_nut_backplane_offset_from_port": -0.00860627368092537,
+        "actual_mesh_based_seating_translation": [
+          -0.004781471565365791,
+          -0.003897244343534112,
+          0.006001412868499756
+        ],
+        "receiving_mount_plane": [
+          1.031109094619751,
+          -1.4666131734848022,
+          -0.0961768627166748
+        ],
+        "port": {
+          "id": "wide-shoe-power-1-2.start",
+          "xyz_bu": [
+            1.031109094619751,
+            -1.4666131734848022,
+            -0.0961768627166748
+          ],
+          "outward_normal": [
+            -0.5555797815322876,
+            -0.45283761620521545,
+            0.6973299980163574
+          ]
+        }
+      },
+      {
+        "terminal": "end",
+        "architecture_id": "wire_mineral_insulated",
+        "joint_id": "cable_gland",
+        "library_build_invoked": true,
+        "diameter_argument": 0.0405,
+        "objects": [
+          "Pipette library gland wide-shoe-power-1-2 end 0",
+          "Pipette library gland wide-shoe-power-1-2 end 1",
+          "Pipette library gland wide-shoe-power-1-2 end 2"
+        ],
+        "actual_recipe_roles": [
+          "six-flat-retaining-nut",
+          "concentric-insertion-sleeve",
+          "actual-ferrule-or-grommet"
+        ],
+        "generated_nut_backplane_offset_from_port": -0.00860630549574637,
+        "actual_mesh_based_seating_translation": [
+          -4.886505067247526e-08,
+          -0.0046873558312654495,
+          0.007217838428914547
+        ],
+        "receiving_mount_plane": [
+          0.32499998807907104,
+          -1.0066030025482178,
+          0.7442015409469604
+        ],
+        "port": {
+          "id": "wide-shoe-power-1-2.end",
+          "xyz_bu": [
+            0.32499998807907104,
+            -1.0066030025482178,
+            0.7442015409469604
+          ],
+          "outward_normal": [
+            -5.677819899574388e-06,
+            -0.5446420311927795,
+            0.8386686444282532
+          ]
+        }
+      }
+    ],
+    "module_hashes": {
+      "README.md": "f243e88a68fbdccdb70b828e72cae8109f401380d97e70d65bc02b35b30e850d",
+      "PIPETTE_STANDARD.md": "540a244a9192d2514c0c8ae97b657f0b896b8dddb170e5c51fb6d0f9554096be",
+      "core.py": "9a991dea7dd646faad8766326ef60e67c0618c283a81dbf297119ee6ec3761c7",
+      "blender_adapter.py": "724c1964fee8916b43dc86c0ff0185ec1646c1964662b2af1ea6ecbfbed68a1d",
+      "type_registry.json": "42e220db26a981956741a7ce268c8e74172382497cacf54a9a0b23691085e654",
+      "library_fittings.py": "3a6f75821350980c5080dc7c651cd4773f402424a8ac113c2d52943296804df7",
+      "library_geometry.py": "36daec4fcdbf5d333b04e26f5e592ca9ecece0f159b5e4ef86a110a102c5b48e",
+      "architecture_catalog.v1.json": "121cbadeb3f42912b25635a700a00a9bb22c5bd5a37050f4d6071225d978db98"
+    },
+    "warnings": [],
+    "proportion_regenerated_plan": true
+  },
+  {
+    "id": "wide-internal-main-power-1",
+    "collection": "FMPL | PIPETTE | wide-internal-main-power-1",
+    "objects": [
+      "FMPL | PIPETTE | wide-internal-main-power-1 | continuous visible route",
+      "Pipette library gland wide-internal-main-power-1 start 0",
+      "Pipette library gland wide-internal-main-power-1 start 1",
+      "Pipette library gland wide-internal-main-power-1 start 2",
+      "Pipette library gland wide-internal-main-power-1 end 0",
+      "Pipette library gland wide-internal-main-power-1 end 1",
+      "Pipette library gland wide-internal-main-power-1 end 2"
+    ],
+    "typed_family": "single_wire",
+    "typed_payload": "power",
+    "fittings": {
+      "start": "none",
+      "end": "none"
+    },
+    "actual_library_fittings": [
+      {
+        "terminal": "start",
+        "architecture_id": "wire_mineral_insulated",
+        "joint_id": "cable_gland",
+        "library_build_invoked": true,
+        "diameter_argument": 0.06075,
+        "objects": [
+          "Pipette library gland wide-internal-main-power-1 start 0",
+          "Pipette library gland wide-internal-main-power-1 start 1",
+          "Pipette library gland wide-internal-main-power-1 start 2"
+        ],
+        "actual_recipe_roles": [
+          "six-flat-retaining-nut",
+          "concentric-insertion-sleeve",
+          "actual-ferrule-or-grommet"
+        ],
+        "generated_nut_backplane_offset_from_port": -0.012909412384033203,
+        "actual_mesh_based_seating_translation": [
+          0.0,
+          0.012909412384033203,
+          0.0
+        ],
+        "receiving_mount_plane": [
+          0.30000001192092896,
+          2.1886491775512695,
+          1.2394169569015503
+        ],
+        "port": {
+          "id": "wide-internal-main-power-1.start",
+          "xyz_bu": [
+            0.30000001192092896,
+            2.1886491775512695,
+            1.2394169569015503
+          ],
+          "outward_normal": [
+            0.0,
+            1.0,
+            0.0
+          ]
+        }
+      },
+      {
+        "terminal": "end",
+        "architecture_id": "wire_mineral_insulated",
+        "joint_id": "cable_gland",
+        "library_build_invoked": true,
+        "diameter_argument": 0.06075,
+        "objects": [
+          "Pipette library gland wide-internal-main-power-1 end 0",
+          "Pipette library gland wide-internal-main-power-1 end 1",
+          "Pipette library gland wide-internal-main-power-1 end 2"
+        ],
+        "actual_recipe_roles": [
+          "six-flat-retaining-nut",
+          "concentric-insertion-sleeve",
+          "actual-ferrule-or-grommet"
+        ],
+        "generated_nut_backplane_offset_from_port": -0.01290944505205971,
+        "actual_mesh_based_seating_translation": [
+          1.6051274087658385e-07,
+          0.010826906189322472,
+          0.007030779495835304
+        ],
+        "receiving_mount_plane": [
+          1.2300002574920654,
+          1.791972279548645,
+          1.9099597930908203
+        ],
+        "port": {
+          "id": "wide-internal-main-power-1.end",
+          "xyz_bu": [
+            1.2300002574920654,
+            1.791972279548645,
+            1.9099597930908203
+          ],
+          "outward_normal": [
+            1.2433744814188685e-05,
+            0.8386809825897217,
+            0.5446228981018066
+          ]
+        }
+      }
+    ],
+    "module_hashes": {
+      "README.md": "f243e88a68fbdccdb70b828e72cae8109f401380d97e70d65bc02b35b30e850d",
+      "PIPETTE_STANDARD.md": "540a244a9192d2514c0c8ae97b657f0b896b8dddb170e5c51fb6d0f9554096be",
+      "core.py": "9a991dea7dd646faad8766326ef60e67c0618c283a81dbf297119ee6ec3761c7",
+      "blender_adapter.py": "724c1964fee8916b43dc86c0ff0185ec1646c1964662b2af1ea6ecbfbed68a1d",
+      "type_registry.json": "42e220db26a981956741a7ce268c8e74172382497cacf54a9a0b23691085e654",
+      "library_fittings.py": "3a6f75821350980c5080dc7c651cd4773f402424a8ac113c2d52943296804df7",
+      "library_geometry.py": "36daec4fcdbf5d333b04e26f5e592ca9ecece0f159b5e4ef86a110a102c5b48e",
+      "architecture_catalog.v1.json": "121cbadeb3f42912b25635a700a00a9bb22c5bd5a37050f4d6071225d978db98"
+    },
+    "warnings": [],
+    "proportion_regenerated_plan": true
+  }
+]

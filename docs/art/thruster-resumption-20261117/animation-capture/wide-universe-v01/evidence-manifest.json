@@ -1,0 +1,54 @@
+{
+  "status": "BYTE_EXACT_FINAL_SOURCE_CAPTURE_EVIDENCE",
+  "source_directory": "build/thruster-resume-20261117/capture-wide-universe-v01/output",
+  "master_retained": "build/thruster-resume-20261117/capture-wide-universe-v01/output/capture-master.blend",
+  "master_sha256": "dd05d1a70a609279e7fdc77b17b263739926dabd87ed88810460b62b897a0096",
+  "files": [
+    {
+      "source": "build/thruster-resume-20261117/capture-wide-universe-v01/output/capture-receipt.json",
+      "copy": "docs/art/thruster-resumption-20261117/animation-capture/wide-universe-v01/capture-receipt.json",
+      "sha256": "475588d1b5bb85c3fb9e3912152316f957d7c8cb563c2f846fc8e4c88eea4e73"
+    },
+    {
+      "source": "build/thruster-resume-20261117/capture-wide-universe-v01/output/package-validation.json",
+      "copy": "docs/art/thruster-resumption-20261117/animation-capture/wide-universe-v01/package-validation.json",
+      "sha256": "234f9fb9b5b3c1007e9e7160a4d35ee1ec43ba7a166f63e70901a7e3c4075d8c"
+    },
+    {
+      "source": "build/thruster-resume-20261117/capture-wide-universe-v01/output/advecting-capture-validation.json",
+      "copy": "docs/art/thruster-resumption-20261117/animation-capture/wide-universe-v01/advecting-capture-validation.json",
+      "sha256": "910be1c06cb5a0cd1fea36e99b78980dd4482a985db74fa1d3baa0dd20888b6c"
+    },
+    {
+      "source": "build/thruster-resume-20261117/capture-wide-universe-v01/output/source-capture-review.json",
+      "copy": "docs/art/thruster-resumption-20261117/animation-capture/wide-universe-v01/source-capture-review.json",
+      "sha256": "f62a3449845e73c7d68253a2880532c1ad7bdb617f0fbed53b96158d3c11df00"
+    },
+    {
+      "source": "build/thruster-resume-20261117/capture-wide-universe-v01/output/profile.json",
+      "copy": "docs/art/thruster-resumption-20261117/animation-capture/wide-universe-v01/profile.json",
+      "sha256": "8b467c1ad44d68e20a1308c2ee94f33bea8c6ae1540b6bf57ccccbf6e825f44a"
+    },
+    {
+      "source": "build/thruster-resume-20261117/capture-wide-universe-v01/output/package/source-assembly-board.png",
+      "copy": "docs/art/thruster-resumption-20261117/animation-capture/wide-universe-v01/source-assembly-board.png",
+      "sha256": "a7f1df3f96524279d1ac188426f25d84527e34702842b2c217334d10339967e2"
+    },
+    {
+      "source": "build/thruster-resume-20261117/capture-wide-universe-v01/output/package/source-assembly-loop.gif",
+      "copy": "docs/art/thruster-resumption-20261117/animation-capture/wide-universe-v01/source-assembly-loop.gif",
+      "sha256": "1a141efc93dbafc224233a68edb5d635f64916f35393dd84ba4eb09cce616979"
+    },
+    {
+      "source": "build/thruster-resume-20261117/capture-wide-universe-v01/output/intensity-comparison-native-scale.png",
+      "copy": "docs/art/thruster-resumption-20261117/animation-capture/wide-universe-v01/intensity-comparison-native-scale.png",
+      "sha256": "7ca42558883154255d4a7382dbe381e47e9a85958a2b043a53ef4c28d8abd1a2"
+    },
+    {
+      "source": "build/thruster-resume-20261117/capture-wide-universe-v01/output/intensity-eight-consecutive-source.gif",
+      "copy": "docs/art/thruster-resumption-20261117/animation-capture/wide-universe-v01/intensity-eight-consecutive-source.gif",
+      "sha256": "726d99155c79b677152d36229d2bba0fc25fc4bda7a6e8b99a28ce9bd575e674"
+    }
+  ],
+  "scope": "Final stronger FX; unchanged authoredbody/well; nativefit/powerstates reviewed separately."
+}

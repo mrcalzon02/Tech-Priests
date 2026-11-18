@@ -1,0 +1,12 @@
+00:02.438  blend            | Read blend: "C:\Users\Admin\Documents\ChatGPT\Tech priests\model-production\build\thruster-resume-20261117\capture-wide-universe-v01\output\capture-master.blend"
+00:39.407  render           | Saved: 'C:\Users\Admin\Documents\ChatGPT\Tech priests\model-production\build\thruster-resume-20261117\capture-wide-universe-v01\output\frames\cold_body\000.png'
+CAPTURED cold_body 0
+00:45.953  render           | Saved: 'C:\Users\Admin\Documents\ChatGPT\Tech priests\model-production\build\thruster-resume-20261117\capture-wide-universe-v01\output\frames\cold_light\000.png'
+CAPTURED cold_light 0
+00:52.578  render           | Saved: 'C:\Users\Admin\Documents\ChatGPT\Tech priests\model-production\build\thruster-resume-20261117\capture-wide-universe-v01\output\frames\shadow\000.png'
+CAPTURED shadow 0
+01:12.344  render           | Saved: 'C:\Users\Admin\Documents\ChatGPT\Tech priests\model-production\build\thruster-resume-20261117\capture-wide-universe-v01\output\frames\underlay\000.png'
+CAPTURED underlay 0
+Blender 5.0.0 (hash a37564c4df7a built 2025-11-18 11:06:54)
+
+Blender quit

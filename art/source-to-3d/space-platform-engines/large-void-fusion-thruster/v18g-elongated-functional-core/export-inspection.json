@@ -1,0 +1,2510 @@
+{
+  "status": "PASS_CONSTRUCTION_EXPORT_ONLY",
+  "source": {
+    "meshes": 910,
+    "triangles": 305038,
+    "bounds_m": [
+      [
+        -1.894121527671814,
+        -2.3299221992492676,
+        -1.265803337097168
+      ],
+      [
+        1.894121527671814,
+        2.3663904666900635,
+        2.7596521377563477
+      ]
+    ],
+    "nonfinite_vertices": 0,
+    "degenerate_triangles": 0,
+    "missing_uv_meshes": [],
+    "collapsed_uv_triangles": 0,
+    "raw_topological_boundary_edges": 240,
+    "images": [
+      {
+        "name": "armor-basecolor",
+        "size": [
+          512,
+          512
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          0.07561274827457964,
+          0.08308823802508414,
+          0.08774510049261153,
+          1.0
+        ]
+      },
+      {
+        "name": "armor-normal",
+        "size": [
+          512,
+          512
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          0.5000000298023224,
+          0.4981617946177721,
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "name": "armor-orm",
+        "size": [
+          512,
+          512
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          1.0,
+          0.5301470868289471,
+          0.6509804129600525,
+          1.0
+        ]
+      },
+      {
+        "name": "bronze-basecolor",
+        "size": [
+          512,
+          512
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          0.24473040737211704,
+          0.17034314200282097,
+          0.07806372828781605,
+          1.0
+        ]
+      },
+      {
+        "name": "bronze-normal",
+        "size": [
+          512,
+          512
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          0.5000000298023224,
+          0.4981617946177721,
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "name": "bronze-orm",
+        "size": [
+          512,
+          512
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          1.0,
+          0.5204657148569822,
+          0.7215686440467834,
+          1.0
+        ]
+      },
+      {
+        "name": "cast-basecolor",
+        "size": [
+          512,
+          512
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          0.10514706745743752,
+          0.11311275325715542,
+          0.11997549794614315,
+          1.0
+        ]
+      },
+      {
+        "name": "cast-normal",
+        "size": [
+          512,
+          512
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          0.5000000298023224,
+          0.4981617946177721,
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "name": "cast-orm",
+        "size": [
+          512,
+          512
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          1.0,
+          0.6604166869074106,
+          0.6196078658103943,
+          1.0
+        ]
+      },
+      {
+        "name": "ceramic-basecolor",
+        "size": [
+          512,
+          512
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          0.47279414907097816,
+          0.44227944500744343,
+          0.36250000912696123,
+          1.0
+        ]
+      },
+      {
+        "name": "ceramic-normal",
+        "size": [
+          512,
+          512
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          0.5000000298023224,
+          0.4981617946177721,
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "name": "ceramic-orm",
+        "size": [
+          512,
+          512
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          1.0,
+          0.6604166869074106,
+          0.05882353335618973,
+          1.0
+        ]
+      },
+      {
+        "name": "copper-basecolor",
+        "size": [
+          512,
+          512
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          0.2240196242928505,
+          0.046691179974004626,
+          0.026715688407421112,
+          1.0
+        ]
+      },
+      {
+        "name": "copper-normal",
+        "size": [
+          512,
+          512
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          0.5000000298023224,
+          0.4981617946177721,
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "name": "copper-orm",
+        "size": [
+          512,
+          512
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          1.0,
+          0.5301470868289471,
+          0.6196078658103943,
+          1.0
+        ]
+      },
+      {
+        "name": "dgordillo-sculpt-normal.png",
+        "size": [
+          1024,
+          1024
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          0.38786767050623894,
+          0.3602941380813718,
+          0.7302696332335472,
+          1.0
+        ]
+      },
+      {
+        "name": "green-basecolor",
+        "size": [
+          512,
+          512
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          0.01568627543747425,
+          0.3300245199352503,
+          0.003921568859368563,
+          1.0
+        ]
+      },
+      {
+        "name": "green-normal",
+        "size": [
+          512,
+          512
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          0.5000000298023224,
+          0.4981617946177721,
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "name": "green-orm",
+        "size": [
+          512,
+          512
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          1.0,
+          0.42009807378053665,
+          0.0784313753247261,
+          1.0
+        ]
+      },
+      {
+        "name": "Noctilith-sprite-mineral-00-basecolor",
+        "size": [
+          1024,
+          1024
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          0.12058824254199862,
+          0.13284314470365644,
+          0.09730392671190202,
+          1.0
+        ]
+      },
+      {
+        "name": "Noctilith-sprite-mineral-00-normal",
+        "size": [
+          1024,
+          1024
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          0.507720616646111,
+          0.5112745380029082,
+          0.9941176697611809,
+          1.0
+        ]
+      },
+      {
+        "name": "Noctilith-sprite-mineral-00-orm",
+        "size": [
+          1024,
+          1024
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          1.0,
+          0.8672794792801142,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "Noctilith-sprite-mineral-01-basecolor",
+        "size": [
+          1024,
+          1024
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          0.10588236036710441,
+          0.11740196798928082,
+          0.08541667088866234,
+          1.0
+        ]
+      },
+      {
+        "name": "Noctilith-sprite-mineral-01-normal",
+        "size": [
+          1024,
+          1024
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          0.5060049314051867,
+          0.509803949855268,
+          0.9955882616341114,
+          1.0
+        ]
+      },
+      {
+        "name": "Noctilith-sprite-mineral-01-orm",
+        "size": [
+          1024,
+          1024
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          1.0,
+          0.8676471263170242,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "Noctilith-sprite-mineral-02-basecolor",
+        "size": [
+          1024,
+          1024
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          0.07794118160381913,
+          0.08419118216261268,
+          0.060661768075078726,
+          1.0
+        ]
+      },
+      {
+        "name": "Noctilith-sprite-mineral-02-normal",
+        "size": [
+          1024,
+          1024
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          0.5098039507865906,
+          0.5077206175774336,
+          0.9969362914562225,
+          1.0
+        ]
+      },
+      {
+        "name": "Noctilith-sprite-mineral-02-orm",
+        "size": [
+          1024,
+          1024
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          1.0,
+          0.8623775187879801,
+          0.0,
+          1.0
+        ]
+      }
+    ],
+    "all_texture_images_packed": true
+  },
+  "export": {
+    "meshes": 910,
+    "triangles": 305036,
+    "bounds_m": [
+      [
+        -1.894121527671814,
+        -2.3299221992492676,
+        -1.265803337097168
+      ],
+      [
+        1.894121527671814,
+        2.3663904666900635,
+        2.7596521377563477
+      ]
+    ],
+    "nonfinite_vertices": 0,
+    "degenerate_triangles": 0,
+    "missing_uv_meshes": [],
+    "collapsed_uv_triangles": 0,
+    "raw_topological_boundary_edges": 218950,
+    "images": [
+      {
+        "name": "armor-basecolor",
+        "size": [
+          512,
+          512
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          0.07561274827457964,
+          0.08308823802508414,
+          0.08774510049261153,
+          1.0
+        ]
+      },
+      {
+        "name": "armor-normal",
+        "size": [
+          512,
+          512
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          0.5000000298023224,
+          0.4981617946177721,
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "name": "armor-orm",
+        "size": [
+          512,
+          512
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          1.0,
+          0.5301470868289471,
+          0.6509804129600525,
+          1.0
+        ]
+      },
+      {
+        "name": "bronze-basecolor",
+        "size": [
+          512,
+          512
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          0.24473040737211704,
+          0.17034314200282097,
+          0.07806372828781605,
+          1.0
+        ]
+      },
+      {
+        "name": "bronze-normal",
+        "size": [
+          512,
+          512
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          0.5000000298023224,
+          0.4981617946177721,
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "name": "bronze-orm",
+        "size": [
+          512,
+          512
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          1.0,
+          0.5204657148569822,
+          0.7215686440467834,
+          1.0
+        ]
+      },
+      {
+        "name": "cast-basecolor",
+        "size": [
+          512,
+          512
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          0.10514706745743752,
+          0.11311275325715542,
+          0.11997549794614315,
+          1.0
+        ]
+      },
+      {
+        "name": "cast-normal",
+        "size": [
+          512,
+          512
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          0.5000000298023224,
+          0.4981617946177721,
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "name": "cast-orm",
+        "size": [
+          512,
+          512
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          1.0,
+          0.6604166869074106,
+          0.6196078658103943,
+          1.0
+        ]
+      },
+      {
+        "name": "ceramic-basecolor",
+        "size": [
+          512,
+          512
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          0.47279414907097816,
+          0.44227944500744343,
+          0.36250000912696123,
+          1.0
+        ]
+      },
+      {
+        "name": "ceramic-normal",
+        "size": [
+          512,
+          512
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          0.5000000298023224,
+          0.4981617946177721,
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "name": "ceramic-orm",
+        "size": [
+          512,
+          512
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          1.0,
+          0.6604166869074106,
+          0.05882353335618973,
+          1.0
+        ]
+      },
+      {
+        "name": "copper-basecolor",
+        "size": [
+          512,
+          512
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          0.2240196242928505,
+          0.046691179974004626,
+          0.026715688407421112,
+          1.0
+        ]
+      },
+      {
+        "name": "copper-normal",
+        "size": [
+          512,
+          512
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          0.5000000298023224,
+          0.4981617946177721,
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "name": "copper-orm",
+        "size": [
+          512,
+          512
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          1.0,
+          0.5301470868289471,
+          0.6196078658103943,
+          1.0
+        ]
+      },
+      {
+        "name": "dgordillo-sculpt-normal",
+        "size": [
+          1024,
+          1024
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          0.38786767050623894,
+          0.3602941380813718,
+          0.7302696332335472,
+          1.0
+        ]
+      },
+      {
+        "name": "green-basecolor",
+        "size": [
+          512,
+          512
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          0.01568627543747425,
+          0.3300245199352503,
+          0.003921568859368563,
+          1.0
+        ]
+      },
+      {
+        "name": "green-normal",
+        "size": [
+          512,
+          512
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          0.5000000298023224,
+          0.4981617946177721,
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "name": "green-orm",
+        "size": [
+          512,
+          512
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          1.0,
+          0.42009807378053665,
+          0.0784313753247261,
+          1.0
+        ]
+      },
+      {
+        "name": "Noctilith-sprite-mineral-00-basecolor",
+        "size": [
+          1024,
+          1024
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          0.12058824254199862,
+          0.13284314470365644,
+          0.09730392671190202,
+          1.0
+        ]
+      },
+      {
+        "name": "Noctilith-sprite-mineral-00-normal",
+        "size": [
+          1024,
+          1024
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          0.507720616646111,
+          0.5112745380029082,
+          0.9941176697611809,
+          1.0
+        ]
+      },
+      {
+        "name": "Noctilith-sprite-mineral-00-orm",
+        "size": [
+          1024,
+          1024
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          1.0,
+          0.8672794792801142,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "Noctilith-sprite-mineral-01-basecolor",
+        "size": [
+          1024,
+          1024
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          0.10588236036710441,
+          0.11740196798928082,
+          0.08541667088866234,
+          1.0
+        ]
+      },
+      {
+        "name": "Noctilith-sprite-mineral-01-normal",
+        "size": [
+          1024,
+          1024
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          0.5060049314051867,
+          0.509803949855268,
+          0.9955882616341114,
+          1.0
+        ]
+      },
+      {
+        "name": "Noctilith-sprite-mineral-01-orm",
+        "size": [
+          1024,
+          1024
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          1.0,
+          0.8676471263170242,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "Noctilith-sprite-mineral-02-basecolor",
+        "size": [
+          1024,
+          1024
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          0.07794118160381913,
+          0.08419118216261268,
+          0.060661768075078726,
+          1.0
+        ]
+      },
+      {
+        "name": "Noctilith-sprite-mineral-02-normal",
+        "size": [
+          1024,
+          1024
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          0.5098039507865906,
+          0.5077206175774336,
+          0.9969362914562225,
+          1.0
+        ]
+      },
+      {
+        "name": "Noctilith-sprite-mineral-02-orm",
+        "size": [
+          1024,
+          1024
+        ],
+        "packed": true,
+        "pixels_loaded": true,
+        "sample_mean_rgba": [
+          1.0,
+          0.8623775187879801,
+          0.0,
+          1.0
+        ]
+      }
+    ]
+  },
+  "actual_glb_material_channels": [
+    {
+      "name": "LargeVoidV01 cast",
+      "basecolor": true,
+      "metalrough": true,
+      "normal": true
+    },
+    {
+      "name": "LargeVoidV01 bronze",
+      "basecolor": true,
+      "metalrough": true,
+      "normal": true
+    },
+    {
+      "name": "LargeVoidV01 ceramic",
+      "basecolor": true,
+      "metalrough": true,
+      "normal": true
+    },
+    {
+      "name": "LargeVoidV01 green",
+      "basecolor": true,
+      "metalrough": true,
+      "normal": true
+    },
+    {
+      "name": "LargeVoidV01 armor",
+      "basecolor": true,
+      "metalrough": true,
+      "normal": true
+    },
+    {
+      "name": "LargeVoidV01 copper",
+      "basecolor": true,
+      "metalrough": true,
+      "normal": true
+    },
+    {
+      "name": "Noctilith sprite mineral / rock 0",
+      "basecolor": true,
+      "metalrough": true,
+      "normal": true
+    },
+    {
+      "name": "Noctilith sprite mineral / rock 1",
+      "basecolor": true,
+      "metalrough": true,
+      "normal": true
+    },
+    {
+      "name": "Noctilith sprite mineral / rock 2",
+      "basecolor": true,
+      "metalrough": true,
+      "normal": true
+    },
+    {
+      "name": "LargeVoidV01 supplied skull bronze",
+      "basecolor": true,
+      "metalrough": true,
+      "normal": true
+    }
+  ],
+  "embedded_glb_images": 28,
+  "source_sha256": "954c7ed2ef3f3d91e8f09c8427708cd5c42e784523ccbb832bf36a26f01b14bd",
+  "glb_sha256": "4d9ef76ab5452728437d399af5456fbaa2b3626381da548dfb06de1b47d713de",
+  "bounds_max_delta_m": 0.0,
+  "deck_mount_count": 6,
+  "deck_mount_max_error_m": 0.0,
+  "visible_fluid_ports": [],
+  "not_claimed": [
+    "all-pairs mechanical intersection clearance",
+    "native projection or prototype integration",
+    "animation",
+    "owner appearance acceptance"
+  ],
+  "skull_relief": {
+    "source": [
+      {
+        "skull": "Supplied original low-poly skull seal 0",
+        "mount_plane_world_m": [
+          0.0,
+          1.4329943656921387,
+          2.6188037395477295
+        ],
+        "outward_normal": [
+          0.0,
+          -0.5446390509605408,
+          0.838670551776886
+        ],
+        "signed_range_relative_to_backing_front_m": [
+          -0.30756108462810516,
+          0.2050405591726303
+        ],
+        "directional_depth_m": 0.5126016438007355,
+        "depth_buried_fraction": 0.6000001918598293,
+        "depth_visible_fraction": 0.3999998081401707,
+        "at_least_half_buried": true
+      },
+      {
+        "skull": "Supplied original low-poly skull seal 1",
+        "mount_plane_world_m": [
+          0.0,
+          -1.3484565019607544,
+          0.8125081658363342
+        ],
+        "outward_normal": [
+          0.0,
+          -0.5446390509605408,
+          0.838670551776886
+        ],
+        "signed_range_relative_to_backing_front_m": [
+          -0.28193097561597824,
+          0.1879538968205452
+        ],
+        "directional_depth_m": 0.46988487243652344,
+        "depth_buried_fraction": 0.6000001109932821,
+        "depth_visible_fraction": 0.39999988900671796,
+        "at_least_half_buried": true
+      }
+    ],
+    "actual_glb_reimport": [
+      {
+        "skull": "Supplied original low-poly skull seal 0",
+        "mount_plane_world_m": [
+          0.0,
+          1.4329943656921387,
+          2.6188037395477295
+        ],
+        "outward_normal": [
+          0.0,
+          -0.5446391701698303,
+          0.8386704921722412
+        ],
+        "signed_range_relative_to_backing_front_m": [
+          -0.30756108462810516,
+          0.2050405740737915
+        ],
+        "directional_depth_m": 0.5126016587018967,
+        "depth_buried_fraction": 0.6000001744180216,
+        "depth_visible_fraction": 0.39999982558197844,
+        "at_least_half_buried": true
+      },
+      {
+        "skull": "Supplied original low-poly skull seal 1",
+        "mount_plane_world_m": [
+          0.0,
+          -1.3484565019607544,
+          0.8125081658363342
+        ],
+        "outward_normal": [
+          0.0,
+          -0.5446391701698303,
+          0.8386704921722412
+        ],
+        "signed_range_relative_to_backing_front_m": [
+          -0.28193098306655884,
+          0.1879539117217064
+        ],
+        "directional_depth_m": 0.46988489478826523,
+        "depth_buried_fraction": 0.6000000983083309,
+        "depth_visible_fraction": 0.39999990169166916,
+        "at_least_half_buried": true
+      }
+    ],
+    "criterion": "Actual projected skull depth behind the bronze medallion front plane is at least 50%; both rear and front ranges are nonzero. This measures directional depth, not fraction of mesh volume."
+  },
+  "stacked_dish_emitter": {
+    "source": [
+      {
+        "name": "Armored shallow dish stage 0",
+        "center_world_m": [
+          0.0,
+          -1.1308939456939697,
+          -0.2266446053981781
+        ],
+        "axis_world": [
+          0.0,
+          -0.8386704325675964,
+          -0.5446392297744751
+        ],
+        "outer_radius_m": 0.9600001198115373,
+        "central_aperture_radius_m": 0.22079985954568074,
+        "axial_range_relative_to_center_m": [
+          -0.10000009089708328,
+          0.13000020384788513
+        ],
+        "dish_body_axial_depth_m": 0.23000029474496841
+      },
+      {
+        "name": "Armored shallow dish stage 1",
+        "center_world_m": [
+          0.0,
+          -1.3741085529327393,
+          -0.3845899999141693
+        ],
+        "axis_world": [
+          0.0,
+          -0.8386704325675964,
+          -0.5446392297744751
+        ],
+        "outer_radius_m": 0.8300000905775112,
+        "central_aperture_radius_m": 0.19089986416215016,
+        "axial_range_relative_to_center_m": [
+          -0.10000014305114746,
+          0.13000014424324036
+        ],
+        "dish_body_axial_depth_m": 0.23000028729438782
+      },
+      {
+        "name": "Armored shallow dish stage 2",
+        "center_world_m": [
+          0.0,
+          -1.6173229217529297,
+          -0.5425353050231934
+        ],
+        "axis_world": [
+          0.0,
+          -0.8386704325675964,
+          -0.5446392297744751
+        ],
+        "outer_radius_m": 0.690000138749233,
+        "central_aperture_radius_m": 0.15869985172833423,
+        "axial_range_relative_to_center_m": [
+          -0.10000012442469597,
+          0.13000015914440155
+        ],
+        "dish_body_axial_depth_m": 0.23000028356909752
+      },
+      {
+        "name": "Armored shallow dish stage 3",
+        "center_world_m": [
+          0.0,
+          -1.8605372905731201,
+          -0.700480580329895
+        ],
+        "axis_world": [
+          0.0,
+          -0.8386704325675964,
+          -0.5446392297744751
+        ],
+        "outer_radius_m": 0.5400001380785572,
+        "central_aperture_radius_m": 0.12419994814748994,
+        "axial_range_relative_to_center_m": [
+          -0.1000001379288733,
+          0.13000010699033737
+        ],
+        "dish_body_axial_depth_m": 0.23000024491921067
+      }
+    ],
+    "actual_glb_reimport": [
+      {
+        "name": "Armored shallow dish stage 0",
+        "center_world_m": [
+          0.0,
+          -1.1308939456939697,
+          -0.2266446053981781
+        ],
+        "axis_world": [
+          0.0,
+          -0.8386704921722412,
+          -0.5446391105651855
+        ],
+        "outer_radius_m": 0.9600001353335782,
+        "central_aperture_radius_m": 0.22079987430850218,
+        "axial_range_relative_to_center_m": [
+          -0.10000005923211575,
+          0.13000008463859558
+        ],
+        "dish_body_axial_depth_m": 0.23000014387071133
+      },
+      {
+        "name": "Armored shallow dish stage 1",
+        "center_world_m": [
+          0.0,
+          -1.3741085529327393,
+          -0.3845899999141693
+        ],
+        "axis_world": [
+          0.0,
+          -0.8386704921722412,
+          -0.5446391105651855
+        ],
+        "outer_radius_m": 0.8300000995541134,
+        "central_aperture_radius_m": 0.1908998666014462,
+        "axial_range_relative_to_center_m": [
+          -0.10000012442469597,
+          0.130000039935112
+        ],
+        "dish_body_axial_depth_m": 0.23000016435980797
+      },
+      {
+        "name": "Armored shallow dish stage 2",
+        "center_world_m": [
+          0.0,
+          -1.6173229217529297,
+          -0.5425353050231934
+        ],
+        "axis_world": [
+          0.0,
+          -0.8386704921722412,
+          -0.5446391105651855
+        ],
+        "outer_radius_m": 0.6900001495471737,
+        "central_aperture_radius_m": 0.15869986053101304,
+        "axial_range_relative_to_center_m": [
+          -0.10000009089708328,
+          0.13000008463859558
+        ],
+        "dish_body_axial_depth_m": 0.23000017553567886
+      },
+      {
+        "name": "Armored shallow dish stage 3",
+        "center_world_m": [
+          0.0,
+          -1.8605372905731201,
+          -0.700480580329895
+        ],
+        "axis_world": [
+          0.0,
+          -0.8386704921722412,
+          -0.5446391105651855
+        ],
+        "outer_radius_m": 0.540000124281189,
+        "central_aperture_radius_m": 0.12419994252355888,
+        "axial_range_relative_to_center_m": [
+          -0.10000011511147022,
+          0.1300000660121441
+        ],
+        "dish_body_axial_depth_m": 0.2300001811236143
+      }
+    ],
+    "criterion": "Four physically dished thick annular stage bodies step inward toward the projecting central emitter tip. Actual radial/axial extents measured in source and GLB; separate segmented armor/rim hardware lies outside the measured core dish shells."
+  },
+  "named_interface_seating": {
+    "source": {
+      "shoes": [
+        {
+          "part": "Fitted mineral contact shoe 0 -1",
+          "host": "Fractured Noctilith block 0",
+          "rays": 9,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.0020001750090159476,
+            -0.0020000101067125797
+          ],
+          "actual_vertex_max_error_m": 1.1920928955078125e-07,
+          "target_embed_m": 0.002,
+          "pass": true
+        },
+        {
+          "part": "Fitted mineral contact shoe 0 1",
+          "host": "Fractured Noctilith block 0",
+          "rays": 9,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.0020001750090159476,
+            -0.001999942527618259
+          ],
+          "actual_vertex_max_error_m": 1.3328003749250113e-07,
+          "target_embed_m": 0.002,
+          "pass": true
+        },
+        {
+          "part": "Fitted mineral contact shoe 1 -1",
+          "host": "Fractured Noctilith block 1",
+          "rays": 9,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.0020000669173896313,
+            -0.0019999262876808643
+          ],
+          "actual_vertex_max_error_m": 1.1920928955078125e-07,
+          "target_embed_m": 0.002,
+          "pass": true
+        },
+        {
+          "part": "Fitted mineral contact shoe 1 1",
+          "host": "Fractured Noctilith block 1",
+          "rays": 9,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.0020000669173896313,
+            -0.0019999161595478654
+          ],
+          "actual_vertex_max_error_m": 1.1926748300777466e-07,
+          "target_embed_m": 0.002,
+          "pass": true
+        },
+        {
+          "part": "Fitted mineral contact shoe 2 -1",
+          "host": "Fractured Noctilith block 2",
+          "rays": 9,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.0020000750082544982,
+            -0.001999942527618259
+          ],
+          "actual_vertex_max_error_m": 1.1920928955078125e-07,
+          "target_embed_m": 0.002,
+          "pass": true
+        },
+        {
+          "part": "Fitted mineral contact shoe 2 1",
+          "host": "Fractured Noctilith block 2",
+          "rays": 9,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.0020000499789603055,
+            -0.0019999101059511304
+          ],
+          "actual_vertex_max_error_m": 5.960464477539063e-08,
+          "target_embed_m": 0.002,
+          "pass": true
+        }
+      ],
+      "dish_ribs": [
+        {
+          "part": "Profile-seated dished rib 0 0",
+          "host": "Armored shallow dish stage 0",
+          "rays": 18,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.0024840491823852062,
+            -0.0020000425283797085
+          ],
+          "actual_vertex_max_error_m": 2.9802322387695312e-08,
+          "target_embed_m": 0.002,
+          "pass": true
+        },
+        {
+          "part": "Profile-seated dished rib 0 1",
+          "host": "Armored shallow dish stage 0",
+          "rays": 18,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.0024840491823852062,
+            -0.0020000425283797085
+          ],
+          "actual_vertex_max_error_m": 2.9802322387695312e-08,
+          "target_embed_m": 0.002,
+          "pass": true
+        },
+        {
+          "part": "Profile-seated dished rib 0 2",
+          "host": "Armored shallow dish stage 0",
+          "rays": 18,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.0024839668185450137,
+            -0.001999992469791323
+          ],
+          "actual_vertex_max_error_m": 5.960464477539063e-08,
+          "target_embed_m": 0.002,
+          "pass": true
+        },
+        {
+          "part": "Profile-seated dished rib 0 3",
+          "host": "Armored shallow dish stage 0",
+          "rays": 18,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.0024839992402121425,
+            -0.001999992469791323
+          ],
+          "actual_vertex_max_error_m": 5.960464477539063e-08,
+          "target_embed_m": 0.002,
+          "pass": true
+        },
+        {
+          "part": "Profile-seated dished rib 1 0",
+          "host": "Armored shallow dish stage 1",
+          "rays": 18,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.002469531958922744,
+            -0.0019999181968159974
+          ],
+          "actual_vertex_max_error_m": 2.9802322387695312e-08,
+          "target_embed_m": 0.002,
+          "pass": true
+        },
+        {
+          "part": "Profile-seated dished rib 1 1",
+          "host": "Armored shallow dish stage 1",
+          "rays": 18,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.0024695339961908758,
+            -0.0019999161595478654
+          ],
+          "actual_vertex_max_error_m": 2.9802322387695312e-08,
+          "target_embed_m": 0.002,
+          "pass": true
+        },
+        {
+          "part": "Profile-seated dished rib 1 2",
+          "host": "Armored shallow dish stage 1",
+          "rays": 18,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.0024695664760656655,
+            -0.0019999101059511304
+          ],
+          "actual_vertex_max_error_m": 5.960464477539063e-08,
+          "target_embed_m": 0.002,
+          "pass": true
+        },
+        {
+          "part": "Profile-seated dished rib 1 3",
+          "host": "Armored shallow dish stage 1",
+          "rays": 18,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.0024695664760656655,
+            -0.0019999101059511304
+          ],
+          "actual_vertex_max_error_m": 5.960464477539063e-08,
+          "target_embed_m": 0.002,
+          "pass": true
+        },
+        {
+          "part": "Profile-seated dished rib 2 0",
+          "host": "Armored shallow dish stage 2",
+          "rays": 18,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.0024020312121137977,
+            -0.001999942527618259
+          ],
+          "actual_vertex_max_error_m": 2.9802322387695312e-08,
+          "target_embed_m": 0.002,
+          "pass": true
+        },
+        {
+          "part": "Profile-seated dished rib 2 1",
+          "host": "Armored shallow dish stage 2",
+          "rays": 18,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.0024020312121137977,
+            -0.001999942527618259
+          ],
+          "actual_vertex_max_error_m": 2.9802322387695312e-08,
+          "target_embed_m": 0.002,
+          "pass": true
+        },
+        {
+          "part": "Profile-seated dished rib 2 2",
+          "host": "Armored shallow dish stage 2",
+          "rays": 18,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.0024021799326874316,
+            -0.0019999101059511304
+          ],
+          "actual_vertex_max_error_m": 5.960464477539063e-08,
+          "target_embed_m": 0.002,
+          "pass": true
+        },
+        {
+          "part": "Profile-seated dished rib 2 3",
+          "host": "Armored shallow dish stage 2",
+          "rays": 18,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.002402147452812642,
+            -0.0019999101059511304
+          ],
+          "actual_vertex_max_error_m": 5.960464477539063e-08,
+          "target_embed_m": 0.002,
+          "pass": true
+        },
+        {
+          "part": "Profile-seated dished rib 3 0",
+          "host": "Armored shallow dish stage 3",
+          "rays": 18,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.0021779314847663045,
+            -0.001999942527618259
+          ],
+          "actual_vertex_max_error_m": 2.9802322387695312e-08,
+          "target_embed_m": 0.002,
+          "pass": true
+        },
+        {
+          "part": "Profile-seated dished rib 3 1",
+          "host": "Armored shallow dish stage 3",
+          "rays": 18,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.0021779314847663045,
+            -0.001999942527618259
+          ],
+          "actual_vertex_max_error_m": 2.9802322387695312e-08,
+          "target_embed_m": 0.002,
+          "pass": true
+        },
+        {
+          "part": "Profile-seated dished rib 3 2",
+          "host": "Armored shallow dish stage 3",
+          "rays": 18,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.0021778990048915148,
+            -0.001999845146201551
+          ],
+          "actual_vertex_max_error_m": 1.1920928955078125e-07,
+          "target_embed_m": 0.002,
+          "pass": true
+        },
+        {
+          "part": "Profile-seated dished rib 3 3",
+          "host": "Armored shallow dish stage 3",
+          "rays": 18,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.0021778990048915148,
+            -0.001999845146201551
+          ],
+          "actual_vertex_max_error_m": 1.1920928955078125e-07,
+          "target_embed_m": 0.002,
+          "pass": true
+        }
+      ],
+      "recessed_seams": [
+        {
+          "part": "Recessed green mineral seam 0",
+          "actual_recess_from_original_skin_m": 0.024386398727074265,
+          "air_clearance_to_carved_floor_m": 0.009546545334160328,
+          "pass": true
+        },
+        {
+          "part": "Recessed green mineral seam 1",
+          "actual_recess_from_original_skin_m": 0.02438638499006629,
+          "air_clearance_to_carved_floor_m": 0.00922745035495609,
+          "pass": true
+        },
+        {
+          "part": "Recessed green mineral seam 2",
+          "actual_recess_from_original_skin_m": 0.024386381963267922,
+          "air_clearance_to_carved_floor_m": 0.008814006054308265,
+          "pass": true
+        },
+        {
+          "part": "Recessed green mineral seam 3",
+          "actual_recess_from_original_skin_m": 0.024386364442761987,
+          "air_clearance_to_carved_floor_m": 0.008823129232041538,
+          "pass": true
+        },
+        {
+          "part": "Recessed green mineral seam 4",
+          "actual_recess_from_original_skin_m": 0.024113319697789848,
+          "air_clearance_to_carved_floor_m": 0.009912087582051754,
+          "pass": true
+        },
+        {
+          "part": "Recessed green mineral seam 5",
+          "actual_recess_from_original_skin_m": 0.024113378662150353,
+          "air_clearance_to_carved_floor_m": 0.009163969836663455,
+          "pass": true
+        },
+        {
+          "part": "Recessed green mineral seam 6",
+          "actual_recess_from_original_skin_m": 0.024113426101393998,
+          "air_clearance_to_carved_floor_m": 0.00923696719110012,
+          "pass": true
+        },
+        {
+          "part": "Recessed green mineral seam 7",
+          "actual_recess_from_original_skin_m": 0.024113443738315254,
+          "air_clearance_to_carved_floor_m": 0.008785820624325424,
+          "pass": true
+        },
+        {
+          "part": "Recessed green mineral seam 20",
+          "actual_recess_from_original_skin_m": 0.024451813427731395,
+          "air_clearance_to_carved_floor_m": 0.010086790309287608,
+          "pass": true
+        },
+        {
+          "part": "Recessed green mineral seam 21",
+          "actual_recess_from_original_skin_m": 0.024452077224850655,
+          "air_clearance_to_carved_floor_m": 0.009098863461986184,
+          "pass": true
+        },
+        {
+          "part": "Recessed green mineral seam 22",
+          "actual_recess_from_original_skin_m": 0.024452027399092913,
+          "air_clearance_to_carved_floor_m": 0.007980016875080764,
+          "pass": true
+        },
+        {
+          "part": "Recessed green mineral seam 23",
+          "actual_recess_from_original_skin_m": 0.024451920529827476,
+          "air_clearance_to_carved_floor_m": 0.008141273632645607,
+          "pass": true
+        },
+        {
+          "part": "Recessed green mineral seam 24",
+          "actual_recess_from_original_skin_m": 0.024256063567008823,
+          "air_clearance_to_carved_floor_m": 0.009140925481915474,
+          "pass": true
+        },
+        {
+          "part": "Recessed green mineral seam 25",
+          "actual_recess_from_original_skin_m": 0.02425610041245818,
+          "air_clearance_to_carved_floor_m": 0.008470204484183341,
+          "pass": true
+        },
+        {
+          "part": "Recessed green mineral seam 26",
+          "actual_recess_from_original_skin_m": 0.02425616525579244,
+          "air_clearance_to_carved_floor_m": 0.009038226387929171,
+          "pass": true
+        },
+        {
+          "part": "Recessed green mineral seam 27",
+          "actual_recess_from_original_skin_m": 0.024256095406599343,
+          "air_clearance_to_carved_floor_m": 0.008728710934519768,
+          "pass": true
+        },
+        {
+          "part": "Recessed green mineral seam 40",
+          "actual_recess_from_original_skin_m": 0.0244430061429739,
+          "air_clearance_to_carved_floor_m": 0.008739586221054196,
+          "pass": true
+        },
+        {
+          "part": "Recessed green mineral seam 41",
+          "actual_recess_from_original_skin_m": 0.024442923720926046,
+          "air_clearance_to_carved_floor_m": 0.009811746655032039,
+          "pass": true
+        },
+        {
+          "part": "Recessed green mineral seam 42",
+          "actual_recess_from_original_skin_m": 0.024442908819764853,
+          "air_clearance_to_carved_floor_m": 0.00852976180613041,
+          "pass": true
+        },
+        {
+          "part": "Recessed green mineral seam 43",
+          "actual_recess_from_original_skin_m": 0.02444296982139349,
+          "air_clearance_to_carved_floor_m": 0.008227394195273519,
+          "pass": true
+        },
+        {
+          "part": "Recessed green mineral seam 44",
+          "actual_recess_from_original_skin_m": 0.024443149770377204,
+          "air_clearance_to_carved_floor_m": 0.01017691899323836,
+          "pass": true
+        },
+        {
+          "part": "Recessed green mineral seam 45",
+          "actual_recess_from_original_skin_m": 0.02444316155742854,
+          "air_clearance_to_carved_floor_m": 0.009431393584236503,
+          "pass": true
+        },
+        {
+          "part": "Recessed green mineral seam 46",
+          "actual_recess_from_original_skin_m": 0.024443094851449132,
+          "air_clearance_to_carved_floor_m": 0.007965905679157004,
+          "pass": true
+        },
+        {
+          "part": "Recessed green mineral seam 47",
+          "actual_recess_from_original_skin_m": 0.024443139089271426,
+          "air_clearance_to_carved_floor_m": 0.008432956004980952,
+          "pass": true
+        }
+      ],
+      "foundations": [
+        {
+          "part": "Installation bay foundation landing 0",
+          "actual_contact_vertices": 8,
+          "minimum_fore_y_m": 0.10000000149011612,
+          "maximum_contact_z_error_m": 0.0,
+          "actual_vertex_max_error_m": 0.0,
+          "pass": true
+        },
+        {
+          "part": "Installation bay foundation landing 1",
+          "actual_contact_vertices": 8,
+          "minimum_fore_y_m": 0.9800000190734863,
+          "maximum_contact_z_error_m": 0.0,
+          "actual_vertex_max_error_m": 0.0,
+          "pass": true
+        },
+        {
+          "part": "Installation bay foundation landing 2",
+          "actual_contact_vertices": 8,
+          "minimum_fore_y_m": 0.10000000149011612,
+          "maximum_contact_z_error_m": 0.0,
+          "actual_vertex_max_error_m": 0.0,
+          "pass": true
+        },
+        {
+          "part": "Installation bay foundation landing 3",
+          "actual_contact_vertices": 8,
+          "minimum_fore_y_m": 0.9800000190734863,
+          "maximum_contact_z_error_m": 0.0,
+          "actual_vertex_max_error_m": 0.0,
+          "pass": true
+        },
+        {
+          "part": "Installation bay foundation landing 4",
+          "actual_contact_vertices": 8,
+          "minimum_fore_y_m": 1.600000023841858,
+          "maximum_contact_z_error_m": 0.0,
+          "actual_vertex_max_error_m": 0.0,
+          "pass": true
+        },
+        {
+          "part": "Installation bay foundation landing 5",
+          "actual_contact_vertices": 8,
+          "minimum_fore_y_m": 1.600000023841858,
+          "maximum_contact_z_error_m": 0.0,
+          "actual_vertex_max_error_m": 0.0,
+          "pass": true
+        }
+      ],
+      "structural_roots": [
+        {
+          "beam": "Low surrounding-platform diagonal 0",
+          "actual_receiver": "Low curved cast seat Low surrounding-platform diagonal 0",
+          "mating_face_vertices": 8,
+          "missing": 0,
+          "maximum_opposing_plane_gap_m": 5.940502312284934e-09,
+          "minimum_receiver_normal_dot": 0.9999998994171619,
+          "actual_vertex_max_error_m": 0,
+          "pass": true
+        },
+        {
+          "beam": "Low surrounding-platform diagonal 1",
+          "actual_receiver": "Low curved cast seat Low surrounding-platform diagonal 1",
+          "mating_face_vertices": 8,
+          "missing": 0,
+          "maximum_opposing_plane_gap_m": 1.64715842743135e-07,
+          "minimum_receiver_normal_dot": 0.9999999087303877,
+          "actual_vertex_max_error_m": 0,
+          "pass": true
+        },
+        {
+          "beam": "Low surrounding-platform diagonal 2",
+          "actual_receiver": "Low curved cast seat Low surrounding-platform diagonal 2",
+          "mating_face_vertices": 8,
+          "missing": 0,
+          "maximum_opposing_plane_gap_m": 5.940502312284934e-09,
+          "minimum_receiver_normal_dot": 0.9999999068677425,
+          "actual_vertex_max_error_m": 0,
+          "pass": true
+        },
+        {
+          "beam": "Low surrounding-platform diagonal 3",
+          "actual_receiver": "Low curved cast seat Low surrounding-platform diagonal 3",
+          "mating_face_vertices": 8,
+          "missing": 0,
+          "maximum_opposing_plane_gap_m": 1.64715842743135e-07,
+          "minimum_receiver_normal_dot": 0.9999999087303877,
+          "actual_vertex_max_error_m": 0,
+          "pass": true
+        },
+        {
+          "beam": "Low surrounding-platform diagonal 4",
+          "actual_receiver": "Low curved cast seat Low surrounding-platform diagonal 4",
+          "mating_face_vertices": 8,
+          "missing": 0,
+          "maximum_opposing_plane_gap_m": 0.0,
+          "minimum_receiver_normal_dot": 1.0000000069849193,
+          "actual_vertex_max_error_m": 0,
+          "pass": true
+        },
+        {
+          "beam": "Low surrounding-platform diagonal 5",
+          "actual_receiver": "Low curved cast seat Low surrounding-platform diagonal 5",
+          "mating_face_vertices": 8,
+          "missing": 0,
+          "maximum_opposing_plane_gap_m": 0.0,
+          "minimum_receiver_normal_dot": 1.0000000069849193,
+          "actual_vertex_max_error_m": 0,
+          "pass": true
+        }
+      ],
+      "support_contacts": [
+        {
+          "pad": "Bay bearing receiving shoe 0",
+          "host": "Tower frame saddle.002",
+          "samples": 9,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.0010000124748330563,
+            -0.0009999225731007755
+          ],
+          "minimum_parent_normal_dot": 1.0,
+          "actual_vertex_max_error_m": 0,
+          "pass": true
+        },
+        {
+          "pad": "Bay bearing receiving shoe 1",
+          "host": "Tower frame saddle.001",
+          "samples": 9,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.0010000149777624756,
+            -0.0009999675676226616
+          ],
+          "minimum_parent_normal_dot": 1.0,
+          "actual_vertex_max_error_m": 0,
+          "pass": true
+        },
+        {
+          "pad": "Bay bearing receiving shoe 2",
+          "host": "Tower frame saddle.005",
+          "samples": 9,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.0010000124748330563,
+            -0.0009999225731007755
+          ],
+          "minimum_parent_normal_dot": 1.0,
+          "actual_vertex_max_error_m": 0,
+          "pass": true
+        },
+        {
+          "pad": "Bay bearing receiving shoe 3",
+          "host": "Tower frame saddle.004",
+          "samples": 9,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.0010000149777624756,
+            -0.0009999675676226616
+          ],
+          "minimum_parent_normal_dot": 1.0,
+          "actual_vertex_max_error_m": 0,
+          "pass": true
+        },
+        {
+          "pad": "Bay bearing receiving shoe 4",
+          "host": "Broad rolled top load crossmember",
+          "samples": 9,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.001000046730041504,
+            -0.001000046730041504
+          ],
+          "minimum_parent_normal_dot": 0.9999999403953552,
+          "actual_vertex_max_error_m": 0,
+          "pass": true
+        },
+        {
+          "pad": "Bay bearing receiving shoe 5",
+          "host": "Broad rolled top load crossmember",
+          "samples": 9,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.001000046730041504,
+            -0.001000046730041504
+          ],
+          "minimum_parent_normal_dot": 1.0,
+          "actual_vertex_max_error_m": 0,
+          "pass": true
+        }
+      ],
+      "all_named_interfaces_pass": true
+    },
+    "actual_glb_reimport": {
+      "shoes": [
+        {
+          "part": "Fitted mineral contact shoe 0 -1",
+          "host": "Fractured Noctilith block 0",
+          "rays": 9,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.0020001750090159476,
+            -0.0020000101067125797
+          ],
+          "actual_vertex_max_error_m": 1.1920928955078125e-07,
+          "target_embed_m": 0.002,
+          "pass": true
+        },
+        {
+          "part": "Fitted mineral contact shoe 0 1",
+          "host": "Fractured Noctilith block 0",
+          "rays": 9,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.0020001750090159476,
+            -0.001999942527618259
+          ],
+          "actual_vertex_max_error_m": 1.3328003749250113e-07,
+          "target_embed_m": 0.002,
+          "pass": true
+        },
+        {
+          "part": "Fitted mineral contact shoe 1 -1",
+          "host": "Fractured Noctilith block 1",
+          "rays": 9,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.0020000669173896313,
+            -0.0019999262876808643
+          ],
+          "actual_vertex_max_error_m": 1.1920928955078125e-07,
+          "target_embed_m": 0.002,
+          "pass": true
+        },
+        {
+          "part": "Fitted mineral contact shoe 1 1",
+          "host": "Fractured Noctilith block 1",
+          "rays": 9,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.0020000669173896313,
+            -0.0019999161595478654
+          ],
+          "actual_vertex_max_error_m": 1.1926748300777466e-07,
+          "target_embed_m": 0.002,
+          "pass": true
+        },
+        {
+          "part": "Fitted mineral contact shoe 2 -1",
+          "host": "Fractured Noctilith block 2",
+          "rays": 9,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.0020000750082544982,
+            -0.001999942527618259
+          ],
+          "actual_vertex_max_error_m": 1.1920928955078125e-07,
+          "target_embed_m": 0.002,
+          "pass": true
+        },
+        {
+          "part": "Fitted mineral contact shoe 2 1",
+          "host": "Fractured Noctilith block 2",
+          "rays": 9,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.0020000499789603055,
+            -0.0019999101059511304
+          ],
+          "actual_vertex_max_error_m": 5.960464477539063e-08,
+          "target_embed_m": 0.002,
+          "pass": true
+        }
+      ],
+      "dish_ribs": [
+        {
+          "part": "Profile-seated dished rib 0 0",
+          "host": "Armored shallow dish stage 0",
+          "rays": 18,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.0024840491823852062,
+            -0.0020000425283797085
+          ],
+          "actual_vertex_max_error_m": 2.9802322387695312e-08,
+          "target_embed_m": 0.002,
+          "pass": true
+        },
+        {
+          "part": "Profile-seated dished rib 0 1",
+          "host": "Armored shallow dish stage 0",
+          "rays": 18,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.0024840491823852062,
+            -0.0020000425283797085
+          ],
+          "actual_vertex_max_error_m": 2.9802322387695312e-08,
+          "target_embed_m": 0.002,
+          "pass": true
+        },
+        {
+          "part": "Profile-seated dished rib 0 2",
+          "host": "Armored shallow dish stage 0",
+          "rays": 18,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.0024839668185450137,
+            -0.001999992469791323
+          ],
+          "actual_vertex_max_error_m": 5.960464477539063e-08,
+          "target_embed_m": 0.002,
+          "pass": true
+        },
+        {
+          "part": "Profile-seated dished rib 0 3",
+          "host": "Armored shallow dish stage 0",
+          "rays": 18,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.0024839992402121425,
+            -0.001999992469791323
+          ],
+          "actual_vertex_max_error_m": 5.960464477539063e-08,
+          "target_embed_m": 0.002,
+          "pass": true
+        },
+        {
+          "part": "Profile-seated dished rib 1 0",
+          "host": "Armored shallow dish stage 1",
+          "rays": 18,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.002469531958922744,
+            -0.0019999181968159974
+          ],
+          "actual_vertex_max_error_m": 2.9802322387695312e-08,
+          "target_embed_m": 0.002,
+          "pass": true
+        },
+        {
+          "part": "Profile-seated dished rib 1 1",
+          "host": "Armored shallow dish stage 1",
+          "rays": 18,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.0024695339961908758,
+            -0.0019999161595478654
+          ],
+          "actual_vertex_max_error_m": 2.9802322387695312e-08,
+          "target_embed_m": 0.002,
+          "pass": true
+        },
+        {
+          "part": "Profile-seated dished rib 1 2",
+          "host": "Armored shallow dish stage 1",
+          "rays": 18,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.0024695664760656655,
+            -0.0019999101059511304
+          ],
+          "actual_vertex_max_error_m": 5.960464477539063e-08,
+          "target_embed_m": 0.002,
+          "pass": true
+        },
+        {
+          "part": "Profile-seated dished rib 1 3",
+          "host": "Armored shallow dish stage 1",
+          "rays": 18,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.0024695664760656655,
+            -0.0019999101059511304
+          ],
+          "actual_vertex_max_error_m": 5.960464477539063e-08,
+          "target_embed_m": 0.002,
+          "pass": true
+        },
+        {
+          "part": "Profile-seated dished rib 2 0",
+          "host": "Armored shallow dish stage 2",
+          "rays": 18,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.0024020312121137977,
+            -0.001999942527618259
+          ],
+          "actual_vertex_max_error_m": 2.9802322387695312e-08,
+          "target_embed_m": 0.002,
+          "pass": true
+        },
+        {
+          "part": "Profile-seated dished rib 2 1",
+          "host": "Armored shallow dish stage 2",
+          "rays": 18,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.0024020312121137977,
+            -0.001999942527618259
+          ],
+          "actual_vertex_max_error_m": 2.9802322387695312e-08,
+          "target_embed_m": 0.002,
+          "pass": true
+        },
+        {
+          "part": "Profile-seated dished rib 2 2",
+          "host": "Armored shallow dish stage 2",
+          "rays": 18,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.0024021799326874316,
+            -0.0019999101059511304
+          ],
+          "actual_vertex_max_error_m": 5.960464477539063e-08,
+          "target_embed_m": 0.002,
+          "pass": true
+        },
+        {
+          "part": "Profile-seated dished rib 2 3",
+          "host": "Armored shallow dish stage 2",
+          "rays": 18,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.002402147452812642,
+            -0.0019999101059511304
+          ],
+          "actual_vertex_max_error_m": 5.960464477539063e-08,
+          "target_embed_m": 0.002,
+          "pass": true
+        },
+        {
+          "part": "Profile-seated dished rib 3 0",
+          "host": "Armored shallow dish stage 3",
+          "rays": 18,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.0021779314847663045,
+            -0.001999942527618259
+          ],
+          "actual_vertex_max_error_m": 2.9802322387695312e-08,
+          "target_embed_m": 0.002,
+          "pass": true
+        },
+        {
+          "part": "Profile-seated dished rib 3 1",
+          "host": "Armored shallow dish stage 3",
+          "rays": 18,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.0021779314847663045,
+            -0.001999942527618259
+          ],
+          "actual_vertex_max_error_m": 2.9802322387695312e-08,
+          "target_embed_m": 0.002,
+          "pass": true
+        },
+        {
+          "part": "Profile-seated dished rib 3 2",
+          "host": "Armored shallow dish stage 3",
+          "rays": 18,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.0021778990048915148,
+            -0.001999845146201551
+          ],
+          "actual_vertex_max_error_m": 1.1920928955078125e-07,
+          "target_embed_m": 0.002,
+          "pass": true
+        },
+        {
+          "part": "Profile-seated dished rib 3 3",
+          "host": "Armored shallow dish stage 3",
+          "rays": 18,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.0021778990048915148,
+            -0.001999845146201551
+          ],
+          "actual_vertex_max_error_m": 1.1920928955078125e-07,
+          "target_embed_m": 0.002,
+          "pass": true
+        }
+      ],
+      "recessed_seams": [
+        {
+          "part": "Recessed green mineral seam 0",
+          "actual_recess_from_original_skin_m": 0.023675139527767897,
+          "air_clearance_to_carved_floor_m": 0.01064816047437489,
+          "pass": true
+        },
+        {
+          "part": "Recessed green mineral seam 1",
+          "actual_recess_from_original_skin_m": 0.02376537397503853,
+          "air_clearance_to_carved_floor_m": 0.009608387015759945,
+          "pass": true
+        },
+        {
+          "part": "Recessed green mineral seam 2",
+          "actual_recess_from_original_skin_m": 0.023878287989646196,
+          "air_clearance_to_carved_floor_m": 0.008929014729801565,
+          "pass": true
+        },
+        {
+          "part": "Recessed green mineral seam 3",
+          "actual_recess_from_original_skin_m": 0.023878371459431946,
+          "air_clearance_to_carved_floor_m": 0.009314715513028204,
+          "pass": true
+        },
+        {
+          "part": "Recessed green mineral seam 4",
+          "actual_recess_from_original_skin_m": 0.023519706563092768,
+          "air_clearance_to_carved_floor_m": 0.010602834227029234,
+          "pass": true
+        },
+        {
+          "part": "Recessed green mineral seam 5",
+          "actual_recess_from_original_skin_m": 0.02348546017310582,
+          "air_clearance_to_carved_floor_m": 0.00994390674168244,
+          "pass": true
+        },
+        {
+          "part": "Recessed green mineral seam 6",
+          "actual_recess_from_original_skin_m": 0.02361097512766719,
+          "air_clearance_to_carved_floor_m": 0.009915150643792003,
+          "pass": true
+        },
+        {
+          "part": "Recessed green mineral seam 7",
+          "actual_recess_from_original_skin_m": 0.023510565399192274,
+          "air_clearance_to_carved_floor_m": 0.00984498910838738,
+          "pass": true
+        },
+        {
+          "part": "Recessed green mineral seam 20",
+          "actual_recess_from_original_skin_m": 0.023942529689520597,
+          "air_clearance_to_carved_floor_m": 0.010393579606898129,
+          "pass": true
+        },
+        {
+          "part": "Recessed green mineral seam 21",
+          "actual_recess_from_original_skin_m": 0.023942607454955578,
+          "air_clearance_to_carved_floor_m": 0.009489815449342132,
+          "pass": true
+        },
+        {
+          "part": "Recessed green mineral seam 22",
+          "actual_recess_from_original_skin_m": 0.023896234575659037,
+          "air_clearance_to_carved_floor_m": 0.008618440362624824,
+          "pass": true
+        },
+        {
+          "part": "Recessed green mineral seam 23",
+          "actual_recess_from_original_skin_m": 0.02380358730442822,
+          "air_clearance_to_carved_floor_m": 0.008883283357135952,
+          "pass": true
+        },
+        {
+          "part": "Recessed green mineral seam 24",
+          "actual_recess_from_original_skin_m": 0.02375084036611952,
+          "air_clearance_to_carved_floor_m": 0.009327378356829286,
+          "pass": true
+        },
+        {
+          "part": "Recessed green mineral seam 25",
+          "actual_recess_from_original_skin_m": 0.023638473881874233,
+          "air_clearance_to_carved_floor_m": 0.008896432293113321,
+          "pass": true
+        },
+        {
+          "part": "Recessed green mineral seam 26",
+          "actual_recess_from_original_skin_m": 0.023624477675184608,
+          "air_clearance_to_carved_floor_m": 0.009470466000493616,
+          "pass": true
+        },
+        {
+          "part": "Recessed green mineral seam 27",
+          "actual_recess_from_original_skin_m": 0.023612990975379944,
+          "air_clearance_to_carved_floor_m": 0.00961780920624733,
+          "pass": true
+        },
+        {
+          "part": "Recessed green mineral seam 40",
+          "actual_recess_from_original_skin_m": 0.02382061956450343,
+          "air_clearance_to_carved_floor_m": 0.009185667848214507,
+          "pass": true
+        },
+        {
+          "part": "Recessed green mineral seam 41",
+          "actual_recess_from_original_skin_m": 0.023841081652790308,
+          "air_clearance_to_carved_floor_m": 0.010383402230218053,
+          "pass": true
+        },
+        {
+          "part": "Recessed green mineral seam 42",
+          "actual_recess_from_original_skin_m": 0.023707410786300898,
+          "air_clearance_to_carved_floor_m": 0.009509774157777429,
+          "pass": true
+        },
+        {
+          "part": "Recessed green mineral seam 43",
+          "actual_recess_from_original_skin_m": 0.023806465906091034,
+          "air_clearance_to_carved_floor_m": 0.008923746179789305,
+          "pass": true
+        },
+        {
+          "part": "Recessed green mineral seam 44",
+          "actual_recess_from_original_skin_m": 0.02370752760907635,
+          "air_clearance_to_carved_floor_m": 0.010852267383597791,
+          "pass": true
+        },
+        {
+          "part": "Recessed green mineral seam 45",
+          "actual_recess_from_original_skin_m": 0.023820750298909843,
+          "air_clearance_to_carved_floor_m": 0.010115315963048488,
+          "pass": true
+        },
+        {
+          "part": "Recessed green mineral seam 46",
+          "actual_recess_from_original_skin_m": 0.023806495999451727,
+          "air_clearance_to_carved_floor_m": 0.008621582936029881,
+          "pass": true
+        },
+        {
+          "part": "Recessed green mineral seam 47",
+          "actual_recess_from_original_skin_m": 0.023707551532424986,
+          "air_clearance_to_carved_floor_m": 0.00902662385487929,
+          "pass": true
+        }
+      ],
+      "foundations": [
+        {
+          "part": "Installation bay foundation landing 0",
+          "actual_contact_vertices": 8,
+          "minimum_fore_y_m": 0.10000000149011612,
+          "maximum_contact_z_error_m": 0.0,
+          "actual_vertex_max_error_m": 0.0,
+          "pass": true
+        },
+        {
+          "part": "Installation bay foundation landing 1",
+          "actual_contact_vertices": 8,
+          "minimum_fore_y_m": 0.9800000190734863,
+          "maximum_contact_z_error_m": 0.0,
+          "actual_vertex_max_error_m": 0.0,
+          "pass": true
+        },
+        {
+          "part": "Installation bay foundation landing 2",
+          "actual_contact_vertices": 8,
+          "minimum_fore_y_m": 0.10000000149011612,
+          "maximum_contact_z_error_m": 0.0,
+          "actual_vertex_max_error_m": 0.0,
+          "pass": true
+        },
+        {
+          "part": "Installation bay foundation landing 3",
+          "actual_contact_vertices": 8,
+          "minimum_fore_y_m": 0.9800000190734863,
+          "maximum_contact_z_error_m": 0.0,
+          "actual_vertex_max_error_m": 0.0,
+          "pass": true
+        },
+        {
+          "part": "Installation bay foundation landing 4",
+          "actual_contact_vertices": 8,
+          "minimum_fore_y_m": 1.600000023841858,
+          "maximum_contact_z_error_m": 0.0,
+          "actual_vertex_max_error_m": 0.0,
+          "pass": true
+        },
+        {
+          "part": "Installation bay foundation landing 5",
+          "actual_contact_vertices": 8,
+          "minimum_fore_y_m": 1.600000023841858,
+          "maximum_contact_z_error_m": 0.0,
+          "actual_vertex_max_error_m": 0.0,
+          "pass": true
+        }
+      ],
+      "structural_roots": [
+        {
+          "beam": "Low surrounding-platform diagonal 0",
+          "actual_receiver": "Low curved cast seat Low surrounding-platform diagonal 0",
+          "mating_face_vertices": 8,
+          "missing": 0,
+          "maximum_opposing_plane_gap_m": 5.940502312284934e-09,
+          "minimum_receiver_normal_dot": 0.9999998994171619,
+          "actual_vertex_max_error_m": 0,
+          "pass": true
+        },
+        {
+          "beam": "Low surrounding-platform diagonal 1",
+          "actual_receiver": "Low curved cast seat Low surrounding-platform diagonal 1",
+          "mating_face_vertices": 8,
+          "missing": 0,
+          "maximum_opposing_plane_gap_m": 1.64715842743135e-07,
+          "minimum_receiver_normal_dot": 0.9999999087303877,
+          "actual_vertex_max_error_m": 0,
+          "pass": true
+        },
+        {
+          "beam": "Low surrounding-platform diagonal 2",
+          "actual_receiver": "Low curved cast seat Low surrounding-platform diagonal 2",
+          "mating_face_vertices": 8,
+          "missing": 0,
+          "maximum_opposing_plane_gap_m": 5.940502312284934e-09,
+          "minimum_receiver_normal_dot": 0.9999999068677425,
+          "actual_vertex_max_error_m": 0,
+          "pass": true
+        },
+        {
+          "beam": "Low surrounding-platform diagonal 3",
+          "actual_receiver": "Low curved cast seat Low surrounding-platform diagonal 3",
+          "mating_face_vertices": 8,
+          "missing": 0,
+          "maximum_opposing_plane_gap_m": 1.64715842743135e-07,
+          "minimum_receiver_normal_dot": 0.9999999087303877,
+          "actual_vertex_max_error_m": 0,
+          "pass": true
+        },
+        {
+          "beam": "Low surrounding-platform diagonal 4",
+          "actual_receiver": "Low curved cast seat Low surrounding-platform diagonal 4",
+          "mating_face_vertices": 8,
+          "missing": 0,
+          "maximum_opposing_plane_gap_m": 0.0,
+          "minimum_receiver_normal_dot": 1.0000000069849193,
+          "actual_vertex_max_error_m": 0,
+          "pass": true
+        },
+        {
+          "beam": "Low surrounding-platform diagonal 5",
+          "actual_receiver": "Low curved cast seat Low surrounding-platform diagonal 5",
+          "mating_face_vertices": 8,
+          "missing": 0,
+          "maximum_opposing_plane_gap_m": 0.0,
+          "minimum_receiver_normal_dot": 1.0000000069849193,
+          "actual_vertex_max_error_m": 0,
+          "pass": true
+        }
+      ],
+      "support_contacts": [
+        {
+          "pad": "Bay bearing receiving shoe 0",
+          "host": "Tower frame saddle.002",
+          "samples": 9,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.0010000124748330563,
+            -0.0009999225731007755
+          ],
+          "minimum_parent_normal_dot": 1.0,
+          "actual_vertex_max_error_m": 0,
+          "pass": true
+        },
+        {
+          "pad": "Bay bearing receiving shoe 1",
+          "host": "Tower frame saddle.001",
+          "samples": 9,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.0010000312176998705,
+            -0.000999961281195283
+          ],
+          "minimum_parent_normal_dot": 0.9999999403953552,
+          "actual_vertex_max_error_m": 0,
+          "pass": true
+        },
+        {
+          "pad": "Bay bearing receiving shoe 2",
+          "host": "Tower frame saddle.005",
+          "samples": 9,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.0010000124748330563,
+            -0.0009999225731007755
+          ],
+          "minimum_parent_normal_dot": 1.0,
+          "actual_vertex_max_error_m": 0,
+          "pass": true
+        },
+        {
+          "pad": "Bay bearing receiving shoe 3",
+          "host": "Tower frame saddle.004",
+          "samples": 9,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.0010000312176998705,
+            -0.000999961281195283
+          ],
+          "minimum_parent_normal_dot": 0.9999999403953552,
+          "actual_vertex_max_error_m": 0,
+          "pass": true
+        },
+        {
+          "pad": "Bay bearing receiving shoe 4",
+          "host": "Broad rolled top load crossmember",
+          "samples": 9,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.001000046730041504,
+            -0.001000046730041504
+          ],
+          "minimum_parent_normal_dot": 0.9999999403953552,
+          "actual_vertex_max_error_m": 0,
+          "pass": true
+        },
+        {
+          "pad": "Bay bearing receiving shoe 5",
+          "host": "Broad rolled top load crossmember",
+          "samples": 9,
+          "missing": 0,
+          "signed_gap_range_m": [
+            -0.001000046730041504,
+            -0.001000046730041504
+          ],
+          "minimum_parent_normal_dot": 1.0,
+          "actual_vertex_max_error_m": 0,
+          "pass": true
+        }
+      ],
+      "all_named_interfaces_pass": true
+    },
+    "scope": "Actual named shoe/back-face and dish-rib vertices against actual host triangles, recessed seam versus carved floor, foundation polygon vertices. Not a whole-model collision proof."
+  },
+  "deck_edge": {
+    "source_edge_y": 0,
+    "source_fore": "+Y vessel",
+    "source_aft": "-Y open space",
+    "full_transformed_bounds_fore_axial_fraction": 0.5038826490094332,
+    "source_edge_frame_present": true,
+    "installation_opening": {
+      "x_min": -1.4,
+      "x_max": 1.4,
+      "fore_y_max": 1.55,
+      "no_aft_floor": true
+    },
+    "core_datum_world": [
+      0,
+      0.45,
+      0.8
+    ],
+    "native_registration": "Pending measured sprite/camera shift to legal native cut+1; no1:1world/tile inference. Historical four-around-body foundation proof is superseded."
+  },
+  "bidirectional_world_vertex_max_error_m": 3.3717478231665154e-07,
+  "boundary_interpretation": "Raw imported topological boundaries include intentional tube mouths and split UV/normal seams. No watertightness claim is made for this deliberately multi-part machine.",
+  "failures": []
+}

@@ -1,0 +1,33 @@
+{
+  "status": "PASS_ACTUAL_NATIVE_NARROW_FIT_AND_STATE_REVIEW",
+  "body_glb_sha256": "2b1f7164dc6df970aef9c9f1367bf8cf30f82ba3471d1eb9fcf6e84821d3d137",
+  "capture_receipt_sha256": "30e760f22d5bf1a1eb0370fcfc221e1d579bf48dd8cc08e87f0b9c7a622beef0",
+  "native_validation_sha256": "67d32f6c1c6f54ef3f9e473df512bf116a6441bad257d4cdb7e086cfd7335fc1",
+  "images_actually_viewed": [
+    "void-fusion-thruster-working.png",
+    "void-fusion-thruster-night.png",
+    "void-fusion-thruster-paused-powered.png",
+    "void-fusion-thruster-idle.png"
+  ],
+  "observations": [
+    "Fore installation rim and anchors register onto legal foundation; aft emitter and approximately half the physical engine hang over actual space.",
+    "Authored backing/cases block the core; no foundation/space shows through the protected internal windows.",
+    "Green surface arcs/dish tracks align to body; moving ejecta begins at the emitter; no detached tube/ring trail.",
+    "Actual per-drive native tint matches real operation/sink; powered-paused retains crackling and suppresses plume; drained power removes effects; restart returns energy.",
+    "Mineral surface and new mechanical hardware are clean at native high-quality zoom. Night reduces reflected body color; self-lit energy remains visible."
+  ],
+  "native_png_sha256": {
+    "void-fusion-thruster-idle.png": "6535478fa874f66725e8b5c934df819ee4c68a497a91a2189bedf6f3922c4e6a",
+    "void-fusion-thruster-night.png": "0b2922a94f35c4e257c2c0ee04c4f547ba94cb03aa29a3af5a58f4b7d23b5b1c",
+    "void-fusion-thruster-paused-powered.png": "4a6728c603049f1935d04e8a624fa541512620fc259683a21c78e48fa69676ab",
+    "void-fusion-thruster-restart.png": "d8f6e3ff9f6b03090bab265c7ab85349951d08eee454c8b2a4e9221c626642f2",
+    "void-fusion-thruster-startup.png": "e5d08e16d080ca1dc89f67c6cf807e30db31787ba328bd00b2ba1588c1f7ee31",
+    "void-fusion-thruster-working.png": "1957f3f6cb276f3031e0274a1e0a173c3f3c634f0996bfa276b6b29d927603df"
+  },
+  "not_claimed": [
+    "Final owner artistic acceptance",
+    "Real background refraction",
+    "Released or normal-profile-installed art"
+  ],
+  "scope": "Actual high-quality2.1.24 graphical client, source-bound ordinary drive, inspected PNGs plus independent native color/control checks."
+}

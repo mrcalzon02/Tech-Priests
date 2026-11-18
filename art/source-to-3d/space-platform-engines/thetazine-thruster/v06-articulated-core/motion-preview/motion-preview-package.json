@@ -1,0 +1,15 @@
+{
+  "status": "PACKAGED_ACTUAL_SOURCE_MECHANICAL_MOTION_REQUIRES_VISUAL_REVIEW",
+  "capture_receipt_sha256": "84ba82ee67926b35d59fbaccb06ef0ce9ff7339921429517833e2c379031a7f0",
+  "source_sha256": "35c4f470ad92015b70d056086b7f6e53573f4ccabbecab6af346ab382734871e",
+  "outputs": [
+    {
+      "view": "mechanism",
+      "file": "thetazine-v06-mechanism-cycle.gif",
+      "sha256": "39212000ef095dffe07cdcdb8bd58850796a841fbdbba0756d0930fe8c3c920f",
+      "actual_source_frames": 64,
+      "duration_seconds": 2.1333333333333333
+    }
+  ],
+  "scope": "Source previews, actual64poses at30fps. GIF quantization is not native clock proof; runtime integration stays separate."
+}

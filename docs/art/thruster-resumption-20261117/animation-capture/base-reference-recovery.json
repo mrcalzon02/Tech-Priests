@@ -1,0 +1,110 @@
+{
+  "supplied_zip_sha256": "0670bc10c11800e89beb4d39dd692dc32a4d3ea4b967b742559b54a8d7967791",
+  "archive_at_prior_path_present": false,
+  "reference_directory": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Factorio\\data\\space-age\\graphics\\entity\\thruster",
+  "status": "ALL_SUPPLIED_FILES_RECOVERED_EXACTLY",
+  "files": [
+    {
+      "name": "thruster-1.png",
+      "sha256": "c93a2fcaa4e5894f57389cb2b1925a39a8fd79902e358e27764af315d417fa82",
+      "matches_supplied_archive": true,
+      "bytes": 6542740
+    },
+    {
+      "name": "thruster-2.png",
+      "sha256": "f98c406653b696fcd8539445c203b8c4aa5d82245ac3d83db1e12c42490c72b2",
+      "matches_supplied_archive": true,
+      "bytes": 6527116
+    },
+    {
+      "name": "thruster-bckg.lua",
+      "sha256": "118e313d3f2a3a9f66652e77e433db43bbfd9481405c822fc692db76265b6d9e",
+      "matches_supplied_archive": true,
+      "bytes": 99
+    },
+    {
+      "name": "thruster-bckg.png",
+      "sha256": "55dcb352024ac55f294f3aa218cce3e829f21db53230b8f184ec22b36b7694d0",
+      "matches_supplied_archive": true,
+      "bytes": 87514
+    },
+    {
+      "name": "thruster-flame.png",
+      "sha256": "9626b34f61c124bfdfda89580a223695cb0e2dc123f4c183a2857defaf1130e8",
+      "matches_supplied_archive": true,
+      "bytes": 177072
+    },
+    {
+      "name": "thruster-light-1.png",
+      "sha256": "9eb2d16bb605e9a57fccc1eaddafc49b8ab8fe829b6f6b03aabd6b7527e98fcb",
+      "matches_supplied_archive": true,
+      "bytes": 6006919
+    },
+    {
+      "name": "thruster-light-2.png",
+      "sha256": "2ffede0a771e1f92a2e22a0c09f4cf0134695bca881352f2238cf4af43cd6514",
+      "matches_supplied_archive": true,
+      "bytes": 6039366
+    },
+    {
+      "name": "thruster-light.lua",
+      "sha256": "c49069c177cdbf4de8b19c342c90798cb8a917c4b5693c60cbfad295546be9e8",
+      "matches_supplied_archive": true,
+      "bytes": 168
+    },
+    {
+      "name": "thruster-pipe-connection-1.png",
+      "sha256": "0d5d481b7ce4abeaf3c347dfdaf737131e0233860db81da6f21d4c0976715ac6",
+      "matches_supplied_archive": true,
+      "bytes": 21717
+    },
+    {
+      "name": "thruster-pipe-connection-2.png",
+      "sha256": "84ae1720da02b8728acdfec7db92d790d08b93faded6015ed2a53623bc545ffc",
+      "matches_supplied_archive": true,
+      "bytes": 21743
+    },
+    {
+      "name": "thruster-pipe-connection-3.png",
+      "sha256": "c19f85a2f31369e47ab64c09b5e3337a77ee47359a4f1cb3d6f962d76d284aed",
+      "matches_supplied_archive": true,
+      "bytes": 21767
+    },
+    {
+      "name": "thruster-pipe-connection-4.png",
+      "sha256": "127c810e64305236573fbb20e429941baeed3d62d90458eb74ef413d7b5767f5",
+      "matches_supplied_archive": true,
+      "bytes": 21905
+    },
+    {
+      "name": "thruster-remnants.lua",
+      "sha256": "9491cf5e6548718d0eb776621e571565e9af717739dcc12b3688a7ee188e9a05",
+      "matches_supplied_archive": true,
+      "bytes": 100
+    },
+    {
+      "name": "thruster-remnants.png",
+      "sha256": "3e1ccb0910c2458852982344c53a923ab914c20ffca6c6c269bcbae69a94a686",
+      "matches_supplied_archive": true,
+      "bytes": 242527
+    },
+    {
+      "name": "thruster-smoke-glow.png",
+      "sha256": "5441374a9b717880babe3352e3578bd0ca956c97c5bc4c58ee3eb81a2d8e53b6",
+      "matches_supplied_archive": true,
+      "bytes": 2016466
+    },
+    {
+      "name": "thruster-smoke.png",
+      "sha256": "90d9c705fcb66950eab2b1fd16e628666dbe182f7fc2e06881d7fe0bf94162ca",
+      "matches_supplied_archive": true,
+      "bytes": 2050804
+    },
+    {
+      "name": "thruster.lua",
+      "sha256": "58d781106a443f25d2e644ea6d806f3fab83e14d798246a64a0a195750416767",
+      "matches_supplied_archive": true,
+      "bytes": 170
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+00:01.312  blend            | Read blend: "C:\Users\Admin\Documents\ChatGPT\Tech priests\model-production\art\source-to-3d\space-platform-engines\thetazine-thruster\v06-articulated-core\thetazine-v06-articulated-core.blend"
+C:\Users\Admin\Documents\ChatGPT\Tech priests\model-production\tools\art\thetazine_v06\verify_packaged_source.py:20: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  if not material.use_nodes:continue
+PASS_REOPENED_PACKAGED_SOURCE_TEXTURES_AND_EXACT_SOURCE_EXPORT_HASHES 27
+Blender 5.0.0 (hash a37564c4df7a built 2025-11-18 11:06:54)
+
+Blender quit

@@ -1,0 +1,208 @@
+{
+  "status": "PASS_ACTUAL_RETAINED48FACET_COLLAR_FRAMES",
+  "source_sha256": "35c4f470ad92015b70d056086b7f6e53573f4ccabbecab6af346ab382734871e",
+  "script_sha256": "afffdef6c5a65f365ebe359dab8c288102d2a95125bef433cb72ad8b5c638d2b",
+  "units": "BU; no real-world scale inferred",
+  "rows": [
+    {
+      "collar": "Outer actuator collar",
+      "shaft": "Outer actuator body -1",
+      "actual_collar_center_world": [
+        -1.1500000183780987,
+        -0.8653174322098494,
+        -0.3575137256799887
+      ],
+      "actual_shaft_center_world": [
+        -1.149999976158142,
+        -1.1258810758590698,
+        -0.47901657223701477
+      ],
+      "perpendicular_axis_offset_bu": 4.7529665166119624e-08,
+      "maximum_angular_phase_difference_rad": 6.909165616020285e-08,
+      "actual_collar_inner_radius_range_bu": [
+        0.1062499616666499,
+        0.10625005727194467
+      ],
+      "actual_shaft_seating_radius_range_bu": [
+        0.10624994635501804,
+        0.10625006618859091
+      ],
+      "pass": true
+    },
+    {
+      "collar": "Outer actuator collar.001",
+      "shaft": "Outer actuator body -1",
+      "actual_collar_center_world": [
+        -1.1500000183780987,
+        -1.205182971432805,
+        -0.5159956207498908
+      ],
+      "actual_shaft_center_world": [
+        -1.149999976158142,
+        -1.1258810758590698,
+        -0.47901657223701477
+      ],
+      "perpendicular_axis_offset_bu": 5.1582931213350567e-08,
+      "maximum_angular_phase_difference_rad": 7.58593181465761e-08,
+      "actual_collar_inner_radius_range_bu": [
+        0.10624995399210223,
+        0.10625008315666472
+      ],
+      "actual_shaft_seating_radius_range_bu": [
+        0.10624994635501804,
+        0.10625006618859091
+      ],
+      "pass": true
+    },
+    {
+      "collar": "Outer actuator collar.002",
+      "shaft": "V06 giant actuator sliding rod -1",
+      "actual_collar_center_world": [
+        -1.1500000183780987,
+        -1.771625280380249,
+        -0.780132041623195
+      ],
+      "actual_shaft_center_world": [
+        -1.149999976158142,
+        -1.7572132447331221,
+        -0.7734115825793177
+      ],
+      "perpendicular_axis_offset_bu": 4.477555723631525e-08,
+      "maximum_angular_phase_difference_rad": 3.0071426614097785e-07,
+      "actual_collar_inner_radius_range_bu": [
+        0.10624985652817753,
+        0.10625009825310078
+      ],
+      "actual_shaft_seating_radius_range_bu": [
+        0.10624992991712032,
+        0.10625009979964462
+      ],
+      "pass": true
+    },
+    {
+      "collar": "Outer actuator collar.003",
+      "shaft": "V06 giant actuator sliding rod -1",
+      "actual_collar_center_world": [
+        -1.1500000183780987,
+        -2.5080004384120307,
+        -1.1235093319167693
+      ],
+      "actual_shaft_center_world": [
+        -1.149999976158142,
+        -1.7572132447331221,
+        -0.7734115825793177
+      ],
+      "perpendicular_axis_offset_bu": 7.524277500208422e-08,
+      "maximum_angular_phase_difference_rad": 7.734689783239768e-07,
+      "actual_collar_inner_radius_range_bu": [
+        0.1062498273524876,
+        0.10625010073395691
+      ],
+      "actual_shaft_seating_radius_range_bu": [
+        0.10624992991712032,
+        0.10625009979964462
+      ],
+      "pass": true
+    },
+    {
+      "collar": "Outer actuator collar.004",
+      "shaft": "Outer actuator body 1",
+      "actual_collar_center_world": [
+        1.1500000183780987,
+        -0.8653174322098494,
+        -0.3575137256799887
+      ],
+      "actual_shaft_center_world": [
+        1.149999976158142,
+        -1.1258810758590698,
+        -0.47901657223701477
+      ],
+      "perpendicular_axis_offset_bu": 4.7529665166119624e-08,
+      "maximum_angular_phase_difference_rad": 6.909165635449188e-08,
+      "actual_collar_inner_radius_range_bu": [
+        0.1062499616666499,
+        0.10625005727194467
+      ],
+      "actual_shaft_seating_radius_range_bu": [
+        0.10624994635501804,
+        0.10625006618859091
+      ],
+      "pass": true
+    },
+    {
+      "collar": "Outer actuator collar.005",
+      "shaft": "Outer actuator body 1",
+      "actual_collar_center_world": [
+        1.1500000183780987,
+        -1.205182971432805,
+        -0.5159956207498908
+      ],
+      "actual_shaft_center_world": [
+        1.149999976158142,
+        -1.1258810758590698,
+        -0.47901657223701477
+      ],
+      "perpendicular_axis_offset_bu": 5.1582931213350567e-08,
+      "maximum_angular_phase_difference_rad": 7.585931828535397e-08,
+      "actual_collar_inner_radius_range_bu": [
+        0.10624995399210223,
+        0.10625008315666472
+      ],
+      "actual_shaft_seating_radius_range_bu": [
+        0.10624994635501804,
+        0.10625006618859091
+      ],
+      "pass": true
+    },
+    {
+      "collar": "Outer actuator collar.006",
+      "shaft": "V06 giant actuator sliding rod 1",
+      "actual_collar_center_world": [
+        1.1500000183780987,
+        -1.771625280380249,
+        -0.780132041623195
+      ],
+      "actual_shaft_center_world": [
+        1.149999976158142,
+        -1.7572132447331221,
+        -0.7734115825793177
+      ],
+      "perpendicular_axis_offset_bu": 4.477555723631525e-08,
+      "maximum_angular_phase_difference_rad": 3.0071426589117767e-07,
+      "actual_collar_inner_radius_range_bu": [
+        0.10624985652817753,
+        0.10625009825310078
+      ],
+      "actual_shaft_seating_radius_range_bu": [
+        0.10624992991712032,
+        0.10625009979964462
+      ],
+      "pass": true
+    },
+    {
+      "collar": "Outer actuator collar.007",
+      "shaft": "V06 giant actuator sliding rod 1",
+      "actual_collar_center_world": [
+        1.1500000183780987,
+        -2.5080004384120307,
+        -1.1235093319167693
+      ],
+      "actual_shaft_center_world": [
+        1.149999976158142,
+        -1.7572132447331221,
+        -0.7734115825793177
+      ],
+      "perpendicular_axis_offset_bu": 7.524277500208422e-08,
+      "maximum_angular_phase_difference_rad": 7.734689775745762e-07,
+      "actual_collar_inner_radius_range_bu": [
+        0.1062498273524876,
+        0.10625010073395691
+      ],
+      "actual_shaft_seating_radius_range_bu": [
+        0.10624992991712032,
+        0.10625009979964462
+      ],
+      "pass": true
+    }
+  ]
+}

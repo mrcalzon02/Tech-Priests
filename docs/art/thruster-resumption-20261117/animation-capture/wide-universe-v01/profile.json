@@ -1,0 +1,157 @@
+{
+  "prototype": "large-void-fusion-thruster",
+  "stage": "FINAL_CAPTURE_CANDIDATE",
+  "glb": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\large-void-fusion-v01\\detail-18g-actual-clip-face-seats\\large-void-fusion-v01.glb",
+  "glb_sha256": "4d9ef76ab5452728437d399af5456fbaa2b3626381da548dfb06de1b47d713de",
+  "validation": {
+    "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\large-void-fusion-v01\\detail-18g-actual-clip-face-seats\\export-inspection.json",
+    "sha256": "4bd6baac856d1d1b960a8d601507c46478ca72790fb2ccf01637fc7db2db179f"
+  },
+  "source_size": 1280,
+  "samples": 64,
+  "output_frames": 64,
+  "native_pixels_per_source_unit": 32,
+  "native_cut_y": 1,
+  "minimum_ortho_scale": 8,
+  "registration_status": "EXPLICIT_CANDIDATE_32_NATIVE_PIXELS_PER_BU_REQUIRES_NATIVE_FIT",
+  "geometry_handoff": {
+    "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\large-void-fusion-v01\\service-underlay-19e-final-tessellation\\capture-source-geometry.json",
+    "sha256": "1e8e38618af9685af15bf486cdbe3054aa4fc202ae7061d551258991f6398da5"
+  },
+  "body_exclude": [
+    "Installation bay foundation landing 0",
+    "Bay bearing receiving shoe 0",
+    "Installation bay foundation landing 1",
+    "Bay bearing receiving shoe 1",
+    "Installation bay foundation landing 2",
+    "Bay bearing receiving shoe 2",
+    "Installation bay foundation landing 3",
+    "Bay bearing receiving shoe 3",
+    "Installation bay foundation landing 4",
+    "Bay bearing receiving shoe 4",
+    "Installation bay foundation landing 5",
+    "Bay bearing receiving shoe 5",
+    "Low surrounding-platform diagonal 0",
+    "Low curved cast seat Low surrounding-platform diagonal 0",
+    "Low surrounding-platform diagonal 1",
+    "Low curved cast seat Low surrounding-platform diagonal 1",
+    "Low surrounding-platform diagonal 2",
+    "Low curved cast seat Low surrounding-platform diagonal 2",
+    "Low surrounding-platform diagonal 3",
+    "Low curved cast seat Low surrounding-platform diagonal 3",
+    "Low surrounding-platform diagonal 4",
+    "Low curved cast seat Low surrounding-platform diagonal 4",
+    "Low surrounding-platform diagonal 5",
+    "Low curved cast seat Low surrounding-platform diagonal 5",
+    "Mount V18 captive cast-root retaining plate 4",
+    "Mount V18 retained root 4 -0.022 seated bearing washer",
+    "Mount V18 retained root 4 -0.022 retained shaft",
+    "Mount V18 retained root 4 -0.022 six-flat captive head",
+    "Mount V18 retained root 4 0.022 seated bearing washer",
+    "Mount V18 retained root 4 0.022 retained shaft",
+    "Mount V18 retained root 4 0.022 six-flat captive head",
+    "Mount V18 captive cast-root retaining plate 5",
+    "Mount V18 retained root 5 -0.022 seated bearing washer",
+    "Mount V18 retained root 5 -0.022 retained shaft",
+    "Mount V18 retained root 5 -0.022 six-flat captive head",
+    "Mount V18 retained root 5 0.022 seated bearing washer",
+    "Mount V18 retained root 5 0.022 retained shaft",
+    "Mount V18 retained root 5 0.022 six-flat captive head"
+  ],
+  "underlay": {
+    "glb": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\large-void-fusion-v01\\service-underlay-19e-final-tessellation\\installation-service-underlay.glb",
+    "sha256": "a041d26a3fec886dc644807374342f9e1869735eea5d178ebf6be4f2a17a1946"
+  },
+  "deck_receiver_polygons": [
+    [
+      [
+        -3,
+        0
+      ],
+      [
+        -1.4,
+        0
+      ],
+      [
+        -1.4,
+        3.2
+      ],
+      [
+        -3,
+        3.2
+      ]
+    ],
+    [
+      [
+        1.4,
+        0
+      ],
+      [
+        3,
+        0
+      ],
+      [
+        3,
+        3.2
+      ],
+      [
+        1.4,
+        3.2
+      ]
+    ],
+    [
+      [
+        -1.4,
+        1.55
+      ],
+      [
+        1.4,
+        1.55
+      ],
+      [
+        1.4,
+        3.2
+      ],
+      [
+        -1.4,
+        3.2
+      ]
+    ]
+  ],
+  "aperture": {
+    "mesh": "Central green extraction aperture",
+    "center": [
+      -1.4745941134819418e-09,
+      -2.093268632888794,
+      -0.8516176342964172
+    ],
+    "axis": [
+      0.0,
+      -0.838670551776886,
+      -0.5446390509605408
+    ],
+    "radius": 0.13499940997171112,
+    "effect_origin": [
+      0.0,
+      -2.3637399673461914,
+      -1.02726411819458
+    ],
+    "validation": {
+      "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\large-void-fusion-v01\\service-underlay-19e-final-tessellation\\capture-source-geometry.json",
+      "sha256": "1e8e38618af9685af15bf486cdbe3054aa4fc202ae7061d551258991f6398da5"
+    }
+  },
+  "field_length": 6.0,
+  "field_radius": 0.25,
+  "light_exposure": -2,
+  "denoise_cold": true,
+  "field_engine": "BLENDER_EEVEE",
+  "effects_mode": "ADVECTING_PARTICLES_AND_POWER_LINKED_CRACKLE",
+  "particle_count": 96,
+  "wisp_count": 32,
+  "field_exposure": -1,
+  "effects_style": "TORTURED_UNIVERSE_V1",
+  "arc_capture_strength": 16,
+  "render_threads": 8,
+  "revision_authority": "Owner: much more pronounced thruster effects; unleashing the essence of the tortured universe. Physical source and actual native demand envelope unchanged."
+}

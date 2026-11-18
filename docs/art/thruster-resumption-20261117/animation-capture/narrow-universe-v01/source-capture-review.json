@@ -1,0 +1,26 @@
+{
+  "status": "PASS_SOURCE_APPEARANCE_4_OF_5_AND_FINAL64_TECHNICAL_GATES",
+  "score": 4,
+  "max_score": 5,
+  "capture_receipt_sha256": "38fbbce171d7b9d3a0ec7bc497afa24eb51f5c17f5c54873c9ebcd51bc640cd9",
+  "package_validation_sha256": "3e36fe6aec216ce9f11d7f5a7eac35e990ce24c40427fdc69dcafb982e55fd10",
+  "actual_visual_review": "Root and independent art agent viewed native-scale18MW/6MW style comparison and eight consecutive V01pilot phases. V02 retains exact style/camera/geometry and byte-identical fresh static lanes; only additive working-energy actual black-well depth occlusion repaired.",
+  "reviewed_pilot_artifacts": {
+    "intensity-comparison-native-scale.png": {
+      "file": "build\\thruster-resume-20261117\\capture-narrow-universe-v01\\output\\intensity-comparison-native-scale.png",
+      "sha256": "fc1ffae82f43137a7165f82aca287a4e3a2ef5287ac58305ca8dfd76c8306e19"
+    },
+    "intensity-eight-consecutive-source.gif": {
+      "file": "build\\thruster-resume-20261117\\capture-narrow-universe-v01\\output\\intensity-eight-consecutive-source.gif",
+      "sha256": "7b368bb5c578e1e9baf7a6b950391260d2b367ae6a8f2b894afceae329cf7267"
+    }
+  },
+  "observations": [
+    "Pronounced full-length macro lightning and long ragged accelerating wake remain visible at6MW.",
+    "Actual opaque core, exposed mineral, skulls/guides/machinery stay legible.",
+    "No attached tube/closed circular plume loop or canvas clipping in reviewed phases."
+  ],
+  "technical_validation": "Complete source65+65PNG, exact wraps, real geometry/camera/coverage, actual surface anchors and downstream acceleration pass. No synthetic alpha/relaxed threshold.",
+  "user_direction": "Observed firing and requested proceeding; no new narrow client run.",
+  "owner_blanket_artistic_approval": false
+}

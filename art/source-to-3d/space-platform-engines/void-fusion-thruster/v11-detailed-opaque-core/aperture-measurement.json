@@ -1,0 +1,33 @@
+{
+  "status": "PASS_ACTUAL_DETAILED_BODY_UNCHANGED_PROJECTOR_RIM_REMEASURED",
+  "body_glb_sha256": "2b1f7164dc6df970aef9c9f1367bf8cf30f82ba3471d1eb9fcf6e84821d3d137",
+  "projector_mesh": "V05 tier02 thick concave annular dish",
+  "aperture_center_source": [
+    0.0,
+    -4.224999904632568,
+    0.06000000983476639
+  ],
+  "outward_axis_source": [
+    0,
+    -1,
+    0
+  ],
+  "aperture_radius_source": 0.25500000058489086,
+  "measured_rim_vertices": 256,
+  "rim_plane_max_error": 0.0,
+  "central_bore_radius": 0.0561,
+  "central_bore_y_extent": [
+    -4.117382526397705,
+    -4.0903825759887695
+  ],
+  "central_projecting_tip_aftmost_y": -4.425000190734863,
+  "definition": "Final stacked dish outer forward-facing aperture rim. Central retained stem projects through/forward of the inner bore; FX must respect the central occluder. Not a chemical nozzle.",
+  "deck_edge_source": [
+    0,
+    0,
+    0
+  ],
+  "source_unit_to_native_pixel": "Candidate calibration is external measured camera/profile input; no recovered physical/native unit identity is claimed.",
+  "previous_body_glb_sha256": "dead4344d5857aa28cb9885763ddec257ac0aed02d86a1114b8f146478d3b08e",
+  "primary_guard": "Projector belongs to the889 unchanged primary meshes; source/export geometric correspondence also passes for the current body."
+}

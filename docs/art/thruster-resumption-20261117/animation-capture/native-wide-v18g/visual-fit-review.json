@@ -1,0 +1,35 @@
+{
+  "status": "PASS_ACTUAL_NATIVE_WIDE_FIT_AND_STATE_REVIEW",
+  "body_glb_sha256": "4d9ef76ab5452728437d399af5456fbaa2b3626381da548dfb06de1b47d713de",
+  "well_glb_sha256": "a041d26a3fec886dc644807374342f9e1869735eea5d178ebf6be4f2a17a1946",
+  "capture_receipt_sha256": "5487489b51efaa595d7420896ca911a9dfcfb43e739672a2b0dd0f8edc8a092b",
+  "native_validation_sha256": "6f1a89e37d31c125174fd43217a73d050d851317f10711222b7b292bb77370d6",
+  "images_actually_viewed": [
+    "large-void-fusion-thruster-working.png",
+    "large-void-fusion-thruster-paused-powered.png",
+    "large-void-fusion-thruster-idle.png",
+    "large-void-fusion-thruster-night.png"
+  ],
+  "observations": [
+    "Fore rim and substantial braces seat onto legal foundation; the aft engine structure and stacked dish head hang over actual space.",
+    "Chunkier inter-stone cases and the retained engine backbone close the protected core; no visible foundation or space passes through it.",
+    "The elongated wide silhouette preserves rigid dish and round hardware proportions; the Noctilith remains mineral rather than a flat black fill.",
+    "Surface energy and dish tracks align with the body; advecting particulate/wisp ejecta starts at the projecting emitter rather than floating tubes or rings.",
+    "Powered-paused keeps energy and removes the plume; drained idle removes energy and plume. Night keeps self-lit green energy visible while reflected body color darkens.",
+    "Independent native validation binds visible effects to actual operation and sink power, including restoration."
+  ],
+  "native_png_sha256": {
+    "large-void-fusion-thruster-idle.png": "cab18b62751c5d7a54942822321eabcf2917239c19b41342c264b3552ef07ef2",
+    "large-void-fusion-thruster-night.png": "44140313281e369ad848c8e92847fdec557d2d40903d70b7bac5bff7d3286eb1",
+    "large-void-fusion-thruster-paused-powered.png": "84331b1e7ecab37f73fde382645bafcb98497282fb2f4a24105dade0a5c5b639",
+    "large-void-fusion-thruster-restart.png": "f209a543c508f8962a70923844eda2d6e83fb1473aa866c733258ca48cad591d",
+    "large-void-fusion-thruster-startup.png": "01c3a19848e8331674ff40e2139f4299c966da728017f8b2d6ef6d344af7b69d",
+    "large-void-fusion-thruster-working.png": "09c42ac60f962bd4f92fc6d142778821fdc6f8e3a6674762d74b1335d7bf8de2"
+  },
+  "not_claimed": [
+    "Final owner artistic acceptance",
+    "Real background refraction",
+    "Released or normal-profile-installed art"
+  ],
+  "scope": "Actual high-quality Factorio2.1.24 graphical client; source-bound ordinary drive; inspected PNGs plus native color/control checks."
+}

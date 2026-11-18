@@ -1,0 +1,7 @@
+00:00.797  blend            | Read blend: "C:\Users\Admin\Documents\ChatGPT\Tech priests\model-production\art\source-to-3d\space-platform-engines\void-fusion-thruster\v11-detailed-opaque-core\void-fusion-v11.blend"
+CANONICAL_SOURCE_AUDIT_PASS 74 packed images 36 used materials
+Blender 5.0.0 (hash a37564c4df7a built 2025-11-18 11:06:54)
+
+Blender quit
+<string>:16: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+<string>:17: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0

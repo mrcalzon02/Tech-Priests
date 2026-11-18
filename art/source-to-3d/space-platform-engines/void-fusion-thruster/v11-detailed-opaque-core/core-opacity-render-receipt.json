@@ -1,0 +1,15 @@
+{
+  "glb_sha256": "2b1f7164dc6df970aef9c9f1367bf8cf30f82ba3471d1eb9fcf6e84821d3d137",
+  "actual_glb_import_only": true,
+  "background": "Actual3D magenta board belowengineZ-.65, review-only neverexported; transparent-alpha witness has no board.",
+  "renders": [
+    {
+      "file": "actual-core-transparent-alpha.png",
+      "sha256": "77035cb47d16bf72c5c87d5518951dbaa7d887f91f7d42b5ddb50569e3f36118"
+    },
+    {
+      "file": "actual-core-magenta-background.png",
+      "sha256": "3586c97d5fd175b88c9643def47ca43be1b3c161ac6e6a9f10e6f092f36323b9"
+    }
+  ]
+}

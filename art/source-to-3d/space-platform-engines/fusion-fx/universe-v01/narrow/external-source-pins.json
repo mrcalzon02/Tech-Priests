@@ -1,0 +1,53 @@
+{
+  "status": "PASS_EXTERNAL_CANONICAL_SOURCE_IDENTITIES",
+  "family": "narrow",
+  "body": {
+    "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\art\\source-to-3d\\space-platform-engines\\void-fusion-thruster\\v11-detailed-opaque-core\\void-fusion-v11.glb",
+    "sha256": "2b1f7164dc6df970aef9c9f1367bf8cf30f82ba3471d1eb9fcf6e84821d3d137"
+  },
+  "service_well": {
+    "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\art\\source-to-3d\\space-platform-engines\\void-fusion-thruster\\v11-detailed-opaque-core\\service-well-v10\\narrow-service-well-v10.glb",
+    "sha256": "b3c083952cec501d375875f30a4780b07fa2d840bd0a1f873c4e6d3250123276"
+  },
+  "original_body_input": {
+    "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\void-fusion-v11.glb",
+    "sha256": "2b1f7164dc6df970aef9c9f1367bf8cf30f82ba3471d1eb9fcf6e84821d3d137"
+  },
+  "original_underlay_input": {
+    "glb": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\service-well-v10\\narrow-service-well-v10.glb",
+    "sha256": "b3c083952cec501d375875f30a4780b07fa2d840bd0a1f873c4e6d3250123276",
+    "validation": {
+      "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\service-underlay-receipt.json",
+      "sha256": "7d7fa307c126fac71daacafde76ef8625de4d2e7938fe934a2cf6301647c6c98"
+    }
+  },
+  "source_paths_in_copied_receipts_unchanged": true,
+  "physical_geometry_or_original_master_modified": false,
+  "external_validation_and_aperture_records": [
+    {
+      "role": "body_validation",
+      "canonical_path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\art\\source-to-3d\\space-platform-engines\\void-fusion-thruster\\v11-detailed-opaque-core\\roundtrip-validation.json",
+      "sha256": "a9e1e15390df52aeb0265eea46d9d5d75af7bfa5cb7f760badd456d9b686954e",
+      "original_input_path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\roundtrip-validation.json"
+    },
+    {
+      "role": "aperture_validation",
+      "canonical_path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\art\\source-to-3d\\space-platform-engines\\void-fusion-thruster\\v11-detailed-opaque-core\\aperture-measurement.json",
+      "sha256": "faf3f98d998efd4e306389d473d3accdec6ddf9165f1f56b3d538425a1898dad",
+      "original_input_path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\aperture-measurement.json"
+    },
+    {
+      "role": "underlay_validation",
+      "canonical_path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\art\\source-to-3d\\space-platform-engines\\void-fusion-thruster\\v11-detailed-opaque-core\\service-underlay-receipt.json",
+      "sha256": "7d7fa307c126fac71daacafde76ef8625de4d2e7938fe934a2cf6301647c6c98",
+      "original_input_path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\service-underlay-receipt.json"
+    },
+    {
+      "role": "geometry_handoff",
+      "canonical_path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\art\\source-to-3d\\space-platform-engines\\void-fusion-thruster\\v11-detailed-opaque-core\\aperture-measurement.json",
+      "sha256": "faf3f98d998efd4e306389d473d3accdec6ddf9165f1f56b3d538425a1898dad",
+      "original_input_path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\aperture-measurement.json"
+    }
+  ],
+  "remap_policy": "Original receipt/profile paths preserved byte-exact. If staging is absent, use these canonical identical assets/records in a NEW profile/output, earning a new binding. Do not rewrite these frozen receipts."
+}

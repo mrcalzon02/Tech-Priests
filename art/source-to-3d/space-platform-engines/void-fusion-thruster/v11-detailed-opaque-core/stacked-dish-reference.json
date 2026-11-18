@@ -1,0 +1,110 @@
+{
+  "reference_private_path": "C:\\Users\\Admin\\AppData\\Local\\Temp\\codex-clipboard-4c56f180-de0c-4c9c-b642-8fb95cfd6d36.png",
+  "reference_sha256": "51653135eeb298c4cbb6936b0d85faef5ddded231c790752682f80de44470e4f",
+  "image_size": [
+    283,
+    230
+  ],
+  "privacy": "Screenshot inspected only; no screenshot text imported into art. Clipboard existence optional; build uses hash-checked clean committed sprite.",
+  "owner_authority": "Recognizable thick segmented armored stacked dish emitter; tiers decrease toward smaller lower face and central projecting tip. Supersedes prior equal-bore thin-ring interpretation.",
+  "feature_rectangles_xyxy": {
+    "upper_armored_tier_and_reliquary": [
+      45,
+      27,
+      237,
+      111
+    ],
+    "three_stepped_segmented_dish_tiers": [
+      55,
+      88,
+      226,
+      181
+    ],
+    "radial_bracing_and_central_projecting_tip": [
+      88,
+      143,
+      194,
+      216
+    ]
+  },
+  "interpretation": "Adapt screenshot construction to narrow 1x9 width; preserve three discrete stepped dishes and plated/braced silhouette, not a continuous cone.",
+  "actual_tiers": [
+    {
+      "object": "V05 tier00 thick concave annular dish",
+      "center_y": -3.64,
+      "outer_radius": 0.405,
+      "inner_radius": 0.08910000000000001,
+      "actual_curved_face_depth": 0.10761730239406608,
+      "wall_thickness": 0.027,
+      "armored_band_axial_thickness": 0.079,
+      "rim_armor_segments": 12,
+      "radial_braces": 8,
+      "stepped_silhouette": "separate substantial dish tier; decreasing radius toward terminal face"
+    },
+    {
+      "object": "V05 tier01 thick concave annular dish",
+      "center_y": -3.93,
+      "outer_radius": 0.33,
+      "inner_radius": 0.0726,
+      "actual_curved_face_depth": 0.10761730239406608,
+      "wall_thickness": 0.027,
+      "armored_band_axial_thickness": 0.079,
+      "rim_armor_segments": 12,
+      "radial_braces": 8,
+      "stepped_silhouette": "separate substantial dish tier; decreasing radius toward terminal face"
+    },
+    {
+      "object": "V05 tier02 thick concave annular dish",
+      "center_y": -4.16,
+      "outer_radius": 0.255,
+      "inner_radius": 0.056100000000000004,
+      "actual_curved_face_depth": 0.10761730239406653,
+      "wall_thickness": 0.027,
+      "armored_band_axial_thickness": 0.079,
+      "rim_armor_segments": 12,
+      "radial_braces": 8,
+      "stepped_silhouette": "separate substantial dish tier; decreasing radius toward terminal face"
+    }
+  ],
+  "durable_clean_reference": {
+    "path": "tech-priests_src/graphics/entity/void-fusion-thruster/void-fusion-thruster-wide-idle.png",
+    "sha256": "3b7b6d743220a516fcfae11162b9ad2e5cff713338f5f7c549664c260a35df16",
+    "head_crop_xyxy": [
+      51,
+      280,
+      334,
+      510
+    ],
+    "size": [
+      384,
+      512
+    ],
+    "mapping": "Supplied screenshot is the wide-head detail, adapted to narrow 1x9. Clean committed sprite is durable authority; no UI text imported.",
+    "feature_rectangles_xyxy": {
+      "upper_armored_tier_and_reliquary": [
+        96,
+        307,
+        288,
+        391
+      ],
+      "three_stepped_segmented_dish_tiers": [
+        106,
+        368,
+        277,
+        461
+      ],
+      "radial_bracing_and_central_projecting_tip": [
+        139,
+        423,
+        245,
+        496
+      ]
+    }
+  },
+  "original_narrow_first_cell_head_crop_xyxy": [
+    54,
+    386,
+    138,
+    547
+  ]
+}

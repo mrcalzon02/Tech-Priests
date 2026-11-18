@@ -1,0 +1,633 @@
+{
+  "status": "PASS_ACTUAL_DETAILED_BODY_DEEP_SERVICE_WELL_CONTACTS_AND_CLEARANCE",
+  "body_glb_sha256": "2b1f7164dc6df970aef9c9f1367bf8cf30f82ba3471d1eb9fcf6e84821d3d137",
+  "underlay_glb_sha256": "b3c083952cec501d375875f30a4780b07fa2d840bd0a1f873c4e6d3250123276",
+  "underlay_blend_sha256": "2308796e18b4ad6a88faf3901c2ae081a8f2e67af2da77e9f7c55a2fd3590092",
+  "previous_rim_only_glb_sha256": "21ffc3f1fc1bf5be137344c447a4687fb6fea34fad861106d85944155e8bae32",
+  "underlay_glb": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\service-well-v10\\narrow-service-well-v10.glb",
+  "parts": {
+    "NARROW_SERVICE_WEST_WELL_RIM": {
+      "bounds": [
+        [
+          -0.7400000095367432,
+          0.0,
+          -0.23999999463558197
+        ],
+        [
+          -0.5,
+          4.199999809265137,
+          0.0
+        ]
+      ],
+      "vertices": 36,
+      "triangles": 20
+    },
+    "NARROW_SERVICE_EAST_WELL_RIM": {
+      "bounds": [
+        [
+          0.5,
+          0.0,
+          -0.23999999463558197
+        ],
+        [
+          0.7400000095367432,
+          4.199999809265137,
+          0.0
+        ]
+      ],
+      "vertices": 36,
+      "triangles": 20
+    },
+    "NARROW_SERVICE_FORE_RIM_BACKWALL": {
+      "bounds": [
+        [
+          -0.7400000095367432,
+          4.199999809265137,
+          -0.23999999463558197
+        ],
+        [
+          0.7400000095367432,
+          4.440000057220459,
+          0.0
+        ]
+      ],
+      "vertices": 36,
+      "triangles": 20
+    },
+    "NARROW_SERVICE_DEEP_FORE_WELL_FLOOR": {
+      "bounds": [
+        [
+          -0.5,
+          0.0,
+          -0.4699999988079071
+        ],
+        [
+          0.5,
+          4.199999809265137,
+          -0.4300000071525574
+        ]
+      ],
+      "vertices": 24,
+      "triangles": 12
+    },
+    "NARROW_SERVICE_DEEP_WEST_WALL": {
+      "bounds": [
+        [
+          -0.5199999809265137,
+          0.0,
+          -0.4699999988079071
+        ],
+        [
+          -0.5,
+          4.199999809265137,
+          -0.23999999463558197
+        ]
+      ],
+      "vertices": 24,
+      "triangles": 12
+    },
+    "NARROW_SERVICE_DEEP_EAST_WALL": {
+      "bounds": [
+        [
+          0.5,
+          0.0,
+          -0.4699999988079071
+        ],
+        [
+          0.5199999809265137,
+          4.199999809265137,
+          -0.23999999463558197
+        ]
+      ],
+      "vertices": 24,
+      "triangles": 12
+    },
+    "NARROW_SERVICE_DEEP_FORE_BACKWALL": {
+      "bounds": [
+        [
+          -0.7400000095367432,
+          4.199999809265137,
+          -0.4699999988079071
+        ],
+        [
+          0.7400000095367432,
+          4.21999979019165,
+          -0.23999999463558197
+        ]
+      ],
+      "vertices": 24,
+      "triangles": 12
+    }
+  },
+  "actual_rim_floor_wall_seats": [
+    {
+      "a": "NARROW_SERVICE_DEEP_WEST_WALL",
+      "b": "NARROW_SERVICE_WEST_WELL_RIM",
+      "point": [
+        -0.5099999904632568,
+        2.0999999046325684,
+        -0.23999999463558197
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "actual_interface_ray_errors": {
+        "NARROW_SERVICE_DEEP_WEST_WALL": 0.0,
+        "NARROW_SERVICE_WEST_WELL_RIM": 0.0
+      }
+    },
+    {
+      "a": "NARROW_SERVICE_DEEP_FORE_WELL_FLOOR",
+      "b": "NARROW_SERVICE_DEEP_WEST_WALL",
+      "point": [
+        -0.5,
+        2.0999999046325684,
+        -0.44999998807907104
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "actual_interface_ray_errors": {
+        "NARROW_SERVICE_DEEP_FORE_WELL_FLOOR": 0.0,
+        "NARROW_SERVICE_DEEP_WEST_WALL": 0.0
+      }
+    },
+    {
+      "a": "NARROW_SERVICE_DEEP_EAST_WALL",
+      "b": "NARROW_SERVICE_EAST_WELL_RIM",
+      "point": [
+        0.5099999904632568,
+        2.0999999046325684,
+        -0.23999999463558197
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "actual_interface_ray_errors": {
+        "NARROW_SERVICE_DEEP_EAST_WALL": 0.0,
+        "NARROW_SERVICE_EAST_WELL_RIM": 0.0
+      }
+    },
+    {
+      "a": "NARROW_SERVICE_DEEP_FORE_WELL_FLOOR",
+      "b": "NARROW_SERVICE_DEEP_EAST_WALL",
+      "point": [
+        0.5,
+        2.0999999046325684,
+        -0.44999998807907104
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "actual_interface_ray_errors": {
+        "NARROW_SERVICE_DEEP_FORE_WELL_FLOOR": 0.0,
+        "NARROW_SERVICE_DEEP_EAST_WALL": 0.0
+      }
+    },
+    {
+      "a": "NARROW_SERVICE_DEEP_FORE_BACKWALL",
+      "b": "NARROW_SERVICE_FORE_RIM_BACKWALL",
+      "point": [
+        0.0,
+        4.210000038146973,
+        -0.23999999463558197
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "actual_interface_ray_errors": {
+        "NARROW_SERVICE_DEEP_FORE_BACKWALL": 0.0,
+        "NARROW_SERVICE_FORE_RIM_BACKWALL": 0.0
+      }
+    },
+    {
+      "a": "NARROW_SERVICE_DEEP_FORE_WELL_FLOOR",
+      "b": "NARROW_SERVICE_DEEP_FORE_BACKWALL",
+      "point": [
+        0.0,
+        4.199999809265137,
+        -0.44999998807907104
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "actual_interface_ray_errors": {
+        "NARROW_SERVICE_DEEP_FORE_WELL_FLOOR": 0.0,
+        "NARROW_SERVICE_DEEP_FORE_BACKWALL": 0.0
+      }
+    }
+  ],
+  "floor_top_z": -0.4300000071525574,
+  "minimum_actual_fore_core_z": -0.35999998450279236,
+  "conservative_floor_to_body_clearance": 0.07000002264976501,
+  "minimum_lower_side_wall_gap": 0.09999999403953552,
+  "minimum_lower_fore_wall_gap": 0.02000017166137713,
+  "source_deck_edge_y": 0,
+  "deck_top_z": 0,
+  "central_fore_well_xy": [
+    [
+      -0.5,
+      0
+    ],
+    [
+      0.5,
+      0
+    ],
+    [
+      0.5,
+      4.2
+    ],
+    [
+      -0.5,
+      4.2
+    ]
+  ],
+  "receiver_xy_polygons": [
+    [
+      [
+        -1.3,
+        0
+      ],
+      [
+        -0.5,
+        0
+      ],
+      [
+        -0.5,
+        4.8
+      ],
+      [
+        -1.3,
+        4.8
+      ]
+    ],
+    [
+      [
+        0.5,
+        0
+      ],
+      [
+        1.3,
+        0
+      ],
+      [
+        1.3,
+        4.8
+      ],
+      [
+        0.5,
+        4.8
+      ]
+    ],
+    [
+      [
+        -0.5,
+        4.2
+      ],
+      [
+        0.5,
+        4.2
+      ],
+      [
+        0.5,
+        4.8
+      ],
+      [
+        -0.5,
+        4.8
+      ]
+    ]
+  ],
+  "no_aft_floor_or_foundation": true,
+  "reason": "Native origin foundation cannot be removed. Opaque bounded deep service well covers that unavoidable floor beneath the lowered fore installation; original rim-only source preserved. No body changes or whole-deck/donor art.",
+  "limits": "Static actual exported surface/bounds witnesses; final camera registration, projected native assembly/underlay occlusion and dynamic runtime art fit require real capture/native review.",
+  "previous_body_glb_sha256": "dead4344d5857aa28cb9885763ddec257ac0aed02d86a1114b8f146478d3b08e",
+  "actual_new_body_fore_min_z": -0.35999998450279236,
+  "actual_new_body_mount_contacts": [
+    {
+      "part": "V09_mount side ledge flange 00 -1",
+      "receiver": "side_ledge_-1",
+      "point": [
+        -0.61,
+        0.18984344,
+        0
+      ],
+      "normal": [
+        0,
+        0,
+        1
+      ],
+      "actual_receiver_mesh": "NARROW_SERVICE_WEST_WELL_RIM",
+      "actual_export_ray_errors": {
+        "V09_mount side ledge flange 00 -1": 0.0,
+        "NARROW_SERVICE_WEST_WELL_RIM": 0.0
+      }
+    },
+    {
+      "part": "V09_mount side lip cheek 00 -1",
+      "receiver": "side_ledge_wall_-1",
+      "point": [
+        -0.5,
+        0.18984344,
+        -0.1
+      ],
+      "normal": [
+        -1,
+        0,
+        0
+      ],
+      "actual_receiver_mesh": "NARROW_SERVICE_WEST_WELL_RIM",
+      "actual_export_ray_errors": {
+        "V09_mount side lip cheek 00 -1": 0.0,
+        "NARROW_SERVICE_WEST_WELL_RIM": 0.0
+      }
+    },
+    {
+      "part": "V09_mount side ledge flange 00 1",
+      "receiver": "side_ledge_1",
+      "point": [
+        0.61,
+        0.18984344,
+        0
+      ],
+      "normal": [
+        0,
+        0,
+        1
+      ],
+      "actual_receiver_mesh": "NARROW_SERVICE_EAST_WELL_RIM",
+      "actual_export_ray_errors": {
+        "V09_mount side ledge flange 00 1": 0.0,
+        "NARROW_SERVICE_EAST_WELL_RIM": 0.0
+      }
+    },
+    {
+      "part": "V09_mount side lip cheek 00 1",
+      "receiver": "side_ledge_wall_1",
+      "point": [
+        0.5,
+        0.18984344,
+        -0.1
+      ],
+      "normal": [
+        1,
+        0,
+        0
+      ],
+      "actual_receiver_mesh": "NARROW_SERVICE_EAST_WELL_RIM",
+      "actual_export_ray_errors": {
+        "V09_mount side lip cheek 00 1": 0.0,
+        "NARROW_SERVICE_EAST_WELL_RIM": 0.0
+      }
+    },
+    {
+      "part": "V09_mount side ledge flange 01 -1",
+      "receiver": "side_ledge_-1",
+      "point": [
+        -0.61,
+        1.60295499,
+        0
+      ],
+      "normal": [
+        0,
+        0,
+        1
+      ],
+      "actual_receiver_mesh": "NARROW_SERVICE_WEST_WELL_RIM",
+      "actual_export_ray_errors": {
+        "V09_mount side ledge flange 01 -1": 3.725290298461914e-09,
+        "NARROW_SERVICE_WEST_WELL_RIM": 0.0
+      }
+    },
+    {
+      "part": "V09_mount side lip cheek 01 -1",
+      "receiver": "side_ledge_wall_-1",
+      "point": [
+        -0.5,
+        1.60295499,
+        -0.1
+      ],
+      "normal": [
+        -1,
+        0,
+        0
+      ],
+      "actual_receiver_mesh": "NARROW_SERVICE_WEST_WELL_RIM",
+      "actual_export_ray_errors": {
+        "V09_mount side lip cheek 01 -1": 0.0,
+        "NARROW_SERVICE_WEST_WELL_RIM": 0.0
+      }
+    },
+    {
+      "part": "V09_mount side ledge flange 01 1",
+      "receiver": "side_ledge_1",
+      "point": [
+        0.61,
+        1.60295499,
+        0
+      ],
+      "normal": [
+        0,
+        0,
+        1
+      ],
+      "actual_receiver_mesh": "NARROW_SERVICE_EAST_WELL_RIM",
+      "actual_export_ray_errors": {
+        "V09_mount side ledge flange 01 1": 0.0,
+        "NARROW_SERVICE_EAST_WELL_RIM": 0.0
+      }
+    },
+    {
+      "part": "V09_mount side lip cheek 01 1",
+      "receiver": "side_ledge_wall_1",
+      "point": [
+        0.5,
+        1.60295499,
+        -0.1
+      ],
+      "normal": [
+        1,
+        0,
+        0
+      ],
+      "actual_receiver_mesh": "NARROW_SERVICE_EAST_WELL_RIM",
+      "actual_export_ray_errors": {
+        "V09_mount side lip cheek 01 1": 0.0,
+        "NARROW_SERVICE_EAST_WELL_RIM": 0.0
+      }
+    },
+    {
+      "part": "V09_mount side ledge flange 02 -1",
+      "receiver": "side_ledge_-1",
+      "point": [
+        -0.61,
+        2.69258317,
+        0
+      ],
+      "normal": [
+        0,
+        0,
+        1
+      ],
+      "actual_receiver_mesh": "NARROW_SERVICE_WEST_WELL_RIM",
+      "actual_export_ray_errors": {
+        "V09_mount side ledge flange 02 -1": 3.725290298461914e-09,
+        "NARROW_SERVICE_WEST_WELL_RIM": 0.0
+      }
+    },
+    {
+      "part": "V09_mount side lip cheek 02 -1",
+      "receiver": "side_ledge_wall_-1",
+      "point": [
+        -0.5,
+        2.69258317,
+        -0.1
+      ],
+      "normal": [
+        -1,
+        0,
+        0
+      ],
+      "actual_receiver_mesh": "NARROW_SERVICE_WEST_WELL_RIM",
+      "actual_export_ray_errors": {
+        "V09_mount side lip cheek 02 -1": 0.0,
+        "NARROW_SERVICE_WEST_WELL_RIM": 0.0
+      }
+    },
+    {
+      "part": "V09_mount side ledge flange 02 1",
+      "receiver": "side_ledge_1",
+      "point": [
+        0.61,
+        2.69258317,
+        0
+      ],
+      "normal": [
+        0,
+        0,
+        1
+      ],
+      "actual_receiver_mesh": "NARROW_SERVICE_EAST_WELL_RIM",
+      "actual_export_ray_errors": {
+        "V09_mount side ledge flange 02 1": 0.0,
+        "NARROW_SERVICE_EAST_WELL_RIM": 0.0
+      }
+    },
+    {
+      "part": "V09_mount side lip cheek 02 1",
+      "receiver": "side_ledge_wall_1",
+      "point": [
+        0.5,
+        2.69258317,
+        -0.1
+      ],
+      "normal": [
+        1,
+        0,
+        0
+      ],
+      "actual_receiver_mesh": "NARROW_SERVICE_EAST_WELL_RIM",
+      "actual_export_ray_errors": {
+        "V09_mount side lip cheek 02 1": 0.0,
+        "NARROW_SERVICE_EAST_WELL_RIM": 0.0
+      }
+    },
+    {
+      "part": "V09_mount fore crossmember flange -1",
+      "receiver": "fore_crossmember",
+      "point": [
+        -0.3,
+        4.32,
+        0
+      ],
+      "normal": [
+        0,
+        0,
+        1
+      ],
+      "actual_receiver_mesh": "NARROW_SERVICE_FORE_RIM_BACKWALL",
+      "actual_export_ray_errors": {
+        "V09_mount fore crossmember flange -1": 0.0,
+        "NARROW_SERVICE_FORE_RIM_BACKWALL": 3.725290298461914e-09
+      }
+    },
+    {
+      "part": "V09_mount fore lip cheek -1",
+      "receiver": "fore_crossmember_wall",
+      "point": [
+        -0.3,
+        4.2,
+        -0.1
+      ],
+      "normal": [
+        0,
+        1,
+        0
+      ],
+      "actual_receiver_mesh": "NARROW_SERVICE_FORE_RIM_BACKWALL",
+      "actual_export_ray_errors": {
+        "V09_mount fore lip cheek -1": 0.0,
+        "NARROW_SERVICE_FORE_RIM_BACKWALL": 0.0
+      }
+    },
+    {
+      "part": "V09_mount fore crossmember flange 1",
+      "receiver": "fore_crossmember",
+      "point": [
+        0.3,
+        4.32,
+        0
+      ],
+      "normal": [
+        0,
+        0,
+        1
+      ],
+      "actual_receiver_mesh": "NARROW_SERVICE_FORE_RIM_BACKWALL",
+      "actual_export_ray_errors": {
+        "V09_mount fore crossmember flange 1": 0.0,
+        "NARROW_SERVICE_FORE_RIM_BACKWALL": 3.725290298461914e-09
+      }
+    },
+    {
+      "part": "V09_mount fore lip cheek 1",
+      "receiver": "fore_crossmember_wall",
+      "point": [
+        0.3,
+        4.2,
+        -0.1
+      ],
+      "normal": [
+        0,
+        1,
+        0
+      ],
+      "actual_receiver_mesh": "NARROW_SERVICE_FORE_RIM_BACKWALL",
+      "actual_export_ray_errors": {
+        "V09_mount fore lip cheek 1": 0.0,
+        "NARROW_SERVICE_FORE_RIM_BACKWALL": 0.0
+      }
+    }
+  ],
+  "minimum_conservative_inner_side_wall_clearance": 0.09999999403953552,
+  "minimum_fore_wall_clearance": 0.02000017166137713,
+  "body_detail_receipts": {
+    "roundtrip-validation.json": "a9e1e15390df52aeb0265eea46d9d5d75af7bfa5cb7f760badd456d9b686954e",
+    "guide-cover-export-validation.json": "538ce78989c8f7b3739290fd539719691a0cb559321291b652a86d291fe7511c",
+    "pipette-export-validation.json": "78d88fe8257645b365023b9d7dbdf66c4747b42caf3d04ddfef1c04509bdbc44",
+    "functional-detail-export-validation.json": "4b273cf17f0025c13e642f601252b66781fae6de70caff6bff0dab49d75a15e3"
+  },
+  "engine_pan_distinction": "Engine retained backing pan moves with the body across fore/aft halves; this separate well contains only the fore ship installation floor/rims/walls."
+}

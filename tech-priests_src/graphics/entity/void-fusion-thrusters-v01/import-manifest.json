@@ -1,0 +1,247 @@
+{
+  "status": "GENERATED_REQUIRES_NATIVE_POWER_COUPLING_AND_FITTING_PROOF",
+  "module": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tech-priests_src\\prototypes\\generated_graphics\\void-fusion-thrusters-v01.lua",
+  "module_sha256": "6369e78d8f67085f6ab12dd94c741e032063c8a208278c842c3f7b14fe7584b8",
+  "families": [
+    {
+      "prototype": "void-fusion-thruster",
+      "capture_receipt": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\capture-narrow-universe-v02-depth\\output\\capture-receipt.json",
+      "receipt_sha256": "38fbbce171d7b9d3a0ec7bc497afa24eb51f5c17f5c54873c9ebcd51bc640cd9",
+      "input_glb": {
+        "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\void-fusion-v11.glb",
+        "sha256": "2b1f7164dc6df970aef9c9f1367bf8cf30f82ba3471d1eb9fcf6e84821d3d137"
+      },
+      "registration": {
+        "cell": [
+          288,
+          1304
+        ],
+        "native_pixels_per_source_unit": 32,
+        "scale": 0.31499174267753466,
+        "shift_tiles": [
+          0.024437802561340448,
+          3.57782153840616
+        ],
+        "source_deck_origin": [
+          0,
+          0,
+          0
+        ],
+        "source_deck_pixel": [
+          141.51736450195312,
+          339.32421875
+        ],
+        "native_cut_y": 0.5,
+        "aperture_source": [
+          0.0,
+          -4.224999904632568,
+          0.06000000983476639
+        ],
+        "aperture_pixel": [
+          141.51736450195312,
+          638.5167236328125
+        ],
+        "aperture_native_tiles": [
+          0.0,
+          3.4450990159091845
+        ],
+        "field_origin_source": [
+          0.0,
+          -4.450000190734864,
+          0.06000000983476639
+        ],
+        "field_origin_pixel": [
+          141.51736450195312,
+          654.6796264648438
+        ],
+        "field_origin_native_tiles": [
+          0.0,
+          3.6041984199650967
+        ],
+        "status": "CANDIDATE_REQUIRES_NATIVE_FIT",
+        "original_full_canvas_registration": {
+          "cell": [
+            1536,
+            1536
+          ],
+          "scale": 0.31499174267753466,
+          "shift_tiles": [
+            0.024437802561340448,
+            3.1447078922245497
+          ],
+          "source_deck_pixel": [
+            765.5173645019531,
+            499.32421875
+          ],
+          "aperture_pixel": [
+            765.5173645019531,
+            798.5167236328125
+          ],
+          "field_origin_pixel": [
+            765.5173645019531,
+            814.6796264648438
+          ]
+        },
+        "common_crop_box": [
+          624,
+          160,
+          912,
+          1464
+        ]
+      },
+      "energy_animation": "tp-void-fusion-thruster-energy-v01",
+      "plume_animation": "tp-void-fusion-thruster-plume-v01",
+      "plume_kind": "advected_particle_ejecta_and_turbulent_wisps"
+    },
+    {
+      "prototype": "large-void-fusion-thruster",
+      "capture_receipt": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\capture-wide-universe-v01\\output\\capture-receipt.json",
+      "receipt_sha256": "475588d1b5bb85c3fb9e3912152316f957d7c8cb563c2f846fc8e4c88eea4e73",
+      "input_glb": {
+        "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\large-void-fusion-v01\\detail-18g-actual-clip-face-seats\\large-void-fusion-v01.glb",
+        "sha256": "4d9ef76ab5452728437d399af5456fbaa2b3626381da548dfb06de1b47d713de"
+      },
+      "registration": {
+        "cell": [
+          432,
+          1120
+        ],
+        "native_pixels_per_source_unit": 32,
+        "scale": 0.35367629350092983,
+        "shift_tiles": [
+          0.3766645139090159,
+          3.8662637148770265
+        ],
+        "source_deck_origin": [
+          0,
+          0,
+          0
+        ],
+        "source_deck_pixel": [
+          181.9200668334961,
+          300.6655731201172
+        ],
+        "native_cut_y": 1,
+        "aperture_source": [
+          -1.4745941134819418e-09,
+          -2.093268632888794,
+          -0.8516176342964172
+        ],
+        "aperture_pixel": [
+          181.9200668334961,
+          489.07286071777344
+        ],
+        "aperture_native_tiles": [
+          0.0,
+          3.082349723315711
+        ],
+        "field_origin_source": [
+          0.0,
+          -2.3637399673461914,
+          -1.02726411819458
+        ],
+        "field_origin_pixel": [
+          181.9200668334961,
+          517.6144256591797
+        ],
+        "field_origin_native_tiles": [
+          0.0,
+          3.3978020639154813
+        ],
+        "status": "CANDIDATE_REQUIRES_NATIVE_FIT",
+        "original_full_canvas_registration": {
+          "cell": [
+            1280,
+            1280
+          ],
+          "scale": 0.35367629350092983,
+          "shift_tiles": [
+            0.3766645139090159,
+            3.6894255681265617
+          ],
+          "source_deck_pixel": [
+            605.9200668334961,
+            396.6655731201172
+          ],
+          "aperture_pixel": [
+            605.9200668334961,
+            585.0728607177734
+          ],
+          "field_origin_pixel": [
+            605.9200668334961,
+            613.6144256591797
+          ]
+        },
+        "common_crop_box": [
+          424,
+          96,
+          856,
+          1216
+        ]
+      },
+      "energy_animation": "tp-large-void-fusion-thruster-energy-v01",
+      "plume_animation": "tp-large-void-fusion-thruster-plume-v01",
+      "plume_kind": "advected_particle_ejecta_and_turbulent_wisps"
+    }
+  ],
+  "files": [
+    {
+      "file": "graphics/entity/void-fusion-thrusters-v01/void-fusion-thruster/cold_body.png",
+      "sha256": "8713018714c1083413040d60a0f2f598f3425474167d4dd6cc9b13fdb094f30a"
+    },
+    {
+      "file": "graphics/entity/void-fusion-thrusters-v01/void-fusion-thruster/deck_shadow.png",
+      "sha256": "fe14627dce69b97908274b6866bd96cc7d59c0c856c603876d2bfd88c4e505d6"
+    },
+    {
+      "file": "graphics/entity/void-fusion-thrusters-v01/void-fusion-thruster/service_underlay.png",
+      "sha256": "a07db5e4b47cc77fadb0082f47d2c6aee2efeb39591fb3ae6f9b6d25e17955d8"
+    },
+    {
+      "file": "graphics/entity/void-fusion-thrusters-v01/void-fusion-thruster/working_light-1.png",
+      "sha256": "9bc16269af151731961dfcf9f9b02dbee90672e181bc159f078956109fe27b77"
+    },
+    {
+      "file": "graphics/entity/void-fusion-thrusters-v01/void-fusion-thruster/working_light-2.png",
+      "sha256": "176ee0f145168face26d3093c92f427401aa81e3da784716a7e0096d951a5e71"
+    },
+    {
+      "file": "graphics/entity/void-fusion-thrusters-v01/void-fusion-thruster/field_candidate-1.png",
+      "sha256": "08b233a50e6fab0e6308c04870bf30875ae4bde53a9adb54d2aec4d93de3045f"
+    },
+    {
+      "file": "graphics/entity/void-fusion-thrusters-v01/void-fusion-thruster/field_candidate-2.png",
+      "sha256": "59a16589e6793bb10e58c07864de5e62761b3bfc68c0edf9a6522c0357dd19b7"
+    },
+    {
+      "file": "graphics/entity/void-fusion-thrusters-v01/large-void-fusion-thruster/cold_body.png",
+      "sha256": "efdf8b95ced8aca53a5a8834c314fb0af84373d0373cf49de5141aaea6a541fc"
+    },
+    {
+      "file": "graphics/entity/void-fusion-thrusters-v01/large-void-fusion-thruster/deck_shadow.png",
+      "sha256": "9606b302d2733518f9d6d349b9e3a1df9d0db61cf81d890e33b95fd7666fc350"
+    },
+    {
+      "file": "graphics/entity/void-fusion-thrusters-v01/large-void-fusion-thruster/service_underlay.png",
+      "sha256": "7814ba07dd1abe432697bb37a0ebd39e79cb51368c53ba49fd73e12f197d8c97"
+    },
+    {
+      "file": "graphics/entity/void-fusion-thrusters-v01/large-void-fusion-thruster/working_light-1.png",
+      "sha256": "aabcbad89a895a59662d273bb9f726318e4f2c73cd925e46ad86eb30543c793d"
+    },
+    {
+      "file": "graphics/entity/void-fusion-thrusters-v01/large-void-fusion-thruster/working_light-2.png",
+      "sha256": "0742ff8fd5acaad4e3f6a3a4cdb312db893212d6aa1fe00e92ea273521f8f338"
+    },
+    {
+      "file": "graphics/entity/void-fusion-thrusters-v01/large-void-fusion-thruster/field_candidate-1.png",
+      "sha256": "66753746464981111253680995a789bdb5e0af287e34e89cbfff6a8cdf810496"
+    },
+    {
+      "file": "graphics/entity/void-fusion-thrusters-v01/large-void-fusion-thruster/field_candidate-2.png",
+      "sha256": "0b5e645a30a09b87fc8f146cbc2629765ba0c667e58e981f03c001245774bc3e"
+    }
+  ],
+  "scope": "Source/private-mod graphics only. No normal-profile installation or late-import activation performed.",
+  "subsequent_integration_evidence": "docs/art/thruster-resumption-20261117/animation-capture/universe-v01-integration.json"
+}

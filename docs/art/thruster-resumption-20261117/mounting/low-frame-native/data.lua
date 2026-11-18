@@ -1,0 +1,2 @@
+-- Only the disposable electrical source belongs to the proof; drives are unchanged.
+data:extend{{type='electric-energy-interface',name='thruster-proof-power',icon='__base__/graphics/icons/accumulator.png',icon_size=64,flags={'placeable-off-grid'},max_health=100,collision_box={{-.2,-.2},{.2,.2}},selection_box={{-.3,-.3},{.3,.3}},energy_source={type='electric',buffer_capacity='100MJ',usage_priority='primary-output',output_flow_limit='100MW',input_flow_limit='0W'},energy_production='100MW',energy_usage='0W',picture={filename='__core__/graphics/empty.png',width=1,height=1}}}

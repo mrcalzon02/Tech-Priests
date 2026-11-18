@@ -1,0 +1,146 @@
+{
+  "stage": "CONSTRUCTION_CANDIDATE_NO_RUNTIME_PROMOTION",
+  "prototype": "large-void-fusion-thruster",
+  "native_footprint": [
+    4,
+    4
+  ],
+  "direction": "fixed north only",
+  "axes": {
+    "X": "right",
+    "Y": "toward deck/front",
+    "Z": "up"
+  },
+  "unit_scale": 1,
+  "placement_origin": [
+    0,
+    0,
+    0
+  ],
+  "deck_plane_z": 0,
+  "deck_mount_centers": [
+    [
+      -1.649999976158142,
+      0.2800000011920929,
+      0.0
+    ],
+    [
+      -1.649999976158142,
+      1.159999966621399,
+      0.0
+    ],
+    [
+      1.649999976158142,
+      0.2800000011920929,
+      0.0
+    ],
+    [
+      1.649999976158142,
+      1.159999966621399,
+      0.0
+    ],
+    [
+      -0.8999999761581421,
+      1.7799999713897705,
+      0.0
+    ],
+    [
+      0.8999999761581421,
+      1.7799999713897705,
+      0.0
+    ]
+  ],
+  "visible_fluid_ports": [],
+  "declared_physical_electric_connector": null,
+  "reference": {
+    "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tech-priests_src\\graphics\\entity\\void-fusion-thruster\\void-fusion-thruster-wide-idle.png",
+    "sha256": "3b7b6d743220a516fcfae11162b9ad2e5cff713338f5f7c549664c260a35df16"
+  },
+  "emitter_reference": {
+    "path": "C:\\Users\\Admin\\AppData\\Local\\Temp\\codex-clipboard-4c56f180-de0c-4c9c-b642-8fb95cfd6d36.png",
+    "sha256": "51653135eeb298c4cbb6936b0d85faef5ddded231c790752682f80de44470e4f"
+  },
+  "surface_plan": {
+    "armor": {
+      "region": "segmented armor blocks on each dish tier, shoulder fittings and skull backing plinths",
+      "finish": "blackened cast iron with broad graphite faces and shallow edge scoring",
+      "direction": "plate borders follow individual armor-panel UVs",
+      "wear": "sparse bronze-exposed border abrasion, no all-over stripes"
+    },
+    "cast": {
+      "region": "four-foot portal chassis, open Noctilith cage and thick dished electrode stage bodies",
+      "finish": "mottled dark gunmetal casting",
+      "direction": "fine stipple on frames; circumferential machining along dished stage UVs",
+      "wear": "edge polishing on actual bevels; recessed dish interiors stay dark"
+    },
+    "bronze": {
+      "region": "flange rings, emblem and fastener seats",
+      "finish": "aged warm bronze with radial machining",
+      "direction": "circumferential lathe UV u, axial UV v",
+      "wear": "restrained polished ring lips"
+    },
+    "copper": {
+      "region": "paired induction windings",
+      "finish": "insulated oxidized copper",
+      "direction": "linear winding texture along each helical cable",
+      "wear": "fine longitudinal draw marks; dark joints"
+    },
+    "ceramic": {
+      "region": "lateral induction tower isolators, inter-dish electrode standoffs and central emitter insulator",
+      "finish": "warm grey refractory ceramic",
+      "direction": "circumferential rib seams",
+      "wear": "local mottling and fine crazing"
+    },
+    "skull": {
+      "region": "two winged cog seals at the upper and lower casing",
+      "finish": "aged bronze casting over supplied unchanged DGordillo low-poly skull",
+      "direction": "original donor UV and sculpt normal preserved",
+      "wear": "fine casting mottling; no remesh or anatomical substitution"
+    },
+    "rock": {
+      "region": "three independent visibly irregular Noctilith chunks",
+      "finish": "black pitted stone, matte fracture faces",
+      "direction": "part-specific faceted rock surfaces",
+      "wear": "sharp fracture relief and sparse green energized fissures; not metal armor"
+    },
+    "green": {
+      "region": "Noctilith fractures, energized contacts and aft field collars",
+      "finish": "quintessential Necron green electrical/field emission",
+      "direction": "fractures follow actual irregular rock edge chains",
+      "wear": "contained electric field; no chemical combustion or heat interpretation"
+    }
+  },
+  "source_script_sha256": "8d0c0b6fa76a72233f05926aa89f61affd9044fae3ac99a8779ced88970714a8",
+  "design_authority": "Electrified NOCTILITH ROCKS crammed into mechanically stabilized CAGES; megawatts dumped in; quintessential NECRON GREEN glow; spatial ionic trails and space-time distortion move the ship.",
+  "emitter_authority": "Recognizable thick armored segmented stacked dish tiers, stepping inward toward the lower central projecting emitter tip, banded bolted rims and radial braces. Attached owner reference supersedes the same-diameter thin ring plan. Separate dished stages, not a continuous chemical bell.",
+  "mechanical_intent": "irregular Noctilith rocks held in an open stabilized wide cage; thick separately dished segmented armored tiers step inward to a projecting emitter tip",
+  "legacy_superseded": "closed cassette/pressure vessel, chemical bell and same-diameter thin ring stack are superseded",
+  "not_claimed": [
+    "final appearance acceptance",
+    "native camera registration",
+    "working animation",
+    "spatial ionic trails or space-time distortion integrated in game",
+    "full sprites",
+    "runtime import",
+    "propulsion validation"
+  ],
+  "refinement_stage": "V11 bounded one-bay/one-root artistic pilot",
+  "repair_receipt": "repair-receipt.json",
+  "repair_script_sha256": "b0fed09b0cb9867095dbcc0401e4279e4a992e505e2801fb4c982e97ffee1ef2",
+  "current_native_sha256": "740a28848cdf1ee4997932e344d0387f902a33373cf97ca96a3ee6940cd21a3f",
+  "current_glb_sha256": "1a137ab6350ac5ab6a9dc5e93aab253988ab51fdff7fb380eeae52dc12947cd0",
+  "current_source_sha256": "22ea19c088b939bd0b81fa7b2cd2bf73545fd1651670f79a825f72b38aac5e78",
+  "refinement_receipt": "refinement-receipt.json",
+  "pilot_receipt": "pilot-receipt.json",
+  "current_stage": "PROPORTIONS_PILOT_NOT_PROMOTED_REQUIRES_ACTUAL_CANONICAL_VIEW_AND_FIT_CHECKS",
+  "pipette_requests": "pipette-requests.json",
+  "source_lowering_m": 1.25,
+  "technical_validation": [
+    "export-inspection.json",
+    "power-bay-validation.json"
+  ],
+  "mineral_material_receipt": "mineral-materials.json",
+  "capture_geometry": "capture-source-geometry.json",
+  "native_art_promotion": false,
+  "core_station_scale": 1.65
+}

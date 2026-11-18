@@ -1,0 +1,142 @@
+{
+  "status": "PASS_NATIVE_FORE_SUPPORTED_EDGE_MOUNTS_FLIGHT_DYNAMIC_POWER_AND_EXACT_RELOAD",
+  "engine": "Factorio 2.1.24 build 87808, Steam win64",
+  "rows": [
+    {
+      "name": "hydrogen-thruster",
+      "passed": true,
+      "placement_legal": true,
+      "movement": true
+    },
+    {
+      "name": "thetazine-thruster",
+      "passed": true,
+      "placement_legal": true,
+      "movement": true
+    },
+    {
+      "name": "void-fusion-thruster",
+      "passed": true,
+      "placement_legal": true,
+      "movement": true,
+      "unpowered_refusal": true,
+      "powered_service": true,
+      "power_cut_refusal": true,
+      "power_recovery": true,
+      "sink_replaced": true,
+      "native_cycle": true,
+      "power_bounds": true,
+      "significant_variation": true,
+      "minimum_power_watts": 6171157.411455284,
+      "maximum_power_watts": 17681295.032367375
+    },
+    {
+      "name": "large-void-fusion-thruster",
+      "passed": true,
+      "placement_legal": true,
+      "movement": true,
+      "unpowered_refusal": true,
+      "powered_service": true,
+      "power_cut_refusal": true,
+      "power_recovery": true,
+      "sink_replaced": true,
+      "native_cycle": true,
+      "power_bounds": true,
+      "significant_variation": true,
+      "minimum_power_watts": 6981558.400953378,
+      "maximum_power_watts": 16721559.3196775
+    }
+  ],
+  "saved_tick": 1500,
+  "compared_tick": 1560,
+  "exact_continuous_reload_match": true,
+  "source_files_bound": 5437,
+  "current_key_source_hashes": {
+    "prototypes/compatibility/space-age.lua": "552f13dd5c7d70edd85e4f74ad8eda619a22ea34249892eed5c571d382ddb49f",
+    "prototypes/compatibility/thruster-mounting-visuals.lua": "4112368519c640b79ffbe5660a6a80cea0291147de651aa5c1f13fd76e483896",
+    "scripts/core/efficiency_economy_0595.lua": "bb01ea11fa82484c5f02dda2bd837b1280b7ca52d423d23a47fafc2631545034",
+    "scripts/core/efficiency_economy_0596.lua": "7e0720910fcb3e626806981ee774cc339a43bfed7bc1cecf2fd90319b2ba408a",
+    "scripts/core/void_fusion_operation.lua": "493741097327ef5b16aacb6541928251cc08c2629b02872bda4bce859b9f7f12",
+    "scripts/generated/control_legacy_part_001.lua": "cf8bc54bdb04e9afc861fb682474ae66aa4ef3e8e54982d9aac95732aa32cee1",
+    "scripts/generated/control_legacy_part_002.lua": "8c98025ceac1cf735d6b1d69ea768d8c6832e644d81e99e61d327defa6a6d7f3",
+    "scripts/generated/control_legacy_part_004.lua": "d37208ed9014f05acaf94314821f952bb0311ceb44fd656509add4e80d9a23d9"
+  },
+  "placement_probes": {},
+  "native_cuts_local_y": {
+    "void-fusion-thruster": 0.5,
+    "large-void-fusion-thruster": 1
+  },
+  "flight_fixture": "flight_low.lua",
+  "surrounding_ledge_guard": {
+    "enabled": true,
+    "narrow_fore_foundation": "Three columns for the core and surrounding cheek-brace landings",
+    "missing_side_landing_refused": true,
+    "nominal_core_snap_grids": {
+      "narrow": [
+        1,
+        9
+      ],
+      "wide": [
+        4,
+        4
+      ]
+    }
+  },
+  "model_contract": "Source edge Y=0, +Y fore, -Y aft, about half physical axial envelope over space. Only fore anchors touch deck. Model/sprite registration must map that source edge to the quantized native cuts; nominal rows are not the fraction of physical structure on deck.",
+  "registration_gate": "New authored models are not installed as native sprites yet; their source-to-native camera/shift must still be measured against the legal deck cut. This receipt proves ordinary native edge placement and operation, not final new-art fitting.",
+  "server_shutdown": "The private loopback test server was stopped after the CRC-verified completed autosave; normal profiles were untouched.",
+  "evidence": {
+    "user-data/script-output/thruster-resume/native-results.json": {
+      "sha256": "768e976cbefebfd5c8a08680598b78407480ed39c64636f472aaf522ec34f5cf",
+      "bytes": 265947
+    },
+    "user-data/script-output/thruster-resume/continuous-results.json": {
+      "sha256": "5c6c56f8481798531c046b3f84e430606b50d30b3cb5a16fcebe1f1aa1f54ac4",
+      "bytes": 263809
+    },
+    "user-data/script-output/thruster-resume/reload-results.json": {
+      "sha256": "5c6c56f8481798531c046b3f84e430606b50d30b3cb5a16fcebe1f1aa1f54ac4",
+      "bytes": 263809
+    },
+    "user-data/saves/_autosave-thruster-resume-complete.zip": {
+      "sha256": "10662890c246953fe7e734cdaf95cfc948a39d7125fc5ec0c093f8bc39d6bd45",
+      "bytes": 835414
+    },
+    "source-binding.json": {
+      "sha256": "33e48d5a529c8e790a977f6e517573c5d5b5402e6f26e52567f78cec872eaf23",
+      "bytes": 713067
+    },
+    "mounting-source-binding.json": {
+      "sha256": "6adf6662570c9bc0e20c8ac608638d7be2a8ff7fbcbcd127598c08c722efca75",
+      "bytes": 306
+    },
+    "create.log": {
+      "sha256": "2266cfd415efb175001492f024ec68fc401213bd6b0a776146236707b98e2fe7",
+      "bytes": 54298
+    },
+    "test.log": {
+      "sha256": "b7f108f079975001c9121db8b7416e4c9cce9f2b302b2016072f978b86d080a2",
+      "bytes": 54703
+    },
+    "server.log": {
+      "sha256": "be3858714028090fe152aa8dba7c24f6089d1457aed8b270ef7ed358b4c7481b",
+      "bytes": 55343
+    },
+    "reload.log": {
+      "sha256": "ace89096793345edd0c961eb269af4fe82ec97fc98cfb2b0ab899f6ca20ab575",
+      "bytes": 54309
+    },
+    "mods/thruster-resume-proof/control.lua": {
+      "sha256": "d84fbddbb06e24fb2f3312c9783e7fd3bd7a4d56157df21cf3e2fa8a36b9d124",
+      "bytes": 10470
+    },
+    "mods/thruster-resume-proof/data.lua": {
+      "sha256": "7713a331cb6696734b607b1e2d9e01007aba53def483c9834e75dd2c97a04569",
+      "bytes": 579
+    },
+    "mods/thruster-resume-proof/data-final-fixes.lua": {
+      "sha256": "487acfd15853ebc6af70e431cef81dba6ada0874a5cc84216dee83f192e5f1ee",
+      "bytes": 62
+    }
+  }
+}

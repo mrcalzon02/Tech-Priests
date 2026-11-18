@@ -1,0 +1,11 @@
+{
+  "region": "Bounded native U-bay integration well, retaining original24support parts",
+  "interior": "Nonemissive matte charcoal coated lining, fine isotropic manufacturing grain, highroughness dielectric exportedPBR",
+  "boundaries": "Welded U-pan side rims and separate fore backwall at measured receiving cut planes; no entire platform surface",
+  "geometry": "AllnewgeometryY>=0,strict|X|<1.4,Z<0; floor below actualforebody by>=80mm",
+  "maps": {
+    "wide-bay-v16-basecolor.png": "5b4447621f19c8ff1ce6e1d1b371621f127c7b7ac3f02b81755535484a164064",
+    "wide-bay-v16-normal.png": "5ed47b2b481caa851096c34e53297e2582b18aa0e599b46c484cdba45c575411",
+    "wide-bay-v16-orm.png": "31cfd8edbc251394e0cfa1e1034a17d902e3038efaff47b180114b01588843f9"
+  }
+}

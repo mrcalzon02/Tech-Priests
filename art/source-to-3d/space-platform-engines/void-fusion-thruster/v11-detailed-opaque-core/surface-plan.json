@@ -1,0 +1,3838 @@
+{
+  "status": "CURRENT_V11_MATERIAL_PLAN_INDEX_NO_SURFACE_CHANGES",
+  "source_blend_sha256": "61e9a02667e2c6124fbd738adfb48fb3b4180ba9b59da86165117b0a76b28d4d",
+  "glb_sha256": "2b1f7164dc6df970aef9c9f1367bf8cf30f82ba3471d1eb9fcf6e84821d3d137",
+  "source_contract_sha256": "2e2dc9e4057b0f8150726021ef5923dfdad9ce886d1e015c4444b76cba801f43",
+  "exact_material_bindings": "canonical-packed-source-audit.json",
+  "notes": "Current material regions already authored in immutable source. Earlier authored_refinement surface constants and finish_repair mineral bake records are historical; bounded_mineral_pass is the current mineral override. New closed receiver cover bake supersedes earlier cover geometry bake.",
+  "current_mineral_bakes": {
+    "status": "ALL_SEVEN_BAKED_ACTUAL_COLD_EXPORT_VIEWED_ROOT_CLEARED_CAPTURE_STAGE",
+    "reference_receipt_sha256": "9a89fd36f0367d96df98857f66389711c815f64e846908f9b3339f51bd1a41bf",
+    "bakes": [
+      {
+        "label": "V09 Noctilith 00",
+        "size": [
+          768,
+          768
+        ],
+        "meshes": [
+          "V04 retained noctilith blackrock 00"
+        ],
+        "triangles": 974,
+        "coverage_with_gutter": 0.4677073160807292,
+        "baked_channels": [
+          "basecolor",
+          "metalrough",
+          "normal",
+          "grain",
+          "crushed",
+          "pressure",
+          "emission"
+        ],
+        "decoded_map_semantic_checks": [
+          {
+            "channel": "basecolor",
+            "decoded_rgb_min": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "decoded_rgb_max": [
+              0.4117647409439087,
+              0.572549045085907,
+              0.2823529541492462
+            ],
+            "decoded_rgb_mean": [
+              0.08329346776008606,
+              0.13256491720676422,
+              0.0563264824450016
+            ],
+            "nonblank_expected": true
+          },
+          {
+            "channel": "metalrough",
+            "decoded_rgb_min": [
+              1.0,
+              0.6196078658103943,
+              0.0
+            ],
+            "decoded_rgb_max": [
+              1.0,
+              0.988235354423523,
+              0.0313725508749485
+            ],
+            "decoded_rgb_mean": [
+              1.0,
+              0.8525081872940063,
+              0.0046707456931471825
+            ],
+            "nonblank_expected": true
+          },
+          {
+            "channel": "normal",
+            "decoded_rgb_min": [
+              0.40392160415649414,
+              0.40392160415649414,
+              0.988235354423523
+            ],
+            "decoded_rgb_max": [
+              0.5960784554481506,
+              0.5921568870544434,
+              1.0
+            ],
+            "decoded_rgb_mean": [
+              0.500380277633667,
+              0.500288724899292,
+              0.9999287724494934
+            ],
+            "nonblank_expected": true
+          },
+          {
+            "channel": "grain",
+            "decoded_rgb_min": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "decoded_rgb_max": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "decoded_rgb_mean": [
+              0.23181074857711792,
+              0.23181074857711792,
+              0.23181074857711792
+            ],
+            "nonblank_expected": true
+          },
+          {
+            "channel": "crushed",
+            "decoded_rgb_min": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "decoded_rgb_max": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "decoded_rgb_mean": [
+              0.2027171403169632,
+              0.2027171403169632,
+              0.2027171403169632
+            ],
+            "nonblank_expected": true
+          },
+          {
+            "channel": "pressure",
+            "decoded_rgb_min": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "decoded_rgb_max": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "decoded_rgb_mean": [
+              0.011145244352519512,
+              0.011145244352519512,
+              0.011145244352519512
+            ],
+            "nonblank_expected": true
+          },
+          {
+            "channel": "emission",
+            "decoded_rgb_min": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "decoded_rgb_max": [
+              0.02352941408753395,
+              1.0,
+              0.0
+            ],
+            "decoded_rgb_mean": [
+              0.0025939412880688906,
+              0.10746828466653824,
+              0.0
+            ],
+            "nonblank_expected": true
+          }
+        ],
+        "atlas_uv_bounds": [
+          [
+            0.0024651574049833276
+          ],
+          [
+            0.9969730771642962
+          ]
+        ],
+        "method": "Actual unique geometry UV atlas; world-scale mineral/tool grain, real sharp/chipped edge mask, current measured receiver contact-pressure mask; tangent-space normal derived analytically in each actual triangle UV frame. Not a uniform tiled stripe shader."
+      },
+      {
+        "label": "V09 Noctilith 01",
+        "size": [
+          768,
+          768
+        ],
+        "meshes": [
+          "V04 retained noctilith blackrock 01"
+        ],
+        "triangles": 896,
+        "coverage_with_gutter": 0.4522026909722222,
+        "baked_channels": [
+          "basecolor",
+          "metalrough",
+          "normal",
+          "grain",
+          "crushed",
+          "pressure",
+          "emission"
+        ],
+        "decoded_map_semantic_checks": [
+          {
+            "channel": "basecolor",
+            "decoded_rgb_min": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "decoded_rgb_max": [
+              0.3960784673690796,
+              0.5490196347236633,
+              0.2705882489681244
+            ],
+            "decoded_rgb_mean": [
+              0.075106680393219,
+              0.11923490464687347,
+              0.050461992621421814
+            ],
+            "nonblank_expected": true
+          },
+          {
+            "channel": "metalrough",
+            "decoded_rgb_min": [
+              1.0,
+              0.6196078658103943,
+              0.0
+            ],
+            "decoded_rgb_max": [
+              1.0,
+              0.988235354423523,
+              0.0313725508749485
+            ],
+            "decoded_rgb_mean": [
+              1.0,
+              0.8542865514755249,
+              0.004555090330541134
+            ],
+            "nonblank_expected": true
+          },
+          {
+            "channel": "normal",
+            "decoded_rgb_min": [
+              0.4078431725502014,
+              0.40000003576278687,
+              0.988235354423523
+            ],
+            "decoded_rgb_max": [
+              0.6000000238418579,
+              0.5960784554481506,
+              1.0
+            ],
+            "decoded_rgb_mean": [
+              0.5003842115402222,
+              0.500357985496521,
+              0.9999299645423889
+            ],
+            "nonblank_expected": true
+          },
+          {
+            "channel": "grain",
+            "decoded_rgb_min": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "decoded_rgb_max": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "decoded_rgb_mean": [
+              0.22582180798053741,
+              0.22582180798053741,
+              0.22582180798053741
+            ],
+            "nonblank_expected": true
+          },
+          {
+            "channel": "crushed",
+            "decoded_rgb_min": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "decoded_rgb_max": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "decoded_rgb_mean": [
+              0.19444064795970917,
+              0.19444064795970917,
+              0.19444064795970917
+            ],
+            "nonblank_expected": true
+          },
+          {
+            "channel": "pressure",
+            "decoded_rgb_min": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "decoded_rgb_max": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "decoded_rgb_mean": [
+              0.01061522588133812,
+              0.01061522588133812,
+              0.01061522588133812
+            ],
+            "nonblank_expected": true
+          },
+          {
+            "channel": "emission",
+            "decoded_rgb_min": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "decoded_rgb_max": [
+              0.02352941408753395,
+              1.0,
+              0.0
+            ],
+            "decoded_rgb_mean": [
+              0.0025365608744323254,
+              0.10511020570993423,
+              0.0
+            ],
+            "nonblank_expected": true
+          }
+        ],
+        "atlas_uv_bounds": [
+          [
+            0.0024395965352568528
+          ],
+          [
+            0.9972618992766846
+          ]
+        ],
+        "method": "Actual unique geometry UV atlas; world-scale mineral/tool grain, real sharp/chipped edge mask, current measured receiver contact-pressure mask; tangent-space normal derived analytically in each actual triangle UV frame. Not a uniform tiled stripe shader."
+      },
+      {
+        "label": "V09 Noctilith 02",
+        "size": [
+          768,
+          768
+        ],
+        "meshes": [
+          "V04 retained noctilith blackrock 02"
+        ],
+        "triangles": 914,
+        "coverage_with_gutter": 0.4567820231119792,
+        "baked_channels": [
+          "basecolor",
+          "metalrough",
+          "normal",
+          "grain",
+          "crushed",
+          "pressure",
+          "emission"
+        ],
+        "decoded_map_semantic_checks": [
+          {
+            "channel": "basecolor",
+            "decoded_rgb_min": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "decoded_rgb_max": [
+              0.3921568989753723,
+              0.5568627715110779,
+              0.2705882489681244
+            ],
+            "decoded_rgb_mean": [
+              0.07704243063926697,
+              0.120298832654953,
+              0.0519966296851635
+            ],
+            "nonblank_expected": true
+          },
+          {
+            "channel": "metalrough",
+            "decoded_rgb_min": [
+              1.0,
+              0.6196078658103943,
+              0.0
+            ],
+            "decoded_rgb_max": [
+              1.0,
+              0.988235354423523,
+              0.0313725508749485
+            ],
+            "decoded_rgb_mean": [
+              1.0,
+              0.8549163341522217,
+              0.004470991902053356
+            ],
+            "nonblank_expected": true
+          },
+          {
+            "channel": "normal",
+            "decoded_rgb_min": [
+              0.4078431725502014,
+              0.4078431725502014,
+              0.988235354423523
+            ],
+            "decoded_rgb_max": [
+              0.5960784554481506,
+              0.6000000238418579,
+              1.0
+            ],
+            "decoded_rgb_mean": [
+              0.5003997683525085,
+              0.5004244446754456,
+              0.9999295473098755
+            ],
+            "nonblank_expected": true
+          },
+          {
+            "channel": "grain",
+            "decoded_rgb_min": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "decoded_rgb_max": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "decoded_rgb_mean": [
+              0.22832053899765015,
+              0.22832053899765015,
+              0.22832053899765015
+            ],
+            "nonblank_expected": true
+          },
+          {
+            "channel": "crushed",
+            "decoded_rgb_min": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "decoded_rgb_max": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "decoded_rgb_mean": [
+              0.20349399745464325,
+              0.20349399745464325,
+              0.20349399745464325
+            ],
+            "nonblank_expected": true
+          },
+          {
+            "channel": "pressure",
+            "decoded_rgb_min": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "decoded_rgb_max": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "decoded_rgb_mean": [
+              0.010820554569363594,
+              0.010820554569363594,
+              0.010820554569363594
+            ],
+            "nonblank_expected": true
+          },
+          {
+            "channel": "emission",
+            "decoded_rgb_min": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "decoded_rgb_max": [
+              0.02352941408753395,
+              1.0,
+              0.0
+            ],
+            "decoded_rgb_mean": [
+              0.002486860379576683,
+              0.10303165018558502,
+              0.0
+            ],
+            "nonblank_expected": true
+          }
+        ],
+        "atlas_uv_bounds": [
+          [
+            0.0024887237142592463
+          ],
+          [
+            0.9950871253405309
+          ]
+        ],
+        "method": "Actual unique geometry UV atlas; world-scale mineral/tool grain, real sharp/chipped edge mask, current measured receiver contact-pressure mask; tangent-space normal derived analytically in each actual triangle UV frame. Not a uniform tiled stripe shader."
+      },
+      {
+        "label": "V09 Noctilith 03",
+        "size": [
+          768,
+          768
+        ],
+        "meshes": [
+          "V04 retained noctilith blackrock 03"
+        ],
+        "triangles": 896,
+        "coverage_with_gutter": 0.4583638509114583,
+        "baked_channels": [
+          "basecolor",
+          "metalrough",
+          "normal",
+          "grain",
+          "crushed",
+          "pressure",
+          "emission"
+        ],
+        "decoded_map_semantic_checks": [
+          {
+            "channel": "basecolor",
+            "decoded_rgb_min": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "decoded_rgb_max": [
+              0.3960784673690796,
+              0.5490196347236633,
+              0.27450981736183167
+            ],
+            "decoded_rgb_mean": [
+              0.07170719653367996,
+              0.11077991127967834,
+              0.04847436025738716
+            ],
+            "nonblank_expected": true
+          },
+          {
+            "channel": "metalrough",
+            "decoded_rgb_min": [
+              1.0,
+              0.6196078658103943,
+              0.0
+            ],
+            "decoded_rgb_max": [
+              1.0,
+              0.988235354423523,
+              0.0313725508749485
+            ],
+            "decoded_rgb_mean": [
+              1.0,
+              0.8538156747817993,
+              0.004611583426594734
+            ],
+            "nonblank_expected": true
+          },
+          {
+            "channel": "normal",
+            "decoded_rgb_min": [
+              0.40392160415649414,
+              0.40392160415649414,
+              0.988235354423523
+            ],
+            "decoded_rgb_max": [
+              0.6000000238418579,
+              0.6000000238418579,
+              1.0
+            ],
+            "decoded_rgb_mean": [
+              0.5003384947776794,
+              0.5001813769340515,
+              0.9999362230300903
+            ],
+            "nonblank_expected": true
+          },
+          {
+            "channel": "grain",
+            "decoded_rgb_min": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "decoded_rgb_max": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "decoded_rgb_mean": [
+              0.2297615259885788,
+              0.2297615259885788,
+              0.2297615259885788
+            ],
+            "nonblank_expected": true
+          },
+          {
+            "channel": "crushed",
+            "decoded_rgb_min": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "decoded_rgb_max": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "decoded_rgb_mean": [
+              0.19404153525829315,
+              0.19404153525829315,
+              0.19404153525829315
+            ],
+            "nonblank_expected": true
+          },
+          {
+            "channel": "pressure",
+            "decoded_rgb_min": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "decoded_rgb_max": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "decoded_rgb_mean": [
+              0.010196083225309849,
+              0.010196083225309849,
+              0.010196083225309849
+            ],
+            "nonblank_expected": true
+          },
+          {
+            "channel": "emission",
+            "decoded_rgb_min": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "decoded_rgb_max": [
+              0.02352941408753395,
+              1.0,
+              0.0
+            ],
+            "decoded_rgb_mean": [
+              0.002577232662588358,
+              0.10669618844985962,
+              0.0
+            ],
+            "nonblank_expected": true
+          }
+        ],
+        "atlas_uv_bounds": [
+          [
+            0.0023837599569445167
+          ],
+          [
+            0.9961345920656849
+          ]
+        ],
+        "method": "Actual unique geometry UV atlas; world-scale mineral/tool grain, real sharp/chipped edge mask, current measured receiver contact-pressure mask; tangent-space normal derived analytically in each actual triangle UV frame. Not a uniform tiled stripe shader."
+      },
+      {
+        "label": "V09 Noctilith 04",
+        "size": [
+          768,
+          768
+        ],
+        "meshes": [
+          "V04 retained noctilith blackrock 04"
+        ],
+        "triangles": 872,
+        "coverage_with_gutter": 0.4627956814236111,
+        "baked_channels": [
+          "basecolor",
+          "metalrough",
+          "normal",
+          "grain",
+          "crushed",
+          "pressure",
+          "emission"
+        ],
+        "decoded_map_semantic_checks": [
+          {
+            "channel": "basecolor",
+            "decoded_rgb_min": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "decoded_rgb_max": [
+              0.3960784673690796,
+              0.5490196347236633,
+              0.2705882489681244
+            ],
+            "decoded_rgb_mean": [
+              0.07367993891239166,
+              0.11699864268302917,
+              0.049334704875946045
+            ],
+            "nonblank_expected": true
+          },
+          {
+            "channel": "metalrough",
+            "decoded_rgb_min": [
+              1.0,
+              0.6196078658103943,
+              0.0
+            ],
+            "decoded_rgb_max": [
+              1.0,
+              0.988235354423523,
+              0.0313725508749485
+            ],
+            "decoded_rgb_mean": [
+              1.0,
+              0.8517467379570007,
+              0.00479505117982626
+            ],
+            "nonblank_expected": true
+          },
+          {
+            "channel": "normal",
+            "decoded_rgb_min": [
+              0.3921568989753723,
+              0.40392160415649414,
+              0.988235354423523
+            ],
+            "decoded_rgb_max": [
+              0.5960784554481506,
+              0.5843137502670288,
+              1.0
+            ],
+            "decoded_rgb_mean": [
+              0.500364363193512,
+              0.5003219246864319,
+              0.9999182820320129
+            ],
+            "nonblank_expected": true
+          },
+          {
+            "channel": "grain",
+            "decoded_rgb_min": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "decoded_rgb_max": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "decoded_rgb_mean": [
+              0.22831779718399048,
+              0.22831779718399048,
+              0.22831779718399048
+            ],
+            "nonblank_expected": true
+          },
+          {
+            "channel": "crushed",
+            "decoded_rgb_min": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "decoded_rgb_max": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "decoded_rgb_mean": [
+              0.19462710618972778,
+              0.19462710618972778,
+              0.19462710618972778
+            ],
+            "nonblank_expected": true
+          },
+          {
+            "channel": "pressure",
+            "decoded_rgb_min": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "decoded_rgb_max": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "decoded_rgb_mean": [
+              0.008747419342398643,
+              0.008747419342398643,
+              0.008747419342398643
+            ],
+            "nonblank_expected": true
+          },
+          {
+            "channel": "emission",
+            "decoded_rgb_min": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "decoded_rgb_max": [
+              0.02352941408753395,
+              1.0,
+              0.0
+            ],
+            "decoded_rgb_mean": [
+              0.002654331736266613,
+              0.1099865734577179,
+              0.0
+            ],
+            "nonblank_expected": true
+          }
+        ],
+        "atlas_uv_bounds": [
+          [
+            0.002302823393677452
+          ],
+          [
+            0.9974402557624118
+          ]
+        ],
+        "method": "Actual unique geometry UV atlas; world-scale mineral/tool grain, real sharp/chipped edge mask, current measured receiver contact-pressure mask; tangent-space normal derived analytically in each actual triangle UV frame. Not a uniform tiled stripe shader."
+      },
+      {
+        "label": "V09 Noctilith 05",
+        "size": [
+          768,
+          768
+        ],
+        "meshes": [
+          "V04 retained noctilith blackrock 05"
+        ],
+        "triangles": 896,
+        "coverage_with_gutter": 0.4632195366753472,
+        "baked_channels": [
+          "basecolor",
+          "metalrough",
+          "normal",
+          "grain",
+          "crushed",
+          "pressure",
+          "emission"
+        ],
+        "decoded_map_semantic_checks": [
+          {
+            "channel": "basecolor",
+            "decoded_rgb_min": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "decoded_rgb_max": [
+              0.38431376218795776,
+              0.501960813999176,
+              0.25882354378700256
+            ],
+            "decoded_rgb_mean": [
+              0.06516994535923004,
+              0.09890823811292648,
+              0.043442606925964355
+            ],
+            "nonblank_expected": true
+          },
+          {
+            "channel": "metalrough",
+            "decoded_rgb_min": [
+              1.0,
+              0.6196078658103943,
+              0.0
+            ],
+            "decoded_rgb_max": [
+              1.0,
+              0.988235354423523,
+              0.0313725508749485
+            ],
+            "decoded_rgb_mean": [
+              1.0,
+              0.8520556092262268,
+              0.004722005687654018
+            ],
+            "nonblank_expected": true
+          },
+          {
+            "channel": "normal",
+            "decoded_rgb_min": [
+              0.40000003576278687,
+              0.4078431725502014,
+              0.988235354423523
+            ],
+            "decoded_rgb_max": [
+              0.6000000238418579,
+              0.6039215922355652,
+              1.0
+            ],
+            "decoded_rgb_mean": [
+              0.5003432035446167,
+              0.5003414750099182,
+              0.9999340772628784
+            ],
+            "nonblank_expected": true
+          },
+          {
+            "channel": "grain",
+            "decoded_rgb_min": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "decoded_rgb_max": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "decoded_rgb_mean": [
+              0.22999483346939087,
+              0.22999483346939087,
+              0.22999483346939087
+            ],
+            "nonblank_expected": true
+          },
+          {
+            "channel": "crushed",
+            "decoded_rgb_min": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "decoded_rgb_max": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "decoded_rgb_mean": [
+              0.20584124326705933,
+              0.20584124326705933,
+              0.20584124326705933
+            ],
+            "nonblank_expected": true
+          },
+          {
+            "channel": "pressure",
+            "decoded_rgb_min": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "decoded_rgb_max": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "decoded_rgb_mean": [
+              0.010659012012183666,
+              0.010659012012183666,
+              0.010659012012183666
+            ],
+            "nonblank_expected": true
+          },
+          {
+            "channel": "emission",
+            "decoded_rgb_min": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "decoded_rgb_max": [
+              0.02352941408753395,
+              1.0,
+              0.0
+            ],
+            "decoded_rgb_mean": [
+              0.0026329224929213524,
+              0.10908398032188416,
+              0.0
+            ],
+            "nonblank_expected": true
+          }
+        ],
+        "atlas_uv_bounds": [
+          [
+            0.0025010832591075456
+          ],
+          [
+            0.9963568768993848
+          ]
+        ],
+        "method": "Actual unique geometry UV atlas; world-scale mineral/tool grain, real sharp/chipped edge mask, current measured receiver contact-pressure mask; tangent-space normal derived analytically in each actual triangle UV frame. Not a uniform tiled stripe shader."
+      },
+      {
+        "label": "V09 Noctilith 06",
+        "size": [
+          768,
+          768
+        ],
+        "meshes": [
+          "V04 retained noctilith blackrock 06"
+        ],
+        "triangles": 834,
+        "coverage_with_gutter": 0.4495154486762153,
+        "baked_channels": [
+          "basecolor",
+          "metalrough",
+          "normal",
+          "grain",
+          "crushed",
+          "pressure",
+          "emission"
+        ],
+        "decoded_map_semantic_checks": [
+          {
+            "channel": "basecolor",
+            "decoded_rgb_min": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "decoded_rgb_max": [
+              0.38431376218795776,
+              0.5764706134796143,
+              0.26274511218070984
+            ],
+            "decoded_rgb_mean": [
+              0.07344090193510056,
+              0.11391080915927887,
+              0.049375832080841064
+            ],
+            "nonblank_expected": true
+          },
+          {
+            "channel": "metalrough",
+            "decoded_rgb_min": [
+              1.0,
+              0.6196078658103943,
+              0.0
+            ],
+            "decoded_rgb_max": [
+              1.0,
+              0.988235354423523,
+              0.0313725508749485
+            ],
+            "decoded_rgb_mean": [
+              1.0,
+              0.8547284603118896,
+              0.004513922147452831
+            ],
+            "nonblank_expected": true
+          },
+          {
+            "channel": "normal",
+            "decoded_rgb_min": [
+              0.3960784673690796,
+              0.4078431725502014,
+              0.988235354423523
+            ],
+            "decoded_rgb_max": [
+              0.5960784554481506,
+              0.5960784554481506,
+              1.0
+            ],
+            "decoded_rgb_mean": [
+              0.5004005432128906,
+              0.5004068613052368,
+              0.9999310970306396
+            ],
+            "nonblank_expected": true
+          },
+          {
+            "channel": "grain",
+            "decoded_rgb_min": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "decoded_rgb_max": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "decoded_rgb_mean": [
+              0.22589370608329773,
+              0.22589370608329773,
+              0.22589370608329773
+            ],
+            "nonblank_expected": true
+          },
+          {
+            "channel": "crushed",
+            "decoded_rgb_min": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "decoded_rgb_max": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "decoded_rgb_mean": [
+              0.20248426496982574,
+              0.20248426496982574,
+              0.20248426496982574
+            ],
+            "nonblank_expected": true
+          },
+          {
+            "channel": "pressure",
+            "decoded_rgb_min": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "decoded_rgb_max": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "decoded_rgb_mean": [
+              0.00828094407916069,
+              0.00828094407916069,
+              0.00828094407916069
+            ],
+            "nonblank_expected": true
+          },
+          {
+            "channel": "emission",
+            "decoded_rgb_min": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "decoded_rgb_max": [
+              0.02352941408753395,
+              1.0,
+              0.0
+            ],
+            "decoded_rgb_mean": [
+              0.002538665197789669,
+              0.10503299534320831,
+              0.0
+            ],
+            "nonblank_expected": true
+          }
+        ],
+        "atlas_uv_bounds": [
+          [
+            0.0026938024045503766
+          ],
+          [
+            0.9956419730117744
+          ]
+        ],
+        "method": "Actual unique geometry UV atlas; world-scale mineral/tool grain, real sharp/chipped edge mask, current measured receiver contact-pressure mask; tangent-space normal derived analytically in each actual triangle UV frame. Not a uniform tiled stripe shader."
+      }
+    ],
+    "geometry_policy": "No rock vertex/face changes; actual geometry/contacts/energized recess assignments preserved",
+    "interpretation": "Pinned original blackstone icons and legacy cold/run rock windows: broad angular charcoal/olive mineral face mottling, granular chipped faces, sparse subdued ochre nonmetal fracture web; separate recessed green energized faces. Not gray asteroid family or metallic brass."
+  },
+  "current_cage_dish_nonmineral_bakes": [
+    {
+      "label": "cantilever-frame-authored",
+      "size": [
+        768,
+        768
+      ],
+      "meshes": [
+        "V04 cage longitudinal crown rail -1",
+        "V04 cage longitudinal crown rail 1",
+        "V06 rock00 cast jaw-to-keel web -1",
+        "V06 rock00 cast jaw-to-keel web 1",
+        "V06 rock01 cast jaw-to-keel web -1",
+        "V06 rock01 cast jaw-to-keel web 1",
+        "V06 rock02 cast jaw-to-keel web -1",
+        "V06 rock02 cast jaw-to-keel web 1",
+        "V06 rock03 cast jaw-to-keel web -1",
+        "V06 rock03 cast jaw-to-keel web 1",
+        "V06 rock04 cast jaw-to-keel web -1",
+        "V06 rock04 cast jaw-to-keel web 1",
+        "V06 rock05 cast jaw-to-keel web -1",
+        "V06 rock05 cast jaw-to-keel web 1",
+        "V06 rock06 cast jaw-to-keel web -1",
+        "V06 rock06 cast jaw-to-keel web 1",
+        "Continuous structural keel -1",
+        "V07 fore channel closed forged termination -1",
+        "V05 grounded dish stack support -1",
+        "Continuous structural keel 1",
+        "V07 fore channel closed forged termination 1",
+        "V05 grounded dish stack support 1",
+        "V06 rock00 shaped compression jaw -1",
+        "V06 rock00 shaped compression jaw 1",
+        "V06 rock01 shaped compression jaw -1",
+        "V06 rock01 shaped compression jaw 1",
+        "V06 rock02 shaped compression jaw -1",
+        "V06 rock02 shaped compression jaw 1",
+        "V06 rock03 shaped compression jaw -1",
+        "V06 rock03 shaped compression jaw 1",
+        "V06 rock04 shaped compression jaw -1",
+        "V06 rock04 shaped compression jaw 1",
+        "V06 rock05 shaped compression jaw -1",
+        "V06 rock05 shaped compression jaw 1",
+        "V06 rock06 shaped compression jaw -1",
+        "V06 rock06 shaped compression jaw 1",
+        "Coil support -1 00 -3.19",
+        "Coil support -1 00 -2.81",
+        "Coil support -1 01 -2.04",
+        "Coil support -1 01 -1.6600000000000001",
+        "Coil support -1 02 -0.8700000000000001",
+        "Coil support -1 02 -0.49000000000000005",
+        "Coil support -1 03 0.49000000000000005",
+        "Coil support -1 03 0.8700000000000001",
+        "Coil support -1 04 1.6600000000000001",
+        "Coil support -1 04 2.04",
+        "Coil support -1 05 2.81",
+        "Coil support -1 05 3.19",
+        "Coil support 1 00 -3.19",
+        "Coil support 1 00 -2.81",
+        "Coil support 1 01 -2.04",
+        "Coil support 1 01 -1.6600000000000001",
+        "Coil support 1 02 -0.8700000000000001",
+        "Coil support 1 02 -0.49000000000000005",
+        "Coil support 1 03 0.49000000000000005",
+        "Coil support 1 03 0.8700000000000001",
+        "Coil support 1 04 1.6600000000000001",
+        "Coil support 1 04 2.04",
+        "Coil support 1 05 2.81",
+        "Coil support 1 05 3.19"
+      ],
+      "triangles": 2424,
+      "coverage_with_gutter": 0.6653323703342013,
+      "baked_channels": [
+        "basecolor",
+        "metalrough",
+        "normal",
+        "grain",
+        "crushed",
+        "pressure",
+        "emission"
+      ],
+      "decoded_map_semantic_checks": [
+        {
+          "channel": "basecolor",
+          "decoded_rgb_min": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "decoded_rgb_max": [
+            0.14901961386203766,
+            0.16862745583057404,
+            0.15294118225574493
+          ],
+          "decoded_rgb_mean": [
+            0.056261878460645676,
+            0.06334393471479416,
+            0.06008315831422806
+          ],
+          "nonblank_expected": true
+        },
+        {
+          "channel": "metalrough",
+          "decoded_rgb_min": [
+            1.0,
+            0.41568630933761597,
+            0.0
+          ],
+          "decoded_rgb_max": [
+            1.0,
+            0.9019608497619629,
+            0.7686275243759155
+          ],
+          "decoded_rgb_mean": [
+            1.0,
+            0.6947883367538452,
+            0.501586377620697
+          ],
+          "nonblank_expected": true
+        },
+        {
+          "channel": "normal",
+          "decoded_rgb_min": [
+            0.49803924560546875,
+            0.49803924560546875,
+            1.0
+          ],
+          "decoded_rgb_max": [
+            0.501960813999176,
+            0.501960813999176,
+            1.0
+          ],
+          "decoded_rgb_mean": [
+            0.5001747608184814,
+            0.5001723766326904,
+            1.0
+          ],
+          "nonblank_expected": true
+        },
+        {
+          "channel": "grain",
+          "decoded_rgb_min": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "decoded_rgb_max": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "decoded_rgb_mean": [
+            0.33247578144073486,
+            0.33247578144073486,
+            0.33247578144073486
+          ],
+          "nonblank_expected": true
+        },
+        {
+          "channel": "crushed",
+          "decoded_rgb_min": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "decoded_rgb_max": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "decoded_rgb_mean": [
+            0.14121946692466736,
+            0.14121946692466736,
+            0.14121946692466736
+          ],
+          "nonblank_expected": true
+        },
+        {
+          "channel": "pressure",
+          "decoded_rgb_min": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "decoded_rgb_max": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "decoded_rgb_mean": [
+            0.010873118415474892,
+            0.010873118415474892,
+            0.010873118415474892
+          ],
+          "nonblank_expected": true
+        },
+        {
+          "channel": "emission",
+          "decoded_rgb_min": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "decoded_rgb_max": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "decoded_rgb_mean": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "nonblank_expected": false
+        }
+      ],
+      "atlas_uv_bounds": [
+        [
+          0.0007592405312410404
+        ],
+        [
+          0.999240759468759
+        ]
+      ],
+      "method": "Actual unique geometry UV atlas; world-scale mineral/tool grain, real sharp/chipped edge mask, current measured receiver contact-pressure mask; tangent-space normal derived analytically in each actual triangle UV frame. Not a uniform tiled stripe shader."
+    },
+    {
+      "label": "dish-carrier-authored",
+      "size": [
+        768,
+        768
+      ],
+      "meshes": [
+        "V05 tier00 segmented rim armor00",
+        "V05 tier00 segmented rim armor01",
+        "V05 tier00 segmented rim armor02",
+        "V05 tier00 segmented rim armor03",
+        "V05 tier00 segmented rim armor04",
+        "V05 tier00 segmented rim armor05",
+        "V05 tier00 segmented rim armor06",
+        "V05 tier00 segmented rim armor07",
+        "V05 tier00 segmented rim armor08",
+        "V05 tier00 segmented rim armor09",
+        "V05 tier00 segmented rim armor10",
+        "V05 tier00 segmented rim armor11",
+        "V05 tier01 segmented rim armor00",
+        "V05 tier01 segmented rim armor01",
+        "V05 tier01 segmented rim armor02",
+        "V05 tier01 segmented rim armor03",
+        "V05 tier01 segmented rim armor04",
+        "V05 tier01 segmented rim armor05",
+        "V05 tier01 segmented rim armor06",
+        "V05 tier01 segmented rim armor07",
+        "V05 tier01 segmented rim armor08",
+        "V05 tier01 segmented rim armor09",
+        "V05 tier01 segmented rim armor10",
+        "V05 tier01 segmented rim armor11",
+        "V05 tier02 segmented rim armor00",
+        "V05 tier02 segmented rim armor01",
+        "V05 tier02 segmented rim armor02",
+        "V05 tier02 segmented rim armor03",
+        "V05 tier02 segmented rim armor04",
+        "V05 tier02 segmented rim armor05",
+        "V05 tier02 segmented rim armor06",
+        "V05 tier02 segmented rim armor07",
+        "V05 tier02 segmented rim armor08",
+        "V05 tier02 segmented rim armor09",
+        "V05 tier02 segmented rim armor10",
+        "V05 tier02 segmented rim armor11",
+        "V07 tier00 flared cast radial web00",
+        "V07 tier00 flared cast radial web01",
+        "V07 tier00 flared cast radial web02",
+        "V07 tier00 flared cast radial web03",
+        "V07 tier00 flared cast radial web04",
+        "V07 tier00 flared cast radial web05",
+        "V07 tier00 flared cast radial web06",
+        "V07 tier00 flared cast radial web07",
+        "V07 tier01 flared cast radial web00",
+        "V07 tier01 flared cast radial web01",
+        "V07 tier01 flared cast radial web02",
+        "V07 tier01 flared cast radial web03",
+        "V07 tier01 flared cast radial web04",
+        "V07 tier01 flared cast radial web05",
+        "V07 tier01 flared cast radial web06",
+        "V07 tier01 flared cast radial web07",
+        "V07 tier02 flared cast radial web00",
+        "V07 tier02 flared cast radial web01",
+        "V07 tier02 flared cast radial web02",
+        "V07 tier02 flared cast radial web03",
+        "V07 tier02 flared cast radial web04",
+        "V07 tier02 flared cast radial web05",
+        "V07 tier02 flared cast radial web06",
+        "V07 tier02 flared cast radial web07",
+        "V07 retained electrode curved root flange",
+        "V07 carrier cast gripping finger00",
+        "V07 carrier cast gripping finger01",
+        "V07 carrier cast gripping finger02",
+        "V07 carrier cast gripping finger03"
+      ],
+      "triangles": 9952,
+      "coverage_with_gutter": 0.4877726236979167,
+      "baked_channels": [
+        "basecolor",
+        "metalrough",
+        "normal",
+        "grain",
+        "crushed",
+        "pressure",
+        "emission"
+      ],
+      "decoded_map_semantic_checks": [
+        {
+          "channel": "basecolor",
+          "decoded_rgb_min": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "decoded_rgb_max": [
+            0.32549020648002625,
+            0.2352941334247589,
+            0.19215688109397888
+          ],
+          "decoded_rgb_mean": [
+            0.06301232427358627,
+            0.060815222561359406,
+            0.04575531184673309
+          ],
+          "nonblank_expected": true
+        },
+        {
+          "channel": "metalrough",
+          "decoded_rgb_min": [
+            1.0,
+            0.35686275362968445,
+            0.0
+          ],
+          "decoded_rgb_max": [
+            1.0,
+            0.9019608497619629,
+            0.8117647767066956
+          ],
+          "decoded_rgb_mean": [
+            1.0,
+            0.7332625389099121,
+            0.36659467220306396
+          ],
+          "nonblank_expected": true
+        },
+        {
+          "channel": "normal",
+          "decoded_rgb_min": [
+            0.49803924560546875,
+            0.49803924560546875,
+            1.0
+          ],
+          "decoded_rgb_max": [
+            0.501960813999176,
+            0.501960813999176,
+            1.0
+          ],
+          "decoded_rgb_mean": [
+            0.5001933574676514,
+            0.5001868009567261,
+            1.0
+          ],
+          "nonblank_expected": true
+        },
+        {
+          "channel": "grain",
+          "decoded_rgb_min": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "decoded_rgb_max": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "decoded_rgb_mean": [
+            0.2455337792634964,
+            0.2455337792634964,
+            0.2455337792634964
+          ],
+          "nonblank_expected": true
+        },
+        {
+          "channel": "crushed",
+          "decoded_rgb_min": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "decoded_rgb_max": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "decoded_rgb_mean": [
+            0.19411583244800568,
+            0.19411583244800568,
+            0.19411583244800568
+          ],
+          "nonblank_expected": true
+        },
+        {
+          "channel": "pressure",
+          "decoded_rgb_min": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "decoded_rgb_max": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "decoded_rgb_mean": [
+            0.032439786940813065,
+            0.032439786940813065,
+            0.032439786940813065
+          ],
+          "nonblank_expected": true
+        },
+        {
+          "channel": "emission",
+          "decoded_rgb_min": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "decoded_rgb_max": [
+            0.02352941408753395,
+            0.988235354423523,
+            0.0
+          ],
+          "decoded_rgb_mean": [
+            0.0002419298398308456,
+            0.010021534748375416,
+            0.0
+          ],
+          "nonblank_expected": true
+        }
+      ],
+      "atlas_uv_bounds": [
+        [
+          0.0015752125452085778
+        ],
+        [
+          0.9981992621518049
+        ]
+      ],
+      "method": "Actual unique geometry UV atlas; world-scale mineral/tool grain, real sharp/chipped edge mask, current measured receiver contact-pressure mask; tangent-space normal derived analytically in each actual triangle UV frame. Not a uniform tiled stripe shader."
+    }
+  ],
+  "current_pan_and_plate_bake": {
+    "label": "V11 receiver-pan-constructed-surfaces",
+    "size": [
+      768,
+      768
+    ],
+    "meshes": [
+      "V10 retained core pan floor 00",
+      "V10 retained core pan floor 01",
+      "V10 retained core pan floor 02",
+      "V10 retained core pan floor 03",
+      "V10 retained core pan floor 04",
+      "V10 retained core pan floor 05",
+      "V10 retained core pan floor 06",
+      "V10 core pan raised side return -1",
+      "V10 core pan raised side return 1",
+      "V10 substantial split receiver cover 00",
+      "V10 substantial split receiver cover 01",
+      "V10 substantial split receiver cover 02",
+      "V10 substantial split receiver cover 03",
+      "V10 substantial split receiver cover 04",
+      "V10 substantial split receiver cover 05",
+      "V11 receiver00 retained inspection cover",
+      "V11 receiver01 retained inspection cover",
+      "V11 receiver02 retained inspection cover",
+      "V11 receiver03 retained inspection cover",
+      "V11 receiver04 retained inspection cover",
+      "V11 receiver05 retained inspection cover"
+    ],
+    "triangles": 7507,
+    "coverage_with_gutter": 0.6234842936197916,
+    "baked_channels": [
+      "basecolor",
+      "metalrough",
+      "normal",
+      "grain",
+      "crushed",
+      "pressure",
+      "emission"
+    ],
+    "decoded_map_semantic_checks": [
+      {
+        "channel": "basecolor",
+        "decoded_rgb_min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "decoded_rgb_max": [
+          0.4235294461250305,
+          0.4431372880935669,
+          0.4274510145187378
+        ],
+        "decoded_rgb_mean": [
+          0.14169439673423767,
+          0.15212786197662354,
+          0.13874642550945282
+        ],
+        "nonblank_expected": true
+      },
+      {
+        "channel": "metalrough",
+        "decoded_rgb_min": [
+          1.0,
+          0.4235294461250305,
+          0.0
+        ],
+        "decoded_rgb_max": [
+          1.0,
+          0.9019608497619629,
+          0.7686275243759155
+        ],
+        "decoded_rgb_mean": [
+          1.0,
+          0.7444651126861572,
+          0.4489783048629761
+        ],
+        "nonblank_expected": true
+      },
+      {
+        "channel": "normal",
+        "decoded_rgb_min": [
+          0.4901961088180542,
+          0.4901961088180542,
+          1.0
+        ],
+        "decoded_rgb_max": [
+          0.5098039507865906,
+          0.5058823823928833,
+          1.0
+        ],
+        "decoded_rgb_mean": [
+          0.5003126263618469,
+          0.5003121495246887,
+          1.0
+        ],
+        "nonblank_expected": true
+      },
+      {
+        "channel": "grain",
+        "decoded_rgb_min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "decoded_rgb_max": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "decoded_rgb_mean": [
+          0.3115389943122864,
+          0.3115389943122864,
+          0.3115389943122864
+        ],
+        "nonblank_expected": true
+      },
+      {
+        "channel": "crushed",
+        "decoded_rgb_min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "decoded_rgb_max": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "decoded_rgb_mean": [
+          0.08584447205066681,
+          0.08584447205066681,
+          0.08584447205066681
+        ],
+        "nonblank_expected": true
+      },
+      {
+        "channel": "pressure",
+        "decoded_rgb_min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "decoded_rgb_max": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "decoded_rgb_mean": [
+          0.0026526013389229774,
+          0.0026526013389229774,
+          0.0026526013389229774
+        ],
+        "nonblank_expected": true
+      },
+      {
+        "channel": "emission",
+        "decoded_rgb_min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "decoded_rgb_max": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "decoded_rgb_mean": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "nonblank_expected": false
+      }
+    ],
+    "atlas_uv_bounds": [
+      [
+        0.0006437937252121842
+      ],
+      [
+        0.9990736773247775
+      ]
+    ],
+    "method": "Actual unique geometry UV atlas; world-scale mineral/tool grain, real sharp/chipped edge mask, current measured receiver contact-pressure mask; tangent-space normal derived analytically in each actual triangle UV frame. Not a uniform tiled stripe shader."
+  },
+  "current_closed_receiver_cover_bake": {
+    "label": "V11 closed-receiver-machining-surfaces",
+    "size": [
+      768,
+      768
+    ],
+    "meshes": [
+      "V10 substantial split receiver cover 00",
+      "V10 substantial split receiver cover 01",
+      "V10 substantial split receiver cover 02",
+      "V10 substantial split receiver cover 03",
+      "V10 substantial split receiver cover 04",
+      "V10 substantial split receiver cover 05"
+    ],
+    "triangles": 5860,
+    "coverage_with_gutter": 0.5972035725911459,
+    "baked_channels": [
+      "basecolor",
+      "metalrough",
+      "normal",
+      "grain",
+      "crushed",
+      "pressure",
+      "emission"
+    ],
+    "decoded_map_semantic_checks": [
+      {
+        "channel": "basecolor",
+        "decoded_rgb_min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "decoded_rgb_max": [
+          0.3176470696926117,
+          0.33725491166114807,
+          0.2980392277240753
+        ],
+        "decoded_rgb_mean": [
+          0.1367427557706833,
+          0.14668798446655273,
+          0.13331176340579987
+        ],
+        "nonblank_expected": true
+      },
+      {
+        "channel": "metalrough",
+        "decoded_rgb_min": [
+          1.0,
+          0.5098039507865906,
+          0.0
+        ],
+        "decoded_rgb_max": [
+          1.0,
+          0.9019608497619629,
+          0.7215686440467834
+        ],
+        "decoded_rgb_mean": [
+          1.0,
+          0.7523831129074097,
+          0.42972785234451294
+        ],
+        "nonblank_expected": true
+      },
+      {
+        "channel": "normal",
+        "decoded_rgb_min": [
+          0.4941176772117615,
+          0.4941176772117615,
+          1.0
+        ],
+        "decoded_rgb_max": [
+          0.5058823823928833,
+          0.5098039507865906,
+          1.0
+        ],
+        "decoded_rgb_mean": [
+          0.500251293182373,
+          0.5002513527870178,
+          1.0
+        ],
+        "nonblank_expected": true
+      },
+      {
+        "channel": "grain",
+        "decoded_rgb_min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "decoded_rgb_max": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "decoded_rgb_mean": [
+          0.30027735233306885,
+          0.30027735233306885,
+          0.30027735233306885
+        ],
+        "nonblank_expected": true
+      },
+      {
+        "channel": "crushed",
+        "decoded_rgb_min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "decoded_rgb_max": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "decoded_rgb_mean": [
+          0.11350253224372864,
+          0.11350253224372864,
+          0.11350253224372864
+        ],
+        "nonblank_expected": true
+      },
+      {
+        "channel": "pressure",
+        "decoded_rgb_min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "decoded_rgb_max": [
+          0.988235354423523,
+          0.988235354423523,
+          0.988235354423523
+        ],
+        "decoded_rgb_mean": [
+          0.0009544304339215159,
+          0.0009544304339215159,
+          0.0009544304339215159
+        ],
+        "nonblank_expected": true
+      },
+      {
+        "channel": "emission",
+        "decoded_rgb_min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "decoded_rgb_max": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "decoded_rgb_mean": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "nonblank_expected": false
+      }
+    ],
+    "atlas_uv_bounds": [
+      [
+        0.0010096181562005437
+      ],
+      [
+        0.998931635585437
+      ]
+    ],
+    "method": "Actual unique geometry UV atlas; world-scale mineral/tool grain, real sharp/chipped edge mask, current measured receiver contact-pressure mask; tangent-space normal derived analytically in each actual triangle UV frame. Not a uniform tiled stripe shader."
+  },
+  "packed_image_count": 74,
+  "used_material_count": 36,
+  "material_bindings": [
+    {
+      "name": "cantilever-frame-authored authored surfaces",
+      "users": 60,
+      "use_nodes": true,
+      "images": [
+        {
+          "name": "cantilever-frame-authored basecolor",
+          "colorspace": "sRGB"
+        },
+        {
+          "name": "cantilever-frame-authored metalrough",
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "cantilever-frame-authored normal",
+          "colorspace": "Non-Color"
+        }
+      ],
+      "principled": {
+        "Base Color": {
+          "linked": true,
+          "default": [
+            0.800000011920929,
+            0.800000011920929,
+            0.800000011920929,
+            1.0
+          ]
+        },
+        "Metallic": {
+          "linked": true,
+          "default": 0.0
+        },
+        "Roughness": {
+          "linked": true,
+          "default": 0.5
+        },
+        "Emission Color": {
+          "linked": false,
+          "default": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "Emission Strength": {
+          "linked": false,
+          "default": 0.0
+        }
+      }
+    },
+    {
+      "name": "cantilever-frame-authored energized recess",
+      "users": 60,
+      "use_nodes": true,
+      "images": [
+        {
+          "name": "cantilever-frame-authored basecolor",
+          "colorspace": "sRGB"
+        },
+        {
+          "name": "cantilever-frame-authored metalrough",
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "cantilever-frame-authored normal",
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "cantilever-frame-authored emission",
+          "colorspace": "sRGB"
+        }
+      ],
+      "principled": {
+        "Base Color": {
+          "linked": true,
+          "default": [
+            0.800000011920929,
+            0.800000011920929,
+            0.800000011920929,
+            1.0
+          ]
+        },
+        "Metallic": {
+          "linked": true,
+          "default": 0.0
+        },
+        "Roughness": {
+          "linked": true,
+          "default": 0.5
+        },
+        "Emission Color": {
+          "linked": true,
+          "default": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "Emission Strength": {
+          "linked": false,
+          "default": 7.0
+        }
+      }
+    },
+    {
+      "name": "dish-carrier-authored authored surfaces",
+      "users": 65,
+      "use_nodes": true,
+      "images": [
+        {
+          "name": "dish-carrier-authored basecolor",
+          "colorspace": "sRGB"
+        },
+        {
+          "name": "dish-carrier-authored metalrough",
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "dish-carrier-authored normal",
+          "colorspace": "Non-Color"
+        }
+      ],
+      "principled": {
+        "Base Color": {
+          "linked": true,
+          "default": [
+            0.800000011920929,
+            0.800000011920929,
+            0.800000011920929,
+            1.0
+          ]
+        },
+        "Metallic": {
+          "linked": true,
+          "default": 0.0
+        },
+        "Roughness": {
+          "linked": true,
+          "default": 0.5
+        },
+        "Emission Color": {
+          "linked": false,
+          "default": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "Emission Strength": {
+          "linked": false,
+          "default": 0.0
+        }
+      }
+    },
+    {
+      "name": "dish-carrier-authored energized recess",
+      "users": 41,
+      "use_nodes": true,
+      "images": [
+        {
+          "name": "dish-carrier-authored basecolor",
+          "colorspace": "sRGB"
+        },
+        {
+          "name": "dish-carrier-authored metalrough",
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "dish-carrier-authored normal",
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "dish-carrier-authored emission",
+          "colorspace": "sRGB"
+        }
+      ],
+      "principled": {
+        "Base Color": {
+          "linked": true,
+          "default": [
+            0.800000011920929,
+            0.800000011920929,
+            0.800000011920929,
+            1.0
+          ]
+        },
+        "Metallic": {
+          "linked": true,
+          "default": 0.0
+        },
+        "Roughness": {
+          "linked": true,
+          "default": 0.5
+        },
+        "Emission Color": {
+          "linked": true,
+          "default": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "Emission Strength": {
+          "linked": false,
+          "default": 7.0
+        }
+      }
+    },
+    {
+      "name": "Enclosed copper induction winding",
+      "users": 354,
+      "use_nodes": true,
+      "images": [
+        {
+          "name": "Enclosed copper induction winding-basecolor",
+          "colorspace": "sRGB"
+        },
+        {
+          "name": "Enclosed copper induction winding-metalrough",
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "Enclosed copper induction winding-normal",
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "V06 copper basecolor",
+          "colorspace": "sRGB"
+        },
+        {
+          "name": "V06 copper metalrough",
+          "colorspace": "Non-Color"
+        }
+      ],
+      "principled": {
+        "Base Color": {
+          "linked": true,
+          "default": [
+            0.800000011920929,
+            0.800000011920929,
+            0.800000011920929,
+            1.0
+          ]
+        },
+        "Metallic": {
+          "linked": true,
+          "default": 0.0
+        },
+        "Roughness": {
+          "linked": true,
+          "default": 0.5
+        },
+        "Emission Color": {
+          "linked": false,
+          "default": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "Emission Strength": {
+          "linked": false,
+          "default": 0.0
+        }
+      }
+    },
+    {
+      "name": "Glazed olive insulator",
+      "users": 89,
+      "use_nodes": true,
+      "images": [
+        {
+          "name": "Glazed olive insulator-basecolor",
+          "colorspace": "sRGB"
+        },
+        {
+          "name": "Glazed olive insulator-metalrough",
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "Glazed olive insulator-normal",
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "V06 ceramic basecolor",
+          "colorspace": "sRGB"
+        },
+        {
+          "name": "V06 ceramic metalrough",
+          "colorspace": "Non-Color"
+        }
+      ],
+      "principled": {
+        "Base Color": {
+          "linked": true,
+          "default": [
+            0.800000011920929,
+            0.800000011920929,
+            0.800000011920929,
+            1.0
+          ]
+        },
+        "Metallic": {
+          "linked": true,
+          "default": 0.0
+        },
+        "Roughness": {
+          "linked": true,
+          "default": 0.5
+        },
+        "Emission Color": {
+          "linked": false,
+          "default": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "Emission Strength": {
+          "linked": false,
+          "default": 0.0
+        }
+      }
+    },
+    {
+      "name": "Noctilith energized fracture Necron green",
+      "users": 13,
+      "use_nodes": true,
+      "images": [],
+      "principled": {
+        "Base Color": {
+          "linked": false,
+          "default": [
+            0.014999999664723873,
+            0.25,
+            0.0010000000474974513,
+            1.0
+          ]
+        },
+        "Metallic": {
+          "linked": false,
+          "default": 0.11999999731779099
+        },
+        "Roughness": {
+          "linked": false,
+          "default": 0.28999999165534973
+        },
+        "Emission Color": {
+          "linked": false,
+          "default": [
+            0.05999999865889549,
+            1.0,
+            0.0010000000474974513,
+            1.0
+          ]
+        },
+        "Emission Strength": {
+          "linked": false,
+          "default": 7.0
+        }
+      }
+    },
+    {
+      "name": "Satin iron load rails",
+      "users": 44,
+      "use_nodes": true,
+      "images": [
+        {
+          "name": "Satin iron load rails-basecolor",
+          "colorspace": "sRGB"
+        },
+        {
+          "name": "Satin iron load rails-metalrough",
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "Satin iron load rails-normal",
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "V06 rail basecolor",
+          "colorspace": "sRGB"
+        },
+        {
+          "name": "V06 rail metalrough",
+          "colorspace": "Non-Color"
+        }
+      ],
+      "principled": {
+        "Base Color": {
+          "linked": true,
+          "default": [
+            0.800000011920929,
+            0.800000011920929,
+            0.800000011920929,
+            1.0
+          ]
+        },
+        "Metallic": {
+          "linked": true,
+          "default": 0.0
+        },
+        "Roughness": {
+          "linked": true,
+          "default": 0.5
+        },
+        "Emission Color": {
+          "linked": false,
+          "default": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "Emission Strength": {
+          "linked": false,
+          "default": 0.0
+        }
+      }
+    },
+    {
+      "name": "Spine blackened cast iron",
+      "users": 69,
+      "use_nodes": true,
+      "images": [
+        {
+          "name": "Spine blackened cast iron-basecolor",
+          "colorspace": "sRGB"
+        },
+        {
+          "name": "Spine blackened cast iron-metalrough",
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "Spine blackened cast iron-normal",
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "V06 hull basecolor",
+          "colorspace": "sRGB"
+        },
+        {
+          "name": "V06 hull metalrough",
+          "colorspace": "Non-Color"
+        }
+      ],
+      "principled": {
+        "Base Color": {
+          "linked": true,
+          "default": [
+            0.800000011920929,
+            0.800000011920929,
+            0.800000011920929,
+            1.0
+          ]
+        },
+        "Metallic": {
+          "linked": true,
+          "default": 0.0
+        },
+        "Roughness": {
+          "linked": true,
+          "default": 0.5
+        },
+        "Emission Color": {
+          "linked": false,
+          "default": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "Emission Strength": {
+          "linked": false,
+          "default": 0.0
+        }
+      }
+    },
+    {
+      "name": "V06 dark compressed ceramic contact pads",
+      "users": 26,
+      "use_nodes": true,
+      "images": [],
+      "principled": {
+        "Base Color": {
+          "linked": false,
+          "default": [
+            0.017999999225139618,
+            0.026000000536441803,
+            0.01899999938905239,
+            1.0
+          ]
+        },
+        "Metallic": {
+          "linked": false,
+          "default": 0.029999999329447746
+        },
+        "Roughness": {
+          "linked": false,
+          "default": 0.7200000286102295
+        },
+        "Emission Color": {
+          "linked": false,
+          "default": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "Emission Strength": {
+          "linked": false,
+          "default": 0.0
+        }
+      }
+    },
+    {
+      "name": "V09 Noctilith 00 authored surfaces",
+      "users": 1,
+      "use_nodes": true,
+      "images": [
+        {
+          "name": "V09 Noctilith 00 basecolor",
+          "colorspace": "sRGB"
+        },
+        {
+          "name": "V09 Noctilith 00 metalrough",
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "V09 Noctilith 00 normal",
+          "colorspace": "Non-Color"
+        }
+      ],
+      "principled": {
+        "Base Color": {
+          "linked": true,
+          "default": [
+            0.800000011920929,
+            0.800000011920929,
+            0.800000011920929,
+            1.0
+          ]
+        },
+        "Metallic": {
+          "linked": true,
+          "default": 0.0
+        },
+        "Roughness": {
+          "linked": true,
+          "default": 0.5
+        },
+        "Emission Color": {
+          "linked": false,
+          "default": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "Emission Strength": {
+          "linked": false,
+          "default": 0.0
+        }
+      }
+    },
+    {
+      "name": "V09 Noctilith 00 energized recess",
+      "users": 1,
+      "use_nodes": true,
+      "images": [
+        {
+          "name": "V09 Noctilith 00 basecolor",
+          "colorspace": "sRGB"
+        },
+        {
+          "name": "V09 Noctilith 00 metalrough",
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "V09 Noctilith 00 normal",
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "V09 Noctilith 00 emission",
+          "colorspace": "sRGB"
+        }
+      ],
+      "principled": {
+        "Base Color": {
+          "linked": true,
+          "default": [
+            0.800000011920929,
+            0.800000011920929,
+            0.800000011920929,
+            1.0
+          ]
+        },
+        "Metallic": {
+          "linked": true,
+          "default": 0.0
+        },
+        "Roughness": {
+          "linked": true,
+          "default": 0.5
+        },
+        "Emission Color": {
+          "linked": true,
+          "default": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "Emission Strength": {
+          "linked": false,
+          "default": 2.799999952316284
+        }
+      }
+    },
+    {
+      "name": "V09 Noctilith 01 authored surfaces",
+      "users": 1,
+      "use_nodes": true,
+      "images": [
+        {
+          "name": "V09 Noctilith 01 basecolor",
+          "colorspace": "sRGB"
+        },
+        {
+          "name": "V09 Noctilith 01 metalrough",
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "V09 Noctilith 01 normal",
+          "colorspace": "Non-Color"
+        }
+      ],
+      "principled": {
+        "Base Color": {
+          "linked": true,
+          "default": [
+            0.800000011920929,
+            0.800000011920929,
+            0.800000011920929,
+            1.0
+          ]
+        },
+        "Metallic": {
+          "linked": true,
+          "default": 0.0
+        },
+        "Roughness": {
+          "linked": true,
+          "default": 0.5
+        },
+        "Emission Color": {
+          "linked": false,
+          "default": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "Emission Strength": {
+          "linked": false,
+          "default": 0.0
+        }
+      }
+    },
+    {
+      "name": "V09 Noctilith 01 energized recess",
+      "users": 1,
+      "use_nodes": true,
+      "images": [
+        {
+          "name": "V09 Noctilith 01 basecolor",
+          "colorspace": "sRGB"
+        },
+        {
+          "name": "V09 Noctilith 01 metalrough",
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "V09 Noctilith 01 normal",
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "V09 Noctilith 01 emission",
+          "colorspace": "sRGB"
+        }
+      ],
+      "principled": {
+        "Base Color": {
+          "linked": true,
+          "default": [
+            0.800000011920929,
+            0.800000011920929,
+            0.800000011920929,
+            1.0
+          ]
+        },
+        "Metallic": {
+          "linked": true,
+          "default": 0.0
+        },
+        "Roughness": {
+          "linked": true,
+          "default": 0.5
+        },
+        "Emission Color": {
+          "linked": true,
+          "default": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "Emission Strength": {
+          "linked": false,
+          "default": 2.799999952316284
+        }
+      }
+    },
+    {
+      "name": "V09 Noctilith 02 authored surfaces",
+      "users": 1,
+      "use_nodes": true,
+      "images": [
+        {
+          "name": "V09 Noctilith 02 basecolor",
+          "colorspace": "sRGB"
+        },
+        {
+          "name": "V09 Noctilith 02 metalrough",
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "V09 Noctilith 02 normal",
+          "colorspace": "Non-Color"
+        }
+      ],
+      "principled": {
+        "Base Color": {
+          "linked": true,
+          "default": [
+            0.800000011920929,
+            0.800000011920929,
+            0.800000011920929,
+            1.0
+          ]
+        },
+        "Metallic": {
+          "linked": true,
+          "default": 0.0
+        },
+        "Roughness": {
+          "linked": true,
+          "default": 0.5
+        },
+        "Emission Color": {
+          "linked": false,
+          "default": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "Emission Strength": {
+          "linked": false,
+          "default": 0.0
+        }
+      }
+    },
+    {
+      "name": "V09 Noctilith 02 energized recess",
+      "users": 1,
+      "use_nodes": true,
+      "images": [
+        {
+          "name": "V09 Noctilith 02 basecolor",
+          "colorspace": "sRGB"
+        },
+        {
+          "name": "V09 Noctilith 02 metalrough",
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "V09 Noctilith 02 normal",
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "V09 Noctilith 02 emission",
+          "colorspace": "sRGB"
+        }
+      ],
+      "principled": {
+        "Base Color": {
+          "linked": true,
+          "default": [
+            0.800000011920929,
+            0.800000011920929,
+            0.800000011920929,
+            1.0
+          ]
+        },
+        "Metallic": {
+          "linked": true,
+          "default": 0.0
+        },
+        "Roughness": {
+          "linked": true,
+          "default": 0.5
+        },
+        "Emission Color": {
+          "linked": true,
+          "default": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "Emission Strength": {
+          "linked": false,
+          "default": 2.799999952316284
+        }
+      }
+    },
+    {
+      "name": "V09 Noctilith 03 authored surfaces",
+      "users": 1,
+      "use_nodes": true,
+      "images": [
+        {
+          "name": "V09 Noctilith 03 basecolor",
+          "colorspace": "sRGB"
+        },
+        {
+          "name": "V09 Noctilith 03 metalrough",
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "V09 Noctilith 03 normal",
+          "colorspace": "Non-Color"
+        }
+      ],
+      "principled": {
+        "Base Color": {
+          "linked": true,
+          "default": [
+            0.800000011920929,
+            0.800000011920929,
+            0.800000011920929,
+            1.0
+          ]
+        },
+        "Metallic": {
+          "linked": true,
+          "default": 0.0
+        },
+        "Roughness": {
+          "linked": true,
+          "default": 0.5
+        },
+        "Emission Color": {
+          "linked": false,
+          "default": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "Emission Strength": {
+          "linked": false,
+          "default": 0.0
+        }
+      }
+    },
+    {
+      "name": "V09 Noctilith 03 energized recess",
+      "users": 1,
+      "use_nodes": true,
+      "images": [
+        {
+          "name": "V09 Noctilith 03 basecolor",
+          "colorspace": "sRGB"
+        },
+        {
+          "name": "V09 Noctilith 03 metalrough",
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "V09 Noctilith 03 normal",
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "V09 Noctilith 03 emission",
+          "colorspace": "sRGB"
+        }
+      ],
+      "principled": {
+        "Base Color": {
+          "linked": true,
+          "default": [
+            0.800000011920929,
+            0.800000011920929,
+            0.800000011920929,
+            1.0
+          ]
+        },
+        "Metallic": {
+          "linked": true,
+          "default": 0.0
+        },
+        "Roughness": {
+          "linked": true,
+          "default": 0.5
+        },
+        "Emission Color": {
+          "linked": true,
+          "default": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "Emission Strength": {
+          "linked": false,
+          "default": 2.799999952316284
+        }
+      }
+    },
+    {
+      "name": "V09 Noctilith 04 authored surfaces",
+      "users": 1,
+      "use_nodes": true,
+      "images": [
+        {
+          "name": "V09 Noctilith 04 basecolor",
+          "colorspace": "sRGB"
+        },
+        {
+          "name": "V09 Noctilith 04 metalrough",
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "V09 Noctilith 04 normal",
+          "colorspace": "Non-Color"
+        }
+      ],
+      "principled": {
+        "Base Color": {
+          "linked": true,
+          "default": [
+            0.800000011920929,
+            0.800000011920929,
+            0.800000011920929,
+            1.0
+          ]
+        },
+        "Metallic": {
+          "linked": true,
+          "default": 0.0
+        },
+        "Roughness": {
+          "linked": true,
+          "default": 0.5
+        },
+        "Emission Color": {
+          "linked": false,
+          "default": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "Emission Strength": {
+          "linked": false,
+          "default": 0.0
+        }
+      }
+    },
+    {
+      "name": "V09 Noctilith 04 energized recess",
+      "users": 1,
+      "use_nodes": true,
+      "images": [
+        {
+          "name": "V09 Noctilith 04 basecolor",
+          "colorspace": "sRGB"
+        },
+        {
+          "name": "V09 Noctilith 04 metalrough",
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "V09 Noctilith 04 normal",
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "V09 Noctilith 04 emission",
+          "colorspace": "sRGB"
+        }
+      ],
+      "principled": {
+        "Base Color": {
+          "linked": true,
+          "default": [
+            0.800000011920929,
+            0.800000011920929,
+            0.800000011920929,
+            1.0
+          ]
+        },
+        "Metallic": {
+          "linked": true,
+          "default": 0.0
+        },
+        "Roughness": {
+          "linked": true,
+          "default": 0.5
+        },
+        "Emission Color": {
+          "linked": true,
+          "default": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "Emission Strength": {
+          "linked": false,
+          "default": 2.799999952316284
+        }
+      }
+    },
+    {
+      "name": "V09 Noctilith 05 authored surfaces",
+      "users": 1,
+      "use_nodes": true,
+      "images": [
+        {
+          "name": "V09 Noctilith 05 basecolor",
+          "colorspace": "sRGB"
+        },
+        {
+          "name": "V09 Noctilith 05 metalrough",
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "V09 Noctilith 05 normal",
+          "colorspace": "Non-Color"
+        }
+      ],
+      "principled": {
+        "Base Color": {
+          "linked": true,
+          "default": [
+            0.800000011920929,
+            0.800000011920929,
+            0.800000011920929,
+            1.0
+          ]
+        },
+        "Metallic": {
+          "linked": true,
+          "default": 0.0
+        },
+        "Roughness": {
+          "linked": true,
+          "default": 0.5
+        },
+        "Emission Color": {
+          "linked": false,
+          "default": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "Emission Strength": {
+          "linked": false,
+          "default": 0.0
+        }
+      }
+    },
+    {
+      "name": "V09 Noctilith 05 energized recess",
+      "users": 1,
+      "use_nodes": true,
+      "images": [
+        {
+          "name": "V09 Noctilith 05 basecolor",
+          "colorspace": "sRGB"
+        },
+        {
+          "name": "V09 Noctilith 05 metalrough",
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "V09 Noctilith 05 normal",
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "V09 Noctilith 05 emission",
+          "colorspace": "sRGB"
+        }
+      ],
+      "principled": {
+        "Base Color": {
+          "linked": true,
+          "default": [
+            0.800000011920929,
+            0.800000011920929,
+            0.800000011920929,
+            1.0
+          ]
+        },
+        "Metallic": {
+          "linked": true,
+          "default": 0.0
+        },
+        "Roughness": {
+          "linked": true,
+          "default": 0.5
+        },
+        "Emission Color": {
+          "linked": true,
+          "default": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "Emission Strength": {
+          "linked": false,
+          "default": 2.799999952316284
+        }
+      }
+    },
+    {
+      "name": "V09 Noctilith 06 authored surfaces",
+      "users": 1,
+      "use_nodes": true,
+      "images": [
+        {
+          "name": "V09 Noctilith 06 basecolor",
+          "colorspace": "sRGB"
+        },
+        {
+          "name": "V09 Noctilith 06 metalrough",
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "V09 Noctilith 06 normal",
+          "colorspace": "Non-Color"
+        }
+      ],
+      "principled": {
+        "Base Color": {
+          "linked": true,
+          "default": [
+            0.800000011920929,
+            0.800000011920929,
+            0.800000011920929,
+            1.0
+          ]
+        },
+        "Metallic": {
+          "linked": true,
+          "default": 0.0
+        },
+        "Roughness": {
+          "linked": true,
+          "default": 0.5
+        },
+        "Emission Color": {
+          "linked": false,
+          "default": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "Emission Strength": {
+          "linked": false,
+          "default": 0.0
+        }
+      }
+    },
+    {
+      "name": "V09 Noctilith 06 energized recess",
+      "users": 1,
+      "use_nodes": true,
+      "images": [
+        {
+          "name": "V09 Noctilith 06 basecolor",
+          "colorspace": "sRGB"
+        },
+        {
+          "name": "V09 Noctilith 06 metalrough",
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "V09 Noctilith 06 normal",
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "V09 Noctilith 06 emission",
+          "colorspace": "sRGB"
+        }
+      ],
+      "principled": {
+        "Base Color": {
+          "linked": true,
+          "default": [
+            0.800000011920929,
+            0.800000011920929,
+            0.800000011920929,
+            1.0
+          ]
+        },
+        "Metallic": {
+          "linked": true,
+          "default": 0.0
+        },
+        "Roughness": {
+          "linked": true,
+          "default": 0.5
+        },
+        "Emission Color": {
+          "linked": true,
+          "default": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "Emission Strength": {
+          "linked": false,
+          "default": 2.799999952316284
+        }
+      }
+    },
+    {
+      "name": "V11 blackened cast iron guide receivers",
+      "users": 68,
+      "use_nodes": true,
+      "images": [],
+      "principled": {
+        "Base Color": {
+          "linked": false,
+          "default": [
+            0.03500000014901161,
+            0.0430000014603138,
+            0.03799999877810478,
+            1.0
+          ]
+        },
+        "Metallic": {
+          "linked": false,
+          "default": 0.6600000262260437
+        },
+        "Roughness": {
+          "linked": false,
+          "default": 0.6399999856948853
+        },
+        "Emission Color": {
+          "linked": false,
+          "default": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "Emission Strength": {
+          "linked": false,
+          "default": 0.0
+        }
+      }
+    },
+    {
+      "name": "V11 closed-receiver-machining-surfaces authored surfaces",
+      "users": 6,
+      "use_nodes": true,
+      "images": [
+        {
+          "name": "V11 closed-receiver-machining-surfaces basecolor",
+          "colorspace": "sRGB"
+        },
+        {
+          "name": "V11 closed-receiver-machining-surfaces metalrough",
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "V11 closed-receiver-machining-surfaces normal",
+          "colorspace": "Non-Color"
+        }
+      ],
+      "principled": {
+        "Base Color": {
+          "linked": true,
+          "default": [
+            0.800000011920929,
+            0.800000011920929,
+            0.800000011920929,
+            1.0
+          ]
+        },
+        "Metallic": {
+          "linked": true,
+          "default": 0.0
+        },
+        "Roughness": {
+          "linked": true,
+          "default": 0.5
+        },
+        "Emission Color": {
+          "linked": false,
+          "default": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "Emission Strength": {
+          "linked": false,
+          "default": 0.0
+        }
+      }
+    },
+    {
+      "name": "V11 closed-receiver-machining-surfaces energized recess",
+      "users": 6,
+      "use_nodes": true,
+      "images": [
+        {
+          "name": "V11 closed-receiver-machining-surfaces basecolor",
+          "colorspace": "sRGB"
+        },
+        {
+          "name": "V11 closed-receiver-machining-surfaces metalrough",
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "V11 closed-receiver-machining-surfaces normal",
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "V11 closed-receiver-machining-surfaces emission",
+          "colorspace": "sRGB"
+        }
+      ],
+      "principled": {
+        "Base Color": {
+          "linked": true,
+          "default": [
+            0.800000011920929,
+            0.800000011920929,
+            0.800000011920929,
+            1.0
+          ]
+        },
+        "Metallic": {
+          "linked": true,
+          "default": 0.0
+        },
+        "Roughness": {
+          "linked": true,
+          "default": 0.5
+        },
+        "Emission Color": {
+          "linked": true,
+          "default": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "Emission Strength": {
+          "linked": false,
+          "default": 7.0
+        }
+      }
+    },
+    {
+      "name": "V11 compressed ceramic bus guide sleeve",
+      "users": 34,
+      "use_nodes": true,
+      "images": [],
+      "principled": {
+        "Base Color": {
+          "linked": false,
+          "default": [
+            0.03799999877810478,
+            0.054999999701976776,
+            0.02199999988079071,
+            1.0
+          ]
+        },
+        "Metallic": {
+          "linked": false,
+          "default": 0.0
+        },
+        "Roughness": {
+          "linked": false,
+          "default": 0.7300000190734863
+        },
+        "Emission Color": {
+          "linked": false,
+          "default": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "Emission Strength": {
+          "linked": false,
+          "default": 0.0
+        }
+      }
+    },
+    {
+      "name": "V11 dark protective polymer clip",
+      "users": 34,
+      "use_nodes": true,
+      "images": [],
+      "principled": {
+        "Base Color": {
+          "linked": false,
+          "default": [
+            0.014999999664723873,
+            0.02500000037252903,
+            0.017000000923871994,
+            1.0
+          ]
+        },
+        "Metallic": {
+          "linked": false,
+          "default": 0.0
+        },
+        "Roughness": {
+          "linked": false,
+          "default": 0.7699999809265137
+        },
+        "Emission Color": {
+          "linked": false,
+          "default": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "Emission Strength": {
+          "linked": false,
+          "default": 0.0
+        }
+      }
+    },
+    {
+      "name": "V11 machined satin iron cover hardware",
+      "users": 124,
+      "use_nodes": true,
+      "images": [],
+      "principled": {
+        "Base Color": {
+          "linked": false,
+          "default": [
+            0.0949999988079071,
+            0.10499999672174454,
+            0.10000000149011612,
+            1.0
+          ]
+        },
+        "Metallic": {
+          "linked": false,
+          "default": 0.7799999713897705
+        },
+        "Roughness": {
+          "linked": false,
+          "default": 0.550000011920929
+        },
+        "Emission Color": {
+          "linked": false,
+          "default": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "Emission Strength": {
+          "linked": false,
+          "default": 0.0
+        }
+      }
+    },
+    {
+      "name": "V11 receiver split-cover compressed joint",
+      "users": 6,
+      "use_nodes": true,
+      "images": [],
+      "principled": {
+        "Base Color": {
+          "linked": false,
+          "default": [
+            0.00800000037997961,
+            0.012000000104308128,
+            0.008999999612569809,
+            1.0
+          ]
+        },
+        "Metallic": {
+          "linked": false,
+          "default": 0.0
+        },
+        "Roughness": {
+          "linked": false,
+          "default": 0.8799999952316284
+        },
+        "Emission Color": {
+          "linked": false,
+          "default": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "Emission Strength": {
+          "linked": false,
+          "default": 0.0
+        }
+      }
+    },
+    {
+      "name": "V11 receiver-pan-constructed-surfaces authored surfaces",
+      "users": 15,
+      "use_nodes": true,
+      "images": [
+        {
+          "name": "V11 receiver-pan-constructed-surfaces basecolor",
+          "colorspace": "sRGB"
+        },
+        {
+          "name": "V11 receiver-pan-constructed-surfaces metalrough",
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "V11 receiver-pan-constructed-surfaces normal",
+          "colorspace": "Non-Color"
+        }
+      ],
+      "principled": {
+        "Base Color": {
+          "linked": true,
+          "default": [
+            0.800000011920929,
+            0.800000011920929,
+            0.800000011920929,
+            1.0
+          ]
+        },
+        "Metallic": {
+          "linked": true,
+          "default": 0.0
+        },
+        "Roughness": {
+          "linked": true,
+          "default": 0.5
+        },
+        "Emission Color": {
+          "linked": false,
+          "default": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "Emission Strength": {
+          "linked": false,
+          "default": 0.0
+        }
+      }
+    },
+    {
+      "name": "V11 receiver-pan-constructed-surfaces energized recess",
+      "users": 15,
+      "use_nodes": true,
+      "images": [
+        {
+          "name": "V11 receiver-pan-constructed-surfaces basecolor",
+          "colorspace": "sRGB"
+        },
+        {
+          "name": "V11 receiver-pan-constructed-surfaces metalrough",
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "V11 receiver-pan-constructed-surfaces normal",
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "V11 receiver-pan-constructed-surfaces emission",
+          "colorspace": "sRGB"
+        }
+      ],
+      "principled": {
+        "Base Color": {
+          "linked": true,
+          "default": [
+            0.800000011920929,
+            0.800000011920929,
+            0.800000011920929,
+            1.0
+          ]
+        },
+        "Metallic": {
+          "linked": true,
+          "default": 0.0
+        },
+        "Roughness": {
+          "linked": true,
+          "default": 0.5
+        },
+        "Emission Color": {
+          "linked": true,
+          "default": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "Emission Strength": {
+          "linked": false,
+          "default": 7.0
+        }
+      }
+    },
+    {
+      "name": "Void Fusion cast supplied skull 0",
+      "users": 1,
+      "use_nodes": true,
+      "images": [
+        {
+          "name": "Worn bronze retaining bands-basecolor",
+          "colorspace": "sRGB"
+        },
+        {
+          "name": "Worn bronze retaining bands-metalrough",
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "Worn bronze retaining bands-normal",
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "dgordillo-sculpt-normal.png",
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "V06 skull-cast-0 basecolor",
+          "colorspace": "sRGB"
+        },
+        {
+          "name": "V06 skull-cast-0 metalrough",
+          "colorspace": "Non-Color"
+        }
+      ],
+      "principled": {
+        "Base Color": {
+          "linked": true,
+          "default": [
+            0.800000011920929,
+            0.800000011920929,
+            0.800000011920929,
+            1.0
+          ]
+        },
+        "Metallic": {
+          "linked": true,
+          "default": 0.0
+        },
+        "Roughness": {
+          "linked": true,
+          "default": 0.5
+        },
+        "Emission Color": {
+          "linked": false,
+          "default": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "Emission Strength": {
+          "linked": false,
+          "default": 0.0
+        }
+      }
+    },
+    {
+      "name": "Void Fusion cast supplied skull 1",
+      "users": 1,
+      "use_nodes": true,
+      "images": [
+        {
+          "name": "Worn bronze retaining bands-basecolor",
+          "colorspace": "sRGB"
+        },
+        {
+          "name": "Worn bronze retaining bands-metalrough",
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "Worn bronze retaining bands-normal",
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "dgordillo-sculpt-normal.png",
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "V06 skull-cast-1 basecolor",
+          "colorspace": "sRGB"
+        },
+        {
+          "name": "V06 skull-cast-1 metalrough",
+          "colorspace": "Non-Color"
+        }
+      ],
+      "principled": {
+        "Base Color": {
+          "linked": true,
+          "default": [
+            0.800000011920929,
+            0.800000011920929,
+            0.800000011920929,
+            1.0
+          ]
+        },
+        "Metallic": {
+          "linked": true,
+          "default": 0.0
+        },
+        "Roughness": {
+          "linked": true,
+          "default": 0.5
+        },
+        "Emission Color": {
+          "linked": false,
+          "default": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "Emission Strength": {
+          "linked": false,
+          "default": 0.0
+        }
+      }
+    },
+    {
+      "name": "Worn bronze retaining bands",
+      "users": 192,
+      "use_nodes": true,
+      "images": [
+        {
+          "name": "Worn bronze retaining bands-basecolor",
+          "colorspace": "sRGB"
+        },
+        {
+          "name": "Worn bronze retaining bands-metalrough",
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "Worn bronze retaining bands-normal",
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "V06 bands basecolor",
+          "colorspace": "sRGB"
+        },
+        {
+          "name": "V06 bands metalrough",
+          "colorspace": "Non-Color"
+        }
+      ],
+      "principled": {
+        "Base Color": {
+          "linked": true,
+          "default": [
+            0.800000011920929,
+            0.800000011920929,
+            0.800000011920929,
+            1.0
+          ]
+        },
+        "Metallic": {
+          "linked": true,
+          "default": 0.0
+        },
+        "Roughness": {
+          "linked": true,
+          "default": 0.5
+        },
+        "Emission Color": {
+          "linked": false,
+          "default": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "Emission Strength": {
+          "linked": false,
+          "default": 0.0
+        }
+      }
+    }
+  ]
+}

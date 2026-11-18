@@ -1,0 +1,345 @@
+{
+  "status": "PASS_ACTUAL_SOURCE_GLb_EIGHT_CONVEX_REPAIRED_BRACES_AND_OPAQUE_PROTECTED_CORE",
+  "glb_sha256": "2b1f7164dc6df970aef9c9f1367bf8cf30f82ba3471d1eb9fcf6e84821d3d137",
+  "blend_sha256": "61e9a02667e2c6124fbd738adfb48fb3b4180ba9b59da86165117b0a76b28d4d",
+  "unchanged_primary_mesh_count": 889,
+  "source_repaired_solids": [
+    {
+      "object": "V09_mount low diagonal gusset 00 -1",
+      "closed_manifold": true,
+      "vertices_after_UV_weld": 8,
+      "convex_halfspace_error": 1.4901161193847656e-08,
+      "actual_signed_volume": 0.0009242998789191262,
+      "bounds": [
+        [
+          -0.4819999933242798,
+          0.1448434442281723,
+          -0.27000001072883606
+        ],
+        [
+          -0.27000001072883606,
+          0.2348434329032898,
+          -0.10499999672174454
+        ]
+      ]
+    },
+    {
+      "object": "V09_mount low diagonal gusset 00 1",
+      "closed_manifold": true,
+      "vertices_after_UV_weld": 8,
+      "convex_halfspace_error": 1.4901161193847656e-08,
+      "actual_signed_volume": 0.0009242998789191262,
+      "bounds": [
+        [
+          0.27000001072883606,
+          0.1448434442281723,
+          -0.27000001072883606
+        ],
+        [
+          0.4819999933242798,
+          0.2348434329032898,
+          -0.10499999672174454
+        ]
+      ]
+    },
+    {
+      "object": "V09_mount low diagonal gusset 01 -1",
+      "closed_manifold": true,
+      "vertices_after_UV_weld": 8,
+      "convex_halfspace_error": 0,
+      "actual_signed_volume": 0.0009242991137445042,
+      "bounds": [
+        [
+          -0.4819999933242798,
+          1.557955026626587,
+          -0.27000001072883606
+        ],
+        [
+          -0.27000001072883606,
+          1.6479549407958984,
+          -0.10499999672174454
+        ]
+      ]
+    },
+    {
+      "object": "V09_mount low diagonal gusset 01 1",
+      "closed_manifold": true,
+      "vertices_after_UV_weld": 8,
+      "convex_halfspace_error": 0,
+      "actual_signed_volume": 0.0009242991137445042,
+      "bounds": [
+        [
+          0.27000001072883606,
+          1.557955026626587,
+          -0.27000001072883606
+        ],
+        [
+          0.4819999933242798,
+          1.6479549407958984,
+          -0.10499999672174454
+        ]
+      ]
+    },
+    {
+      "object": "V09_mount low diagonal gusset 02 -1",
+      "closed_manifold": true,
+      "vertices_after_UV_weld": 8,
+      "convex_halfspace_error": 0,
+      "actual_signed_volume": 0.000924299113744507,
+      "bounds": [
+        [
+          -0.4819999933242798,
+          2.647583246231079,
+          -0.27000001072883606
+        ],
+        [
+          -0.27000001072883606,
+          2.7375831604003906,
+          -0.10499999672174454
+        ]
+      ]
+    },
+    {
+      "object": "V09_mount low diagonal gusset 02 1",
+      "closed_manifold": true,
+      "vertices_after_UV_weld": 8,
+      "convex_halfspace_error": 0,
+      "actual_signed_volume": 0.000924299113744507,
+      "bounds": [
+        [
+          0.27000001072883606,
+          2.647583246231079,
+          -0.27000001072883606
+        ],
+        [
+          0.4819999933242798,
+          2.7375831604003906,
+          -0.10499999672174454
+        ]
+      ]
+    },
+    {
+      "object": "V09_mount fore low crossmember brace -1",
+      "closed_manifold": true,
+      "vertices_after_UV_weld": 8,
+      "convex_halfspace_error": 0,
+      "actual_signed_volume": 0.000514800619044891,
+      "bounds": [
+        [
+          -0.3449999988079071,
+          4.099999904632568,
+          -0.27000001072883606
+        ],
+        [
+          -0.2549999952316284,
+          4.182000160217285,
+          -0.10499999672174454
+        ]
+      ]
+    },
+    {
+      "object": "V09_mount fore low crossmember brace 1",
+      "closed_manifold": true,
+      "vertices_after_UV_weld": 8,
+      "convex_halfspace_error": 0,
+      "actual_signed_volume": 0.000514800619044891,
+      "bounds": [
+        [
+          0.2549999952316284,
+          4.099999904632568,
+          -0.27000001072883606
+        ],
+        [
+          0.3449999988079071,
+          4.182000160217285,
+          -0.10499999672174454
+        ]
+      ]
+    }
+  ],
+  "actual_glb_repaired_solids": [
+    {
+      "object": "V09_mount low diagonal gusset 00 -1",
+      "closed_manifold": true,
+      "vertices_after_UV_weld": 8,
+      "convex_halfspace_error": 1.4901161193847656e-08,
+      "actual_signed_volume": 0.0009242998789191262,
+      "bounds": [
+        [
+          -0.4819999933242798,
+          0.1448434442281723,
+          -0.27000001072883606
+        ],
+        [
+          -0.27000001072883606,
+          0.2348434329032898,
+          -0.10499999672174454
+        ]
+      ]
+    },
+    {
+      "object": "V09_mount low diagonal gusset 00 1",
+      "closed_manifold": true,
+      "vertices_after_UV_weld": 8,
+      "convex_halfspace_error": 1.4901161193847656e-08,
+      "actual_signed_volume": 0.0009242998789191262,
+      "bounds": [
+        [
+          0.27000001072883606,
+          0.1448434442281723,
+          -0.27000001072883606
+        ],
+        [
+          0.4819999933242798,
+          0.2348434329032898,
+          -0.10499999672174454
+        ]
+      ]
+    },
+    {
+      "object": "V09_mount low diagonal gusset 01 -1",
+      "closed_manifold": true,
+      "vertices_after_UV_weld": 8,
+      "convex_halfspace_error": 0,
+      "actual_signed_volume": 0.0009242991137445042,
+      "bounds": [
+        [
+          -0.4819999933242798,
+          1.557955026626587,
+          -0.27000001072883606
+        ],
+        [
+          -0.27000001072883606,
+          1.6479549407958984,
+          -0.10499999672174454
+        ]
+      ]
+    },
+    {
+      "object": "V09_mount low diagonal gusset 01 1",
+      "closed_manifold": true,
+      "vertices_after_UV_weld": 8,
+      "convex_halfspace_error": 0,
+      "actual_signed_volume": 0.0009242991137445042,
+      "bounds": [
+        [
+          0.27000001072883606,
+          1.557955026626587,
+          -0.27000001072883606
+        ],
+        [
+          0.4819999933242798,
+          1.6479549407958984,
+          -0.10499999672174454
+        ]
+      ]
+    },
+    {
+      "object": "V09_mount low diagonal gusset 02 -1",
+      "closed_manifold": true,
+      "vertices_after_UV_weld": 8,
+      "convex_halfspace_error": 0,
+      "actual_signed_volume": 0.000924299113744507,
+      "bounds": [
+        [
+          -0.4819999933242798,
+          2.647583246231079,
+          -0.27000001072883606
+        ],
+        [
+          -0.27000001072883606,
+          2.7375831604003906,
+          -0.10499999672174454
+        ]
+      ]
+    },
+    {
+      "object": "V09_mount low diagonal gusset 02 1",
+      "closed_manifold": true,
+      "vertices_after_UV_weld": 8,
+      "convex_halfspace_error": 0,
+      "actual_signed_volume": 0.000924299113744507,
+      "bounds": [
+        [
+          0.27000001072883606,
+          2.647583246231079,
+          -0.27000001072883606
+        ],
+        [
+          0.4819999933242798,
+          2.7375831604003906,
+          -0.10499999672174454
+        ]
+      ]
+    },
+    {
+      "object": "V09_mount fore low crossmember brace -1",
+      "closed_manifold": true,
+      "vertices_after_UV_weld": 8,
+      "convex_halfspace_error": 0,
+      "actual_signed_volume": 0.000514800619044891,
+      "bounds": [
+        [
+          -0.3449999988079071,
+          4.099999904632568,
+          -0.27000001072883606
+        ],
+        [
+          -0.2549999952316284,
+          4.182000160217285,
+          -0.10499999672174454
+        ]
+      ]
+    },
+    {
+      "object": "V09_mount fore low crossmember brace 1",
+      "closed_manifold": true,
+      "vertices_after_UV_weld": 8,
+      "convex_halfspace_error": 0,
+      "actual_signed_volume": 0.000514800619044891,
+      "bounds": [
+        [
+          0.2549999952316284,
+          4.099999904632568,
+          -0.27000001072883606
+        ],
+        [
+          0.3449999988079071,
+          4.182000160217285,
+          -0.10499999672174454
+        ]
+      ]
+    }
+  ],
+  "protected_core": {
+    "x_range": [
+      -0.22,
+      0.22
+    ],
+    "source_z_reference": 0.08,
+    "core_y_range": [
+      -3.487019443511963,
+      3.4915771961212156
+    ],
+    "canonical45_ray_direction": [
+      0.0,
+      0.7071067690849304,
+      -0.7071067690849304
+    ],
+    "source_ray_count": 693,
+    "source_blocked": 693,
+    "actual_glb_blocked": 693,
+    "accepted_body_subset_without_new_pan_or_cases_blocked": 693,
+    "newly_blocked_rays": 0,
+    "sampling": "Six inter-stone interface windows plus51 axial core stations, inside keels. Outer cage openings, mounting margins and field aperture are intentionally excluded.",
+    "limits": "Finite canonical-view geometric ray sample, not a claim that every intentional exterior opening is closed or arbitrary camera projections are opaque.",
+    "side_and_underside_window_witness": {
+      "source_count": 180,
+      "source_blocked": 180,
+      "actual_glb_blocked": 180,
+      "old_body_subset_blocked": 114,
+      "newly_blocked": 66,
+      "mask": "Both\u00b1Xviewdirections, five axial offsets about each of six interfaces, Z-.26/-.13/-.10 inside backing/core zone; aperture/exterioruppercage excluded."
+    }
+  }
+}

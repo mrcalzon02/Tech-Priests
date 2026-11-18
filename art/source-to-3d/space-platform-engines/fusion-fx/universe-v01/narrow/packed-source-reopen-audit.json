@@ -1,0 +1,1281 @@
+{
+  "status": "PASS_ACTUAL_CANONICAL_PACKED_FX_DERIVATIVE_REOPEN_NO_RESAVE",
+  "master": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\art\\source-to-3d\\space-platform-engines\\fusion-fx\\universe-v01\\narrow\\capture-master.blend",
+  "master_sha256": "54e77d6f539ba29f60d1880f067230158501f0e9db770f21f9ec15528f10e1e0",
+  "loaded_from_canonical_directory": true,
+  "all_image_datablocks_packed_and_loaded": true,
+  "image_count": 55,
+  "images": [
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.24313727021217346,
+        0.1725490242242813,
+        0.07450980693101883,
+        1.0
+      ],
+      "name": "bands-basecolor",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        128,
+        128
+      ],
+      "users": 2,
+      "colorspace": "sRGB",
+      "packed_bytes": 12199,
+      "packed_sha256": "11df43a7a38c903870e07a999e646a29f5d1366ec94f50d126be75c50e5c499e"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        1.0,
+        0.4941176772117615,
+        0.8313726186752319,
+        1.0
+      ],
+      "name": "bands-metalrough",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        128,
+        128
+      ],
+      "users": 2,
+      "colorspace": "Non-Color",
+      "packed_bytes": 6675,
+      "packed_sha256": "bf4adf6eed29bdb346ab79a7096a603e5402d9d4a2da2f75ec4ce916cabd7745"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.0941176563501358,
+        0.10588236153125763,
+        0.10196079313755035,
+        1.0
+      ],
+      "name": "cantilever-frame-authored-basecolor",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        768,
+        768
+      ],
+      "users": 2,
+      "colorspace": "sRGB",
+      "packed_bytes": 373932,
+      "packed_sha256": "64d2eaa7f8b88e1cffa883a4b4a99e973be39614f08b761dbe42e102103cf9b5"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        1.0,
+        0.5647059082984924,
+        0.7686275243759155,
+        1.0
+      ],
+      "name": "cantilever-frame-authored-metalrough",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        768,
+        768
+      ],
+      "users": 2,
+      "colorspace": "Non-Color",
+      "packed_bytes": 297144,
+      "packed_sha256": "a433e25aca267d8d0d3b9d0639d265388490d4b161c267d47736f7bfe505cc31"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.501960813999176,
+        0.501960813999176,
+        1.0,
+        1.0
+      ],
+      "name": "cantilever-frame-authored-normal",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        768,
+        768
+      ],
+      "users": 2,
+      "colorspace": "Non-Color",
+      "packed_bytes": 237965,
+      "packed_sha256": "47c8052c47291369af876e218520a76da5d068561fd586e518d07ef6592e606b"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.062745101749897,
+        0.07450980693101883,
+        0.0313725508749485,
+        1.0
+      ],
+      "name": "ceramic-basecolor",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        128,
+        128
+      ],
+      "users": 2,
+      "colorspace": "sRGB",
+      "packed_bytes": 10812,
+      "packed_sha256": "687255edf74e5c152f59f3682afb5c465bc8241dc2409f56b82690d0dc66b3ec"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        1.0,
+        0.3529411852359772,
+        0.07058823853731155,
+        1.0
+      ],
+      "name": "ceramic-metalrough",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        128,
+        128
+      ],
+      "users": 2,
+      "colorspace": "Non-Color",
+      "packed_bytes": 6704,
+      "packed_sha256": "7a6399f5baf74da4d07a6fe3e3d6f06aae2d43c5fbfcfe89099a904795e11b9c"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.22745099663734436,
+        0.1098039299249649,
+        0.03921568766236305,
+        1.0
+      ],
+      "name": "copper-basecolor",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        128,
+        128
+      ],
+      "users": 2,
+      "colorspace": "sRGB",
+      "packed_bytes": 11737,
+      "packed_sha256": "b50da07e712de23fe3a046e30884a8ece5b71768565e0f681d6a376aeeae7c6f"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        1.0,
+        0.43137258291244507,
+        0.8588235974311829,
+        1.0
+      ],
+      "name": "copper-metalrough",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        128,
+        128
+      ],
+      "users": 2,
+      "colorspace": "Non-Color",
+      "packed_bytes": 6636,
+      "packed_sha256": "e71b8e94eaeab80482b3e5016b4430a73aacddaab6387bc53f98f6802cc13bd5"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "dgordillo-sculpt-normal",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        1024,
+        1024
+      ],
+      "users": 4,
+      "colorspace": "Non-Color",
+      "packed_bytes": 1020404,
+      "packed_sha256": "46e6a66303569b6b46d4f22e5260bdd1e7da9dc27aa63cf3667d4b29bf5c279d"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "dish-carrier-authored-basecolor",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        768,
+        768
+      ],
+      "users": 2,
+      "colorspace": "sRGB",
+      "packed_bytes": 417711,
+      "packed_sha256": "059e8fa9c9bbb52efcf823737ebba2d42e76724bb7cc77adecff66a59b8c7066"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        1.0,
+        0.9019608497619629,
+        0.0,
+        1.0
+      ],
+      "name": "dish-carrier-authored-metalrough",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        768,
+        768
+      ],
+      "users": 2,
+      "colorspace": "Non-Color",
+      "packed_bytes": 344503,
+      "packed_sha256": "3103646fa5c7e6469fe3bddc0640abcc5dfa18bdbf1cccd7f1c2ec88361d5828"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.501960813999176,
+        0.501960813999176,
+        1.0,
+        1.0
+      ],
+      "name": "dish-carrier-authored-normal",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        768,
+        768
+      ],
+      "users": 2,
+      "colorspace": "Non-Color",
+      "packed_bytes": 226548,
+      "packed_sha256": "9298978433e547add07a9dec499c9f4801bb4e1c97a443e4fddc723fde0d2020"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.04313725605607033,
+        0.0470588281750679,
+        0.03921568766236305,
+        1.0
+      ],
+      "name": "hull-basecolor",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        128,
+        128
+      ],
+      "users": 2,
+      "colorspace": "sRGB",
+      "packed_bytes": 9841,
+      "packed_sha256": "fa4e66f03aeb4c76dbd23428a6a86658855ca090c1e5b2503460aafb75348b02"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        1.0,
+        0.6313725709915161,
+        0.7215686440467834,
+        1.0
+      ],
+      "name": "hull-metalrough",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        128,
+        128
+      ],
+      "users": 2,
+      "colorspace": "Non-Color",
+      "packed_bytes": 6637,
+      "packed_sha256": "3f3b9cc57b2c5887c5c88abae6b45d53bc62c4fab6a1e075c0d768a046e52d72"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.0941176563501358,
+        0.10588236153125763,
+        0.10588236153125763,
+        1.0
+      ],
+      "name": "rail-basecolor",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        128,
+        128
+      ],
+      "users": 2,
+      "colorspace": "sRGB",
+      "packed_bytes": 11068,
+      "packed_sha256": "36bf2b46c575170c66dd10d975258a770a1f63e05c0f3a9ccfa6aeb127122d07"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        1.0,
+        0.5215686559677124,
+        0.7882353663444519,
+        1.0
+      ],
+      "name": "rail-metalrough",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        128,
+        128
+      ],
+      "users": 2,
+      "colorspace": "Non-Color",
+      "packed_bytes": 6653,
+      "packed_sha256": "ae7dd2ac9f65dfecde64d34083f0d9ddd4b583ca6f735051e4255d58701100b1"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.250980406999588,
+        0.18039216101169586,
+        0.0784313753247261,
+        1.0
+      ],
+      "name": "skull-cast-0-basecolor",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        128,
+        128
+      ],
+      "users": 2,
+      "colorspace": "sRGB",
+      "packed_bytes": 12454,
+      "packed_sha256": "4dd6152149b9220525b0a9a5ef2fd269d53cb994780edf0164ac04d3122ee26f"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        1.0,
+        0.48235297203063965,
+        0.7803922295570374,
+        1.0
+      ],
+      "name": "skull-cast-0-metalrough",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        128,
+        128
+      ],
+      "users": 2,
+      "colorspace": "Non-Color",
+      "packed_bytes": 6623,
+      "packed_sha256": "06492f4a53df2c1651adecfd02ada10b054b08f41ea922da2db5ccd0d35aa3ff"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.250980406999588,
+        0.18039216101169586,
+        0.0784313753247261,
+        1.0
+      ],
+      "name": "skull-cast-1-basecolor",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        128,
+        128
+      ],
+      "users": 2,
+      "colorspace": "sRGB",
+      "packed_bytes": 12454,
+      "packed_sha256": "4dd6152149b9220525b0a9a5ef2fd269d53cb994780edf0164ac04d3122ee26f"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        1.0,
+        0.48235297203063965,
+        0.7803922295570374,
+        1.0
+      ],
+      "name": "skull-cast-1-metalrough",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        128,
+        128
+      ],
+      "users": 2,
+      "colorspace": "Non-Color",
+      "packed_bytes": 6623,
+      "packed_sha256": "06492f4a53df2c1651adecfd02ada10b054b08f41ea922da2db5ccd0d35aa3ff"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "V09 Noctilith 00-basecolor",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        768,
+        768
+      ],
+      "users": 5,
+      "colorspace": "sRGB",
+      "packed_bytes": 393354,
+      "packed_sha256": "1b2ac3981628585b2a3c27a9b26d50f14752b52e6f18c0d347a3ec81555ba25b"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "V09 Noctilith 00-emission",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        768,
+        768
+      ],
+      "users": 3,
+      "colorspace": "sRGB",
+      "packed_bytes": 151024,
+      "packed_sha256": "0e78a56e3264c11994786777a2cbd52e70770f45edbb5ab64f1572f03d1e18eb"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        1.0,
+        0.9019608497619629,
+        0.0,
+        1.0
+      ],
+      "name": "V09 Noctilith 00-metalrough",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        768,
+        768
+      ],
+      "users": 5,
+      "colorspace": "Non-Color",
+      "packed_bytes": 192408,
+      "packed_sha256": "83b0d92f89210796b2a9778bb30f6b813287a43213c5d3281d1f8d81dc1b127f"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.501960813999176,
+        0.501960813999176,
+        1.0,
+        1.0
+      ],
+      "name": "V09 Noctilith 00-normal",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        768,
+        768
+      ],
+      "users": 5,
+      "colorspace": "Non-Color",
+      "packed_bytes": 429998,
+      "packed_sha256": "7d42217bde57fec949ed3177c8cdf56be080591c424f3d9b0d7b651f566e2343"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "V09 Noctilith 01-basecolor",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        768,
+        768
+      ],
+      "users": 5,
+      "colorspace": "sRGB",
+      "packed_bytes": 396039,
+      "packed_sha256": "a7a52f6d07dbf94d2ca9e97f0c4dab1a46358fe68ad0d677318a6100ae7704b4"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "V09 Noctilith 01-emission",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        768,
+        768
+      ],
+      "users": 3,
+      "colorspace": "sRGB",
+      "packed_bytes": 151076,
+      "packed_sha256": "2c11be2510a8687b4d4f01838c9fc398e8ffd62d882771c9e27356a19194c09b"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        1.0,
+        0.9019608497619629,
+        0.0,
+        1.0
+      ],
+      "name": "V09 Noctilith 01-metalrough",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        768,
+        768
+      ],
+      "users": 5,
+      "colorspace": "Non-Color",
+      "packed_bytes": 192309,
+      "packed_sha256": "fce71f1ac9de08e8792d1c0dae4bf0556479787bb2f3ca1bb2530a888c7a011a"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.501960813999176,
+        0.501960813999176,
+        1.0,
+        1.0
+      ],
+      "name": "V09 Noctilith 01-normal",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        768,
+        768
+      ],
+      "users": 5,
+      "colorspace": "Non-Color",
+      "packed_bytes": 428545,
+      "packed_sha256": "614a72a31faffe1f5c9f7b99bad08bb40a8e07046c2a325cce9e76aca6c46506"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "V09 Noctilith 02-basecolor",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        768,
+        768
+      ],
+      "users": 5,
+      "colorspace": "sRGB",
+      "packed_bytes": 392039,
+      "packed_sha256": "8e541f21cd4e2f39cdee26637cd6792e2c11eadc51a3d2b361e74a4f2ad57dfd"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "V09 Noctilith 02-emission",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        768,
+        768
+      ],
+      "users": 3,
+      "colorspace": "sRGB",
+      "packed_bytes": 148660,
+      "packed_sha256": "0586cf32ddf0b8f2a4d70b9252ff3c802fe69dd9610725e7088734f6ebe3f831"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        1.0,
+        0.9019608497619629,
+        0.0,
+        1.0
+      ],
+      "name": "V09 Noctilith 02-metalrough",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        768,
+        768
+      ],
+      "users": 5,
+      "colorspace": "Non-Color",
+      "packed_bytes": 193875,
+      "packed_sha256": "9dab085e27df753be3cce521d51a95e2a3d9a6208c58e2522ed4dc4b60172870"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.501960813999176,
+        0.501960813999176,
+        1.0,
+        1.0
+      ],
+      "name": "V09 Noctilith 02-normal",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        768,
+        768
+      ],
+      "users": 5,
+      "colorspace": "Non-Color",
+      "packed_bytes": 429918,
+      "packed_sha256": "51dadc8d0550ff594d0130a6f5d5fe57279f336363411c938d0419e5a9e18cd3"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "V09 Noctilith 03-basecolor",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        768,
+        768
+      ],
+      "users": 5,
+      "colorspace": "sRGB",
+      "packed_bytes": 393169,
+      "packed_sha256": "6d3dc079e1f286ea82fa90992beb8b1eb9ee29382142d213b8a4eee0a2a5d982"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "V09 Noctilith 03-emission",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        768,
+        768
+      ],
+      "users": 3,
+      "colorspace": "sRGB",
+      "packed_bytes": 151103,
+      "packed_sha256": "1313e85bf134289deacafbd3c3e4e8fbdc6c6ce85f1b4c992abe4c44580cc8f2"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        1.0,
+        0.9019608497619629,
+        0.0,
+        1.0
+      ],
+      "name": "V09 Noctilith 03-metalrough",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        768,
+        768
+      ],
+      "users": 5,
+      "colorspace": "Non-Color",
+      "packed_bytes": 189237,
+      "packed_sha256": "4318060e2fc7d107e729bf48f91acc63939a0b92d283994b47be924ed28c7d31"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.501960813999176,
+        0.501960813999176,
+        1.0,
+        1.0
+      ],
+      "name": "V09 Noctilith 03-normal",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        768,
+        768
+      ],
+      "users": 5,
+      "colorspace": "Non-Color",
+      "packed_bytes": 430754,
+      "packed_sha256": "19ef6d8f86c8737330cbbda00b308be32b567ed9f207920f2cbc849815bf4733"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "V09 Noctilith 04-basecolor",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        768,
+        768
+      ],
+      "users": 5,
+      "colorspace": "sRGB",
+      "packed_bytes": 400651,
+      "packed_sha256": "f0d50afad3fae7776caaafec0a94bc59e08db85065217484c3e298ee1d2b0c83"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "V09 Noctilith 04-emission",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        768,
+        768
+      ],
+      "users": 3,
+      "colorspace": "sRGB",
+      "packed_bytes": 157644,
+      "packed_sha256": "eebcf17ad743161de844e5c0ff8cda40308ee24dbb3600aa55846c69517d4e50"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        1.0,
+        0.9019608497619629,
+        0.0,
+        1.0
+      ],
+      "name": "V09 Noctilith 04-metalrough",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        768,
+        768
+      ],
+      "users": 5,
+      "colorspace": "Non-Color",
+      "packed_bytes": 192334,
+      "packed_sha256": "9bde832867fd0cfd88ea1f24cba422c507b00724df4547715419185ec34553c7"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.501960813999176,
+        0.501960813999176,
+        1.0,
+        1.0
+      ],
+      "name": "V09 Noctilith 04-normal",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        768,
+        768
+      ],
+      "users": 5,
+      "colorspace": "Non-Color",
+      "packed_bytes": 440444,
+      "packed_sha256": "4c47e79cc81e1701523f065bf43f8e74ded5fbb711494e99ceb2f262a2914ab1"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "V09 Noctilith 05-basecolor",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        768,
+        768
+      ],
+      "users": 5,
+      "colorspace": "sRGB",
+      "packed_bytes": 401651,
+      "packed_sha256": "e1c8605798bec3c5614983b5f54a73f412c1a2e34bced250cdccd71b6264ccf6"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "V09 Noctilith 05-emission",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        768,
+        768
+      ],
+      "users": 3,
+      "colorspace": "sRGB",
+      "packed_bytes": 155405,
+      "packed_sha256": "a6e400d9d65ea8d13443256cc961055194427c28c9b4695c8f19dd8eb4714731"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        1.0,
+        0.9019608497619629,
+        0.0,
+        1.0
+      ],
+      "name": "V09 Noctilith 05-metalrough",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        768,
+        768
+      ],
+      "users": 5,
+      "colorspace": "Non-Color",
+      "packed_bytes": 192244,
+      "packed_sha256": "d5e69c7607bd2ac34243f5f880756d88c37f0d32334cbfa606e5cd1ac344a913"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.501960813999176,
+        0.501960813999176,
+        1.0,
+        1.0
+      ],
+      "name": "V09 Noctilith 05-normal",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        768,
+        768
+      ],
+      "users": 5,
+      "colorspace": "Non-Color",
+      "packed_bytes": 432355,
+      "packed_sha256": "9b7973372f72c248efb09450f8b7fb6292312534232b47696a33d43ae51d4ac7"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "V09 Noctilith 06-basecolor",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        768,
+        768
+      ],
+      "users": 5,
+      "colorspace": "sRGB",
+      "packed_bytes": 386301,
+      "packed_sha256": "fde080263b3bf9028a630bdb3e888d205c966571225056efb2aa9ca676c056a5"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "V09 Noctilith 06-emission",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        768,
+        768
+      ],
+      "users": 3,
+      "colorspace": "sRGB",
+      "packed_bytes": 149067,
+      "packed_sha256": "13685cff7b1952b5fcc02792f0b798334f23a8fae72609f0f499d5b888f5aabc"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        1.0,
+        0.9019608497619629,
+        0.0,
+        1.0
+      ],
+      "name": "V09 Noctilith 06-metalrough",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        768,
+        768
+      ],
+      "users": 5,
+      "colorspace": "Non-Color",
+      "packed_bytes": 186458,
+      "packed_sha256": "4c6c301561f5420641d387a17999966c2dfe662f6d2bc0a20258760c0024ddf3"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.501960813999176,
+        0.501960813999176,
+        1.0,
+        1.0
+      ],
+      "name": "V09 Noctilith 06-normal",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        768,
+        768
+      ],
+      "users": 5,
+      "colorspace": "Non-Color",
+      "packed_bytes": 420438,
+      "packed_sha256": "93368957c3eb6192e50f70288d2f140e40533868967b4ab2a444c3a1e2bb5c87"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.2196078598499298,
+        0.2352941334247589,
+        0.21568629145622253,
+        1.0
+      ],
+      "name": "V11 closed-receiver-machining-surfaces-basecolor",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        768,
+        768
+      ],
+      "users": 2,
+      "colorspace": "sRGB",
+      "packed_bytes": 463557,
+      "packed_sha256": "77372ebd787e9448609f4454d9f2e5f96ee43d6fab08afdd9a58338e7a185175"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        1.0,
+        0.6509804129600525,
+        0.7215686440467834,
+        1.0
+      ],
+      "name": "V11 closed-receiver-machining-surfaces-metalrough",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        768,
+        768
+      ],
+      "users": 2,
+      "colorspace": "Non-Color",
+      "packed_bytes": 377464,
+      "packed_sha256": "5775b820f1b968008082f3623e119a9f569db6a0accbda6d91734ccc822495e0"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.501960813999176,
+        0.501960813999176,
+        1.0,
+        1.0
+      ],
+      "name": "V11 closed-receiver-machining-surfaces-normal",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        768,
+        768
+      ],
+      "users": 2,
+      "colorspace": "Non-Color",
+      "packed_bytes": 276955,
+      "packed_sha256": "dc07dfd732afebae8c146a024a6dfe8ce1a662b904b919a99e04025bd9548744"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.22745099663734436,
+        0.24313727021217346,
+        0.22352942824363708,
+        1.0
+      ],
+      "name": "V11 receiver-pan-constructed-surfaces-basecolor",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        768,
+        768
+      ],
+      "users": 2,
+      "colorspace": "sRGB",
+      "packed_bytes": 470729,
+      "packed_sha256": "5c23fb7f8d2718745797e4b2bb26bd723fb1c028b23f2b1a1135eed75ba2a887"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        1.0,
+        0.6549019813537598,
+        0.7215686440467834,
+        1.0
+      ],
+      "name": "V11 receiver-pan-constructed-surfaces-metalrough",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        768,
+        768
+      ],
+      "users": 2,
+      "colorspace": "Non-Color",
+      "packed_bytes": 377215,
+      "packed_sha256": "a9aabb19580234b718b8129b31975f7202dbef81fb569d5a1f6c74c3103635de"
+    },
+    {
+      "was_lazy_before_pixel_read": true,
+      "decoded_pixel_probe": [
+        0.49803924560546875,
+        0.501960813999176,
+        1.0,
+        1.0
+      ],
+      "name": "V11 receiver-pan-constructed-surfaces-normal",
+      "type": "IMAGE",
+      "source": "FILE",
+      "original_filepath": "",
+      "packed": true,
+      "has_data": true,
+      "size": [
+        768,
+        768
+      ],
+      "users": 2,
+      "colorspace": "Non-Color",
+      "packed_bytes": 289892,
+      "packed_sha256": "2fec1952c7e99dc3e89cb6aa78e1db283c6b60bc2d1bb874aabf52267e0e0828"
+    }
+  ],
+  "scene_objects": 1475,
+  "physical_meshes_expected": 1184,
+  "physical_object_names_present": true,
+  "save_export_or_render_performed": false,
+  "manual_analytic_FX_phase_helpers_preserved": "tooling/tools/art/thruster_resumption/animation",
+  "scope": "Read-only opening confirms portable packed derivative/image loading; final64 source/wrap/coverage checks are byte-preserved separately. No new native pixel proof or owner artistic approval inferred."
+}

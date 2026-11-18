@@ -1,0 +1,124 @@
+{
+  "prototype": "void-fusion-thruster",
+  "stage": "FINAL_CAPTURE_CANDIDATE",
+  "glb": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\void-fusion-v11.glb",
+  "glb_sha256": "2b1f7164dc6df970aef9c9f1367bf8cf30f82ba3471d1eb9fcf6e84821d3d137",
+  "validation": {
+    "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\roundtrip-validation.json",
+    "sha256": "a9e1e15390df52aeb0265eea46d9d5d75af7bfa5cb7f760badd456d9b686954e"
+  },
+  "source_size": 1536,
+  "samples": 64,
+  "output_frames": 64,
+  "native_pixels_per_source_unit": 32,
+  "native_cut_y": 0.5,
+  "minimum_ortho_scale": 8,
+  "registration_status": "EXPLICIT_CANDIDATE_32_NATIVE_PIXELS_PER_BU_REQUIRES_NATIVE_FIT",
+  "geometry_handoff": {
+    "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\aperture-measurement.json",
+    "sha256": "faf3f98d998efd4e306389d473d3accdec6ddf9165f1f56b3d538425a1898dad"
+  },
+  "body_exclude": [],
+  "underlay": {
+    "glb": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\service-well-v10\\narrow-service-well-v10.glb",
+    "sha256": "b3c083952cec501d375875f30a4780b07fa2d840bd0a1f873c4e6d3250123276",
+    "validation": {
+      "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\service-underlay-receipt.json",
+      "sha256": "7d7fa307c126fac71daacafde76ef8625de4d2e7938fe934a2cf6301647c6c98"
+    }
+  },
+  "deck_receiver_polygons": [
+    [
+      [
+        -1.3,
+        0
+      ],
+      [
+        -0.5,
+        0
+      ],
+      [
+        -0.5,
+        4.8
+      ],
+      [
+        -1.3,
+        4.8
+      ]
+    ],
+    [
+      [
+        0.5,
+        0
+      ],
+      [
+        1.3,
+        0
+      ],
+      [
+        1.3,
+        4.8
+      ],
+      [
+        0.5,
+        4.8
+      ]
+    ],
+    [
+      [
+        -0.5,
+        4.2
+      ],
+      [
+        0.5,
+        4.2
+      ],
+      [
+        0.5,
+        4.8
+      ],
+      [
+        -0.5,
+        4.8
+      ]
+    ]
+  ],
+  "aperture": {
+    "mesh": "V05 tier02 thick concave annular dish",
+    "center": [
+      0.0,
+      -4.224999904632568,
+      0.06000000983476639
+    ],
+    "axis": [
+      0,
+      -1,
+      0
+    ],
+    "radius": 0.25500000058489086,
+    "effect_origin": [
+      0.0,
+      -4.450000190734864,
+      0.06000000983476639
+    ],
+    "validation": {
+      "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\aperture-measurement.json",
+      "sha256": "faf3f98d998efd4e306389d473d3accdec6ddf9165f1f56b3d538425a1898dad"
+    }
+  },
+  "field_length": 7.4,
+  "field_radius": 0.25,
+  "light_exposure": -2,
+  "denoise_cold": true,
+  "field_engine": "BLENDER_EEVEE",
+  "effects_mode": "ADVECTING_PARTICLES_AND_POWER_LINKED_CRACKLE",
+  "particle_count": 96,
+  "wisp_count": 32,
+  "field_exposure": -1,
+  "effects_style": "TORTURED_UNIVERSE_V1",
+  "arc_capture_strength": 16,
+  "render_threads": 8,
+  "revision_authority": "Owner: much more pronounced thruster effects; unleashing the essence of the tortured universe. Physical source and actual native demand envelope unchanged.",
+  "energy_underlay_occlusion": "OPAQUE_BLACK_DEPTH",
+  "technical_revision": "Real3D installation-well depth occlusion repairs strict energy coverage; no synthesized alpha or tolerance relaxation."
+}

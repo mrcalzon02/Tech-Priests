@@ -1,0 +1,34 @@
+{
+  "status": "PASS_EXISTING_FULL_FOUNDATION_SAVE_WITH_NEW_MOUNT_RULES",
+  "input_save": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\local-validation\\thruster-resume-20261117\\user-data\\saves\\_autosave-thruster-resume-complete.zip",
+  "input_save_sha256": "dbdc3efbe3206aa13678ceebec8c6115efc134d8f9c9709175ecec98d28ba80c",
+  "all_four_original_entity_ids_preserved": true,
+  "all_four_operation_readbacks_pass": true,
+  "comparison": "New half-mount prototypes loaded the genuine pre-mount-correction tick1500 save; all original entities remain operational at1560. No tile carving/migration is performed.",
+  "rows": [
+    {
+      "name": "hydrogen-thruster",
+      "unit": 2,
+      "passed": true,
+      "connection": "nauvis-vulcanus"
+    },
+    {
+      "name": "thetazine-thruster",
+      "unit": 6,
+      "passed": true,
+      "connection": false
+    },
+    {
+      "name": "void-fusion-thruster",
+      "unit": 10,
+      "passed": true,
+      "connection": false
+    },
+    {
+      "name": "large-void-fusion-thruster",
+      "unit": 14,
+      "passed": true,
+      "connection": "nauvis-vulcanus"
+    }
+  ]
+}

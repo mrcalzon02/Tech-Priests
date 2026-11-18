@@ -1,0 +1,48 @@
+{
+  "status": "PASS_SOURCE_APPEARANCE_REVIEW_NATIVE_SCOPE_SEPARATE",
+  "family": "wide",
+  "source_capture_score": 4,
+  "score_scale": 5,
+  "reviewer": "Independent model and FX-source packaging agent",
+  "master_sha256": "dd05d1a70a609279e7fdc77b17b263739926dabd87ed88810460b62b897a0096",
+  "capture_receipt_sha256": "475588d1b5bb85c3fb9e3912152316f957d7c8cb563c2f846fc8e4c88eea4e73",
+  "final64_validation_sha256": "910be1c06cb5a0cd1fea36e99b78980dd4482a985db74fa1d3baa0dd20888b6c",
+  "actual_viewed_images": [
+    {
+      "path": "review/source-assembly-board.png",
+      "sha256": "a7f1df3f96524279d1ac188426f25d84527e34702842b2c217334d10339967e2",
+      "actually_viewed": true,
+      "scope": "Actual final source board: cold assembly and phases0/16/32/48"
+    },
+    {
+      "path": "review/intensity-comparison-native-scale.png",
+      "sha256": "7ca42558883154255d4a7382dbe381e47e9a85958a2b043a53ef4c28d8abd1a2",
+      "actually_viewed": true,
+      "scope": "18MW/6MW style pilot; narrowV01 historical before depth correction"
+    },
+    {
+      "path": "review/intensity-eight-consecutive-source.gif",
+      "sha256": "726d99155c79b677152d36229d2bba0fc25fc4bda7a6e8b99a28ce9bd575e674",
+      "actually_viewed": true,
+      "frames_individually_extracted_and_viewed": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "scope": "Consecutive18MW day/6MW night style pilot; GIF is not native timing proof"
+    }
+  ],
+  "observations": [
+    "Pronounced full-body forks and connected ragged ejecta remain readable at gameplay scale, including6MW.",
+    "Machinery/mineral/dishes remain discernible; intended core stays opaque.",
+    "Consecutive pilot phases show changing forks and downstream strands; no attached tube or closed circular plume loop seen.",
+    "No visible canvas cutoff; full-power wake is dense enough and no density increase is requested."
+  ],
+  "native_scope": "User observed actual wide firing and directed proceeding. No new narrow native-art proof was performed at user direction. Prior native control proof, unchanged physical geometry and new source64 checks are separate evidence. No full owner artistic approval inferred.",
+  "scope": "Source appearance/style only. Historical narrowV01 views are not proof of corrected V02 depth. Full64/wrap/coverage is measured separately in copied final validation."
+}

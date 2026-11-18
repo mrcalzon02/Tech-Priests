@@ -1,0 +1,1254 @@
+{
+  "status": "PASS_38_VISIBLE_ELECTRICAL_ROUTES_76_TERMINATIONS_ACTUAL_EXPORT",
+  "failed_clearances": [],
+  "glb_sha256": "2b1f7164dc6df970aef9c9f1367bf8cf30f82ba3471d1eb9fcf6e84821d3d137",
+  "blend_sha256": "61e9a02667e2c6124fbd738adfb48fb3b4180ba9b59da86165117b0a76b28d4d",
+  "script_sha256": "0781d62456c0618aa1b9f0773d635b7a3b704bf8076149e95df7017897eb4f4b",
+  "actual_vertex_correspondence_max_error": 0,
+  "fixture_bores": [
+    {
+      "object": "V09 coil -1 00 start lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 0.0,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 coil -1 00 end lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 0.0,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 coil 1 00 start lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 0.0,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 coil 1 00 end lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 0.0,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 coil -1 01 start lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 0.0,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 coil -1 01 end lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 0.0,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 coil 1 01 start lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 0.0,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 coil 1 01 end lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 0.0,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 coil -1 02 start lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 0.0,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 coil -1 02 end lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 0.0,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 coil 1 02 start lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 0.0,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 coil 1 02 end lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 0.0,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 coil -1 03 start lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 0.0,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 coil -1 03 end lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 0.0,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 coil 1 03 start lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 0.0,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 coil 1 03 end lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 0.0,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 coil -1 04 start lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 0.0,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 coil -1 04 end lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 0.0,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 coil 1 04 start lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 0.0,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 coil 1 04 end lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 0.0,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 coil -1 05 start lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 0.0,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 coil -1 05 end lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 0.0,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 coil 1 05 start lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 0.0,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 coil 1 05 end lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 0.0,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 aft axial bus lug -1 | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 0.0,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 fore axial bus lug -1 | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 0.0,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 aft axial bus lug 1 | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 0.0,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 fore axial bus lug 1 | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 0.0,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 V07 tier00 flared cast radial web00 root lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 0.0,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 V07 tier00 flared cast radial web00 rim lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 0.0,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 V07 tier00 flared cast radial web01 root lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 2.1073424255447017e-08,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 V07 tier00 flared cast radial web01 rim lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 5.3726900748371916e-08,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 V07 tier00 flared cast radial web02 root lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 6.954835253666225e-19,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 V07 tier00 flared cast radial web02 rim lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 6.303844250154932e-19,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 V07 tier00 flared cast radial web03 root lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 2.1073424255447017e-08,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 V07 tier00 flared cast radial web03 rim lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 5.3726900748371916e-08,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 V07 tier00 flared cast radial web04 root lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 0.0,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 V07 tier00 flared cast radial web04 rim lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 0.0,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 V07 tier00 flared cast radial web05 root lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 3.725290298461914e-09,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 V07 tier00 flared cast radial web05 rim lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 0.0,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 V07 tier00 flared cast radial web06 root lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 9.379599654299568e-19,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 V07 tier00 flared cast radial web06 rim lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 8.728658082178614e-19,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 V07 tier00 flared cast radial web07 root lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 7.450580596923828e-09,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 V07 tier00 flared cast radial web07 rim lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 2.1073424255447017e-08,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 V07 tier01 flared cast radial web00 root lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 0.0,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 V07 tier01 flared cast radial web00 rim lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 0.0,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 V07 tier01 flared cast radial web01 root lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 2.1073424255447017e-08,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 V07 tier01 flared cast radial web01 rim lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 2.1073424255447017e-08,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 V07 tier01 flared cast radial web02 root lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 8.3845178496600845e-19,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 V07 tier01 flared cast radial web02 rim lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 6.246074021612906e-19,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 V07 tier01 flared cast radial web03 root lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 2.1073424255447017e-08,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 V07 tier01 flared cast radial web03 rim lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 0.0,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 V07 tier01 flared cast radial web04 root lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 0.0,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 V07 tier01 flared cast radial web04 rim lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 0.0,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 V07 tier01 flared cast radial web05 root lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 5.587935447692871e-09,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 V07 tier01 flared cast radial web05 rim lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 2.1073424255447017e-08,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 V07 tier01 flared cast radial web06 root lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 6.985287994608022e-19,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 V07 tier01 flared cast radial web06 rim lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 8.670887771343262e-19,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 V07 tier01 flared cast radial web07 root lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 3.725290298461914e-09,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 V07 tier01 flared cast radial web07 rim lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 2.1073424255447017e-08,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 V07 tier02 flared cast radial web00 root lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 0.0,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 V07 tier02 flared cast radial web00 rim lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 0.0,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 V07 tier02 flared cast radial web01 root lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 2.6863450374185958e-08,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 V07 tier02 flared cast radial web01 rim lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 2.1073424255447017e-08,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 V07 tier02 flared cast radial web02 root lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 5.990243412817416e-19,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 V07 tier02 flared cast radial web02 rim lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 7.213767731852618e-19,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 V07 tier02 flared cast radial web03 root lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 2.1073424255447017e-08,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 V07 tier02 flared cast radial web03 rim lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 0.0,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 V07 tier02 flared cast radial web04 root lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 0.0,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 V07 tier02 flared cast radial web04 rim lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 0.0,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 V07 tier02 flared cast radial web05 root lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 7.508562643358995e-09,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 V07 tier02 flared cast radial web05 rim lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 2.1073424255447017e-08,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 V07 tier02 flared cast radial web06 root lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 8.414990976622816e-19,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 V07 tier02 flared cast radial web06 rim lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 9.638515251216732e-19,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 V07 tier02 flared cast radial web07 root lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 1.862645149230957e-09,
+      "entry_distinct_from_mate": true
+    },
+    {
+      "object": "V09 V07 tier02 flared cast radial web07 rim lug | Connected formed ring lug",
+      "actual_GLb_bore_probe_count": 9,
+      "maximum_endstop_error": 3.0719530773294423e-08,
+      "entry_distinct_from_mate": true
+    }
+  ],
+  "endpoint_caps_and_tangency": [
+    {
+      "route": "narrow-coil--1-00",
+      "end": "start",
+      "actual_cap_center_to_stop": 4.786961795153919e-07,
+      "actual_first_or_last_segment_dot_bore_axis": 1.0,
+      "fixture": "V09 coil -1 00 start lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-coil--1-00",
+      "end": "end",
+      "actual_cap_center_to_stop": 2.384185791015625e-07,
+      "actual_first_or_last_segment_dot_bore_axis": 1.0,
+      "fixture": "V09 coil -1 00 end lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-coil-1-00",
+      "end": "start",
+      "actual_cap_center_to_stop": 4.777675730550706e-07,
+      "actual_first_or_last_segment_dot_bore_axis": 1.0,
+      "fixture": "V09 coil 1 00 start lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-coil-1-00",
+      "end": "end",
+      "actual_cap_center_to_stop": 2.4027400458748785e-07,
+      "actual_first_or_last_segment_dot_bore_axis": 1.0,
+      "fixture": "V09 coil 1 00 end lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-coil--1-01",
+      "end": "start",
+      "actual_cap_center_to_stop": 1.2644054553268208e-07,
+      "actual_first_or_last_segment_dot_bore_axis": 1.0,
+      "fixture": "V09 coil -1 01 start lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-coil--1-01",
+      "end": "end",
+      "actual_cap_center_to_stop": 2.9802322387695312e-08,
+      "actual_first_or_last_segment_dot_bore_axis": 1.0,
+      "fixture": "V09 coil -1 01 end lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-coil-1-01",
+      "end": "start",
+      "actual_cap_center_to_stop": 1.228781230931777e-07,
+      "actual_first_or_last_segment_dot_bore_axis": 1.0,
+      "fixture": "V09 coil 1 01 start lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-coil-1-01",
+      "end": "end",
+      "actual_cap_center_to_stop": 0.0,
+      "actual_first_or_last_segment_dot_bore_axis": 1.0,
+      "fixture": "V09 coil 1 01 end lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-coil--1-02",
+      "end": "start",
+      "actual_cap_center_to_stop": 1.2644054553268208e-07,
+      "actual_first_or_last_segment_dot_bore_axis": 1.0,
+      "fixture": "V09 coil -1 02 start lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-coil--1-02",
+      "end": "end",
+      "actual_cap_center_to_stop": 6.664001874625056e-08,
+      "actual_first_or_last_segment_dot_bore_axis": 1.0,
+      "fixture": "V09 coil -1 02 end lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-coil-1-02",
+      "end": "start",
+      "actual_cap_center_to_stop": 1.228781230931777e-07,
+      "actual_first_or_last_segment_dot_bore_axis": 1.0,
+      "fixture": "V09 coil 1 02 start lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-coil-1-02",
+      "end": "end",
+      "actual_cap_center_to_stop": 5.960464477539063e-08,
+      "actual_first_or_last_segment_dot_bore_axis": 1.0,
+      "fixture": "V09 coil 1 02 end lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-coil--1-03",
+      "end": "start",
+      "actual_cap_center_to_stop": 1.2644054553268208e-07,
+      "actual_first_or_last_segment_dot_bore_axis": 1.0,
+      "fixture": "V09 coil -1 03 start lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-coil--1-03",
+      "end": "end",
+      "actual_cap_center_to_stop": 1.228781230931777e-07,
+      "actual_first_or_last_segment_dot_bore_axis": 1.0,
+      "fixture": "V09 coil -1 03 end lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-coil-1-03",
+      "end": "start",
+      "actual_cap_center_to_stop": 1.228781230931777e-07,
+      "actual_first_or_last_segment_dot_bore_axis": 1.0,
+      "fixture": "V09 coil 1 03 start lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-coil-1-03",
+      "end": "end",
+      "actual_cap_center_to_stop": 1.1920928955078125e-07,
+      "actual_first_or_last_segment_dot_bore_axis": 1.0,
+      "fixture": "V09 coil 1 03 end lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-coil--1-04",
+      "end": "start",
+      "actual_cap_center_to_stop": 4.786961795153919e-07,
+      "actual_first_or_last_segment_dot_bore_axis": 1.0,
+      "fixture": "V09 coil -1 04 start lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-coil--1-04",
+      "end": "end",
+      "actual_cap_center_to_stop": 2.384185791015625e-07,
+      "actual_first_or_last_segment_dot_bore_axis": 1.0,
+      "fixture": "V09 coil -1 04 end lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-coil-1-04",
+      "end": "start",
+      "actual_cap_center_to_stop": 4.777675730550706e-07,
+      "actual_first_or_last_segment_dot_bore_axis": 1.0,
+      "fixture": "V09 coil 1 04 start lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-coil-1-04",
+      "end": "end",
+      "actual_cap_center_to_stop": 2.4027400458748785e-07,
+      "actual_first_or_last_segment_dot_bore_axis": 1.0,
+      "fixture": "V09 coil 1 04 end lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-coil--1-05",
+      "end": "start",
+      "actual_cap_center_to_stop": 2.421152116249788e-07,
+      "actual_first_or_last_segment_dot_bore_axis": 1.0,
+      "fixture": "V09 coil -1 05 start lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-coil--1-05",
+      "end": "end",
+      "actual_cap_center_to_stop": 7.154109408949496e-07,
+      "actual_first_or_last_segment_dot_bore_axis": 1.0,
+      "fixture": "V09 coil -1 05 end lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-coil-1-05",
+      "end": "start",
+      "actual_cap_center_to_stop": 2.4027400458748785e-07,
+      "actual_first_or_last_segment_dot_bore_axis": 1.0,
+      "fixture": "V09 coil 1 05 start lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-coil-1-05",
+      "end": "end",
+      "actual_cap_center_to_stop": 7.160314188441016e-07,
+      "actual_first_or_last_segment_dot_bore_axis": 1.0,
+      "fixture": "V09 coil 1 05 end lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-axial-power-bus--1",
+      "end": "start",
+      "actual_cap_center_to_stop": 2.457562461863554e-07,
+      "actual_first_or_last_segment_dot_bore_axis": 1.0,
+      "fixture": "V09 aft axial bus lug -1 | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-axial-power-bus--1",
+      "end": "end",
+      "actual_cap_center_to_stop": 2.457562461863554e-07,
+      "actual_first_or_last_segment_dot_bore_axis": 0.9999999403953552,
+      "fixture": "V09 fore axial bus lug -1 | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-axial-power-bus-1",
+      "end": "start",
+      "actual_cap_center_to_stop": 2.384185791015625e-07,
+      "actual_first_or_last_segment_dot_bore_axis": 1.0,
+      "fixture": "V09 aft axial bus lug 1 | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-axial-power-bus-1",
+      "end": "end",
+      "actual_cap_center_to_stop": 2.384185791015625e-07,
+      "actual_first_or_last_segment_dot_bore_axis": 0.9999999403953552,
+      "fixture": "V09 fore axial bus lug 1 | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier00-flared-cast-radial-web00",
+      "end": "start",
+      "actual_cap_center_to_stop": 3.725290298461914e-09,
+      "actual_first_or_last_segment_dot_bore_axis": 1.0000000000000058,
+      "fixture": "V09 V07 tier00 flared cast radial web00 root lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier00-flared-cast-radial-web00",
+      "end": "end",
+      "actual_cap_center_to_stop": 3.725290298461914e-09,
+      "actual_first_or_last_segment_dot_bore_axis": 0.9999999999999942,
+      "fixture": "V09 V07 tier00 flared cast radial web00 rim lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier00-flared-cast-radial-web01",
+      "end": "start",
+      "actual_cap_center_to_stop": 0.0,
+      "actual_first_or_last_segment_dot_bore_axis": 0.9999999701976776,
+      "fixture": "V09 V07 tier00 flared cast radial web01 root lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier00-flared-cast-radial-web01",
+      "end": "end",
+      "actual_cap_center_to_stop": 0.0,
+      "actual_first_or_last_segment_dot_bore_axis": 0.9999999403953552,
+      "fixture": "V09 V07 tier00 flared cast radial web01 rim lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier00-flared-cast-radial-web02",
+      "end": "start",
+      "actual_cap_center_to_stop": 1.4901164351815695e-08,
+      "actual_first_or_last_segment_dot_bore_axis": 1.0,
+      "fixture": "V09 V07 tier00 flared cast radial web02 root lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier00-flared-cast-radial-web02",
+      "end": "end",
+      "actual_cap_center_to_stop": 9.70127783083321e-12,
+      "actual_first_or_last_segment_dot_bore_axis": 1.0,
+      "fixture": "V09 V07 tier00 flared cast radial web02 rim lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier00-flared-cast-radial-web03",
+      "end": "start",
+      "actual_cap_center_to_stop": 2.384185791015625e-07,
+      "actual_first_or_last_segment_dot_bore_axis": 0.9999999701976776,
+      "fixture": "V09 V07 tier00 flared cast radial web03 root lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier00-flared-cast-radial-web03",
+      "end": "end",
+      "actual_cap_center_to_stop": 2.384185791015625e-07,
+      "actual_first_or_last_segment_dot_bore_axis": 0.9999999105930328,
+      "fixture": "V09 V07 tier00 flared cast radial web03 rim lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier00-flared-cast-radial-web04",
+      "end": "start",
+      "actual_cap_center_to_stop": 2.384476811558792e-07,
+      "actual_first_or_last_segment_dot_bore_axis": 1.0000000000000058,
+      "fixture": "V09 V07 tier00 flared cast radial web04 root lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier00-flared-cast-radial-web04",
+      "end": "end",
+      "actual_cap_center_to_stop": 3.003425057343598e-08,
+      "actual_first_or_last_segment_dot_bore_axis": 0.9999999999999942,
+      "fixture": "V09 V07 tier00 flared cast radial web04 rim lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier00-flared-cast-radial-web05",
+      "end": "start",
+      "actual_cap_center_to_stop": 2.385640538720096e-07,
+      "actual_first_or_last_segment_dot_bore_axis": 1.0,
+      "fixture": "V09 V07 tier00 flared cast radial web05 root lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier00-flared-cast-radial-web05",
+      "end": "end",
+      "actual_cap_center_to_stop": 2.3934808975769594e-07,
+      "actual_first_or_last_segment_dot_bore_axis": 0.9999999403953552,
+      "fixture": "V09 V07 tier00 flared cast radial web05 rim lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier00-flared-cast-radial-web06",
+      "end": "start",
+      "actual_cap_center_to_stop": 9.701276204529985e-12,
+      "actual_first_or_last_segment_dot_bore_axis": 1.0,
+      "fixture": "V09 V07 tier00 flared cast radial web06 root lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier00-flared-cast-radial-web06",
+      "end": "end",
+      "actual_cap_center_to_stop": 9.701276204529985e-12,
+      "actual_first_or_last_segment_dot_bore_axis": 1.0,
+      "fixture": "V09 V07 tier00 flared cast radial web06 rim lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier00-flared-cast-radial-web07",
+      "end": "start",
+      "actual_cap_center_to_stop": 7.450580596923828e-09,
+      "actual_first_or_last_segment_dot_bore_axis": 0.9999998807907104,
+      "fixture": "V09 V07 tier00 flared cast radial web07 root lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier00-flared-cast-radial-web07",
+      "end": "end",
+      "actual_cap_center_to_stop": 1.4901161193847656e-08,
+      "actual_first_or_last_segment_dot_bore_axis": 0.9999999403953552,
+      "fixture": "V09 V07 tier00 flared cast radial web07 rim lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier01-flared-cast-radial-web00",
+      "end": "start",
+      "actual_cap_center_to_stop": 2.385640538720096e-07,
+      "actual_first_or_last_segment_dot_bore_axis": 1.0000000000000069,
+      "fixture": "V09 V07 tier01 flared cast radial web00 root lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier01-flared-cast-radial-web00",
+      "end": "end",
+      "actual_cap_center_to_stop": 2.403028819392642e-07,
+      "actual_first_or_last_segment_dot_bore_axis": 0.999999999999993,
+      "fixture": "V09 V07 tier01 flared cast radial web00 rim lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier01-flared-cast-radial-web01",
+      "end": "start",
+      "actual_cap_center_to_stop": 2.384185791015625e-07,
+      "actual_first_or_last_segment_dot_bore_axis": 0.9999999403953552,
+      "fixture": "V09 V07 tier01 flared cast radial web01 root lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier01-flared-cast-radial-web01",
+      "end": "end",
+      "actual_cap_center_to_stop": 2.388837865275353e-07,
+      "actual_first_or_last_segment_dot_bore_axis": 0.9999999403953552,
+      "fixture": "V09 V07 tier01 flared cast radial web01 rim lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier01-flared-cast-radial-web02",
+      "end": "start",
+      "actual_cap_center_to_stop": 2.384185792989355e-07,
+      "actual_first_or_last_segment_dot_bore_axis": 1.0,
+      "fixture": "V09 V07 tier01 flared cast radial web02 root lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier01-flared-cast-radial-web02",
+      "end": "end",
+      "actual_cap_center_to_stop": 4.768371583018115e-07,
+      "actual_first_or_last_segment_dot_bore_axis": 1.0,
+      "fixture": "V09 V07 tier01 flared cast radial web02 rim lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier01-flared-cast-radial-web03",
+      "end": "start",
+      "actual_cap_center_to_stop": 1.666000468656264e-08,
+      "actual_first_or_last_segment_dot_bore_axis": 0.9999999701976776,
+      "fixture": "V09 V07 tier01 flared cast radial web03 root lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier01-flared-cast-radial-web03",
+      "end": "end",
+      "actual_cap_center_to_stop": 1.4901161193847656e-08,
+      "actual_first_or_last_segment_dot_bore_axis": 0.9999999403953552,
+      "fixture": "V09 V07 tier01 flared cast radial web03 rim lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier01-flared-cast-radial-web04",
+      "end": "start",
+      "actual_cap_center_to_stop": 2.385640538720096e-07,
+      "actual_first_or_last_segment_dot_bore_axis": 1.0000000000000069,
+      "fixture": "V09 V07 tier01 flared cast radial web04 root lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier01-flared-cast-radial-web04",
+      "end": "end",
+      "actual_cap_center_to_stop": 3.003425057343598e-08,
+      "actual_first_or_last_segment_dot_bore_axis": 0.999999999999993,
+      "fixture": "V09 V07 tier01 flared cast radial web04 rim lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier01-flared-cast-radial-web05",
+      "end": "start",
+      "actual_cap_center_to_stop": 0.0,
+      "actual_first_or_last_segment_dot_bore_axis": 0.9999999701976776,
+      "fixture": "V09 V07 tier01 flared cast radial web05 root lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier01-flared-cast-radial-web05",
+      "end": "end",
+      "actual_cap_center_to_stop": 0.0,
+      "actual_first_or_last_segment_dot_bore_axis": 0.9999999403953552,
+      "fixture": "V09 V07 tier01 flared cast radial web05 rim lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier01-flared-cast-radial-web06",
+      "end": "start",
+      "actual_cap_center_to_stop": 2.3841857929893547e-07,
+      "actual_first_or_last_segment_dot_bore_axis": 1.0,
+      "fixture": "V09 V07 tier01 flared cast radial web06 root lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier01-flared-cast-radial-web06",
+      "end": "end",
+      "actual_cap_center_to_stop": 4.777675731535649e-07,
+      "actual_first_or_last_segment_dot_bore_axis": 1.0,
+      "fixture": "V09 V07 tier01 flared cast radial web06 rim lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier01-flared-cast-radial-web07",
+      "end": "start",
+      "actual_cap_center_to_stop": 2.384185791015625e-07,
+      "actual_first_or_last_segment_dot_bore_axis": 0.9999999701976776,
+      "fixture": "V09 V07 tier01 flared cast radial web07 root lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier01-flared-cast-radial-web07",
+      "end": "end",
+      "actual_cap_center_to_stop": 2.38999946897409e-07,
+      "actual_first_or_last_segment_dot_bore_axis": 1.0000000298023224,
+      "fixture": "V09 V07 tier01 flared cast radial web07 rim lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier02-flared-cast-radial-web00",
+      "end": "start",
+      "actual_cap_center_to_stop": 1.5359765386647212e-08,
+      "actual_first_or_last_segment_dot_bore_axis": 1.0000000000000089,
+      "fixture": "V09 V07 tier02 flared cast radial web00 root lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier02-flared-cast-radial-web00",
+      "end": "end",
+      "actual_cap_center_to_stop": 2.9802322387695312e-08,
+      "actual_first_or_last_segment_dot_bore_axis": 0.9999999999999821,
+      "fixture": "V09 V07 tier02 flared cast radial web00 rim lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier02-flared-cast-radial-web01",
+      "end": "start",
+      "actual_cap_center_to_stop": 0.0,
+      "actual_first_or_last_segment_dot_bore_axis": 0.9999999403953552,
+      "fixture": "V09 V07 tier02 flared cast radial web01 root lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier02-flared-cast-radial-web01",
+      "end": "end",
+      "actual_cap_center_to_stop": 1.4901161193847656e-08,
+      "actual_first_or_last_segment_dot_bore_axis": 0.9999999403953552,
+      "fixture": "V09 V07 tier02 flared cast radial web01 rim lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier02-flared-cast-radial-web02",
+      "end": "start",
+      "actual_cap_center_to_stop": 9.70127783083321e-12,
+      "actual_first_or_last_segment_dot_bore_axis": 1.0,
+      "fixture": "V09 V07 tier02 flared cast radial web02 root lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier02-flared-cast-radial-web02",
+      "end": "end",
+      "actual_cap_center_to_stop": 2.980232396667946e-08,
+      "actual_first_or_last_segment_dot_bore_axis": 1.0,
+      "fixture": "V09 V07 tier02 flared cast radial web02 rim lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier02-flared-cast-radial-web03",
+      "end": "start",
+      "actual_cap_center_to_stop": 7.450580596923828e-09,
+      "actual_first_or_last_segment_dot_bore_axis": 0.9999999701976776,
+      "fixture": "V09 V07 tier02 flared cast radial web03 root lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier02-flared-cast-radial-web03",
+      "end": "end",
+      "actual_cap_center_to_stop": 4.770699320310986e-07,
+      "actual_first_or_last_segment_dot_bore_axis": 0.9999999403953552,
+      "fixture": "V09 V07 tier02 flared cast radial web03 rim lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier02-flared-cast-radial-web04",
+      "end": "start",
+      "actual_cap_center_to_stop": 1.5359765386647212e-08,
+      "actual_first_or_last_segment_dot_bore_axis": 1.0000000000000089,
+      "fixture": "V09 V07 tier02 flared cast radial web04 root lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier02-flared-cast-radial-web04",
+      "end": "end",
+      "actual_cap_center_to_stop": 3.003425057343598e-08,
+      "actual_first_or_last_segment_dot_bore_axis": 1.0,
+      "fixture": "V09 V07 tier02 flared cast radial web04 rim lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier02-flared-cast-radial-web05",
+      "end": "start",
+      "actual_cap_center_to_stop": 9.313225746154785e-10,
+      "actual_first_or_last_segment_dot_bore_axis": 1.0,
+      "fixture": "V09 V07 tier02 flared cast radial web05 root lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier02-flared-cast-radial-web05",
+      "end": "end",
+      "actual_cap_center_to_stop": 4.768953623117584e-07,
+      "actual_first_or_last_segment_dot_bore_axis": 1.0000000596046448,
+      "fixture": "V09 V07 tier02 flared cast radial web05 rim lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier02-flared-cast-radial-web06",
+      "end": "start",
+      "actual_cap_center_to_stop": 9.701276204529985e-12,
+      "actual_first_or_last_segment_dot_bore_axis": 1.0,
+      "fixture": "V09 V07 tier02 flared cast radial web06 root lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier02-flared-cast-radial-web06",
+      "end": "end",
+      "actual_cap_center_to_stop": 1.4901164351814637e-08,
+      "actual_first_or_last_segment_dot_bore_axis": 1.0,
+      "fixture": "V09 V07 tier02 flared cast radial web06 rim lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier02-flared-cast-radial-web07",
+      "end": "start",
+      "actual_cap_center_to_stop": 1.862645149230957e-09,
+      "actual_first_or_last_segment_dot_bore_axis": 1.0,
+      "fixture": "V09 V07 tier02 flared cast radial web07 root lug | Connected formed ring lug"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier02-flared-cast-radial-web07",
+      "end": "end",
+      "actual_cap_center_to_stop": 7.450580596923828e-09,
+      "actual_first_or_last_segment_dot_bore_axis": 1.0000000596046448,
+      "fixture": "V09 V07 tier02 flared cast radial web07 rim lug | Connected formed ring lug"
+    }
+  ],
+  "sampled_route_clearances": [
+    {
+      "route": "narrow-coil--1-00",
+      "sampled_center_and_chord_midpoint_count": 925,
+      "minimum_sampled_rock_and_machine_frame_surface_gap": 0.012757012860698403,
+      "nearest_part": "V04 retained noctilith blackrock 01",
+      "minimum_conservative_actual_insulator_radial_gap": 0.0003234854436971468
+    },
+    {
+      "route": "narrow-coil-1-00",
+      "sampled_center_and_chord_midpoint_count": 925,
+      "minimum_sampled_rock_and_machine_frame_surface_gap": 0.02197682056634149,
+      "nearest_part": "V04 retained noctilith blackrock 01",
+      "minimum_conservative_actual_insulator_radial_gap": 0.0003234846453548379
+    },
+    {
+      "route": "narrow-coil--1-01",
+      "sampled_center_and_chord_midpoint_count": 925,
+      "minimum_sampled_rock_and_machine_frame_surface_gap": 0.017669668392197694,
+      "nearest_part": "V04 retained noctilith blackrock 01",
+      "minimum_conservative_actual_insulator_radial_gap": 0.00032377388461359013
+    },
+    {
+      "route": "narrow-coil-1-01",
+      "sampled_center_and_chord_midpoint_count": 925,
+      "minimum_sampled_rock_and_machine_frame_surface_gap": 0.028999705574451775,
+      "nearest_part": "V10 substantial split receiver cover 01",
+      "minimum_conservative_actual_insulator_radial_gap": 0.0003237764830606865
+    },
+    {
+      "route": "narrow-coil--1-02",
+      "sampled_center_and_chord_midpoint_count": 925,
+      "minimum_sampled_rock_and_machine_frame_surface_gap": 0.009580430641248906,
+      "nearest_part": "V04 retained noctilith blackrock 03",
+      "minimum_conservative_actual_insulator_radial_gap": 0.0003239795831723735
+    },
+    {
+      "route": "narrow-coil-1-02",
+      "sampled_center_and_chord_midpoint_count": 925,
+      "minimum_sampled_rock_and_machine_frame_surface_gap": 0.018601195097055878,
+      "nearest_part": "V04 retained noctilith blackrock 03",
+      "minimum_conservative_actual_insulator_radial_gap": 0.0003239780148562993
+    },
+    {
+      "route": "narrow-coil--1-03",
+      "sampled_center_and_chord_midpoint_count": 925,
+      "minimum_sampled_rock_and_machine_frame_surface_gap": 0.02143258672611494,
+      "nearest_part": "V04 retained noctilith blackrock 04",
+      "minimum_conservative_actual_insulator_radial_gap": 0.00032392705642995956
+    },
+    {
+      "route": "narrow-coil-1-03",
+      "sampled_center_and_chord_midpoint_count": 925,
+      "minimum_sampled_rock_and_machine_frame_surface_gap": 0.02899981353282205,
+      "nearest_part": "V10 substantial split receiver cover 03",
+      "minimum_conservative_actual_insulator_radial_gap": 0.00032391424375334543
+    },
+    {
+      "route": "narrow-coil--1-04",
+      "sampled_center_and_chord_midpoint_count": 925,
+      "minimum_sampled_rock_and_machine_frame_surface_gap": 0.02079852888872881,
+      "nearest_part": "V04 retained noctilith blackrock 04",
+      "minimum_conservative_actual_insulator_radial_gap": 0.0003234855253393121
+    },
+    {
+      "route": "narrow-coil-1-04",
+      "sampled_center_and_chord_midpoint_count": 925,
+      "minimum_sampled_rock_and_machine_frame_surface_gap": 0.012455385351215502,
+      "nearest_part": "V04 retained noctilith blackrock 05",
+      "minimum_conservative_actual_insulator_radial_gap": 0.0003234853764549628
+    },
+    {
+      "route": "narrow-coil--1-05",
+      "sampled_center_and_chord_midpoint_count": 925,
+      "minimum_sampled_rock_and_machine_frame_surface_gap": 0.015622482682826337,
+      "nearest_part": "V04 retained noctilith blackrock 06",
+      "minimum_conservative_actual_insulator_radial_gap": 0.0003233315830877409
+    },
+    {
+      "route": "narrow-coil-1-05",
+      "sampled_center_and_chord_midpoint_count": 925,
+      "minimum_sampled_rock_and_machine_frame_surface_gap": 0.02260007411095477,
+      "nearest_part": "V04 retained noctilith blackrock 05",
+      "minimum_conservative_actual_insulator_radial_gap": 0.0003233406608428996
+    },
+    {
+      "route": "narrow-axial-power-bus--1",
+      "sampled_center_and_chord_midpoint_count": 1383,
+      "minimum_sampled_rock_and_machine_frame_surface_gap": 0.0011037286780052075,
+      "nearest_part": "V11 axialbus00 -1 actual protective ceramic wire sleeve"
+    },
+    {
+      "route": "narrow-axial-power-bus-1",
+      "sampled_center_and_chord_midpoint_count": 1383,
+      "minimum_sampled_rock_and_machine_frame_surface_gap": 0.0011037691551194669,
+      "nearest_part": "V11 axialbus04 1 actual protective ceramic wire sleeve"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier00-flared-cast-radial-web00",
+      "sampled_center_and_chord_midpoint_count": 191,
+      "minimum_sampled_rock_and_machine_frame_surface_gap": 0.00036839936723490237,
+      "nearest_part": "V11 fieldguide V07 tier00 flared cast radial web00 actual protective ceramic wire sleeve"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier00-flared-cast-radial-web01",
+      "sampled_center_and_chord_midpoint_count": 189,
+      "minimum_sampled_rock_and_machine_frame_surface_gap": 0.00035551220331874215,
+      "nearest_part": "V11 fieldguide V07 tier00 flared cast radial web01 actual protective ceramic wire sleeve"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier00-flared-cast-radial-web02",
+      "sampled_center_and_chord_midpoint_count": 191,
+      "minimum_sampled_rock_and_machine_frame_surface_gap": 0.00036801360409675476,
+      "nearest_part": "V11 fieldguide V07 tier00 flared cast radial web02 actual protective ceramic wire sleeve"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier00-flared-cast-radial-web03",
+      "sampled_center_and_chord_midpoint_count": 189,
+      "minimum_sampled_rock_and_machine_frame_surface_gap": 0.000355792761530996,
+      "nearest_part": "V11 fieldguide V07 tier00 flared cast radial web03 actual protective ceramic wire sleeve"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier00-flared-cast-radial-web04",
+      "sampled_center_and_chord_midpoint_count": 191,
+      "minimum_sampled_rock_and_machine_frame_surface_gap": 0.0003685953633983628,
+      "nearest_part": "V11 fieldguide V07 tier00 flared cast radial web04 actual protective ceramic wire sleeve"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier00-flared-cast-radial-web05",
+      "sampled_center_and_chord_midpoint_count": 189,
+      "minimum_sampled_rock_and_machine_frame_surface_gap": 0.00035579423918981855,
+      "nearest_part": "V11 fieldguide V07 tier00 flared cast radial web05 actual protective ceramic wire sleeve"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier00-flared-cast-radial-web06",
+      "sampled_center_and_chord_midpoint_count": 191,
+      "minimum_sampled_rock_and_machine_frame_surface_gap": 0.00036823921699045536,
+      "nearest_part": "V11 fieldguide V07 tier00 flared cast radial web06 actual protective ceramic wire sleeve"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier00-flared-cast-radial-web07",
+      "sampled_center_and_chord_midpoint_count": 189,
+      "minimum_sampled_rock_and_machine_frame_surface_gap": 0.00035519009453155274,
+      "nearest_part": "V11 fieldguide V07 tier00 flared cast radial web07 actual protective ceramic wire sleeve"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier01-flared-cast-radial-web00",
+      "sampled_center_and_chord_midpoint_count": 149,
+      "minimum_sampled_rock_and_machine_frame_surface_gap": 0.0003786802335611983,
+      "nearest_part": "V11 fieldguide V07 tier01 flared cast radial web00 actual protective ceramic wire sleeve"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier01-flared-cast-radial-web01",
+      "sampled_center_and_chord_midpoint_count": 151,
+      "minimum_sampled_rock_and_machine_frame_surface_gap": 0.00037872723166945763,
+      "nearest_part": "V11 fieldguide V07 tier01 flared cast radial web01 actual protective ceramic wire sleeve"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier01-flared-cast-radial-web02",
+      "sampled_center_and_chord_midpoint_count": 149,
+      "minimum_sampled_rock_and_machine_frame_surface_gap": 0.0003785886455648273,
+      "nearest_part": "V11 fieldguide V07 tier01 flared cast radial web02 actual protective ceramic wire sleeve"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier01-flared-cast-radial-web03",
+      "sampled_center_and_chord_midpoint_count": 151,
+      "minimum_sampled_rock_and_machine_frame_surface_gap": 0.0003787791574922134,
+      "nearest_part": "V11 fieldguide V07 tier01 flared cast radial web03 actual protective ceramic wire sleeve"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier01-flared-cast-radial-web04",
+      "sampled_center_and_chord_midpoint_count": 149,
+      "minimum_sampled_rock_and_machine_frame_surface_gap": 0.0003786702218435212,
+      "nearest_part": "V11 fieldguide V07 tier01 flared cast radial web04 actual protective ceramic wire sleeve"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier01-flared-cast-radial-web05",
+      "sampled_center_and_chord_midpoint_count": 151,
+      "minimum_sampled_rock_and_machine_frame_surface_gap": 0.00037880718841171645,
+      "nearest_part": "V11 fieldguide V07 tier01 flared cast radial web05 actual protective ceramic wire sleeve"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier01-flared-cast-radial-web06",
+      "sampled_center_and_chord_midpoint_count": 149,
+      "minimum_sampled_rock_and_machine_frame_surface_gap": 0.000378475708620981,
+      "nearest_part": "V11 fieldguide V07 tier01 flared cast radial web06 actual protective ceramic wire sleeve"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier01-flared-cast-radial-web07",
+      "sampled_center_and_chord_midpoint_count": 151,
+      "minimum_sampled_rock_and_machine_frame_surface_gap": 0.00037869822367048644,
+      "nearest_part": "V11 fieldguide V07 tier01 flared cast radial web07 actual protective ceramic wire sleeve"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier02-flared-cast-radial-web00",
+      "sampled_center_and_chord_midpoint_count": 117,
+      "minimum_sampled_rock_and_machine_frame_surface_gap": 0.0003594212241088187,
+      "nearest_part": "V11 fieldguide V07 tier02 flared cast radial web00 actual protective ceramic wire sleeve"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier02-flared-cast-radial-web01",
+      "sampled_center_and_chord_midpoint_count": 119,
+      "minimum_sampled_rock_and_machine_frame_surface_gap": 0.00035938384053341415,
+      "nearest_part": "V11 fieldguide V07 tier02 flared cast radial web01 actual protective ceramic wire sleeve"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier02-flared-cast-radial-web02",
+      "sampled_center_and_chord_midpoint_count": 117,
+      "minimum_sampled_rock_and_machine_frame_surface_gap": 0.00035878221203732756,
+      "nearest_part": "V11 fieldguide V07 tier02 flared cast radial web02 actual protective ceramic wire sleeve"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier02-flared-cast-radial-web03",
+      "sampled_center_and_chord_midpoint_count": 119,
+      "minimum_sampled_rock_and_machine_frame_surface_gap": 0.00035896800500384834,
+      "nearest_part": "V11 fieldguide V07 tier02 flared cast radial web03 actual protective ceramic wire sleeve"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier02-flared-cast-radial-web04",
+      "sampled_center_and_chord_midpoint_count": 117,
+      "minimum_sampled_rock_and_machine_frame_surface_gap": 0.00035950123265632815,
+      "nearest_part": "V11 fieldguide V07 tier02 flared cast radial web04 actual protective ceramic wire sleeve"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier02-flared-cast-radial-web05",
+      "sampled_center_and_chord_midpoint_count": 119,
+      "minimum_sampled_rock_and_machine_frame_surface_gap": 0.00035897914130434425,
+      "nearest_part": "V11 fieldguide V07 tier02 flared cast radial web05 actual protective ceramic wire sleeve"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier02-flared-cast-radial-web06",
+      "sampled_center_and_chord_midpoint_count": 117,
+      "minimum_sampled_rock_and_machine_frame_surface_gap": 0.0003587638184164789,
+      "nearest_part": "V11 fieldguide V07 tier02 flared cast radial web06 actual protective ceramic wire sleeve"
+    },
+    {
+      "route": "narrow-field-lead-V07-tier02-flared-cast-radial-web07",
+      "sampled_center_and_chord_midpoint_count": 119,
+      "minimum_sampled_rock_and_machine_frame_surface_gap": 0.0003589125893253436,
+      "nearest_part": "V11 fieldguide V07 tier02 flared cast radial web07 actual protective ceramic wire sleeve"
+    }
+  ],
+  "inventory": {
+    "continuous_windings": 12,
+    "axial_power_buses": 2,
+    "field_power_leads": 24,
+    "structural_ties": "Mechanical members, not wires",
+    "rock_fractures": "Recessed mineral faces, not wires"
+  },
+  "limits": [
+    "Every visible electrical route has typed actual Pipette plan/build and two actual fixtures. This is not a simulation of electrical ampacity.",
+    "Actual centerline rings reconstructed from actual reimported mesh vertices; ring and chord midpoint clearance witnesses are sampled static checks, not exhaustive dynamic triangle collision proof.",
+    "Separately passing full roundtrip receipt is required for triangle/UV/material, all receiver-seat and skull/bay gates."
+  ]
+}

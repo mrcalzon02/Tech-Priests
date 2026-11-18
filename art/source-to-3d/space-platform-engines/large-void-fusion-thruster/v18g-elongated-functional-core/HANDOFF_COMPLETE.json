@@ -1,0 +1,345 @@
+{
+  "status": "HANDOFF_COMPLETE",
+  "scope": "All mandatory current wide body and separate underlay technical gates passed. Native fit and animation/capture acceptance remain parent tasks.",
+  "body_source_sha256": "954c7ed2ef3f3d91e8f09c8427708cd5c42e784523ccbb832bf36a26f01b14bd",
+  "body_glb_sha256": "4d9ef76ab5452728437d399af5456fbaa2b3626381da548dfb06de1b47d713de",
+  "underlay_source_sha256": "a03b77e0792f95afb7580a9a27b66625c721ead80f8feb49e886666340b551ea",
+  "underlay_glb_sha256": "a041d26a3fec886dc644807374342f9e1869735eea5d178ebf6be4f2a17a1946",
+  "source_mesh_count": 40,
+  "actual_glb_mesh_count": 40,
+  "body_exclusion_count": 38,
+  "well_only_count": 2,
+  "source_and_actual_export_finite_nondegenerate_and_uv": true,
+  "world_correspondence": [
+    {
+      "mesh": "Bay bearing receiving shoe 0",
+      "triangles": 32,
+      "source_to_export_max_error": 0.0,
+      "export_to_source_max_error": 0.0
+    },
+    {
+      "mesh": "Bay bearing receiving shoe 1",
+      "triangles": 32,
+      "source_to_export_max_error": 0.0,
+      "export_to_source_max_error": 0.0
+    },
+    {
+      "mesh": "Bay bearing receiving shoe 2",
+      "triangles": 32,
+      "source_to_export_max_error": 0.0,
+      "export_to_source_max_error": 0.0
+    },
+    {
+      "mesh": "Bay bearing receiving shoe 3",
+      "triangles": 32,
+      "source_to_export_max_error": 0.0,
+      "export_to_source_max_error": 0.0
+    },
+    {
+      "mesh": "Bay bearing receiving shoe 4",
+      "triangles": 32,
+      "source_to_export_max_error": 0.0,
+      "export_to_source_max_error": 0.0
+    },
+    {
+      "mesh": "Bay bearing receiving shoe 5",
+      "triangles": 32,
+      "source_to_export_max_error": 0.0,
+      "export_to_source_max_error": 0.0
+    },
+    {
+      "mesh": "Installation bay foundation landing 0",
+      "triangles": 28,
+      "source_to_export_max_error": 0.0,
+      "export_to_source_max_error": 0.0
+    },
+    {
+      "mesh": "Installation bay foundation landing 1",
+      "triangles": 28,
+      "source_to_export_max_error": 0.0,
+      "export_to_source_max_error": 0.0
+    },
+    {
+      "mesh": "Installation bay foundation landing 2",
+      "triangles": 28,
+      "source_to_export_max_error": 0.0,
+      "export_to_source_max_error": 0.0
+    },
+    {
+      "mesh": "Installation bay foundation landing 3",
+      "triangles": 28,
+      "source_to_export_max_error": 0.0,
+      "export_to_source_max_error": 0.0
+    },
+    {
+      "mesh": "Installation bay foundation landing 4",
+      "triangles": 28,
+      "source_to_export_max_error": 0.0,
+      "export_to_source_max_error": 0.0
+    },
+    {
+      "mesh": "Installation bay foundation landing 5",
+      "triangles": 28,
+      "source_to_export_max_error": 0.0,
+      "export_to_source_max_error": 0.0
+    },
+    {
+      "mesh": "Low curved cast seat Low surrounding-platform diagonal 0",
+      "triangles": 716,
+      "source_to_export_max_error": 0.0,
+      "export_to_source_max_error": 0.0
+    },
+    {
+      "mesh": "Low curved cast seat Low surrounding-platform diagonal 1",
+      "triangles": 716,
+      "source_to_export_max_error": 0.0,
+      "export_to_source_max_error": 0.0
+    },
+    {
+      "mesh": "Low curved cast seat Low surrounding-platform diagonal 2",
+      "triangles": 716,
+      "source_to_export_max_error": 0.0,
+      "export_to_source_max_error": 0.0
+    },
+    {
+      "mesh": "Low curved cast seat Low surrounding-platform diagonal 3",
+      "triangles": 716,
+      "source_to_export_max_error": 0.0,
+      "export_to_source_max_error": 0.0
+    },
+    {
+      "mesh": "Low curved cast seat Low surrounding-platform diagonal 4",
+      "triangles": 716,
+      "source_to_export_max_error": 0.0,
+      "export_to_source_max_error": 0.0
+    },
+    {
+      "mesh": "Low curved cast seat Low surrounding-platform diagonal 5",
+      "triangles": 716,
+      "source_to_export_max_error": 0.0,
+      "export_to_source_max_error": 0.0
+    },
+    {
+      "mesh": "Low surrounding-platform diagonal 0",
+      "triangles": 44,
+      "source_to_export_max_error": 0.0,
+      "export_to_source_max_error": 0.0
+    },
+    {
+      "mesh": "Low surrounding-platform diagonal 1",
+      "triangles": 44,
+      "source_to_export_max_error": 0.0,
+      "export_to_source_max_error": 0.0
+    },
+    {
+      "mesh": "Low surrounding-platform diagonal 2",
+      "triangles": 44,
+      "source_to_export_max_error": 0.0,
+      "export_to_source_max_error": 0.0
+    },
+    {
+      "mesh": "Low surrounding-platform diagonal 3",
+      "triangles": 44,
+      "source_to_export_max_error": 0.0,
+      "export_to_source_max_error": 0.0
+    },
+    {
+      "mesh": "Low surrounding-platform diagonal 4",
+      "triangles": 28,
+      "source_to_export_max_error": 0.0,
+      "export_to_source_max_error": 0.0
+    },
+    {
+      "mesh": "Low surrounding-platform diagonal 5",
+      "triangles": 28,
+      "source_to_export_max_error": 0.0,
+      "export_to_source_max_error": 0.0
+    },
+    {
+      "mesh": "Mount V18 captive cast-root retaining plate 4",
+      "triangles": 32,
+      "source_to_export_max_error": 0.0,
+      "export_to_source_max_error": 0.0
+    },
+    {
+      "mesh": "Mount V18 captive cast-root retaining plate 5",
+      "triangles": 32,
+      "source_to_export_max_error": 0.0,
+      "export_to_source_max_error": 0.0
+    },
+    {
+      "mesh": "Mount V18 retained root 4 -0.022 retained shaft",
+      "triangles": 44,
+      "source_to_export_max_error": 0.0,
+      "export_to_source_max_error": 0.0
+    },
+    {
+      "mesh": "Mount V18 retained root 4 -0.022 seated bearing washer",
+      "triangles": 256,
+      "source_to_export_max_error": 0.0,
+      "export_to_source_max_error": 0.0
+    },
+    {
+      "mesh": "Mount V18 retained root 4 -0.022 six-flat captive head",
+      "triangles": 20,
+      "source_to_export_max_error": 0.0,
+      "export_to_source_max_error": 0.0
+    },
+    {
+      "mesh": "Mount V18 retained root 4 0.022 retained shaft",
+      "triangles": 44,
+      "source_to_export_max_error": 0.0,
+      "export_to_source_max_error": 0.0
+    },
+    {
+      "mesh": "Mount V18 retained root 4 0.022 seated bearing washer",
+      "triangles": 256,
+      "source_to_export_max_error": 0.0,
+      "export_to_source_max_error": 0.0
+    },
+    {
+      "mesh": "Mount V18 retained root 4 0.022 six-flat captive head",
+      "triangles": 20,
+      "source_to_export_max_error": 0.0,
+      "export_to_source_max_error": 0.0
+    },
+    {
+      "mesh": "Mount V18 retained root 5 -0.022 retained shaft",
+      "triangles": 44,
+      "source_to_export_max_error": 0.0,
+      "export_to_source_max_error": 0.0
+    },
+    {
+      "mesh": "Mount V18 retained root 5 -0.022 seated bearing washer",
+      "triangles": 256,
+      "source_to_export_max_error": 0.0,
+      "export_to_source_max_error": 0.0
+    },
+    {
+      "mesh": "Mount V18 retained root 5 -0.022 six-flat captive head",
+      "triangles": 20,
+      "source_to_export_max_error": 0.0,
+      "export_to_source_max_error": 0.0
+    },
+    {
+      "mesh": "Mount V18 retained root 5 0.022 retained shaft",
+      "triangles": 44,
+      "source_to_export_max_error": 0.0,
+      "export_to_source_max_error": 0.0
+    },
+    {
+      "mesh": "Mount V18 retained root 5 0.022 seated bearing washer",
+      "triangles": 256,
+      "source_to_export_max_error": 0.0,
+      "export_to_source_max_error": 0.0
+    },
+    {
+      "mesh": "Mount V18 retained root 5 0.022 six-flat captive head",
+      "triangles": 20,
+      "source_to_export_max_error": 0.0,
+      "export_to_source_max_error": 0.0
+    },
+    {
+      "mesh": "WIDE BAY V16 open-front floor sidewalls and retained rims",
+      "triangles": 97,
+      "source_to_export_max_error": 0.0,
+      "export_to_source_max_error": 0.0
+    },
+    {
+      "mesh": "WIDE BAY V16 fore backwall and closed rim",
+      "triangles": 12,
+      "source_to_export_max_error": 0.0,
+      "export_to_source_max_error": 0.0
+    }
+  ],
+  "actual_new_well_bounds": [
+    [
+      -1.3990000486373901,
+      0.0,
+      -0.5035975575447083
+    ],
+    [
+      1.3990000486373901,
+      1.5499999523162842,
+      -0.0020000000949949026
+    ]
+  ],
+  "actual_export_body_sat_intersections": 0,
+  "actual_export_body_to_well_vertex_clearance": 0.031064348295331,
+  "actual_export_well_to_body_vertex_clearance": 0.022530024871230125,
+  "floor_vertical_clearance": 0.08000000000000002,
+  "actual_pan_wall_max_contact_gap": 0.0,
+  "packed_source_images": 12,
+  "embedded_glb_images": 12,
+  "pbr_material_count": 4,
+  "camera_contract_sha256": "314132ec8c5c398970ac7bbe8b776d1f3b89b682c1b132e21acbca63af803b29",
+  "camera": {
+    "name": "FMPL_CAPTURE_CAMERA",
+    "matrix_world": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.32019054889678955
+      ],
+      [
+        0.0,
+        0.7071067690849304,
+        -0.7071067690849304,
+        -14.47154426574707
+      ],
+      [
+        0.0,
+        0.7071067690849304,
+        0.7071067690849304,
+        14.472244262695312
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "type": "ORTHO",
+    "ortho_scale": 8.231695175170898,
+    "shift_x": 0.0,
+    "shift_y": 0.0,
+    "resolution": [
+      512,
+      512
+    ]
+  },
+  "registration": {
+    "native_pixels_per_source_unit": 32,
+    "native_cut_y": 1,
+    "status": "CANDIDATE_REQUIRES_NEW_NATIVE_FIT"
+  },
+  "body_alpha_changed_pixels": 0,
+  "body_receipts": {
+    "export-inspection.json": {
+      "status": "PASS_CONSTRUCTION_EXPORT_ONLY",
+      "sha256": "4bd6baac856d1d1b960a8d601507c46478ca72790fb2ccf01637fc7db2db179f"
+    },
+    "power-bay-validation.json": {
+      "status": "PASS_ACTUAL_POWER_AND_BAY",
+      "sha256": "72d958880d829e35fc6f3b7a7d3881a0915064696004ae56e9d96262b900b54f"
+    },
+    "functional-detail-validation.json": {
+      "status": "PASS_ACTUAL_FUNCTIONAL_SEATS_GUIDE_BORES_AND_OPAQUE_CORE",
+      "sha256": "2fa93e99843597c11dd7095b39c03c2c8ff00e09c9fddefe91bac89ae38f14b2"
+    }
+  },
+  "underlay_receipts": {
+    "underlay-validation.json": "473a3e79cd48063a7702d54425bb963c1dba9a31fcc6798f6f6b3d89d653d995",
+    "underlay-contact-export-validation.json": "7bfc9a584435e6c81fd43690f257fe0a8aa198e513d45ddc9c8455221aad3f23",
+    "capture-source-geometry.json": "1e8e38618af9685af15bf486cdbe3054aa4fc202ae7061d551258991f6398da5"
+  },
+  "script_sha256": "b5a1bdf495d9c3d9204da042756e5407e16c858c74c2aa7ac203d0df9f734a3d",
+  "count_correction": "38 unchanged source-specific support/exclusion objects plus2 new well objects=40. Earlier66/68 message wording was incorrect; no GLB consolidation occurred.",
+  "failed_studies_preserved": [
+    "service-underlay-19c-brace-receivers",
+    "service-underlay-19d-verified-clean-well"
+  ],
+  "cleanup": "Three exact zero-cross collinear CSG triangles removed after final explicit tessellation; thresholds unchanged; envelope, contacts and camera unchanged."
+}

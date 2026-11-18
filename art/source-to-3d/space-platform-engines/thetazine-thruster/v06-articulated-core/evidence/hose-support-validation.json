@@ -1,0 +1,3187 @@
+{
+  "status": "PASS_EIGHT_HOSES_AND_EIGHT_SUPPORT_SEATS_66_REOPENED_SOURCE_POSES",
+  "source": {
+    "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\core-03c-seated-interfaces\\thetazine-v06-seated-interfaces.blend",
+    "sha256": "82fb6a2a74209ec8cc714b5dfa72934bec024b0b2afafec43357a957a10b269f"
+  },
+  "baseline_sha256": "f02f30ad740636d6fa7906a01c6b86af45d90cf1eb940a7c7fc627ed065a2f34",
+  "script_sha256": "5fe1fee4dff248470113abe27a8169cf815e078c39b3892f95a4297e6ce8aed5",
+  "measured_hose_poses": 528,
+  "measured_support_poses": 528,
+  "max_captive_union_gap": 3.3532579380696226e-07,
+  "max_radius_change": 1.7299267923709394e-06,
+  "max_support_seat_error": 2.9200193199910854e-07,
+  "working_loop_max_error": 0.0,
+  "topology_materials_uvs_unchanged": true,
+  "measurements": [
+    {
+      "frame": 0,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 3.291774098146435e-08,
+      "maximum_radius_change": 3.463751589716235e-08
+    },
+    {
+      "frame": 0,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 6.66400185600605e-09,
+      "maximum_radius_change": 1.6584548678810762e-08
+    },
+    {
+      "frame": 0,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 3.013573351094411e-08,
+      "maximum_radius_change": 0.0
+    },
+    {
+      "frame": 0,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 3.291774098146435e-08,
+      "maximum_radius_change": 0.0
+    },
+    {
+      "frame": 0,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 9.424321852717194e-09,
+      "maximum_radius_change": 7.134543414388794e-09
+    },
+    {
+      "frame": 0,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 3.025522903145073e-08,
+      "maximum_radius_change": 0.0
+    },
+    {
+      "frame": 0,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 5.990192664116746e-08,
+      "maximum_radius_change": 6.493425817877263e-09
+    },
+    {
+      "frame": 0,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 5.960464455334602e-09,
+      "maximum_radius_change": 1.1594888389698799e-08
+    },
+    {
+      "frame": 1,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 1.0545138125485848e-07,
+      "maximum_radius_change": 4.1396750120881176e-07
+    },
+    {
+      "frame": 1,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 2.694855531563326e-08,
+      "maximum_radius_change": 4.205119960992709e-07
+    },
+    {
+      "frame": 1,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 1.2420812835078253e-07,
+      "maximum_radius_change": 4.235661388435341e-07
+    },
+    {
+      "frame": 1,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 7.468440580130122e-08,
+      "maximum_radius_change": 4.037287373859222e-07
+    },
+    {
+      "frame": 1,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 2.6832597733365143e-08,
+      "maximum_radius_change": 4.177224991741557e-07
+    },
+    {
+      "frame": 1,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 1.236347467849078e-07,
+      "maximum_radius_change": 4.1494003989728245e-07
+    },
+    {
+      "frame": 1,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 1.446564327752256e-07,
+      "maximum_radius_change": 3.8526743992295387e-07
+    },
+    {
+      "frame": 1,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 2.384930732690812e-07,
+      "maximum_radius_change": 3.7426556766251284e-07
+    },
+    {
+      "frame": 2,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 5.230286354296453e-08,
+      "maximum_radius_change": 5.760236732182955e-07
+    },
+    {
+      "frame": 2,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 3.610182337600967e-08,
+      "maximum_radius_change": 5.955274951507938e-07
+    },
+    {
+      "frame": 2,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 6.426530673404079e-08,
+      "maximum_radius_change": 5.631643355541449e-07
+    },
+    {
+      "frame": 2,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 9.70293319947642e-08,
+      "maximum_radius_change": 5.648003827962711e-07
+    },
+    {
+      "frame": 2,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 2.385053654798534e-07,
+      "maximum_radius_change": 5.998951300018041e-07
+    },
+    {
+      "frame": 2,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 1.3113021846145045e-07,
+      "maximum_radius_change": 5.923127329721112e-07
+    },
+    {
+      "frame": 2,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 2.384930732690812e-07,
+      "maximum_radius_change": 4.988856080814785e-07
+    },
+    {
+      "frame": 2,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 2.38790817544194e-07,
+      "maximum_radius_change": 5.353330503263254e-07
+    },
+    {
+      "frame": 3,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 1.831327855339012e-07,
+      "maximum_radius_change": 7.6190809457366e-07
+    },
+    {
+      "frame": 3,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 9.56190298773979e-08,
+      "maximum_radius_change": 7.757274998604347e-07
+    },
+    {
+      "frame": 3,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 8.760057951512653e-08,
+      "maximum_radius_change": 7.608428798933087e-07
+    },
+    {
+      "frame": 3,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 1.560002843872414e-07,
+      "maximum_radius_change": 7.463188388401321e-07
+    },
+    {
+      "frame": 3,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 2.386077926054893e-07,
+      "maximum_radius_change": 7.662506306405081e-07
+    },
+    {
+      "frame": 3,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 1.0362469338604306e-07,
+      "maximum_radius_change": 7.826484988843196e-07
+    },
+    {
+      "frame": 3,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 6.07850493533873e-08,
+      "maximum_radius_change": 6.744919838139185e-07
+    },
+    {
+      "frame": 3,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 6.136673772707681e-08,
+      "maximum_radius_change": 6.602999586269309e-07
+    },
+    {
+      "frame": 4,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 3.5762786843029915e-08,
+      "maximum_radius_change": 9.390192210606552e-07
+    },
+    {
+      "frame": 4,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 8.769004202072542e-08,
+      "maximum_radius_change": 9.411657707070198e-07
+    },
+    {
+      "frame": 4,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 5.4056516741305815e-08,
+      "maximum_radius_change": 9.314858363390632e-07
+    },
+    {
+      "frame": 4,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 1.1511568984114005e-07,
+      "maximum_radius_change": 9.390686910304424e-07
+    },
+    {
+      "frame": 4,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 4.309800237651685e-08,
+      "maximum_radius_change": 9.583457925982364e-07
+    },
+    {
+      "frame": 4,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 6.02714671097234e-08,
+      "maximum_radius_change": 9.540669566876492e-07
+    },
+    {
+      "frame": 4,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 5.990192664116746e-08,
+      "maximum_radius_change": 8.576841569324367e-07
+    },
+    {
+      "frame": 4,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 1.2215317208718776e-07,
+      "maximum_radius_change": 8.527918212153374e-07
+    },
+    {
+      "frame": 5,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 1.6388567792419337e-07,
+      "maximum_radius_change": 1.14398546818828e-06
+    },
+    {
+      "frame": 5,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 2.3850354714539556e-07,
+      "maximum_radius_change": 1.1564875512237727e-06
+    },
+    {
+      "frame": 5,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 4.9151249269583314e-08,
+      "maximum_radius_change": 1.1267326873870553e-06
+    },
+    {
+      "frame": 5,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 3.291774098146435e-08,
+      "maximum_radius_change": 1.1387062672507664e-06
+    },
+    {
+      "frame": 5,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 5.342935177091331e-08,
+      "maximum_radius_change": 1.1480934970914403e-06
+    },
+    {
+      "frame": 5,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 4.8514666045122425e-08,
+      "maximum_radius_change": 1.170367872130318e-06
+    },
+    {
+      "frame": 5,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 1.9221920384900836e-07,
+      "maximum_radius_change": 9.555224293467113e-07
+    },
+    {
+      "frame": 5,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 1.6995164650069436e-07,
+      "maximum_radius_change": 1.0259925393371616e-06
+    },
+    {
+      "frame": 6,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 1.0728836064011205e-07,
+      "maximum_radius_change": 1.3309730705346468e-06
+    },
+    {
+      "frame": 6,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 2.4978897800236503e-08,
+      "maximum_radius_change": 1.353812572740809e-06
+    },
+    {
+      "frame": 6,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 8.344650259672903e-08,
+      "maximum_radius_change": 1.3122293077705294e-06
+    },
+    {
+      "frame": 6,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 3.291774098146435e-08,
+      "maximum_radius_change": 1.3141621012513482e-06
+    },
+    {
+      "frame": 6,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 1.1983642817716412e-07,
+      "maximum_radius_change": 1.3439925661273833e-06
+    },
+    {
+      "frame": 6,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 4.14027095181891e-08,
+      "maximum_radius_change": 1.3127427029441252e-06
+    },
+    {
+      "frame": 6,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 2.384930732690812e-07,
+      "maximum_radius_change": 1.0941427196070608e-06
+    },
+    {
+      "frame": 6,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 5.900558778515827e-08,
+      "maximum_radius_change": 1.120215007643921e-06
+    },
+    {
+      "frame": 7,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 9.536743172944284e-08,
+      "maximum_radius_change": 1.4785435508979372e-06
+    },
+    {
+      "frame": 7,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 2.3855009214303215e-07,
+      "maximum_radius_change": 1.5115178442631771e-06
+    },
+    {
+      "frame": 7,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 1.4308218816049022e-07,
+      "maximum_radius_change": 1.4940191238044243e-06
+    },
+    {
+      "frame": 7,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 1.4354699338743786e-07,
+      "maximum_radius_change": 1.4856220183628865e-06
+    },
+    {
+      "frame": 7,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 2.9950963321619396e-08,
+      "maximum_radius_change": 1.5085477877707643e-06
+    },
+    {
+      "frame": 7,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 1.2013700229374393e-07,
+      "maximum_radius_change": 1.489948113858608e-06
+    },
+    {
+      "frame": 7,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 2.6259888129542254e-07,
+      "maximum_radius_change": 1.2993008756678748e-06
+    },
+    {
+      "frame": 7,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 2.384185791015625e-07,
+      "maximum_radius_change": 1.2938209717622273e-06
+    },
+    {
+      "frame": 8,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 8.780312455982243e-08,
+      "maximum_radius_change": 1.6166341969131581e-06
+    },
+    {
+      "frame": 8,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 5.093168053068807e-08,
+      "maximum_radius_change": 1.6634498093553995e-06
+    },
+    {
+      "frame": 8,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 1.0323827304756276e-07,
+      "maximum_radius_change": 1.6402842805962603e-06
+    },
+    {
+      "frame": 8,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 6.44722808939407e-08,
+      "maximum_radius_change": 1.6195579762984247e-06
+    },
+    {
+      "frame": 8,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 1.192465366348007e-07,
+      "maximum_radius_change": 1.6459175393446213e-06
+    },
+    {
+      "frame": 8,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 7.177349669371893e-08,
+      "maximum_radius_change": 1.6272187152305273e-06
+    },
+    {
+      "frame": 8,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 6.583548183979798e-08,
+      "maximum_radius_change": 1.3678528468022422e-06
+    },
+    {
+      "frame": 8,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 5.127385414230728e-08,
+      "maximum_radius_change": 1.3802444529670277e-06
+    },
+    {
+      "frame": 9,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 1.3113021846145045e-07,
+      "maximum_radius_change": 1.6945622658970372e-06
+    },
+    {
+      "frame": 9,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 2.384863813862163e-07,
+      "maximum_radius_change": 1.696312996041227e-06
+    },
+    {
+      "frame": 9,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 1.8869836481335167e-07,
+      "maximum_radius_change": 1.706371348761393e-06
+    },
+    {
+      "frame": 9,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 9.610960191761888e-08,
+      "maximum_radius_change": 1.6947490080049255e-06
+    },
+    {
+      "frame": 9,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 1.2095725618579294e-08,
+      "maximum_radius_change": 1.70613372749151e-06
+    },
+    {
+      "frame": 9,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 1.638856779726475e-07,
+      "maximum_radius_change": 1.7299267923709394e-06
+    },
+    {
+      "frame": 9,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 1.9750644611578218e-07,
+      "maximum_radius_change": 1.4875868375244239e-06
+    },
+    {
+      "frame": 9,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 2.3908819103729953e-07,
+      "maximum_radius_change": 1.4207889256975803e-06
+    },
+    {
+      "frame": 10,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 1.3328003750243127e-07,
+      "maximum_radius_change": 1.6982742455373678e-06
+    },
+    {
+      "frame": 10,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 2.3847561578686786e-07,
+      "maximum_radius_change": 1.7273767246167582e-06
+    },
+    {
+      "frame": 10,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 1.0990553437723634e-07,
+      "maximum_radius_change": 1.7166571338461667e-06
+    },
+    {
+      "frame": 10,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 1.25736135929983e-07,
+      "maximum_radius_change": 1.6992066022986085e-06
+    },
+    {
+      "frame": 10,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 1.6787145579527732e-07,
+      "maximum_radius_change": 1.7053807976480373e-06
+    },
+    {
+      "frame": 10,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 5.96791041642727e-08,
+      "maximum_radius_change": 1.706734979414759e-06
+    },
+    {
+      "frame": 10,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 7.539457482173755e-08,
+      "maximum_radius_change": 1.4686761362209255e-06
+    },
+    {
+      "frame": 10,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 2.384185791015625e-07,
+      "maximum_radius_change": 1.4771956558037869e-06
+    },
+    {
+      "frame": 11,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 1.1920928955078125e-07,
+      "maximum_radius_change": 1.6543121013345985e-06
+    },
+    {
+      "frame": 11,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 2.3847241511022987e-07,
+      "maximum_radius_change": 1.6542825924670268e-06
+    },
+    {
+      "frame": 11,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 1.192465366345406e-07,
+      "maximum_radius_change": 1.6596097779791874e-06
+    },
+    {
+      "frame": 11,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 1.2331104797923208e-07,
+      "maximum_radius_change": 1.6656243481405486e-06
+    },
+    {
+      "frame": 11,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 7.264984710733303e-08,
+      "maximum_radius_change": 1.6471567445552893e-06
+    },
+    {
+      "frame": 11,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 1.1935820814558717e-07,
+      "maximum_radius_change": 1.66254180912484e-06
+    },
+    {
+      "frame": 11,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 9.775888610987443e-08,
+      "maximum_radius_change": 1.4541217134150797e-06
+    },
+    {
+      "frame": 11,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 2.384930732690812e-07,
+      "maximum_radius_change": 1.4502448181311078e-06
+    },
+    {
+      "frame": 12,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 4.460403189384421e-08,
+      "maximum_radius_change": 1.567230264315489e-06
+    },
+    {
+      "frame": 12,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 5.98660060705509e-08,
+      "maximum_radius_change": 1.5957144908068654e-06
+    },
+    {
+      "frame": 12,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 5.066394803687757e-08,
+      "maximum_radius_change": 1.5658225704373585e-06
+    },
+    {
+      "frame": 12,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 7.562981574234829e-08,
+      "maximum_radius_change": 1.5470849862864178e-06
+    },
+    {
+      "frame": 12,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 5.206884489089101e-08,
+      "maximum_radius_change": 1.5785035067800157e-06
+    },
+    {
+      "frame": 12,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 4.777675734913695e-08,
+      "maximum_radius_change": 1.5567363555873959e-06
+    },
+    {
+      "frame": 12,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 5.990192664116746e-08,
+      "maximum_radius_change": 1.3616978502134502e-06
+    },
+    {
+      "frame": 12,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 1.4660804115147729e-07,
+      "maximum_radius_change": 1.3572043592383065e-06
+    },
+    {
+      "frame": 13,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 1.0409503702663455e-07,
+      "maximum_radius_change": 1.4374898014563042e-06
+    },
+    {
+      "frame": 13,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 1.6693000453458712e-07,
+      "maximum_radius_change": 1.4661129240922666e-06
+    },
+    {
+      "frame": 13,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 1.6903461118117696e-07,
+      "maximum_radius_change": 1.4372066779871906e-06
+    },
+    {
+      "frame": 13,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 2.3215224865843272e-07,
+      "maximum_radius_change": 1.4291548836586898e-06
+    },
+    {
+      "frame": 13,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 2.3875826985183813e-07,
+      "maximum_radius_change": 1.4538222259663502e-06
+    },
+    {
+      "frame": 13,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 1.5497207634257012e-07,
+      "maximum_radius_change": 1.4309373569248995e-06
+    },
+    {
+      "frame": 13,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 1.21130951841284e-07,
+      "maximum_radius_change": 1.2324525444987189e-06
+    },
+    {
+      "frame": 13,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 1.7047345199439115e-07,
+      "maximum_radius_change": 1.251520210687751e-06
+    },
+    {
+      "frame": 14,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 6.078504937516057e-08,
+      "maximum_radius_change": 1.280246209212077e-06
+    },
+    {
+      "frame": 14,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 1.0196753119925981e-07,
+      "maximum_radius_change": 1.3029244666368234e-06
+    },
+    {
+      "frame": 14,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 1.3197415958691594e-07,
+      "maximum_radius_change": 1.2672275633424102e-06
+    },
+    {
+      "frame": 14,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 9.991559150229412e-08,
+      "maximum_radius_change": 1.2777753581189044e-06
+    },
+    {
+      "frame": 14,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 4.8067794667410106e-08,
+      "maximum_radius_change": 1.2949565740827396e-06
+    },
+    {
+      "frame": 14,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 6.87394297132623e-08,
+      "maximum_radius_change": 1.2931095808577098e-06
+    },
+    {
+      "frame": 14,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 1.234550188570532e-07,
+      "maximum_radius_change": 1.0966559693265099e-06
+    },
+    {
+      "frame": 14,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 1.461225827316915e-07,
+      "maximum_radius_change": 1.086661448539139e-06
+    },
+    {
+      "frame": 15,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 1.3113021846145045e-07,
+      "maximum_radius_change": 1.0806865414908495e-06
+    },
+    {
+      "frame": 15,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 2.3859342900828183e-07,
+      "maximum_radius_change": 1.089934665798875e-06
+    },
+    {
+      "frame": 15,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 1.2703622274164917e-07,
+      "maximum_radius_change": 1.083379364857917e-06
+    },
+    {
+      "frame": 15,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 9.629425069694699e-08,
+      "maximum_radius_change": 1.07422484814379e-06
+    },
+    {
+      "frame": 15,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 2.3843982395113393e-07,
+      "maximum_radius_change": 1.124857241852073e-06
+    },
+    {
+      "frame": 15,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 1.2420812836543371e-07,
+      "maximum_radius_change": 1.099634718768061e-06
+    },
+    {
+      "frame": 15,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 1.2215317208718776e-07,
+      "maximum_radius_change": 9.640836294844135e-07
+    },
+    {
+      "frame": 15,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 1.0132789627620757e-07,
+      "maximum_radius_change": 9.523972537978098e-07
+    },
+    {
+      "frame": 16,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 5.623090943351915e-08,
+      "maximum_radius_change": 8.836095517772424e-07
+    },
+    {
+      "frame": 16,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 2.4260193259086992e-08,
+      "maximum_radius_change": 8.95951400445294e-07
+    },
+    {
+      "frame": 16,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 7.34855413214493e-08,
+      "maximum_radius_change": 8.85492874636018e-07
+    },
+    {
+      "frame": 16,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 1.436706876026324e-07,
+      "maximum_radius_change": 8.866042224969783e-07
+    },
+    {
+      "frame": 16,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 1.8525595594125664e-08,
+      "maximum_radius_change": 9.04474977067582e-07
+    },
+    {
+      "frame": 16,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 9.098254152786752e-08,
+      "maximum_radius_change": 8.933241253394897e-07
+    },
+    {
+      "frame": 16,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 5.990192664116746e-08,
+      "maximum_radius_change": 7.984843544694975e-07
+    },
+    {
+      "frame": 16,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 5.6545930832510786e-08,
+      "maximum_radius_change": 7.723511194906996e-07
+    },
+    {
+      "frame": 17,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 2.2907112667549825e-07,
+      "maximum_radius_change": 6.783544006377928e-07
+    },
+    {
+      "frame": 17,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 1.2540236853434453e-07,
+      "maximum_radius_change": 6.894614843627744e-07
+    },
+    {
+      "frame": 17,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 2.149076030797054e-07,
+      "maximum_radius_change": 6.738180553245154e-07
+    },
+    {
+      "frame": 17,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 1.618131633911191e-07,
+      "maximum_radius_change": 6.82623498129975e-07
+    },
+    {
+      "frame": 17,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 4.935412138822176e-08,
+      "maximum_radius_change": 7.016872613785363e-07
+    },
+    {
+      "frame": 17,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 1.554298973472402e-07,
+      "maximum_radius_change": 6.873214284525142e-07
+    },
+    {
+      "frame": 17,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 5.990192664116746e-08,
+      "maximum_radius_change": 6.008864122594715e-07
+    },
+    {
+      "frame": 17,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 2.384185791015625e-07,
+      "maximum_radius_change": 6.24536730518821e-07
+    },
+    {
+      "frame": 18,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 3.291774098146435e-08,
+      "maximum_radius_change": 4.969925339742831e-07
+    },
+    {
+      "frame": 18,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 7.193669662160688e-08,
+      "maximum_radius_change": 4.888316425116779e-07
+    },
+    {
+      "frame": 18,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 7.913063794886659e-08,
+      "maximum_radius_change": 5.23938886387576e-07
+    },
+    {
+      "frame": 18,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 1.4354699338743786e-07,
+      "maximum_radius_change": 4.87104666102578e-07
+    },
+    {
+      "frame": 18,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 2.3858732160466166e-07,
+      "maximum_radius_change": 5.018209261881124e-07
+    },
+    {
+      "frame": 18,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 1.4841436856089175e-07,
+      "maximum_radius_change": 5.37575345585517e-07
+    },
+    {
+      "frame": 18,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 1.5043532200570454e-07,
+      "maximum_radius_change": 4.5241405612767016e-07
+    },
+    {
+      "frame": 18,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 9.775888610987443e-08,
+      "maximum_radius_change": 4.4625848787116507e-07
+    },
+    {
+      "frame": 19,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 1.0728836064011205e-07,
+      "maximum_radius_change": 3.238597029303625e-07
+    },
+    {
+      "frame": 19,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 2.385221662343757e-07,
+      "maximum_radius_change": 3.401610019077017e-07
+    },
+    {
+      "frame": 19,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 1.1935820814558717e-07,
+      "maximum_radius_change": 3.5635487213858674e-07
+    },
+    {
+      "frame": 19,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 1.4354699338743786e-07,
+      "maximum_radius_change": 3.2689454845802324e-07
+    },
+    {
+      "frame": 19,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 2.3851169317571173e-07,
+      "maximum_radius_change": 3.435408006818852e-07
+    },
+    {
+      "frame": 19,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 1.1954409551864976e-07,
+      "maximum_radius_change": 3.387933607129634e-07
+    },
+    {
+      "frame": 19,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 5.990192664116746e-08,
+      "maximum_radius_change": 3.1507810886038934e-07
+    },
+    {
+      "frame": 19,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 2.384185791015625e-07,
+      "maximum_radius_change": 3.078073849208107e-07
+    },
+    {
+      "frame": 20,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 1.0728836064011205e-07,
+      "maximum_radius_change": 2.1222105220375376e-07
+    },
+    {
+      "frame": 20,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 1.0308828055725477e-07,
+      "maximum_radius_change": 2.1572440775385893e-07
+    },
+    {
+      "frame": 20,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 1.5600028421120072e-07,
+      "maximum_radius_change": 2.191303812293377e-07
+    },
+    {
+      "frame": 20,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 3.371747868310783e-08,
+      "maximum_radius_change": 2.0183759366632081e-07
+    },
+    {
+      "frame": 20,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 9.831679142627972e-08,
+      "maximum_radius_change": 2.2623195701509946e-07
+    },
+    {
+      "frame": 20,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 1.1980385328233493e-07,
+      "maximum_radius_change": 2.149657890027079e-07
+    },
+    {
+      "frame": 20,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 1.7078577002141285e-07,
+      "maximum_radius_change": 2.082700176417318e-07
+    },
+    {
+      "frame": 20,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 2.384185791015625e-07,
+      "maximum_radius_change": 2.2440146983659925e-07
+    },
+    {
+      "frame": 21,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 7.907449693270114e-08,
+      "maximum_radius_change": 1.1790714245230038e-07
+    },
+    {
+      "frame": 21,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 2.385221662343757e-07,
+      "maximum_radius_change": 1.3276570969000812e-07
+    },
+    {
+      "frame": 21,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 6.643979788100315e-08,
+      "maximum_radius_change": 1.3352506442187995e-07
+    },
+    {
+      "frame": 21,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 5.623090943351915e-08,
+      "maximum_radius_change": 1.1560765514340154e-07
+    },
+    {
+      "frame": 21,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 1.319848061608304e-07,
+      "maximum_radius_change": 1.2858897696643723e-07
+    },
+    {
+      "frame": 21,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 5.230286356826886e-08,
+      "maximum_radius_change": 1.2802621821017546e-07
+    },
+    {
+      "frame": 21,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 7.34855413394595e-08,
+      "maximum_radius_change": 1.6358699587992742e-07
+    },
+    {
+      "frame": 21,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 1.6953304575274917e-07,
+      "maximum_radius_change": 1.394494210452124e-07
+    },
+    {
+      "frame": 22,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 1.44164402669869e-07,
+      "maximum_radius_change": 8.94107159282731e-08
+    },
+    {
+      "frame": 22,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 3.904452576784404e-08,
+      "maximum_radius_change": 1.021405628826022e-07
+    },
+    {
+      "frame": 22,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 2.0320289060148598e-07,
+      "maximum_radius_change": 7.5325886375599e-08
+    },
+    {
+      "frame": 22,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 1.7891324782063461e-07,
+      "maximum_radius_change": 7.177035045435876e-08
+    },
+    {
+      "frame": 22,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 2.384186518611297e-07,
+      "maximum_radius_change": 9.290149971530326e-08
+    },
+    {
+      "frame": 22,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 1.3490283843837062e-07,
+      "maximum_radius_change": 8.167030390859864e-08
+    },
+    {
+      "frame": 22,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 5.990192664116746e-08,
+      "maximum_radius_change": 1.1835733901982559e-07
+    },
+    {
+      "frame": 22,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 2.384930732690812e-07,
+      "maximum_radius_change": 1.0821977947106376e-07
+    },
+    {
+      "frame": 23,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 8.107108181777529e-08,
+      "maximum_radius_change": 6.674921744498352e-08
+    },
+    {
+      "frame": 23,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 4.785946991691136e-08,
+      "maximum_radius_change": 1.0152775933858216e-07
+    },
+    {
+      "frame": 23,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 3.5886748462108216e-08,
+      "maximum_radius_change": 6.136540880996577e-08
+    },
+    {
+      "frame": 23,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 9.386548841834098e-08,
+      "maximum_radius_change": 7.159506269782678e-08
+    },
+    {
+      "frame": 23,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 2.4343710273647718e-08,
+      "maximum_radius_change": 1.2291146692100519e-07
+    },
+    {
+      "frame": 23,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 6.75007800088019e-08,
+      "maximum_radius_change": 7.999278771320117e-08
+    },
+    {
+      "frame": 23,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 5.990192664116746e-08,
+      "maximum_radius_change": 1.224599501872814e-07
+    },
+    {
+      "frame": 23,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 7.372687403900928e-08,
+      "maximum_radius_change": 1.223123219859512e-07
+    },
+    {
+      "frame": 24,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 5.7480637822320996e-08,
+      "maximum_radius_change": 1.0582991180618784e-07
+    },
+    {
+      "frame": 24,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 1.1932346740709234e-07,
+      "maximum_radius_change": 8.818242824837341e-08
+    },
+    {
+      "frame": 24,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 1.1924653663592793e-07,
+      "maximum_radius_change": 7.240631602623004e-08
+    },
+    {
+      "frame": 24,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 1.4354699338743786e-07,
+      "maximum_radius_change": 5.5679671637220984e-08
+    },
+    {
+      "frame": 24,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 6.337046186749226e-08,
+      "maximum_radius_change": 9.002534372137827e-08
+    },
+    {
+      "frame": 24,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 1.1924653663592793e-07,
+      "maximum_radius_change": 7.829229160816187e-08
+    },
+    {
+      "frame": 24,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 5.990192664116746e-08,
+      "maximum_radius_change": 1.1881149721004736e-07
+    },
+    {
+      "frame": 24,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 6.078504920097444e-08,
+      "maximum_radius_change": 1.035681954711376e-07
+    },
+    {
+      "frame": 25,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 1.0728836064011205e-07,
+      "maximum_radius_change": 8.807483682649053e-08
+    },
+    {
+      "frame": 25,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 7.7550711436235e-08,
+      "maximum_radius_change": 1.1005999274449341e-07
+    },
+    {
+      "frame": 25,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 1.1924653663592793e-07,
+      "maximum_radius_change": 1.1729725499232124e-07
+    },
+    {
+      "frame": 25,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 1.4354699338743786e-07,
+      "maximum_radius_change": 1.0189634662427505e-07
+    },
+    {
+      "frame": 25,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 4.865748229686298e-08,
+      "maximum_radius_change": 1.7764090429195356e-07
+    },
+    {
+      "frame": 25,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 7.913063794886659e-08,
+      "maximum_radius_change": 1.1326402910016853e-07
+    },
+    {
+      "frame": 25,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 6.76978629053154e-08,
+      "maximum_radius_change": 1.3477384371018974e-07
+    },
+    {
+      "frame": 25,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 1.2963153824031296e-07,
+      "maximum_radius_change": 1.2248398213732248e-07
+    },
+    {
+      "frame": 26,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 3.953724855003678e-08,
+      "maximum_radius_change": 1.8971850000715218e-07
+    },
+    {
+      "frame": 26,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 1.9409093169172334e-07,
+      "maximum_radius_change": 1.9240336933401547e-07
+    },
+    {
+      "frame": 26,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 6.222907617881406e-08,
+      "maximum_radius_change": 2.0434407771441343e-07
+    },
+    {
+      "frame": 26,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 8.513246092821604e-08,
+      "maximum_radius_change": 1.914307723449582e-07
+    },
+    {
+      "frame": 26,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 1.6716978179137265e-07,
+      "maximum_radius_change": 2.087402845851738e-07
+    },
+    {
+      "frame": 26,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 4.951133637231599e-08,
+      "maximum_radius_change": 2.1746820391688182e-07
+    },
+    {
+      "frame": 26,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 2.409384600124861e-07,
+      "maximum_radius_change": 2.201166466736515e-07
+    },
+    {
+      "frame": 26,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 1.480548660931038e-07,
+      "maximum_radius_change": 1.9943903261515628e-07
+    },
+    {
+      "frame": 27,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 1.1920928955078125e-07,
+      "maximum_radius_change": 3.0784934564043187e-07
+    },
+    {
+      "frame": 27,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 1.9133511767530587e-07,
+      "maximum_radius_change": 3.176143451022462e-07
+    },
+    {
+      "frame": 27,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 1.4453358232134652e-07,
+      "maximum_radius_change": 3.146888194055508e-07
+    },
+    {
+      "frame": 27,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 1.4354699338743786e-07,
+      "maximum_radius_change": 3.0900170457093257e-07
+    },
+    {
+      "frame": 27,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 2.8738345087451905e-07,
+      "maximum_radius_change": 3.364976768199801e-07
+    },
+    {
+      "frame": 27,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 1.3447420802777572e-07,
+      "maximum_radius_change": 3.2685251311059815e-07
+    },
+    {
+      "frame": 27,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 2.384930732690812e-07,
+      "maximum_radius_change": 2.9092015711024155e-07
+    },
+    {
+      "frame": 27,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 2.384185791015625e-07,
+      "maximum_radius_change": 3.1637206698159615e-07
+    },
+    {
+      "frame": 28,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 1.1071071408421838e-07,
+      "maximum_radius_change": 4.4617974905014623e-07
+    },
+    {
+      "frame": 28,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 2.4063652375798513e-08,
+      "maximum_radius_change": 4.399391810294695e-07
+    },
+    {
+      "frame": 28,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 1.0323827304115288e-07,
+      "maximum_radius_change": 4.561707866168607e-07
+    },
+    {
+      "frame": 28,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 3.291774098146435e-08,
+      "maximum_radius_change": 4.4406270811869764e-07
+    },
+    {
+      "frame": 28,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 2.385140932922511e-07,
+      "maximum_radius_change": 4.483404642263711e-07
+    },
+    {
+      "frame": 28,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 7.108962803705235e-08,
+      "maximum_radius_change": 4.3475135604043036e-07
+    },
+    {
+      "frame": 28,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 7.20205662674911e-08,
+      "maximum_radius_change": 4.133523388710758e-07
+    },
+    {
+      "frame": 28,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 6.2229076093742e-08,
+      "maximum_radius_change": 4.053434778800158e-07
+    },
+    {
+      "frame": 29,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 1.0728836064011205e-07,
+      "maximum_radius_change": 5.606682134257079e-07
+    },
+    {
+      "frame": 29,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 7.38305642307993e-08,
+      "maximum_radius_change": 5.475109468855432e-07
+    },
+    {
+      "frame": 29,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 1.0811303349485333e-07,
+      "maximum_radius_change": 5.774686585857669e-07
+    },
+    {
+      "frame": 29,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 9.329602620928602e-08,
+      "maximum_radius_change": 5.597973253279598e-07
+    },
+    {
+      "frame": 29,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 4.3039599333233496e-08,
+      "maximum_radius_change": 5.439452473721129e-07
+    },
+    {
+      "frame": 29,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 1.0566173739843863e-07,
+      "maximum_radius_change": 5.547700334812555e-07
+    },
+    {
+      "frame": 29,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 2.1737316294278677e-07,
+      "maximum_radius_change": 4.883962725701907e-07
+    },
+    {
+      "frame": 29,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 2.3916247663463336e-07,
+      "maximum_radius_change": 4.989361303067708e-07
+    },
+    {
+      "frame": 30,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 7.53945745759792e-08,
+      "maximum_radius_change": 6.175601744429216e-07
+    },
+    {
+      "frame": 30,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 1.1939255964696922e-07,
+      "maximum_radius_change": 6.592635184571316e-07
+    },
+    {
+      "frame": 30,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 1.2039548084288075e-07,
+      "maximum_radius_change": 6.350777990160594e-07
+    },
+    {
+      "frame": 30,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 7.34855413394595e-08,
+      "maximum_radius_change": 6.078848632795619e-07
+    },
+    {
+      "frame": 30,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 7.38095470112397e-08,
+      "maximum_radius_change": 6.168206481138583e-07
+    },
+    {
+      "frame": 30,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 7.545345359639754e-08,
+      "maximum_radius_change": 6.3463078354975e-07
+    },
+    {
+      "frame": 30,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 5.990192664116746e-08,
+      "maximum_radius_change": 5.741334591843894e-07
+    },
+    {
+      "frame": 30,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 2.622604369229009e-07,
+      "maximum_radius_change": 5.783853251756232e-07
+    },
+    {
+      "frame": 31,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 1.6774233919733377e-07,
+      "maximum_radius_change": 6.847373748702923e-07
+    },
+    {
+      "frame": 31,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 1.19596469332809e-07,
+      "maximum_radius_change": 6.670594439872612e-07
+    },
+    {
+      "frame": 31,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 7.633118915271781e-08,
+      "maximum_radius_change": 6.970887128782133e-07
+    },
+    {
+      "frame": 31,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 9.610960191761888e-08,
+      "maximum_radius_change": 6.704663182560688e-07
+    },
+    {
+      "frame": 31,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 4.777245092063212e-08,
+      "maximum_radius_change": 6.759735252104271e-07
+    },
+    {
+      "frame": 31,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 1.1954409551864976e-07,
+      "maximum_radius_change": 6.84859730273879e-07
+    },
+    {
+      "frame": 31,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 1.5370603743134982e-07,
+      "maximum_radius_change": 6.354702814653779e-07
+    },
+    {
+      "frame": 31,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 1.4367068750130083e-07,
+      "maximum_radius_change": 6.156606602164549e-07
+    },
+    {
+      "frame": 32,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 1.0728836064011205e-07,
+      "maximum_radius_change": 6.931170951074428e-07
+    },
+    {
+      "frame": 32,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 2.1534881197839572e-07,
+      "maximum_radius_change": 6.972698515933518e-07
+    },
+    {
+      "frame": 32,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 1.4514679495385396e-07,
+      "maximum_radius_change": 7.01880649933706e-07
+    },
+    {
+      "frame": 32,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 1.4354699338743786e-07,
+      "maximum_radius_change": 7.005875070770218e-07
+    },
+    {
+      "frame": 32,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 1.6905693690471336e-07,
+      "maximum_radius_change": 6.846279650557507e-07
+    },
+    {
+      "frame": 32,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 8.683682839927857e-08,
+      "maximum_radius_change": 6.900550573035735e-07
+    },
+    {
+      "frame": 32,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 5.990192664116746e-08,
+      "maximum_radius_change": 5.822965348650788e-07
+    },
+    {
+      "frame": 32,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 1.3126561371321096e-07,
+      "maximum_radius_change": 5.89665173765519e-07
+    },
+    {
+      "frame": 33,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 1.5312710494714967e-07,
+      "maximum_radius_change": 6.736588027966839e-07
+    },
+    {
+      "frame": 33,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 1.2058699816807515e-07,
+      "maximum_radius_change": 6.795451197999514e-07
+    },
+    {
+      "frame": 33,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 6.556510923072523e-08,
+      "maximum_radius_change": 6.634023989315896e-07
+    },
+    {
+      "frame": 33,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 4.9151249269583314e-08,
+      "maximum_radius_change": 6.7324577363026e-07
+    },
+    {
+      "frame": 33,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 1.4312256277644803e-07,
+      "maximum_radius_change": 7.025830707496628e-07
+    },
+    {
+      "frame": 33,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 4.053554091296891e-08,
+      "maximum_radius_change": 6.856351479900269e-07
+    },
+    {
+      "frame": 33,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 1.2853061348867573e-07,
+      "maximum_radius_change": 5.964156786983366e-07
+    },
+    {
+      "frame": 33,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 7.468440601395428e-08,
+      "maximum_radius_change": 6.045106194299543e-07
+    },
+    {
+      "frame": 34,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 1.4709189743914635e-07,
+      "maximum_radius_change": 6.625400622295441e-07
+    },
+    {
+      "frame": 34,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 3.8356133210990185e-08,
+      "maximum_radius_change": 6.588666027901313e-07
+    },
+    {
+      "frame": 34,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 1.4793483779473014e-07,
+      "maximum_radius_change": 6.793668912430384e-07
+    },
+    {
+      "frame": 34,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 1.8167198483805327e-07,
+      "maximum_radius_change": 6.604633766144064e-07
+    },
+    {
+      "frame": 34,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 2.564514065639145e-08,
+      "maximum_radius_change": 6.678601605497603e-07
+    },
+    {
+      "frame": 34,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 1.3341325089601836e-07,
+      "maximum_radius_change": 6.602780462661162e-07
+    },
+    {
+      "frame": 34,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 7.39674191254991e-08,
+      "maximum_radius_change": 5.83027341287401e-07
+    },
+    {
+      "frame": 34,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 5.623090943351914e-08,
+      "maximum_radius_change": 5.866994007286408e-07
+    },
+    {
+      "frame": 35,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 1.9304912968213457e-07,
+      "maximum_radius_change": 6.148993960536364e-07
+    },
+    {
+      "frame": 35,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 2.3961646663216596e-07,
+      "maximum_radius_change": 6.210338449469388e-07
+    },
+    {
+      "frame": 35,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 1.6713231678759516e-07,
+      "maximum_radius_change": 6.507943434846952e-07
+    },
+    {
+      "frame": 35,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 2.1989186705890322e-07,
+      "maximum_radius_change": 6.389984579385777e-07
+    },
+    {
+      "frame": 35,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 2.9995563735490225e-08,
+      "maximum_radius_change": 6.402894228429989e-07
+    },
+    {
+      "frame": 35,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 1.6657338860334445e-07,
+      "maximum_radius_change": 6.380876110823053e-07
+    },
+    {
+      "frame": 35,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 2.1663644138906565e-07,
+      "maximum_radius_change": 5.397703802603737e-07
+    },
+    {
+      "frame": 35,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 1.7721734921827236e-07,
+      "maximum_radius_change": 5.518554340236403e-07
+    },
+    {
+      "frame": 36,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 1.1920928955078125e-07,
+      "maximum_radius_change": 6.341252901942429e-07
+    },
+    {
+      "frame": 36,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 2.399544616013909e-07,
+      "maximum_radius_change": 6.513859352741402e-07
+    },
+    {
+      "frame": 36,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 1.2160662270625664e-07,
+      "maximum_radius_change": 6.293977447557886e-07
+    },
+    {
+      "frame": 36,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 9.405454290264565e-08,
+      "maximum_radius_change": 6.072963259773356e-07
+    },
+    {
+      "frame": 36,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 1.445845827000709e-07,
+      "maximum_radius_change": 6.396601566621696e-07
+    },
+    {
+      "frame": 36,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 1.5231290262012546e-07,
+      "maximum_radius_change": 6.21081257770606e-07
+    },
+    {
+      "frame": 36,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 2.3916247663463336e-07,
+      "maximum_radius_change": 5.707455775771919e-07
+    },
+    {
+      "frame": 36,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 1.7540382094252568e-07,
+      "maximum_radius_change": 5.589870214622872e-07
+    },
+    {
+      "frame": 37,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 3.291774098146435e-08,
+      "maximum_radius_change": 6.894205420715505e-07
+    },
+    {
+      "frame": 37,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 2.5734180195817155e-08,
+      "maximum_radius_change": 6.741498718432215e-07
+    },
+    {
+      "frame": 37,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 1.0409503689949218e-07,
+      "maximum_radius_change": 6.749996629973332e-07
+    },
+    {
+      "frame": 37,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 7.177349669371893e-08,
+      "maximum_radius_change": 6.783174359425992e-07
+    },
+    {
+      "frame": 37,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 9.562977842711669e-08,
+      "maximum_radius_change": 6.729066558686103e-07
+    },
+    {
+      "frame": 37,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 4.3084717699257e-08,
+      "maximum_radius_change": 6.910167715395987e-07
+    },
+    {
+      "frame": 37,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 9.117757420426706e-08,
+      "maximum_radius_change": 5.852318885474217e-07
+    },
+    {
+      "frame": 37,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 6.447228086314866e-08,
+      "maximum_radius_change": 6.06227688174088e-07
+    },
+    {
+      "frame": 38,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 1.0460572716184205e-07,
+      "maximum_radius_change": 7.502919014829024e-07
+    },
+    {
+      "frame": 38,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 7.319792580549792e-08,
+      "maximum_radius_change": 7.430719404510899e-07
+    },
+    {
+      "frame": 38,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 1.1924653663592793e-07,
+      "maximum_radius_change": 7.398397652846889e-07
+    },
+    {
+      "frame": 38,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 1.0202671758865016e-07,
+      "maximum_radius_change": 7.362085995971102e-07
+    },
+    {
+      "frame": 38,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 3.591103039555328e-08,
+      "maximum_radius_change": 7.778204569319769e-07
+    },
+    {
+      "frame": 38,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 6.750077990586506e-08,
+      "maximum_radius_change": 7.586175906210135e-07
+    },
+    {
+      "frame": 38,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 5.990192664116746e-08,
+      "maximum_radius_change": 6.103782238808808e-07
+    },
+    {
+      "frame": 38,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 9.848303590395718e-08,
+      "maximum_radius_change": 6.671541184014029e-07
+    },
+    {
+      "frame": 39,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 1.1935820818994067e-07,
+      "maximum_radius_change": 7.792015082469517e-07
+    },
+    {
+      "frame": 39,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 9.908869555123758e-08,
+      "maximum_radius_change": 8.282679025833906e-07
+    },
+    {
+      "frame": 39,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 1.1920928955078125e-07,
+      "maximum_radius_change": 8.278054095672838e-07
+    },
+    {
+      "frame": 39,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 1.4354699338743786e-07,
+      "maximum_radius_change": 7.921344646194539e-07
+    },
+    {
+      "frame": 39,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 1.9088032714151694e-07,
+      "maximum_radius_change": 8.159115718192611e-07
+    },
+    {
+      "frame": 39,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 1.205429340355419e-07,
+      "maximum_radius_change": 8.245870022072221e-07
+    },
+    {
+      "frame": 39,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 1.344742080351572e-07,
+      "maximum_radius_change": 6.752955289193729e-07
+    },
+    {
+      "frame": 39,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 1.3381209564197004e-07,
+      "maximum_radius_change": 7.251833836346977e-07
+    },
+    {
+      "frame": 40,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 1.25736135929983e-07,
+      "maximum_radius_change": 7.856061712968598e-07
+    },
+    {
+      "frame": 40,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 1.2163301018205832e-07,
+      "maximum_radius_change": 7.977644362472391e-07
+    },
+    {
+      "frame": 40,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 8.194283894594533e-08,
+      "maximum_radius_change": 7.945849053725418e-07
+    },
+    {
+      "frame": 40,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 1.0272078470762241e-07,
+      "maximum_radius_change": 7.865188838968029e-07
+    },
+    {
+      "frame": 40,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 1.9079169840988752e-07,
+      "maximum_radius_change": 7.825194938415603e-07
+    },
+    {
+      "frame": 40,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 2.0529019954928116e-07,
+      "maximum_radius_change": 7.923789276109705e-07
+    },
+    {
+      "frame": 40,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 2.384930732690812e-07,
+      "maximum_radius_change": 6.885235436862591e-07
+    },
+    {
+      "frame": 40,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 5.4628559135783194e-08,
+      "maximum_radius_change": 7.00445538931449e-07
+    },
+    {
+      "frame": 41,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 1.360501314258533e-07,
+      "maximum_radius_change": 7.132397536052659e-07
+    },
+    {
+      "frame": 41,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 2.38458229773311e-07,
+      "maximum_radius_change": 7.148111195731666e-07
+    },
+    {
+      "frame": 41,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 5.623090943351914e-08,
+      "maximum_radius_change": 7.163997174652881e-07
+    },
+    {
+      "frame": 41,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 1.4354699338743786e-07,
+      "maximum_radius_change": 6.976762619431698e-07
+    },
+    {
+      "frame": 41,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 9.424321852717194e-09,
+      "maximum_radius_change": 7.118881749645922e-07
+    },
+    {
+      "frame": 41,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 1.2013700229374393e-07,
+      "maximum_radius_change": 7.247723502051828e-07
+    },
+    {
+      "frame": 41,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 1.462440984132465e-07,
+      "maximum_radius_change": 6.24460236103852e-07
+    },
+    {
+      "frame": 41,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 1.532430663559248e-07,
+      "maximum_radius_change": 6.437008436624425e-07
+    },
+    {
+      "frame": 42,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 8.471411702134824e-08,
+      "maximum_radius_change": 6.11234413736006e-07
+    },
+    {
+      "frame": 42,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 1.5602874898917989e-07,
+      "maximum_radius_change": 5.892735808338267e-07
+    },
+    {
+      "frame": 42,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 1.1573128606320094e-07,
+      "maximum_radius_change": 6.002867335985762e-07
+    },
+    {
+      "frame": 42,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 8.513246092821604e-08,
+      "maximum_radius_change": 5.778142642687278e-07
+    },
+    {
+      "frame": 42,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 1.7069890295675347e-07,
+      "maximum_radius_change": 6.057602213310753e-07
+    },
+    {
+      "frame": 42,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 1.3116408041626454e-07,
+      "maximum_radius_change": 5.823571372631786e-07
+    },
+    {
+      "frame": 42,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 5.990192664116746e-08,
+      "maximum_radius_change": 5.332403741897807e-07
+    },
+    {
+      "frame": 42,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 1.1680077290842262e-07,
+      "maximum_radius_change": 5.330909390102723e-07
+    },
+    {
+      "frame": 43,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 1.1920928955078125e-07,
+      "maximum_radius_change": 4.996964042963681e-07
+    },
+    {
+      "frame": 43,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 1.3334301843322801e-07,
+      "maximum_radius_change": 5.073379194947547e-07
+    },
+    {
+      "frame": 43,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 1.5231290262012546e-07,
+      "maximum_radius_change": 5.082626925723144e-07
+    },
+    {
+      "frame": 43,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 1.1755873520939878e-07,
+      "maximum_radius_change": 4.930461866003988e-07
+    },
+    {
+      "frame": 43,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 1.9105510148912656e-08,
+      "maximum_radius_change": 5.053525382603397e-07
+    },
+    {
+      "frame": 43,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 1.398170483569404e-07,
+      "maximum_radius_change": 4.961918264323462e-07
+    },
+    {
+      "frame": 43,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 2.384930732690812e-07,
+      "maximum_radius_change": 4.738506325652203e-07
+    },
+    {
+      "frame": 43,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 1.485340093040652e-07,
+      "maximum_radius_change": 4.5059743255387863e-07
+    },
+    {
+      "frame": 44,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 1.9405866378492703e-07,
+      "maximum_radius_change": 4.795760263354154e-07
+    },
+    {
+      "frame": 44,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 4.037259201449347e-08,
+      "maximum_radius_change": 4.6185302907120196e-07
+    },
+    {
+      "frame": 44,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 1.1954409551864976e-07,
+      "maximum_radius_change": 4.7100000050148694e-07
+    },
+    {
+      "frame": 44,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 1.4305114737211966e-07,
+      "maximum_radius_change": 4.760295250205715e-07
+    },
+    {
+      "frame": 44,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 2.3851169317571173e-07,
+      "maximum_radius_change": 4.7541560588282294e-07
+    },
+    {
+      "frame": 44,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 1.192465366345406e-07,
+      "maximum_radius_change": 4.7440872748272245e-07
+    },
+    {
+      "frame": 44,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 2.3856754417534385e-07,
+      "maximum_radius_change": 4.038017214491596e-07
+    },
+    {
+      "frame": 44,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 2.668265018317176e-07,
+      "maximum_radius_change": 4.2364045645809645e-07
+    },
+    {
+      "frame": 45,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 9.25312918831025e-08,
+      "maximum_radius_change": 4.553424601261291e-07
+    },
+    {
+      "frame": 45,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 4.875578178107505e-08,
+      "maximum_radius_change": 4.7410086956301e-07
+    },
+    {
+      "frame": 45,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 1.3381209558262611e-07,
+      "maximum_radius_change": 4.437188228095801e-07
+    },
+    {
+      "frame": 45,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 1.4354699338743786e-07,
+      "maximum_radius_change": 4.5563291496686364e-07
+    },
+    {
+      "frame": 45,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 2.5035752424346675e-07,
+      "maximum_radius_change": 4.664861917025309e-07
+    },
+    {
+      "frame": 45,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 7.656355251679022e-08,
+      "maximum_radius_change": 4.380461797598434e-07
+    },
+    {
+      "frame": 45,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 5.990192664116746e-08,
+      "maximum_radius_change": 4.1302809070803415e-07
+    },
+    {
+      "frame": 45,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 1.3287959582674672e-07,
+      "maximum_radius_change": 4.2373149483632133e-07
+    },
+    {
+      "frame": 46,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 3.291774098146435e-08,
+      "maximum_radius_change": 4.49288935430725e-07
+    },
+    {
+      "frame": 46,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 3.877166467510346e-08,
+      "maximum_radius_change": 4.444884485615974e-07
+    },
+    {
+      "frame": 46,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 6.643979790590331e-08,
+      "maximum_radius_change": 4.6326423441822584e-07
+    },
+    {
+      "frame": 46,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 7.468440580130122e-08,
+      "maximum_radius_change": 4.601118585023656e-07
+    },
+    {
+      "frame": 46,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 1.499108842510737e-07,
+      "maximum_radius_change": 4.519068586561481e-07
+    },
+    {
+      "frame": 46,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 6.44722808939407e-08,
+      "maximum_radius_change": 4.807758282321384e-07
+    },
+    {
+      "frame": 46,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 2.384930732690812e-07,
+      "maximum_radius_change": 4.26836548474141e-07
+    },
+    {
+      "frame": 46,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 2.980232243210423e-08,
+      "maximum_radius_change": 4.245917452905257e-07
+    },
+    {
+      "frame": 47,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 8.760057951512653e-08,
+      "maximum_radius_change": 4.312385005061925e-07
+    },
+    {
+      "frame": 47,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 2.421152107401117e-08,
+      "maximum_radius_change": 4.186897790553479e-07
+    },
+    {
+      "frame": 47,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 1.1954409551864976e-07,
+      "maximum_radius_change": 4.490166750636959e-07
+    },
+    {
+      "frame": 47,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 7.372687395822869e-08,
+      "maximum_radius_change": 4.2195356600438494e-07
+    },
+    {
+      "frame": 47,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 2.1481750123061e-07,
+      "maximum_radius_change": 4.363200781926091e-07
+    },
+    {
+      "frame": 47,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 1.1954409551864976e-07,
+      "maximum_radius_change": 4.3452116901820936e-07
+    },
+    {
+      "frame": 47,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 5.990192664116746e-08,
+      "maximum_radius_change": 3.9746033897447575e-07
+    },
+    {
+      "frame": 47,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 1.4526912689845823e-07,
+      "maximum_radius_change": 3.8612992723369155e-07
+    },
+    {
+      "frame": 48,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 8.365910551828581e-08,
+      "maximum_radius_change": 4.10055659094688e-07
+    },
+    {
+      "frame": 48,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 7.887856892844925e-08,
+      "maximum_radius_change": 4.0933500032591663e-07
+    },
+    {
+      "frame": 48,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 5.331201504665113e-08,
+      "maximum_radius_change": 4.271659600069144e-07
+    },
+    {
+      "frame": 48,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 1.5792419083991973e-07,
+      "maximum_radius_change": 3.8590669450278003e-07
+    },
+    {
+      "frame": 48,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 7.560136860611826e-08,
+      "maximum_radius_change": 4.1527174844679937e-07
+    },
+    {
+      "frame": 48,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 1.192465366345406e-07,
+      "maximum_radius_change": 3.9214959871025634e-07
+    },
+    {
+      "frame": 48,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 1.757073754974164e-07,
+      "maximum_radius_change": 3.681803682625828e-07
+    },
+    {
+      "frame": 48,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 2.384930732690812e-07,
+      "maximum_radius_change": 3.712210899786683e-07
+    },
+    {
+      "frame": 49,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 1.3341325095553968e-07,
+      "maximum_radius_change": 3.767268663135148e-07
+    },
+    {
+      "frame": 49,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 1.9111283873880818e-07,
+      "maximum_radius_change": 3.787373164115815e-07
+    },
+    {
+      "frame": 49,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 1.5682366041211566e-07,
+      "maximum_radius_change": 3.8299576145262026e-07
+    },
+    {
+      "frame": 49,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 8.780312456735911e-08,
+      "maximum_radius_change": 3.9572700838430563e-07
+    },
+    {
+      "frame": 49,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 1.6129775691744328e-07,
+      "maximum_radius_change": 3.8016762014814187e-07
+    },
+    {
+      "frame": 49,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 1.1935820814558717e-07,
+      "maximum_radius_change": 3.890063713513081e-07
+    },
+    {
+      "frame": 49,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 2.3856754417534385e-07,
+      "maximum_radius_change": 3.297327423809615e-07
+    },
+    {
+      "frame": 49,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 2.457562461863554e-07,
+      "maximum_radius_change": 3.377454951061787e-07
+    },
+    {
+      "frame": 50,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 8.450416840749598e-08,
+      "maximum_radius_change": 3.6196718811165596e-07
+    },
+    {
+      "frame": 50,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 8.39579939377832e-08,
+      "maximum_radius_change": 3.523083946521677e-07
+    },
+    {
+      "frame": 50,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 1.1954409551864976e-07,
+      "maximum_radius_change": 3.731388439481842e-07
+    },
+    {
+      "frame": 50,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 1.5312710503358044e-07,
+      "maximum_radius_change": 3.532789605020792e-07
+    },
+    {
+      "frame": 50,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 1.4309964553616906e-07,
+      "maximum_radius_change": 3.541302441983918e-07
+    },
+    {
+      "frame": 50,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 5.462855928114551e-08,
+      "maximum_radius_change": 3.572304924231995e-07
+    },
+    {
+      "frame": 50,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 2.384930732690812e-07,
+      "maximum_radius_change": 3.516603634956539e-07
+    },
+    {
+      "frame": 50,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 4.768371586472142e-08,
+      "maximum_radius_change": 3.1790959795913176e-07
+    },
+    {
+      "frame": 51,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 4.2981520592539125e-08,
+      "maximum_radius_change": 3.2622016001015997e-07
+    },
+    {
+      "frame": 51,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 7.216013296232813e-08,
+      "maximum_radius_change": 3.510779899296157e-07
+    },
+    {
+      "frame": 51,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 4.053554088848134e-08,
+      "maximum_radius_change": 3.258715633447373e-07
+    },
+    {
+      "frame": 51,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 5.870376718015617e-08,
+      "maximum_radius_change": 3.2496142388094285e-07
+    },
+    {
+      "frame": 51,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 1.0766088967166775e-07,
+      "maximum_radius_change": 3.4828654563168193e-07
+    },
+    {
+      "frame": 51,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 3.025522903145073e-08,
+      "maximum_radius_change": 3.5485516672317807e-07
+    },
+    {
+      "frame": 51,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 1.6953304576055585e-07,
+      "maximum_radius_change": 3.053325031907028e-07
+    },
+    {
+      "frame": 51,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 1.451467949720905e-07,
+      "maximum_radius_change": 3.0073794893975547e-07
+    },
+    {
+      "frame": 52,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 1.0728836064011205e-07,
+      "maximum_radius_change": 2.9759502284676387e-07
+    },
+    {
+      "frame": 52,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 1.1956789144930564e-07,
+      "maximum_radius_change": 3.1623666887914403e-07
+    },
+    {
+      "frame": 52,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 1.2039548084288075e-07,
+      "maximum_radius_change": 3.14066347539832e-07
+    },
+    {
+      "frame": 52,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 1.4354699338743786e-07,
+      "maximum_radius_change": 3.0295231241705967e-07
+    },
+    {
+      "frame": 52,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 9.54168954150145e-08,
+      "maximum_radius_change": 3.1276924152001673e-07
+    },
+    {
+      "frame": 52,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 1.1980385328785848e-07,
+      "maximum_radius_change": 3.2199616181727286e-07
+    },
+    {
+      "frame": 52,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 5.990192664116746e-08,
+      "maximum_radius_change": 3.030727945066425e-07
+    },
+    {
+      "frame": 52,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 2.457562461863554e-07,
+      "maximum_radius_change": 2.9305309704602545e-07
+    },
+    {
+      "frame": 53,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 1.2039548084288075e-07,
+      "maximum_radius_change": 2.6680545439639047e-07
+    },
+    {
+      "frame": 53,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 1.192517735741176e-07,
+      "maximum_radius_change": 2.669551071449172e-07
+    },
+    {
+      "frame": 53,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 1.2013700233780991e-07,
+      "maximum_radius_change": 2.80621725953778e-07
+    },
+    {
+      "frame": 53,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 6.95103632675049e-08,
+      "maximum_radius_change": 2.6888267848357295e-07
+    },
+    {
+      "frame": 53,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 5.8211162642106206e-08,
+      "maximum_radius_change": 2.81342107180671e-07
+    },
+    {
+      "frame": 53,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 1.6691961251078266e-07,
+      "maximum_radius_change": 2.7236516175754844e-07
+    },
+    {
+      "frame": 53,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 5.990192664116746e-08,
+      "maximum_radius_change": 2.618110230348525e-07
+    },
+    {
+      "frame": 53,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 3.576278680602248e-08,
+      "maximum_radius_change": 2.7108244942536386e-07
+    },
+    {
+      "frame": 54,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 1.0062422173842287e-07,
+      "maximum_radius_change": 2.340559409480525e-07
+    },
+    {
+      "frame": 54,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 2.0302285278845572e-07,
+      "maximum_radius_change": 2.58317864654245e-07
+    },
+    {
+      "frame": 54,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 1.1920928955078125e-07,
+      "maximum_radius_change": 2.432517612477314e-07
+    },
+    {
+      "frame": 54,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 1.7438815645025876e-07,
+      "maximum_radius_change": 2.33666093613083e-07
+    },
+    {
+      "frame": 54,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 9.544016357109703e-08,
+      "maximum_radius_change": 2.3748840009829575e-07
+    },
+    {
+      "frame": 54,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 4.777675734913695e-08,
+      "maximum_radius_change": 2.551914996956617e-07
+    },
+    {
+      "frame": 54,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 5.990192664116746e-08,
+      "maximum_radius_change": 2.3939118829613415e-07
+    },
+    {
+      "frame": 54,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 1.1198696043088007e-07,
+      "maximum_radius_change": 2.378423221843784e-07
+    },
+    {
+      "frame": 55,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 1.0132789605416297e-07,
+      "maximum_radius_change": 1.804311829389782e-07
+    },
+    {
+      "frame": 55,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 1.937509133912206e-08,
+      "maximum_radius_change": 1.8886808698936886e-07
+    },
+    {
+      "frame": 55,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 3.013573351094411e-08,
+      "maximum_radius_change": 2.0980600440312358e-07
+    },
+    {
+      "frame": 55,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 8.018984824160217e-08,
+      "maximum_radius_change": 1.9336063200592335e-07
+    },
+    {
+      "frame": 55,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 8.681445149817169e-08,
+      "maximum_radius_change": 1.9263199685370935e-07
+    },
+    {
+      "frame": 55,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 1.2013700229374393e-07,
+      "maximum_radius_change": 2.1326071625304976e-07
+    },
+    {
+      "frame": 55,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 1.493688115937419e-07,
+      "maximum_radius_change": 1.9265674255919407e-07
+    },
+    {
+      "frame": 55,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 3.816559454168137e-08,
+      "maximum_radius_change": 2.0461029157786692e-07
+    },
+    {
+      "frame": 56,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 1.5724785286922063e-07,
+      "maximum_radius_change": 1.4486364460775114e-07
+    },
+    {
+      "frame": 56,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 1.0831822047154473e-07,
+      "maximum_radius_change": 1.4886112070788826e-07
+    },
+    {
+      "frame": 56,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 1.1924653663592793e-07,
+      "maximum_radius_change": 1.5144051104809542e-07
+    },
+    {
+      "frame": 56,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 1.7960690465956748e-07,
+      "maximum_radius_change": 1.339064716748828e-07
+    },
+    {
+      "frame": 56,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 5.497296680760988e-08,
+      "maximum_radius_change": 1.45646430249613e-07
+    },
+    {
+      "frame": 56,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 1.2013700229374393e-07,
+      "maximum_radius_change": 1.4879460130678979e-07
+    },
+    {
+      "frame": 56,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 5.990192664116746e-08,
+      "maximum_radius_change": 1.5591072340809253e-07
+    },
+    {
+      "frame": 56,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 5.623090929229906e-08,
+      "maximum_radius_change": 1.535228907334485e-07
+    },
+    {
+      "frame": 57,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 9.629425049765586e-08,
+      "maximum_radius_change": 8.69528870434122e-08
+    },
+    {
+      "frame": 57,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 2.778027672262211e-08,
+      "maximum_radius_change": 1.489469803189758e-07
+    },
+    {
+      "frame": 57,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 1.0049173420619963e-07,
+      "maximum_radius_change": 1.0658605623103945e-07
+    },
+    {
+      "frame": 57,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 3.291774098146435e-08,
+      "maximum_radius_change": 1.0702944214235899e-07
+    },
+    {
+      "frame": 57,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 6.805056220562239e-08,
+      "maximum_radius_change": 9.684536649012809e-08
+    },
+    {
+      "frame": 57,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 9.725790538161112e-08,
+      "maximum_radius_change": 9.949231973005457e-08
+    },
+    {
+      "frame": 57,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 9.629425069694699e-08,
+      "maximum_radius_change": 1.2836208712618813e-07
+    },
+    {
+      "frame": 57,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 7.562981571609895e-08,
+      "maximum_radius_change": 1.4178920945684403e-07
+    },
+    {
+      "frame": 58,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 3.953724855003678e-08,
+      "maximum_radius_change": 6.916058724326657e-08
+    },
+    {
+      "frame": 58,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 2.9636551624608552e-08,
+      "maximum_radius_change": 1.2478758051881478e-07
+    },
+    {
+      "frame": 58,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 5.990192672954453e-08,
+      "maximum_radius_change": 9.768337333460053e-08
+    },
+    {
+      "frame": 58,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 5.230286356826886e-08,
+      "maximum_radius_change": 7.27831919872246e-08
+    },
+    {
+      "frame": 58,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 1.192186024127753e-07,
+      "maximum_radius_change": 1.0825557797411456e-07
+    },
+    {
+      "frame": 58,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 4.9151249269583314e-08,
+      "maximum_radius_change": 9.495045108498523e-08
+    },
+    {
+      "frame": 58,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 5.990192664116746e-08,
+      "maximum_radius_change": 1.3535019261629033e-07
+    },
+    {
+      "frame": 58,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 2.384185791015625e-07,
+      "maximum_radius_change": 1.1896211778855692e-07
+    },
+    {
+      "frame": 59,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 1.0728836064011205e-07,
+      "maximum_radius_change": 6.42798394095978e-08
+    },
+    {
+      "frame": 59,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 8.371217185309887e-08,
+      "maximum_radius_change": 1.2671178213630174e-07
+    },
+    {
+      "frame": 59,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 6.590290181849694e-08,
+      "maximum_radius_change": 8.155132390219588e-08
+    },
+    {
+      "frame": 59,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 1.4354699338743786e-07,
+      "maximum_radius_change": 6.200496663333332e-08
+    },
+    {
+      "frame": 59,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 4.859505171623563e-08,
+      "maximum_radius_change": 7.469252376324231e-08
+    },
+    {
+      "frame": 59,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 1.1980385328233493e-07,
+      "maximum_radius_change": 7.240012653286776e-08
+    },
+    {
+      "frame": 59,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 5.990192664116746e-08,
+      "maximum_radius_change": 1.111979522072648e-07
+    },
+    {
+      "frame": 59,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 2.384185791015625e-07,
+      "maximum_radius_change": 1.0146515986436677e-07
+    },
+    {
+      "frame": 60,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 1.3113021846145045e-07,
+      "maximum_radius_change": 6.250830918153039e-08
+    },
+    {
+      "frame": 60,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 2.1375019723413803e-08,
+      "maximum_radius_change": 1.0310516489198118e-07
+    },
+    {
+      "frame": 60,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 1.1954409551864976e-07,
+      "maximum_radius_change": 6.664846735615626e-08
+    },
+    {
+      "frame": 60,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 6.951036340078608e-08,
+      "maximum_radius_change": 6.22516500292658e-08
+    },
+    {
+      "frame": 60,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 2.3849423705582384e-07,
+      "maximum_radius_change": 9.644434220690279e-08
+    },
+    {
+      "frame": 60,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 1.1980385328233493e-07,
+      "maximum_radius_change": 8.065827009073878e-08
+    },
+    {
+      "frame": 60,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 9.830249856609349e-08,
+      "maximum_radius_change": 1.2818410298487404e-07
+    },
+    {
+      "frame": 60,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 2.665600739919886e-08,
+      "maximum_radius_change": 1.3270432394629772e-07
+    },
+    {
+      "frame": 61,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 6.84805231641836e-08,
+      "maximum_radius_change": 8.361963493852542e-08
+    },
+    {
+      "frame": 61,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 1.0192056586017244e-07,
+      "maximum_radius_change": 9.998533759270067e-08
+    },
+    {
+      "frame": 61,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 7.208220136706595e-08,
+      "maximum_radius_change": 8.35284372502354e-08
+    },
+    {
+      "frame": 61,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 8.616943536011614e-08,
+      "maximum_radius_change": 6.56207792687491e-08
+    },
+    {
+      "frame": 61,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 9.551011566069516e-08,
+      "maximum_radius_change": 1.0029347487228168e-07
+    },
+    {
+      "frame": 61,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 7.68530187802538e-08,
+      "maximum_radius_change": 8.152263071548038e-08
+    },
+    {
+      "frame": 61,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 5.990192664116746e-08,
+      "maximum_radius_change": 1.07303567059569e-07
+    },
+    {
+      "frame": 61,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 7.275674130622018e-08,
+      "maximum_radius_change": 1.3217514355234883e-07
+    },
+    {
+      "frame": 62,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 3.291774098146435e-08,
+      "maximum_radius_change": 9.236297704440233e-08
+    },
+    {
+      "frame": 62,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 1.6694621514481503e-07,
+      "maximum_radius_change": 1.337016833913296e-07
+    },
+    {
+      "frame": 62,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 5.230286354296453e-08,
+      "maximum_radius_change": 1.1260731651308031e-07
+    },
+    {
+      "frame": 62,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 5.960464486420846e-08,
+      "maximum_radius_change": 1.0679056598739134e-07
+    },
+    {
+      "frame": 62,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 4.1829552748266637e-08,
+      "maximum_radius_change": 1.8027120861352497e-07
+    },
+    {
+      "frame": 62,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 3.025522903145073e-08,
+      "maximum_radius_change": 1.1779565532721303e-07
+    },
+    {
+      "frame": 62,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 7.348554153757165e-08,
+      "maximum_radius_change": 1.5576405403006088e-07
+    },
+    {
+      "frame": 62,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 1.24458152155582e-07,
+      "maximum_radius_change": 1.4714137383520232e-07
+    },
+    {
+      "frame": 63,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 9.629425055950483e-08,
+      "maximum_radius_change": 1.7966406690161918e-07
+    },
+    {
+      "frame": 63,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 3.1111867382742715e-07,
+      "maximum_radius_change": 1.8566557562216257e-07
+    },
+    {
+      "frame": 63,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 1.1924653663592793e-07,
+      "maximum_radius_change": 1.8150385201753938e-07
+    },
+    {
+      "frame": 63,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 1.0460572716184205e-07,
+      "maximum_radius_change": 1.8580561672587592e-07
+    },
+    {
+      "frame": 63,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 2.3963963218033774e-07,
+      "maximum_radius_change": 1.8953162124468736e-07
+    },
+    {
+      "frame": 63,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 5.599348017703075e-08,
+      "maximum_radius_change": 1.9230184766794167e-07
+    },
+    {
+      "frame": 63,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 3.3532579380696226e-07,
+      "maximum_radius_change": 1.756701745458944e-07
+    },
+    {
+      "frame": 63,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 1.5184568402107324e-07,
+      "maximum_radius_change": 1.6326744692318762e-07
+    },
+    {
+      "frame": 64,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 1.7921085808426267e-07,
+      "maximum_radius_change": 2.663142726067047e-07
+    },
+    {
+      "frame": 64,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 2.3846077592214554e-07,
+      "maximum_radius_change": 2.7085697387740915e-07
+    },
+    {
+      "frame": 64,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 1.1935820814558717e-07,
+      "maximum_radius_change": 2.773619502405289e-07
+    },
+    {
+      "frame": 64,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 8.08516738721848e-08,
+      "maximum_radius_change": 2.763236263830793e-07
+    },
+    {
+      "frame": 64,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 2.4778781700854055e-08,
+      "maximum_radius_change": 2.9248696353789683e-07
+    },
+    {
+      "frame": 64,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 1.2013700229374393e-07,
+      "maximum_radius_change": 2.7941858085633875e-07
+    },
+    {
+      "frame": 64,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 2.384930732690812e-07,
+      "maximum_radius_change": 2.7804828673511084e-07
+    },
+    {
+      "frame": 64,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 2.384185791015625e-07,
+      "maximum_radius_change": 2.534551061667001e-07
+    },
+    {
+      "frame": 65,
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "maximum_actual_captive_union_gap": 1.0545138125485848e-07,
+      "maximum_radius_change": 4.1396750120881176e-07
+    },
+    {
+      "frame": 65,
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "maximum_actual_captive_union_gap": 2.694855531563326e-08,
+      "maximum_radius_change": 4.205119960992709e-07
+    },
+    {
+      "frame": 65,
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "maximum_actual_captive_union_gap": 1.2420812835078253e-07,
+      "maximum_radius_change": 4.235661388435341e-07
+    },
+    {
+      "frame": 65,
+      "mesh": "V04 cold bulk radial feed water 0",
+      "maximum_actual_captive_union_gap": 7.468440580130122e-08,
+      "maximum_radius_change": 4.037287373859222e-07
+    },
+    {
+      "frame": 65,
+      "mesh": "V04 cold bulk radial feed water 1",
+      "maximum_actual_captive_union_gap": 2.6832597733365143e-08,
+      "maximum_radius_change": 4.177224991741557e-07
+    },
+    {
+      "frame": 65,
+      "mesh": "V04 cold bulk radial feed water 2",
+      "maximum_actual_captive_union_gap": 1.236347467849078e-07,
+      "maximum_radius_change": 4.1494003989728245e-07
+    },
+    {
+      "frame": 65,
+      "mesh": "V04 regenerative turbo supply fuel",
+      "maximum_actual_captive_union_gap": 1.446564327752256e-07,
+      "maximum_radius_change": 3.8526743992295387e-07
+    },
+    {
+      "frame": 65,
+      "mesh": "V04 regenerative turbo supply water",
+      "maximum_actual_captive_union_gap": 2.384930732690812e-07,
+      "maximum_radius_change": 3.7426556766251284e-07
+    }
+  ],
+  "scope": "Actual reopened source terminal-ring centers including duplicate caps; invariant tube cross sections; fixed and moving support terminal vertices. Actual GLB and swept collision checks separate."
+}

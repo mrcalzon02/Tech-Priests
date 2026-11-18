@@ -1,0 +1,121 @@
+{
+  "status": "LOCAL_V11_DETAILED_STATIC_SOURCE_PASSED_AND_CAPTURE_PINS_DELIVERED",
+  "client_date": "2026-11-17",
+  "current_candidate": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail",
+  "source_path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\void-fusion-v11.blend",
+  "glb_path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\void-fusion-v11.glb",
+  "source_sha256": "61e9a02667e2c6124fbd738adfb48fb3b4180ba9b59da86165117b0a76b28d4d",
+  "glb_sha256": "2b1f7164dc6df970aef9c9f1367bf8cf30f82ba3471d1eb9fcf6e84821d3d137",
+  "service_underlay_glb": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\service-well-v10\\narrow-service-well-v10.glb",
+  "service_underlay_glb_sha256": "b3c083952cec501d375875f30a4780b07fa2d840bd0a1f873c4e6d3250123276",
+  "capture_handoff": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\capture-handoff.json",
+  "capture_handoff_sha256": "ae47717de3bf5cc19f448793919ea139ae5231e4679615031a9b84c28cbcce90",
+  "measurements": {
+    "mesh_count": 1184,
+    "triangles": 499042,
+    "actual_bounds": [
+      [
+        -0.7049999833106995,
+        -4.425000190734863,
+        -0.35999998450279236
+      ],
+      [
+        0.7049999833106995,
+        4.440000057220459,
+        0.5303148627281189
+      ]
+    ],
+    "width_depth_height": [
+      1.409999966621399,
+      8.865000247955322,
+      0.8903148472309113
+    ],
+    "world_position_max_delta": 2.3888378564151935e-07,
+    "uv_max_delta": 9.689480066299438e-06,
+    "surface_area_max_delta": 3.631256256797499e-08
+  },
+  "actual_seat_count": 2652,
+  "guides": 34,
+  "new_captive_fasteners": 62,
+  "closed_receiver_covers": 6,
+  "original_routes": 38,
+  "original_terminations": 76,
+  "intentional_primary_structure_repairs": 8,
+  "otherwise_exact_primary_meshes": 889,
+  "protected_core_ray_witness": {
+    "x_range": [
+      -0.22,
+      0.22
+    ],
+    "source_z_reference": 0.08,
+    "core_y_range": [
+      -3.487019443511963,
+      3.4915771961212156
+    ],
+    "canonical45_ray_direction": [
+      0.0,
+      0.7071067690849304,
+      -0.7071067690849304
+    ],
+    "source_ray_count": 693,
+    "source_blocked": 693,
+    "actual_glb_blocked": 693,
+    "accepted_body_subset_without_new_pan_or_cases_blocked": 693,
+    "newly_blocked_rays": 0,
+    "sampling": "Six inter-stone interface windows plus51 axial core stations, inside keels. Outer cage openings, mounting margins and field aperture are intentionally excluded.",
+    "limits": "Finite canonical-view geometric ray sample, not a claim that every intentional exterior opening is closed or arbitrary camera projections are opaque.",
+    "side_and_underside_window_witness": {
+      "source_count": 180,
+      "source_blocked": 180,
+      "actual_glb_blocked": 180,
+      "old_body_subset_blocked": 114,
+      "newly_blocked": 66,
+      "mask": "Both\u00b1Xviewdirections, five axial offsets about each of six interfaces, Z-.26/-.13/-.10 inside backing/core zone; aperture/exterioruppercage excluded."
+    }
+  },
+  "required_pass_receipts": {
+    "roundtrip-validation.json": "a9e1e15390df52aeb0265eea46d9d5d75af7bfa5cb7f760badd456d9b686954e",
+    "guide-cover-export-validation.json": "538ce78989c8f7b3739290fd539719691a0cb559321291b652a86d291fe7511c",
+    "pipette-export-validation.json": "78d88fe8257645b365023b9d7dbdf66c4747b42caf3d04ddfef1c04509bdbc44",
+    "functional-detail-export-validation.json": "4b273cf17f0025c13e642f601252b66781fae6de70caff6bff0dab49d75a15e3"
+  },
+  "actual_renders_viewed": [
+    {
+      "file": "actual-core-transparent-alpha.png",
+      "sha256": "77035cb47d16bf72c5c87d5518951dbaa7d887f91f7d42b5ddb50569e3f36118",
+      "actually_viewed": true
+    },
+    {
+      "file": "actual-core-magenta-background.png",
+      "sha256": "3586c97d5fd175b88c9643def47ca43be1b3c161ac6e6a9f10e6f092f36323b9",
+      "actually_viewed": true
+    },
+    {
+      "file": "actual-new-cover-guide-detail.png",
+      "sha256": "f7376daca486b7747381aa82683ff5580b578cc1d685b3ca27b9c520eb972f1f",
+      "scope": "Actual imported GLB, emission disabled cold or neutral-clay construction review; U-bay deck only where explicitly named.",
+      "actually_viewed": true
+    },
+    {
+      "file": "actual-axial-guide-detail.png",
+      "sha256": "1704a6e5355dc2f7a829f3dc9330c96ab0337a0820ecadbf60b20a419ceb20af",
+      "scope": "Actual imported GLB, emission disabled cold or neutral-clay construction review; U-bay deck only where explicitly named.",
+      "actually_viewed": true
+    },
+    {
+      "file": "actual-field-guide-detail.png",
+      "sha256": "4cb88b54a4385604150c43782db7bd4cfee852bd1490bb46c1ee589446b7ebfa",
+      "scope": "Actual imported GLB, emission disabled cold or neutral-clay construction review; U-bay deck only where explicitly named.",
+      "actually_viewed": true
+    },
+    {
+      "file": "actual-new-whole-body.png",
+      "sha256": "e8ffae51b29fde766bff891c69f788d31b88d42365f1d49e6980095fc000e286",
+      "scope": "Actual imported GLB, emission disabled cold or neutral-clay construction review; U-bay deck only where explicitly named.",
+      "actually_viewed": true
+    }
+  ],
+  "authority": "User explicitly requested functional detail/structural reinforcement/chunkier machinery/opaque core. Root viewed accepted bulk and11cdetail direction; final technical repairs/checks preserve that direction. No inferred release or final owner pixel acceptance.",
+  "remaining_gates": "Final768/64 capture, combined FX/actualdraw envelope, native pixel/registration/layer proof and final owner acceptance; this is not installed/released art.",
+  "ordinary_runtime_or_git_mutations": false
+}

@@ -1,0 +1,72 @@
+{
+  "stage": "V18G_BODY_V19E_UNDERLAY_TECHNICALLY_VERIFIED_CAPTURE_SOURCE",
+  "prototype": "large-void-fusion-thruster",
+  "native_footprint": [
+    4,
+    4
+  ],
+  "direction": "fixed north only",
+  "body_source": "large-void-fusion-v01.blend",
+  "body_glb": "large-void-fusion-v01.glb",
+  "body_source_sha256": "954c7ed2ef3f3d91e8f09c8427708cd5c42e784523ccbb832bf36a26f01b14bd",
+  "body_glb_sha256": "4d9ef76ab5452728437d399af5456fbaa2b3626381da548dfb06de1b47d713de",
+  "underlay_source": "wide-service-underlay-v16.blend",
+  "underlay_glb": "installation-service-underlay.glb",
+  "underlay_source_sha256": "a03b77e0792f95afb7580a9a27b66625c721ead80f8feb49e886666340b551ea",
+  "underlay_glb_sha256": "a041d26a3fec886dc644807374342f9e1869735eea5d178ebf6be4f2a17a1946",
+  "construction_stage": "build/thruster-resume-20261117/large-void-fusion-v01/detail-18g-actual-clip-face-seats",
+  "well_stage": "build/thruster-resume-20261117/large-void-fusion-v01/service-underlay-19e-final-tessellation",
+  "source_edge": {
+    "Y": 0,
+    "Z": 0,
+    "fore": "+Y vessel",
+    "aft": "-Y open space",
+    "core_datum": [
+      0,
+      0.45,
+      0.8
+    ]
+  },
+  "source_fore_axial_bounds_fraction": 0.5038826490094332,
+  "native_registration": "32nativepx/BU candidate calibration and legal cut+1; actual camera/shift and native foundation proof belong to capture integration. No worldunit/native tile identity.",
+  "visible_fluid_ports": [],
+  "declared_physical_external_electric_connector": null,
+  "design_authority": "Electrified irregular Noctilith rocks retained in mechanically stabilized cages with Necron green energy; thick armored segmented inward-stepping stacked dishes and guarded central tip, per supplied owner reference.",
+  "owner_reference_mapping": "REFERENCE_FEATURE_MAPPING.json",
+  "accepted_scope": "Root independently viewed and accepted elongated proportions, chunky opaque-core functional construction and lower half-hanging installation for capture stage; user permits rough coil appearance for proceeding. No final native-art score claimed.",
+  "technical_validation": [
+    "export-inspection.json",
+    "power-bay-validation.json",
+    "functional-detail-validation.json",
+    "underlay-validation.json",
+    "underlay-contact-export-validation.json",
+    "HANDOFF_COMPLETE.json"
+  ],
+  "capture_geometry": "capture-source-geometry.json",
+  "surface_plan": "SURFACE_PLAN.json",
+  "body_exclusion_count": 38,
+  "underlay_mesh_count": 40,
+  "source_script_pins": {
+    "tools/art/large_void_fusion_thruster_v01/proportion_v17.py": "61baec6d35a80dbce0154081d999bbd58b94ebd1203631c65e669d2d95a49596",
+    "tools/art/large_void_fusion_thruster_v01/functional_detail_v18.py": "4395bf38c87f85a659bb0a9e10e26aeb812b0273a7776a4d1f61c176b26d4e18",
+    "tools/art/large_void_fusion_thruster_v01/repair_guide_arms_v18g.py": "ff3522bb7cea50a3ef4cdb0aa02b92216c118e6489e3c30bde45d9da152f4a1d",
+    "tools/art/large_void_fusion_thruster_v01/audit_functional_detail_v18.py": "4bf77e6c3919a832ed257d0a58d471a824a5a2a0705a6d5b7f4955d41f264c9e",
+    "tools/art/large_void_fusion_thruster_v01/inspect_refinement.py": "1e6a1829549e2bf0f00fa6a279c7562bd48751748c5d60157b649a6fdcf9c8b9",
+    "tools/art/large_void_fusion_thruster_v01/audit_power_and_bay.py": "e6cdc7cac222c77b6dfd01769eb2c8ff3f0291aeb426804b554abf1a6f389f00",
+    "tools/art/large_void_fusion_thruster_v01/build_service_bay_v16.py": "215d95b31d3aa5d3c25f6725b3b3db9b878b5f4d084a141180572ff2b2edfa1e",
+    "tools/art/large_void_fusion_thruster_v01/audit_underlay_v16.py": "8c860b583df30eaef2b9aef8444d3e0b2e2a12d59e48fa059ce3479caa86b79b",
+    "tools/art/large_void_fusion_thruster_v01/finalize_underlay_handoff.py": "b5a1bdf495d9c3d9204da042756e5407e16c858c74c2aa7ac203d0df9f734a3d",
+    "tools/art/large_void_fusion_thruster_v01/render_proportion_pilot.py": "10523e43716486a95aa39ec87b2d86dc87dd8430419ec59573f4d77faecf75e9",
+    "tools/art/large_void_fusion_thruster_v01/compare_proportion_silhouettes.py": "e1db59afc22c240db286788a63a47b6951c2890258d8ba8e144d8cb7c9fc101d",
+    "tools/art/large_void_fusion_thruster_v01/checkpoint_v18g.py": "c5b7a30ae746a4a23c63d825ab1b886b0aa2e9c6943713107d066674b7f6e7c9",
+    "tools/art/large_void_fusion_thruster_v01/verify_checkpoint_v18g.py": "389c59033c116716deadf1f17276b68c36bf8f01b8d066a153553ab4d60d23c7"
+  },
+  "provenance": "history/inherited-source-manifest.json retains old V11/V15/V17 authoring fields as history only; exact current pins are this manifest and CHECKPOINT.json.",
+  "native_art_promotion": false,
+  "remaining_gates": [
+    "Fresh hash-pinned separated animation/capture layers with whole-engine electrical crackle and advected spatial trail/distortion effects",
+    "Native sprite/camera registration, layer ordering, foundation/well tile-bleed and power-synchronized brightness proof",
+    "Normal installed profile and release acceptance"
+  ],
+  "receipt_notes": "RECEIPT_NOTES.md"
+}

@@ -1,0 +1,19 @@
+{
+  "status": "ENCODED_ACTUAL_SOURCE_FULL_COLOR_MOTION_VIDEO",
+  "file": "thetazine-v06-mechanism-cycle.mp4",
+  "sha256": "4a8665095b8459b8fa03f7fb1ea06cc4318bb996608564c287323ebdc591c042",
+  "source_sha256": "35c4f470ad92015b70d056086b7f6e53573f4ccabbecab6af346ab382734871e",
+  "capture_receipt_sha256": "84ba82ee67926b35d59fbaccb06ef0ce9ff7339921429517833e2c379031a7f0",
+  "script_sha256": "d0199051e5e0d163d2e16924996688f7e3c9df910322def8073b67d17079a474",
+  "encoder": "ffmpeg version 9.0.2-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
+  "size": [
+    640,
+    768
+  ],
+  "fps": 30,
+  "video_frames": 192,
+  "duration_seconds": 6.4,
+  "working_loop_frames": 64,
+  "loop_repetitions": 3,
+  "scope": "Three repeats of the same64 actual source working poses, composited on a dark background and encoded without GIF palette reduction. Source preview, not native gameplay timing."
+}

@@ -1,0 +1,220 @@
+{
+  "status": "INTEGRATED_FINAL64_SOURCE_FX_USER_OBSERVED_FIRING_AND_PROCEED",
+  "owner_direction": "It's done it worked it was firing we need to keep moving",
+  "acceptance_scope": "User observed actual wide firing and instructed proceeding to integration. No further native client reruns; this is not a fabricated complete new narrow native-art test or blanket artistic approval.",
+  "previous_assets_archive": "docs/art/thruster-resumption-20261117/animation-capture/history/restrained-fx-before-universe-v01/archive-manifest.json",
+  "source_module": {
+    "file": "tech-priests_src/prototypes/generated_graphics/void-fusion-thrusters-v01.lua",
+    "sha256": "6369e78d8f67085f6ab12dd94c741e032063c8a208278c842c3f7b14fe7584b8"
+  },
+  "source_manifest": {
+    "file": "tech-priests_src/graphics/entity/void-fusion-thrusters-v01/import-manifest.json",
+    "sha256": "7cf4e7a0229bf7b47c3f32ee6aeee0ff8d3166902f8c11042a40bc932ebbbb58"
+  },
+  "runtime_control_source_unchanged": {
+    "scripts/generated/control_legacy_part_002.lua": "746d5f243bd66476db36b35e43d9ec66b867cfbd21d691ca55641bf7dfe365ee",
+    "scripts/core/void_fusion_visuals.lua": "85655201cad15acf802d0d360ec3f948415244d17da148b132c63351067bfe1e"
+  },
+  "existing_native_power_lifecycle_save_reload_proof": "native-power/validation.json",
+  "family_source_identity_and_registration": [
+    {
+      "prototype": "void-fusion-thruster",
+      "immutable_body_glb_sha256": "2b1f7164dc6df970aef9c9f1367bf8cf30f82ba3471d1eb9fcf6e84821d3d137",
+      "native_aperture_drift_pixels": 8.833008820374744e-06,
+      "final_capture_receipt_sha256": "38fbbce171d7b9d3a0ec7bc497afa24eb51f5c17f5c54873c9ebcd51bc640cd9"
+    },
+    {
+      "prototype": "large-void-fusion-thruster",
+      "immutable_body_glb_sha256": "4d9ef76ab5452728437d399af5456fbaa2b3626381da548dfb06de1b47d713de",
+      "native_aperture_drift_pixels": 2.363675218930439e-05,
+      "final_capture_receipt_sha256": "475588d1b5bb85c3fb9e3912152316f957d7c8cb563c2f846fc8e4c88eea4e73"
+    }
+  ],
+  "runtime_pngs": [
+    {
+      "file": "graphics/entity/void-fusion-thrusters-v01/void-fusion-thruster/cold_body.png",
+      "sha256": "8713018714c1083413040d60a0f2f598f3425474167d4dd6cc9b13fdb094f30a"
+    },
+    {
+      "file": "graphics/entity/void-fusion-thrusters-v01/void-fusion-thruster/deck_shadow.png",
+      "sha256": "fe14627dce69b97908274b6866bd96cc7d59c0c856c603876d2bfd88c4e505d6"
+    },
+    {
+      "file": "graphics/entity/void-fusion-thrusters-v01/void-fusion-thruster/service_underlay.png",
+      "sha256": "a07db5e4b47cc77fadb0082f47d2c6aee2efeb39591fb3ae6f9b6d25e17955d8"
+    },
+    {
+      "file": "graphics/entity/void-fusion-thrusters-v01/void-fusion-thruster/working_light-1.png",
+      "sha256": "9bc16269af151731961dfcf9f9b02dbee90672e181bc159f078956109fe27b77"
+    },
+    {
+      "file": "graphics/entity/void-fusion-thrusters-v01/void-fusion-thruster/working_light-2.png",
+      "sha256": "176ee0f145168face26d3093c92f427401aa81e3da784716a7e0096d951a5e71"
+    },
+    {
+      "file": "graphics/entity/void-fusion-thrusters-v01/void-fusion-thruster/field_candidate-1.png",
+      "sha256": "08b233a50e6fab0e6308c04870bf30875ae4bde53a9adb54d2aec4d93de3045f"
+    },
+    {
+      "file": "graphics/entity/void-fusion-thrusters-v01/void-fusion-thruster/field_candidate-2.png",
+      "sha256": "59a16589e6793bb10e58c07864de5e62761b3bfc68c0edf9a6522c0357dd19b7"
+    },
+    {
+      "file": "graphics/entity/void-fusion-thrusters-v01/large-void-fusion-thruster/cold_body.png",
+      "sha256": "efdf8b95ced8aca53a5a8834c314fb0af84373d0373cf49de5141aaea6a541fc"
+    },
+    {
+      "file": "graphics/entity/void-fusion-thrusters-v01/large-void-fusion-thruster/deck_shadow.png",
+      "sha256": "9606b302d2733518f9d6d349b9e3a1df9d0db61cf81d890e33b95fd7666fc350"
+    },
+    {
+      "file": "graphics/entity/void-fusion-thrusters-v01/large-void-fusion-thruster/service_underlay.png",
+      "sha256": "7814ba07dd1abe432697bb37a0ebd39e79cb51368c53ba49fd73e12f197d8c97"
+    },
+    {
+      "file": "graphics/entity/void-fusion-thrusters-v01/large-void-fusion-thruster/working_light-1.png",
+      "sha256": "aabcbad89a895a59662d273bb9f726318e4f2c73cd925e46ad86eb30543c793d"
+    },
+    {
+      "file": "graphics/entity/void-fusion-thrusters-v01/large-void-fusion-thruster/working_light-2.png",
+      "sha256": "0742ff8fd5acaad4e3f6a3a4cdb312db893212d6aa1fe00e92ea273521f8f338"
+    },
+    {
+      "file": "graphics/entity/void-fusion-thrusters-v01/large-void-fusion-thruster/field_candidate-1.png",
+      "sha256": "66753746464981111253680995a789bdb5e0af287e34e89cbfff6a8cdf810496"
+    },
+    {
+      "file": "graphics/entity/void-fusion-thrusters-v01/large-void-fusion-thruster/field_candidate-2.png",
+      "sha256": "0b5e645a30a09b87fc8f146cbc2629765ba0c667e58e981f03c001245774bc3e"
+    }
+  ],
+  "style": "TORTURED_UNIVERSE_V1: macro surface forks, hot emitter core, broad ragged advecting wake, accelerating fragments and free lightning shards. Overall brightness remains actual demandfactor/1.5.",
+  "source_capture_scope": "Both complete64-phase energy/ejecta sequences plus rendered wrap and exact atlas checks. Narrow V02 uses actual opaque-black well depth geometry in additive energy pass; cold/body/source geometry unchanged.",
+  "new_native_art_scope": {
+    "wide": "User observed actual stronger FX firing in isolated high-quality graphical client; automatic run receipts incomplete after window closure and not relabeled as a full test.",
+    "narrow": "No new graphical-client run at user direction. Existing native control/body fitting plus current immutable source/registration and final64 capture checks retained separately."
+  },
+  "deployment": "Local source integrated. No normal-profile install, release, commit or staging.",
+  "source_capture_evidence": {
+    "narrow-universe-v01": {
+      "status": "BYTE_EXACT_FINAL_SOURCE_CAPTURE_EVIDENCE",
+      "source_directory": "build/thruster-resume-20261117/capture-narrow-universe-v02-depth/output",
+      "master_retained": "build/thruster-resume-20261117/capture-narrow-universe-v02-depth/output/capture-master.blend",
+      "master_sha256": "54e77d6f539ba29f60d1880f067230158501f0e9db770f21f9ec15528f10e1e0",
+      "files": [
+        {
+          "source": "build/thruster-resume-20261117/capture-narrow-universe-v02-depth/output/capture-receipt.json",
+          "copy": "docs/art/thruster-resumption-20261117/animation-capture/narrow-universe-v01/capture-receipt.json",
+          "sha256": "38fbbce171d7b9d3a0ec7bc497afa24eb51f5c17f5c54873c9ebcd51bc640cd9"
+        },
+        {
+          "source": "build/thruster-resume-20261117/capture-narrow-universe-v02-depth/output/package-validation.json",
+          "copy": "docs/art/thruster-resumption-20261117/animation-capture/narrow-universe-v01/package-validation.json",
+          "sha256": "3e36fe6aec216ce9f11d7f5a7eac35e990ce24c40427fdc69dcafb982e55fd10"
+        },
+        {
+          "source": "build/thruster-resume-20261117/capture-narrow-universe-v02-depth/output/advecting-capture-validation.json",
+          "copy": "docs/art/thruster-resumption-20261117/animation-capture/narrow-universe-v01/advecting-capture-validation.json",
+          "sha256": "92ef1c1ae393e00217a48967dc403d61c243d163b694faed9931fd3806c67732"
+        },
+        {
+          "source": "build/thruster-resume-20261117/capture-narrow-universe-v02-depth/output/source-capture-review.json",
+          "copy": "docs/art/thruster-resumption-20261117/animation-capture/narrow-universe-v01/source-capture-review.json",
+          "sha256": "0d107df4eafaece91754124e3c5745400678bcbea0bbc8d60a1493f896c0bb71"
+        },
+        {
+          "source": "build/thruster-resume-20261117/capture-narrow-universe-v02-depth/output/profile.json",
+          "copy": "docs/art/thruster-resumption-20261117/animation-capture/narrow-universe-v01/profile.json",
+          "sha256": "fce6d269951d014358d61da0b65f4c95dfd4acb5decef5c9c1157af0ed8eebee"
+        },
+        {
+          "source": "build/thruster-resume-20261117/capture-narrow-universe-v02-depth/output/package/source-assembly-board.png",
+          "copy": "docs/art/thruster-resumption-20261117/animation-capture/narrow-universe-v01/source-assembly-board.png",
+          "sha256": "f87eeba2000413a10451767213ace524ca4e08eef43f63706bfde6f5dd9ff67d"
+        },
+        {
+          "source": "build/thruster-resume-20261117/capture-narrow-universe-v02-depth/output/package/source-assembly-loop.gif",
+          "copy": "docs/art/thruster-resumption-20261117/animation-capture/narrow-universe-v01/source-assembly-loop.gif",
+          "sha256": "879409e49b87a4c6ee8860b680c44ade11eb19129db9462d150034cbc736031c"
+        }
+      ],
+      "scope": "Final stronger FX and real-black-well technical repair. No new narrow native-art run at user direction; prior actual native control proof remains separate."
+    },
+    "wide-universe-v01": {
+      "status": "BYTE_EXACT_FINAL_SOURCE_CAPTURE_EVIDENCE",
+      "source_directory": "build/thruster-resume-20261117/capture-wide-universe-v01/output",
+      "master_retained": "build/thruster-resume-20261117/capture-wide-universe-v01/output/capture-master.blend",
+      "master_sha256": "dd05d1a70a609279e7fdc77b17b263739926dabd87ed88810460b62b897a0096",
+      "files": [
+        {
+          "source": "build/thruster-resume-20261117/capture-wide-universe-v01/output/capture-receipt.json",
+          "copy": "docs/art/thruster-resumption-20261117/animation-capture/wide-universe-v01/capture-receipt.json",
+          "sha256": "475588d1b5bb85c3fb9e3912152316f957d7c8cb563c2f846fc8e4c88eea4e73"
+        },
+        {
+          "source": "build/thruster-resume-20261117/capture-wide-universe-v01/output/package-validation.json",
+          "copy": "docs/art/thruster-resumption-20261117/animation-capture/wide-universe-v01/package-validation.json",
+          "sha256": "234f9fb9b5b3c1007e9e7160a4d35ee1ec43ba7a166f63e70901a7e3c4075d8c"
+        },
+        {
+          "source": "build/thruster-resume-20261117/capture-wide-universe-v01/output/advecting-capture-validation.json",
+          "copy": "docs/art/thruster-resumption-20261117/animation-capture/wide-universe-v01/advecting-capture-validation.json",
+          "sha256": "910be1c06cb5a0cd1fea36e99b78980dd4482a985db74fa1d3baa0dd20888b6c"
+        },
+        {
+          "source": "build/thruster-resume-20261117/capture-wide-universe-v01/output/source-capture-review.json",
+          "copy": "docs/art/thruster-resumption-20261117/animation-capture/wide-universe-v01/source-capture-review.json",
+          "sha256": "f62a3449845e73c7d68253a2880532c1ad7bdb617f0fbed53b96158d3c11df00"
+        },
+        {
+          "source": "build/thruster-resume-20261117/capture-wide-universe-v01/output/profile.json",
+          "copy": "docs/art/thruster-resumption-20261117/animation-capture/wide-universe-v01/profile.json",
+          "sha256": "8b467c1ad44d68e20a1308c2ee94f33bea8c6ae1540b6bf57ccccbf6e825f44a"
+        },
+        {
+          "source": "build/thruster-resume-20261117/capture-wide-universe-v01/output/package/source-assembly-board.png",
+          "copy": "docs/art/thruster-resumption-20261117/animation-capture/wide-universe-v01/source-assembly-board.png",
+          "sha256": "a7f1df3f96524279d1ac188426f25d84527e34702842b2c217334d10339967e2"
+        },
+        {
+          "source": "build/thruster-resume-20261117/capture-wide-universe-v01/output/package/source-assembly-loop.gif",
+          "copy": "docs/art/thruster-resumption-20261117/animation-capture/wide-universe-v01/source-assembly-loop.gif",
+          "sha256": "1a141efc93dbafc224233a68edb5d635f64916f35393dd84ba4eb09cce616979"
+        },
+        {
+          "source": "build/thruster-resume-20261117/capture-wide-universe-v01/output/intensity-comparison-native-scale.png",
+          "copy": "docs/art/thruster-resumption-20261117/animation-capture/wide-universe-v01/intensity-comparison-native-scale.png",
+          "sha256": "7ca42558883154255d4a7382dbe381e47e9a85958a2b043a53ef4c28d8abd1a2"
+        },
+        {
+          "source": "build/thruster-resume-20261117/capture-wide-universe-v01/output/intensity-eight-consecutive-source.gif",
+          "copy": "docs/art/thruster-resumption-20261117/animation-capture/wide-universe-v01/intensity-eight-consecutive-source.gif",
+          "sha256": "726d99155c79b677152d36229d2bba0fc25fc4bda7a6e8b99a28ce9bd575e674"
+        }
+      ],
+      "scope": "Final stronger FX; unchanged authoredbody/well; nativefit/powerstates reviewed separately."
+    }
+  },
+  "actual_user_observed_wide_image": {
+    "file": "docs/art/thruster-resumption-20261117/animation-capture/user-observed-wide-universe-v01/large-void-fusion-thruster-working.png",
+    "sha256": "578c4e99ec0ef941fdda690d0ad7473eae355028510a3394852195b8a1c283fe"
+  },
+  "durable_editable_fx_packages": {
+    "wide": {
+      "directory": "art/source-to-3d/space-platform-engines/fusion-fx/universe-v01/wide",
+      "manifests": {
+        "manifest.json": "53b16b22e5b11d262e7fe0843d77ceeb952967e68373ef74581e14399f306d93"
+      },
+      "packed_master_reopened": true,
+      "resaved": false
+    },
+    "narrow": {
+      "directory": "art/source-to-3d/space-platform-engines/fusion-fx/universe-v01/narrow",
+      "manifests": {
+        "manifest.json": "f61bfe945518c9d97b1e2d19bc5240e9ba1b9aa92878a6d80a44f5d01baf55c6"
+      },
+      "packed_master_reopened": true,
+      "resaved": false
+    }
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "armor": {
+    "region": "segmented armor blocks on each dish tier, shoulder fittings and skull backing plinths",
+    "finish": "blackened cast iron with broad graphite faces and shallow edge scoring",
+    "direction": "plate borders follow individual armor-panel UVs",
+    "wear": "sparse bronze-exposed border abrasion, no all-over stripes"
+  },
+  "cast": {
+    "region": "Low braced U-bay landing/seat castings, open Noctilith cage and thick dished electrode bodies",
+    "finish": "mottled dark gunmetal casting",
+    "direction": "fine stipple on frames; circumferential machining along dished stage UVs",
+    "wear": "edge polishing on actual bevels; recessed dish interiors stay dark"
+  },
+  "bronze": {
+    "region": "flange rings, emblem and fastener seats",
+    "finish": "aged warm bronze with radial machining",
+    "direction": "circumferential lathe UV u, axial UV v",
+    "wear": "restrained polished ring lips"
+  },
+  "copper": {
+    "region": "Four induction windings, six retained mineral-contact leads and two sealed housing feeds",
+    "finish": "insulated oxidized copper",
+    "direction": "linear winding texture along each helical cable",
+    "wear": "fine longitudinal draw marks; dark joints"
+  },
+  "ceramic": {
+    "region": "lateral induction tower isolators, inter-dish electrode standoffs and central emitter insulator",
+    "finish": "warm grey refractory ceramic",
+    "direction": "circumferential rib seams",
+    "wear": "local mottling and fine crazing"
+  },
+  "skull": {
+    "region": "two winged cog seals at the upper and lower casing",
+    "finish": "aged bronze casting over supplied unchanged DGordillo low-poly skull",
+    "direction": "original donor UV and sculpt normal preserved",
+    "wear": "fine casting mottling; no remesh or anatomical substitution"
+  },
+  "rock": {
+    "region": "Three distinct irregular clast groups, with actual open joints, crushed contact edges and pilot open-edge chips",
+    "finish": "Dielectric dark olive/charcoal angular mineral, mottled granular faces and subdued pale ochre fracture web",
+    "direction": "Unique model-specific UV base/normal/roughness bake; granular variation across differently oriented cleavage planes",
+    "wear": "Nonemissive broken mineral seams and contact pressure masks remain distinct from recessed green energized geometry",
+    "receipt": "mineral-materials.json",
+    "reference": "docs/art/thruster-resumption-20261117/animation-capture/noctilith-reference.json",
+    "current_derivative": "V15b unique mineral maps retained through V17 axial re-layout; geometry/UVs now match V18g. No new mineral bake is claimed at V18."
+  },
+  "green": {
+    "region": "Noctilith fractures, energized contacts and aft field collars",
+    "finish": "quintessential Necron green electrical/field emission",
+    "direction": "fractures follow actual irregular rock edge chains",
+    "wear": "contained electric field; no chemical combustion or heat interpretation"
+  },
+  "core_hardware": {
+    "region": "Continuous23cm-deep retained backing pan, two substantial inter-stone cast crossheads, fitted ceramic receivers, bolted access covers and cage load attachments",
+    "finish": "Existing part-specific cast/armor/ceramic PBR with new actual UV islands; no flat image fill",
+    "mechanical_review": "390 actual canonical core through-rays blocked; external cage gaps and emitter aperture intentionally excluded",
+    "validation": "functional-detail-validation.json"
+  },
+  "retained_hardware": {
+    "region": "Seated joint bolts/bearing washers/captive plates, seven insulating cable guide assemblies and two seated cast-root retention caps",
+    "finish": "Existing matching bronze/cast/ceramic finish; guide bores retain measurable conductor clearance",
+    "validation": "functional-detail-validation.json"
+  },
+  "installation_well": {
+    "surface_plan": "UNDERLAY_SURFACE_PLAN.json",
+    "source": "wide-service-underlay-v16.blend",
+    "glb": "installation-service-underlay.glb",
+    "fore_only": true,
+    "body_exclusions": 38,
+    "well_only_parts": 2
+  }
+}

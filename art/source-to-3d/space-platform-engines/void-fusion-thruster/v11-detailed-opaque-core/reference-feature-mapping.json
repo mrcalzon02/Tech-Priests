@@ -1,0 +1,110 @@
+{
+  "source_cell": [
+    0,
+    0,
+    192,
+    576
+  ],
+  "visible_body_extent_y": [
+    35,
+    546
+  ],
+  "model_y_extent": [
+    4.31,
+    -4.39
+  ],
+  "method": "Manually identified sprite landmark rectangles. Longitudinal interpolation only; depth/perspective not asserted recovered.",
+  "features": [
+    {
+      "name": "Fore skull and cog reliquary",
+      "crop_xyxy": [
+        73,
+        55,
+        120,
+        108
+      ],
+      "center_y_px": 81,
+      "model_y": 3.5268297455968685
+    },
+    {
+      "name": "Aft skull and cog reliquary",
+      "crop_xyxy": [
+        73,
+        385,
+        121,
+        436
+      ],
+      "center_y_px": 410,
+      "model_y": -2.07454011741683
+    },
+    {
+      "name": "Five retaining and mounting band stations",
+      "crop_xyxy": [
+        [
+          55,
+          121,
+          137,
+          139
+        ],
+        [
+          55,
+          186,
+          137,
+          202
+        ],
+        [
+          55,
+          269,
+          137,
+          285
+        ],
+        [
+          55,
+          333,
+          137,
+          349
+        ],
+        [
+          55,
+          461,
+          137,
+          479
+        ]
+      ],
+      "center_y_px": [
+        130,
+        194,
+        277,
+        341,
+        470
+      ],
+      "model_y": [
+        2.692583170254403,
+        1.602954990215264,
+        0.18984344422700605,
+        -0.8997847358121325,
+        -3.096066536203522
+      ]
+    },
+    {
+      "name": "Long stepped/fluted central casing",
+      "crop_xyxy": [
+        65,
+        108,
+        127,
+        385
+      ],
+      "scope": "Segmented raised shoulders, longitudinal relief and recessed seam transitions; no pixel replica claimed"
+    },
+    {
+      "name": "Aft concentric exhaust structure",
+      "crop_xyxy": [
+        54,
+        442,
+        138,
+        546
+      ],
+      "scope": "V01 hollow annular throat retained; source-profile refinement still open"
+    }
+  ]
+}

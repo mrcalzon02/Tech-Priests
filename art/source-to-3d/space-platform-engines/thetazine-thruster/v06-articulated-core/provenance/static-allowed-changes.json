@@ -1,0 +1,3653 @@
+{
+  "status": "EXACT_STATIC_MATE_DECLARATIONS_FOR_INDEPENDENT_EVALUATION",
+  "new_names": [
+    "V06 fixed bearing shoe -1 0 fitted access cap",
+    "V06 fixed bearing shoe -1 0 tapered load rib",
+    "V06 fixed bearing shoe -1 0-0.08 actual bored washer",
+    "V06 fixed bearing shoe -1 0-0.08 retained six-flat head",
+    "V06 fixed bearing shoe -1 0-0.08 bounded insert stud",
+    "V06 fixed bearing shoe -1 00.08 actual bored washer",
+    "V06 fixed bearing shoe -1 00.08 retained six-flat head",
+    "V06 fixed bearing shoe -1 00.08 bounded insert stud",
+    "V06 fixed bearing shoe -1 1 fitted access cap",
+    "V06 fixed bearing shoe -1 1 tapered load rib",
+    "V06 fixed bearing shoe -1 1-0.08 actual bored washer",
+    "V06 fixed bearing shoe -1 1-0.08 retained six-flat head",
+    "V06 fixed bearing shoe -1 1-0.08 bounded insert stud",
+    "V06 fixed bearing shoe -1 10.08 actual bored washer",
+    "V06 fixed bearing shoe -1 10.08 retained six-flat head",
+    "V06 fixed bearing shoe -1 10.08 bounded insert stud",
+    "V06 fixed bearing shoe -1 2 fitted access cap",
+    "V06 fixed bearing shoe -1 2 tapered load rib",
+    "V06 fixed bearing shoe -1 2-0.08 actual bored washer",
+    "V06 fixed bearing shoe -1 2-0.08 retained six-flat head",
+    "V06 fixed bearing shoe -1 2-0.08 bounded insert stud",
+    "V06 fixed bearing shoe -1 20.08 actual bored washer",
+    "V06 fixed bearing shoe -1 20.08 retained six-flat head",
+    "V06 fixed bearing shoe -1 20.08 bounded insert stud",
+    "V06 fixed bearing shoe -1 3 fitted access cap",
+    "V06 fixed bearing shoe -1 3 tapered load rib",
+    "V06 fixed bearing shoe -1 3-0.08 actual bored washer",
+    "V06 fixed bearing shoe -1 3-0.08 retained six-flat head",
+    "V06 fixed bearing shoe -1 3-0.08 bounded insert stud",
+    "V06 fixed bearing shoe -1 30.08 actual bored washer",
+    "V06 fixed bearing shoe -1 30.08 retained six-flat head",
+    "V06 fixed bearing shoe -1 30.08 bounded insert stud",
+    "V06 fixed bearing shoe -1 4 fitted access cap",
+    "V06 fixed bearing shoe -1 4 tapered load rib",
+    "V06 fixed bearing shoe -1 4-0.08 actual bored washer",
+    "V06 fixed bearing shoe -1 4-0.08 retained six-flat head",
+    "V06 fixed bearing shoe -1 4-0.08 bounded insert stud",
+    "V06 fixed bearing shoe -1 40.08 actual bored washer",
+    "V06 fixed bearing shoe -1 40.08 retained six-flat head",
+    "V06 fixed bearing shoe -1 40.08 bounded insert stud",
+    "V06 fixed bearing shoe 1 0 fitted access cap",
+    "V06 fixed bearing shoe 1 0 tapered load rib",
+    "V06 fixed bearing shoe 1 0-0.08 actual bored washer",
+    "V06 fixed bearing shoe 1 0-0.08 retained six-flat head",
+    "V06 fixed bearing shoe 1 0-0.08 bounded insert stud",
+    "V06 fixed bearing shoe 1 00.08 actual bored washer",
+    "V06 fixed bearing shoe 1 00.08 retained six-flat head",
+    "V06 fixed bearing shoe 1 00.08 bounded insert stud",
+    "V06 fixed bearing shoe 1 1 fitted access cap",
+    "V06 fixed bearing shoe 1 1 tapered load rib",
+    "V06 fixed bearing shoe 1 1-0.08 actual bored washer",
+    "V06 fixed bearing shoe 1 1-0.08 retained six-flat head",
+    "V06 fixed bearing shoe 1 1-0.08 bounded insert stud",
+    "V06 fixed bearing shoe 1 10.08 actual bored washer",
+    "V06 fixed bearing shoe 1 10.08 retained six-flat head",
+    "V06 fixed bearing shoe 1 10.08 bounded insert stud",
+    "V06 fixed bearing shoe 1 2 fitted access cap",
+    "V06 fixed bearing shoe 1 2 tapered load rib",
+    "V06 fixed bearing shoe 1 2-0.08 actual bored washer",
+    "V06 fixed bearing shoe 1 2-0.08 retained six-flat head",
+    "V06 fixed bearing shoe 1 2-0.08 bounded insert stud",
+    "V06 fixed bearing shoe 1 20.08 actual bored washer",
+    "V06 fixed bearing shoe 1 20.08 retained six-flat head",
+    "V06 fixed bearing shoe 1 20.08 bounded insert stud",
+    "V06 fixed bearing shoe 1 3 fitted access cap",
+    "V06 fixed bearing shoe 1 3 tapered load rib",
+    "V06 fixed bearing shoe 1 3-0.08 actual bored washer",
+    "V06 fixed bearing shoe 1 3-0.08 retained six-flat head",
+    "V06 fixed bearing shoe 1 3-0.08 bounded insert stud",
+    "V06 fixed bearing shoe 1 30.08 actual bored washer",
+    "V06 fixed bearing shoe 1 30.08 retained six-flat head",
+    "V06 fixed bearing shoe 1 30.08 bounded insert stud",
+    "V06 fixed bearing shoe 1 4 fitted access cap",
+    "V06 fixed bearing shoe 1 4 tapered load rib",
+    "V06 fixed bearing shoe 1 4-0.08 actual bored washer",
+    "V06 fixed bearing shoe 1 4-0.08 retained six-flat head",
+    "V06 fixed bearing shoe 1 4-0.08 bounded insert stud",
+    "V06 fixed bearing shoe 1 40.08 actual bored washer",
+    "V06 fixed bearing shoe 1 40.08 retained six-flat head",
+    "V06 fixed bearing shoe 1 40.08 bounded insert stud",
+    "V06 fore fixed joint -1 seated pad",
+    "V06 fore fixed joint -1 stepped load strap",
+    "V06 fore joint -1 -0.067 actual bored washer",
+    "V06 fore joint -1 -0.067 retained six-flat head",
+    "V06 fore joint -1 -0.067 bounded insert stud",
+    "V06 fore joint -1 0.067 actual bored washer",
+    "V06 fore joint -1 0.067 retained six-flat head",
+    "V06 fore joint -1 0.067 bounded insert stud",
+    "V06 fore fixed joint 1 seated pad",
+    "V06 fore fixed joint 1 stepped load strap",
+    "V06 fore joint 1 -0.067 actual bored washer",
+    "V06 fore joint 1 -0.067 retained six-flat head",
+    "V06 fore joint 1 -0.067 bounded insert stud",
+    "V06 fore joint 1 0.067 actual bored washer",
+    "V06 fore joint 1 0.067 retained six-flat head",
+    "V06 fore joint 1 0.067 bounded insert stud",
+    "V06 lower fixed crossbar -1 retained end plate",
+    "V06 lower end -1 -0.043 actual bored washer",
+    "V06 lower end -1 -0.043 retained six-flat head",
+    "V06 lower end -1 -0.043 bounded insert stud",
+    "V06 lower end -1 0.043 actual bored washer",
+    "V06 lower end -1 0.043 retained six-flat head",
+    "V06 lower end -1 0.043 bounded insert stud",
+    "V06 lower fixed crossbar 1 retained end plate",
+    "V06 lower end 1 -0.043 actual bored washer",
+    "V06 lower end 1 -0.043 retained six-flat head",
+    "V06 lower end 1 -0.043 bounded insert stud",
+    "V06 lower end 1 0.043 actual bored washer",
+    "V06 lower end 1 0.043 retained six-flat head",
+    "V06 lower end 1 0.043 bounded insert stud"
+  ],
+  "bounded_contacts": [
+    {
+      "object": "V06 fixed bearing shoe -1 0 fitted access cap",
+      "host": "Underlay side bearing block -1 0",
+      "point_host_local": [
+        0.0,
+        0.0,
+        0.15999998152256012
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.24481379077092624,
+      "max_insertion_depth": 2e-05,
+      "reason": "Actual original bearing-block top receives shaped shoe",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 0 tapered load rib",
+      "host": "V06 fixed bearing shoe -1 0 fitted access cap",
+      "point_host_local": [
+        0.0,
+        0.0,
+        0.17799997329711914
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.06657824516917495,
+      "max_insertion_depth": 2e-05,
+      "reason": "Tapered rib is seated on real machined cap",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 0-0.08 actual bored washer",
+      "host": "V06 fixed bearing shoe -1 0 fitted access cap",
+      "point_host_local": [
+        0.010799884796142578,
+        -0.07999992370605469,
+        0.17799997329711914
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.029096450952617994,
+      "max_insertion_depth": 2e-05,
+      "reason": "Washer annulus bears on actual new plate top",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 0-0.08 retained six-flat head",
+      "host": "V06 fixed bearing shoe -1 0-0.08 actual bored washer",
+      "point_host_local": [
+        0.00839996337890625,
+        -0.07999992370605469,
+        0.18199998140335083
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.023196712450216057,
+      "max_insertion_depth": 2e-05,
+      "reason": "Captive head underside bears on real washer",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 00.08 actual bored washer",
+      "host": "V06 fixed bearing shoe -1 0 fitted access cap",
+      "point_host_local": [
+        0.010799884796142578,
+        0.07999992370605469,
+        0.17799997329711914
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.029096450952617994,
+      "max_insertion_depth": 2e-05,
+      "reason": "Washer annulus bears on actual new plate top",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 00.08 retained six-flat head",
+      "host": "V06 fixed bearing shoe -1 00.08 actual bored washer",
+      "point_host_local": [
+        0.00839996337890625,
+        0.07999992370605469,
+        0.18199998140335083
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.023196712450216057,
+      "max_insertion_depth": 2e-05,
+      "reason": "Captive head underside bears on real washer",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 1 fitted access cap",
+      "host": "Underlay side bearing block -1 1",
+      "point_host_local": [
+        0.0,
+        0.0,
+        0.1599999964237213
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.24481379077092624,
+      "max_insertion_depth": 2e-05,
+      "reason": "Actual original bearing-block top receives shaped shoe",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 1 tapered load rib",
+      "host": "V06 fixed bearing shoe -1 1 fitted access cap",
+      "point_host_local": [
+        0.0,
+        0.0,
+        0.17800000309944153
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.06657824516917495,
+      "max_insertion_depth": 2e-05,
+      "reason": "Tapered rib is seated on real machined cap",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 1-0.08 actual bored washer",
+      "host": "V06 fixed bearing shoe -1 1 fitted access cap",
+      "point_host_local": [
+        0.010799884796142578,
+        -0.07999998331069946,
+        0.17800000309944153
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.029096450952617994,
+      "max_insertion_depth": 2e-05,
+      "reason": "Washer annulus bears on actual new plate top",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 1-0.08 retained six-flat head",
+      "host": "V06 fixed bearing shoe -1 1-0.08 actual bored washer",
+      "point_host_local": [
+        0.00839996337890625,
+        -0.07999998331069946,
+        0.18199999630451202
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.023196712450216057,
+      "max_insertion_depth": 2e-05,
+      "reason": "Captive head underside bears on real washer",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 10.08 actual bored washer",
+      "host": "V06 fixed bearing shoe -1 1 fitted access cap",
+      "point_host_local": [
+        0.010799884796142578,
+        0.07999998331069946,
+        0.17800000309944153
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.029096450952617994,
+      "max_insertion_depth": 2e-05,
+      "reason": "Washer annulus bears on actual new plate top",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 10.08 retained six-flat head",
+      "host": "V06 fixed bearing shoe -1 10.08 actual bored washer",
+      "point_host_local": [
+        0.00839996337890625,
+        0.07999998331069946,
+        0.18199999630451202
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.023196712450216057,
+      "max_insertion_depth": 2e-05,
+      "reason": "Captive head underside bears on real washer",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 2 fitted access cap",
+      "host": "Underlay side bearing block -1 2",
+      "point_host_local": [
+        0.0,
+        0.0,
+        0.1599999964237213
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.24481379077092624,
+      "max_insertion_depth": 2e-05,
+      "reason": "Actual original bearing-block top receives shaped shoe",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 2 tapered load rib",
+      "host": "V06 fixed bearing shoe -1 2 fitted access cap",
+      "point_host_local": [
+        0.0,
+        0.0,
+        0.17800000309944153
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.06657824516917495,
+      "max_insertion_depth": 2e-05,
+      "reason": "Tapered rib is seated on real machined cap",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 2-0.08 actual bored washer",
+      "host": "V06 fixed bearing shoe -1 2 fitted access cap",
+      "point_host_local": [
+        0.010799884796142578,
+        -0.07999998331069946,
+        0.17800000309944153
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.029096450952617994,
+      "max_insertion_depth": 2e-05,
+      "reason": "Washer annulus bears on actual new plate top",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 2-0.08 retained six-flat head",
+      "host": "V06 fixed bearing shoe -1 2-0.08 actual bored washer",
+      "point_host_local": [
+        0.00839996337890625,
+        -0.07999998331069946,
+        0.18199999630451202
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.023196712450216057,
+      "max_insertion_depth": 2e-05,
+      "reason": "Captive head underside bears on real washer",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 20.08 actual bored washer",
+      "host": "V06 fixed bearing shoe -1 2 fitted access cap",
+      "point_host_local": [
+        0.010799884796142578,
+        0.07999998331069946,
+        0.17800000309944153
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.029096450952617994,
+      "max_insertion_depth": 2e-05,
+      "reason": "Washer annulus bears on actual new plate top",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 20.08 retained six-flat head",
+      "host": "V06 fixed bearing shoe -1 20.08 actual bored washer",
+      "point_host_local": [
+        0.00839996337890625,
+        0.07999998331069946,
+        0.18199999630451202
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.023196712450216057,
+      "max_insertion_depth": 2e-05,
+      "reason": "Captive head underside bears on real washer",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 3 fitted access cap",
+      "host": "Underlay side bearing block -1 3",
+      "point_host_local": [
+        0.0,
+        0.0,
+        0.15999998152256012
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.24481379077092624,
+      "max_insertion_depth": 2e-05,
+      "reason": "Actual original bearing-block top receives shaped shoe",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 3 tapered load rib",
+      "host": "V06 fixed bearing shoe -1 3 fitted access cap",
+      "point_host_local": [
+        0.0,
+        0.0,
+        0.17799997329711914
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.06657824516917495,
+      "max_insertion_depth": 2e-05,
+      "reason": "Tapered rib is seated on real machined cap",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 3-0.08 actual bored washer",
+      "host": "V06 fixed bearing shoe -1 3 fitted access cap",
+      "point_host_local": [
+        0.010799884796142578,
+        -0.07999992370605469,
+        0.17799997329711914
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.029096450952617994,
+      "max_insertion_depth": 2e-05,
+      "reason": "Washer annulus bears on actual new plate top",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 3-0.08 retained six-flat head",
+      "host": "V06 fixed bearing shoe -1 3-0.08 actual bored washer",
+      "point_host_local": [
+        0.00839996337890625,
+        -0.07999992370605469,
+        0.18199998140335083
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.023196712450216057,
+      "max_insertion_depth": 2e-05,
+      "reason": "Captive head underside bears on real washer",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 30.08 actual bored washer",
+      "host": "V06 fixed bearing shoe -1 3 fitted access cap",
+      "point_host_local": [
+        0.010799884796142578,
+        0.07999992370605469,
+        0.17799997329711914
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.029096450952617994,
+      "max_insertion_depth": 2e-05,
+      "reason": "Washer annulus bears on actual new plate top",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 30.08 retained six-flat head",
+      "host": "V06 fixed bearing shoe -1 30.08 actual bored washer",
+      "point_host_local": [
+        0.00839996337890625,
+        0.07999992370605469,
+        0.18199998140335083
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.023196712450216057,
+      "max_insertion_depth": 2e-05,
+      "reason": "Captive head underside bears on real washer",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 4 fitted access cap",
+      "host": "Underlay side bearing block -1 4",
+      "point_host_local": [
+        0.0,
+        0.0,
+        0.15999998152256012
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.24481379077092624,
+      "max_insertion_depth": 2e-05,
+      "reason": "Actual original bearing-block top receives shaped shoe",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 4 tapered load rib",
+      "host": "V06 fixed bearing shoe -1 4 fitted access cap",
+      "point_host_local": [
+        0.0,
+        0.0,
+        0.17799997329711914
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.06657824516917495,
+      "max_insertion_depth": 2e-05,
+      "reason": "Tapered rib is seated on real machined cap",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 4-0.08 actual bored washer",
+      "host": "V06 fixed bearing shoe -1 4 fitted access cap",
+      "point_host_local": [
+        0.010799884796142578,
+        -0.07999992370605469,
+        0.17799997329711914
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.029096450952617994,
+      "max_insertion_depth": 2e-05,
+      "reason": "Washer annulus bears on actual new plate top",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 4-0.08 retained six-flat head",
+      "host": "V06 fixed bearing shoe -1 4-0.08 actual bored washer",
+      "point_host_local": [
+        0.00839996337890625,
+        -0.07999992370605469,
+        0.18199998140335083
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.023196712450216057,
+      "max_insertion_depth": 2e-05,
+      "reason": "Captive head underside bears on real washer",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 40.08 actual bored washer",
+      "host": "V06 fixed bearing shoe -1 4 fitted access cap",
+      "point_host_local": [
+        0.010799884796142578,
+        0.07999992370605469,
+        0.17799997329711914
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.029096450952617994,
+      "max_insertion_depth": 2e-05,
+      "reason": "Washer annulus bears on actual new plate top",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 40.08 retained six-flat head",
+      "host": "V06 fixed bearing shoe -1 40.08 actual bored washer",
+      "point_host_local": [
+        0.00839996337890625,
+        0.07999992370605469,
+        0.18199998140335083
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.023196712450216057,
+      "max_insertion_depth": 2e-05,
+      "reason": "Captive head underside bears on real washer",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 0 fitted access cap",
+      "host": "Underlay side bearing block 1 0",
+      "point_host_local": [
+        0.0,
+        0.0,
+        0.15999998152256012
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.24481379077092624,
+      "max_insertion_depth": 2e-05,
+      "reason": "Actual original bearing-block top receives shaped shoe",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 0 tapered load rib",
+      "host": "V06 fixed bearing shoe 1 0 fitted access cap",
+      "point_host_local": [
+        0.0,
+        0.0,
+        0.17799997329711914
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.06657824516917495,
+      "max_insertion_depth": 2e-05,
+      "reason": "Tapered rib is seated on real machined cap",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 0-0.08 actual bored washer",
+      "host": "V06 fixed bearing shoe 1 0 fitted access cap",
+      "point_host_local": [
+        0.010799884796142578,
+        -0.07999992370605469,
+        0.17799997329711914
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.029096450952617994,
+      "max_insertion_depth": 2e-05,
+      "reason": "Washer annulus bears on actual new plate top",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 0-0.08 retained six-flat head",
+      "host": "V06 fixed bearing shoe 1 0-0.08 actual bored washer",
+      "point_host_local": [
+        0.00839996337890625,
+        -0.07999992370605469,
+        0.18199998140335083
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.023196712450216057,
+      "max_insertion_depth": 2e-05,
+      "reason": "Captive head underside bears on real washer",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 00.08 actual bored washer",
+      "host": "V06 fixed bearing shoe 1 0 fitted access cap",
+      "point_host_local": [
+        0.010799884796142578,
+        0.07999992370605469,
+        0.17799997329711914
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.029096450952617994,
+      "max_insertion_depth": 2e-05,
+      "reason": "Washer annulus bears on actual new plate top",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 00.08 retained six-flat head",
+      "host": "V06 fixed bearing shoe 1 00.08 actual bored washer",
+      "point_host_local": [
+        0.00839996337890625,
+        0.07999992370605469,
+        0.18199998140335083
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.023196712450216057,
+      "max_insertion_depth": 2e-05,
+      "reason": "Captive head underside bears on real washer",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 1 fitted access cap",
+      "host": "Underlay side bearing block 1 1",
+      "point_host_local": [
+        0.0,
+        0.0,
+        0.15999998152256012
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.24481379077092624,
+      "max_insertion_depth": 2e-05,
+      "reason": "Actual original bearing-block top receives shaped shoe",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 1 tapered load rib",
+      "host": "V06 fixed bearing shoe 1 1 fitted access cap",
+      "point_host_local": [
+        0.0,
+        0.0,
+        0.17799997329711914
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.06657824516917495,
+      "max_insertion_depth": 2e-05,
+      "reason": "Tapered rib is seated on real machined cap",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 1-0.08 actual bored washer",
+      "host": "V06 fixed bearing shoe 1 1 fitted access cap",
+      "point_host_local": [
+        0.010799884796142578,
+        -0.07999998331069946,
+        0.17799997329711914
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.029096450952617994,
+      "max_insertion_depth": 2e-05,
+      "reason": "Washer annulus bears on actual new plate top",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 1-0.08 retained six-flat head",
+      "host": "V06 fixed bearing shoe 1 1-0.08 actual bored washer",
+      "point_host_local": [
+        0.00839996337890625,
+        -0.07999998331069946,
+        0.18199998140335083
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.023196712450216057,
+      "max_insertion_depth": 2e-05,
+      "reason": "Captive head underside bears on real washer",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 10.08 actual bored washer",
+      "host": "V06 fixed bearing shoe 1 1 fitted access cap",
+      "point_host_local": [
+        0.010799884796142578,
+        0.07999998331069946,
+        0.17799997329711914
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.029096450952617994,
+      "max_insertion_depth": 2e-05,
+      "reason": "Washer annulus bears on actual new plate top",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 10.08 retained six-flat head",
+      "host": "V06 fixed bearing shoe 1 10.08 actual bored washer",
+      "point_host_local": [
+        0.00839996337890625,
+        0.07999998331069946,
+        0.18199998140335083
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.023196712450216057,
+      "max_insertion_depth": 2e-05,
+      "reason": "Captive head underside bears on real washer",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 2 fitted access cap",
+      "host": "Underlay side bearing block 1 2",
+      "point_host_local": [
+        0.0,
+        0.0,
+        0.15999998152256012
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.24481379077092624,
+      "max_insertion_depth": 2e-05,
+      "reason": "Actual original bearing-block top receives shaped shoe",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 2 tapered load rib",
+      "host": "V06 fixed bearing shoe 1 2 fitted access cap",
+      "point_host_local": [
+        0.0,
+        0.0,
+        0.17799997329711914
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.06657824516917495,
+      "max_insertion_depth": 2e-05,
+      "reason": "Tapered rib is seated on real machined cap",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 2-0.08 actual bored washer",
+      "host": "V06 fixed bearing shoe 1 2 fitted access cap",
+      "point_host_local": [
+        0.010799884796142578,
+        -0.07999998331069946,
+        0.17799997329711914
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.029096450952617994,
+      "max_insertion_depth": 2e-05,
+      "reason": "Washer annulus bears on actual new plate top",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 2-0.08 retained six-flat head",
+      "host": "V06 fixed bearing shoe 1 2-0.08 actual bored washer",
+      "point_host_local": [
+        0.00839996337890625,
+        -0.07999998331069946,
+        0.18199998140335083
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.023196712450216057,
+      "max_insertion_depth": 2e-05,
+      "reason": "Captive head underside bears on real washer",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 20.08 actual bored washer",
+      "host": "V06 fixed bearing shoe 1 2 fitted access cap",
+      "point_host_local": [
+        0.010799884796142578,
+        0.07999998331069946,
+        0.17799997329711914
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.029096450952617994,
+      "max_insertion_depth": 2e-05,
+      "reason": "Washer annulus bears on actual new plate top",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 20.08 retained six-flat head",
+      "host": "V06 fixed bearing shoe 1 20.08 actual bored washer",
+      "point_host_local": [
+        0.00839996337890625,
+        0.07999998331069946,
+        0.18199998140335083
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.023196712450216057,
+      "max_insertion_depth": 2e-05,
+      "reason": "Captive head underside bears on real washer",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 3 fitted access cap",
+      "host": "Underlay side bearing block 1 3",
+      "point_host_local": [
+        0.0,
+        0.0,
+        0.15999998152256012
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.24481379077092624,
+      "max_insertion_depth": 2e-05,
+      "reason": "Actual original bearing-block top receives shaped shoe",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 3 tapered load rib",
+      "host": "V06 fixed bearing shoe 1 3 fitted access cap",
+      "point_host_local": [
+        0.0,
+        0.0,
+        0.17799997329711914
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.06657824516917495,
+      "max_insertion_depth": 2e-05,
+      "reason": "Tapered rib is seated on real machined cap",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 3-0.08 actual bored washer",
+      "host": "V06 fixed bearing shoe 1 3 fitted access cap",
+      "point_host_local": [
+        0.010799884796142578,
+        -0.07999992370605469,
+        0.17799997329711914
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.029096450952617994,
+      "max_insertion_depth": 2e-05,
+      "reason": "Washer annulus bears on actual new plate top",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 3-0.08 retained six-flat head",
+      "host": "V06 fixed bearing shoe 1 3-0.08 actual bored washer",
+      "point_host_local": [
+        0.00839996337890625,
+        -0.07999992370605469,
+        0.18199998140335083
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.023196712450216057,
+      "max_insertion_depth": 2e-05,
+      "reason": "Captive head underside bears on real washer",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 30.08 actual bored washer",
+      "host": "V06 fixed bearing shoe 1 3 fitted access cap",
+      "point_host_local": [
+        0.010799884796142578,
+        0.07999992370605469,
+        0.17799997329711914
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.029096450952617994,
+      "max_insertion_depth": 2e-05,
+      "reason": "Washer annulus bears on actual new plate top",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 30.08 retained six-flat head",
+      "host": "V06 fixed bearing shoe 1 30.08 actual bored washer",
+      "point_host_local": [
+        0.00839996337890625,
+        0.07999992370605469,
+        0.18199998140335083
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.023196712450216057,
+      "max_insertion_depth": 2e-05,
+      "reason": "Captive head underside bears on real washer",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 4 fitted access cap",
+      "host": "Underlay side bearing block 1 4",
+      "point_host_local": [
+        0.0,
+        0.0,
+        0.15999998152256012
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.24481379077092624,
+      "max_insertion_depth": 2e-05,
+      "reason": "Actual original bearing-block top receives shaped shoe",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 4 tapered load rib",
+      "host": "V06 fixed bearing shoe 1 4 fitted access cap",
+      "point_host_local": [
+        0.0,
+        0.0,
+        0.17799997329711914
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.06657824516917495,
+      "max_insertion_depth": 2e-05,
+      "reason": "Tapered rib is seated on real machined cap",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 4-0.08 actual bored washer",
+      "host": "V06 fixed bearing shoe 1 4 fitted access cap",
+      "point_host_local": [
+        0.010799884796142578,
+        -0.07999992370605469,
+        0.17799997329711914
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.029096450952617994,
+      "max_insertion_depth": 2e-05,
+      "reason": "Washer annulus bears on actual new plate top",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 4-0.08 retained six-flat head",
+      "host": "V06 fixed bearing shoe 1 4-0.08 actual bored washer",
+      "point_host_local": [
+        0.00839996337890625,
+        -0.07999992370605469,
+        0.18199998140335083
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.023196712450216057,
+      "max_insertion_depth": 2e-05,
+      "reason": "Captive head underside bears on real washer",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 40.08 actual bored washer",
+      "host": "V06 fixed bearing shoe 1 4 fitted access cap",
+      "point_host_local": [
+        0.010799884796142578,
+        0.07999992370605469,
+        0.17799997329711914
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.029096450952617994,
+      "max_insertion_depth": 2e-05,
+      "reason": "Washer annulus bears on actual new plate top",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 40.08 retained six-flat head",
+      "host": "V06 fixed bearing shoe 1 40.08 actual bored washer",
+      "point_host_local": [
+        0.00839996337890625,
+        0.07999992370605469,
+        0.18199998140335083
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.023196712450216057,
+      "max_insertion_depth": 2e-05,
+      "reason": "Captive head underside bears on real washer",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fore fixed joint -1 seated pad",
+      "host": "Underlay fore crossmember",
+      "point_host_local": [
+        -2.1500000953674316,
+        0.08999991416931152,
+        0.11999998986721039
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.11083967334368028,
+      "max_insertion_depth": 2e-05,
+      "reason": "Actual existing fore crossmember supports joint pad",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fore fixed joint -1 stepped load strap",
+      "host": "V06 fixed bearing shoe -1 0 fitted access cap",
+      "point_host_local": [
+        0.0,
+        0.13499999046325684,
+        0.17800000309944153
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.17002,
+      "max_insertion_depth": 0.06202,
+      "reason": "Strap fore landing rests on actual bearing-shoe cap",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "geometry_class": "FORMED_TWO_LANDING_STRAP",
+      "finite_receiver_contact_required": true,
+      "actual_contact_patch_world": {
+        "x_range": [
+          -2.19,
+          -2.11
+        ],
+        "y_range": [
+          2.22,
+          2.24
+        ],
+        "z": 0.018
+      },
+      "actual_contact_max_depth": 2e-05,
+      "global_tangent_depth_is_not_insertion": "Rear leg below the cap plane is outside the finite cap beyondY2.24; only the stated fore landing contacts this host."
+    },
+    {
+      "object": "V06 fore fixed joint -1 stepped load strap",
+      "host": "V06 fore fixed joint -1 seated pad",
+      "point_host_local": [
+        -2.1500000953674316,
+        0.09999990463256836,
+        0.13599999248981476
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.17002,
+      "max_insertion_depth": 2e-05,
+      "reason": "Strap rear landing rests on actual crossmember pad",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "geometry_class": "FORMED_TWO_LANDING_STRAP",
+      "finite_receiver_contact_required": true,
+      "actual_contact_patch_world": {
+        "x_range": [
+          -2.19,
+          -2.11
+        ],
+        "y_range": [
+          2.325,
+          2.375
+        ],
+        "z": -0.044
+      },
+      "actual_contact_max_depth": 2e-05
+    },
+    {
+      "object": "V06 fore joint -1 -0.067 actual bored washer",
+      "host": "V06 fore fixed joint -1 seated pad",
+      "point_host_local": [
+        -2.2079999446868896,
+        0.08999991416931152,
+        0.13599999248981476
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.024351050121192878,
+      "max_insertion_depth": 2e-05,
+      "reason": "Washer annulus bears on actual new plate top",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fore joint -1 -0.067 retained six-flat head",
+      "host": "V06 fore joint -1 -0.067 actual bored washer",
+      "point_host_local": [
+        -2.2100000381469727,
+        0.08999991416931152,
+        0.13999998569488525
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.020268456731316584,
+      "max_insertion_depth": 2e-05,
+      "reason": "Captive head underside bears on real washer",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fore joint -1 0.067 actual bored washer",
+      "host": "V06 fore fixed joint -1 seated pad",
+      "point_host_local": [
+        -2.074000120162964,
+        0.08999991416931152,
+        0.13599999248981476
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.024351050121192878,
+      "max_insertion_depth": 2e-05,
+      "reason": "Washer annulus bears on actual new plate top",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fore joint -1 0.067 retained six-flat head",
+      "host": "V06 fore joint -1 0.067 actual bored washer",
+      "point_host_local": [
+        -2.076000213623047,
+        0.08999991416931152,
+        0.13999998569488525
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.020268456731316584,
+      "max_insertion_depth": 2e-05,
+      "reason": "Captive head underside bears on real washer",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fore fixed joint 1 seated pad",
+      "host": "Underlay fore crossmember",
+      "point_host_local": [
+        2.1500000953674316,
+        0.08999991416931152,
+        0.12000000476837158
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.11083967334368028,
+      "max_insertion_depth": 2e-05,
+      "reason": "Actual existing fore crossmember supports joint pad",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fore fixed joint 1 stepped load strap",
+      "host": "V06 fixed bearing shoe 1 0 fitted access cap",
+      "point_host_local": [
+        0.0,
+        0.13499999046325684,
+        0.17800000309944153
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.17002,
+      "max_insertion_depth": 0.06202,
+      "reason": "Strap fore landing rests on actual bearing-shoe cap",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "geometry_class": "FORMED_TWO_LANDING_STRAP",
+      "finite_receiver_contact_required": true,
+      "actual_contact_patch_world": {
+        "x_range": [
+          2.11,
+          2.19
+        ],
+        "y_range": [
+          2.22,
+          2.24
+        ],
+        "z": 0.018
+      },
+      "actual_contact_max_depth": 2e-05,
+      "global_tangent_depth_is_not_insertion": "Rear leg below the cap plane is outside the finite cap beyondY2.24; only the stated fore landing contacts this host."
+    },
+    {
+      "object": "V06 fore fixed joint 1 stepped load strap",
+      "host": "V06 fore fixed joint 1 seated pad",
+      "point_host_local": [
+        2.1500000953674316,
+        0.09999990463256836,
+        0.13600000739097595
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.17002,
+      "max_insertion_depth": 2e-05,
+      "reason": "Strap rear landing rests on actual crossmember pad",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "geometry_class": "FORMED_TWO_LANDING_STRAP",
+      "finite_receiver_contact_required": true,
+      "actual_contact_patch_world": {
+        "x_range": [
+          2.11,
+          2.19
+        ],
+        "y_range": [
+          2.325,
+          2.375
+        ],
+        "z": -0.044
+      },
+      "actual_contact_max_depth": 2e-05
+    },
+    {
+      "object": "V06 fore joint 1 -0.067 actual bored washer",
+      "host": "V06 fore fixed joint 1 seated pad",
+      "point_host_local": [
+        2.0920002460479736,
+        0.08999991416931152,
+        0.13600000739097595
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.024351050121192878,
+      "max_insertion_depth": 2e-05,
+      "reason": "Washer annulus bears on actual new plate top",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fore joint 1 -0.067 retained six-flat head",
+      "host": "V06 fore joint 1 -0.067 actual bored washer",
+      "point_host_local": [
+        2.0900001525878906,
+        0.08999991416931152,
+        0.14000001549720764
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.020268456731316584,
+      "max_insertion_depth": 2e-05,
+      "reason": "Captive head underside bears on real washer",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fore joint 1 0.067 actual bored washer",
+      "host": "V06 fore fixed joint 1 seated pad",
+      "point_host_local": [
+        2.2260000705718994,
+        0.08999991416931152,
+        0.13600000739097595
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.024351050121192878,
+      "max_insertion_depth": 2e-05,
+      "reason": "Washer annulus bears on actual new plate top",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fore joint 1 0.067 retained six-flat head",
+      "host": "V06 fore joint 1 0.067 actual bored washer",
+      "point_host_local": [
+        2.2239999771118164,
+        0.08999991416931152,
+        0.14000001549720764
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.020268456731316584,
+      "max_insertion_depth": 2e-05,
+      "reason": "Captive head underside bears on real washer",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 lower fixed crossbar -1 retained end plate",
+      "host": "Lower mounting crossmember",
+      "point_host_local": [
+        -1.975000023841858,
+        2.60770320892334e-07,
+        6.705522537231445e-08
+      ],
+      "normal_host_local": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "region_radius": 0.08931725639682331,
+      "max_insertion_depth": 2e-05,
+      "reason": "Retained end plate bears on actual fixed crossbar end",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 lower end -1 -0.043 actual bored washer",
+      "host": "V06 lower fixed crossbar -1 retained end plate",
+      "point_host_local": [
+        -1.9893999099731445,
+        -0.024651404470205307,
+        0.011495262384414673
+      ],
+      "normal_host_local": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "region_radius": 0.024351050121192878,
+      "max_insertion_depth": 2e-05,
+      "reason": "Washer annulus bears on actual new plate top",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 lower end -1 -0.043 retained six-flat head",
+      "host": "V06 lower end -1 -0.043 actual bored washer",
+      "point_host_local": [
+        -1.9925998449325562,
+        -0.026101458817720413,
+        0.012171454727649689
+      ],
+      "normal_host_local": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "region_radius": 0.020268456731316584,
+      "max_insertion_depth": 2e-05,
+      "reason": "Captive head underside bears on real washer",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 lower end -1 0.043 actual bored washer",
+      "host": "V06 lower fixed crossbar -1 retained end plate",
+      "point_host_local": [
+        -1.9893999099731445,
+        0.037702564150094986,
+        -0.01758083701133728
+      ],
+      "normal_host_local": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "region_radius": 0.024351050121192878,
+      "max_insertion_depth": 2e-05,
+      "reason": "Washer annulus bears on actual new plate top",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 lower end -1 0.043 retained six-flat head",
+      "host": "V06 lower end -1 0.043 actual bored washer",
+      "point_host_local": [
+        -1.9925998449325562,
+        0.03625251725316048,
+        -0.01690465211868286
+      ],
+      "normal_host_local": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "region_radius": 0.020268456731316584,
+      "max_insertion_depth": 2e-05,
+      "reason": "Captive head underside bears on real washer",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 lower fixed crossbar 1 retained end plate",
+      "host": "Lower mounting crossmember",
+      "point_host_local": [
+        1.975000023841858,
+        2.60770320892334e-07,
+        6.705522537231445e-08
+      ],
+      "normal_host_local": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "region_radius": 0.08931725639682331,
+      "max_insertion_depth": 2e-05,
+      "reason": "Retained end plate bears on actual fixed crossbar end",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 lower end 1 -0.043 actual bored washer",
+      "host": "V06 lower fixed crossbar 1 retained end plate",
+      "point_host_local": [
+        1.9893999099731445,
+        -0.024651404470205307,
+        0.011495262384414673
+      ],
+      "normal_host_local": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "region_radius": 0.024351050121192878,
+      "max_insertion_depth": 2e-05,
+      "reason": "Washer annulus bears on actual new plate top",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 lower end 1 -0.043 retained six-flat head",
+      "host": "V06 lower end 1 -0.043 actual bored washer",
+      "point_host_local": [
+        1.9925998449325562,
+        -0.026101458817720413,
+        0.012171454727649689
+      ],
+      "normal_host_local": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "region_radius": 0.020268456731316584,
+      "max_insertion_depth": 2e-05,
+      "reason": "Captive head underside bears on real washer",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 lower end 1 0.043 actual bored washer",
+      "host": "V06 lower fixed crossbar 1 retained end plate",
+      "point_host_local": [
+        1.9893999099731445,
+        0.037702564150094986,
+        -0.01758083701133728
+      ],
+      "normal_host_local": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "region_radius": 0.024351050121192878,
+      "max_insertion_depth": 2e-05,
+      "reason": "Washer annulus bears on actual new plate top",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 lower end 1 0.043 retained six-flat head",
+      "host": "V06 lower end 1 0.043 actual bored washer",
+      "point_host_local": [
+        1.9925998449325562,
+        0.03625251725316048,
+        -0.01690465211868286
+      ],
+      "normal_host_local": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "region_radius": 0.020268456731316584,
+      "max_insertion_depth": 2e-05,
+      "reason": "Captive head underside bears on real washer",
+      "mode": "CONTACT",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions"
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 0-0.08 bounded insert stud",
+      "host": "V06 fixed bearing shoe -1 0 fitted access cap",
+      "point_host_local": [
+        0.0,
+        -0.07999992370605469,
+        0.17799997329711914
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.028428449447303522,
+      "max_insertion_depth": 0.028019999999999996,
+      "reason": "Bounded threaded shaft through this exact new plate; original support engagement declared separately",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_plate_thickness": 0.017999999999999995,
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 0-0.08 bounded insert stud",
+      "host": "Underlay side bearing block -1 0",
+      "point_host_local": [
+        0.0,
+        -0.07999992370605469,
+        0.15999996662139893
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.02645936459145718,
+      "max_insertion_depth": 0.01002,
+      "reason": "Exactly.010BU shaft engagement into the named existing fixed support",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 0-0.08 bounded insert stud",
+      "host": "V06 fixed bearing shoe -1 0-0.08 retained six-flat head",
+      "point_host_local": [
+        0.0,
+        -0.07999992370605469,
+        0.18199996650218964
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "region_radius": 0.03237799746585069,
+      "max_insertion_depth": 0.00402,
+      "reason": "Integral retained bolt shaft enters head underside by.004BU; receiving host normal points down the shaft",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_head_engagement": 0.004
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 00.08 bounded insert stud",
+      "host": "V06 fixed bearing shoe -1 0 fitted access cap",
+      "point_host_local": [
+        0.0,
+        0.07999992370605469,
+        0.17799997329711914
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.028428449447303522,
+      "max_insertion_depth": 0.028019999999999996,
+      "reason": "Bounded threaded shaft through this exact new plate; original support engagement declared separately",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_plate_thickness": 0.017999999999999995,
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 00.08 bounded insert stud",
+      "host": "Underlay side bearing block -1 0",
+      "point_host_local": [
+        0.0,
+        0.07999992370605469,
+        0.15999996662139893
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.02645936459145718,
+      "max_insertion_depth": 0.01002,
+      "reason": "Exactly.010BU shaft engagement into the named existing fixed support",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 00.08 bounded insert stud",
+      "host": "V06 fixed bearing shoe -1 00.08 retained six-flat head",
+      "point_host_local": [
+        0.0,
+        0.07999992370605469,
+        0.18199996650218964
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "region_radius": 0.03237799746585069,
+      "max_insertion_depth": 0.00402,
+      "reason": "Integral retained bolt shaft enters head underside by.004BU; receiving host normal points down the shaft",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_head_engagement": 0.004
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 1-0.08 bounded insert stud",
+      "host": "V06 fixed bearing shoe -1 1 fitted access cap",
+      "point_host_local": [
+        0.0,
+        -0.08000004291534424,
+        0.17799997329711914
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.028428449447303522,
+      "max_insertion_depth": 0.028019999999999996,
+      "reason": "Bounded threaded shaft through this exact new plate; original support engagement declared separately",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_plate_thickness": 0.017999999999999995,
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 1-0.08 bounded insert stud",
+      "host": "Underlay side bearing block -1 1",
+      "point_host_local": [
+        0.0,
+        -0.08000004291534424,
+        0.15999998152256012
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.02645936459145718,
+      "max_insertion_depth": 0.01002,
+      "reason": "Exactly.010BU shaft engagement into the named existing fixed support",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 1-0.08 bounded insert stud",
+      "host": "V06 fixed bearing shoe -1 1-0.08 retained six-flat head",
+      "point_host_local": [
+        0.0,
+        -0.08000004291534424,
+        0.18199998140335083
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "region_radius": 0.03237799746585069,
+      "max_insertion_depth": 0.00402,
+      "reason": "Integral retained bolt shaft enters head underside by.004BU; receiving host normal points down the shaft",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_head_engagement": 0.004
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 10.08 bounded insert stud",
+      "host": "V06 fixed bearing shoe -1 1 fitted access cap",
+      "point_host_local": [
+        0.0,
+        0.08000016212463379,
+        0.17799997329711914
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.028428449447303522,
+      "max_insertion_depth": 0.028019999999999996,
+      "reason": "Bounded threaded shaft through this exact new plate; original support engagement declared separately",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_plate_thickness": 0.017999999999999995,
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 10.08 bounded insert stud",
+      "host": "Underlay side bearing block -1 1",
+      "point_host_local": [
+        0.0,
+        0.08000016212463379,
+        0.15999998152256012
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.02645936459145718,
+      "max_insertion_depth": 0.01002,
+      "reason": "Exactly.010BU shaft engagement into the named existing fixed support",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 10.08 bounded insert stud",
+      "host": "V06 fixed bearing shoe -1 10.08 retained six-flat head",
+      "point_host_local": [
+        0.0,
+        0.08000016212463379,
+        0.18199998140335083
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "region_radius": 0.03237799746585069,
+      "max_insertion_depth": 0.00402,
+      "reason": "Integral retained bolt shaft enters head underside by.004BU; receiving host normal points down the shaft",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_head_engagement": 0.004
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 2-0.08 bounded insert stud",
+      "host": "V06 fixed bearing shoe -1 2 fitted access cap",
+      "point_host_local": [
+        0.0,
+        -0.08000010251998901,
+        0.17799997329711914
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.028428449447303522,
+      "max_insertion_depth": 0.028019999999999996,
+      "reason": "Bounded threaded shaft through this exact new plate; original support engagement declared separately",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_plate_thickness": 0.017999999999999995,
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 2-0.08 bounded insert stud",
+      "host": "Underlay side bearing block -1 2",
+      "point_host_local": [
+        0.0,
+        -0.08000010251998901,
+        0.15999998152256012
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.02645936459145718,
+      "max_insertion_depth": 0.01002,
+      "reason": "Exactly.010BU shaft engagement into the named existing fixed support",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 2-0.08 bounded insert stud",
+      "host": "V06 fixed bearing shoe -1 2-0.08 retained six-flat head",
+      "point_host_local": [
+        0.0,
+        -0.08000010251998901,
+        0.18199998140335083
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "region_radius": 0.03237799746585069,
+      "max_insertion_depth": 0.00402,
+      "reason": "Integral retained bolt shaft enters head underside by.004BU; receiving host normal points down the shaft",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_head_engagement": 0.004
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 20.08 bounded insert stud",
+      "host": "V06 fixed bearing shoe -1 2 fitted access cap",
+      "point_host_local": [
+        0.0,
+        0.07999998331069946,
+        0.17799997329711914
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.028428449447303522,
+      "max_insertion_depth": 0.028019999999999996,
+      "reason": "Bounded threaded shaft through this exact new plate; original support engagement declared separately",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_plate_thickness": 0.017999999999999995,
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 20.08 bounded insert stud",
+      "host": "Underlay side bearing block -1 2",
+      "point_host_local": [
+        0.0,
+        0.07999998331069946,
+        0.15999998152256012
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.02645936459145718,
+      "max_insertion_depth": 0.01002,
+      "reason": "Exactly.010BU shaft engagement into the named existing fixed support",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 20.08 bounded insert stud",
+      "host": "V06 fixed bearing shoe -1 20.08 retained six-flat head",
+      "point_host_local": [
+        0.0,
+        0.07999998331069946,
+        0.18199998140335083
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "region_radius": 0.03237799746585069,
+      "max_insertion_depth": 0.00402,
+      "reason": "Integral retained bolt shaft enters head underside by.004BU; receiving host normal points down the shaft",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_head_engagement": 0.004
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 3-0.08 bounded insert stud",
+      "host": "V06 fixed bearing shoe -1 3 fitted access cap",
+      "point_host_local": [
+        0.0,
+        -0.08000016212463379,
+        0.17799997329711914
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.028428449447303522,
+      "max_insertion_depth": 0.028019999999999996,
+      "reason": "Bounded threaded shaft through this exact new plate; original support engagement declared separately",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_plate_thickness": 0.017999999999999995,
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 3-0.08 bounded insert stud",
+      "host": "Underlay side bearing block -1 3",
+      "point_host_local": [
+        0.0,
+        -0.08000016212463379,
+        0.15999996662139893
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.02645936459145718,
+      "max_insertion_depth": 0.01002,
+      "reason": "Exactly.010BU shaft engagement into the named existing fixed support",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 3-0.08 bounded insert stud",
+      "host": "V06 fixed bearing shoe -1 3-0.08 retained six-flat head",
+      "point_host_local": [
+        0.0,
+        -0.08000016212463379,
+        0.18199996650218964
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "region_radius": 0.03237799746585069,
+      "max_insertion_depth": 0.00402,
+      "reason": "Integral retained bolt shaft enters head underside by.004BU; receiving host normal points down the shaft",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_head_engagement": 0.004
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 30.08 bounded insert stud",
+      "host": "V06 fixed bearing shoe -1 3 fitted access cap",
+      "point_host_local": [
+        0.0,
+        0.07999992370605469,
+        0.17799997329711914
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.028428449447303522,
+      "max_insertion_depth": 0.028019999999999996,
+      "reason": "Bounded threaded shaft through this exact new plate; original support engagement declared separately",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_plate_thickness": 0.017999999999999995,
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 30.08 bounded insert stud",
+      "host": "Underlay side bearing block -1 3",
+      "point_host_local": [
+        0.0,
+        0.07999992370605469,
+        0.15999996662139893
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.02645936459145718,
+      "max_insertion_depth": 0.01002,
+      "reason": "Exactly.010BU shaft engagement into the named existing fixed support",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 30.08 bounded insert stud",
+      "host": "V06 fixed bearing shoe -1 30.08 retained six-flat head",
+      "point_host_local": [
+        0.0,
+        0.07999992370605469,
+        0.18199996650218964
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "region_radius": 0.03237799746585069,
+      "max_insertion_depth": 0.00402,
+      "reason": "Integral retained bolt shaft enters head underside by.004BU; receiving host normal points down the shaft",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_head_engagement": 0.004
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 4-0.08 bounded insert stud",
+      "host": "V06 fixed bearing shoe -1 4 fitted access cap",
+      "point_host_local": [
+        0.0,
+        -0.07999944686889648,
+        0.17799997329711914
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.028428449447303522,
+      "max_insertion_depth": 0.028019999999999996,
+      "reason": "Bounded threaded shaft through this exact new plate; original support engagement declared separately",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_plate_thickness": 0.017999999999999995,
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 4-0.08 bounded insert stud",
+      "host": "Underlay side bearing block -1 4",
+      "point_host_local": [
+        0.0,
+        -0.07999944686889648,
+        0.15999996662139893
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.02645936459145718,
+      "max_insertion_depth": 0.01002,
+      "reason": "Exactly.010BU shaft engagement into the named existing fixed support",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 4-0.08 bounded insert stud",
+      "host": "V06 fixed bearing shoe -1 4-0.08 retained six-flat head",
+      "point_host_local": [
+        0.0,
+        -0.07999944686889648,
+        0.18199996650218964
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "region_radius": 0.03237799746585069,
+      "max_insertion_depth": 0.00402,
+      "reason": "Integral retained bolt shaft enters head underside by.004BU; receiving host normal points down the shaft",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_head_engagement": 0.004
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 40.08 bounded insert stud",
+      "host": "V06 fixed bearing shoe -1 4 fitted access cap",
+      "point_host_local": [
+        0.0,
+        0.07999920845031738,
+        0.17799997329711914
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.028428449447303522,
+      "max_insertion_depth": 0.028019999999999996,
+      "reason": "Bounded threaded shaft through this exact new plate; original support engagement declared separately",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_plate_thickness": 0.017999999999999995,
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 40.08 bounded insert stud",
+      "host": "Underlay side bearing block -1 4",
+      "point_host_local": [
+        0.0,
+        0.07999920845031738,
+        0.15999996662139893
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.02645936459145718,
+      "max_insertion_depth": 0.01002,
+      "reason": "Exactly.010BU shaft engagement into the named existing fixed support",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 fixed bearing shoe -1 40.08 bounded insert stud",
+      "host": "V06 fixed bearing shoe -1 40.08 retained six-flat head",
+      "point_host_local": [
+        0.0,
+        0.07999920845031738,
+        0.18199996650218964
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "region_radius": 0.03237799746585069,
+      "max_insertion_depth": 0.00402,
+      "reason": "Integral retained bolt shaft enters head underside by.004BU; receiving host normal points down the shaft",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_head_engagement": 0.004
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 0-0.08 bounded insert stud",
+      "host": "V06 fixed bearing shoe 1 0 fitted access cap",
+      "point_host_local": [
+        0.0,
+        -0.07999992370605469,
+        0.17799997329711914
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.028428449447303522,
+      "max_insertion_depth": 0.028019999999999996,
+      "reason": "Bounded threaded shaft through this exact new plate; original support engagement declared separately",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_plate_thickness": 0.017999999999999995,
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 0-0.08 bounded insert stud",
+      "host": "Underlay side bearing block 1 0",
+      "point_host_local": [
+        0.0,
+        -0.07999992370605469,
+        0.15999996662139893
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.02645936459145718,
+      "max_insertion_depth": 0.01002,
+      "reason": "Exactly.010BU shaft engagement into the named existing fixed support",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 0-0.08 bounded insert stud",
+      "host": "V06 fixed bearing shoe 1 0-0.08 retained six-flat head",
+      "point_host_local": [
+        0.0,
+        -0.07999992370605469,
+        0.18199996650218964
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "region_radius": 0.03237799746585069,
+      "max_insertion_depth": 0.00402,
+      "reason": "Integral retained bolt shaft enters head underside by.004BU; receiving host normal points down the shaft",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_head_engagement": 0.004
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 00.08 bounded insert stud",
+      "host": "V06 fixed bearing shoe 1 0 fitted access cap",
+      "point_host_local": [
+        0.0,
+        0.07999992370605469,
+        0.17799997329711914
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.028428449447303522,
+      "max_insertion_depth": 0.028019999999999996,
+      "reason": "Bounded threaded shaft through this exact new plate; original support engagement declared separately",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_plate_thickness": 0.017999999999999995,
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 00.08 bounded insert stud",
+      "host": "Underlay side bearing block 1 0",
+      "point_host_local": [
+        0.0,
+        0.07999992370605469,
+        0.15999996662139893
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.02645936459145718,
+      "max_insertion_depth": 0.01002,
+      "reason": "Exactly.010BU shaft engagement into the named existing fixed support",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 00.08 bounded insert stud",
+      "host": "V06 fixed bearing shoe 1 00.08 retained six-flat head",
+      "point_host_local": [
+        0.0,
+        0.07999992370605469,
+        0.18199996650218964
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "region_radius": 0.03237799746585069,
+      "max_insertion_depth": 0.00402,
+      "reason": "Integral retained bolt shaft enters head underside by.004BU; receiving host normal points down the shaft",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_head_engagement": 0.004
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 1-0.08 bounded insert stud",
+      "host": "V06 fixed bearing shoe 1 1 fitted access cap",
+      "point_host_local": [
+        0.0,
+        -0.08000004291534424,
+        0.17799997329711914
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.028428449447303522,
+      "max_insertion_depth": 0.028019999999999996,
+      "reason": "Bounded threaded shaft through this exact new plate; original support engagement declared separately",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_plate_thickness": 0.017999999999999995,
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 1-0.08 bounded insert stud",
+      "host": "Underlay side bearing block 1 1",
+      "point_host_local": [
+        0.0,
+        -0.08000004291534424,
+        0.15999996662139893
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.02645936459145718,
+      "max_insertion_depth": 0.01002,
+      "reason": "Exactly.010BU shaft engagement into the named existing fixed support",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 1-0.08 bounded insert stud",
+      "host": "V06 fixed bearing shoe 1 1-0.08 retained six-flat head",
+      "point_host_local": [
+        0.0,
+        -0.08000004291534424,
+        0.18199996650218964
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "region_radius": 0.03237799746585069,
+      "max_insertion_depth": 0.00402,
+      "reason": "Integral retained bolt shaft enters head underside by.004BU; receiving host normal points down the shaft",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_head_engagement": 0.004
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 10.08 bounded insert stud",
+      "host": "V06 fixed bearing shoe 1 1 fitted access cap",
+      "point_host_local": [
+        0.0,
+        0.08000016212463379,
+        0.17799997329711914
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.028428449447303522,
+      "max_insertion_depth": 0.028019999999999996,
+      "reason": "Bounded threaded shaft through this exact new plate; original support engagement declared separately",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_plate_thickness": 0.017999999999999995,
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 10.08 bounded insert stud",
+      "host": "Underlay side bearing block 1 1",
+      "point_host_local": [
+        0.0,
+        0.08000016212463379,
+        0.15999996662139893
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.02645936459145718,
+      "max_insertion_depth": 0.01002,
+      "reason": "Exactly.010BU shaft engagement into the named existing fixed support",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 10.08 bounded insert stud",
+      "host": "V06 fixed bearing shoe 1 10.08 retained six-flat head",
+      "point_host_local": [
+        0.0,
+        0.08000016212463379,
+        0.18199996650218964
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "region_radius": 0.03237799746585069,
+      "max_insertion_depth": 0.00402,
+      "reason": "Integral retained bolt shaft enters head underside by.004BU; receiving host normal points down the shaft",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_head_engagement": 0.004
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 2-0.08 bounded insert stud",
+      "host": "V06 fixed bearing shoe 1 2 fitted access cap",
+      "point_host_local": [
+        0.0,
+        -0.08000010251998901,
+        0.17799997329711914
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.028428449447303522,
+      "max_insertion_depth": 0.028019999999999996,
+      "reason": "Bounded threaded shaft through this exact new plate; original support engagement declared separately",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_plate_thickness": 0.017999999999999995,
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 2-0.08 bounded insert stud",
+      "host": "Underlay side bearing block 1 2",
+      "point_host_local": [
+        0.0,
+        -0.08000010251998901,
+        0.15999996662139893
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.02645936459145718,
+      "max_insertion_depth": 0.01002,
+      "reason": "Exactly.010BU shaft engagement into the named existing fixed support",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 2-0.08 bounded insert stud",
+      "host": "V06 fixed bearing shoe 1 2-0.08 retained six-flat head",
+      "point_host_local": [
+        0.0,
+        -0.08000010251998901,
+        0.18199996650218964
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "region_radius": 0.03237799746585069,
+      "max_insertion_depth": 0.00402,
+      "reason": "Integral retained bolt shaft enters head underside by.004BU; receiving host normal points down the shaft",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_head_engagement": 0.004
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 20.08 bounded insert stud",
+      "host": "V06 fixed bearing shoe 1 2 fitted access cap",
+      "point_host_local": [
+        0.0,
+        0.07999998331069946,
+        0.17799997329711914
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.028428449447303522,
+      "max_insertion_depth": 0.028019999999999996,
+      "reason": "Bounded threaded shaft through this exact new plate; original support engagement declared separately",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_plate_thickness": 0.017999999999999995,
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 20.08 bounded insert stud",
+      "host": "Underlay side bearing block 1 2",
+      "point_host_local": [
+        0.0,
+        0.07999998331069946,
+        0.15999996662139893
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.02645936459145718,
+      "max_insertion_depth": 0.01002,
+      "reason": "Exactly.010BU shaft engagement into the named existing fixed support",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 20.08 bounded insert stud",
+      "host": "V06 fixed bearing shoe 1 20.08 retained six-flat head",
+      "point_host_local": [
+        0.0,
+        0.07999998331069946,
+        0.18199996650218964
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "region_radius": 0.03237799746585069,
+      "max_insertion_depth": 0.00402,
+      "reason": "Integral retained bolt shaft enters head underside by.004BU; receiving host normal points down the shaft",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_head_engagement": 0.004
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 3-0.08 bounded insert stud",
+      "host": "V06 fixed bearing shoe 1 3 fitted access cap",
+      "point_host_local": [
+        0.0,
+        -0.08000016212463379,
+        0.17799997329711914
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.028428449447303522,
+      "max_insertion_depth": 0.028019999999999996,
+      "reason": "Bounded threaded shaft through this exact new plate; original support engagement declared separately",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_plate_thickness": 0.017999999999999995,
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 3-0.08 bounded insert stud",
+      "host": "Underlay side bearing block 1 3",
+      "point_host_local": [
+        0.0,
+        -0.08000016212463379,
+        0.15999996662139893
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.02645936459145718,
+      "max_insertion_depth": 0.01002,
+      "reason": "Exactly.010BU shaft engagement into the named existing fixed support",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 3-0.08 bounded insert stud",
+      "host": "V06 fixed bearing shoe 1 3-0.08 retained six-flat head",
+      "point_host_local": [
+        0.0,
+        -0.08000016212463379,
+        0.18199996650218964
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "region_radius": 0.03237799746585069,
+      "max_insertion_depth": 0.00402,
+      "reason": "Integral retained bolt shaft enters head underside by.004BU; receiving host normal points down the shaft",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_head_engagement": 0.004
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 30.08 bounded insert stud",
+      "host": "V06 fixed bearing shoe 1 3 fitted access cap",
+      "point_host_local": [
+        0.0,
+        0.07999992370605469,
+        0.17799997329711914
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.028428449447303522,
+      "max_insertion_depth": 0.028019999999999996,
+      "reason": "Bounded threaded shaft through this exact new plate; original support engagement declared separately",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_plate_thickness": 0.017999999999999995,
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 30.08 bounded insert stud",
+      "host": "Underlay side bearing block 1 3",
+      "point_host_local": [
+        0.0,
+        0.07999992370605469,
+        0.15999996662139893
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.02645936459145718,
+      "max_insertion_depth": 0.01002,
+      "reason": "Exactly.010BU shaft engagement into the named existing fixed support",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 30.08 bounded insert stud",
+      "host": "V06 fixed bearing shoe 1 30.08 retained six-flat head",
+      "point_host_local": [
+        0.0,
+        0.07999992370605469,
+        0.18199996650218964
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "region_radius": 0.03237799746585069,
+      "max_insertion_depth": 0.00402,
+      "reason": "Integral retained bolt shaft enters head underside by.004BU; receiving host normal points down the shaft",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_head_engagement": 0.004
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 4-0.08 bounded insert stud",
+      "host": "V06 fixed bearing shoe 1 4 fitted access cap",
+      "point_host_local": [
+        0.0,
+        -0.07999944686889648,
+        0.17799997329711914
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.028428449447303522,
+      "max_insertion_depth": 0.028019999999999996,
+      "reason": "Bounded threaded shaft through this exact new plate; original support engagement declared separately",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_plate_thickness": 0.017999999999999995,
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 4-0.08 bounded insert stud",
+      "host": "Underlay side bearing block 1 4",
+      "point_host_local": [
+        0.0,
+        -0.07999944686889648,
+        0.15999996662139893
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.02645936459145718,
+      "max_insertion_depth": 0.01002,
+      "reason": "Exactly.010BU shaft engagement into the named existing fixed support",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 4-0.08 bounded insert stud",
+      "host": "V06 fixed bearing shoe 1 4-0.08 retained six-flat head",
+      "point_host_local": [
+        0.0,
+        -0.07999944686889648,
+        0.18199996650218964
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "region_radius": 0.03237799746585069,
+      "max_insertion_depth": 0.00402,
+      "reason": "Integral retained bolt shaft enters head underside by.004BU; receiving host normal points down the shaft",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_head_engagement": 0.004
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 40.08 bounded insert stud",
+      "host": "V06 fixed bearing shoe 1 4 fitted access cap",
+      "point_host_local": [
+        0.0,
+        0.07999920845031738,
+        0.17799997329711914
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.028428449447303522,
+      "max_insertion_depth": 0.028019999999999996,
+      "reason": "Bounded threaded shaft through this exact new plate; original support engagement declared separately",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_plate_thickness": 0.017999999999999995,
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 40.08 bounded insert stud",
+      "host": "Underlay side bearing block 1 4",
+      "point_host_local": [
+        0.0,
+        0.07999920845031738,
+        0.15999996662139893
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.02645936459145718,
+      "max_insertion_depth": 0.01002,
+      "reason": "Exactly.010BU shaft engagement into the named existing fixed support",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 fixed bearing shoe 1 40.08 bounded insert stud",
+      "host": "V06 fixed bearing shoe 1 40.08 retained six-flat head",
+      "point_host_local": [
+        0.0,
+        0.07999920845031738,
+        0.18199996650218964
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "region_radius": 0.03237799746585069,
+      "max_insertion_depth": 0.00402,
+      "reason": "Integral retained bolt shaft enters head underside by.004BU; receiving host normal points down the shaft",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_head_engagement": 0.004
+    },
+    {
+      "object": "V06 fore joint -1 -0.067 bounded insert stud",
+      "host": "V06 fore fixed joint -1 seated pad",
+      "point_host_local": [
+        -2.217000722885132,
+        0.09000015258789062,
+        0.13600000739097595
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.026325892875931813,
+      "max_insertion_depth": 0.02602,
+      "reason": "Bounded threaded shaft through this exact new plate; original support engagement declared separately",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_plate_thickness": 0.016,
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 fore joint -1 -0.067 bounded insert stud",
+      "host": "Underlay fore crossmember",
+      "point_host_local": [
+        -2.217000722885132,
+        0.09000015258789062,
+        0.12000001221895218
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.024351050121192878,
+      "max_insertion_depth": 0.01002,
+      "reason": "Exactly.010BU shaft engagement into the named existing fixed support",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 fore joint -1 -0.067 bounded insert stud",
+      "host": "V06 fore joint -1 -0.067 retained six-flat head",
+      "point_host_local": [
+        -2.217000722885132,
+        0.09000015258789062,
+        0.14000001549720764
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "region_radius": 0.03028549190084311,
+      "max_insertion_depth": 0.00402,
+      "reason": "Integral retained bolt shaft enters head underside by.004BU; receiving host normal points down the shaft",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_head_engagement": 0.004
+    },
+    {
+      "object": "V06 fore joint -1 0.067 bounded insert stud",
+      "host": "V06 fore fixed joint -1 seated pad",
+      "point_host_local": [
+        -2.0830001831054688,
+        0.09000015258789062,
+        0.13600000739097595
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.026325892875931813,
+      "max_insertion_depth": 0.02602,
+      "reason": "Bounded threaded shaft through this exact new plate; original support engagement declared separately",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_plate_thickness": 0.016,
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 fore joint -1 0.067 bounded insert stud",
+      "host": "Underlay fore crossmember",
+      "point_host_local": [
+        -2.0830001831054688,
+        0.09000015258789062,
+        0.12000001221895218
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.024351050121192878,
+      "max_insertion_depth": 0.01002,
+      "reason": "Exactly.010BU shaft engagement into the named existing fixed support",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 fore joint -1 0.067 bounded insert stud",
+      "host": "V06 fore joint -1 0.067 retained six-flat head",
+      "point_host_local": [
+        -2.0830001831054688,
+        0.09000015258789062,
+        0.14000001549720764
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "region_radius": 0.03028549190084311,
+      "max_insertion_depth": 0.00402,
+      "reason": "Integral retained bolt shaft enters head underside by.004BU; receiving host normal points down the shaft",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_head_engagement": 0.004
+    },
+    {
+      "object": "V06 fore joint 1 -0.067 bounded insert stud",
+      "host": "V06 fore fixed joint 1 seated pad",
+      "point_host_local": [
+        2.083000421524048,
+        0.09000015258789062,
+        0.13600000739097595
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.026325892875931813,
+      "max_insertion_depth": 0.02602,
+      "reason": "Bounded threaded shaft through this exact new plate; original support engagement declared separately",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_plate_thickness": 0.016,
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 fore joint 1 -0.067 bounded insert stud",
+      "host": "Underlay fore crossmember",
+      "point_host_local": [
+        2.083000421524048,
+        0.09000015258789062,
+        0.12000001221895218
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.024351050121192878,
+      "max_insertion_depth": 0.01002,
+      "reason": "Exactly.010BU shaft engagement into the named existing fixed support",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 fore joint 1 -0.067 bounded insert stud",
+      "host": "V06 fore joint 1 -0.067 retained six-flat head",
+      "point_host_local": [
+        2.083000421524048,
+        0.09000015258789062,
+        0.14000001549720764
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "region_radius": 0.03028549190084311,
+      "max_insertion_depth": 0.00402,
+      "reason": "Integral retained bolt shaft enters head underside by.004BU; receiving host normal points down the shaft",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_head_engagement": 0.004
+    },
+    {
+      "object": "V06 fore joint 1 0.067 bounded insert stud",
+      "host": "V06 fore fixed joint 1 seated pad",
+      "point_host_local": [
+        2.2170004844665527,
+        0.09000015258789062,
+        0.13600000739097595
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.026325892875931813,
+      "max_insertion_depth": 0.02602,
+      "reason": "Bounded threaded shaft through this exact new plate; original support engagement declared separately",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_plate_thickness": 0.016,
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 fore joint 1 0.067 bounded insert stud",
+      "host": "Underlay fore crossmember",
+      "point_host_local": [
+        2.2170004844665527,
+        0.09000015258789062,
+        0.12000001221895218
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "region_radius": 0.024351050121192878,
+      "max_insertion_depth": 0.01002,
+      "reason": "Exactly.010BU shaft engagement into the named existing fixed support",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 fore joint 1 0.067 bounded insert stud",
+      "host": "V06 fore joint 1 0.067 retained six-flat head",
+      "point_host_local": [
+        2.2170004844665527,
+        0.09000015258789062,
+        0.14000001549720764
+      ],
+      "normal_host_local": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "region_radius": 0.03028549190084311,
+      "max_insertion_depth": 0.00402,
+      "reason": "Integral retained bolt shaft enters head underside by.004BU; receiving host normal points down the shaft",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_head_engagement": 0.004
+    },
+    {
+      "object": "V06 lower end -1 -0.043 bounded insert stud",
+      "host": "V06 lower fixed crossbar -1 retained end plate",
+      "point_host_local": [
+        -1.98940110206604,
+        -0.03117666020989418,
+        0.014538094401359558
+      ],
+      "normal_host_local": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "region_radius": 0.028304271247461897,
+      "max_insertion_depth": 0.028019999999999996,
+      "reason": "Bounded threaded shaft through this exact new plate; original support engagement declared separately",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_plate_thickness": 0.017999999999999995,
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 lower end -1 -0.043 bounded insert stud",
+      "host": "Lower mounting crossmember",
+      "point_host_local": [
+        -1.9750012159347534,
+        -0.03117666020989418,
+        0.014538094401359558
+      ],
+      "normal_host_local": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "region_radius": 0.026325892875931806,
+      "max_insertion_depth": 0.01002,
+      "reason": "Exactly.010BU shaft engagement into the named existing fixed support",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 lower end -1 -0.043 bounded insert stud",
+      "host": "V06 lower end -1 -0.043 retained six-flat head",
+      "point_host_local": [
+        -1.9926010370254517,
+        -0.03117666020989418,
+        0.014538094401359558
+      ],
+      "normal_host_local": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "region_radius": 0.03226903099319419,
+      "max_insertion_depth": 0.00402,
+      "reason": "Integral retained bolt shaft enters head underside by.004BU; receiving host normal points down the shaft",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_head_engagement": 0.004
+    },
+    {
+      "object": "V06 lower end -1 0.043 bounded insert stud",
+      "host": "V06 lower fixed crossbar -1 retained end plate",
+      "point_host_local": [
+        -1.98940110206604,
+        0.031177308410406113,
+        -0.014538012444972992
+      ],
+      "normal_host_local": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "region_radius": 0.028304271247461897,
+      "max_insertion_depth": 0.028019999999999996,
+      "reason": "Bounded threaded shaft through this exact new plate; original support engagement declared separately",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_plate_thickness": 0.017999999999999995,
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 lower end -1 0.043 bounded insert stud",
+      "host": "Lower mounting crossmember",
+      "point_host_local": [
+        -1.9750012159347534,
+        0.031177308410406113,
+        -0.014538012444972992
+      ],
+      "normal_host_local": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "region_radius": 0.026325892875931806,
+      "max_insertion_depth": 0.01002,
+      "reason": "Exactly.010BU shaft engagement into the named existing fixed support",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 lower end -1 0.043 bounded insert stud",
+      "host": "V06 lower end -1 0.043 retained six-flat head",
+      "point_host_local": [
+        -1.9926010370254517,
+        0.031177308410406113,
+        -0.014538012444972992
+      ],
+      "normal_host_local": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "region_radius": 0.03226903099319419,
+      "max_insertion_depth": 0.00402,
+      "reason": "Integral retained bolt shaft enters head underside by.004BU; receiving host normal points down the shaft",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_head_engagement": 0.004
+    },
+    {
+      "object": "V06 lower end 1 -0.043 bounded insert stud",
+      "host": "V06 lower fixed crossbar 1 retained end plate",
+      "point_host_local": [
+        1.98940110206604,
+        -0.03117666020989418,
+        0.014538086950778961
+      ],
+      "normal_host_local": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "region_radius": 0.028304271247461897,
+      "max_insertion_depth": 0.028019999999999996,
+      "reason": "Bounded threaded shaft through this exact new plate; original support engagement declared separately",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_plate_thickness": 0.017999999999999995,
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 lower end 1 -0.043 bounded insert stud",
+      "host": "Lower mounting crossmember",
+      "point_host_local": [
+        1.9750012159347534,
+        -0.03117666020989418,
+        0.014538086950778961
+      ],
+      "normal_host_local": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "region_radius": 0.026325892875931806,
+      "max_insertion_depth": 0.01002,
+      "reason": "Exactly.010BU shaft engagement into the named existing fixed support",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 lower end 1 -0.043 bounded insert stud",
+      "host": "V06 lower end 1 -0.043 retained six-flat head",
+      "point_host_local": [
+        1.9926010370254517,
+        -0.03117666020989418,
+        0.014538086950778961
+      ],
+      "normal_host_local": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "region_radius": 0.03226903099319419,
+      "max_insertion_depth": 0.00402,
+      "reason": "Integral retained bolt shaft enters head underside by.004BU; receiving host normal points down the shaft",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_head_engagement": 0.004
+    },
+    {
+      "object": "V06 lower end 1 0.043 bounded insert stud",
+      "host": "V06 lower fixed crossbar 1 retained end plate",
+      "point_host_local": [
+        1.98940110206604,
+        0.031177304685115814,
+        -0.014538012444972992
+      ],
+      "normal_host_local": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "region_radius": 0.028304271247461897,
+      "max_insertion_depth": 0.028019999999999996,
+      "reason": "Bounded threaded shaft through this exact new plate; original support engagement declared separately",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_plate_thickness": 0.017999999999999995,
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 lower end 1 0.043 bounded insert stud",
+      "host": "Lower mounting crossmember",
+      "point_host_local": [
+        1.9750012159347534,
+        0.031177304685115814,
+        -0.014538012444972992
+      ],
+      "normal_host_local": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "region_radius": 0.026325892875931806,
+      "max_insertion_depth": 0.01002,
+      "reason": "Exactly.010BU shaft engagement into the named existing fixed support",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_original_support_insertion": 0.01
+    },
+    {
+      "object": "V06 lower end 1 0.043 bounded insert stud",
+      "host": "V06 lower end 1 0.043 retained six-flat head",
+      "point_host_local": [
+        1.9926010370254517,
+        0.031177304685115814,
+        -0.014538012444972992
+      ],
+      "normal_host_local": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "region_radius": 0.03226903099319419,
+      "max_insertion_depth": 0.00402,
+      "reason": "Integral retained bolt shaft enters head underside by.004BU; receiving host normal points down the shaft",
+      "mode": "INSERTION",
+      "numerical_allowance": 2e-05,
+      "bound_basis": "Declared authored primitive dimensions and intended engagement, not fitted from detected collisions",
+      "nominal_head_engagement": 0.004
+    }
+  ],
+  "reference_source": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\core05-fixedbrackets\\thetazine-v06-static-bracket-pilot.blend",
+  "reference_source_sha256": "a618053162f0ff3bf1db7ee4a8c14014c196c8980af17c20ca653c3ec0aed464",
+  "source_geometry_modified": false,
+  "no_other_contact_waivers": true,
+  "application_scope": "Static110meshes preserved exactly in subsequent rod-repair source; bind actual final source separately. Nonmates including pipes/oldbolt heads/movingcore remain strict.",
+  "typed_geometry_note": "Two formed straps have remote legs below the infinite fore-cap tangent outside the finite cap. Their nominal globaldepth bound.062 is not cap insertion; check stated finite receiving patch andactualcontactdepth<=2e-5. All other contact/insert bounds follow authored primitive dimensions."
+}

@@ -1,0 +1,383 @@
+{
+  "status": "PASS_BOUNDED_MOTION_EXPORT_AND_NO_NEW_UNRELATED_INTERFERENCE_WITH_RECORDED_LEGACY_ROUGHNESS",
+  "units": "Blender units (BU), no real-world unit conversion assumed",
+  "source": {
+    "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\core10-complete-pose-range\\thetazine-v06-complete-motion.blend",
+    "sha256": "35c4f470ad92015b70d056086b7f6e53573f4ccabbecab6af346ab382734871e"
+  },
+  "actual_glb": {
+    "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\core10-complete-pose-range\\thetazine-v06-complete-motion.glb",
+    "sha256": "77892d382fe0b1f39f28d84082d6c68dbb3b00c26f1476a3963cac97b9fce074"
+  },
+  "checker": {
+    "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\thetazine_v06\\validate_motion_export.py",
+    "sha256": "b5f566607bc1c35bfe9c6b9af58e16266e086e9c623a7c4318d7887c70d020cf"
+  },
+  "references": [
+    {
+      "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\independent10-export66\\validation.json",
+      "sha256": "c7c1358c5a6096f1a60ad8a7bfc3d243bf4c1b6ccb690337fc2b16d32bb40bed"
+    },
+    {
+      "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\independent08j-local32-source-clearance\\clearance.json",
+      "sha256": "eea0b7489fa2aac269f60fd39916603ad70e8d24d4651fc18542c80c02ca9090"
+    },
+    {
+      "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\independent08j-final-region-review\\terminal-review.json",
+      "sha256": "fc77bd46600f70da534d9414c5eca55e910e0bf815512dbd9b22975cc4be3654"
+    },
+    {
+      "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\independent08j-final-region-review\\inherited-containment-review.json",
+      "sha256": "12040195711ecfb62d9f9227045a137165e71efd3ad0626a04eabddd308edd85"
+    },
+    {
+      "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\independent08g-local32-source-clearance\\bounded-gap-equivalence.json",
+      "sha256": "cbbd79b28d1da21677690254445c4edc81e08fcabb5813cf440cc92e5e07c69f"
+    },
+    {
+      "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\core07-collar-aligned\\static-bracket-moving-clearance.json",
+      "sha256": "b54268d971a126b8b2d19c77a926b965b99645492011b5bc7a83d86c73c0ac63"
+    },
+    {
+      "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\core08-matched-collar-facets\\facet-repair-lineage-validation.json",
+      "sha256": "d1393e378e1ed585e6fda2fa671759a282631acf66cb920323ae90a698f7589d"
+    }
+  ],
+  "all66_motion_and_actual_export": {
+    "physical_meshes": 3202,
+    "canonical_empty_nodes": 21,
+    "poses": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65
+    ],
+    "maximum_world_vertex_error": 2.00186445908912e-06,
+    "original_source_undeclared_field_changes": 0,
+    "fixed_original_interfaces": 758,
+    "actual_fore_pin_max_error": 1.1115170082327494e-07,
+    "actual_aft_pin_max_error": 4.7672294576056707e-07,
+    "minimum_actual_rod_barrel_overlap": 0.15454674518023265,
+    "minimum_actual_radial_running_gap": 0.00499979136627883,
+    "maximum_actual_annular_seat_gap": 5.066394805908203e-07,
+    "working1_wrap65_all_bit_exact": true
+  },
+  "finite32_source_screen": {
+    "participants": [
+      "Actuator support clevis.001",
+      "Actuator support clevis.003",
+      "Clevis fixed pin.001",
+      "Clevis fixed pin.003",
+      "Outer actuator body -1",
+      "Outer actuator body 1",
+      "Outer actuator collar",
+      "Outer actuator collar.001",
+      "Outer actuator collar.002",
+      "Outer actuator collar.003",
+      "Outer actuator collar.004",
+      "Outer actuator collar.005",
+      "Outer actuator collar.006",
+      "Outer actuator collar.007",
+      "Source actuator helical thread -1",
+      "Source actuator helical thread 1",
+      "V04 cold bulk radial feed fuel 0",
+      "V04 cold bulk radial feed fuel 1",
+      "V04 cold bulk radial feed fuel 2",
+      "V04 cold bulk radial feed water 0",
+      "V04 cold bulk radial feed water 1",
+      "V04 cold bulk radial feed water 2",
+      "V04 guide-rail aft structural web fuel",
+      "V04 guide-rail aft structural web water",
+      "V04 injector bridge support -1 actual seated riser",
+      "V04 injector bridge support -1 seated weld collar",
+      "V04 injector bridge support 1 actual seated riser",
+      "V04 injector bridge support 1 seated weld collar",
+      "V04 regenerative turbo supply fuel",
+      "V04 regenerative turbo supply water",
+      "V06 giant actuator sliding rod -1",
+      "V06 giant actuator sliding rod 1"
+    ],
+    "poses": 66,
+    "hard_new_unrelated_host_or_outside_shaft_corridor_failures": 0,
+    "counts": {
+      "broadphase_pairs": 6760512,
+      "aabb_culled": 6699859,
+      "exact_pairs": 55161,
+      "PROVED_INHERITED_SHARED_RIGID_CONTACT": 600,
+      "clear_pairs": 37095,
+      "dedicated_actual_fit_mate": 792,
+      "INHERITED_FUNCTIONAL_REPLACEMENT_WITHIN_OLD_SHAFT_CORRIDOR": 4566,
+      "ANIMATED_INHERITED_SAME_PART_LOCAL_REGION_ROUGHNESS": 7685,
+      "INHERITED_SAME_FINITE_CONTAINED_SOURCE_PART": 199,
+      "PROVED_INHERITED_ACTUAL_TERMINAL_PATCH": 4954,
+      "NEW_SUBPART_CONTACT_IN_INHERITED_SAME_FINITE_UNION_ASSEMBLY_REGION": 27,
+      "ANIMATED_INHERITED_COLD_SAME_PART_LOCAL_REGION_ROUGHNESS": 27,
+      "reused_exact_actual_support_seat": 232,
+      "COLLECTED_CONNECTED_SOURCE_TERMINAL_SUBPART_FLAG": 2,
+      "INHERITED_FUNCTIONAL_REPLACEMENT_WITHIN_OLD_CORRIDOR_AND_ACTUAL_OLD_CYCLE_HOST_REGION": 4,
+      "ANIMATED_INHERITED_ACTUAL_OLD_CYCLE_SAME_PART_LOCAL_REGION_ROUGHNESS": 1,
+      "COLLECTED_LEGACY_SAME_PAIR_LOCAL_REGION_CLASSIFIER_FLAG": 1
+    },
+    "all_input_pins_rechecked": {
+      "source": true,
+      "glb": true,
+      "source_proof": true,
+      "role_contract": true,
+      "canonical_provenance": true
+    },
+    "maximum_recorded_legacy_patch_host_local_displacement": [
+      0.15740620702986008,
+      12,
+      "V04 cold bulk radial feed water 1",
+      "V04 injector bridge support 1 actual seated riser",
+      "canonical_cold_patch_host_local_drift"
+    ],
+    "new_subpart_contacts_inside_explicit_old_union_assembly_regions": {
+      "pose_pair_rows": 27,
+      "exact_pairs": [
+        [
+          "V04 injector bridge support -1 actual seated riser",
+          "V04 seated union 023 through flange bolt.002"
+        ],
+        [
+          "V04 injector bridge support 1 actual seated riser",
+          "V04 seated union 029 through flange bolt.001"
+        ]
+      ]
+    }
+  },
+  "collected_flags": {
+    "count": 3,
+    "all_exact_flags_independently_reviewed_in_source_and_actual_glb": true,
+    "left_terminal12": {
+      "frame": 12,
+      "pipe": "V04 restraint hydraulic feed 6",
+      "clevis": "Actuator support clevis.001",
+      "source_joint_index": 77,
+      "actual_source_and_export_contact_regions": [
+        {
+          "phase": "SOURCE",
+          "triangle_intersections": 6,
+          "closed_solid_containment": false,
+          "actual_bidirectional_vertex_surface_gap": 0.0,
+          "surface_gap_measurement": "EXACT_CROSSING_OR_CONTAINMENT",
+          "clearance_margin": 0.0005,
+          "source_pipe_body_ring_positions": [
+            21,
+            22,
+            23
+          ],
+          "all_contacts_on_preexisting_last_span": true,
+          "all_contact_clevis_vertices_in_old_fouled_union_region": true,
+          "clevis_source_vertex_ids": [
+            16,
+            22,
+            51
+          ],
+          "physical_vertex_mapping_error": 0.0
+        },
+        {
+          "phase": "ACTUAL_GLB",
+          "triangle_intersections": 6,
+          "closed_solid_containment": false,
+          "actual_bidirectional_vertex_surface_gap": 0.0,
+          "surface_gap_measurement": "EXACT_CROSSING_OR_CONTAINMENT",
+          "clearance_margin": 0.0005,
+          "source_pipe_body_ring_positions": [
+            21,
+            22,
+            23
+          ],
+          "all_contacts_on_preexisting_last_span": true,
+          "all_contact_clevis_vertices_in_old_fouled_union_region": true,
+          "clevis_source_vertex_ids": [
+            16,
+            22,
+            51
+          ],
+          "physical_vertex_mapping_error": 2.6656007889869215e-07
+        }
+      ],
+      "outside_strict_union_envelope": 0.024015779941694904,
+      "classification": "MEASURED_INHERITED_CONNECTED_TERMINAL_SPAN_AND_SAME_OLD_CLEVIS_FACE_REGION"
+    },
+    "right_terminal46": {
+      "frame": 46,
+      "pipe": "V04 restraint hydraulic feed 0",
+      "clevis": "Actuator support clevis.003",
+      "source_joint_index": 65,
+      "actual_source_and_export_contact_regions": [
+        {
+          "phase": "SOURCE",
+          "triangle_intersections": 0,
+          "closed_solid_containment": false,
+          "actual_bidirectional_vertex_surface_gap": 0.0001405960792908445,
+          "surface_gap_measurement": "EXACT_UNDER_MARGIN_VERTEX_SURFACE_MINIMUM",
+          "clearance_margin": 0.0005,
+          "source_pipe_body_ring_positions": [
+            22
+          ],
+          "all_contacts_on_preexisting_last_span": true,
+          "all_contact_clevis_vertices_in_old_fouled_union_region": true,
+          "clevis_source_vertex_ids": [
+            16,
+            43,
+            51
+          ],
+          "physical_vertex_mapping_error": 0.0
+        },
+        {
+          "phase": "ACTUAL_GLB",
+          "triangle_intersections": 0,
+          "closed_solid_containment": false,
+          "actual_bidirectional_vertex_surface_gap": 0.00014064458082430065,
+          "surface_gap_measurement": "EXACT_UNDER_MARGIN_VERTEX_SURFACE_MINIMUM",
+          "clearance_margin": 0.0005,
+          "source_pipe_body_ring_positions": [
+            22
+          ],
+          "all_contacts_on_preexisting_last_span": true,
+          "all_contact_clevis_vertices_in_old_fouled_union_region": true,
+          "clevis_source_vertex_ids": [
+            16,
+            43,
+            51
+          ],
+          "physical_vertex_mapping_error": 2.384185791015625e-07
+        }
+      ],
+      "outside_strict_union_envelope": 0.0223450090090358,
+      "classification": "MEASURED_INHERITED_CONNECTED_TERMINAL_SPAN_AND_SAME_OLD_CLEVIS_FACE_REGION"
+    },
+    "retained_finite_original_bolt_containment48": {
+      "frame": 48,
+      "a": "V04 injector bridge support 1 actual seated riser",
+      "b": "V04 seated union 029 through flange bolt",
+      "canonical_cold_state": {
+        "triangle_intersections": 0,
+        "closed_solid_containment": true,
+        "actual_bidirectional_vertex_surface_gap": 0.0,
+        "surface_gap_measurement": "EXACT_CROSSING_OR_CONTAINMENT",
+        "clearance_margin": 0.0005
+      },
+      "all_old_part_vertices_inside_old_host": true,
+      "actual_source_and_export_regions": [
+        {
+          "phase": "SOURCE",
+          "state": {
+            "triangle_intersections": 0,
+            "closed_solid_containment": true,
+            "actual_bidirectional_vertex_surface_gap": 0.0,
+            "surface_gap_measurement": "EXACT_CROSSING_OR_CONTAINMENT",
+            "clearance_margin": 0.0005
+          },
+          "all_same_original_part_vertices_inside_same_host": true,
+          "old_nearest_host_source_vertices": [
+            10,
+            12,
+            13
+          ],
+          "current_nearest_host_source_vertices": [
+            12,
+            14,
+            15
+          ],
+          "finite_source_face_vertex_overlap": 1,
+          "witness_within_exact_finite_source_union": true,
+          "physical_source_export_witness_error": 0.0,
+          "nearest_host_surface_distance": 0.032759688794612885
+        },
+        {
+          "phase": "ACTUAL_GLB",
+          "state": {
+            "triangle_intersections": 0,
+            "closed_solid_containment": true,
+            "actual_bidirectional_vertex_surface_gap": 0.0,
+            "surface_gap_measurement": "EXACT_CROSSING_OR_CONTAINMENT",
+            "clearance_margin": 0.0005
+          },
+          "all_same_original_part_vertices_inside_same_host": true,
+          "old_nearest_host_source_vertices": [
+            10,
+            12,
+            13
+          ],
+          "current_nearest_host_source_vertices": [
+            12,
+            14,
+            15
+          ],
+          "finite_source_face_vertex_overlap": 1,
+          "witness_within_exact_finite_source_union": true,
+          "physical_source_export_witness_error": 1.2202813740193247e-07,
+          "nearest_host_surface_distance": 0.03275975584983826
+        }
+      ],
+      "classification": "RETAINED_SAME_WHOLE_FINITE_ORIGINAL_SUBPART_CONTAINMENT_AND_ADJACENT_SOURCE_FACE_REGION"
+    }
+  },
+  "acceptance_limit": "Parent/root explicitly accepted the related legacy terminal roughness within the existing-layout/refinement scope: preserve LEFT actual touching terminal subpart separately from RIGHT separated under-margin terminal approach. Both remain on the original authored last Bezier span20..30 and old fouled clevis face regions. Record strict outside-union amounts (.02401578BU left/.02234501BU right); no enlarged fitting envelope, reroute or source edit. Same original whole-bolt containment at48 was already present in canonical cold0 and remains within exact source union029.",
+  "scope_limit": "This closes all66 physical source/export motion and a bounded32-part source interference screen with the recorded source+actualGLB legacy-region reviews. It retains inherited old contacts/containment and does not claim universal CAD clearance, native art installation, runtime sprite integration or owner appearance acceptance."
+}

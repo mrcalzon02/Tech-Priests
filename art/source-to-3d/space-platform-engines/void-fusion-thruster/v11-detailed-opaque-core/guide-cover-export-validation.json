@@ -1,0 +1,1235 @@
+{
+  "status": "PASS_ACTUAL_SOURCE_GLb_34_PROTECTIVE_GUIDES_62_CAPTIVE_FASTENERS_SIX_CLOSED_RECEIVER_COVERS",
+  "glb_sha256": "2b1f7164dc6df970aef9c9f1367bf8cf30f82ba3471d1eb9fcf6e84821d3d137",
+  "blend_sha256": "61e9a02667e2c6124fbd738adfb48fb3b4180ba9b59da86165117b0a76b28d4d",
+  "actual_guides": [
+    {
+      "clip": "V11 axialbus00 -1 Polymer receiving collar",
+      "sleeve": "V11 axialbus00 -1 actual protective ceramic wire sleeve",
+      "actual_wire_radius": 0.01,
+      "actual_minimum_polygonal_bore_radius": 0.01110418093575528,
+      "actual_minimum_radial_wire_clearance": 0.0011041809357552803,
+      "actual_bore_ray_count": 48,
+      "solid_parts": [
+        {
+          "object": "V11 axialbus00 -1 Polymer receiving collar",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 1.3611396229925447e-05
+        },
+        {
+          "object": "V11 axialbus00 -1 actual protective ceramic wire sleeve",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 3.586908674329402e-06
+        },
+        {
+          "object": "V11 axialbus00 -1 actual concave cast clip cradle",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 0.00032544118122178025
+        },
+        {
+          "object": "V11 axialbus00 -1 shaped bolted receiving foot",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 9.000011987988954e-05
+        }
+      ],
+      "actual_Pipette_architecture": "conduit_split_corrugated_loom",
+      "actual_Pipette_joint": "split_loom_clip"
+    },
+    {
+      "clip": "V11 axialbus00 1 Polymer receiving collar",
+      "sleeve": "V11 axialbus00 1 actual protective ceramic wire sleeve",
+      "actual_wire_radius": 0.01,
+      "actual_minimum_polygonal_bore_radius": 0.01110418093575528,
+      "actual_minimum_radial_wire_clearance": 0.0011041809357552803,
+      "actual_bore_ray_count": 48,
+      "solid_parts": [
+        {
+          "object": "V11 axialbus00 1 Polymer receiving collar",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 1.3611396229925447e-05
+        },
+        {
+          "object": "V11 axialbus00 1 actual protective ceramic wire sleeve",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 3.586908674329402e-06
+        },
+        {
+          "object": "V11 axialbus00 1 actual concave cast clip cradle",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 0.0003254411092150001
+        },
+        {
+          "object": "V11 axialbus00 1 shaped bolted receiving foot",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 9.000027634217721e-05
+        }
+      ],
+      "actual_Pipette_architecture": "conduit_split_corrugated_loom",
+      "actual_Pipette_joint": "split_loom_clip"
+    },
+    {
+      "clip": "V11 axialbus01 -1 Polymer receiving collar",
+      "sleeve": "V11 axialbus01 -1 actual protective ceramic wire sleeve",
+      "actual_wire_radius": 0.01,
+      "actual_minimum_polygonal_bore_radius": 0.01110418093575528,
+      "actual_minimum_radial_wire_clearance": 0.0011041809357552803,
+      "actual_bore_ray_count": 48,
+      "solid_parts": [
+        {
+          "object": "V11 axialbus01 -1 Polymer receiving collar",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 1.3611396229925447e-05
+        },
+        {
+          "object": "V11 axialbus01 -1 actual protective ceramic wire sleeve",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 3.586908674329402e-06
+        },
+        {
+          "object": "V11 axialbus01 -1 actual concave cast clip cradle",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 0.0003254403273146863
+        },
+        {
+          "object": "V11 axialbus01 -1 shaped bolted receiving foot",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 9.00000975281342e-05
+        }
+      ],
+      "actual_Pipette_architecture": "conduit_split_corrugated_loom",
+      "actual_Pipette_joint": "split_loom_clip"
+    },
+    {
+      "clip": "V11 axialbus01 1 Polymer receiving collar",
+      "sleeve": "V11 axialbus01 1 actual protective ceramic wire sleeve",
+      "actual_wire_radius": 0.01,
+      "actual_minimum_polygonal_bore_radius": 0.01110418093575528,
+      "actual_minimum_radial_wire_clearance": 0.0011041809357552803,
+      "actual_bore_ray_count": 48,
+      "solid_parts": [
+        {
+          "object": "V11 axialbus01 1 Polymer receiving collar",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 1.3611396229925447e-05
+        },
+        {
+          "object": "V11 axialbus01 1 actual protective ceramic wire sleeve",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 3.586908674329402e-06
+        },
+        {
+          "object": "V11 axialbus01 1 actual concave cast clip cradle",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 0.00032544032731468504
+        },
+        {
+          "object": "V11 axialbus01 1 shaped bolted receiving foot",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 9.000007517637873e-05
+        }
+      ],
+      "actual_Pipette_architecture": "conduit_split_corrugated_loom",
+      "actual_Pipette_joint": "split_loom_clip"
+    },
+    {
+      "clip": "V11 axialbus02 -1 Polymer receiving collar",
+      "sleeve": "V11 axialbus02 -1 actual protective ceramic wire sleeve",
+      "actual_wire_radius": 0.01,
+      "actual_minimum_polygonal_bore_radius": 0.01110418093575528,
+      "actual_minimum_radial_wire_clearance": 0.0011041809357552803,
+      "actual_bore_ray_count": 48,
+      "solid_parts": [
+        {
+          "object": "V11 axialbus02 -1 Polymer receiving collar",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 1.3611396229925447e-05
+        },
+        {
+          "object": "V11 axialbus02 -1 actual protective ceramic wire sleeve",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 3.586908674329402e-06
+        },
+        {
+          "object": "V11 axialbus02 -1 actual concave cast clip cradle",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 0.00032544036853101677
+        },
+        {
+          "object": "V11 axialbus02 -1 shaped bolted receiving foot",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 9.000020556157693e-05
+        }
+      ],
+      "actual_Pipette_architecture": "conduit_split_corrugated_loom",
+      "actual_Pipette_joint": "split_loom_clip"
+    },
+    {
+      "clip": "V11 axialbus02 1 Polymer receiving collar",
+      "sleeve": "V11 axialbus02 1 actual protective ceramic wire sleeve",
+      "actual_wire_radius": 0.01,
+      "actual_minimum_polygonal_bore_radius": 0.01110418093575528,
+      "actual_minimum_radial_wire_clearance": 0.0011041809357552803,
+      "actual_bore_ray_count": 48,
+      "solid_parts": [
+        {
+          "object": "V11 axialbus02 1 Polymer receiving collar",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 1.3611396229925447e-05
+        },
+        {
+          "object": "V11 axialbus02 1 actual protective ceramic wire sleeve",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 3.586908674329402e-06
+        },
+        {
+          "object": "V11 axialbus02 1 actual concave cast clip cradle",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 0.00032544036609191695
+        },
+        {
+          "object": "V11 axialbus02 1 shaped bolted receiving foot",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 9.000018320982798e-05
+        }
+      ],
+      "actual_Pipette_architecture": "conduit_split_corrugated_loom",
+      "actual_Pipette_joint": "split_loom_clip"
+    },
+    {
+      "clip": "V11 axialbus03 -1 Polymer receiving collar",
+      "sleeve": "V11 axialbus03 -1 actual protective ceramic wire sleeve",
+      "actual_wire_radius": 0.01,
+      "actual_minimum_polygonal_bore_radius": 0.01110418093575528,
+      "actual_minimum_radial_wire_clearance": 0.0011041809357552803,
+      "actual_bore_ray_count": 48,
+      "solid_parts": [
+        {
+          "object": "V11 axialbus03 -1 Polymer receiving collar",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 1.3611396229925447e-05
+        },
+        {
+          "object": "V11 axialbus03 -1 actual protective ceramic wire sleeve",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 3.586908674329402e-06
+        },
+        {
+          "object": "V11 axialbus03 -1 actual concave cast clip cradle",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 0.0003254400084239586
+        },
+        {
+          "object": "V11 axialbus03 -1 shaped bolted receiving foot",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 9.000000067048536e-05
+        }
+      ],
+      "actual_Pipette_architecture": "conduit_split_corrugated_loom",
+      "actual_Pipette_joint": "split_loom_clip"
+    },
+    {
+      "clip": "V11 axialbus03 1 Polymer receiving collar",
+      "sleeve": "V11 axialbus03 1 actual protective ceramic wire sleeve",
+      "actual_wire_radius": 0.01,
+      "actual_minimum_polygonal_bore_radius": 0.01110418093575528,
+      "actual_minimum_radial_wire_clearance": 0.0011041809357552803,
+      "actual_bore_ray_count": 48,
+      "solid_parts": [
+        {
+          "object": "V11 axialbus03 1 Polymer receiving collar",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 1.3611396229925447e-05
+        },
+        {
+          "object": "V11 axialbus03 1 actual protective ceramic wire sleeve",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 3.586908674329402e-06
+        },
+        {
+          "object": "V11 axialbus03 1 actual concave cast clip cradle",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 0.00032544000849073684
+        },
+        {
+          "object": "V11 axialbus03 1 shaped bolted receiving foot",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 9.000004537393695e-05
+        }
+      ],
+      "actual_Pipette_architecture": "conduit_split_corrugated_loom",
+      "actual_Pipette_joint": "split_loom_clip"
+    },
+    {
+      "clip": "V11 axialbus04 -1 Polymer receiving collar",
+      "sleeve": "V11 axialbus04 -1 actual protective ceramic wire sleeve",
+      "actual_wire_radius": 0.01,
+      "actual_minimum_polygonal_bore_radius": 0.01110418093575528,
+      "actual_minimum_radial_wire_clearance": 0.0011041809357552803,
+      "actual_bore_ray_count": 48,
+      "solid_parts": [
+        {
+          "object": "V11 axialbus04 -1 Polymer receiving collar",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 1.3611396229925447e-05
+        },
+        {
+          "object": "V11 axialbus04 -1 actual protective ceramic wire sleeve",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 3.586908674329402e-06
+        },
+        {
+          "object": "V11 axialbus04 -1 actual concave cast clip cradle",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 0.00032544150004547247
+        },
+        {
+          "object": "V11 axialbus04 -1 shaped bolted receiving foot",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 9.000032849643331e-05
+        }
+      ],
+      "actual_Pipette_architecture": "conduit_split_corrugated_loom",
+      "actual_Pipette_joint": "split_loom_clip"
+    },
+    {
+      "clip": "V11 axialbus04 1 Polymer receiving collar",
+      "sleeve": "V11 axialbus04 1 actual protective ceramic wire sleeve",
+      "actual_wire_radius": 0.01,
+      "actual_minimum_polygonal_bore_radius": 0.01110418093575528,
+      "actual_minimum_radial_wire_clearance": 0.0011041809357552803,
+      "actual_bore_ray_count": 48,
+      "solid_parts": [
+        {
+          "object": "V11 axialbus04 1 Polymer receiving collar",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 1.3611396229925447e-05
+        },
+        {
+          "object": "V11 axialbus04 1 actual protective ceramic wire sleeve",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 3.586908674329402e-06
+        },
+        {
+          "object": "V11 axialbus04 1 actual concave cast clip cradle",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 0.0003254415000454729
+        },
+        {
+          "object": "V11 axialbus04 1 shaped bolted receiving foot",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 9.000030614464836e-05
+        }
+      ],
+      "actual_Pipette_architecture": "conduit_split_corrugated_loom",
+      "actual_Pipette_joint": "split_loom_clip"
+    },
+    {
+      "clip": "V11 fieldguide V07 tier00 flared cast radial web00 Polymer receiving collar",
+      "sleeve": "V11 fieldguide V07 tier00 flared cast radial web00 actual protective ceramic wire sleeve",
+      "actual_wire_radius": 0.002,
+      "actual_minimum_polygonal_bore_radius": 0.0023794472693480216,
+      "actual_minimum_radial_wire_clearance": 0.0003794472693480215,
+      "actual_bore_ray_count": 48,
+      "solid_parts": [
+        {
+          "object": "V11 fieldguide V07 tier00 flared cast radial web00 Polymer receiving collar",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 3.675076945940211e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier00 flared cast radial web00 actual protective ceramic wire sleeve",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 1.5661202197224572e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier00 flared cast radial web00 actual concave cast clip cradle",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 6.340389226974653e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier00 flared cast radial web00 shaped bolted receiving foot",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 4.5616269915527075e-07
+        }
+      ],
+      "actual_Pipette_architecture": "conduit_split_corrugated_loom",
+      "actual_Pipette_joint": "split_loom_clip"
+    },
+    {
+      "clip": "V11 fieldguide V07 tier00 flared cast radial web01 Polymer receiving collar",
+      "sleeve": "V11 fieldguide V07 tier00 flared cast radial web01 actual protective ceramic wire sleeve",
+      "actual_wire_radius": 0.002,
+      "actual_minimum_polygonal_bore_radius": 0.0023793818713879226,
+      "actual_minimum_radial_wire_clearance": 0.00037938187138792257,
+      "actual_bore_ray_count": 48,
+      "solid_parts": [
+        {
+          "object": "V11 fieldguide V07 tier00 flared cast radial web01 Polymer receiving collar",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 3.675076928774399e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier00 flared cast radial web01 actual protective ceramic wire sleeve",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 1.566120227429201e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier00 flared cast radial web01 actual concave cast clip cradle",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 6.31448450460203e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier00 flared cast radial web01 shaped bolted receiving foot",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 4.6163849116187327e-07
+        }
+      ],
+      "actual_Pipette_architecture": "conduit_split_corrugated_loom",
+      "actual_Pipette_joint": "split_loom_clip"
+    },
+    {
+      "clip": "V11 fieldguide V07 tier00 flared cast radial web02 Polymer receiving collar",
+      "sleeve": "V11 fieldguide V07 tier00 flared cast radial web02 actual protective ceramic wire sleeve",
+      "actual_wire_radius": 0.002,
+      "actual_minimum_polygonal_bore_radius": 0.002379450324195092,
+      "actual_minimum_radial_wire_clearance": 0.00037945032419509214,
+      "actual_bore_ray_count": 48,
+      "solid_parts": [
+        {
+          "object": "V11 fieldguide V07 tier00 flared cast radial web02 Polymer receiving collar",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 3.675077109465839e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier00 flared cast radial web02 actual protective ceramic wire sleeve",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 1.566120209766958e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier00 flared cast radial web02 actual concave cast clip cradle",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 6.521216873415081e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier00 flared cast radial web02 shaped bolted receiving foot",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 4.561069749198021e-07
+        }
+      ],
+      "actual_Pipette_architecture": "conduit_split_corrugated_loom",
+      "actual_Pipette_joint": "split_loom_clip"
+    },
+    {
+      "clip": "V11 fieldguide V07 tier00 flared cast radial web03 Polymer receiving collar",
+      "sleeve": "V11 fieldguide V07 tier00 flared cast radial web03 actual protective ceramic wire sleeve",
+      "actual_wire_radius": 0.002,
+      "actual_minimum_polygonal_bore_radius": 0.0023793810882439246,
+      "actual_minimum_radial_wire_clearance": 0.00037938108824392457,
+      "actual_bore_ray_count": 48,
+      "solid_parts": [
+        {
+          "object": "V11 fieldguide V07 tier00 flared cast radial web03 Polymer receiving collar",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 3.6750769656034956e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier00 flared cast radial web03 actual protective ceramic wire sleeve",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 1.566120249155486e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier00 flared cast radial web03 actual concave cast clip cradle",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 6.314674618432292e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier00 flared cast radial web03 shaped bolted receiving foot",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 4.6152803961974585e-07
+        }
+      ],
+      "actual_Pipette_architecture": "conduit_split_corrugated_loom",
+      "actual_Pipette_joint": "split_loom_clip"
+    },
+    {
+      "clip": "V11 fieldguide V07 tier00 flared cast radial web04 Polymer receiving collar",
+      "sleeve": "V11 fieldguide V07 tier00 flared cast radial web04 actual protective ceramic wire sleeve",
+      "actual_wire_radius": 0.002,
+      "actual_minimum_polygonal_bore_radius": 0.0023794738341430238,
+      "actual_minimum_radial_wire_clearance": 0.0003794738341430237,
+      "actual_bore_ray_count": 48,
+      "solid_parts": [
+        {
+          "object": "V11 fieldguide V07 tier00 flared cast radial web04 Polymer receiving collar",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 3.675077051849831e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier00 flared cast radial web04 actual protective ceramic wire sleeve",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 1.5661202437263047e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier00 flared cast radial web04 actual concave cast clip cradle",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 6.34039915770259e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier00 flared cast radial web04 shaped bolted receiving foot",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 4.560754049122137e-07
+        }
+      ],
+      "actual_Pipette_architecture": "conduit_split_corrugated_loom",
+      "actual_Pipette_joint": "split_loom_clip"
+    },
+    {
+      "clip": "V11 fieldguide V07 tier00 flared cast radial web05 Polymer receiving collar",
+      "sleeve": "V11 fieldguide V07 tier00 flared cast radial web05 actual protective ceramic wire sleeve",
+      "actual_wire_radius": 0.002,
+      "actual_minimum_polygonal_bore_radius": 0.002379380378262823,
+      "actual_minimum_radial_wire_clearance": 0.0003793803782628229,
+      "actual_bore_ray_count": 48,
+      "solid_parts": [
+        {
+          "object": "V11 fieldguide V07 tier00 flared cast radial web05 Polymer receiving collar",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 3.6750770066914704e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier00 flared cast radial web05 actual protective ceramic wire sleeve",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 1.5661202144167098e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier00 flared cast radial web05 actual concave cast clip cradle",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 6.314657874145306e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier00 flared cast radial web05 shaped bolted receiving foot",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 4.61527980107556e-07
+        }
+      ],
+      "actual_Pipette_architecture": "conduit_split_corrugated_loom",
+      "actual_Pipette_joint": "split_loom_clip"
+    },
+    {
+      "clip": "V11 fieldguide V07 tier00 flared cast radial web06 Polymer receiving collar",
+      "sleeve": "V11 fieldguide V07 tier00 flared cast radial web06 actual protective ceramic wire sleeve",
+      "actual_wire_radius": 0.002,
+      "actual_minimum_polygonal_bore_radius": 0.002379447556020054,
+      "actual_minimum_radial_wire_clearance": 0.000379447556020054,
+      "actual_bore_ray_count": 48,
+      "solid_parts": [
+        {
+          "object": "V11 fieldguide V07 tier00 flared cast radial web06 Polymer receiving collar",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 3.6750769250702e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier00 flared cast radial web06 actual protective ceramic wire sleeve",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 1.566120231428473e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier00 flared cast radial web06 actual concave cast clip cradle",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 6.520796227149797e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier00 flared cast radial web06 shaped bolted receiving foot",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 4.5614176494113667e-07
+        }
+      ],
+      "actual_Pipette_architecture": "conduit_split_corrugated_loom",
+      "actual_Pipette_joint": "split_loom_clip"
+    },
+    {
+      "clip": "V11 fieldguide V07 tier00 flared cast radial web07 Polymer receiving collar",
+      "sleeve": "V11 fieldguide V07 tier00 flared cast radial web07 actual protective ceramic wire sleeve",
+      "actual_wire_radius": 0.002,
+      "actual_minimum_polygonal_bore_radius": 0.002379380378262823,
+      "actual_minimum_radial_wire_clearance": 0.0003793803782628229,
+      "actual_bore_ray_count": 48,
+      "solid_parts": [
+        {
+          "object": "V11 fieldguide V07 tier00 flared cast radial web07 Polymer receiving collar",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 3.6750770192727774e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier00 flared cast radial web07 actual protective ceramic wire sleeve",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 1.5661202533577634e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier00 flared cast radial web07 actual concave cast clip cradle",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 6.314654834823218e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier00 flared cast radial web07 shaped bolted receiving foot",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 4.61527365427621e-07
+        }
+      ],
+      "actual_Pipette_architecture": "conduit_split_corrugated_loom",
+      "actual_Pipette_joint": "split_loom_clip"
+    },
+    {
+      "clip": "V11 fieldguide V07 tier01 flared cast radial web00 Polymer receiving collar",
+      "sleeve": "V11 fieldguide V07 tier01 flared cast radial web00 actual protective ceramic wire sleeve",
+      "actual_wire_radius": 0.002,
+      "actual_minimum_polygonal_bore_radius": 0.002379423881571677,
+      "actual_minimum_radial_wire_clearance": 0.00037942388157167703,
+      "actual_bore_ray_count": 48,
+      "solid_parts": [
+        {
+          "object": "V11 fieldguide V07 tier01 flared cast radial web00 Polymer receiving collar",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 3.6750769973316266e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier01 flared cast radial web00 actual protective ceramic wire sleeve",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 1.5661202158458164e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier01 flared cast radial web00 actual concave cast clip cradle",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 6.115057865530189e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier01 flared cast radial web00 shaped bolted receiving foot",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 4.446433962303661e-07
+        }
+      ],
+      "actual_Pipette_architecture": "conduit_split_corrugated_loom",
+      "actual_Pipette_joint": "split_loom_clip"
+    },
+    {
+      "clip": "V11 fieldguide V07 tier01 flared cast radial web01 Polymer receiving collar",
+      "sleeve": "V11 fieldguide V07 tier01 flared cast radial web01 actual protective ceramic wire sleeve",
+      "actual_wire_radius": 0.002,
+      "actual_minimum_polygonal_bore_radius": 0.0023794569086761745,
+      "actual_minimum_radial_wire_clearance": 0.0003794569086761745,
+      "actual_bore_ray_count": 48,
+      "solid_parts": [
+        {
+          "object": "V11 fieldguide V07 tier01 flared cast radial web01 Polymer receiving collar",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 3.675076993038132e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier01 flared cast radial web01 actual protective ceramic wire sleeve",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 1.5661202567785713e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier01 flared cast radial web01 actual concave cast clip cradle",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 6.332445706752003e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier01 flared cast radial web01 shaped bolted receiving foot",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 4.4471045523523113e-07
+        }
+      ],
+      "actual_Pipette_architecture": "conduit_split_corrugated_loom",
+      "actual_Pipette_joint": "split_loom_clip"
+    },
+    {
+      "clip": "V11 fieldguide V07 tier01 flared cast radial web02 Polymer receiving collar",
+      "sleeve": "V11 fieldguide V07 tier01 flared cast radial web02 actual protective ceramic wire sleeve",
+      "actual_wire_radius": 0.002,
+      "actual_minimum_polygonal_bore_radius": 0.002379362381552292,
+      "actual_minimum_radial_wire_clearance": 0.0003793623815522918,
+      "actual_bore_ray_count": 48,
+      "solid_parts": [
+        {
+          "object": "V11 fieldguide V07 tier01 flared cast radial web02 Polymer receiving collar",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 3.6750770528601674e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier01 flared cast radial web02 actual protective ceramic wire sleeve",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 1.5661202454219466e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier01 flared cast radial web02 actual concave cast clip cradle",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 6.295767212489104e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier01 flared cast radial web02 shaped bolted receiving foot",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 4.4471005316852805e-07
+        }
+      ],
+      "actual_Pipette_architecture": "conduit_split_corrugated_loom",
+      "actual_Pipette_joint": "split_loom_clip"
+    },
+    {
+      "clip": "V11 fieldguide V07 tier01 flared cast radial web03 Polymer receiving collar",
+      "sleeve": "V11 fieldguide V07 tier01 flared cast radial web03 actual protective ceramic wire sleeve",
+      "actual_wire_radius": 0.002,
+      "actual_minimum_polygonal_bore_radius": 0.002379462534585712,
+      "actual_minimum_radial_wire_clearance": 0.00037946253458571175,
+      "actual_bore_ray_count": 48,
+      "solid_parts": [
+        {
+          "object": "V11 fieldguide V07 tier01 flared cast radial web03 Polymer receiving collar",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 3.6750770280376853e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier01 flared cast radial web03 actual protective ceramic wire sleeve",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 1.566120290768667e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier01 flared cast radial web03 actual concave cast clip cradle",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 6.333980693598292e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier01 flared cast radial web03 shaped bolted receiving foot",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 4.446151251426677e-07
+        }
+      ],
+      "actual_Pipette_architecture": "conduit_split_corrugated_loom",
+      "actual_Pipette_joint": "split_loom_clip"
+    },
+    {
+      "clip": "V11 fieldguide V07 tier01 flared cast radial web04 Polymer receiving collar",
+      "sleeve": "V11 fieldguide V07 tier01 flared cast radial web04 actual protective ceramic wire sleeve",
+      "actual_wire_radius": 0.002,
+      "actual_minimum_polygonal_bore_radius": 0.0023793920962834262,
+      "actual_minimum_radial_wire_clearance": 0.0003793920962834262,
+      "actual_bore_ray_count": 48,
+      "solid_parts": [
+        {
+          "object": "V11 fieldguide V07 tier01 flared cast radial web04 Polymer receiving collar",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 3.675076930062299e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier01 flared cast radial web04 actual protective ceramic wire sleeve",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 1.5661202186435543e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier01 flared cast radial web04 actual concave cast clip cradle",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 6.11533115638158e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier01 flared cast radial web04 shaped bolted receiving foot",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 4.446443539539804e-07
+        }
+      ],
+      "actual_Pipette_architecture": "conduit_split_corrugated_loom",
+      "actual_Pipette_joint": "split_loom_clip"
+    },
+    {
+      "clip": "V11 fieldguide V07 tier01 flared cast radial web05 Polymer receiving collar",
+      "sleeve": "V11 fieldguide V07 tier01 flared cast radial web05 actual protective ceramic wire sleeve",
+      "actual_wire_radius": 0.002,
+      "actual_minimum_polygonal_bore_radius": 0.0023794593692666958,
+      "actual_minimum_radial_wire_clearance": 0.00037945936926669574,
+      "actual_bore_ray_count": 48,
+      "solid_parts": [
+        {
+          "object": "V11 fieldguide V07 tier01 flared cast radial web05 Polymer receiving collar",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 3.6750769533162165e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier01 flared cast radial web05 actual protective ceramic wire sleeve",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 1.5661202370096138e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier01 flared cast radial web05 actual concave cast clip cradle",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 6.332999045086712e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier01 flared cast radial web05 shaped bolted receiving foot",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 4.446149349228818e-07
+        }
+      ],
+      "actual_Pipette_architecture": "conduit_split_corrugated_loom",
+      "actual_Pipette_joint": "split_loom_clip"
+    },
+    {
+      "clip": "V11 fieldguide V07 tier01 flared cast radial web06 Polymer receiving collar",
+      "sleeve": "V11 fieldguide V07 tier01 flared cast radial web06 actual protective ceramic wire sleeve",
+      "actual_wire_radius": 0.002,
+      "actual_minimum_polygonal_bore_radius": 0.002379362381552292,
+      "actual_minimum_radial_wire_clearance": 0.0003793623815522918,
+      "actual_bore_ray_count": 48,
+      "solid_parts": [
+        {
+          "object": "V11 fieldguide V07 tier01 flared cast radial web06 Polymer receiving collar",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 3.6750770614004226e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier01 flared cast radial web06 actual protective ceramic wire sleeve",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 1.5661202543011826e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier01 flared cast radial web06 actual concave cast clip cradle",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 6.295820141415189e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier01 flared cast radial web06 shaped bolted receiving foot",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 4.4468178111898487e-07
+        }
+      ],
+      "actual_Pipette_architecture": "conduit_split_corrugated_loom",
+      "actual_Pipette_joint": "split_loom_clip"
+    },
+    {
+      "clip": "V11 fieldguide V07 tier01 flared cast radial web07 Polymer receiving collar",
+      "sleeve": "V11 fieldguide V07 tier01 flared cast radial web07 actual protective ceramic wire sleeve",
+      "actual_wire_radius": 0.002,
+      "actual_minimum_polygonal_bore_radius": 0.0023794271305512924,
+      "actual_minimum_radial_wire_clearance": 0.0003794271305512923,
+      "actual_bore_ray_count": 48,
+      "solid_parts": [
+        {
+          "object": "V11 fieldguide V07 tier01 flared cast radial web07 Polymer receiving collar",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 3.6750769653921624e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier01 flared cast radial web07 actual protective ceramic wire sleeve",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 1.5661202764411638e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier01 flared cast radial web07 actual concave cast clip cradle",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 6.332578211825082e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier01 flared cast radial web07 shaped bolted receiving foot",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 4.446057758831075e-07
+        }
+      ],
+      "actual_Pipette_architecture": "conduit_split_corrugated_loom",
+      "actual_Pipette_joint": "split_loom_clip"
+    },
+    {
+      "clip": "V11 fieldguide V07 tier02 flared cast radial web00 Polymer receiving collar",
+      "sleeve": "V11 fieldguide V07 tier02 flared cast radial web00 actual protective ceramic wire sleeve",
+      "actual_wire_radius": 0.002,
+      "actual_minimum_polygonal_bore_radius": 0.0023793063942338308,
+      "actual_minimum_radial_wire_clearance": 0.00037930639423383074,
+      "actual_bore_ray_count": 48,
+      "solid_parts": [
+        {
+          "object": "V11 fieldguide V07 tier02 flared cast radial web00 Polymer receiving collar",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 3.6750769919410025e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier02 flared cast radial web00 actual protective ceramic wire sleeve",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 1.5661202243890463e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier02 flared cast radial web00 actual concave cast clip cradle",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 5.400792533615418e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier02 flared cast radial web00 shaped bolted receiving foot",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 4.7036458710190103e-07
+        }
+      ],
+      "actual_Pipette_architecture": "conduit_split_corrugated_loom",
+      "actual_Pipette_joint": "split_loom_clip"
+    },
+    {
+      "clip": "V11 fieldguide V07 tier02 flared cast radial web01 Polymer receiving collar",
+      "sleeve": "V11 fieldguide V07 tier02 flared cast radial web01 actual protective ceramic wire sleeve",
+      "actual_wire_radius": 0.002,
+      "actual_minimum_polygonal_bore_radius": 0.0023793432461798976,
+      "actual_minimum_radial_wire_clearance": 0.0003793432461798975,
+      "actual_bore_ray_count": 48,
+      "solid_parts": [
+        {
+          "object": "V11 fieldguide V07 tier02 flared cast radial web01 Polymer receiving collar",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 3.675076970477831e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier02 flared cast radial web01 actual protective ceramic wire sleeve",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 1.5661202678562336e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier02 flared cast radial web01 actual concave cast clip cradle",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 5.665711606015647e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier02 flared cast radial web01 shaped bolted receiving foot",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 4.703064635843647e-07
+        }
+      ],
+      "actual_Pipette_architecture": "conduit_split_corrugated_loom",
+      "actual_Pipette_joint": "split_loom_clip"
+    },
+    {
+      "clip": "V11 fieldguide V07 tier02 flared cast radial web02 Polymer receiving collar",
+      "sleeve": "V11 fieldguide V07 tier02 flared cast radial web02 actual protective ceramic wire sleeve",
+      "actual_wire_radius": 0.002,
+      "actual_minimum_polygonal_bore_radius": 0.0023793811337842405,
+      "actual_minimum_radial_wire_clearance": 0.00037938113378424045,
+      "actual_bore_ray_count": 48,
+      "solid_parts": [
+        {
+          "object": "V11 fieldguide V07 tier02 flared cast radial web02 Polymer receiving collar",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 3.6750769895929557e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier02 flared cast radial web02 actual protective ceramic wire sleeve",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 1.5661202240452073e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier02 flared cast radial web02 actual concave cast clip cradle",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 5.583598156254619e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier02 flared cast radial web02 shaped bolted receiving foot",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 4.701296143283074e-07
+        }
+      ],
+      "actual_Pipette_architecture": "conduit_split_corrugated_loom",
+      "actual_Pipette_joint": "split_loom_clip"
+    },
+    {
+      "clip": "V11 fieldguide V07 tier02 flared cast radial web03 Polymer receiving collar",
+      "sleeve": "V11 fieldguide V07 tier02 flared cast radial web03 actual protective ceramic wire sleeve",
+      "actual_wire_radius": 0.002,
+      "actual_minimum_polygonal_bore_radius": 0.0023793432461798976,
+      "actual_minimum_radial_wire_clearance": 0.0003793432461798975,
+      "actual_bore_ray_count": 48,
+      "solid_parts": [
+        {
+          "object": "V11 fieldguide V07 tier02 flared cast radial web03 Polymer receiving collar",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 3.675077049221831e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier02 flared cast radial web03 actual protective ceramic wire sleeve",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 1.5661202378073664e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier02 flared cast radial web03 actual concave cast clip cradle",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 5.666398003547799e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier02 flared cast radial web03 shaped bolted receiving foot",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 4.703067014363838e-07
+        }
+      ],
+      "actual_Pipette_architecture": "conduit_split_corrugated_loom",
+      "actual_Pipette_joint": "split_loom_clip"
+    },
+    {
+      "clip": "V11 fieldguide V07 tier02 flared cast radial web04 Polymer receiving collar",
+      "sleeve": "V11 fieldguide V07 tier02 flared cast radial web04 actual protective ceramic wire sleeve",
+      "actual_wire_radius": 0.002,
+      "actual_minimum_polygonal_bore_radius": 0.0023793605001991027,
+      "actual_minimum_radial_wire_clearance": 0.00037936050019910265,
+      "actual_bore_ray_count": 48,
+      "solid_parts": [
+        {
+          "object": "V11 fieldguide V07 tier02 flared cast radial web04 Polymer receiving collar",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 3.6750770543168666e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier02 flared cast radial web04 actual protective ceramic wire sleeve",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 1.5661202501335478e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier02 flared cast radial web04 actual concave cast clip cradle",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 5.400696467993326e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier02 flared cast radial web04 shaped bolted receiving foot",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 4.7030602803258464e-07
+        }
+      ],
+      "actual_Pipette_architecture": "conduit_split_corrugated_loom",
+      "actual_Pipette_joint": "split_loom_clip"
+    },
+    {
+      "clip": "V11 fieldguide V07 tier02 flared cast radial web05 Polymer receiving collar",
+      "sleeve": "V11 fieldguide V07 tier02 flared cast radial web05 actual protective ceramic wire sleeve",
+      "actual_wire_radius": 0.002,
+      "actual_minimum_polygonal_bore_radius": 0.0023793409265719977,
+      "actual_minimum_radial_wire_clearance": 0.00037934092657199766,
+      "actual_bore_ray_count": 48,
+      "solid_parts": [
+        {
+          "object": "V11 fieldguide V07 tier02 flared cast radial web05 Polymer receiving collar",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 3.675077032201058e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier02 flared cast radial web05 actual protective ceramic wire sleeve",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 1.5661202673476385e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier02 flared cast radial web05 actual concave cast clip cradle",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 5.666392829873446e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier02 flared cast radial web05 shaped bolted receiving foot",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 4.703065564638178e-07
+        }
+      ],
+      "actual_Pipette_architecture": "conduit_split_corrugated_loom",
+      "actual_Pipette_joint": "split_loom_clip"
+    },
+    {
+      "clip": "V11 fieldguide V07 tier02 flared cast radial web06 Polymer receiving collar",
+      "sleeve": "V11 fieldguide V07 tier02 flared cast radial web06 actual protective ceramic wire sleeve",
+      "actual_wire_radius": 0.002,
+      "actual_minimum_polygonal_bore_radius": 0.0023793811337842405,
+      "actual_minimum_radial_wire_clearance": 0.00037938113378424045,
+      "actual_bore_ray_count": 48,
+      "solid_parts": [
+        {
+          "object": "V11 fieldguide V07 tier02 flared cast radial web06 Polymer receiving collar",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 3.6750769895949357e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier02 flared cast radial web06 actual protective ceramic wire sleeve",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 1.5661202240452073e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier02 flared cast radial web06 actual concave cast clip cradle",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 5.583598305108386e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier02 flared cast radial web06 shaped bolted receiving foot",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 4.70129358914556e-07
+        }
+      ],
+      "actual_Pipette_architecture": "conduit_split_corrugated_loom",
+      "actual_Pipette_joint": "split_loom_clip"
+    },
+    {
+      "clip": "V11 fieldguide V07 tier02 flared cast radial web07 Polymer receiving collar",
+      "sleeve": "V11 fieldguide V07 tier02 flared cast radial web07 actual protective ceramic wire sleeve",
+      "actual_wire_radius": 0.002,
+      "actual_minimum_polygonal_bore_radius": 0.002379266110352103,
+      "actual_minimum_radial_wire_clearance": 0.00037926611035210295,
+      "actual_bore_ray_count": 48,
+      "solid_parts": [
+        {
+          "object": "V11 fieldguide V07 tier02 flared cast radial web07 Polymer receiving collar",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 3.6750769370715486e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier02 flared cast radial web07 actual protective ceramic wire sleeve",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 1.5661203042909747e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier02 flared cast radial web07 actual concave cast clip cradle",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 5.665449620241953e-07
+        },
+        {
+          "object": "V11 fieldguide V07 tier02 flared cast radial web07 shaped bolted receiving foot",
+          "closed_manifold": true,
+          "connected_components": 1,
+          "signed_volume": 4.7042144793287027e-07
+        }
+      ],
+      "actual_Pipette_architecture": "conduit_split_corrugated_loom",
+      "actual_Pipette_joint": "split_loom_clip"
+    }
+  ],
+  "actual_connected_fastener_count": 62,
+  "actual_receiver_covers": 6,
+  "minimum_actual_bore_clearance": 0.00037926611035210295,
+  "limits": "Actual static bore and closed-connected surface witnesses; full passing source/export seat and existing-wire clearance receipts remain required. Protective guide architecture is not a new gameplay connector, electrical rating or fluid fitting."
+}

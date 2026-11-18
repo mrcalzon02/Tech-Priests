@@ -1,0 +1,64 @@
+{
+  "status": "PASS_FINAL_SOURCE_RETAINS_ALL40_PREVIOUSLY_MEASURED_FLEX_INTERFACE_OBJECTS_EXACTLY",
+  "source": {
+    "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\core07-collar-aligned\\thetazine-v06-collar-aligned-motion.blend",
+    "sha256": "e1b22e8fc7123d85eeedc379bf3d46eea7a246a7923ee23720ac4405c00717f8"
+  },
+  "script_sha256": "9d7013865827d2b505cec27a5d7d3c041ccf0facf816fe03301cee072b76f905",
+  "origins": [
+    {
+      "source": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\core-02-owned-flex\\thetazine-v06-core-and-leaf-flex.blend",
+      "sha256": "30ccb0f30025e7c81be3ace704019df55e951fb79a34f3b4f7c9003560d88c72",
+      "meshes": [
+        "V04 leaf regenerative flex inlet 00",
+        "V04 leaf regenerative flex outlet 00",
+        "V04 leaf regenerative flex inlet 01",
+        "V04 leaf regenerative flex outlet 01",
+        "V04 leaf regenerative flex inlet 02",
+        "V04 leaf regenerative flex outlet 02",
+        "V04 leaf regenerative flex inlet 03",
+        "V04 leaf regenerative flex outlet 03",
+        "V04 leaf regenerative flex inlet 04",
+        "V04 leaf regenerative flex outlet 04",
+        "V04 leaf regenerative flex inlet 05",
+        "V04 leaf regenerative flex outlet 05",
+        "V04 leaf regenerative flex inlet 06",
+        "V04 leaf regenerative flex outlet 06",
+        "V04 leaf regenerative flex inlet 07",
+        "V04 leaf regenerative flex outlet 07",
+        "V04 leaf regenerative flex inlet 08",
+        "V04 leaf regenerative flex outlet 08",
+        "V04 leaf regenerative flex inlet 09",
+        "V04 leaf regenerative flex outlet 09",
+        "V04 leaf regenerative flex inlet 10",
+        "V04 leaf regenerative flex outlet 10",
+        "V04 leaf regenerative flex inlet 11",
+        "V04 leaf regenerative flex outlet 11"
+      ]
+    },
+    {
+      "source": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\core-03c-seated-interfaces\\thetazine-v06-seated-interfaces.blend",
+      "sha256": "82fb6a2a74209ec8cc714b5dfa72934bec024b0b2afafec43357a957a10b269f",
+      "meshes": [
+        "V04 cold bulk radial feed fuel 0",
+        "V04 cold bulk radial feed fuel 1",
+        "V04 cold bulk radial feed fuel 2",
+        "V04 cold bulk radial feed water 0",
+        "V04 cold bulk radial feed water 1",
+        "V04 cold bulk radial feed water 2",
+        "V04 regenerative turbo supply fuel",
+        "V04 regenerative turbo supply water",
+        "V04 injector bridge support -1 actual seated riser",
+        "V04 injector bridge support -1 seated weld collar",
+        "V04 injector bridge support 1 actual seated riser",
+        "V04 injector bridge support 1 seated weld collar",
+        "V04 pump bed front seat -1 actual seated riser",
+        "V04 pump bed front seat -1 seated weld collar",
+        "V04 pump bed front seat 1 actual seated riser",
+        "V04 pump bed front seat 1 seated weld collar"
+      ]
+    }
+  ],
+  "meshes": 40,
+  "scope": "Exact parent/local transforms, basis vertices, topology, UVs, material bindings, every morph coordinate and morph/object keyframe retained from the independently measured24leaf and16hose/support stages."
+}

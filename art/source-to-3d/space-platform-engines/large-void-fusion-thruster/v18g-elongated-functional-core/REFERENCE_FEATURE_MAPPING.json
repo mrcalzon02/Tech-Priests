@@ -1,0 +1,92 @@
+{
+  "owner_emitter_attachment": {
+    "sha256": "51653135eeb298c4cbb6936b0d85faef5ddded231c790752682f80de44470e4f",
+    "dimensions_px": [
+      283,
+      230
+    ],
+    "path": "C:\\Users\\Admin\\AppData\\Local\\Temp\\codex-clipboard-4c56f180-de0c-4c9c-b642-8fb95cfd6d36.png",
+    "private_reference_policy": "Only hash/path and approximate feature rectangles are recorded. Screenshot text and pixels are not copied into authored art."
+  },
+  "legacy_complete_reference": {
+    "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tech-priests_src\\graphics\\entity\\void-fusion-thruster\\void-fusion-thruster-wide-idle.png",
+    "sha256": "3b7b6d743220a516fcfae11162b9ad2e5cff713338f5f7c549664c260a35df16"
+  },
+  "authority": "Recognizable thick armored segmented stacked dish tiers, stepping inward toward the lower central projecting emitter tip, banded bolted rims and radial braces. Attached owner reference supersedes the same-diameter thin ring plan. Separate dished stages, not a continuous chemical bell.",
+  "approximate_attachment_features": [
+    {
+      "region": "broad upper armored plated stack",
+      "rectangle_px": [
+        45,
+        77,
+        237,
+        138
+      ],
+      "authored_mapping": "largest 0.96m radius dish, segmented armor panels, bolted band rim and concave annular plate"
+    },
+    {
+      "region": "discrete inward stepped dish tiers",
+      "rectangle_px": [
+        65,
+        118,
+        218,
+        181
+      ],
+      "authored_mapping": "four independent dished stage radii 0.96,0.83,0.69,0.54m; 0.23m axial depth each,12 armor segments per tier"
+    },
+    {
+      "region": "radial braces and projecting central tip",
+      "rectangle_px": [
+        76,
+        139,
+        211,
+        218
+      ],
+      "authored_mapping": "radial face ribs, inter-tier metal/ceramic supports, isolated anode pin and four protective radial guards"
+    }
+  ],
+  "clean_legacy_emitter_mapping": {
+    "path": "tech-priests_src/graphics/entity/void-fusion-thruster/void-fusion-thruster-wide-idle.png",
+    "sha256": "3b7b6d743220a516fcfae11162b9ad2e5cff713338f5f7c549664c260a35df16",
+    "full_dimensions_px": [
+      384,
+      512
+    ],
+    "approximate_reconstruction_crop_px": [
+      55,
+      295,
+      330,
+      503
+    ],
+    "armored_emitter_only_crop_px": [
+      104,
+      367,
+      282,
+      497
+    ],
+    "feature_regions_px": {
+      "broad_upper_armored_tiers": [
+        109,
+        370,
+        277,
+        432
+      ],
+      "lower_stepped_face_and_radial_braces": [
+        112,
+        408,
+        276,
+        480
+      ],
+      "central_projecting_tip": [
+        162,
+        440,
+        222,
+        497
+      ]
+    },
+    "note": "Clean committed legacy artwork contains the intended emitter. Reconstruct from these approximate crop/feature coordinates and retained complete PNG; do not depend on Temp clipboard availability or copy screenshot interface text."
+  },
+  "native_contract": "4x4 fixed north, sealed, no visible pipe ports or invented electrical connector",
+  "retained_design": "open irregular Noctilith cage, Necron green fractures/contacts and60%-depth-buried supplied skull reliefs",
+  "superseded": "V05 nearly constant-diameter thin ring/grid terminal head; V06 uses the attached substantial armored stepped dish architecture"
+}

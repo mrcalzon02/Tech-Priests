@@ -1,0 +1,81 @@
+{
+  "status": "PASS_ONLY_FOUR_SHAFT_FACET_SURFACES_CHANGED",
+  "input_source_sha256": "e1b22e8fc7123d85eeedc379bf3d46eea7a246a7923ee23720ac4405c00717f8",
+  "final_source_sha256": "35c4f470ad92015b70d056086b7f6e53573f4ccabbecab6af346ab382734871e",
+  "script_sha256": "5a96b5c281f5824c15d837ead3cfd2bb339abfcc2ee6023d3f2e1f8d4936d5f6",
+  "all_source_objects": 3224,
+  "permitted_changed_meshes": [
+    "Outer actuator body -1",
+    "Outer actuator body 1",
+    "V06 giant actuator sliding rod -1",
+    "V06 giant actuator sliding rod 1"
+  ],
+  "permitted_field_changes": [
+    {
+      "object": "V06 giant actuator sliding rod 1",
+      "field": "mesh.coordinates"
+    },
+    {
+      "object": "V06 giant actuator sliding rod 1",
+      "field": "mesh.loops"
+    },
+    {
+      "object": "V06 giant actuator sliding rod 1",
+      "field": "mesh.polygons"
+    },
+    {
+      "object": "V06 giant actuator sliding rod 1",
+      "field": "mesh.uv"
+    },
+    {
+      "object": "Outer actuator body 1",
+      "field": "mesh.coordinates"
+    },
+    {
+      "object": "Outer actuator body 1",
+      "field": "mesh.loops"
+    },
+    {
+      "object": "Outer actuator body 1",
+      "field": "mesh.polygons"
+    },
+    {
+      "object": "Outer actuator body 1",
+      "field": "mesh.uv"
+    },
+    {
+      "object": "Outer actuator body -1",
+      "field": "mesh.coordinates"
+    },
+    {
+      "object": "Outer actuator body -1",
+      "field": "mesh.loops"
+    },
+    {
+      "object": "Outer actuator body -1",
+      "field": "mesh.polygons"
+    },
+    {
+      "object": "Outer actuator body -1",
+      "field": "mesh.uv"
+    },
+    {
+      "object": "V06 giant actuator sliding rod -1",
+      "field": "mesh.coordinates"
+    },
+    {
+      "object": "V06 giant actuator sliding rod -1",
+      "field": "mesh.loops"
+    },
+    {
+      "object": "V06 giant actuator sliding rod -1",
+      "field": "mesh.polygons"
+    },
+    {
+      "object": "V06 giant actuator sliding rod -1",
+      "field": "mesh.uv"
+    }
+  ],
+  "failures": [],
+  "scope": "Every other parent, local matrix, mesh coordinates/connectivity/UV/PBR/morphs and action/keyframe exactly retained. All object transforms/actions retained even for four repaired meshes. Therefore07 static110-vs-moving clearance excluding those four, and40flex lineage evidence carry to08 without rerunning old audits."
+}

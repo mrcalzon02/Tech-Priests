@@ -1,0 +1,28 @@
+{
+  "status": "PASS_NATIVE_OPTIONAL_ASSET_ABSENCE_SKIPS_VISUALS_PRESERVES_REAL_SERVICE",
+  "preparation_sha256": "e048ce715745f47dd71f29f88c51463caee2d21bf735c908cdf7c8720ae444ab",
+  "native_evidence_sha256": "9ca80c93c42562c06da2f817badd8c87504300e6fb5a41c738db4cbc7079ffd9",
+  "updated_runtime_source_hashes": {
+    "scripts/generated/control_legacy_part_002.lua": "746d5f243bd66476db36b35e43d9ec66b867cfbd21d691ca55641bf7dfe365ee",
+    "scripts/core/void_fusion_visuals.lua": "85655201cad15acf802d0d360ec3f948415244d17da148b132c63351067bfe1e"
+  },
+  "rows": [
+    {
+      "unit": 2,
+      "actual_power_watts": 16128897.521246912,
+      "factor": 1.3440747934372426,
+      "native_platform_speed": 0.005254670114967727,
+      "no_visual_state_or_objects": true,
+      "real_internal_fluid_stores_positive": true
+    },
+    {
+      "unit": 6,
+      "actual_power_watts": 9822552.737607231,
+      "factor": 0.8185460614672693,
+      "native_platform_speed": 1.129996418180415,
+      "no_visual_state_or_objects": true,
+      "real_internal_fluid_stores_positive": true
+    }
+  ],
+  "scope": "Actual2.1.24 headless ordinary registered drive operation with no optional AnimationPrototype names; no pixel art claim."
+}

@@ -1,0 +1,44 @@
+{
+  "status": "BYTE_EXACT_FINAL_SOURCE_CAPTURE_EVIDENCE",
+  "source_directory": "build/thruster-resume-20261117/capture-narrow-universe-v02-depth/output",
+  "master_retained": "build/thruster-resume-20261117/capture-narrow-universe-v02-depth/output/capture-master.blend",
+  "master_sha256": "54e77d6f539ba29f60d1880f067230158501f0e9db770f21f9ec15528f10e1e0",
+  "files": [
+    {
+      "source": "build/thruster-resume-20261117/capture-narrow-universe-v02-depth/output/capture-receipt.json",
+      "copy": "docs/art/thruster-resumption-20261117/animation-capture/narrow-universe-v01/capture-receipt.json",
+      "sha256": "38fbbce171d7b9d3a0ec7bc497afa24eb51f5c17f5c54873c9ebcd51bc640cd9"
+    },
+    {
+      "source": "build/thruster-resume-20261117/capture-narrow-universe-v02-depth/output/package-validation.json",
+      "copy": "docs/art/thruster-resumption-20261117/animation-capture/narrow-universe-v01/package-validation.json",
+      "sha256": "3e36fe6aec216ce9f11d7f5a7eac35e990ce24c40427fdc69dcafb982e55fd10"
+    },
+    {
+      "source": "build/thruster-resume-20261117/capture-narrow-universe-v02-depth/output/advecting-capture-validation.json",
+      "copy": "docs/art/thruster-resumption-20261117/animation-capture/narrow-universe-v01/advecting-capture-validation.json",
+      "sha256": "92ef1c1ae393e00217a48967dc403d61c243d163b694faed9931fd3806c67732"
+    },
+    {
+      "source": "build/thruster-resume-20261117/capture-narrow-universe-v02-depth/output/source-capture-review.json",
+      "copy": "docs/art/thruster-resumption-20261117/animation-capture/narrow-universe-v01/source-capture-review.json",
+      "sha256": "0d107df4eafaece91754124e3c5745400678bcbea0bbc8d60a1493f896c0bb71"
+    },
+    {
+      "source": "build/thruster-resume-20261117/capture-narrow-universe-v02-depth/output/profile.json",
+      "copy": "docs/art/thruster-resumption-20261117/animation-capture/narrow-universe-v01/profile.json",
+      "sha256": "fce6d269951d014358d61da0b65f4c95dfd4acb5decef5c9c1157af0ed8eebee"
+    },
+    {
+      "source": "build/thruster-resume-20261117/capture-narrow-universe-v02-depth/output/package/source-assembly-board.png",
+      "copy": "docs/art/thruster-resumption-20261117/animation-capture/narrow-universe-v01/source-assembly-board.png",
+      "sha256": "f87eeba2000413a10451767213ace524ca4e08eef43f63706bfde6f5dd9ff67d"
+    },
+    {
+      "source": "build/thruster-resume-20261117/capture-narrow-universe-v02-depth/output/package/source-assembly-loop.gif",
+      "copy": "docs/art/thruster-resumption-20261117/animation-capture/narrow-universe-v01/source-assembly-loop.gif",
+      "sha256": "879409e49b87a4c6ee8860b680c44ade11eb19129db9462d150034cbc736031c"
+    }
+  ],
+  "scope": "Final stronger FX and real-black-well technical repair. No new narrow native-art run at user direction; prior actual native control proof remains separate."
+}

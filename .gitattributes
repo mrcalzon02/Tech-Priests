@@ -2202,3 +2202,12 @@ tech-priests_src/graphics/entity/emergency-assembler-v07/* -text whitespace=cr-a
 "wip/combat-roster-local/tools/prepare_combat_live_overlay.py" -text whitespace=cr-at-eol
 "wip/combat-roster-local/tools/preserve_combat_roster_evidence.py" -text whitespace=cr-at-eol
 "wip/combat-roster-local/tools/run_combat_roster_native.py" -text whitespace=cr-at-eol
+
+# Preserve historical capture-tool snapshot EOF bytes.
+"art/source-to-3d/space-platform-engines/thetazine-thruster/v06-articulated-core/tooling/audit_routes.py" -text whitespace=cr-at-eol,-blank-at-eof
+"art/source-to-3d/space-platform-engines/void-fusion-thruster/v11-detailed-opaque-core/supporting-toolchain/authored-driver-snapshot/complete_lowered_v09.py" -text whitespace=cr-at-eol,-blank-at-eof
+"art/source-to-3d/space-platform-engines/void-fusion-thruster/v11-detailed-opaque-core/supporting-toolchain/authored-driver-snapshot/detail_finish_v11.py" -text whitespace=cr-at-eol,-blank-at-eof
+"art/source-to-3d/space-platform-engines/void-fusion-thruster/v11-detailed-opaque-core/supporting-toolchain/authored-driver-snapshot/detail_v10.py" -text whitespace=cr-at-eol,-blank-at-eof
+"art/source-to-3d/space-platform-engines/void-fusion-thruster/v11-detailed-opaque-core/supporting-toolchain/authored-driver-snapshot/pipette_power_terminal.py" -text whitespace=cr-at-eol,-blank-at-eof
+"art/source-to-3d/space-platform-engines/void-fusion-thruster/v11-detailed-opaque-core/supporting-toolchain/authored-driver-snapshot/render_handoff_v09.py" -text whitespace=cr-at-eol,-blank-at-eof
+"art/source-to-3d/space-platform-engines/void-fusion-thruster/v11-detailed-opaque-core/supporting-toolchain/authored-driver-snapshot/verify_pipette_v09.py" -text whitespace=cr-at-eol,-blank-at-eof

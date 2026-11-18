@@ -1,0 +1,25 @@
+{
+  "status": "PASS_DETAILED_NARROW_BODY_READY_FOR_CAPTURE",
+  "body_glb": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\void-fusion-v11.glb",
+  "body_glb_sha256": "2b1f7164dc6df970aef9c9f1367bf8cf30f82ba3471d1eb9fcf6e84821d3d137",
+  "source_blend": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\void-fusion-v11.blend",
+  "source_blend_sha256": "61e9a02667e2c6124fbd738adfb48fb3b4180ba9b59da86165117b0a76b28d4d",
+  "well_glb": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\service-well-v10\\narrow-service-well-v10.glb",
+  "well_glb_sha256": "b3c083952cec501d375875f30a4780b07fa2d840bd0a1f873c4e6d3250123276",
+  "well_validation": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\service-underlay-receipt.json",
+  "well_validation_sha256": "7d7fa307c126fac71daacafde76ef8625de4d2e7938fe934a2cf6301647c6c98",
+  "aperture_validation": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\void-fusion-v11e-closed-detail\\aperture-measurement.json",
+  "aperture_validation_sha256": "faf3f98d998efd4e306389d473d3accdec6ddf9165f1f56b3d538425a1898dad",
+  "required_checks": {
+    "roundtrip-validation.json": "a9e1e15390df52aeb0265eea46d9d5d75af7bfa5cb7f760badd456d9b686954e",
+    "guide-cover-export-validation.json": "538ce78989c8f7b3739290fd539719691a0cb559321291b652a86d291fe7511c",
+    "pipette-export-validation.json": "78d88fe8257645b365023b9d7dbdf66c4747b42caf3d04ddfef1c04509bdbc44",
+    "functional-detail-export-validation.json": "4b273cf17f0025c13e642f601252b66781fae6de70caff6bff0dab49d75a15e3"
+  },
+  "intentional_primary_repairs": 8,
+  "otherwise_exact_primary_meshes": 889,
+  "new_housing_covers": 6,
+  "protected_guides": 34,
+  "captive_fasteners": 62,
+  "remaining_gates": "Final768/64 capture, combined FX/actualdraw envelope, native pixel/registration/layer proof and final owner acceptance; this is not installed/released art."
+}

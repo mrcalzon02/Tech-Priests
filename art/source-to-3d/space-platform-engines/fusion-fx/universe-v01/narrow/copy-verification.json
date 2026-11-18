@@ -1,0 +1,276 @@
+{
+  "status": "PASS_BYTE_EXACT_FX_SOURCE_COPY",
+  "family": "narrow",
+  "staging_output": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\capture-narrow-universe-v02-depth\\output",
+  "canonical_output": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\art\\source-to-3d\\space-platform-engines\\fusion-fx\\universe-v01\\narrow",
+  "files": [
+    {
+      "path": "capture-master.blend",
+      "bytes": 26304972,
+      "sha256": "54e77d6f539ba29f60d1880f067230158501f0e9db770f21f9ec15528f10e1e0",
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\capture-narrow-universe-v02-depth\\output\\capture-master.blend",
+      "role": "passing_final_capture_source_or_receipt",
+      "byte_exact": true
+    },
+    {
+      "path": "profile.json",
+      "bytes": 3813,
+      "sha256": "fce6d269951d014358d61da0b65f4c95dfd4acb5decef5c9c1157af0ed8eebee",
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\capture-narrow-universe-v02-depth\\output\\profile.json",
+      "role": "passing_final_capture_source_or_receipt",
+      "byte_exact": true
+    },
+    {
+      "path": "capture-receipt.json",
+      "bytes": 4712848,
+      "sha256": "38fbbce171d7b9d3a0ec7bc497afa24eb51f5c17f5c54873c9ebcd51bc640cd9",
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\capture-narrow-universe-v02-depth\\output\\capture-receipt.json",
+      "role": "passing_final_capture_source_or_receipt",
+      "byte_exact": true
+    },
+    {
+      "path": "package-validation.json",
+      "bytes": 57828,
+      "sha256": "3e36fe6aec216ce9f11d7f5a7eac35e990ce24c40427fdc69dcafb982e55fd10",
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\capture-narrow-universe-v02-depth\\output\\package-validation.json",
+      "role": "passing_final_capture_source_or_receipt",
+      "byte_exact": true
+    },
+    {
+      "path": "advecting-capture-validation.json",
+      "bytes": 4508,
+      "sha256": "92ef1c1ae393e00217a48967dc403d61c243d163b694faed9931fd3806c67732",
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\capture-narrow-universe-v02-depth\\output\\advecting-capture-validation.json",
+      "role": "passing_final_capture_source_or_receipt",
+      "byte_exact": true
+    },
+    {
+      "path": "review/source-assembly-board.png",
+      "bytes": 678024,
+      "sha256": "f87eeba2000413a10451767213ace524ca4e08eef43f63706bfde6f5dd9ff67d",
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\capture-narrow-universe-v02-depth\\output\\package\\source-assembly-board.png",
+      "role": "actual_final_source_assembly_preview",
+      "byte_exact": true
+    },
+    {
+      "path": "review/source-assembly-loop.gif",
+      "bytes": 6216832,
+      "sha256": "879409e49b87a4c6ee8860b680c44ade11eb19129db9462d150034cbc736031c",
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\capture-narrow-universe-v02-depth\\output\\package\\source-assembly-loop.gif",
+      "role": "actual_final_source_assembly_preview",
+      "byte_exact": true
+    },
+    {
+      "path": "review/history-narrow-v01-pre-depth-fix/intensity-comparison-native-scale.png",
+      "bytes": 94537,
+      "sha256": "fc1ffae82f43137a7165f82aca287a4e3a2ef5287ac58305ca8dfd76c8306e19",
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\capture-narrow-universe-v01\\output\\intensity-comparison-native-scale.png",
+      "role": "actually_viewed_18MW_6MW_style_pilot_historical_previous_depth_setup",
+      "byte_exact": true
+    },
+    {
+      "path": "review/history-narrow-v01-pre-depth-fix/intensity-eight-consecutive-source.gif",
+      "bytes": 289649,
+      "sha256": "7b368bb5c578e1e9baf7a6b950391260d2b367ae6a8f2b894afceae329cf7267",
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\capture-narrow-universe-v01\\output\\intensity-eight-consecutive-source.gif",
+      "role": "actually_viewed_18MW_6MW_style_pilot_historical_previous_depth_setup",
+      "byte_exact": true
+    },
+    {
+      "path": "tooling/tools/art/thruster_resumption/animation/capture.py",
+      "bytes": 25351,
+      "sha256": "ca46a58f894dc4d7494cef82a5f96eda20e93bc8d49e880576461fd5352f22b6",
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\capture-narrow-universe-v02-depth\\output\\runner-logs\\20261117T215837316950Z\\tooling\\capture.py",
+      "role": "exact_hash_bound_capture_binding",
+      "byte_exact": true
+    },
+    {
+      "path": "tooling/tools/art/thruster_resumption/animation/particle_plume.py",
+      "bytes": 9455,
+      "sha256": "8c38721803118475f3a2ebacb75125ab773665eea2ba239946567a033e0d6f7d",
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\capture-narrow-universe-v02-depth\\output\\runner-logs\\20261117T215837316950Z\\tooling\\particle_plume.py",
+      "role": "exact_hash_bound_capture_binding",
+      "byte_exact": true
+    },
+    {
+      "path": "tooling/tools/art/thruster_resumption/animation/electric_arcs.py",
+      "bytes": 18888,
+      "sha256": "dabfc6a32e53d9fb3c0d5b195c6787c78157d38c877323686bb2993a775dec4c",
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\capture-narrow-universe-v02-depth\\output\\runner-logs\\20261117T215837316950Z\\tooling\\electric_arcs.py",
+      "role": "exact_hash_bound_capture_binding",
+      "byte_exact": true
+    },
+    {
+      "path": "tooling/tools/art/thruster_resumption/animation/emitter_energy.py",
+      "bytes": 3034,
+      "sha256": "b064b8672b3faa638a3300579308fd175e824192b954b1af5568cd46b792f9f5",
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\capture-narrow-universe-v02-depth\\output\\runner-logs\\20261117T215837316950Z\\tooling\\emitter_energy.py",
+      "role": "exact_hash_bound_capture_binding",
+      "byte_exact": true
+    },
+    {
+      "path": "tooling/tools/fmpl/blender_camera_guard.py",
+      "bytes": 3304,
+      "sha256": "35da2d58084a1e648022f558d757a7bbb54965de54ccc74a0a32b983621adbc4",
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\fmpl\\blender_camera_guard.py",
+      "role": "exact_hash_bound_capture_binding",
+      "byte_exact": true
+    },
+    {
+      "path": "tooling/tools/fmpl/capture_policy.py",
+      "bytes": 5023,
+      "sha256": "70c08ee79c53a7efa0205393de11c8168ed8f467cf2e059eee2bc629fccfb9f0",
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\fmpl\\capture_policy.py",
+      "role": "exact_hash_bound_capture_binding",
+      "byte_exact": true
+    },
+    {
+      "path": "tooling/tools/art/thruster_resumption/animation/package.py",
+      "bytes": 11874,
+      "sha256": "d3b6fb952ac30425429bae13972bea91d0a05ab52d05dd0de2d0c59d1016ee79",
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\capture-narrow-universe-v02-depth\\output\\runner-logs\\20261117T215837316950Z\\tooling\\package.py",
+      "role": "exact_hash_bound_passing_package_verifier",
+      "byte_exact": true
+    },
+    {
+      "path": "tooling/tools/art/thruster_resumption/animation/verify_capture.py",
+      "bytes": 6362,
+      "sha256": "086889a629aa4067aaa69421188ac0caf37c7fa2e6092e1405f2197f4abaeac1",
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\thruster_resumption\\animation\\verify_capture.py",
+      "role": "exact_hash_bound_passing_final64_verifier",
+      "byte_exact": true
+    },
+    {
+      "path": "evidence/runner-logs/20261117T215837316950Z/energy.log",
+      "bytes": 15214,
+      "sha256": "5e7c682c463d33a2098fe822fd8f80dc5a4579e91e0b965220ac3002f0ec41f6",
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\capture-narrow-universe-v02-depth\\output\\runner-logs\\20261117T215837316950Z\\energy.log",
+      "role": "original_runner_evidence",
+      "byte_exact": true
+    },
+    {
+      "path": "evidence/runner-logs/20261117T215837316950Z/field.log",
+      "bytes": 14174,
+      "sha256": "a985966253bb7f4a5f4eb6a3d30c95190f80e2cd988492e47a70d9137d715acd",
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\capture-narrow-universe-v02-depth\\output\\runner-logs\\20261117T215837316950Z\\field.log",
+      "role": "original_runner_evidence",
+      "byte_exact": true
+    },
+    {
+      "path": "evidence/runner-logs/20261117T215837316950Z/package.log",
+      "bytes": 219,
+      "sha256": "342fbb31f43ca5bc080c5e0cf83f5e7233390fedff6621cf2e8da7357c848ffc",
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\capture-narrow-universe-v02-depth\\output\\runner-logs\\20261117T215837316950Z\\package.log",
+      "role": "original_runner_evidence",
+      "byte_exact": true
+    },
+    {
+      "path": "evidence/runner-logs/20261117T215837316950Z/prepare.log",
+      "bytes": 116860,
+      "sha256": "67ad74f91d7b71e8fe075d44dd12914dc1cf7cfd638ddca2062d59e368316e8e",
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\capture-narrow-universe-v02-depth\\output\\runner-logs\\20261117T215837316950Z\\prepare.log",
+      "role": "original_runner_evidence",
+      "byte_exact": true
+    },
+    {
+      "path": "evidence/runner-logs/20261117T215837316950Z/runner-receipt.json",
+      "bytes": 6124,
+      "sha256": "35a482cc705217ec3f43633b22ae4636e1c2101756a843db82f3a817323f593c",
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\capture-narrow-universe-v02-depth\\output\\runner-logs\\20261117T215837316950Z\\runner-receipt.json",
+      "role": "original_runner_evidence",
+      "byte_exact": true
+    },
+    {
+      "path": "evidence/runner-logs/20261117T215837316950Z/static.log",
+      "bytes": 1220,
+      "sha256": "7a9f3fdca94fdf3baaa7023fabae29eaab3398d3b942d4ca72ec7c6a6576f8f3",
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\capture-narrow-universe-v02-depth\\output\\runner-logs\\20261117T215837316950Z\\static.log",
+      "role": "original_runner_evidence",
+      "byte_exact": true
+    },
+    {
+      "path": "evidence/runner-logs/20261117T215837316950Z/tooling/capture.py",
+      "bytes": 25351,
+      "sha256": "ca46a58f894dc4d7494cef82a5f96eda20e93bc8d49e880576461fd5352f22b6",
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\capture-narrow-universe-v02-depth\\output\\runner-logs\\20261117T215837316950Z\\tooling\\capture.py",
+      "role": "original_runner_tool_snapshot",
+      "byte_exact": true
+    },
+    {
+      "path": "evidence/runner-logs/20261117T215837316950Z/tooling/electric_arcs.py",
+      "bytes": 18888,
+      "sha256": "dabfc6a32e53d9fb3c0d5b195c6787c78157d38c877323686bb2993a775dec4c",
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\capture-narrow-universe-v02-depth\\output\\runner-logs\\20261117T215837316950Z\\tooling\\electric_arcs.py",
+      "role": "original_runner_tool_snapshot",
+      "byte_exact": true
+    },
+    {
+      "path": "evidence/runner-logs/20261117T215837316950Z/tooling/emitter_energy.py",
+      "bytes": 3034,
+      "sha256": "b064b8672b3faa638a3300579308fd175e824192b954b1af5568cd46b792f9f5",
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\capture-narrow-universe-v02-depth\\output\\runner-logs\\20261117T215837316950Z\\tooling\\emitter_energy.py",
+      "role": "original_runner_tool_snapshot",
+      "byte_exact": true
+    },
+    {
+      "path": "evidence/runner-logs/20261117T215837316950Z/tooling/package.py",
+      "bytes": 11874,
+      "sha256": "d3b6fb952ac30425429bae13972bea91d0a05ab52d05dd0de2d0c59d1016ee79",
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\capture-narrow-universe-v02-depth\\output\\runner-logs\\20261117T215837316950Z\\tooling\\package.py",
+      "role": "original_runner_tool_snapshot",
+      "byte_exact": true
+    },
+    {
+      "path": "evidence/runner-logs/20261117T215837316950Z/tooling/particle_plume.py",
+      "bytes": 9455,
+      "sha256": "8c38721803118475f3a2ebacb75125ab773665eea2ba239946567a033e0d6f7d",
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\capture-narrow-universe-v02-depth\\output\\runner-logs\\20261117T215837316950Z\\tooling\\particle_plume.py",
+      "role": "original_runner_tool_snapshot",
+      "byte_exact": true
+    },
+    {
+      "path": "evidence/runner-logs/20261117T215837316950Z/tooling/run_capture.py",
+      "bytes": 3368,
+      "sha256": "4fe8c2e626a419ee8286423decccc972164a2a61f135d7164035deae7f20e950",
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\capture-narrow-universe-v02-depth\\output\\runner-logs\\20261117T215837316950Z\\tooling\\run_capture.py",
+      "role": "original_runner_tool_snapshot",
+      "byte_exact": true
+    },
+    {
+      "path": "tooling/tools/art/thruster_resumption/animation/run_capture.py",
+      "bytes": 3368,
+      "sha256": "4fe8c2e626a419ee8286423decccc972164a2a61f135d7164035deae7f20e950",
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\capture-narrow-universe-v02-depth\\output\\runner-logs\\20261117T215837316950Z\\tooling\\run_capture.py",
+      "role": "exact_original_runner_launcher",
+      "byte_exact": true
+    },
+    {
+      "path": "ATTRIBUTION.txt",
+      "bytes": 704,
+      "sha256": "ac76dcc86bc9a5422b176f8acb8a20971ef0af335e28d63461c724c703e80ba2",
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\art\\source-to-3d\\space-platform-engines\\void-fusion-thruster\\v11-detailed-opaque-core\\ATTRIBUTION.txt",
+      "role": "unchanged_source_body_attribution",
+      "byte_exact": true
+    },
+    {
+      "path": "evidence/native-draw-control-validation.json",
+      "bytes": 10707,
+      "sha256": "9f35e365635b40d37a7bcde6b1f54aa6c21c8bf902f4d365e1431f0cc17cf9e7",
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\docs\\art\\thruster-resumption-20261117\\animation-capture\\native-power\\validation.json",
+      "role": "separate_runtime_power_control_proof_not_new_FX_pixel_proof",
+      "byte_exact": true
+    },
+    {
+      "path": "review/source-capture-review.json",
+      "bytes": 1813,
+      "sha256": "0d107df4eafaece91754124e3c5745400678bcbea0bbc8d60a1493f896c0bb71",
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\capture-narrow-universe-v02-depth\\output\\source-capture-review.json",
+      "role": "parent_current_final64_source_appearance_review",
+      "byte_exact": true
+    }
+  ],
+  "copied_file_count": 33,
+  "copied_bytes": 38688675,
+  "all_originals_unchanged": true,
+  "full_source_frames_not_copied": true
+}

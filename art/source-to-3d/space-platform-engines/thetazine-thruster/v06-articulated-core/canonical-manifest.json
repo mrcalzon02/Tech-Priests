@@ -1,0 +1,454 @@
+{
+  "status": "VALIDATED_V06_MODEL_ANIMATION_ARCHIVED_WITH_DISCLOSED_LEGACY_CONTACTS",
+  "native": {
+    "file": "thetazine-v06-articulated-core.blend",
+    "sha256": "35c4f470ad92015b70d056086b7f6e53573f4ccabbecab6af346ab382734871e"
+  },
+  "glb": {
+    "file": "thetazine-v06-articulated-core.glb",
+    "sha256": "77892d382fe0b1f39f28d84082d6c68dbb3b00c26f1476a3963cac97b9fce074"
+  },
+  "source_baseline": "../v05-mechanical-detail",
+  "working_frames": [
+    1,
+    64
+  ],
+  "cold_frame": 0,
+  "wrap_frame": 65,
+  "fps": 30,
+  "source_saved_scene_range": [
+    1,
+    65
+  ],
+  "actual_glb_export_range": [
+    0,
+    65
+  ],
+  "physical_export": {
+    "meshes": 3202,
+    "empty_nodes": 21,
+    "animation_channels": 150,
+    "source_only_combustion_volume_excluded": true
+  },
+  "runtime_status": "Ordinary native sprites remain V04/source35. No V06 sprite integration, native-client rerun, Git commit or publication is claimed.",
+  "geometry_units": "Blender units (BU), not inferred real-world dimensions",
+  "retained_contact_limits": "Parent/root explicitly accepted the related legacy terminal roughness within the existing-layout/refinement scope: preserve LEFT actual touching terminal subpart separately from RIGHT separated under-margin terminal approach. Both remain on the original authored last Bezier span20..30 and old fouled clevis face regions. Record strict outside-union amounts (.02401578BU left/.02234501BU right); no enlarged fitting envelope, reroute or source edit. Same original whole-bolt containment at48 was already present in canonical cold0 and remains within exact source union029.",
+  "files": [
+    {
+      "file": "thetazine-v06-articulated-core.blend",
+      "sha256": "35c4f470ad92015b70d056086b7f6e53573f4ccabbecab6af346ab382734871e",
+      "bytes": 23451026,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\core10-complete-pose-range\\thetazine-v06-complete-motion.blend"
+    },
+    {
+      "file": "thetazine-v06-articulated-core.glb",
+      "sha256": "77892d382fe0b1f39f28d84082d6c68dbb3b00c26f1476a3963cac97b9fce074",
+      "bytes": 58201192,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\core10-complete-pose-range\\thetazine-v06-complete-motion.glb"
+    },
+    {
+      "file": "evidence/motion-export-validation.json",
+      "sha256": "c7c1358c5a6096f1a60ad8a7bfc3d243bf4c1b6ccb690337fc2b16d32bb40bed",
+      "bytes": 12134961,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\independent10-export66\\validation.json"
+    },
+    {
+      "file": "evidence/core-fixed-envelope.json",
+      "sha256": "473eaf3c9590a7b942f7aa440bb93108fc9baf16c7f8741f057e76b5d6cc434e",
+      "bytes": 328694,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\core08-matched-collar-facets\\core-vs-original-fixed-envelope.json"
+    },
+    {
+      "file": "evidence/core-restored-pumpbed-envelope.json",
+      "sha256": "eb260c2c12367ff6e948fb5674f01ca8ea7bf03d4c4d2135eafb3a49adb32905",
+      "bytes": 260462,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\core08-matched-collar-facets\\core-vs-restored-fixed-pumpbed-envelope.json"
+    },
+    {
+      "file": "evidence/new-bracket-moving-clearance.json",
+      "sha256": "b54268d971a126b8b2d19c77a926b965b99645492011b5bc7a83d86c73c0ac63",
+      "bytes": 414576,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\core07-collar-aligned\\static-bracket-moving-clearance.json"
+    },
+    {
+      "file": "evidence/static-bracket-seats.json",
+      "sha256": "42e59d36cd744a463d1aacd2cda9f11943fee7e4b48238aa621a5ce16d061534",
+      "bytes": 91693,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\core06-seated-rods\\static-contact-first-pose.json"
+    },
+    {
+      "file": "evidence/final-measured-interface-lineage.json",
+      "sha256": "a558e01b85a66d2e15c8986bf16fd8ea70ce66fad06732d007c9c249722fdd11",
+      "bytes": 3438,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\core07-collar-aligned\\flex-lineage-validation.json"
+    },
+    {
+      "file": "evidence/four-shaft-repair-lineage.json",
+      "sha256": "d1393e378e1ed585e6fda2fa671759a282631acf66cb920323ae90a698f7589d",
+      "bytes": 2437,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\core08-matched-collar-facets\\facet-repair-lineage-validation.json"
+    },
+    {
+      "file": "evidence/leaf-flex-validation.json",
+      "sha256": "539abba4875b3f82515ca49d0a22e0fe079215e1f9eca7363a660e41733c1055",
+      "bytes": 447378,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\core-02-owned-flex\\flex-validation.json"
+    },
+    {
+      "file": "evidence/hose-support-validation.json",
+      "sha256": "731f82d4ab310766de9bbdc4320f07b07e16903bc1f62468a38f86d8e19627c7",
+      "bytes": 110624,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\core-03c-seated-interfaces\\interface-validation.json"
+    },
+    {
+      "file": "evidence/retained-collar-frames.json",
+      "sha256": "937fb643af3734f5000feb6569cb9ebc75e3008cfc7fc21e62ea591cdca56838",
+      "bytes": 6442,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\core08-matched-collar-facets\\actual-collar-frame-measurement.json"
+    },
+    {
+      "file": "evidence/actuator-interface-nonmates.json",
+      "sha256": "f5b5e28d748ce70632fa03bb712acafda109ac8a46a7297b1b23d3e170aeefc0",
+      "bytes": 15178,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\independent08j-local32-source-clearance\\final-resolved-receipt.json"
+    },
+    {
+      "file": "evidence/scoped-contact-references/01-clearance.json",
+      "sha256": "eea0b7489fa2aac269f60fd39916603ad70e8d24d4651fc18542c80c02ca9090",
+      "bytes": 17604632,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\independent08j-local32-source-clearance\\clearance.json"
+    },
+    {
+      "file": "evidence/scoped-contact-references/02-terminal-review.json",
+      "sha256": "fc77bd46600f70da534d9414c5eca55e910e0bf815512dbd9b22975cc4be3654",
+      "bytes": 17823,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\independent08j-final-region-review\\terminal-review.json"
+    },
+    {
+      "file": "evidence/scoped-contact-references/03-inherited-containment-review.json",
+      "sha256": "12040195711ecfb62d9f9227045a137165e71efd3ad0626a04eabddd308edd85",
+      "bytes": 3003,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\independent08j-final-region-review\\inherited-containment-review.json"
+    },
+    {
+      "file": "evidence/scoped-contact-references/04-bounded-gap-equivalence.json",
+      "sha256": "cbbd79b28d1da21677690254445c4edc81e08fcabb5813cf440cc92e5e07c69f",
+      "bytes": 5612,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\independent08g-local32-source-clearance\\bounded-gap-equivalence.json"
+    },
+    {
+      "file": "provenance/core-motion.json",
+      "sha256": "7b4716a514b0f75127340d36638d0fb5b857453827a945af517685e5f0541488",
+      "bytes": 94664,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\core-01\\core-motion.json"
+    },
+    {
+      "file": "provenance/core-flex-retarget.json",
+      "sha256": "e3483e25df86d7f8e7956b597576505e4e1642f27580365ccc42f663e9939837",
+      "bytes": 209016,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\core-02-owned-flex\\core-flex-retarget.json"
+    },
+    {
+      "file": "provenance/interface-retarget.json",
+      "sha256": "fcbc7429f2f0cddf9c762c06d80a055ef93c682c7e2a1d9ec4d2c34d0ed3303f",
+      "bytes": 156919,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\core-03c-seated-interfaces\\interface-retarget.json"
+    },
+    {
+      "file": "provenance/pipette-pose-plans.json",
+      "sha256": "21df5c0d3208469ce7d29a53771b9baefb6f64b30955d391e3fd8eb7cd6d8b32",
+      "bytes": 14401407,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\core-03c-seated-interfaces\\pipette-pose-plans.json"
+    },
+    {
+      "file": "provenance/matched-facet-repair.json",
+      "sha256": "ccc1af75cfdb89ea54545e4a9b53ecc7cb242829d343b45e9fc38afc33ffd0e5",
+      "bytes": 1579,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\core08-matched-collar-facets\\matched-facet-repair.json"
+    },
+    {
+      "file": "provenance/static-allowed-changes.json",
+      "sha256": "0d93b6e66ee4f867156acd29ccee2404ae3ea84b02d084b9815ab753f4c1b0a2",
+      "bytes": 133383,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\core05-fixedbrackets\\static-allowed-changes.json"
+    },
+    {
+      "file": "provenance/complete-pose-range-export.json",
+      "sha256": "29225e2ee020ca044d854f3522743ad25c78d6ece38ba7ec221da93b517ec83f",
+      "bytes": 1966,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\core10-complete-pose-range\\complete-pose-range-export.json"
+    },
+    {
+      "file": "provenance/detail-manifest.json",
+      "sha256": "3064c686862a848d8c624573dc9d7b0950f08ef3563cda57e0da27e983d6ab07",
+      "bytes": 414382,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\core10-complete-pose-range\\detail-manifest.json"
+    },
+    {
+      "file": "provenance/side-actuator-motion.json",
+      "sha256": "e134f50d5a67a03b3e798837cac462c9a546a27b8a0e5a090c966d51a7abb221",
+      "bytes": 261076,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\core10-complete-pose-range\\side-actuator-motion.json"
+    },
+    {
+      "file": "provenance/visual-review.json",
+      "sha256": "28ee73c1110a998eeda323d1d19dca4ba2a85a0df0e9cc9bf7b35426da8175c6",
+      "bytes": 4997,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\core10-complete-pose-range\\visual-review.json"
+    },
+    {
+      "file": "provenance/actuator-replacement-roles-with-local-unions.json",
+      "sha256": "347f0109d45757dc55a2fa9f32d8a5a4d3859c4be10ed002912124367f412889",
+      "bytes": 8498,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\core10-complete-pose-range\\actuator-replacement-roles-with-local-unions.json"
+    },
+    {
+      "file": "provenance/actuator-replacement-roles.json",
+      "sha256": "4ec216c24a9a56bd630a47f3de6d3b5fd388051e7ac2c6b5fee9ae532de30472",
+      "bytes": 2765,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\core10-complete-pose-range\\actuator-replacement-roles.json"
+    },
+    {
+      "file": "motion-preview/motion-capture.json",
+      "sha256": "84ba82ee67926b35d59fbaccb06ef0ce9ff7339921429517833e2c379031a7f0",
+      "bytes": 16258,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\core08-matched-collar-facets\\motion-preview\\motion-capture.json"
+    },
+    {
+      "file": "motion-preview/motion-preview-package.json",
+      "sha256": "af10016c4a749bcaf333235b69efa5bfa44d028e77958b3715d1bdbcda0fb14f",
+      "bytes": 687,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\core08-matched-collar-facets\\motion-preview\\motion-preview-package.json"
+    },
+    {
+      "file": "motion-preview/motion-video-preview.json",
+      "sha256": "f3971f43f5b9e09df4a87d2795c3d6ae2e8aad880812dbf1e037ffc06c7b885b",
+      "bytes": 928,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\core08-matched-collar-facets\\motion-preview\\motion-video-preview.json"
+    },
+    {
+      "file": "motion-preview/thetazine-v06-mechanism-cycle.gif",
+      "sha256": "39212000ef095dffe07cdcdb8bd58850796a841fbdbba0756d0930fe8c3c920f",
+      "bytes": 9348637,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\core08-matched-collar-facets\\motion-preview\\thetazine-v06-mechanism-cycle.gif"
+    },
+    {
+      "file": "motion-preview/thetazine-v06-mechanism-cycle.mp4",
+      "sha256": "4a8665095b8459b8fa03f7fb1ea06cc4318bb996608564c287323ebdc591c042",
+      "bytes": 1460546,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\core08-matched-collar-facets\\motion-preview\\thetazine-v06-mechanism-cycle.mp4"
+    },
+    {
+      "file": "motion-preview/thetazine-v06-mechanism-poses.png",
+      "sha256": "60b62c11d4451f017660c1916e416bc7b72efdb8f5b2a6f9755bd7de9443eaa1",
+      "bytes": 1214120,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\core08-matched-collar-facets\\motion-preview\\thetazine-v06-mechanism-poses.png"
+    },
+    {
+      "file": "export-preview/actual-v06-whole.png",
+      "sha256": "cf264af5ca510ea41873b144f1af7d070dffc2f0af76ec4b1a5b2bef09a049e2",
+      "bytes": 818166,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\core10-complete-pose-range\\export-preview\\actual-v06-whole.png"
+    },
+    {
+      "file": "export-preview/actual-v06-side-actuator.png",
+      "sha256": "a0634716ff06146e8061aa6609753f5d3428b7e5774ab72765d21977499cfbfc",
+      "bytes": 1298046,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\core10-complete-pose-range\\export-preview\\actual-v06-side-actuator.png"
+    },
+    {
+      "file": "export-preview/actual-v06-rear.png",
+      "sha256": "e28514b9585514cc62fa5d6564eacd1270a42cd15e5f36686f050e278d007745",
+      "bytes": 575567,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\core10-complete-pose-range\\export-preview\\actual-v06-rear.png"
+    },
+    {
+      "file": "export-preview/actual-v06-rear-clay.png",
+      "sha256": "26ae9c7364edb60b48da0be11da15cf9a42a0b223ca8e733f380f7387a206e04",
+      "bytes": 538068,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\core10-complete-pose-range\\export-preview\\actual-v06-rear-clay.png"
+    },
+    {
+      "file": "export-preview/render-receipt.json",
+      "sha256": "9def9b9f43aa3d567ef9b8e4da45d81f14cb82c3e19abe5f8674589b744f5089",
+      "bytes": 2060,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\core10-complete-pose-range\\export-preview\\render-receipt.json"
+    },
+    {
+      "file": "tooling/add_static_mount_brackets.py",
+      "sha256": "f8480db64aa17eb92a82b133da6c0409631b4218dd1b4e5bafdf3033f0c2cd0b",
+      "bytes": 17028,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\thetazine_v06\\add_static_mount_brackets.py"
+    },
+    {
+      "file": "tooling/assemble_validation_declarations.py",
+      "sha256": "e966f233162acfefdd81491202ece7797a107c6af128337963be2c44dc5c6465",
+      "bytes": 2486,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\thetazine_v06\\assemble_validation_declarations.py"
+    },
+    {
+      "file": "tooling/audit_routes.py",
+      "sha256": "0de47b5f3fa9d89bc9d037b45dcc9d30021c4645554408ba39f3c4a31549372d",
+      "bytes": 5545,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\thetazine_v06\\audit_routes.py"
+    },
+    {
+      "file": "tooling/capture_motion_preview.py",
+      "sha256": "e9c80971d77bc40a6bf1cf1ac6e27ae7a7a6e80a01c002acd2548646da900472",
+      "bytes": 3654,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\thetazine_v06\\capture_motion_preview.py"
+    },
+    {
+      "file": "tooling/export_complete_pose_range.py",
+      "sha256": "558f40602f1598f6a2366404673a91297492c097b0ff9aa7b425fca967205b2e",
+      "bytes": 3305,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\thetazine_v06\\export_complete_pose_range.py"
+    },
+    {
+      "file": "tooling/export_physical_hierarchy.py",
+      "sha256": "e8e075cd4128ae5a0223e366044870e37acee5527cdc774f07409bdb649c452d",
+      "bytes": 2778,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\thetazine_v06\\export_physical_hierarchy.py"
+    },
+    {
+      "file": "tooling/inspect_kinematics.py",
+      "sha256": "a40e35391bd3f29b052a9b991ed700f0334c3736387f48af2f58d10a7e4ed81e",
+      "bytes": 3636,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\thetazine_v06\\inspect_kinematics.py"
+    },
+    {
+      "file": "tooling/measure_retained_collar_frames.py",
+      "sha256": "afffdef6c5a65f365ebe359dab8c288102d2a95125bef433cb72ad8b5c638d2b",
+      "bytes": 2213,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\thetazine_v06\\measure_retained_collar_frames.py"
+    },
+    {
+      "file": "tooling/package_model.py",
+      "sha256": "62e93a1ef2c70fe4296be0b83edfc08e72f44f5901c38d4eca28558db8d51917",
+      "bytes": 6960,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\thetazine_v06\\package_model.py"
+    },
+    {
+      "file": "tooling/package_motion_preview.py",
+      "sha256": "9890f18d47c003d0be3b3ac6cfbfe64b9ca74197a1786f2e6f5f7b5ae8aa376a",
+      "bytes": 2316,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\thetazine_v06\\package_motion_preview.py"
+    },
+    {
+      "file": "tooling/package_motion_video.py",
+      "sha256": "d0199051e5e0d163d2e16924996688f7e3c9df910322def8073b67d17079a474",
+      "bytes": 2549,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\thetazine_v06\\package_motion_video.py"
+    },
+    {
+      "file": "tooling/render_actual_export.py",
+      "sha256": "c8d6f3e13167a0fba138b7a7c5d67d6cbf54a6c2e8c7feffd9d9b04c74fc36d5",
+      "bytes": 3557,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\thetazine_v06\\render_actual_export.py"
+    },
+    {
+      "file": "tooling/repair_actuator_centerlines.py",
+      "sha256": "2c73e2f1f40672fe3302fb675f280cf72493c7b753afc8c56f5a6fed25612ba8",
+      "bytes": 2568,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\thetazine_v06\\repair_actuator_centerlines.py"
+    },
+    {
+      "file": "tooling/repair_actuator_facets.py",
+      "sha256": "c595ac2f4681b3f47db9ee8021ab691234b6aa63eec032ac049b3c8d49ca2643",
+      "bytes": 3861,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\thetazine_v06\\repair_actuator_facets.py"
+    },
+    {
+      "file": "tooling/repair_rod_shoulders.py",
+      "sha256": "e9265313f3020bbebc18289e335726732ff7a6529efb5d1cd7930ecb82fe9274",
+      "bytes": 4055,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\thetazine_v06\\repair_rod_shoulders.py"
+    },
+    {
+      "file": "tooling/retarget_interfaces.py",
+      "sha256": "48f198576ee78e3cf957a604810043c520ecb7d9d2be8ce5d0b13960594afe20",
+      "bytes": 11328,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\thetazine_v06\\retarget_interfaces.py"
+    },
+    {
+      "file": "tooling/retarget_side_actuators.py",
+      "sha256": "81ec8ff5347881397131fa9e9e60bc1f500bb34d0720802542f4834aed0f52e5",
+      "bytes": 12722,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\thetazine_v06\\retarget_side_actuators.py"
+    },
+    {
+      "file": "tooling/validate_motion_export.py",
+      "sha256": "b5f566607bc1c35bfe9c6b9af58e16266e086e9c623a7c4318d7887c70d020cf",
+      "bytes": 102470,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\thetazine_v06\\validate_motion_export.py"
+    },
+    {
+      "file": "tooling/verify_facet_repair_lineage.py",
+      "sha256": "5a96b5c281f5824c15d837ead3cfd2bb339abfcc2ee6023d3f2e1f8d4936d5f6",
+      "bytes": 2665,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\thetazine_v06\\verify_facet_repair_lineage.py"
+    },
+    {
+      "file": "tooling/verify_interfaces.py",
+      "sha256": "5fe1fee4dff248470113abe27a8169cf815e078c39b3892f95a4297e6ce8aed5",
+      "bytes": 5888,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\thetazine_v06\\verify_interfaces.py"
+    },
+    {
+      "file": "tooling/verify_owned_lineage.py",
+      "sha256": "9d7013865827d2b505cec27a5d7d3c041ccf0facf816fe03301cee072b76f905",
+      "bytes": 3522,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\thetazine_v06\\verify_owned_lineage.py"
+    },
+    {
+      "file": "tooling/verify_packaged_source.py",
+      "sha256": "1887bdd6387a8495159d14f4947825719cd51c35381e45855c31a0924532a7e7",
+      "bytes": 2997,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\thetazine_v06\\verify_packaged_source.py"
+    },
+    {
+      "file": "tooling/animate_core_v06.py",
+      "sha256": "b03ca0c41ac086afc8974156b5d568c7235cc1c952f2c0934ddae866605452b3",
+      "bytes": 5341,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\thetazine_v05\\animate_core_v06.py"
+    },
+    {
+      "file": "tooling/retarget_core_flex_v06.py",
+      "sha256": "d82c824568dd1609910d653fa74ba9d4ca94f019ddf334a6284c66bb47be51f0",
+      "bytes": 4280,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\thetazine_v05\\retarget_core_flex_v06.py"
+    },
+    {
+      "file": "tooling/verify_core_flex_v06.py",
+      "sha256": "d59c951900ca1aaa9e0c82675cde7e0b7bbe1118ce5679aa16eead28895ffa93",
+      "bytes": 4331,
+      "copied_from": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\tools\\art\\thetazine_v05\\verify_core_flex_v06.py"
+    },
+    {
+      "file": "README.md",
+      "sha256": "3903ef191ce1ca051ee2f6b84799cd8d16982befbae6f608d04501a05c807b41",
+      "bytes": 2443
+    },
+    {
+      "file": "package-verification.json",
+      "sha256": "36f3623692f7ad3591983655d9e34d48ad9224d04f2206a6958778a18446f904",
+      "bytes": 5229
+    },
+    {
+      "file": "package-verification.log",
+      "sha256": "0589a66d99e5c9e685ab0b35df03c51925fc619adcc94383cf4748a7eb94c184",
+      "bytes": 614
+    },
+    {
+      "file": "provenance/KINEMATIC_OWNERSHIP.md",
+      "sha256": "0b2a52f0ee1848c606ace0efaf1f0905c4ebaa8f0609027b288c879d2ad9657a",
+      "bytes": 6872
+    }
+  ],
+  "clearance_scope": "See exact scoped reports and inherited-contact classifications.",
+  "package_verification": {
+    "file": "package-verification.json",
+    "sha256": "36f3623692f7ad3591983655d9e34d48ad9224d04f2206a6958778a18446f904",
+    "status": "PASS_REOPENED_PACKAGED_SOURCE_TEXTURES_AND_EXACT_SOURCE_EXPORT_HASHES"
+  }
+}

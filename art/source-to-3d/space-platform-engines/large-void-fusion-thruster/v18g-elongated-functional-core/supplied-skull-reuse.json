@@ -1,0 +1,40 @@
+[
+  {
+    "name": "Supplied original low-poly skull seal 0",
+    "height_m": 0.372,
+    "source_sha256": "5e085c30cb3f623b31beee05992ce04d3c9f630b4ec81f474a2cc40b24d811fa",
+    "original_uv_normal_and_topology_preserved": true,
+    "mount_plane": [
+      0.0,
+      0.8333449363708496,
+      3.479386806488037
+    ],
+    "outward_normal": [
+      0.0,
+      -0.5446390509605408,
+      0.838670551776886
+    ],
+    "directional_depth_m": 0.5126017514766236,
+    "target_depth_buried_fraction": 0.6,
+    "owner_correction": "at least halfway bury skulls inside their actual surface"
+  },
+  {
+    "name": "Supplied original low-poly skull seal 1",
+    "height_m": 0.341,
+    "source_sha256": "5e085c30cb3f623b31beee05992ce04d3c9f630b4ec81f474a2cc40b24d811fa",
+    "original_uv_normal_and_topology_preserved": true,
+    "mount_plane": [
+      0.0,
+      -0.8523828983306885,
+      2.38466215133667
+    ],
+    "outward_normal": [
+      0.0,
+      -0.5446390509605408,
+      0.838670551776886
+    ],
+    "directional_depth_m": 0.4698849388535716,
+    "target_depth_buried_fraction": 0.6,
+    "owner_correction": "at least halfway bury skulls inside their actual surface"
+  }
+]

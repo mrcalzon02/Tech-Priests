@@ -1,0 +1,13 @@
+00:01.875  blend            | Read blend: "C:\Users\Admin\Documents\ChatGPT\Tech priests\model-production\build\thruster-resume-20261117\capture-narrow-universe-v02-depth\output\capture-master.blend"
+00:12.000  render           | Saved: 'C:\Users\Admin\Documents\ChatGPT\Tech priests\model-production\build\thruster-resume-20261117\capture-narrow-universe-v02-depth\output\frames\cold_body\000.png'
+CAPTURED cold_body 0
+00:15.109  render           | Saved: 'C:\Users\Admin\Documents\ChatGPT\Tech priests\model-production\build\thruster-resume-20261117\capture-narrow-universe-v02-depth\output\frames\cold_light\000.png'
+CAPTURED cold_light 0
+00:17.875  render           | Saved: 'C:\Users\Admin\Documents\ChatGPT\Tech priests\model-production\build\thruster-resume-20261117\capture-narrow-universe-v02-depth\output\frames\shadow\000.png'
+CAPTURED shadow 0
+00:25.031  render           | Saved: 'C:\Users\Admin\Documents\ChatGPT\Tech priests\model-production\build\thruster-resume-20261117\capture-narrow-universe-v02-depth\output\frames\underlay\000.png'
+CAPTURED underlay 0
+Blender 5.0.0 (hash a37564c4df7a built 2025-11-18 11:06:54)
+
+Blender quit
+Error: Not freed memory blocks: 2, total unfreed memory 0.000046 MB

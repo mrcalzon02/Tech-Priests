@@ -1,0 +1,6448 @@
+{
+  "status": "EIGHT_HOSE_AND_EIGHT_SUPPORT_INTERFACES_REBOUND_REQUIRES_INDEPENDENT_REOPEN",
+  "input_source": {
+    "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\core-02-owned-flex\\thetazine-v06-core-and-leaf-flex.blend",
+    "sha256": "30ccb0f30025e7c81be3ace704019df55e951fb79a34f3b4f7c9003560d88c72"
+  },
+  "script_sha256": "48f198576ee78e3cf957a604810043c520ecb7d9d2be8ce5d0b13960594afe20",
+  "native": {
+    "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\thetazine-v06-motion\\core-03c-seated-interfaces\\thetazine-v06-seated-interfaces.blend",
+    "sha256": "82fb6a2a74209ec8cc714b5dfa72934bec024b0b2afafec43357a957a10b269f"
+  },
+  "pipette_module_hashes": {
+    "core.py": "9a991dea7dd646faad8766326ef60e67c0618c283a81dbf297119ee6ec3761c7",
+    "PIPETTE_STANDARD.md": "540a244a9192d2514c0c8ae97b657f0b896b8dddb170e5c51fb6d0f9554096be",
+    "type_registry.json": "42e220db26a981956741a7ce268c8e74172382497cacf54a9a0b23691085e654"
+  },
+  "pipette_scope": "Typed route/socket planner actually invoked528times; existing sweep topology/UV/materials/unions preserved. No new connector build or game-flow claim.",
+  "maximum_socket_gap": 7.152557373046875e-07,
+  "minimum_terminal_axis_dot": 0.9270391166210175,
+  "changed_objects": [
+    {
+      "mesh": "V04 cold bulk radial feed fuel 0",
+      "method": "Existing41x10 sweep plus two10-vertex cap rings retained. Arc-length smooth weighting, rigid ring rotations; end18percent rigid to actual socket frame.",
+      "poses": 66
+    },
+    {
+      "mesh": "V04 cold bulk radial feed fuel 1",
+      "method": "Existing41x10 sweep plus two10-vertex cap rings retained. Arc-length smooth weighting, rigid ring rotations; end18percent rigid to actual socket frame.",
+      "poses": 66
+    },
+    {
+      "mesh": "V04 cold bulk radial feed fuel 2",
+      "method": "Existing41x10 sweep plus two10-vertex cap rings retained. Arc-length smooth weighting, rigid ring rotations; end18percent rigid to actual socket frame.",
+      "poses": 66
+    },
+    {
+      "mesh": "V04 cold bulk radial feed water 0",
+      "method": "Existing41x10 sweep plus two10-vertex cap rings retained. Arc-length smooth weighting, rigid ring rotations; end18percent rigid to actual socket frame.",
+      "poses": 66
+    },
+    {
+      "mesh": "V04 cold bulk radial feed water 1",
+      "method": "Existing41x10 sweep plus two10-vertex cap rings retained. Arc-length smooth weighting, rigid ring rotations; end18percent rigid to actual socket frame.",
+      "poses": 66
+    },
+    {
+      "mesh": "V04 cold bulk radial feed water 2",
+      "method": "Existing41x10 sweep plus two10-vertex cap rings retained. Arc-length smooth weighting, rigid ring rotations; end18percent rigid to actual socket frame.",
+      "poses": 66
+    },
+    {
+      "mesh": "V04 regenerative turbo supply fuel",
+      "method": "Existing41x10 sweep plus two10-vertex cap rings retained. Arc-length smooth weighting, rigid ring rotations; end18percent rigid to actual socket frame.",
+      "poses": 66
+    },
+    {
+      "mesh": "V04 regenerative turbo supply water",
+      "method": "Existing41x10 sweep plus two10-vertex cap rings retained. Arc-length smooth weighting, rigid ring rotations; end18percent rigid to actual socket frame.",
+      "poses": 66
+    },
+    {
+      "mesh": "V04 injector bridge support -1 actual seated riser",
+      "actual_host": "Pressure chamber retaining band",
+      "host_follows_core": true,
+      "method": "Original seated support weighting retargeted to actual moving host"
+    },
+    {
+      "mesh": "V04 injector bridge support -1 seated weld collar",
+      "actual_host": "Pressure chamber retaining band",
+      "host_follows_core": true,
+      "method": "Original seated support weighting retargeted to actual moving host"
+    },
+    {
+      "mesh": "V04 injector bridge support 1 actual seated riser",
+      "actual_host": "Pressure chamber retaining band",
+      "host_follows_core": true,
+      "method": "Original seated support weighting retargeted to actual moving host"
+    },
+    {
+      "mesh": "V04 injector bridge support 1 seated weld collar",
+      "actual_host": "Pressure chamber retaining band",
+      "host_follows_core": true,
+      "method": "Original seated support weighting retargeted to actual moving host"
+    },
+    {
+      "mesh": "V04 pump bed front seat -1 actual seated riser",
+      "actual_host": "Diagonal shoulder -1",
+      "host_follows_core": false,
+      "method": "Incorrect inherited core deformation removed; both support contacts are fixed"
+    },
+    {
+      "mesh": "V04 pump bed front seat -1 seated weld collar",
+      "actual_host": "Diagonal shoulder -1",
+      "host_follows_core": false,
+      "method": "Incorrect inherited core deformation removed; both support contacts are fixed"
+    },
+    {
+      "mesh": "V04 pump bed front seat 1 actual seated riser",
+      "actual_host": "Diagonal shoulder 1",
+      "host_follows_core": false,
+      "method": "Incorrect inherited core deformation removed; both support contacts are fixed"
+    },
+    {
+      "mesh": "V04 pump bed front seat 1 seated weld collar",
+      "actual_host": "Diagonal shoulder 1",
+      "host_follows_core": false,
+      "method": "Incorrect inherited core deformation removed; both support contacts are fixed"
+    }
+  ],
+  "measurements": [
+    {
+      "frame": 0,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.999807972151757
+      ]
+    },
+    {
+      "frame": 0,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        4.805624485015869e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.9998000264167786
+      ]
+    },
+    {
+      "frame": 0,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998003244400024
+      ]
+    },
+    {
+      "frame": 0,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998079771103221
+      ]
+    },
+    {
+      "frame": 0,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.7939677238464355e-09
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998003989458084
+      ]
+    },
+    {
+      "frame": 0,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.3328003749250113e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998002350330353
+      ]
+    },
+    {
+      "frame": 0,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        2.5288109106536417e-07
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965898096561432
+      ]
+    },
+    {
+      "frame": 0,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        8.429369702178807e-08
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965891391038895
+      ]
+    },
+    {
+      "frame": 1,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998081516932871
+      ]
+    },
+    {
+      "frame": 1,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.384476811558792e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.999800555408001
+      ]
+    },
+    {
+      "frame": 1,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.3328003749250113e-07
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998003989458084
+      ]
+    },
+    {
+      "frame": 1,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.7881393432617188e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998079330835026
+      ]
+    },
+    {
+      "frame": 1,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.7939677238464355e-09
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998005777597427
+      ]
+    },
+    {
+      "frame": 1,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998001456260681
+      ]
+    },
+    {
+      "frame": 1,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965896308422089
+      ]
+    },
+    {
+      "frame": 1,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        4.805480091749757e-07
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965894296765327
+      ]
+    },
+    {
+      "frame": 2,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.6656007498500226e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998081136327528
+      ]
+    },
+    {
+      "frame": 2,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        3.026798367500305e-09
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.9998007416725159
+      ]
+    },
+    {
+      "frame": 2,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998003542423248
+      ]
+    },
+    {
+      "frame": 2,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998079358338146
+      ]
+    },
+    {
+      "frame": 2,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.3842585494815777e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998004883527756
+      ]
+    },
+    {
+      "frame": 2,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.6858739404357614e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.999800443649292
+      ]
+    },
+    {
+      "frame": 2,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        4.805480091749757e-07
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.996588833630085
+      ]
+    },
+    {
+      "frame": 2,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965892359614372
+      ]
+    },
+    {
+      "frame": 3,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.3328003749250113e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998079025681363
+      ]
+    },
+    {
+      "frame": 3,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        5.972094663188382e-08
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.999800406396389
+      ]
+    },
+    {
+      "frame": 3,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.228781230931777e-07
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998005032539368
+      ]
+    },
+    {
+      "frame": 3,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.3328003749250113e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.999807958767633
+      ]
+    },
+    {
+      "frame": 3,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        3.259629011154175e-09
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998001903295517
+      ]
+    },
+    {
+      "frame": 3,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998002052307129
+      ]
+    },
+    {
+      "frame": 3,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        2.384185791015625e-07
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965888634324074
+      ]
+    },
+    {
+      "frame": 3,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965887814760208
+      ]
+    },
+    {
+      "frame": 4,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.3328003749250113e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998079626675462
+      ]
+    },
+    {
+      "frame": 4,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.862645149230957e-09
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.9998002424836159
+      ]
+    },
+    {
+      "frame": 4,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.228781230931777e-07
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998002797365189
+      ]
+    },
+    {
+      "frame": 4,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998080040095374
+      ]
+    },
+    {
+      "frame": 4,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.3283064365386963e-09
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998005330562592
+      ]
+    },
+    {
+      "frame": 4,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998001158237457
+      ]
+    },
+    {
+      "frame": 4,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965893179178238
+      ]
+    },
+    {
+      "frame": 4,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965897127985954
+      ]
+    },
+    {
+      "frame": 5,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.3328003749250113e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.99980781164777
+      ]
+    },
+    {
+      "frame": 5,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.4576330480069735e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.9998005107045174
+      ]
+    },
+    {
+      "frame": 5,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        2.9802322387695312e-08
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.99980029463768
+      ]
+    },
+    {
+      "frame": 5,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.3328003749250113e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998079478973523
+      ]
+    },
+    {
+      "frame": 5,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        3.725290298461914e-09
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998005777597427
+      ]
+    },
+    {
+      "frame": 5,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998002350330353
+      ]
+    },
+    {
+      "frame": 5,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        2.457562461863554e-07
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.996589183807373
+      ]
+    },
+    {
+      "frame": 5,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965886995196342
+      ]
+    },
+    {
+      "frame": 6,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.0647654623614278e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998079820798011
+      ]
+    },
+    {
+      "frame": 6,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.384185791015625e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.9998003914952278
+      ]
+    },
+    {
+      "frame": 6,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.999800443649292
+      ]
+    },
+    {
+      "frame": 6,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998078374774195
+      ]
+    },
+    {
+      "frame": 6,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.862645149230957e-09
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998002350330353
+      ]
+    },
+    {
+      "frame": 6,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998003095388412
+      ]
+    },
+    {
+      "frame": 6,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        4.805480091749757e-07
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965895861387253
+      ]
+    },
+    {
+      "frame": 6,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965885356068611
+      ]
+    },
+    {
+      "frame": 7,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.6656007498500226e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998080135555938
+      ]
+    },
+    {
+      "frame": 7,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.457562461863554e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.9998006075620651
+      ]
+    },
+    {
+      "frame": 7,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998005926609039
+      ]
+    },
+    {
+      "frame": 7,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.6656007498500226e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998080282239243
+      ]
+    },
+    {
+      "frame": 7,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.4033897374973483e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998003095388412
+      ]
+    },
+    {
+      "frame": 7,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.6858739404357614e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998002052307129
+      ]
+    },
+    {
+      "frame": 7,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965886697173119
+      ]
+    },
+    {
+      "frame": 7,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        2.457562461863554e-07
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965892732143402
+      ]
+    },
+    {
+      "frame": 8,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.999807935404533
+      ]
+    },
+    {
+      "frame": 8,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.384476811558792e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.9998002275824547
+      ]
+    },
+    {
+      "frame": 8,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998003989458084
+      ]
+    },
+    {
+      "frame": 8,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998080582008697
+      ]
+    },
+    {
+      "frame": 8,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        3.725290298461914e-09
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998006224632263
+      ]
+    },
+    {
+      "frame": 8,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998001903295517
+      ]
+    },
+    {
+      "frame": 8,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.996589332818985
+      ]
+    },
+    {
+      "frame": 8,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965888634324074
+      ]
+    },
+    {
+      "frame": 9,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.384185791015625e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998080211225897
+      ]
+    },
+    {
+      "frame": 9,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.4578447942743725e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.9998005628585815
+      ]
+    },
+    {
+      "frame": 9,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998002350330353
+      ]
+    },
+    {
+      "frame": 9,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.3328003749250113e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998080912046134
+      ]
+    },
+    {
+      "frame": 9,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.403028819392642e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998003095388412
+      ]
+    },
+    {
+      "frame": 9,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.6858739404357614e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998003393411636
+      ]
+    },
+    {
+      "frame": 9,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        2.6656007498500226e-07
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.996588759124279
+      ]
+    },
+    {
+      "frame": 9,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        2.457562461863554e-07
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965888187289238
+      ]
+    },
+    {
+      "frame": 10,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.5288109106536417e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998079237993807
+      ]
+    },
+    {
+      "frame": 10,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.4578447942743725e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.9998003020882607
+      ]
+    },
+    {
+      "frame": 10,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.7881393432617188e-07
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.999800369143486
+      ]
+    },
+    {
+      "frame": 10,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.6858739404357614e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998078618664294
+      ]
+    },
+    {
+      "frame": 10,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        3.725290298461914e-09
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998003095388412
+      ]
+    },
+    {
+      "frame": 10,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        2.384185791015625e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998005330562592
+      ]
+    },
+    {
+      "frame": 10,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        2.457562461863554e-07
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965886771678925
+      ]
+    },
+    {
+      "frame": 10,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965887889266014
+      ]
+    },
+    {
+      "frame": 11,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.384185791015625e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998082732054172
+      ]
+    },
+    {
+      "frame": 11,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        6.064333243705223e-08
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.9998001232743263
+      ]
+    },
+    {
+      "frame": 11,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.228781230931777e-07
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.99980029463768
+      ]
+    },
+    {
+      "frame": 11,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.6858739404357614e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998077719646972
+      ]
+    },
+    {
+      "frame": 11,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.9802322387695312e-08
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998002201318741
+      ]
+    },
+    {
+      "frame": 11,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        2.6656007498500226e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998002499341965
+      ]
+    },
+    {
+      "frame": 11,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        4.76837158203125e-07
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965894594788551
+      ]
+    },
+    {
+      "frame": 11,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        8.429369702178807e-08
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965886771678925
+      ]
+    },
+    {
+      "frame": 12,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998079052747926
+      ]
+    },
+    {
+      "frame": 12,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.9998002424836159
+      ]
+    },
+    {
+      "frame": 12,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.999800369143486
+      ]
+    },
+    {
+      "frame": 12,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.3328003749250113e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.999808038410265
+      ]
+    },
+    {
+      "frame": 12,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998005330562592
+      ]
+    },
+    {
+      "frame": 12,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998004287481308
+      ]
+    },
+    {
+      "frame": 12,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965880438685417
+      ]
+    },
+    {
+      "frame": 12,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        2.5288109106536417e-07
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965895861387253
+      ]
+    },
+    {
+      "frame": 13,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.7881393432617188e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998080458317418
+      ]
+    },
+    {
+      "frame": 13,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        5.972094663188382e-08
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.9998001977801323
+      ]
+    },
+    {
+      "frame": 13,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998003840446472
+      ]
+    },
+    {
+      "frame": 13,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.6656007498500226e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998078530479688
+      ]
+    },
+    {
+      "frame": 13,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.403028819392642e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998002648353577
+      ]
+    },
+    {
+      "frame": 13,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        2.457562461863554e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998002052307129
+      ]
+    },
+    {
+      "frame": 13,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965890794992447
+      ]
+    },
+    {
+      "frame": 13,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965891540050507
+      ]
+    },
+    {
+      "frame": 14,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998078697390156
+      ]
+    },
+    {
+      "frame": 14,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.384476811558792e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.9998002871870995
+      ]
+    },
+    {
+      "frame": 14,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        2.4027400458748785e-07
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998004734516144
+      ]
+    },
+    {
+      "frame": 14,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998080130899325
+      ]
+    },
+    {
+      "frame": 14,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998002201318741
+      ]
+    },
+    {
+      "frame": 14,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.7881393432617188e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998002499341965
+      ]
+    },
+    {
+      "frame": 14,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        2.457562461863554e-07
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965892881155014
+      ]
+    },
+    {
+      "frame": 14,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        2.457562461863554e-07
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965891614556313
+      ]
+    },
+    {
+      "frame": 15,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998079626820982
+      ]
+    },
+    {
+      "frame": 15,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.384185791015625e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.9998004361987114
+      ]
+    },
+    {
+      "frame": 15,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998002648353577
+      ]
+    },
+    {
+      "frame": 15,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.3328003749250113e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998080436635064
+      ]
+    },
+    {
+      "frame": 15,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.4578447942743725e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998004883527756
+      ]
+    },
+    {
+      "frame": 15,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998002201318741
+      ]
+    },
+    {
+      "frame": 15,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        2.5288109106536417e-07
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.996588759124279
+      ]
+    },
+    {
+      "frame": 15,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        2.457562461863554e-07
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965892657637596
+      ]
+    },
+    {
+      "frame": 16,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.7881393432617188e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998078457210795
+      ]
+    },
+    {
+      "frame": 16,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        3.725290298461914e-09
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.9998001977801323
+      ]
+    },
+    {
+      "frame": 16,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998004883527756
+      ]
+    },
+    {
+      "frame": 16,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998080992518226
+      ]
+    },
+    {
+      "frame": 16,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        3.003425057343598e-08
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998002797365189
+      ]
+    },
+    {
+      "frame": 16,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.7120130796843852e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998005628585815
+      ]
+    },
+    {
+      "frame": 16,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        2.457562461863554e-07
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965885505080223
+      ]
+    },
+    {
+      "frame": 16,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        4.805480091749757e-07
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965900033712387
+      ]
+    },
+    {
+      "frame": 17,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.457562461863554e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998080474833841
+      ]
+    },
+    {
+      "frame": 17,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.9998003095388412
+      ]
+    },
+    {
+      "frame": 17,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.4901161193847656e-07
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998003840446472
+      ]
+    },
+    {
+      "frame": 17,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998078738135519
+      ]
+    },
+    {
+      "frame": 17,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        3.725290298461914e-09
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998004287481308
+      ]
+    },
+    {
+      "frame": 17,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.6858739404357614e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.999800443649292
+      ]
+    },
+    {
+      "frame": 17,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        2.7314279645418166e-07
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965887740254402
+      ]
+    },
+    {
+      "frame": 17,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965895041823387
+      ]
+    },
+    {
+      "frame": 18,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.6858739404357614e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998079660872463
+      ]
+    },
+    {
+      "frame": 18,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.9998002275824547
+      ]
+    },
+    {
+      "frame": 18,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.3328003749250113e-07
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998003542423248
+      ]
+    },
+    {
+      "frame": 18,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        3.625608998714816e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998077551281312
+      ]
+    },
+    {
+      "frame": 18,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.384476811558792e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998004734516144
+      ]
+    },
+    {
+      "frame": 18,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.6858739404357614e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998002052307129
+      ]
+    },
+    {
+      "frame": 18,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965881258249283
+      ]
+    },
+    {
+      "frame": 18,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        2.457562461863554e-07
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965889006853104
+      ]
+    },
+    {
+      "frame": 19,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.384185791015625e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998079566867091
+      ]
+    },
+    {
+      "frame": 19,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        4.768517098963155e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.9998002424836159
+      ]
+    },
+    {
+      "frame": 19,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.6858739404357614e-07
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.999800443649292
+      ]
+    },
+    {
+      "frame": 19,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998080040677451
+      ]
+    },
+    {
+      "frame": 19,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.4027400458748785e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998002722859383
+      ]
+    },
+    {
+      "frame": 19,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.7881393432617188e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998003393411636
+      ]
+    },
+    {
+      "frame": 19,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        2.384185791015625e-07
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965893551707268
+      ]
+    },
+    {
+      "frame": 19,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        2.5288109106536417e-07
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965890496969223
+      ]
+    },
+    {
+      "frame": 20,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.6858739404357614e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998081219473534
+      ]
+    },
+    {
+      "frame": 20,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        5.972094663188382e-08
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.9998004660010338
+      ]
+    },
+    {
+      "frame": 20,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        2.9802322387695312e-08
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998005479574203
+      ]
+    },
+    {
+      "frame": 20,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.3328003749250113e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998078914286452
+      ]
+    },
+    {
+      "frame": 20,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998002424836159
+      ]
+    },
+    {
+      "frame": 20,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        2.6656007498500226e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998001605272293
+      ]
+    },
+    {
+      "frame": 20,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        2.384185791015625e-07
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965887814760208
+      ]
+    },
+    {
+      "frame": 20,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        4.805480091749757e-07
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965894743800163
+      ]
+    },
+    {
+      "frame": 21,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998080348186704
+      ]
+    },
+    {
+      "frame": 21,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.999800518155098
+      ]
+    },
+    {
+      "frame": 21,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.999800443649292
+      ]
+    },
+    {
+      "frame": 21,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998080912046134
+      ]
+    },
+    {
+      "frame": 21,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.384185791015625e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998004958033562
+      ]
+    },
+    {
+      "frame": 21,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998003244400024
+      ]
+    },
+    {
+      "frame": 21,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        2.5288109106536417e-07
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965884611010551
+      ]
+    },
+    {
+      "frame": 21,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        2.384185791015625e-07
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965895116329193
+      ]
+    },
+    {
+      "frame": 22,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.384185791015625e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998079832485018
+      ]
+    },
+    {
+      "frame": 22,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        3.725290298461914e-09
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.9998004660010338
+      ]
+    },
+    {
+      "frame": 22,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        2.6656007498500226e-07
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998003989458084
+      ]
+    },
+    {
+      "frame": 22,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.457562461863554e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998078344178793
+      ]
+    },
+    {
+      "frame": 22,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998002573847771
+      ]
+    },
+    {
+      "frame": 22,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.6858739404357614e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998003244400024
+      ]
+    },
+    {
+      "frame": 22,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        2.384185791015625e-07
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965892434120178
+      ]
+    },
+    {
+      "frame": 22,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        2.384185791015625e-07
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965888932347298
+      ]
+    },
+    {
+      "frame": 23,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.457562461863554e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998081244593777
+      ]
+    },
+    {
+      "frame": 23,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        3.725290298461914e-09
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.9998003467917442
+      ]
+    },
+    {
+      "frame": 23,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.3328003749250113e-07
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998005926609039
+      ]
+    },
+    {
+      "frame": 23,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.6858739404357614e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998077119817026
+      ]
+    },
+    {
+      "frame": 23,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        5.972094663188382e-08
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998004660010338
+      ]
+    },
+    {
+      "frame": 23,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.6858739404357614e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998001158237457
+      ]
+    },
+    {
+      "frame": 23,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        2.384185791015625e-07
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965889230370522
+      ]
+    },
+    {
+      "frame": 23,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965893030166626
+      ]
+    },
+    {
+      "frame": 24,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998079849901842
+      ]
+    },
+    {
+      "frame": 24,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        5.963374150388733e-08
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.9998006075620651
+      ]
+    },
+    {
+      "frame": 24,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        3.4240261593687705e-07
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998003095388412
+      ]
+    },
+    {
+      "frame": 24,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.3328003749250113e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998080752357055
+      ]
+    },
+    {
+      "frame": 24,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        3.725290298461914e-09
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998003393411636
+      ]
+    },
+    {
+      "frame": 24,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.6858739404357614e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998003244400024
+      ]
+    },
+    {
+      "frame": 24,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        2.384185791015625e-07
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.996588684618473
+      ]
+    },
+    {
+      "frame": 24,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        2.384185791015625e-07
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965887293219566
+      ]
+    },
+    {
+      "frame": 25,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.3328003749250113e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998080650038901
+      ]
+    },
+    {
+      "frame": 25,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.862645149230957e-09
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.9998004958033562
+      ]
+    },
+    {
+      "frame": 25,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        2.384185791015625e-07
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998002499341965
+      ]
+    },
+    {
+      "frame": 25,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.457562461863554e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.999807756997825
+      ]
+    },
+    {
+      "frame": 25,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        5.972094663188382e-08
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998003840446472
+      ]
+    },
+    {
+      "frame": 25,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998002648353577
+      ]
+    },
+    {
+      "frame": 25,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965894669294357
+      ]
+    },
+    {
+      "frame": 25,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965890049934387
+      ]
+    },
+    {
+      "frame": 26,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998081363301026
+      ]
+    },
+    {
+      "frame": 26,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        3.725290298461914e-09
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.9998001903295517
+      ]
+    },
+    {
+      "frame": 26,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998002648353577
+      ]
+    },
+    {
+      "frame": 26,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998080666955502
+      ]
+    },
+    {
+      "frame": 26,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        5.587935447692871e-09
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998005703091621
+      ]
+    },
+    {
+      "frame": 26,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998002499341965
+      ]
+    },
+    {
+      "frame": 26,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965886324644089
+      ]
+    },
+    {
+      "frame": 26,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965886697173119
+      ]
+    },
+    {
+      "frame": 27,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.384185791015625e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998078348871786
+      ]
+    },
+    {
+      "frame": 27,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        4.6566128730773926e-09
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.9998003989458084
+      ]
+    },
+    {
+      "frame": 27,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.6858739404357614e-07
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998004138469696
+      ]
+    },
+    {
+      "frame": 27,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.3328003749250113e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998078787066333
+      ]
+    },
+    {
+      "frame": 27,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        4.805561313495796e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998003616929054
+      ]
+    },
+    {
+      "frame": 27,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.3328003749250113e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998003095388412
+      ]
+    },
+    {
+      "frame": 27,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        2.457562461863554e-07
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965892061591148
+      ]
+    },
+    {
+      "frame": 27,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        4.805480091749757e-07
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965894296765327
+      ]
+    },
+    {
+      "frame": 28,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.7881393432617188e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998078325297683
+      ]
+    },
+    {
+      "frame": 28,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        5.965010217646679e-08
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.9998004361987114
+      ]
+    },
+    {
+      "frame": 28,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998003244400024
+      ]
+    },
+    {
+      "frame": 28,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998075607290957
+      ]
+    },
+    {
+      "frame": 28,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.384349494441826e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998004660010338
+      ]
+    },
+    {
+      "frame": 28,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        2.9802322387695312e-08
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998002499341965
+      ]
+    },
+    {
+      "frame": 28,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        2.457562461863554e-07
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965887069702148
+      ]
+    },
+    {
+      "frame": 28,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        2.384185791015625e-07
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965886473655701
+      ]
+    },
+    {
+      "frame": 29,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.457562461863554e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998079716024222
+      ]
+    },
+    {
+      "frame": 29,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.403066041578977e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.999800369143486
+      ]
+    },
+    {
+      "frame": 29,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.6858739404357614e-07
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998002797365189
+      ]
+    },
+    {
+      "frame": 29,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998080238838156
+      ]
+    },
+    {
+      "frame": 29,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        3.725290298461914e-09
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998004585504532
+      ]
+    },
+    {
+      "frame": 29,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.228781230931777e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998002052307129
+      ]
+    },
+    {
+      "frame": 29,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        2.5288109106536417e-07
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965886250138283
+      ]
+    },
+    {
+      "frame": 29,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        4.805480091749757e-07
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965888261795044
+      ]
+    },
+    {
+      "frame": 30,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998079557262827
+      ]
+    },
+    {
+      "frame": 30,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.4578447942743725e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.9998002201318741
+      ]
+    },
+    {
+      "frame": 30,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        2.6656007498500226e-07
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.999799981713295
+      ]
+    },
+    {
+      "frame": 30,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.457562461863554e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998078157041164
+      ]
+    },
+    {
+      "frame": 30,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        3.259629011154175e-09
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998005107045174
+      ]
+    },
+    {
+      "frame": 30,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.228781230931777e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998001903295517
+      ]
+    },
+    {
+      "frame": 30,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        2.5288109106536417e-07
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965877532958984
+      ]
+    },
+    {
+      "frame": 30,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        7.152557373046875e-07
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965894967317581
+      ]
+    },
+    {
+      "frame": 31,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.3328003749250113e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998078174394323
+      ]
+    },
+    {
+      "frame": 31,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.546464821939448e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.9997999370098114
+      ]
+    },
+    {
+      "frame": 31,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998003095388412
+      ]
+    },
+    {
+      "frame": 31,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.457562461863554e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998080063596717
+      ]
+    },
+    {
+      "frame": 31,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        3.026798367500305e-09
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998003765940666
+      ]
+    },
+    {
+      "frame": 31,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.7120130796843852e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998002797365189
+      ]
+    },
+    {
+      "frame": 31,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        2.5288109106536417e-07
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965899959206581
+      ]
+    },
+    {
+      "frame": 31,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        2.384185791015625e-07
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965895116329193
+      ]
+    },
+    {
+      "frame": 32,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.457562461863554e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998077582276892
+      ]
+    },
+    {
+      "frame": 32,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        5.972094663188382e-08
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.999800369143486
+      ]
+    },
+    {
+      "frame": 32,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.7881393432617188e-07
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998003095388412
+      ]
+    },
+    {
+      "frame": 32,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998077363452467
+      ]
+    },
+    {
+      "frame": 32,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.3283064365386963e-09
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998004287481308
+      ]
+    },
+    {
+      "frame": 32,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998003244400024
+      ]
+    },
+    {
+      "frame": 32,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965890049934387
+      ]
+    },
+    {
+      "frame": 32,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.996589221060276
+      ]
+    },
+    {
+      "frame": 33,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.7881393432617188e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998079769866308
+      ]
+    },
+    {
+      "frame": 33,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        3.0321666218526114e-08
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.9998003840446472
+      ]
+    },
+    {
+      "frame": 33,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        2.9200193199910854e-07
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998001456260681
+      ]
+    },
+    {
+      "frame": 33,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998078956959944
+      ]
+    },
+    {
+      "frame": 33,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.384349494441826e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998001977801323
+      ]
+    },
+    {
+      "frame": 33,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998004287481308
+      ]
+    },
+    {
+      "frame": 33,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        2.457562461863554e-07
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965896382927895
+      ]
+    },
+    {
+      "frame": 33,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        2.457562461863554e-07
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965894520282745
+      ]
+    },
+    {
+      "frame": 34,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.457562461863554e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998078343196539
+      ]
+    },
+    {
+      "frame": 34,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        3.0321666218526114e-08
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.999800369143486
+      ]
+    },
+    {
+      "frame": 34,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.3328003749250113e-07
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998003393411636
+      ]
+    },
+    {
+      "frame": 34,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.457562461863554e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998078776770853
+      ]
+    },
+    {
+      "frame": 34,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.4576330480069735e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998003467917442
+      ]
+    },
+    {
+      "frame": 34,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.228781230931777e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998003542423248
+      ]
+    },
+    {
+      "frame": 34,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        2.384185791015625e-07
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965892434120178
+      ]
+    },
+    {
+      "frame": 34,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        8.429369702178807e-08
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965884909033775
+      ]
+    },
+    {
+      "frame": 35,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.99980799703917
+      ]
+    },
+    {
+      "frame": 35,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        4.805624485015869e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.9998001009225845
+      ]
+    },
+    {
+      "frame": 35,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998004734516144
+      ]
+    },
+    {
+      "frame": 35,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.384185791015625e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998079301403777
+      ]
+    },
+    {
+      "frame": 35,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        5.972094663188382e-08
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998005107045174
+      ]
+    },
+    {
+      "frame": 35,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.7881393432617188e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.999800369143486
+      ]
+    },
+    {
+      "frame": 35,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.996589370071888
+      ]
+    },
+    {
+      "frame": 35,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965890869498253
+      ]
+    },
+    {
+      "frame": 36,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998080394143471
+      ]
+    },
+    {
+      "frame": 36,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        5.972094663188382e-08
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.9998001605272293
+      ]
+    },
+    {
+      "frame": 36,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.6858739404357614e-07
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998003542423248
+      ]
+    },
+    {
+      "frame": 36,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.3328003749250113e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998078587050259
+      ]
+    },
+    {
+      "frame": 36,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.384203980840272e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998000040650368
+      ]
+    },
+    {
+      "frame": 36,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998002499341965
+      ]
+    },
+    {
+      "frame": 36,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        4.842304232499576e-07
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965888559818268
+      ]
+    },
+    {
+      "frame": 36,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965888261795044
+      ]
+    },
+    {
+      "frame": 37,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.3328003749250113e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998078961361898
+      ]
+    },
+    {
+      "frame": 37,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        3.725290298461914e-09
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.9998004585504532
+      ]
+    },
+    {
+      "frame": 37,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998004138469696
+      ]
+    },
+    {
+      "frame": 37,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998079478864383
+      ]
+    },
+    {
+      "frame": 37,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        3.725290298461914e-09
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.999800369143486
+      ]
+    },
+    {
+      "frame": 37,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        2.9802322387695312e-08
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998003095388412
+      ]
+    },
+    {
+      "frame": 37,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965897724032402
+      ]
+    },
+    {
+      "frame": 37,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965890645980835
+      ]
+    },
+    {
+      "frame": 38,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.7881393432617188e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998078155767871
+      ]
+    },
+    {
+      "frame": 38,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        3.003425057343598e-08
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.9998003095388412
+      ]
+    },
+    {
+      "frame": 38,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        2.6656007498500226e-07
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998000413179398
+      ]
+    },
+    {
+      "frame": 38,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.6858739404357614e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998078071585041
+      ]
+    },
+    {
+      "frame": 38,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.384476811558792e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998000934720039
+      ]
+    },
+    {
+      "frame": 38,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998001903295517
+      ]
+    },
+    {
+      "frame": 38,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965888857841492
+      ]
+    },
+    {
+      "frame": 38,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        4.805480091749757e-07
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965896904468536
+      ]
+    },
+    {
+      "frame": 39,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.999808140884852
+      ]
+    },
+    {
+      "frame": 39,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.384476811558792e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.9998003989458084
+      ]
+    },
+    {
+      "frame": 39,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.6858739404357614e-07
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998002052307129
+      ]
+    },
+    {
+      "frame": 39,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        3.769728732309794e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998077406671655
+      ]
+    },
+    {
+      "frame": 39,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.862645149230957e-09
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998004660010338
+      ]
+    },
+    {
+      "frame": 39,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        2.457562461863554e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998001158237457
+      ]
+    },
+    {
+      "frame": 39,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        2.384185791015625e-07
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965889900922775
+      ]
+    },
+    {
+      "frame": 39,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.996589258313179
+      ]
+    },
+    {
+      "frame": 40,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.6858739404357614e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.999808034626767
+      ]
+    },
+    {
+      "frame": 40,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.384185791015625e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.999800443649292
+      ]
+    },
+    {
+      "frame": 40,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.6858739404357614e-07
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.999800443649292
+      ]
+    },
+    {
+      "frame": 40,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.6656007498500226e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998081661069591
+      ]
+    },
+    {
+      "frame": 40,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.862645149230957e-09
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998006373643875
+      ]
+    },
+    {
+      "frame": 40,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        2.4027400458748785e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998002499341965
+      ]
+    },
+    {
+      "frame": 40,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        2.384185791015625e-07
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965890422463417
+      ]
+    },
+    {
+      "frame": 40,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        2.457562461863554e-07
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965890571475029
+      ]
+    },
+    {
+      "frame": 41,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.457562461863554e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998079059878364
+      ]
+    },
+    {
+      "frame": 41,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.384476811558792e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.9998001754283905
+      ]
+    },
+    {
+      "frame": 41,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.7881393432617188e-07
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.999800369143486
+      ]
+    },
+    {
+      "frame": 41,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.3328003749250113e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998080100740481
+      ]
+    },
+    {
+      "frame": 41,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        3.725290298461914e-09
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998004883527756
+      ]
+    },
+    {
+      "frame": 41,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        2.4027400458748785e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998002499341965
+      ]
+    },
+    {
+      "frame": 41,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965889602899551
+      ]
+    },
+    {
+      "frame": 41,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        2.457562461863554e-07
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965882152318954
+      ]
+    },
+    {
+      "frame": 42,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998079939396121
+      ]
+    },
+    {
+      "frame": 42,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.403028819392642e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.9997999966144562
+      ]
+    },
+    {
+      "frame": 42,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.3328003749250113e-07
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998002797365189
+      ]
+    },
+    {
+      "frame": 42,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.6858739404357614e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998078687640373
+      ]
+    },
+    {
+      "frame": 42,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        3.725290298461914e-09
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.999800480902195
+      ]
+    },
+    {
+      "frame": 42,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.999800443649292
+      ]
+    },
+    {
+      "frame": 42,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        2.384185791015625e-07
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965895488858223
+      ]
+    },
+    {
+      "frame": 42,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        2.457562461863554e-07
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965887293219566
+      ]
+    },
+    {
+      "frame": 43,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.3328003749250113e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998077564378036
+      ]
+    },
+    {
+      "frame": 43,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        3.725290298461914e-09
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.9998003989458084
+      ]
+    },
+    {
+      "frame": 43,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        3.371747880871523e-07
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998004138469696
+      ]
+    },
+    {
+      "frame": 43,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998079162542126
+      ]
+    },
+    {
+      "frame": 43,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998004585504532
+      ]
+    },
+    {
+      "frame": 43,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.7881393432617188e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998002052307129
+      ]
+    },
+    {
+      "frame": 43,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        2.457562461863554e-07
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965891018509865
+      ]
+    },
+    {
+      "frame": 43,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        2.384185791015625e-07
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965888485312462
+      ]
+    },
+    {
+      "frame": 44,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.3328003749250113e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998078434728086
+      ]
+    },
+    {
+      "frame": 44,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        7.450580596923828e-09
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.9998001903295517
+      ]
+    },
+    {
+      "frame": 44,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998003989458084
+      ]
+    },
+    {
+      "frame": 44,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998078319622437
+      ]
+    },
+    {
+      "frame": 44,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        4.777820964108429e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9997997954487801
+      ]
+    },
+    {
+      "frame": 44,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.99980029463768
+      ]
+    },
+    {
+      "frame": 44,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        4.76837158203125e-07
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965888634324074
+      ]
+    },
+    {
+      "frame": 44,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        4.805480091749757e-07
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965895265340805
+      ]
+    },
+    {
+      "frame": 45,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.3328003749250113e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998080625373404
+      ]
+    },
+    {
+      "frame": 45,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.403894931808364e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.9998002350330353
+      ]
+    },
+    {
+      "frame": 45,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998003244400024
+      ]
+    },
+    {
+      "frame": 45,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.3328003749250113e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998078402059036
+      ]
+    },
+    {
+      "frame": 45,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.384476811558792e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998003467917442
+      ]
+    },
+    {
+      "frame": 45,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998002499341965
+      ]
+    },
+    {
+      "frame": 45,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        2.384185791015625e-07
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965891912579536
+      ]
+    },
+    {
+      "frame": 45,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.996588684618473
+      ]
+    },
+    {
+      "frame": 46,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.6858739404357614e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.99980780443002
+      ]
+    },
+    {
+      "frame": 46,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        3.0719530773294423e-08
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.9998001679778099
+      ]
+    },
+    {
+      "frame": 46,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998001903295517
+      ]
+    },
+    {
+      "frame": 46,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.3328003749250113e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998077986892895
+      ]
+    },
+    {
+      "frame": 46,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        5.972094663188382e-08
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998000264167786
+      ]
+    },
+    {
+      "frame": 46,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998003542423248
+      ]
+    },
+    {
+      "frame": 46,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965893104672432
+      ]
+    },
+    {
+      "frame": 46,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965892657637596
+      ]
+    },
+    {
+      "frame": 47,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998079444485484
+      ]
+    },
+    {
+      "frame": 47,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.9802322387695312e-08
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.9998003765940666
+      ]
+    },
+    {
+      "frame": 47,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        2.384185791015625e-07
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998002648353577
+      ]
+    },
+    {
+      "frame": 47,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.3328003749250113e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998077283307794
+      ]
+    },
+    {
+      "frame": 47,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.384476811558792e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.999800443649292
+      ]
+    },
+    {
+      "frame": 47,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.999800518155098
+      ]
+    },
+    {
+      "frame": 47,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        2.384185791015625e-07
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965886920690536
+      ]
+    },
+    {
+      "frame": 47,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965887740254402
+      ]
+    },
+    {
+      "frame": 48,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.7881393432617188e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998079927318031
+      ]
+    },
+    {
+      "frame": 48,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.4620758953479386e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.999800480902195
+      ]
+    },
+    {
+      "frame": 48,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998001903295517
+      ]
+    },
+    {
+      "frame": 48,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998079441320442
+      ]
+    },
+    {
+      "frame": 48,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        3.0719530773294423e-08
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998001307249069
+      ]
+    },
+    {
+      "frame": 48,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998003393411636
+      ]
+    },
+    {
+      "frame": 48,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        2.5288109106536417e-07
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965897351503372
+      ]
+    },
+    {
+      "frame": 48,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        4.805480091749757e-07
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.996588796377182
+      ]
+    },
+    {
+      "frame": 49,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998080006334931
+      ]
+    },
+    {
+      "frame": 49,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.9998000636696815
+      ]
+    },
+    {
+      "frame": 49,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.6858739404357614e-07
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998003393411636
+      ]
+    },
+    {
+      "frame": 49,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        8.429369702178807e-08
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998079433389648
+      ]
+    },
+    {
+      "frame": 49,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        3.725290298461914e-09
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998002052307129
+      ]
+    },
+    {
+      "frame": 49,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        2.9802322387695312e-08
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.999800369143486
+      ]
+    },
+    {
+      "frame": 49,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965893998742104
+      ]
+    },
+    {
+      "frame": 49,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965896159410477
+      ]
+    },
+    {
+      "frame": 50,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.99980776598386
+      ]
+    },
+    {
+      "frame": 50,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        3.332000937312528e-08
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.9998003616929054
+      ]
+    },
+    {
+      "frame": 50,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        2.9802322387695312e-08
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998003095388412
+      ]
+    },
+    {
+      "frame": 50,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.7881393432617188e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998077663840377
+      ]
+    },
+    {
+      "frame": 50,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.457562461863554e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998001232743263
+      ]
+    },
+    {
+      "frame": 50,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998002797365189
+      ]
+    },
+    {
+      "frame": 50,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965886175632477
+      ]
+    },
+    {
+      "frame": 50,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        2.5288109106536417e-07
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965887665748596
+      ]
+    },
+    {
+      "frame": 51,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998079670622246
+      ]
+    },
+    {
+      "frame": 51,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.9998003393411636
+      ]
+    },
+    {
+      "frame": 51,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998004585504532
+      ]
+    },
+    {
+      "frame": 51,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998078706012166
+      ]
+    },
+    {
+      "frame": 51,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        7.450580596923828e-09
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998002201318741
+      ]
+    },
+    {
+      "frame": 51,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998005032539368
+      ]
+    },
+    {
+      "frame": 51,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        2.457562461863554e-07
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965884760022163
+      ]
+    },
+    {
+      "frame": 51,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        2.457562461863554e-07
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965894892811775
+      ]
+    },
+    {
+      "frame": 52,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.3328003749250113e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998080753284739
+      ]
+    },
+    {
+      "frame": 52,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.385349660155493e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.9998004585504532
+      ]
+    },
+    {
+      "frame": 52,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.3328003749250113e-07
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998004734516144
+      ]
+    },
+    {
+      "frame": 52,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.457562461863554e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998077205909794
+      ]
+    },
+    {
+      "frame": 52,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.4586915969848633e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998004585504532
+      ]
+    },
+    {
+      "frame": 52,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        2.6656007498500226e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998001754283905
+      ]
+    },
+    {
+      "frame": 52,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965891614556313
+      ]
+    },
+    {
+      "frame": 52,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        4.951133646320149e-07
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965901672840118
+      ]
+    },
+    {
+      "frame": 53,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998080780496821
+      ]
+    },
+    {
+      "frame": 53,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.3348812510944096e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.9998003020882607
+      ]
+    },
+    {
+      "frame": 53,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998002797365189
+      ]
+    },
+    {
+      "frame": 53,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.6858739404357614e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998079202105146
+      ]
+    },
+    {
+      "frame": 53,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        7.450580596923828e-09
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998007118701935
+      ]
+    },
+    {
+      "frame": 53,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998003840446472
+      ]
+    },
+    {
+      "frame": 53,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965891540050507
+      ]
+    },
+    {
+      "frame": 53,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965891912579536
+      ]
+    },
+    {
+      "frame": 54,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998080003642826
+      ]
+    },
+    {
+      "frame": 54,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.228781230931777e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.9998003393411636
+      ]
+    },
+    {
+      "frame": 54,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998003244400024
+      ]
+    },
+    {
+      "frame": 54,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.3328003749250113e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998080607474549
+      ]
+    },
+    {
+      "frame": 54,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998004361987114
+      ]
+    },
+    {
+      "frame": 54,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998004585504532
+      ]
+    },
+    {
+      "frame": 54,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965886697173119
+      ]
+    },
+    {
+      "frame": 54,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.996588870882988
+      ]
+    },
+    {
+      "frame": 55,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.6858739404357614e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998078155695111
+      ]
+    },
+    {
+      "frame": 55,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.9998003020882607
+      ]
+    },
+    {
+      "frame": 55,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.7881393432617188e-07
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998003989458084
+      ]
+    },
+    {
+      "frame": 55,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998080574332562
+      ]
+    },
+    {
+      "frame": 55,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.385349660155493e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9997999742627144
+      ]
+    },
+    {
+      "frame": 55,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.6858739404357614e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998002648353577
+      ]
+    },
+    {
+      "frame": 55,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        2.5288109106536417e-07
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965887367725372
+      ]
+    },
+    {
+      "frame": 55,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965885356068611
+      ]
+    },
+    {
+      "frame": 56,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.457562461863554e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998079271099414
+      ]
+    },
+    {
+      "frame": 56,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.9998002201318741
+      ]
+    },
+    {
+      "frame": 56,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        2.384185791015625e-07
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998002648353577
+      ]
+    },
+    {
+      "frame": 56,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.9200193199910854e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.999807906870501
+      ]
+    },
+    {
+      "frame": 56,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998003393411636
+      ]
+    },
+    {
+      "frame": 56,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.3328003749250113e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998002499341965
+      ]
+    },
+    {
+      "frame": 56,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965887367725372
+      ]
+    },
+    {
+      "frame": 56,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.996588796377182
+      ]
+    },
+    {
+      "frame": 57,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.6858739404357614e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998078460703255
+      ]
+    },
+    {
+      "frame": 57,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.385349660155493e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.99980029463768
+      ]
+    },
+    {
+      "frame": 57,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.3328003749250113e-07
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998001754283905
+      ]
+    },
+    {
+      "frame": 57,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.6858739404357614e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998080872612718
+      ]
+    },
+    {
+      "frame": 57,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        5.972094663188382e-08
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998001530766487
+      ]
+    },
+    {
+      "frame": 57,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.3328003749250113e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998004138469696
+      ]
+    },
+    {
+      "frame": 57,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        2.384185791015625e-07
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965889975428581
+      ]
+    },
+    {
+      "frame": 57,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        2.457562461863554e-07
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965881928801537
+      ]
+    },
+    {
+      "frame": 58,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.6858739404357614e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998080184486753
+      ]
+    },
+    {
+      "frame": 58,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.1175870895385742e-08
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.999800443649292
+      ]
+    },
+    {
+      "frame": 58,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998002350330353
+      ]
+    },
+    {
+      "frame": 58,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998080596787986
+      ]
+    },
+    {
+      "frame": 58,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        5.972094663188382e-08
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998000636696815
+      ]
+    },
+    {
+      "frame": 58,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.7881393432617188e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998001605272293
+      ]
+    },
+    {
+      "frame": 58,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965894818305969
+      ]
+    },
+    {
+      "frame": 58,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965891018509865
+      ]
+    },
+    {
+      "frame": 59,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998081363119127
+      ]
+    },
+    {
+      "frame": 59,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        3.725290298461914e-09
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.99980029463768
+      ]
+    },
+    {
+      "frame": 59,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998002499341965
+      ]
+    },
+    {
+      "frame": 59,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998079639644857
+      ]
+    },
+    {
+      "frame": 59,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        7.450580596923828e-09
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998005479574203
+      ]
+    },
+    {
+      "frame": 59,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        2.457562461863554e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998003393411636
+      ]
+    },
+    {
+      "frame": 59,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        2.457562461863554e-07
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965885058045387
+      ]
+    },
+    {
+      "frame": 59,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        2.384185791015625e-07
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.996589183807373
+      ]
+    },
+    {
+      "frame": 60,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998079288561712
+      ]
+    },
+    {
+      "frame": 60,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.4578447942743725e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.999800406396389
+      ]
+    },
+    {
+      "frame": 60,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.3328003749250113e-07
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998002052307129
+      ]
+    },
+    {
+      "frame": 60,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.7881393432617188e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998078530661587
+      ]
+    },
+    {
+      "frame": 60,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.4586915969848633e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998003840446472
+      ]
+    },
+    {
+      "frame": 60,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998004883527756
+      ]
+    },
+    {
+      "frame": 60,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        2.384185791015625e-07
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965885430574417
+      ]
+    },
+    {
+      "frame": 60,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        2.457562461863554e-07
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965885207056999
+      ]
+    },
+    {
+      "frame": 61,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998079234919715
+      ]
+    },
+    {
+      "frame": 61,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.384476811558792e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.9998002797365189
+      ]
+    },
+    {
+      "frame": 61,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998002648353577
+      ]
+    },
+    {
+      "frame": 61,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998077590498724
+      ]
+    },
+    {
+      "frame": 61,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.457562461863554e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998001158237457
+      ]
+    },
+    {
+      "frame": 61,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.7881393432617188e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998003095388412
+      ]
+    },
+    {
+      "frame": 61,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        2.457562461863554e-07
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.996589258313179
+      ]
+    },
+    {
+      "frame": 61,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        2.457562461863554e-07
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965897053480148
+      ]
+    },
+    {
+      "frame": 62,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998079647712075
+      ]
+    },
+    {
+      "frame": 62,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        6.006850114687196e-08
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.9998001456260681
+      ]
+    },
+    {
+      "frame": 62,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998001605272293
+      ]
+    },
+    {
+      "frame": 62,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.999808019529155
+      ]
+    },
+    {
+      "frame": 62,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.4578447942743725e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998006448149681
+      ]
+    },
+    {
+      "frame": 62,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998003244400024
+      ]
+    },
+    {
+      "frame": 62,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        2.457562461863554e-07
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965894743800163
+      ]
+    },
+    {
+      "frame": 62,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965893179178238
+      ]
+    },
+    {
+      "frame": 63,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998080294135434
+      ]
+    },
+    {
+      "frame": 63,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        4.768698988883652e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.9997999891638756
+      ]
+    },
+    {
+      "frame": 63,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998002797365189
+      ]
+    },
+    {
+      "frame": 63,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.3328003749250113e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998081697412999
+      ]
+    },
+    {
+      "frame": 63,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.4576330480069735e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998004287481308
+      ]
+    },
+    {
+      "frame": 63,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.3328003749250113e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998001456260681
+      ]
+    },
+    {
+      "frame": 63,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        2.384185791015625e-07
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965894520282745
+      ]
+    },
+    {
+      "frame": 63,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        2.384185791015625e-07
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965889677405357
+      ]
+    },
+    {
+      "frame": 64,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998079154520383
+      ]
+    },
+    {
+      "frame": 64,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.4577212778354343e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.9998005330562592
+      ]
+    },
+    {
+      "frame": 64,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.999800369143486
+      ]
+    },
+    {
+      "frame": 64,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.3328003749250113e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998078394128243
+      ]
+    },
+    {
+      "frame": 64,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.3842585494815777e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998003244400024
+      ]
+    },
+    {
+      "frame": 64,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.6858739404357614e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998003989458084
+      ]
+    },
+    {
+      "frame": 64,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        4.842304232499576e-07
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965883791446686
+      ]
+    },
+    {
+      "frame": 64,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        5.960464477539063e-08
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965893551707268
+      ]
+    },
+    {
+      "frame": 65,
+      "route": "V04 cold bulk radial feed fuel 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994156509637833,
+        0.9998081516932871
+      ]
+    },
+    {
+      "frame": 65,
+      "route": "V04 cold bulk radial feed fuel 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.384476811558792e-07
+      ],
+      "terminal_axis_dot": [
+        0.9938289374113083,
+        0.999800555408001
+      ]
+    },
+    {
+      "frame": 65,
+      "route": "V04 cold bulk radial feed fuel 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.3328003749250113e-07
+      ],
+      "terminal_axis_dot": [
+        0.993642657995224,
+        0.9998003989458084
+      ]
+    },
+    {
+      "frame": 65,
+      "route": "V04 cold bulk radial feed water 0",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        1.7881393432617188e-07
+      ],
+      "terminal_axis_dot": [
+        0.9994154721498489,
+        0.9998079330835026
+      ]
+    },
+    {
+      "frame": 65,
+      "route": "V04 cold bulk radial feed water 1",
+      "actual_socket_gaps": [
+        3.0719530773294423e-08,
+        2.7939677238464355e-09
+      ],
+      "terminal_axis_dot": [
+        0.9938289225101471,
+        0.9998005777597427
+      ]
+    },
+    {
+      "frame": 65,
+      "route": "V04 cold bulk radial feed water 2",
+      "actual_socket_gaps": [
+        3.414284955677271e-08,
+        1.1920928955078125e-07
+      ],
+      "terminal_axis_dot": [
+        0.9936427921056747,
+        0.9998001456260681
+      ]
+    },
+    {
+      "frame": 65,
+      "route": "V04 regenerative turbo supply fuel",
+      "actual_socket_gaps": [
+        1.7881393432617188e-07,
+        0.0
+      ],
+      "terminal_axis_dot": [
+        0.927041083574295,
+        0.9965896308422089
+      ]
+    },
+    {
+      "frame": 65,
+      "route": "V04 regenerative turbo supply water",
+      "actual_socket_gaps": [
+        8.429369702178807e-08,
+        4.805480091749757e-07
+      ],
+      "terminal_axis_dot": [
+        0.9270391166210175,
+        0.9965894296765327
+      ]
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "status": "PASS_COPIED_NATIVE_REPORTS_AND_CURRENT_RUNTIME_HASHES",
+  "files": {
+    "continuous-results.json": "a42881ee9785e779dbab5457eaa7c0f9b6f621db89875473092a29dea16a4b2c",
+    "optional-assets-absent.json": "757448952b7291306c73cc13941598270afc9141a4043e6e4897a2ea30c94b14",
+    "pre-save.json": "2a95cbf127cc90554ab5a4efe52f4e8e81f9b04d5d00f764cb74e1d5b9cab157",
+    "preparation.json": "ec9e765c2c707b590d52f421107a864b5850b07a0589a91b31bd4a7b7c6a8a20",
+    "README.md": "6c44d6036d69144fa131bc353ca40c578aa60d7a90df54c7099c059f9e35f47a",
+    "reload-results.json": "3aa138eb378d530c1b70e9bdca5b44976ca3afbf7f3632d8418607225263c5f4",
+    "validation.json": "9f35e365635b40d37a7bcde6b1f54aa6c21c8bf902f4d365e1431f0cc17cf9e7"
+  },
+  "reproduction_tools": {
+    "tools/art/thruster_resumption/visuals_native/control.lua": "c26aa41469705f322a314b97de829afe51ab6ee5c7102e0de092309c4fc2bde3",
+    "tools/art/thruster_resumption/visuals_native/prepare.py": "cbf7420d9865b9c16d3e15bdf79160ef74ba65ef569dc4ece3c20d2d3e568b76",
+    "tools/art/thruster_resumption/visuals_native/README.md": "13cb054895fc55aaf97f798b55bb5e94da9dc9750b5ec13dd6c387a3e61dba24",
+    "tools/art/thruster_resumption/visuals_native/run.py": "a23e946fa8efa05f21c8e663f053ca475cbfad790d4f6419cb9957b673101d6c",
+    "tools/art/thruster_resumption/visuals_native/verify.py": "aabb507647918d394819a3cc27399514c91cc917115ecd2af4c4ce36bb0f9f0d",
+    "tools/art/thruster_resumption/visuals_native/verify_fallback.py": "a5213602b013e38fd83eef48d5c065b7cac496d0786b359ce876b3ac23567cd2"
+  }
+}

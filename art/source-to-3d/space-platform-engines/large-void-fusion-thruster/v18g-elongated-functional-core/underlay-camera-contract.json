@@ -1,0 +1,55 @@
+{
+  "schema": "wide_underlay_camera_only_v1",
+  "status": "CAMERA_ONLY_DERIVATIVE_REQUIRES_ITS_OWN_NEW_BODY_RENDER_NOT_A_CAPTURE_PACKAGE",
+  "input_glb": {
+    "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\large-void-fusion-v01\\detail-18g-actual-clip-face-seats\\large-void-fusion-v01.glb",
+    "sha256": "4d9ef76ab5452728437d399af5456fbaa2b3626381da548dfb06de1b47d713de"
+  },
+  "camera": {
+    "name": "FMPL_CAPTURE_CAMERA",
+    "matrix_world": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.32019054889678955
+      ],
+      [
+        0.0,
+        0.7071067690849304,
+        -0.7071067690849304,
+        -14.47154426574707
+      ],
+      [
+        0.0,
+        0.7071067690849304,
+        0.7071067690849304,
+        14.472244262695312
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "type": "ORTHO",
+    "ortho_scale": 8.231695175170898,
+    "shift_x": 0.0,
+    "shift_y": 0.0,
+    "resolution": [
+      512,
+      512
+    ]
+  },
+  "registration": {
+    "native_pixels_per_source_unit": 32,
+    "native_cut_y": 1,
+    "status": "CANDIDATE_REQUIRES_NEW_NATIVE_FIT"
+  },
+  "reused_camera_only_from": {
+    "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\thruster-resume-20261117\\capture-wide15b-final\\output\\capture-receipt.json",
+    "sha256": "8dcd6d664d3a24425c2fbdec671bd0233d89f20cb20acd4cd15083cdc618b3ae"
+  },
+  "scope": "Only the accepted45degreecamera is reused. No old body frames, capture state, or runtime proof are relabeled as new-body evidence."
+}

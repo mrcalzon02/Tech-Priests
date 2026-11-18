@@ -1,0 +1,252 @@
+{
+  "status": "PASS_REOPENED_PACKAGED_SOURCE_TEXTURES_AND_EXACT_SOURCE_EXPORT_HASHES",
+  "source": {
+    "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\art\\source-to-3d\\space-platform-engines\\thetazine-thruster\\v06-articulated-core\\thetazine-v06-articulated-core.blend",
+    "sha256": "35c4f470ad92015b70d056086b7f6e53573f4ccabbecab6af346ab382734871e"
+  },
+  "glb": {
+    "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\art\\source-to-3d\\space-platform-engines\\thetazine-thruster\\v06-articulated-core\\thetazine-v06-articulated-core.glb",
+    "sha256": "77892d382fe0b1f39f28d84082d6c68dbb3b00c26f1476a3963cac97b9fce074"
+  },
+  "script_sha256": "1887bdd6387a8495159d14f4947825719cd51c35381e45855c31a0924532a7e7",
+  "source_fps": 30,
+  "source_saved_scene_range": [
+    1,
+    65
+  ],
+  "capture_contract": {
+    "cold": 0,
+    "working": [
+      1,
+      64
+    ],
+    "wrap": 65,
+    "export_range": [
+      0,
+      65
+    ]
+  },
+  "packed_loaded_material_images": {
+    "brass-basecolor.png": {
+      "size": [
+        1024,
+        1024
+      ],
+      "loaded": true,
+      "packed": true
+    },
+    "brass-metalrough.png": {
+      "size": [
+        1024,
+        1024
+      ],
+      "loaded": true,
+      "packed": true
+    },
+    "brass-normal.png": {
+      "size": [
+        1024,
+        1024
+      ],
+      "loaded": true,
+      "packed": true
+    },
+    "cast-basecolor.png": {
+      "size": [
+        1024,
+        1024
+      ],
+      "loaded": true,
+      "packed": true
+    },
+    "cast-metalrough.png": {
+      "size": [
+        1024,
+        1024
+      ],
+      "loaded": true,
+      "packed": true
+    },
+    "cast-normal.png": {
+      "size": [
+        1024,
+        1024
+      ],
+      "loaded": true,
+      "packed": true
+    },
+    "dark-basecolor.png": {
+      "size": [
+        1024,
+        1024
+      ],
+      "loaded": true,
+      "packed": true
+    },
+    "dark-metalrough.png": {
+      "size": [
+        1024,
+        1024
+      ],
+      "loaded": true,
+      "packed": true
+    },
+    "dark-normal.png": {
+      "size": [
+        1024,
+        1024
+      ],
+      "loaded": true,
+      "packed": true
+    },
+    "steel-basecolor.png": {
+      "size": [
+        1024,
+        1024
+      ],
+      "loaded": true,
+      "packed": true
+    },
+    "steel-metalrough.png": {
+      "size": [
+        1024,
+        1024
+      ],
+      "loaded": true,
+      "packed": true
+    },
+    "steel-normal.png": {
+      "size": [
+        1024,
+        1024
+      ],
+      "loaded": true,
+      "packed": true
+    },
+    "tank-basecolor.png": {
+      "size": [
+        1024,
+        1024
+      ],
+      "loaded": true,
+      "packed": true
+    },
+    "tank-metalrough.png": {
+      "size": [
+        1024,
+        1024
+      ],
+      "loaded": true,
+      "packed": true
+    },
+    "tank-normal.png": {
+      "size": [
+        1024,
+        1024
+      ],
+      "loaded": true,
+      "packed": true
+    },
+    "petal-basecolor.png": {
+      "size": [
+        1024,
+        1024
+      ],
+      "loaded": true,
+      "packed": true
+    },
+    "petal-metalrough.png": {
+      "size": [
+        1024,
+        1024
+      ],
+      "loaded": true,
+      "packed": true
+    },
+    "petal-normal.png": {
+      "size": [
+        1024,
+        1024
+      ],
+      "loaded": true,
+      "packed": true
+    },
+    "full-bell-petal-emission.png": {
+      "size": [
+        512,
+        512
+      ],
+      "loaded": true,
+      "packed": true
+    },
+    "petal-emission.png": {
+      "size": [
+        1024,
+        1024
+      ],
+      "loaded": true,
+      "packed": true
+    },
+    "V04 gentle leaf edge heat fringe.png": {
+      "size": [
+        1024,
+        1024
+      ],
+      "loaded": true,
+      "packed": true
+    },
+    "refractory-basecolor.png": {
+      "size": [
+        1024,
+        1024
+      ],
+      "loaded": true,
+      "packed": true
+    },
+    "refractory-metalrough.png": {
+      "size": [
+        1024,
+        1024
+      ],
+      "loaded": true,
+      "packed": true
+    },
+    "refractory-normal.png": {
+      "size": [
+        1024,
+        1024
+      ],
+      "loaded": true,
+      "packed": true
+    },
+    "full-bell-refractory-emission.png": {
+      "size": [
+        512,
+        512
+      ],
+      "loaded": true,
+      "packed": true
+    },
+    "refractory-regenerative-heat.png": {
+      "size": [
+        1024,
+        1024
+      ],
+      "loaded": true,
+      "packed": true
+    },
+    "pressure-gauge.png": {
+      "size": [
+        512,
+        512
+      ],
+      "loaded": true,
+      "packed": true
+    }
+  },
+  "actual_glb_mesh_nodes": 3202,
+  "actual_glb_empty_nodes": 21,
+  "actual_glb_animation_channels": 150,
+  "embedded_glb_images": 24,
+  "scope": "Native delivery reopened in place without saving; packed source maps loaded. GLB byte identity, physical hierarchy and embedded images verified; existing66-pose actual-export report carries by unchanged SHA256."
+}

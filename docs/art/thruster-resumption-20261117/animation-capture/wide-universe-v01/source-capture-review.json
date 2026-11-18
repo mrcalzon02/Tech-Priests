@@ -1,0 +1,24 @@
+{
+  "status": "PASS_SOURCE_APPEARANCE_4_OF_5_AND_FINAL64_TECHNICAL_GATES",
+  "score": 4,
+  "max_score": 5,
+  "input_glb_sha256": "4d9ef76ab5452728437d399af5456fbaa2b3626381da548dfb06de1b47d713de",
+  "capture_receipt_sha256": "475588d1b5bb85c3fb9e3912152316f957d7c8cb563c2f846fc8e4c88eea4e73",
+  "package_validation_sha256": "234f9fb9b5b3c1007e9e7160a4d35ee1ec43ba7a166f63e70901a7e3c4075d8c",
+  "actual_visual_review": [
+    "Root viewed native-scale previous/new18MW/6MW comparison.",
+    "Independent art agent viewed that board and all8 consecutive source-preview frames individually, including6MW night."
+  ],
+  "viewed_artifacts": {
+    "intensity-comparison-native-scale.png": "7ca42558883154255d4a7382dbe381e47e9a85958a2b043a53ef4c28d8abd1a2",
+    "intensity-eight-consecutive-source.gif": "726d99155c79b677152d36229d2bba0fc25fc4bda7a6e8b99a28ce9bd575e674"
+  },
+  "observations": [
+    "Large branching surface lightning remains visible at6MW and violent at18MW; actual machinery/core remains legible and opaque.",
+    "Long ragged luminous wake begins immediately aft of retained tip; fragments shear/change across consecutive phases.",
+    "No attached tubes, closed circular plume loops or clipped canvas; no further density increase needed."
+  ],
+  "technical_validation": "advecting-capture-validation.json binds complete65+65 actual dynamic PNGs, exact wrap, source geometry/camera, coverage, actual surface anchors, positive downstream acceleration and no white-clipped ejecta.",
+  "owner_approval": false,
+  "native_art_acceptance": "Separate actual graphical-client review still required."
+}

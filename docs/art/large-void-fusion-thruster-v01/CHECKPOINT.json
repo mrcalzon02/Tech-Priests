@@ -1,0 +1,387 @@
+{
+  "status": "V18G_BODY_V19E_WELL_FINAL_CAPTURE_NATIVE_FIT_AND_LOCAL_IMPORT_PASS",
+  "current_source": "art/source-to-3d/space-platform-engines/large-void-fusion-thruster/v18g-elongated-functional-core",
+  "current_body_stage": "build/thruster-resume-20261117/large-void-fusion-v01/detail-18g-actual-clip-face-seats",
+  "current_well_stage": "build/thruster-resume-20261117/large-void-fusion-v01/service-underlay-19e-final-tessellation",
+  "source_sha256": "954c7ed2ef3f3d91e8f09c8427708cd5c42e784523ccbb832bf36a26f01b14bd",
+  "glb_sha256": "4d9ef76ab5452728437d399af5456fbaa2b3626381da548dfb06de1b47d713de",
+  "underlay_source_sha256": "a03b77e0792f95afb7580a9a27b66625c721ead80f8feb49e886666340b551ea",
+  "underlay_glb_sha256": "a041d26a3fec886dc644807374342f9e1869735eea5d178ebf6be4f2a17a1946",
+  "body_meshes": 910,
+  "body_export_triangles": 305036,
+  "source_export_world_vertex_error_m": 3.3717478231665154e-07,
+  "current_technical_status": {
+    "export-inspection.json": "PASS_CONSTRUCTION_EXPORT_ONLY",
+    "power-bay-validation.json": "PASS_ACTUAL_POWER_AND_BAY",
+    "functional-detail-validation.json": "PASS_ACTUAL_FUNCTIONAL_SEATS_GUIDE_BORES_AND_OPAQUE_CORE",
+    "underlay-validation.json": "PASS_WIDE_SERVICE_WELL_EXPORT_AND_UNCHANGED_BODY_ALPHA",
+    "underlay-contact-export-validation.json": "PASS_PACKED_SOURCE_ACTUAL_GLB_UV_PBR_AND_REAL_WELL_WALL_CONTACT",
+    "HANDOFF_COMPLETE.json": "HANDOFF_COMPLETE"
+  },
+  "skull_relief": {
+    "source": [
+      {
+        "skull": "Supplied original low-poly skull seal 0",
+        "mount_plane_world_m": [
+          0.0,
+          1.4329943656921387,
+          2.6188037395477295
+        ],
+        "outward_normal": [
+          0.0,
+          -0.5446390509605408,
+          0.838670551776886
+        ],
+        "signed_range_relative_to_backing_front_m": [
+          -0.30756108462810516,
+          0.2050405591726303
+        ],
+        "directional_depth_m": 0.5126016438007355,
+        "depth_buried_fraction": 0.6000001918598293,
+        "depth_visible_fraction": 0.3999998081401707,
+        "at_least_half_buried": true
+      },
+      {
+        "skull": "Supplied original low-poly skull seal 1",
+        "mount_plane_world_m": [
+          0.0,
+          -1.3484565019607544,
+          0.8125081658363342
+        ],
+        "outward_normal": [
+          0.0,
+          -0.5446390509605408,
+          0.838670551776886
+        ],
+        "signed_range_relative_to_backing_front_m": [
+          -0.28193097561597824,
+          0.1879538968205452
+        ],
+        "directional_depth_m": 0.46988487243652344,
+        "depth_buried_fraction": 0.6000001109932821,
+        "depth_visible_fraction": 0.39999988900671796,
+        "at_least_half_buried": true
+      }
+    ],
+    "actual_glb_reimport": [
+      {
+        "skull": "Supplied original low-poly skull seal 0",
+        "mount_plane_world_m": [
+          0.0,
+          1.4329943656921387,
+          2.6188037395477295
+        ],
+        "outward_normal": [
+          0.0,
+          -0.5446391701698303,
+          0.8386704921722412
+        ],
+        "signed_range_relative_to_backing_front_m": [
+          -0.30756108462810516,
+          0.2050405740737915
+        ],
+        "directional_depth_m": 0.5126016587018967,
+        "depth_buried_fraction": 0.6000001744180216,
+        "depth_visible_fraction": 0.39999982558197844,
+        "at_least_half_buried": true
+      },
+      {
+        "skull": "Supplied original low-poly skull seal 1",
+        "mount_plane_world_m": [
+          0.0,
+          -1.3484565019607544,
+          0.8125081658363342
+        ],
+        "outward_normal": [
+          0.0,
+          -0.5446391701698303,
+          0.8386704921722412
+        ],
+        "signed_range_relative_to_backing_front_m": [
+          -0.28193098306655884,
+          0.1879539117217064
+        ],
+        "directional_depth_m": 0.46988489478826523,
+        "depth_buried_fraction": 0.6000000983083309,
+        "depth_visible_fraction": 0.39999990169166916,
+        "at_least_half_buried": true
+      }
+    ],
+    "criterion": "Actual projected skull depth behind the bronze medallion front plane is at least 50%; both rear and front ranges are nonzero. This measures directional depth, not fraction of mesh volume."
+  },
+  "stacked_dish_measurements": {
+    "source": [
+      {
+        "name": "Armored shallow dish stage 0",
+        "center_world_m": [
+          0.0,
+          -1.1308939456939697,
+          -0.2266446053981781
+        ],
+        "axis_world": [
+          0.0,
+          -0.8386704325675964,
+          -0.5446392297744751
+        ],
+        "outer_radius_m": 0.9600001198115373,
+        "central_aperture_radius_m": 0.22079985954568074,
+        "axial_range_relative_to_center_m": [
+          -0.10000009089708328,
+          0.13000020384788513
+        ],
+        "dish_body_axial_depth_m": 0.23000029474496841
+      },
+      {
+        "name": "Armored shallow dish stage 1",
+        "center_world_m": [
+          0.0,
+          -1.3741085529327393,
+          -0.3845899999141693
+        ],
+        "axis_world": [
+          0.0,
+          -0.8386704325675964,
+          -0.5446392297744751
+        ],
+        "outer_radius_m": 0.8300000905775112,
+        "central_aperture_radius_m": 0.19089986416215016,
+        "axial_range_relative_to_center_m": [
+          -0.10000014305114746,
+          0.13000014424324036
+        ],
+        "dish_body_axial_depth_m": 0.23000028729438782
+      },
+      {
+        "name": "Armored shallow dish stage 2",
+        "center_world_m": [
+          0.0,
+          -1.6173229217529297,
+          -0.5425353050231934
+        ],
+        "axis_world": [
+          0.0,
+          -0.8386704325675964,
+          -0.5446392297744751
+        ],
+        "outer_radius_m": 0.690000138749233,
+        "central_aperture_radius_m": 0.15869985172833423,
+        "axial_range_relative_to_center_m": [
+          -0.10000012442469597,
+          0.13000015914440155
+        ],
+        "dish_body_axial_depth_m": 0.23000028356909752
+      },
+      {
+        "name": "Armored shallow dish stage 3",
+        "center_world_m": [
+          0.0,
+          -1.8605372905731201,
+          -0.700480580329895
+        ],
+        "axis_world": [
+          0.0,
+          -0.8386704325675964,
+          -0.5446392297744751
+        ],
+        "outer_radius_m": 0.5400001380785572,
+        "central_aperture_radius_m": 0.12419994814748994,
+        "axial_range_relative_to_center_m": [
+          -0.1000001379288733,
+          0.13000010699033737
+        ],
+        "dish_body_axial_depth_m": 0.23000024491921067
+      }
+    ],
+    "actual_glb_reimport": [
+      {
+        "name": "Armored shallow dish stage 0",
+        "center_world_m": [
+          0.0,
+          -1.1308939456939697,
+          -0.2266446053981781
+        ],
+        "axis_world": [
+          0.0,
+          -0.8386704921722412,
+          -0.5446391105651855
+        ],
+        "outer_radius_m": 0.9600001353335782,
+        "central_aperture_radius_m": 0.22079987430850218,
+        "axial_range_relative_to_center_m": [
+          -0.10000005923211575,
+          0.13000008463859558
+        ],
+        "dish_body_axial_depth_m": 0.23000014387071133
+      },
+      {
+        "name": "Armored shallow dish stage 1",
+        "center_world_m": [
+          0.0,
+          -1.3741085529327393,
+          -0.3845899999141693
+        ],
+        "axis_world": [
+          0.0,
+          -0.8386704921722412,
+          -0.5446391105651855
+        ],
+        "outer_radius_m": 0.8300000995541134,
+        "central_aperture_radius_m": 0.1908998666014462,
+        "axial_range_relative_to_center_m": [
+          -0.10000012442469597,
+          0.130000039935112
+        ],
+        "dish_body_axial_depth_m": 0.23000016435980797
+      },
+      {
+        "name": "Armored shallow dish stage 2",
+        "center_world_m": [
+          0.0,
+          -1.6173229217529297,
+          -0.5425353050231934
+        ],
+        "axis_world": [
+          0.0,
+          -0.8386704921722412,
+          -0.5446391105651855
+        ],
+        "outer_radius_m": 0.6900001495471737,
+        "central_aperture_radius_m": 0.15869986053101304,
+        "axial_range_relative_to_center_m": [
+          -0.10000009089708328,
+          0.13000008463859558
+        ],
+        "dish_body_axial_depth_m": 0.23000017553567886
+      },
+      {
+        "name": "Armored shallow dish stage 3",
+        "center_world_m": [
+          0.0,
+          -1.8605372905731201,
+          -0.700480580329895
+        ],
+        "axis_world": [
+          0.0,
+          -0.8386704921722412,
+          -0.5446391105651855
+        ],
+        "outer_radius_m": 0.540000124281189,
+        "central_aperture_radius_m": 0.12419994252355888,
+        "axial_range_relative_to_center_m": [
+          -0.10000011511147022,
+          0.1300000660121441
+        ],
+        "dish_body_axial_depth_m": 0.2300001811236143
+      }
+    ],
+    "criterion": "Four physically dished thick annular stage bodies step inward toward the projecting central emitter tip. Actual radial/axial extents measured in source and GLB; separate segmented armor/rim hardware lies outside the measured core dish shells."
+  },
+  "current_projected_body_opaque_size_px": [
+    216,
+    345
+  ],
+  "current_body_width_height_ratio": 0.6260869565217392,
+  "previous_v15b_width_height_ratio": 0.8503937007874016,
+  "legacy_wide_width_height_ratio": 0.5504201680672269,
+  "same_width_projected_length_increase_fraction": 0.3582677165354331,
+  "whole_assembly_fore_axial_bounds_fraction": 0.5038826490094332,
+  "functional": {
+    "fitted_plates": 23,
+    "bearing_washers": 34,
+    "guide_assemblies": 7,
+    "core_through_rays": 390,
+    "open_core_rays": 0
+  },
+  "underlay": {
+    "body_exclusions": 38,
+    "well_only_parts": 2,
+    "actual_meshes": 40,
+    "body_sat_intersections": 0,
+    "body_to_well_vertex_clearance_m": 0.031064348295331,
+    "well_to_body_vertex_clearance_m": 0.022530024871230125,
+    "floor_vertical_clearance_m": 0.08000000000000002,
+    "body_alpha_changed_pixels": 0
+  },
+  "source_scripts": {
+    "tools/art/large_void_fusion_thruster_v01/proportion_v17.py": "61baec6d35a80dbce0154081d999bbd58b94ebd1203631c65e669d2d95a49596",
+    "tools/art/large_void_fusion_thruster_v01/functional_detail_v18.py": "4395bf38c87f85a659bb0a9e10e26aeb812b0273a7776a4d1f61c176b26d4e18",
+    "tools/art/large_void_fusion_thruster_v01/repair_guide_arms_v18g.py": "ff3522bb7cea50a3ef4cdb0aa02b92216c118e6489e3c30bde45d9da152f4a1d",
+    "tools/art/large_void_fusion_thruster_v01/audit_functional_detail_v18.py": "4bf77e6c3919a832ed257d0a58d471a824a5a2a0705a6d5b7f4955d41f264c9e",
+    "tools/art/large_void_fusion_thruster_v01/inspect_refinement.py": "1e6a1829549e2bf0f00fa6a279c7562bd48751748c5d60157b649a6fdcf9c8b9",
+    "tools/art/large_void_fusion_thruster_v01/audit_power_and_bay.py": "e6cdc7cac222c77b6dfd01769eb2c8ff3f0291aeb426804b554abf1a6f389f00",
+    "tools/art/large_void_fusion_thruster_v01/build_service_bay_v16.py": "215d95b31d3aa5d3c25f6725b3b3db9b878b5f4d084a141180572ff2b2edfa1e",
+    "tools/art/large_void_fusion_thruster_v01/audit_underlay_v16.py": "8c860b583df30eaef2b9aef8444d3e0b2e2a12d59e48fa059ce3479caa86b79b",
+    "tools/art/large_void_fusion_thruster_v01/finalize_underlay_handoff.py": "b5a1bdf495d9c3d9204da042756e5407e16c858c74c2aa7ac203d0df9f734a3d",
+    "tools/art/large_void_fusion_thruster_v01/render_proportion_pilot.py": "10523e43716486a95aa39ec87b2d86dc87dd8430419ec59573f4d77faecf75e9",
+    "tools/art/large_void_fusion_thruster_v01/compare_proportion_silhouettes.py": "e1db59afc22c240db286788a63a47b6951c2890258d8ba8e144d8cb7c9fc101d",
+    "tools/art/large_void_fusion_thruster_v01/checkpoint_v18g.py": "c5b7a30ae746a4a23c63d825ab1b886b0aa2e9c6943713107d066674b7f6e7c9",
+    "tools/art/large_void_fusion_thruster_v01/verify_checkpoint_v18g.py": "389c59033c116716deadf1f17276b68c36bf8f01b8d066a153553ab4d60d23c7"
+  },
+  "current_render_receipt": {
+    "source_sha256": "954c7ed2ef3f3d91e8f09c8427708cd5c42e784523ccbb832bf36a26f01b14bd",
+    "glb_sha256": "4d9ef76ab5452728437d399af5456fbaa2b3626381da548dfb06de1b47d713de",
+    "canonical_camera": {
+      "name": "FMPL_CAPTURE_CAMERA",
+      "matrix_world": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.32019054889678955
+        ],
+        [
+          0.0,
+          0.7071067690849304,
+          -0.7071067690849304,
+          -14.47154426574707
+        ],
+        [
+          0.0,
+          0.7071067690849304,
+          0.7071067690849304,
+          14.472244262695312
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "type": "ORTHO",
+      "ortho_scale": 8.231695175170898,
+      "shift_x": 0.0,
+      "shift_y": 0.0,
+      "resolution": [
+        512,
+        512
+      ]
+    },
+    "renderer": "ActualGLBreimport CyclesCPU64samples denoised2threads",
+    "renders": {
+      "canonical-cold-body.png": "2af4135c7d4ac8fb65b85722b9cf56973cc44803ee0e2a374f5221ff00a3d4e4",
+      "canonical-mounted-pilot.png": "5651f475a569f9af8a2469f10dcceff47455ca0a0cb789a38c9b42ec527f7ec8",
+      "functional-core-detail.png": "a2eae2ab6016543a61ec88aae885b9d1057d40c652e2c0f33ce2aa69a8e251ae"
+    }
+  },
+  "count_correction": "38 unchanged source-specific support/exclusion objects plus2 new well objects=40. Earlier66/68 message wording was incorrect; no GLB consolidation occurred.",
+  "failed_underlay_studies": "19c and19d remain preserved. Three exact collinear zero-area CSG triangles removed in19e; no tolerance relaxation.",
+  "historical_render_policy": "Earlier front/rear/clay and powered-detail studies are preserved with their own hashes. They are not relabeled as current18g renders.",
+  "remaining_gates": [
+    "Owner artistic review",
+    "Source-specific icons/remnants",
+    "Normal-profile deployment or release if requested"
+  ],
+  "archive_files_sha256": "8316e38bd5daa12bf913de8ef6f3b29efb24aa02e007c429621ed7cb60ae0dc6",
+  "archive_verified_file_count": 85,
+  "receipt_notes": "RECEIPT_NOTES.md",
+  "historical_handoff_capture_native_or_release_acceptance": false,
+  "subsequent_native_art_gate": {
+    "capture": "../thruster-resumption-20261117/animation-capture/wide-final/evidence-manifest.json",
+    "native_fit": "../thruster-resumption-20261117/animation-capture/native-wide-v18g/visual-fit-review.json",
+    "source_integration": "../thruster-resumption-20261117/animation-capture/final-integration.json",
+    "status": "PASS_FINAL_SOURCE_CAPTURE_NATIVE_FIT_AND_LOCAL_IMPORT",
+    "normal_profile_release": false,
+    "owner_artistic_approval": false
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "status": "PASS_SOURCE_APPEARANCE_REVIEW_NATIVE_SCOPE_SEPARATE",
+  "family": "narrow",
+  "source_capture_score": 4,
+  "score_scale": 5,
+  "reviewer": "Independent model and FX-source packaging agent",
+  "master_sha256": "54e77d6f539ba29f60d1880f067230158501f0e9db770f21f9ec15528f10e1e0",
+  "capture_receipt_sha256": "38fbbce171d7b9d3a0ec7bc497afa24eb51f5c17f5c54873c9ebcd51bc640cd9",
+  "final64_validation_sha256": "92ef1c1ae393e00217a48967dc403d61c243d163b694faed9931fd3806c67732",
+  "actual_viewed_images": [
+    {
+      "path": "review/history-narrow-v01-pre-depth-fix/intensity-comparison-native-scale.png",
+      "sha256": "fc1ffae82f43137a7165f82aca287a4e3a2ef5287ac58305ca8dfd76c8306e19",
+      "actually_viewed": true,
+      "scope": "18MW/6MW style pilot; narrowV01 historical before depth correction"
+    },
+    {
+      "path": "review/history-narrow-v01-pre-depth-fix/intensity-eight-consecutive-source.gif",
+      "sha256": "7b368bb5c578e1e9baf7a6b950391260d2b367ae6a8f2b894afceae329cf7267",
+      "actually_viewed": true,
+      "frames_individually_extracted_and_viewed": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "scope": "Consecutive18MW day/6MW night style pilot; GIF is not native timing proof"
+    }
+  ],
+  "preserved_final_source_board": {
+    "path": "review/source-assembly-board.png",
+    "sha256": "f87eeba2000413a10451767213ace524ca4e08eef43f63706bfde6f5dd9ff67d",
+    "actually_viewed": false,
+    "scope": "Preserved actual final source board; wide viewed during packaging. Narrow current-depth board not newly viewed at user direction; its historical V01 style board was viewed."
+  },
+  "new_narrow_depth_board_visual_loop_performed": false,
+  "observations": [
+    "Pronounced full-body forks and connected ragged ejecta remain readable at gameplay scale, including6MW.",
+    "Machinery/mineral/dishes remain discernible; intended core stays opaque.",
+    "Consecutive pilot phases show changing forks and downstream strands; no attached tube or closed circular plume loop seen.",
+    "No visible canvas cutoff; full-power wake is dense enough and no density increase is requested."
+  ],
+  "native_scope": "User observed actual wide firing and directed proceeding. No new narrow native-art proof was performed at user direction. Prior native control proof, unchanged physical geometry and new source64 checks are separate evidence. No full owner artistic approval inferred.",
+  "scope": "Source appearance/style only. Historical narrowV01 views are not proof of corrected V02 depth. Full64/wrap/coverage is measured separately in copied final validation."
+}

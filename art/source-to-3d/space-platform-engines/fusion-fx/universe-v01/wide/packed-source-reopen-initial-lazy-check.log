@@ -1,0 +1,21 @@
+00:01.094  blend            | Read blend: "C:\Users\Admin\Documents\ChatGPT\Tech priests\model-production\art\source-to-3d\space-platform-engines\fusion-fx\universe-v01\wide\capture-master.blend"
+Blender 5.0.0 (hash a37564c4df7a built 2025-11-18 11:06:54)
+
+Blender quit
+Traceback (most recent call last):
+  File "<string>", line 8, in <module>
+AssertionError: {'name': 'armor-basecolor', 'type': 'IMAGE', 'source': 'FILE', 'original_filepath': '', 'packed': True, 'has_data': False, 'size': [512, 512], 'users': 2, 'colorspace': 'sRGB', 'packed_bytes': 181531, 'packed_sha256': '89eda478ebfed275af7b5221ae8cb225d8cd47632ab3b03c74bdc4f515923fb2'}
+
+Error: script failed, expr: 'import bpy,json,pathlib,hashlib
+d=pathlib.Path(bpy.data.filepath).parent;source=pathlib.Path(bpy.data.filepath);h=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();before=h(source);receipt=json.loads((d/'capture-receipt.json').read_text());assert before==receipt['master_sha256']
+rows=[]
+for im in bpy.data.images:
+ if im.type in {'RENDER_RESULT','COMPOSITING'}:continue
+ row={'name':im.name,'type':im.type,'source':im.source,'original_filepath':im.filepath,'packed':bool(im.packed_file)or len(im.packed_files)>0,'has_data':im.has_data,'size':list(im.size),'users':im.users,'colorspace':im.colorspace_settings.name}
+ if im.packed_file:row.update(packed_bytes=im.packed_file.size,packed_sha256=hashlib.sha256(im.packed_file.data).hexdigest())
+ assert row['packed']and row['has_data']and min(row['size'])>0,row
+ rows.append(row)
+assert rows and before==h(source)
+out={'status':'PASS_ACTUAL_CANONICAL_PACKED_FX_DERIVATIVE_REOPEN_NO_RESAVE','master':str(source),'master_sha256':before,'loaded_from_canonical_directory':True,'all_image_datablocks_packed_and_loaded':True,'image_count':len(rows),'images':rows,'scene_objects':len(bpy.context.scene.objects),'physical_meshes_expected':len(receipt['physical_objects']),'physical_object_names_present':all(bpy.data.objects.get(n) is not None for n in receipt['physical_objects']),'save_export_or_render_performed':False,'manual_analytic_FX_phase_helpers_preserved':'tooling/tools/art/thruster_resumption/animation','scope':'Read-only opening confirms portable packed derivative/image loading; final64 source/wrap/coverage checks are byte-preserved separately. No new native pixel proof or owner artistic approval inferred.'}
+assert out['physical_object_names_present'];(d/'packed-source-reopen-audit.json').write_text(json.dumps(out,indent=2)+'\n',encoding='utf-8');print('PACKED_FX_REOPEN_PASS',len(rows),'images',before)
+', exiting.

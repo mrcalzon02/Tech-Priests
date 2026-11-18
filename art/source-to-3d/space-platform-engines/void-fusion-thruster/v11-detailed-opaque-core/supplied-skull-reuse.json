@@ -1,0 +1,27 @@
+{
+  "source": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\art\\source-to-3d\\conclave-center\\v02-supplied-skull\\supplied-skull",
+  "instances": [
+    {
+      "object": "V02 reliquary 00 supplied DGordillo skull",
+      "source_mesh": "Craneo",
+      "vertices": 1192,
+      "triangles": 2380,
+      "uniform_scale": 0.4422474022245735,
+      "source_mesh_vertices_unchanged": true,
+      "original_uv_unchanged": true,
+      "rotation": "-45 degrees around X; face aft/up, forehead fore/up, teeth aft/source-bottom; rejected flat V02 retained",
+      "donor_sha256": "5e085c30cb3f623b31beee05992ce04d3c9f630b4ec81f474a2cc40b24d811fa"
+    },
+    {
+      "object": "V02 reliquary 01 supplied DGordillo skull",
+      "source_mesh": "Craneo",
+      "vertices": 1192,
+      "triangles": 2380,
+      "uniform_scale": 0.4422474022245735,
+      "source_mesh_vertices_unchanged": true,
+      "original_uv_unchanged": true,
+      "rotation": "-45 degrees around X; face aft/up, forehead fore/up, teeth aft/source-bottom; rejected flat V02 retained",
+      "donor_sha256": "5e085c30cb3f623b31beee05992ce04d3c9f630b4ec81f474a2cc40b24d811fa"
+    }
+  ]
+}
