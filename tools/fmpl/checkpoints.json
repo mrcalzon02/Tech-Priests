@@ -460,6 +460,34 @@
         "native_fuel_exhaustion_circuit_and_blocked_recovery_verified": true,
         "remaining_required_work": []
       }
+    },
+    {
+      "event_id": "tech-priests-emergency-laboratorium-v03-operational-2026-11-17",
+      "asset_id": "tech-priests-emergency-laboratorium-v1",
+      "asset_kind": "model",
+      "revision": "v03-operational-delivery",
+      "state": "verified",
+      "source_sha256": "18411b2c6840e15d76ba51c8e470e4834765a364f05ee7ae590fc76059b12e02",
+      "evidence": {
+        "native_reopen_verified": true,
+        "source_artifact_sha256": "18411b2c6840e15d76ba51c8e470e4834765a364f05ee7ae590fc76059b12e02",
+        "glb_sha256": "b5d6a6ab8b4ad7fa605b131344f02dd1b01351e25623360688323c75acb89225",
+        "owner_visual_approval": false,
+        "factorio_runtime_verified": true,
+        "source_commit": "e2e9e2ad4277a2421aa9157e37845713d31f9d8b",
+        "source_repository": "mrcalzon02/Tech-Priests",
+        "source_path": "art/source-to-3d/emergency-laboratorium/v03/laboratorium-v03.blend",
+        "runtime_path": "art/source-to-3d/emergency-laboratorium/v03/laboratorium-v03.glb",
+        "manifest_path": "art/source-to-3d/emergency-laboratorium/v03/FMPL_MODEL.json",
+        "actual_operated_save_reload": true,
+        "genuine_native_pngs": 9,
+        "actual_science_input_filters_exercised": 12,
+        "actual_automation_research_completed_and_unlock_applied": true,
+        "research_progress_never_assigned": true,
+        "native_fuel_science_starvation_circuit_selection_saved_resume_and_idle_verified": true,
+        "gameplay_research_fuel_speed_inputs_and_ports_preserved": true,
+        "remaining_required_work": []
+      }
     }
   ],
   "schema": "fmpl.checkpoints.v1"
