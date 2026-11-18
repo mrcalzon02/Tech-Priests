@@ -1,0 +1,124 @@
+{
+  "genuine_native_capture": true,
+  "separate_task_desktop": true,
+  "default_desktop_untouched": true,
+  "capture": {
+    "passed": true,
+    "frames": [
+      {
+        "file": "idle-close.png",
+        "tick": 13061
+      },
+      {
+        "file": "idle-wide.png",
+        "tick": 13061
+      },
+      {
+        "file": "working-01.png",
+        "tick": 13151
+      },
+      {
+        "file": "working-02.png",
+        "tick": 13181
+      },
+      {
+        "file": "working-03.png",
+        "tick": 13211
+      },
+      {
+        "file": "working-wide.png",
+        "tick": 13211
+      }
+    ],
+    "wide": {},
+    "samples": [
+      {
+        "tick": 13061,
+        "disabled": true,
+        "status": 66,
+        "crafting_progress": 0,
+        "products": 0,
+        "fuel_remaining": 0
+      },
+      {
+        "tick": 13061,
+        "disabled": true,
+        "status": 66,
+        "crafting_progress": 0,
+        "products": 0,
+        "fuel_remaining": 0
+      },
+      {
+        "tick": 13151,
+        "disabled": false,
+        "status": 1,
+        "crafting_progress": 0.07682291666666677,
+        "products": 0,
+        "fuel_remaining": 3906562.962962966
+      },
+      {
+        "tick": 13181,
+        "disabled": false,
+        "status": 1,
+        "crafting_progress": 0.11588541666666663,
+        "products": 0,
+        "fuel_remaining": 3859896.296296301
+      },
+      {
+        "tick": 13211,
+        "disabled": false,
+        "status": 1,
+        "crafting_progress": 0.1549479166666665,
+        "products": 0,
+        "fuel_remaining": 3813229.6296296357
+      },
+      {
+        "tick": 13211,
+        "disabled": false,
+        "status": 1,
+        "crafting_progress": 0.1549479166666665,
+        "products": 0,
+        "fuel_remaining": 3813229.6296296357
+      }
+    ],
+    "actual_operated_save_loaded": true,
+    "clean_view_uses_actual_crafted_mined_item": true,
+    "standalone_native_burner_without_electrical_supply": true,
+    "native_idle_and_working": true,
+    "native_directions": [
+      0
+    ],
+    "smoke_source_expected": {
+      "x": 0.2,
+      "y": -1.1158504678941934
+    },
+    "screenshots": [
+      {
+        "file": "idle-close.png",
+        "sha256": "7dd46c21ea3efea305410e3760c5deb95b4a6d65b5e689ceda1a7055554be792"
+      },
+      {
+        "file": "idle-wide.png",
+        "sha256": "6bfa5683c4c40ef41cbcf98cc1ab11c2c505fc8b7b47477106bfc05a9eb752cc"
+      },
+      {
+        "file": "working-01.png",
+        "sha256": "8dba0c9e1c4d0c5cd7d3c782d4880936a8d73045e53e55f6f7d14227dcbf51d4"
+      },
+      {
+        "file": "working-02.png",
+        "sha256": "7784296f69771ec9faad9f2eac5135892de3ab221808ffa194fb1bec43525559"
+      },
+      {
+        "file": "working-03.png",
+        "sha256": "a56dc47c1daeabb0afd3500e551ed4ddb2d7bb47c7fc16b938fa5a594b7137b8"
+      },
+      {
+        "file": "working-wide.png",
+        "sha256": "5932c521265333c9f2d8970901f9a5f5f3e2a115c6360620dc713eb7d844a3fe"
+      }
+    ]
+  },
+  "engine_graphics_quality": "medium",
+  "owner_visual_approved": false
+}

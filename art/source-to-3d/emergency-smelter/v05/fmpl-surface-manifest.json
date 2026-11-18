@@ -1,0 +1,1838 @@
+{
+  "status": "candidate-not-native-integrated",
+  "source_sha256": "50fae2883f2fe0870c90c32cc7259a4b33012d71cb9d9adbf1a9b8e986bab6a3",
+  "runtime_sha256": "68eec69b5c8be25e226b422b672803ae53ce5dc3dfe11573fbf89964051c66c5",
+  "role_instances": [
+    {
+      "role": "ferrocrete",
+      "model_specific_instance": "SMELTER FMPL | ferrocrete",
+      "original_maps": {
+        "albedo": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/ferrocrete_albedo.png",
+          "git_blob_sha": "e1a06e81086b1228188e1e47bca236aaada1394c",
+          "sha256": "0614a801528f244f1f8bbe6c8451d7b11c3ab2fca5373d36293c83c02848a0ec",
+          "color_space": "sRGB"
+        },
+        "orm": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/ferrocrete_orm.png",
+          "git_blob_sha": "379af05909cd028194b5f38a74f19c7911ff9eb1",
+          "sha256": "601bd00a7719a15467559ce5df611f13d39ed92d7c8dffc918da5e6f09322be9",
+          "color_space": "Non-Color"
+        },
+        "normal": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/ferrocrete_normal.png",
+          "git_blob_sha": "8cbbf97beb1866109df97124901fefad66e137b5",
+          "sha256": "9d90397d143a9fab840c55407bf67e544dea7d0e7957757a04ed334e8d811a21",
+          "color_space": "Non-Color"
+        }
+      },
+      "texture_repeat_per_tile": 4.0,
+      "fmpl_material_id": "ferrocrete"
+    },
+    {
+      "role": "ferrocrete_dark",
+      "model_specific_instance": "SMELTER FMPL | ferrocrete_dark",
+      "original_maps": {
+        "albedo": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/ferrocrete_dark_albedo.png",
+          "git_blob_sha": "5799f0d161f15fac48c8307a02369e4c89f28f2a",
+          "sha256": "121ae5f812f14b60204275c702e79590006c4c676e492c90d9b115d383b9ed4d",
+          "color_space": "sRGB"
+        },
+        "orm": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/ferrocrete_dark_orm.png",
+          "git_blob_sha": "77a971618c9104389dd600cbc601b94f3ace74f9",
+          "sha256": "f2dc43e597d7e4d7fccacabe662d1eee9703131dd991a72721357ff6d71a1d72",
+          "color_space": "Non-Color"
+        },
+        "normal": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/ferrocrete_dark_normal.png",
+          "git_blob_sha": "a95f3b28e5dc09300bb37c3e91c7a8ec73f744a9",
+          "sha256": "e81a79eb4d5389939f425c18c7bdb1c4656600b10e7c52098e2e908166e98610",
+          "color_space": "Non-Color"
+        }
+      },
+      "texture_repeat_per_tile": 4.0,
+      "fmpl_material_id": "ferrocrete_dark"
+    },
+    {
+      "role": "iron",
+      "model_specific_instance": "SMELTER FMPL | iron",
+      "original_maps": {
+        "albedo": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/iron_albedo.png",
+          "git_blob_sha": "48a6e43d56d32b504d84f3206ec0dc773430e546",
+          "sha256": "cbd2e4fd0e9368d69a4b6d255e7440443414155f4cd8c8434c149063fd65cbb7",
+          "color_space": "sRGB"
+        },
+        "orm": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/iron_orm.png",
+          "git_blob_sha": "12a971cde7dbb9205918f9c06e7686c30b830a99",
+          "sha256": "1c9011a45f77e6f0d5f35cbfbb3e4e0d8f8ed5f8d62a6afd33a04d8477c3a617",
+          "color_space": "Non-Color"
+        },
+        "normal": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/iron_normal.png",
+          "git_blob_sha": "e2101d61497c1b243fffe17abd687e57f409ab7a",
+          "sha256": "f26a49e578f648a434e460e5d0484bec4f0440cf4170895aeda380975e282997",
+          "color_space": "Non-Color"
+        }
+      },
+      "texture_repeat_per_tile": 4.0,
+      "fmpl_material_id": "iron"
+    },
+    {
+      "role": "machine_steel",
+      "model_specific_instance": "SMELTER FMPL | machine_steel",
+      "original_maps": {
+        "albedo": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/machine_steel_albedo.png",
+          "git_blob_sha": "be1d406ed9a2c3822521422a7389515342f50aea",
+          "sha256": "55e9cb3d4079baeafe2b9ac0e34924afabc93e7a128d95cd755878b7bb29354a",
+          "color_space": "sRGB"
+        },
+        "orm": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/machine_steel_orm.png",
+          "git_blob_sha": "143533c884e893362b1557efd2deb0e98c4e5d7c",
+          "sha256": "a89ad9e908dd1e53ec461e8617bb2f6add873af9389031d98d28839e3c082684",
+          "color_space": "Non-Color"
+        },
+        "normal": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/machine_steel_normal.png",
+          "git_blob_sha": "5c517292babc6a46b6abb22aa2295df3911da040",
+          "sha256": "518e4d4d9359646d11984692d452e1faab751bbb53d873f94f7d7df4bf514015",
+          "color_space": "Non-Color"
+        }
+      },
+      "texture_repeat_per_tile": 4.0,
+      "fmpl_material_id": "machine_steel"
+    },
+    {
+      "role": "brass",
+      "model_specific_instance": "SMELTER FMPL | brass",
+      "original_maps": {
+        "albedo": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/brass_albedo.png",
+          "git_blob_sha": "b8f291ab3d0ff419c83e60d805a5c2728ff9753c",
+          "sha256": "57034a31f8c7859a6b3661f57c67e60139bb8dbfc7273cd45be7b98904e35038",
+          "color_space": "sRGB"
+        },
+        "orm": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/brass_orm.png",
+          "git_blob_sha": "a74e7f5ffcc591a7e895d10367282a0bd51748fe",
+          "sha256": "acc155e0e7406452e674e70673dcb149cd3d42fa9b0a0e0a069f61b6d91dc1e0",
+          "color_space": "Non-Color"
+        },
+        "normal": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/brass_normal.png",
+          "git_blob_sha": "11a3babbf0a2ce80efdefff190a7873742054de9",
+          "sha256": "8b48a33b75fd08e7cfa0e405c921b48a43682dafd33f49b582482e188f5eb674",
+          "color_space": "Non-Color"
+        }
+      },
+      "texture_repeat_per_tile": 4.0,
+      "fmpl_material_id": "brass"
+    },
+    {
+      "role": "oxide_red",
+      "model_specific_instance": "SMELTER FMPL | oxide_red",
+      "original_maps": {
+        "albedo": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/oxide_red_albedo.png",
+          "git_blob_sha": "ac7cfa2ed843a2314c84ce666127d1831537edd8",
+          "sha256": "36cd36cf627473aa87a7efc09f8d7ddb557b6bdb7cc381b26242b5a301827557",
+          "color_space": "sRGB"
+        },
+        "orm": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/oxide_red_orm.png",
+          "git_blob_sha": "c94154e8caad29ba10c6cc3f5c6d54d55645f33a",
+          "sha256": "5118c479fdd510fc5dad7f1997154123581e709f67be062d0dceb0c79e7d748b",
+          "color_space": "Non-Color"
+        },
+        "normal": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/oxide_red_normal.png",
+          "git_blob_sha": "addcccb653366475c51ee62e44a612f45aa1feab",
+          "sha256": "247eb85b0b98cc03b6df4408858da55d1a1fabc03ba73138ae0b7017440c5a6e",
+          "color_space": "Non-Color"
+        }
+      },
+      "texture_repeat_per_tile": 4.0,
+      "fmpl_material_id": "oxide_red"
+    },
+    {
+      "role": "dark_recess",
+      "model_specific_instance": "SMELTER FMPL | dark_recess",
+      "original_maps": {
+        "albedo": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/dark_recess_albedo.png",
+          "git_blob_sha": "a34f4725a32b85f57a3c4e4148e4f75abdc17ef6",
+          "sha256": "f693afb6909d4004bd587c4217782f7b28d3d30ff123790a6b25770a54ed2986",
+          "color_space": "sRGB"
+        },
+        "orm": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/dark_recess_orm.png",
+          "git_blob_sha": "526252b087e9ffc18a457ba974f8f5796a723ee1",
+          "sha256": "075e6de0ac5cd008ba3ddccceaee889a3e2b3ce379be5b0627964e1fe8e23b14",
+          "color_space": "Non-Color"
+        },
+        "normal": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/dark_recess_normal.png",
+          "git_blob_sha": "6471dfdd1d63a944fa4b7a09bbf6ebbafacd11a6",
+          "sha256": "d53ed45790b0785e20367a001cb2cee60840bd81ef0ab7b26c0581a59b3d3aca",
+          "color_space": "Non-Color"
+        }
+      },
+      "texture_repeat_per_tile": 4.0,
+      "fmpl_material_id": "dark_recess"
+    },
+    {
+      "role": "indicator_green",
+      "model_specific_instance": "SMELTER FMPL | indicator_green",
+      "original_maps": {
+        "albedo": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/indicator_green_albedo.png",
+          "git_blob_sha": "20a4092be509b142629bc88e2bb7570e3c08e8f5",
+          "sha256": "d517b33a490f58e191a56d9625aba87e1c102c51a989922cd130b9e2784ba37e",
+          "color_space": "sRGB"
+        },
+        "orm": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/indicator_green_orm.png",
+          "git_blob_sha": "5a30eef9b9380805bb1799cbf878ba8591461e9c",
+          "sha256": "17e6ebe26dd26a883cb0ccbaee5a6669572a4b890dcf2aef398546758d2fdab9",
+          "color_space": "Non-Color"
+        },
+        "normal": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/indicator_green_normal.png",
+          "git_blob_sha": "380761d58aa6833359c7552e64bb2cd9256b259d",
+          "sha256": "88abec52038a2f403b17b1e974b3cfe6c0bcdaa233ad9c48da8b0df36c8ae3bf",
+          "color_space": "Non-Color"
+        }
+      },
+      "texture_repeat_per_tile": 4.0,
+      "fmpl_material_id": "indicator_green"
+    },
+    {
+      "role": "alert",
+      "model_specific_instance": "SMELTER FMPL | alert",
+      "original_maps": {
+        "albedo": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/alert_albedo.png",
+          "git_blob_sha": "b001d0b499e7f557afef5aa453967c17f903aeb1",
+          "sha256": "ac5bde4fbd89797cdd0582430c89f43fe73ee05ed2a57b684b3832a549aa2ccc",
+          "color_space": "sRGB"
+        },
+        "orm": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/alert_orm.png",
+          "git_blob_sha": "d7dda2425cc73a2092d1364421d17934c7a55b27",
+          "sha256": "6da2e2b2b75cde947006717530f1eac50f57e349382984b0c5cec84dca274874",
+          "color_space": "Non-Color"
+        },
+        "normal": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/alert_normal.png",
+          "git_blob_sha": "84bf9f4f1d1a78c1c0d35d8d2a0daab0d5214a93",
+          "sha256": "2d4de2ff1345e178351430669ed1c04f7322a218f56e25017cd58b8cf5a21e86",
+          "color_space": "Non-Color"
+        }
+      },
+      "texture_repeat_per_tile": 4.0,
+      "fmpl_material_id": "alert"
+    },
+    {
+      "role": "insulator",
+      "model_specific_instance": "SMELTER FMPL | insulator",
+      "original_maps": {
+        "albedo": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/insulator_albedo.png",
+          "git_blob_sha": "e716c5a16816af1fe9b14542bf1cbab24571b10d",
+          "sha256": "3d9abd2776ef0efdb05cf7fa4a6fac1047a1ab207791f8f5bd0dd205c05054ff",
+          "color_space": "sRGB"
+        },
+        "orm": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/insulator_orm.png",
+          "git_blob_sha": "b2b35e9f712ce67717023b980a80064b1852da61",
+          "sha256": "f94326f7423fd5e752850d7f9bae5033175adaf842b492a30c97baa4eae0d646",
+          "color_space": "Non-Color"
+        },
+        "normal": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/insulator_normal.png",
+          "git_blob_sha": "fb0c46415572105b2a5438384fd935f9eb3ead60",
+          "sha256": "7113e9eabcd5cc3d962eee3e94283bb67be980189bca474c9d24cf63d5faa49c",
+          "color_space": "Non-Color"
+        }
+      },
+      "texture_repeat_per_tile": 4.0,
+      "fmpl_material_id": "insulator"
+    }
+  ],
+  "uv_assignments": [
+    {
+      "object": "SMELTER | dressed foundation",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete_dark"
+    },
+    {
+      "object": "SMELTER | sealed refractory floor",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | staggered founded side brick",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | staggered founded side brick.001",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | staggered founded side brick.002",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | staggered founded side brick.003",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | staggered founded side brick.004",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | staggered founded side brick.005",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | staggered founded side brick.006",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | staggered founded side brick.007",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | staggered founded side brick.008",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | staggered founded side brick.009",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | staggered founded side brick.010",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | staggered founded side brick.011",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | staggered founded side brick.012",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | staggered founded side brick.013",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | staggered founded side brick.014",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | staggered founded side brick.015",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | staggered founded side brick.016",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | staggered founded side brick.017",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | staggered founded side brick.018",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | staggered founded side brick.019",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | staggered founded side brick.020",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | staggered founded side brick.021",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | staggered founded side brick.022",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | staggered founded side brick.023",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | staggered founded side brick.024",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | staggered founded side brick.025",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | staggered founded side brick.026",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | staggered founded side brick.027",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | staggered founded side brick.028",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | staggered founded side brick.029",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | staggered founded side brick.030",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | staggered founded side brick.031",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | fitted refractory vault voussoir",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | fitted refractory vault voussoir.001",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | fitted refractory vault voussoir.002",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | fitted refractory vault voussoir.003",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | fitted refractory vault voussoir.004",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | fitted refractory vault voussoir.005",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | fitted refractory vault voussoir.006",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | fitted refractory vault voussoir.007",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | fitted refractory vault voussoir.008",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | fitted refractory vault voussoir.009",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | fitted refractory vault voussoir.010",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | fitted refractory vault voussoir.011",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | fitted refractory vault voussoir.012",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | fitted refractory vault voussoir.013",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | fitted refractory vault voussoir.014",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | fitted refractory vault voussoir.015",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | fitted refractory vault voussoir.016",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | fitted refractory vault voussoir.017",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | fitted refractory vault voussoir.018",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | fitted refractory vault voussoir.019",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | fitted refractory vault voussoir.020",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | fitted refractory vault voussoir.021",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | fitted refractory vault voussoir.022",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | fitted refractory vault voussoir.023",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | fitted refractory vault voussoir.024",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | fitted refractory vault voussoir.025",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | fitted refractory vault voussoir.026",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | fitted refractory vault voussoir.027",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | fitted refractory vault voussoir.028",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | fitted refractory vault voussoir.029",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | fitted refractory vault voussoir.030",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | fitted refractory vault voussoir.031",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | fitted refractory vault voussoir.032",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | fitted refractory vault voussoir.033",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | fitted refractory vault voussoir.034",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | fitted refractory vault voussoir.035",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | founded rear kiln wall",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete_dark"
+    },
+    {
+      "object": "SMELTER | dark closed iron firebox door",
+      "method": "panel",
+      "material": "SMELTER FMPL | dark_recess"
+    },
+    {
+      "object": "SMELTER | retained firebox jamb",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | retained firebox jamb.001",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | retained door lintel",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | retained door sill",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | founded charge tray",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | charge tray upstand",
+      "method": "panel",
+      "material": "SMELTER FMPL | machine_steel"
+    },
+    {
+      "object": "SMELTER | charge tray upstand.001",
+      "method": "panel",
+      "material": "SMELTER FMPL | machine_steel"
+    },
+    {
+      "object": "SMELTER | burner sight slit",
+      "method": "panel",
+      "material": "SMELTER FMPL | alert"
+    },
+    {
+      "object": "SMELTER | burner sight slit.001",
+      "method": "panel",
+      "material": "SMELTER FMPL | alert"
+    },
+    {
+      "object": "SMELTER | burner sight slit.002",
+      "method": "panel",
+      "material": "SMELTER FMPL | alert"
+    },
+    {
+      "object": "SMELTER | burner grille grounded rail",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | burner grille grounded rail.001",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | fixed retained burner grille",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | fixed retained burner grille.001",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | fixed retained burner grille.002",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | fixed retained burner grille.003",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | fixed retained burner grille.004",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | fixed retained burner grille.005",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | fixed retained burner grille.006",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | fixed retained burner grille.007",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | fixed retained burner grille.008",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | fixed retained burner grille.009",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | fixed retained burner grille.010",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | firebox retained rivet",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | firebox retained rivet.001",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | firebox retained rivet.002",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | firebox retained rivet.003",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | door charge plate",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | charge plate seated mark",
+      "method": "panel",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | charge plate seated mark.001",
+      "method": "panel",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | charge plate seated mark.002",
+      "method": "panel",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | door retained hinge eye",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | door seated hinge pintle",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | machine_steel"
+    },
+    {
+      "object": "SMELTER | door retained hinge eye.001",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | door seated hinge pintle.001",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | machine_steel"
+    },
+    {
+      "object": "SMELTER | door retained hinge eye.002",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | door seated hinge pintle.002",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | machine_steel"
+    },
+    {
+      "object": "SMELTER | door retained hinge eye.003",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | door seated hinge pintle.003",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | machine_steel"
+    },
+    {
+      "object": "SMELTER | retained green roof inspection shield",
+      "method": "panel",
+      "material": "SMELTER FMPL | indicator_green"
+    },
+    {
+      "object": "SMELTER | green shield founded rim",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | green shield founded rim.001",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | green shield seated transverse trace",
+      "method": "panel",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | green shield seated transverse trace.001",
+      "method": "panel",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | retained green roof inspection shield.001",
+      "method": "panel",
+      "material": "SMELTER FMPL | indicator_green"
+    },
+    {
+      "object": "SMELTER | green shield founded rim.002",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | green shield founded rim.003",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | green shield seated transverse trace.002",
+      "method": "panel",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | green shield seated transverse trace.003",
+      "method": "panel",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | retained green roof inspection shield.002",
+      "method": "panel",
+      "material": "SMELTER FMPL | indicator_green"
+    },
+    {
+      "object": "SMELTER | green shield founded rim.004",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | green shield founded rim.005",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | green shield seated transverse trace.004",
+      "method": "panel",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | green shield seated transverse trace.005",
+      "method": "panel",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | vault retaining strap",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | vault strap seated head",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | vault retaining strap.001",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | vault strap seated head.001",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | vault retaining strap.002",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | vault strap seated head.002",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | vault retaining strap.003",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | vault strap seated head.003",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | vault retaining strap.004",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | vault strap seated head.004",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | vault retaining strap.005",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | vault strap seated head.005",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | vault retaining strap.006",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | vault strap seated head.006",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | vault retaining strap.007",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | vault strap seated head.007",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | vault retaining strap.008",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | vault strap seated head.008",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | vault retaining strap.009",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | vault strap seated head.009",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | vault retaining strap.010",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | vault strap seated head.010",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | vault retaining strap.011",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | vault strap seated head.011",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | vault retaining strap.012",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | vault strap seated head.012",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | vault retaining strap.013",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | vault strap seated head.013",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | vault retaining strap.014",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | vault strap seated head.014",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | vault retaining strap.015",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | vault strap seated head.015",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | vault retaining strap.016",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | vault strap seated head.016",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | vault retaining strap.017",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | vault strap seated head.017",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | vault retaining strap.018",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | vault strap seated head.018",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | vault retaining strap.019",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | vault strap seated head.019",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | vault retaining strap.020",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | vault strap seated head.020",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | vault retaining strap.021",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | vault strap seated head.021",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | vault retaining strap.022",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | vault strap seated head.022",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | vault retaining strap.023",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | vault strap seated head.023",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | flue founded side brick",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete_dark"
+    },
+    {
+      "object": "SMELTER | flue founded front back brick",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | flue founded side brick.001",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete_dark"
+    },
+    {
+      "object": "SMELTER | flue founded front back brick.001",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | flue founded side brick.002",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete_dark"
+    },
+    {
+      "object": "SMELTER | flue founded front back brick.002",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | flue founded side brick.003",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete_dark"
+    },
+    {
+      "object": "SMELTER | flue founded front back brick.003",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | flue founded side brick.004",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete_dark"
+    },
+    {
+      "object": "SMELTER | flue founded front back brick.004",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | flue founded side brick.005",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete_dark"
+    },
+    {
+      "object": "SMELTER | flue founded front back brick.005",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | flue founded side brick.006",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete_dark"
+    },
+    {
+      "object": "SMELTER | flue founded front back brick.006",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | flue founded side brick.007",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete_dark"
+    },
+    {
+      "object": "SMELTER | flue founded front back brick.007",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | flue founded side brick.008",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete_dark"
+    },
+    {
+      "object": "SMELTER | flue founded front back brick.008",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | flue founded side brick.009",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete_dark"
+    },
+    {
+      "object": "SMELTER | flue founded front back brick.009",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | flue founded side brick.010",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete_dark"
+    },
+    {
+      "object": "SMELTER | flue founded front back brick.010",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | flue founded side brick.011",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete_dark"
+    },
+    {
+      "object": "SMELTER | flue founded front back brick.011",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | flue founded side brick.012",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete_dark"
+    },
+    {
+      "object": "SMELTER | flue founded front back brick.012",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | flue founded side brick.013",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete_dark"
+    },
+    {
+      "object": "SMELTER | flue founded front back brick.013",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | flue founded side brick.014",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete_dark"
+    },
+    {
+      "object": "SMELTER | flue founded front back brick.014",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | flue founded side brick.015",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete_dark"
+    },
+    {
+      "object": "SMELTER | flue founded front back brick.015",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | flue founded side brick.016",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete_dark"
+    },
+    {
+      "object": "SMELTER | flue founded front back brick.016",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | flue founded side brick.017",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete_dark"
+    },
+    {
+      "object": "SMELTER | flue founded front back brick.017",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | flue founded side brick.018",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete_dark"
+    },
+    {
+      "object": "SMELTER | flue founded front back brick.018",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | flue founded side brick.019",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete_dark"
+    },
+    {
+      "object": "SMELTER | flue founded front back brick.019",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete"
+    },
+    {
+      "object": "SMELTER | flue continuous refractory mortar liner",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete_dark"
+    },
+    {
+      "object": "SMELTER | flue continuous front back mortar liner",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete_dark"
+    },
+    {
+      "object": "SMELTER | flue continuous refractory mortar liner.001",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete_dark"
+    },
+    {
+      "object": "SMELTER | flue continuous front back mortar liner.001",
+      "method": "panel",
+      "material": "SMELTER FMPL | ferrocrete_dark"
+    },
+    {
+      "object": "SMELTER | flue retaining side band",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | flue retaining side band.001",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | flue retaining front back band",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | flue retaining front back band.001",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | flue retaining side band.002",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | flue retaining side band.003",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | flue retaining front back band.002",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | flue retaining front back band.003",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | flue retaining side band.004",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | flue retaining side band.005",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | flue retaining front back band.004",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | flue retaining front back band.005",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | open ceramic flue crown",
+      "method": "sweep",
+      "material": "SMELTER FMPL | insulator"
+    },
+    {
+      "object": "SMELTER | spark guard founded upright",
+      "method": "panel",
+      "material": "SMELTER FMPL | machine_steel"
+    },
+    {
+      "object": "SMELTER | spark guard founded upright.001",
+      "method": "panel",
+      "material": "SMELTER FMPL | machine_steel"
+    },
+    {
+      "object": "SMELTER | spark guard supported hood",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | spark arrestor top grille",
+      "method": "panel",
+      "material": "SMELTER FMPL | machine_steel"
+    },
+    {
+      "object": "SMELTER | spark arrestor top grille.001",
+      "method": "panel",
+      "material": "SMELTER FMPL | machine_steel"
+    },
+    {
+      "object": "SMELTER | spark arrestor top grille.002",
+      "method": "panel",
+      "material": "SMELTER FMPL | machine_steel"
+    },
+    {
+      "object": "SMELTER | left founded service chest",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | service chest retaining rib",
+      "method": "panel",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | service chest retaining rib.001",
+      "method": "panel",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | service chest blind vent",
+      "method": "panel",
+      "material": "SMELTER FMPL | dark_recess"
+    },
+    {
+      "object": "SMELTER | service chest blind vent.001",
+      "method": "panel",
+      "material": "SMELTER FMPL | dark_recess"
+    },
+    {
+      "object": "SMELTER | service chest blind vent.002",
+      "method": "panel",
+      "material": "SMELTER FMPL | dark_recess"
+    },
+    {
+      "object": "SMELTER | service chest blind vent.003",
+      "method": "panel",
+      "material": "SMELTER FMPL | dark_recess"
+    },
+    {
+      "object": "SMELTER | service chest seated plaque",
+      "method": "panel",
+      "material": "SMELTER FMPL | machine_steel"
+    },
+    {
+      "object": "SMELTER | service plaque raised glyph",
+      "method": "panel",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | service plaque raised glyph.001",
+      "method": "panel",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | service plaque raised glyph.002",
+      "method": "panel",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | service chest seated plaque.001",
+      "method": "panel",
+      "material": "SMELTER FMPL | machine_steel"
+    },
+    {
+      "object": "SMELTER | service plaque raised glyph.003",
+      "method": "panel",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | service plaque raised glyph.004",
+      "method": "panel",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | service plaque raised glyph.005",
+      "method": "panel",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | service chest seated plaque.002",
+      "method": "panel",
+      "material": "SMELTER FMPL | machine_steel"
+    },
+    {
+      "object": "SMELTER | service plaque raised glyph.006",
+      "method": "panel",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | service plaque raised glyph.007",
+      "method": "panel",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | service plaque raised glyph.008",
+      "method": "panel",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | combustion air intake",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | air intake founded foot",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | air intake retained grille",
+      "method": "panel",
+      "material": "SMELTER FMPL | machine_steel"
+    },
+    {
+      "object": "SMELTER | air intake retained grille.001",
+      "method": "panel",
+      "material": "SMELTER FMPL | machine_steel"
+    },
+    {
+      "object": "SMELTER | air intake retained grille.002",
+      "method": "panel",
+      "material": "SMELTER FMPL | machine_steel"
+    },
+    {
+      "object": "SMELTER | damper fixed lower bearing",
+      "method": "sweep",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | damper fixed upper bearing",
+      "method": "sweep",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | upper bearing grounded side arm",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | upper bearing grounded side arm.001",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | bearing grounded pillar",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | bearing grounded pillar.001",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | moving retained damper spindle",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | machine_steel"
+    },
+    {
+      "object": "SMELTER | moving round damper butterfly",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | moving damper lever",
+      "method": "panel",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | moving spindle upper retaining head",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | machine_steel"
+    },
+    {
+      "object": "SMELTER | moving spindle lower retaining head",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | machine_steel"
+    },
+    {
+      "object": "SMELTER | closed thermal draft regulator",
+      "method": "sweep",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | thermal regulator sealed crown",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | thermal regulator grounded support",
+      "method": "panel",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | founded circuit terminal block",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | circuit ceramic terminal seat",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | insulator"
+    },
+    {
+      "object": "SMELTER | circuit terminal head",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | oxide_red"
+    },
+    {
+      "object": "SMELTER | circuit ceramic terminal seat.001",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | insulator"
+    },
+    {
+      "object": "SMELTER | circuit terminal head.001",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | indicator_green"
+    },
+    {
+      "object": "SMELTER | foundation corner keeper",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | keeper grounded head",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | foundation corner keeper.001",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | keeper grounded head.001",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | foundation corner keeper.002",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | keeper grounded head.002",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | foundation corner keeper.003",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | keeper grounded head.003",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | masonry strap grounded seat",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | masonry strap rivet",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | masonry strap rivet.001",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | masonry strap grounded seat.001",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | masonry strap rivet.002",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | masonry strap rivet.003",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | masonry strap grounded seat.002",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | masonry strap rivet.004",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | masonry strap rivet.005",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | masonry strap grounded seat.003",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | masonry strap rivet.006",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | masonry strap rivet.007",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | masonry strap grounded seat.004",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | masonry strap rivet.008",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | masonry strap rivet.009",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | masonry strap grounded seat.005",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | masonry strap rivet.010",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | masonry strap rivet.011",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | masonry strap grounded seat.006",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | masonry strap rivet.012",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | masonry strap rivet.013",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | masonry strap grounded seat.007",
+      "method": "panel",
+      "material": "SMELTER FMPL | iron"
+    },
+    {
+      "object": "SMELTER | masonry strap rivet.014",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | brass"
+    },
+    {
+      "object": "SMELTER | masonry strap rivet.015",
+      "method": "cylinder",
+      "material": "SMELTER FMPL | brass"
+    }
+  ],
+  "native_footprint": [
+    1,
+    1
+  ],
+  "native_directions": [
+    0
+  ],
+  "all_original_source_maps_git_blob_verified": true,
+  "owner_visual_approved": false
+}

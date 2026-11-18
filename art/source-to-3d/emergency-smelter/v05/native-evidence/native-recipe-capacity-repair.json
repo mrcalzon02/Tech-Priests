@@ -1,0 +1,13 @@
+{
+  "native_contract_entity_changes": {
+    "output_slots": {
+      "before": 1,
+      "after": 8
+    }
+  },
+  "recipes_ingredients_results_times_fuel_speed_ports_footprint_and_directions_preserved": true,
+  "reason": "The native1-slot furnace did not accept normal ore after existing recipes gained a zero-probability detritus result. Existing reclamation declares eight item products. Eight real output slots allow native automatic recipe selection and all six distinct input paths.",
+  "no_recipe_disabling_or_forced_furnace_recipe": true,
+  "baseline_evidence": "baseline-native-contract.json",
+  "final_evidence": "native-contract.json, selection-and-products.json, operation.json, operated-reload-receipt.json"
+}

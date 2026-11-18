@@ -1,0 +1,32 @@
+{
+  "source_sha256": "50fae2883f2fe0870c90c32cc7259a4b33012d71cb9d9adbf1a9b8e986bab6a3",
+  "runtime_sha256": "68eec69b5c8be25e226b422b672803ae53ce5dc3dfe11573fbf89964051c66c5",
+  "reference_sha256": "ba274b459959094a0f6b1bf32ed2c3224b7aa85aa887ae491f7f848c634a747c",
+  "render_sha256": {
+    "actual-glb-front.png": "06fc4d8e168116ac88cf59b8ee6b7c0b791e9dab32a949be6e632b7657e80e60",
+    "actual-glb-detail.png": "f55d9f781a0da9f8c616b1ee044363f79a1de174770212885fd4d478919f47f4",
+    "actual-glb-rear.png": "33afcc676d8547ee8202a2b31e0f8aac1326fae141a86a8fa11cb8637bf401a2",
+    "actual-glb-clay.png": "c268dd41e21de93dc1fd48b905a8668358cc1a349d86209c4502d6103b924834"
+  },
+  "native_image_sha256": {
+    "idle-close.png": "7dd46c21ea3efea305410e3760c5deb95b4a6d65b5e689ceda1a7055554be792",
+    "working-03.png": "a56dc47c1daeabb0afd3500e551ed4ddb2d7bb47c7fc16b938fa5a594b7137b8",
+    "working-wide.png": "5932c521265333c9f2d8970901f9a5f5f3e2a115c6360620dc713eb7d844a3fe"
+  },
+  "scored_review_out_of_five": {
+    "purpose_readability": 4,
+    "supported_construction": 4,
+    "model_specific_fmpl_surfaces": 4,
+    "motion_and_clearance": 4,
+    "native_integration": 4
+  },
+  "reasoning": "Compact closed refractory kiln preserves the original three green inspection-panel identity. The barrel vault bears on founded side walls; a continuous refractory liner/mortar and masonry chimney load path reach the slab. Fixed rails ground the fire grate, rivets sit on straps, and the captive damper has real coaxial bearing/counterbore clearances. Native idle firebox is dark, working firebox glows, smoke issues at the modeled chimney. Actual ordinary four-sided inserters and native circuit wires work. Uniform item icon framing now includes the full chimney.",
+  "delegated_operational_close_enough": true,
+  "owner_visual_approved": false,
+  "limits": [
+    "Static contact inventory is not exhaustive static-overlap adjudication.",
+    "Native captures use medium graphics; delivered sprites retain full resolution.",
+    "Full user mod pack and portal release were not verified.",
+    "Native furnace auto-selects six distinct input paths; three overlapping hidden emergency wrappers were not forced by disabling ordinary recipes."
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "source_sha256": "50fae2883f2fe0870c90c32cc7259a4b33012d71cb9d9adbf1a9b8e986bab6a3",
+  "runtime_sha256": "68eec69b5c8be25e226b422b672803ae53ce5dc3dfe11573fbf89964051c66c5",
+  "mesh_count": 312,
+  "triangles": 51520,
+  "source_runtime_eight_pose_bounds_errors": {
+    "1": 2.9802322387695312e-08,
+    "13": 2.9802322387695312e-08,
+    "25": 2.9802322387695312e-08,
+    "37": 2.9802322387695312e-08,
+    "49": 2.9802322387695312e-08,
+    "61": 2.9802322387695312e-08,
+    "73": 2.9802322387695312e-08,
+    "85": 2.9802322387695312e-08,
+    "97": 2.9802322387695312e-08
+  },
+  "working_loop_seam_error": 0.0,
+  "packed_source_images": 30,
+  "unpacked_source_images": [],
+  "runtime_embedded_images": 30,
+  "runtime_external_images": [],
+  "bad_meshes": {},
+  "materials_missing_pbr_maps": [],
+  "runtime_clip_seconds": 2,
+  "working_only_clip": true,
+  "native_directions": [
+    0
+  ],
+  "full_clearance_adjudication_pending": true,
+  "native_integration": false,
+  "owner_visual_approved": false,
+  "technical_checks_passed": true
+}

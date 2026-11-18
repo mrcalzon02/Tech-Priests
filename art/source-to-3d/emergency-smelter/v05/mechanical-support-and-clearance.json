@@ -1,0 +1,45 @@
+{
+  "support_and_moving_clearance_passed": true,
+  "source_and_runtime": [
+    {
+      "artifact": "smelter-v05.blend",
+      "sha256": "50fae2883f2fe0870c90c32cc7259a4b33012d71cb9d9adbf1a9b8e986bab6a3",
+      "stationary_grounded_meshes": 307,
+      "all_five_moving_meshes_physically_connected_as_one_rigid_assembly": true,
+      "measured_spindle_radius": 0.009000004953384978,
+      "measured_fixed_coaxial_bore_radii": {
+        "SMELTER | damper fixed upper bearing": 0.009499988738064803,
+        "SMELTER | damper fixed lower bearing": 0.009499988738064803,
+        "SMELTER | closed thermal draft regulator": 0.009499988738064803
+      },
+      "nominal_radial_running_clearance": 0.0005,
+      "polygon_bore_apothem_clearance_lower_bound": 0.00045425490338587074,
+      "minimum_measured_polygon_surface_clearance": 0.00045905221486464143,
+      "retained_lower_head_clears_actual_counterbore": true,
+      "foreign_moving_contacts": [],
+      "sampled_sweep_poses": 193,
+      "fixed_contacts_fully_adjudicated": false
+    },
+    {
+      "artifact": "smelter-v05.glb",
+      "sha256": "68eec69b5c8be25e226b422b672803ae53ce5dc3dfe11573fbf89964051c66c5",
+      "stationary_grounded_meshes": 307,
+      "all_five_moving_meshes_physically_connected_as_one_rigid_assembly": true,
+      "measured_spindle_radius": 0.009000004953384978,
+      "measured_fixed_coaxial_bore_radii": {
+        "SMELTER | damper fixed upper bearing": 0.009499988738064803,
+        "SMELTER | damper fixed lower bearing": 0.009499988738064803,
+        "SMELTER | closed thermal draft regulator": 0.009499988738064803
+      },
+      "nominal_radial_running_clearance": 0.0005,
+      "polygon_bore_apothem_clearance_lower_bound": 0.00045425490338587074,
+      "minimum_measured_polygon_surface_clearance": 0.00045905221486464143,
+      "retained_lower_head_clears_actual_counterbore": true,
+      "foreign_moving_contacts": [],
+      "sampled_sweep_poses": 193,
+      "fixed_contacts_fully_adjudicated": false
+    }
+  ],
+  "scope": "Every fixed component is physically grounded; the single captive damper assembly has measured coaxial bearings, actual casting bore and actual retaining-head counterbore.193 poses per artifact cover the full motion cycle. Static joint contacts are retained in raw inventory; exhaustive static overlap adjudication is not claimed.",
+  "owner_visual_approved": false
+}

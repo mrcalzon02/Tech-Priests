@@ -1,0 +1,4594 @@
+{
+  "artifact": "smelter-v05.glb",
+  "artifact_sha256": "68eec69b5c8be25e226b422b672803ae53ce5dc3dfe11573fbf89964051c66c5",
+  "tolerance_tiles": 0.0001,
+  "root_foundation_meshes": [
+    "SMELTER | dressed foundation"
+  ],
+  "mesh_count": 312,
+  "physically_connected_to_foundation": 307,
+  "unattached_components": [
+    {
+      "objects": [
+        "SMELTER | moving damper lever",
+        "SMELTER | moving retained damper spindle",
+        "SMELTER | moving round damper butterfly",
+        "SMELTER | moving spindle lower retaining head",
+        "SMELTER | moving spindle upper retaining head"
+      ],
+      "nearest_founded_seats": [
+        {
+          "object": "SMELTER | moving retained damper spindle",
+          "nearest_founded_object": "SMELTER | closed thermal draft regulator",
+          "gap": 0.00045905221486464143
+        },
+        {
+          "object": "SMELTER | moving spindle lower retaining head",
+          "nearest_founded_object": "SMELTER | air intake founded foot",
+          "gap": 0.000997837632894516
+        },
+        {
+          "object": "SMELTER | moving damper lever",
+          "nearest_founded_object": "SMELTER | damper fixed upper bearing",
+          "gap": 0.0029999911785125732
+        },
+        {
+          "object": "SMELTER | moving round damper butterfly",
+          "nearest_founded_object": "SMELTER | combustion air intake",
+          "gap": 0.0037239245139062405
+        },
+        {
+          "object": "SMELTER | moving spindle upper retaining head",
+          "nearest_founded_object": "SMELTER | thermal regulator grounded support",
+          "gap": 0.009000003337860107
+        }
+      ]
+    }
+  ],
+  "measured_edges": [
+    {
+      "a": "SMELTER | air intake founded foot",
+      "b": "SMELTER | combustion air intake",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | air intake founded foot",
+      "b": "SMELTER | damper fixed lower bearing",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | air intake founded foot",
+      "b": "SMELTER | dressed foundation",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | air intake founded foot",
+      "b": "SMELTER | masonry strap grounded seat.005",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | air intake founded foot",
+      "b": "SMELTER | masonry strap rivet.010",
+      "basis": "contained solid volume contact",
+      "surface_distance": 0.02699999511241913
+    },
+    {
+      "a": "SMELTER | air intake founded foot",
+      "b": "SMELTER | sealed refractory floor",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | air intake founded foot",
+      "b": "SMELTER | staggered founded side brick.017",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | air intake founded foot",
+      "b": "SMELTER | staggered founded side brick.018",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | air intake founded foot",
+      "b": "SMELTER | staggered founded side brick.021",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | air intake founded foot",
+      "b": "SMELTER | staggered founded side brick.022",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | air intake retained grille",
+      "b": "SMELTER | combustion air intake",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | air intake retained grille.001",
+      "b": "SMELTER | combustion air intake",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | air intake retained grille.002",
+      "b": "SMELTER | combustion air intake",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | bearing grounded pillar",
+      "b": "SMELTER | combustion air intake",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | bearing grounded pillar",
+      "b": "SMELTER | fitted refractory vault voussoir.009",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | bearing grounded pillar",
+      "b": "SMELTER | staggered founded side brick.030",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | bearing grounded pillar",
+      "b": "SMELTER | upper bearing grounded side arm",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | bearing grounded pillar.001",
+      "b": "SMELTER | combustion air intake",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | bearing grounded pillar.001",
+      "b": "SMELTER | thermal regulator grounded support",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | bearing grounded pillar.001",
+      "b": "SMELTER | upper bearing grounded side arm.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | burner grille grounded rail",
+      "b": "SMELTER | dark closed iron firebox door",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | burner grille grounded rail",
+      "b": "SMELTER | door retained hinge eye",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | burner grille grounded rail",
+      "b": "SMELTER | door retained hinge eye.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | burner grille grounded rail",
+      "b": "SMELTER | door seated hinge pintle",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | burner grille grounded rail",
+      "b": "SMELTER | door seated hinge pintle.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | burner grille grounded rail",
+      "b": "SMELTER | fixed retained burner grille",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | burner grille grounded rail",
+      "b": "SMELTER | fixed retained burner grille.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | burner grille grounded rail",
+      "b": "SMELTER | fixed retained burner grille.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | burner grille grounded rail",
+      "b": "SMELTER | fixed retained burner grille.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | burner grille grounded rail",
+      "b": "SMELTER | fixed retained burner grille.004",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | burner grille grounded rail",
+      "b": "SMELTER | fixed retained burner grille.005",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | burner grille grounded rail",
+      "b": "SMELTER | fixed retained burner grille.006",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | burner grille grounded rail",
+      "b": "SMELTER | fixed retained burner grille.007",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | burner grille grounded rail",
+      "b": "SMELTER | fixed retained burner grille.008",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | burner grille grounded rail",
+      "b": "SMELTER | fixed retained burner grille.009",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | burner grille grounded rail",
+      "b": "SMELTER | fixed retained burner grille.010",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | burner grille grounded rail",
+      "b": "SMELTER | retained firebox jamb",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | burner grille grounded rail",
+      "b": "SMELTER | retained firebox jamb.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | burner grille grounded rail",
+      "b": "SMELTER | staggered founded side brick",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | burner grille grounded rail",
+      "b": "SMELTER | staggered founded side brick.016",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | burner grille grounded rail.001",
+      "b": "SMELTER | dark closed iron firebox door",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | burner grille grounded rail.001",
+      "b": "SMELTER | fixed retained burner grille",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | burner grille grounded rail.001",
+      "b": "SMELTER | fixed retained burner grille.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | burner grille grounded rail.001",
+      "b": "SMELTER | fixed retained burner grille.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | burner grille grounded rail.001",
+      "b": "SMELTER | fixed retained burner grille.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | burner grille grounded rail.001",
+      "b": "SMELTER | fixed retained burner grille.004",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | burner grille grounded rail.001",
+      "b": "SMELTER | fixed retained burner grille.005",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | burner grille grounded rail.001",
+      "b": "SMELTER | fixed retained burner grille.006",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | burner grille grounded rail.001",
+      "b": "SMELTER | fixed retained burner grille.007",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | burner grille grounded rail.001",
+      "b": "SMELTER | fixed retained burner grille.008",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | burner grille grounded rail.001",
+      "b": "SMELTER | fixed retained burner grille.009",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | burner grille grounded rail.001",
+      "b": "SMELTER | fixed retained burner grille.010",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | burner grille grounded rail.001",
+      "b": "SMELTER | retained firebox jamb",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | burner grille grounded rail.001",
+      "b": "SMELTER | retained firebox jamb.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | burner grille grounded rail.001",
+      "b": "SMELTER | staggered founded side brick.008",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | burner grille grounded rail.001",
+      "b": "SMELTER | staggered founded side brick.024",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | burner sight slit",
+      "b": "SMELTER | dark closed iron firebox door",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | burner sight slit.001",
+      "b": "SMELTER | dark closed iron firebox door",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | burner sight slit.002",
+      "b": "SMELTER | dark closed iron firebox door",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | charge plate seated mark",
+      "b": "SMELTER | door charge plate",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | charge plate seated mark.001",
+      "b": "SMELTER | door charge plate",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | charge plate seated mark.002",
+      "b": "SMELTER | door charge plate",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | charge tray upstand",
+      "b": "SMELTER | founded charge tray",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | charge tray upstand",
+      "b": "SMELTER | retained door sill",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | charge tray upstand",
+      "b": "SMELTER | retained firebox jamb",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | charge tray upstand",
+      "b": "SMELTER | sealed refractory floor",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | charge tray upstand",
+      "b": "SMELTER | staggered founded side brick",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | charge tray upstand.001",
+      "b": "SMELTER | founded charge tray",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | charge tray upstand.001",
+      "b": "SMELTER | retained door sill",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | charge tray upstand.001",
+      "b": "SMELTER | retained firebox jamb.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | charge tray upstand.001",
+      "b": "SMELTER | sealed refractory floor",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | charge tray upstand.001",
+      "b": "SMELTER | staggered founded side brick.016",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | circuit ceramic terminal seat",
+      "b": "SMELTER | circuit terminal head",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | circuit ceramic terminal seat",
+      "b": "SMELTER | founded circuit terminal block",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | circuit ceramic terminal seat.001",
+      "b": "SMELTER | circuit terminal head.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | circuit ceramic terminal seat.001",
+      "b": "SMELTER | fitted refractory vault voussoir.033",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | circuit ceramic terminal seat.001",
+      "b": "SMELTER | fitted refractory vault voussoir.034",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | circuit ceramic terminal seat.001",
+      "b": "SMELTER | founded circuit terminal block",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | circuit terminal head.001",
+      "b": "SMELTER | fitted refractory vault voussoir.033",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | closed thermal draft regulator",
+      "b": "SMELTER | thermal regulator grounded support",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | closed thermal draft regulator",
+      "b": "SMELTER | thermal regulator sealed crown",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | combustion air intake",
+      "b": "SMELTER | damper fixed lower bearing",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | combustion air intake",
+      "b": "SMELTER | damper fixed upper bearing",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | combustion air intake",
+      "b": "SMELTER | fitted refractory vault voussoir.009",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | combustion air intake",
+      "b": "SMELTER | fitted refractory vault voussoir.018",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | combustion air intake",
+      "b": "SMELTER | masonry strap grounded seat.005",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | combustion air intake",
+      "b": "SMELTER | staggered founded side brick.021",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | combustion air intake",
+      "b": "SMELTER | staggered founded side brick.022",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | combustion air intake",
+      "b": "SMELTER | staggered founded side brick.025",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | combustion air intake",
+      "b": "SMELTER | staggered founded side brick.026",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | combustion air intake",
+      "b": "SMELTER | staggered founded side brick.029",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | combustion air intake",
+      "b": "SMELTER | staggered founded side brick.030",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | combustion air intake",
+      "b": "SMELTER | upper bearing grounded side arm",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | combustion air intake",
+      "b": "SMELTER | upper bearing grounded side arm.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | damper fixed upper bearing",
+      "b": "SMELTER | upper bearing grounded side arm",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | damper fixed upper bearing",
+      "b": "SMELTER | upper bearing grounded side arm.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | dark closed iron firebox door",
+      "b": "SMELTER | door charge plate",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | dark closed iron firebox door",
+      "b": "SMELTER | firebox retained rivet",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | dark closed iron firebox door",
+      "b": "SMELTER | firebox retained rivet.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | dark closed iron firebox door",
+      "b": "SMELTER | firebox retained rivet.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | dark closed iron firebox door",
+      "b": "SMELTER | firebox retained rivet.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | dark closed iron firebox door",
+      "b": "SMELTER | retained door sill",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | dark closed iron firebox door",
+      "b": "SMELTER | retained firebox jamb",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | dark closed iron firebox door",
+      "b": "SMELTER | retained firebox jamb.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | dark closed iron firebox door",
+      "b": "SMELTER | staggered founded side brick",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | dark closed iron firebox door",
+      "b": "SMELTER | staggered founded side brick.004",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | dark closed iron firebox door",
+      "b": "SMELTER | staggered founded side brick.008",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | dark closed iron firebox door",
+      "b": "SMELTER | staggered founded side brick.012",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | dark closed iron firebox door",
+      "b": "SMELTER | staggered founded side brick.016",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | dark closed iron firebox door",
+      "b": "SMELTER | staggered founded side brick.020",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | dark closed iron firebox door",
+      "b": "SMELTER | staggered founded side brick.024",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | dark closed iron firebox door",
+      "b": "SMELTER | staggered founded side brick.028",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | door retained hinge eye",
+      "b": "SMELTER | door seated hinge pintle",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | door retained hinge eye",
+      "b": "SMELTER | retained firebox jamb",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | door retained hinge eye.001",
+      "b": "SMELTER | door seated hinge pintle.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | door retained hinge eye.001",
+      "b": "SMELTER | retained firebox jamb",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | door retained hinge eye.002",
+      "b": "SMELTER | door seated hinge pintle.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | door retained hinge eye.002",
+      "b": "SMELTER | retained firebox jamb.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | door retained hinge eye.003",
+      "b": "SMELTER | door seated hinge pintle.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | door retained hinge eye.003",
+      "b": "SMELTER | retained firebox jamb.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | door seated hinge pintle",
+      "b": "SMELTER | retained firebox jamb",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | door seated hinge pintle.001",
+      "b": "SMELTER | retained firebox jamb",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | door seated hinge pintle.002",
+      "b": "SMELTER | retained firebox jamb.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | door seated hinge pintle.003",
+      "b": "SMELTER | retained firebox jamb.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | dressed foundation",
+      "b": "SMELTER | flue continuous front back mortar liner",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | dressed foundation",
+      "b": "SMELTER | flue continuous front back mortar liner.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | dressed foundation",
+      "b": "SMELTER | flue continuous refractory mortar liner",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | dressed foundation",
+      "b": "SMELTER | flue continuous refractory mortar liner.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | dressed foundation",
+      "b": "SMELTER | foundation corner keeper",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | dressed foundation",
+      "b": "SMELTER | foundation corner keeper.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | dressed foundation",
+      "b": "SMELTER | foundation corner keeper.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | dressed foundation",
+      "b": "SMELTER | foundation corner keeper.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | dressed foundation",
+      "b": "SMELTER | founded charge tray",
+      "basis": "measured near-surface fitted seat",
+      "surface_distance": 1.666000493116826e-08
+    },
+    {
+      "a": "SMELTER | dressed foundation",
+      "b": "SMELTER | sealed refractory floor",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | firebox retained rivet",
+      "b": "SMELTER | retained door sill",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | firebox retained rivet.002",
+      "b": "SMELTER | retained door sill",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir",
+      "b": "SMELTER | fitted refractory vault voussoir.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir",
+      "b": "SMELTER | staggered founded side brick.028",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir",
+      "b": "SMELTER | staggered founded side brick.029",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir",
+      "b": "SMELTER | vault retaining strap",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir",
+      "b": "SMELTER | vault retaining strap.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.001",
+      "b": "SMELTER | fitted refractory vault voussoir.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.001",
+      "b": "SMELTER | green shield founded rim.004",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.001",
+      "b": "SMELTER | retained green roof inspection shield.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.001",
+      "b": "SMELTER | vault retaining strap.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.001",
+      "b": "SMELTER | vault retaining strap.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.002",
+      "b": "SMELTER | fitted refractory vault voussoir.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.002",
+      "b": "SMELTER | green shield founded rim.004",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.002",
+      "b": "SMELTER | green shield seated transverse trace.004",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.002",
+      "b": "SMELTER | retained green roof inspection shield.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.002",
+      "b": "SMELTER | vault retaining strap.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.002",
+      "b": "SMELTER | vault retaining strap.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.003",
+      "b": "SMELTER | fitted refractory vault voussoir.004",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.003",
+      "b": "SMELTER | green shield founded rim.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.003",
+      "b": "SMELTER | green shield founded rim.004",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.003",
+      "b": "SMELTER | green shield seated transverse trace.004",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.003",
+      "b": "SMELTER | retained green roof inspection shield.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.003",
+      "b": "SMELTER | retained green roof inspection shield.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.003",
+      "b": "SMELTER | vault retaining strap.004",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.003",
+      "b": "SMELTER | vault retaining strap.005",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.004",
+      "b": "SMELTER | fitted refractory vault voussoir.005",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.004",
+      "b": "SMELTER | green shield founded rim.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.004",
+      "b": "SMELTER | retained green roof inspection shield.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.004",
+      "b": "SMELTER | vault retaining strap.005",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.004",
+      "b": "SMELTER | vault retaining strap.006",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.005",
+      "b": "SMELTER | fitted refractory vault voussoir.006",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.005",
+      "b": "SMELTER | green shield founded rim",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.005",
+      "b": "SMELTER | green shield founded rim.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.005",
+      "b": "SMELTER | green shield seated transverse trace",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.005",
+      "b": "SMELTER | retained green roof inspection shield",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.005",
+      "b": "SMELTER | retained green roof inspection shield.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.005",
+      "b": "SMELTER | vault retaining strap.006",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.005",
+      "b": "SMELTER | vault retaining strap.007",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.006",
+      "b": "SMELTER | fitted refractory vault voussoir.007",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.006",
+      "b": "SMELTER | green shield founded rim",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.006",
+      "b": "SMELTER | green shield seated transverse trace",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.006",
+      "b": "SMELTER | retained green roof inspection shield",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.006",
+      "b": "SMELTER | vault retaining strap.008",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.006",
+      "b": "SMELTER | vault retaining strap.009",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.007",
+      "b": "SMELTER | fitted refractory vault voussoir.008",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.007",
+      "b": "SMELTER | green shield founded rim",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.007",
+      "b": "SMELTER | retained green roof inspection shield",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.007",
+      "b": "SMELTER | vault retaining strap.009",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.007",
+      "b": "SMELTER | vault retaining strap.010",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.008",
+      "b": "SMELTER | left founded service chest",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.008",
+      "b": "SMELTER | staggered founded side brick.012",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.008",
+      "b": "SMELTER | staggered founded side brick.013",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.008",
+      "b": "SMELTER | vault retaining strap.010",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.008",
+      "b": "SMELTER | vault retaining strap.011",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.009",
+      "b": "SMELTER | fitted refractory vault voussoir.010",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.009",
+      "b": "SMELTER | staggered founded side brick.029",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.009",
+      "b": "SMELTER | staggered founded side brick.030",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.009",
+      "b": "SMELTER | upper bearing grounded side arm",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.010",
+      "b": "SMELTER | fitted refractory vault voussoir.011",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.010",
+      "b": "SMELTER | retained green roof inspection shield.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.011",
+      "b": "SMELTER | fitted refractory vault voussoir.012",
+      "basis": "measured near-surface fitted seat",
+      "surface_distance": 0.0
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.011",
+      "b": "SMELTER | retained green roof inspection shield.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.012",
+      "b": "SMELTER | fitted refractory vault voussoir.013",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.012",
+      "b": "SMELTER | retained green roof inspection shield.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.012",
+      "b": "SMELTER | retained green roof inspection shield.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.013",
+      "b": "SMELTER | fitted refractory vault voussoir.014",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.013",
+      "b": "SMELTER | retained green roof inspection shield.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.014",
+      "b": "SMELTER | fitted refractory vault voussoir.015",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.014",
+      "b": "SMELTER | retained green roof inspection shield",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.014",
+      "b": "SMELTER | retained green roof inspection shield.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.015",
+      "b": "SMELTER | fitted refractory vault voussoir.016",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.015",
+      "b": "SMELTER | retained green roof inspection shield",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.016",
+      "b": "SMELTER | fitted refractory vault voussoir.017",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.016",
+      "b": "SMELTER | retained green roof inspection shield",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.017",
+      "b": "SMELTER | left founded service chest",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.017",
+      "b": "SMELTER | staggered founded side brick.013",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.017",
+      "b": "SMELTER | staggered founded side brick.014",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.018",
+      "b": "SMELTER | fitted refractory vault voussoir.019",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.018",
+      "b": "SMELTER | staggered founded side brick.030",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.018",
+      "b": "SMELTER | staggered founded side brick.031",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.019",
+      "b": "SMELTER | fitted refractory vault voussoir.020",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.019",
+      "b": "SMELTER | green shield founded rim.005",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.019",
+      "b": "SMELTER | retained green roof inspection shield.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.020",
+      "b": "SMELTER | fitted refractory vault voussoir.021",
+      "basis": "measured near-surface fitted seat",
+      "surface_distance": 0.0
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.020",
+      "b": "SMELTER | green shield founded rim.005",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.020",
+      "b": "SMELTER | green shield seated transverse trace.005",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.020",
+      "b": "SMELTER | retained green roof inspection shield.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.021",
+      "b": "SMELTER | fitted refractory vault voussoir.022",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.021",
+      "b": "SMELTER | green shield founded rim.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.021",
+      "b": "SMELTER | green shield founded rim.005",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.021",
+      "b": "SMELTER | green shield seated transverse trace.005",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.021",
+      "b": "SMELTER | retained green roof inspection shield.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.021",
+      "b": "SMELTER | retained green roof inspection shield.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.022",
+      "b": "SMELTER | fitted refractory vault voussoir.023",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.022",
+      "b": "SMELTER | green shield founded rim.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.022",
+      "b": "SMELTER | retained green roof inspection shield.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.023",
+      "b": "SMELTER | fitted refractory vault voussoir.024",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.023",
+      "b": "SMELTER | green shield founded rim.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.023",
+      "b": "SMELTER | green shield founded rim.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.023",
+      "b": "SMELTER | green shield seated transverse trace.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.023",
+      "b": "SMELTER | retained green roof inspection shield",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.023",
+      "b": "SMELTER | retained green roof inspection shield.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.024",
+      "b": "SMELTER | fitted refractory vault voussoir.025",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.024",
+      "b": "SMELTER | green shield founded rim.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.024",
+      "b": "SMELTER | green shield seated transverse trace.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.024",
+      "b": "SMELTER | retained green roof inspection shield",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.025",
+      "b": "SMELTER | fitted refractory vault voussoir.026",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.025",
+      "b": "SMELTER | green shield founded rim.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.025",
+      "b": "SMELTER | retained green roof inspection shield",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.026",
+      "b": "SMELTER | left founded service chest",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.026",
+      "b": "SMELTER | staggered founded side brick.014",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.026",
+      "b": "SMELTER | staggered founded side brick.015",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.027",
+      "b": "SMELTER | fitted refractory vault voussoir.028",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.027",
+      "b": "SMELTER | flue continuous front back mortar liner",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.027",
+      "b": "SMELTER | flue continuous refractory mortar liner.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.027",
+      "b": "SMELTER | flue founded front back brick.004",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.027",
+      "b": "SMELTER | flue founded front back brick.006",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.027",
+      "b": "SMELTER | flue founded side brick.005",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.027",
+      "b": "SMELTER | flue founded side brick.007",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.027",
+      "b": "SMELTER | flue retaining front back band",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.027",
+      "b": "SMELTER | founded rear kiln wall",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.027",
+      "b": "SMELTER | staggered founded side brick.031",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.027",
+      "b": "SMELTER | vault retaining strap.012",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.027",
+      "b": "SMELTER | vault retaining strap.013",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.028",
+      "b": "SMELTER | fitted refractory vault voussoir.029",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.028",
+      "b": "SMELTER | flue continuous front back mortar liner",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.028",
+      "b": "SMELTER | flue continuous refractory mortar liner.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.028",
+      "b": "SMELTER | flue founded front back brick.006",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.028",
+      "b": "SMELTER | flue founded front back brick.008",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.028",
+      "b": "SMELTER | flue founded side brick.007",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.028",
+      "b": "SMELTER | flue founded side brick.009",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.028",
+      "b": "SMELTER | founded rear kiln wall",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.028",
+      "b": "SMELTER | vault retaining strap.013",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.028",
+      "b": "SMELTER | vault retaining strap.014",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.029",
+      "b": "SMELTER | fitted refractory vault voussoir.030",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.029",
+      "b": "SMELTER | flue continuous front back mortar liner",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.029",
+      "b": "SMELTER | flue continuous refractory mortar liner",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.029",
+      "b": "SMELTER | flue founded front back brick.008",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.029",
+      "b": "SMELTER | flue founded front back brick.010",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.029",
+      "b": "SMELTER | flue founded side brick.008",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.029",
+      "b": "SMELTER | flue founded side brick.010",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.029",
+      "b": "SMELTER | founded rear kiln wall",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.029",
+      "b": "SMELTER | vault retaining strap.014",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.029",
+      "b": "SMELTER | vault retaining strap.015",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.030",
+      "b": "SMELTER | fitted refractory vault voussoir.031",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.030",
+      "b": "SMELTER | flue continuous front back mortar liner",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.030",
+      "b": "SMELTER | flue continuous refractory mortar liner",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.030",
+      "b": "SMELTER | flue founded front back brick.010",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.030",
+      "b": "SMELTER | flue founded side brick.008",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.030",
+      "b": "SMELTER | flue founded side brick.010",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.030",
+      "b": "SMELTER | vault retaining strap.016",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.030",
+      "b": "SMELTER | vault retaining strap.017",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.031",
+      "b": "SMELTER | fitted refractory vault voussoir.032",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.031",
+      "b": "SMELTER | vault retaining strap.017",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.031",
+      "b": "SMELTER | vault retaining strap.018",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.032",
+      "b": "SMELTER | fitted refractory vault voussoir.033",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.032",
+      "b": "SMELTER | vault retaining strap.018",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.032",
+      "b": "SMELTER | vault retaining strap.019",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.033",
+      "b": "SMELTER | fitted refractory vault voussoir.034",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.033",
+      "b": "SMELTER | founded circuit terminal block",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.033",
+      "b": "SMELTER | founded rear kiln wall",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.033",
+      "b": "SMELTER | vault retaining strap.020",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.033",
+      "b": "SMELTER | vault retaining strap.021",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.034",
+      "b": "SMELTER | fitted refractory vault voussoir.035",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.034",
+      "b": "SMELTER | founded circuit terminal block",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.034",
+      "b": "SMELTER | founded rear kiln wall",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.034",
+      "b": "SMELTER | vault retaining strap.021",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.034",
+      "b": "SMELTER | vault retaining strap.022",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.035",
+      "b": "SMELTER | founded circuit terminal block",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.035",
+      "b": "SMELTER | founded rear kiln wall",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.035",
+      "b": "SMELTER | left founded service chest",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.035",
+      "b": "SMELTER | staggered founded side brick.015",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.035",
+      "b": "SMELTER | vault retaining strap.022",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | fitted refractory vault voussoir.035",
+      "b": "SMELTER | vault retaining strap.023",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner",
+      "b": "SMELTER | flue founded front back brick",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner",
+      "b": "SMELTER | flue founded front back brick.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner",
+      "b": "SMELTER | flue founded front back brick.004",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner",
+      "b": "SMELTER | flue founded front back brick.006",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner",
+      "b": "SMELTER | flue founded front back brick.008",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner",
+      "b": "SMELTER | flue founded front back brick.010",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner",
+      "b": "SMELTER | flue founded front back brick.012",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner",
+      "b": "SMELTER | flue founded front back brick.014",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner",
+      "b": "SMELTER | flue founded front back brick.016",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner",
+      "b": "SMELTER | flue founded front back brick.018",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner",
+      "b": "SMELTER | flue founded side brick",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner",
+      "b": "SMELTER | flue founded side brick.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner",
+      "b": "SMELTER | flue founded side brick.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner",
+      "b": "SMELTER | flue founded side brick.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner",
+      "b": "SMELTER | flue founded side brick.004",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner",
+      "b": "SMELTER | flue founded side brick.005",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner",
+      "b": "SMELTER | flue founded side brick.006",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner",
+      "b": "SMELTER | flue founded side brick.007",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner",
+      "b": "SMELTER | flue founded side brick.008",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner",
+      "b": "SMELTER | flue founded side brick.009",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner",
+      "b": "SMELTER | flue founded side brick.010",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner",
+      "b": "SMELTER | flue founded side brick.011",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner",
+      "b": "SMELTER | flue founded side brick.012",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner",
+      "b": "SMELTER | flue founded side brick.013",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner",
+      "b": "SMELTER | flue founded side brick.014",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner",
+      "b": "SMELTER | flue founded side brick.015",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner",
+      "b": "SMELTER | flue founded side brick.016",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner",
+      "b": "SMELTER | flue founded side brick.017",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner",
+      "b": "SMELTER | flue founded side brick.018",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner",
+      "b": "SMELTER | flue founded side brick.019",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner",
+      "b": "SMELTER | open ceramic flue crown",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner",
+      "b": "SMELTER | sealed refractory floor",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner",
+      "b": "SMELTER | staggered founded side brick.019",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner",
+      "b": "SMELTER | staggered founded side brick.023",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner",
+      "b": "SMELTER | staggered founded side brick.027",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner",
+      "b": "SMELTER | staggered founded side brick.031",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner",
+      "b": "SMELTER | vault retaining strap.014",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner",
+      "b": "SMELTER | vault retaining strap.015",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner",
+      "b": "SMELTER | vault retaining strap.016",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner.001",
+      "b": "SMELTER | flue founded front back brick.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner.001",
+      "b": "SMELTER | flue founded front back brick.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner.001",
+      "b": "SMELTER | flue founded front back brick.005",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner.001",
+      "b": "SMELTER | flue founded front back brick.007",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner.001",
+      "b": "SMELTER | flue founded front back brick.009",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner.001",
+      "b": "SMELTER | flue founded front back brick.011",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner.001",
+      "b": "SMELTER | flue founded front back brick.013",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner.001",
+      "b": "SMELTER | flue founded front back brick.015",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner.001",
+      "b": "SMELTER | flue founded front back brick.017",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner.001",
+      "b": "SMELTER | flue founded front back brick.019",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner.001",
+      "b": "SMELTER | flue founded side brick",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner.001",
+      "b": "SMELTER | flue founded side brick.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner.001",
+      "b": "SMELTER | flue founded side brick.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner.001",
+      "b": "SMELTER | flue founded side brick.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner.001",
+      "b": "SMELTER | flue founded side brick.004",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner.001",
+      "b": "SMELTER | flue founded side brick.005",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner.001",
+      "b": "SMELTER | flue founded side brick.006",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner.001",
+      "b": "SMELTER | flue founded side brick.007",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner.001",
+      "b": "SMELTER | flue founded side brick.008",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner.001",
+      "b": "SMELTER | flue founded side brick.009",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner.001",
+      "b": "SMELTER | flue founded side brick.010",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner.001",
+      "b": "SMELTER | flue founded side brick.011",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner.001",
+      "b": "SMELTER | flue founded side brick.012",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner.001",
+      "b": "SMELTER | flue founded side brick.013",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner.001",
+      "b": "SMELTER | flue founded side brick.014",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner.001",
+      "b": "SMELTER | flue founded side brick.015",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner.001",
+      "b": "SMELTER | flue founded side brick.016",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner.001",
+      "b": "SMELTER | flue founded side brick.017",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner.001",
+      "b": "SMELTER | flue founded side brick.018",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner.001",
+      "b": "SMELTER | flue founded side brick.019",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous front back mortar liner.001",
+      "b": "SMELTER | open ceramic flue crown",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous refractory mortar liner",
+      "b": "SMELTER | flue founded side brick",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous refractory mortar liner",
+      "b": "SMELTER | flue founded side brick.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous refractory mortar liner",
+      "b": "SMELTER | flue founded side brick.004",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous refractory mortar liner",
+      "b": "SMELTER | flue founded side brick.006",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous refractory mortar liner",
+      "b": "SMELTER | flue founded side brick.008",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous refractory mortar liner",
+      "b": "SMELTER | flue founded side brick.010",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous refractory mortar liner",
+      "b": "SMELTER | flue founded side brick.012",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous refractory mortar liner",
+      "b": "SMELTER | flue founded side brick.014",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous refractory mortar liner",
+      "b": "SMELTER | flue founded side brick.016",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous refractory mortar liner",
+      "b": "SMELTER | flue founded side brick.018",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous refractory mortar liner",
+      "b": "SMELTER | founded rear kiln wall",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous refractory mortar liner",
+      "b": "SMELTER | open ceramic flue crown",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous refractory mortar liner",
+      "b": "SMELTER | sealed refractory floor",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous refractory mortar liner.001",
+      "b": "SMELTER | flue founded side brick.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous refractory mortar liner.001",
+      "b": "SMELTER | flue founded side brick.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous refractory mortar liner.001",
+      "b": "SMELTER | flue founded side brick.005",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous refractory mortar liner.001",
+      "b": "SMELTER | flue founded side brick.007",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous refractory mortar liner.001",
+      "b": "SMELTER | flue founded side brick.009",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous refractory mortar liner.001",
+      "b": "SMELTER | flue founded side brick.011",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous refractory mortar liner.001",
+      "b": "SMELTER | flue founded side brick.013",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous refractory mortar liner.001",
+      "b": "SMELTER | flue founded side brick.015",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous refractory mortar liner.001",
+      "b": "SMELTER | flue founded side brick.017",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous refractory mortar liner.001",
+      "b": "SMELTER | flue founded side brick.019",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous refractory mortar liner.001",
+      "b": "SMELTER | founded rear kiln wall",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous refractory mortar liner.001",
+      "b": "SMELTER | masonry strap grounded seat.007",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous refractory mortar liner.001",
+      "b": "SMELTER | open ceramic flue crown",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous refractory mortar liner.001",
+      "b": "SMELTER | sealed refractory floor",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous refractory mortar liner.001",
+      "b": "SMELTER | staggered founded side brick.019",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous refractory mortar liner.001",
+      "b": "SMELTER | staggered founded side brick.023",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous refractory mortar liner.001",
+      "b": "SMELTER | staggered founded side brick.027",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue continuous refractory mortar liner.001",
+      "b": "SMELTER | staggered founded side brick.031",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick",
+      "b": "SMELTER | flue founded side brick",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick",
+      "b": "SMELTER | flue founded side brick.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick",
+      "b": "SMELTER | sealed refractory floor",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick",
+      "b": "SMELTER | staggered founded side brick.019",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick.001",
+      "b": "SMELTER | flue founded side brick",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick.001",
+      "b": "SMELTER | flue founded side brick.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick.002",
+      "b": "SMELTER | flue founded side brick.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick.002",
+      "b": "SMELTER | flue founded side brick.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick.002",
+      "b": "SMELTER | staggered founded side brick.019",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick.002",
+      "b": "SMELTER | staggered founded side brick.023",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick.002",
+      "b": "SMELTER | staggered founded side brick.027",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick.003",
+      "b": "SMELTER | flue founded side brick.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick.003",
+      "b": "SMELTER | flue founded side brick.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick.004",
+      "b": "SMELTER | flue founded side brick.004",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick.004",
+      "b": "SMELTER | flue founded side brick.005",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick.004",
+      "b": "SMELTER | staggered founded side brick.027",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick.004",
+      "b": "SMELTER | staggered founded side brick.031",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick.005",
+      "b": "SMELTER | flue founded side brick.004",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick.005",
+      "b": "SMELTER | flue founded side brick.005",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick.006",
+      "b": "SMELTER | flue founded side brick.006",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick.006",
+      "b": "SMELTER | flue founded side brick.007",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick.006",
+      "b": "SMELTER | staggered founded side brick.031",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick.007",
+      "b": "SMELTER | flue founded side brick.006",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick.007",
+      "b": "SMELTER | flue founded side brick.007",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick.008",
+      "b": "SMELTER | flue founded side brick.008",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick.008",
+      "b": "SMELTER | flue founded side brick.009",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick.008",
+      "b": "SMELTER | vault retaining strap.014",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick.008",
+      "b": "SMELTER | vault retaining strap.015",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick.009",
+      "b": "SMELTER | flue founded side brick.008",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick.009",
+      "b": "SMELTER | flue founded side brick.009",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick.010",
+      "b": "SMELTER | flue founded side brick.010",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick.010",
+      "b": "SMELTER | flue founded side brick.011",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick.010",
+      "b": "SMELTER | vault retaining strap.014",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick.010",
+      "b": "SMELTER | vault retaining strap.015",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick.010",
+      "b": "SMELTER | vault retaining strap.016",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick.011",
+      "b": "SMELTER | flue founded side brick.010",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick.011",
+      "b": "SMELTER | flue founded side brick.011",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick.012",
+      "b": "SMELTER | flue founded side brick.012",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick.012",
+      "b": "SMELTER | flue founded side brick.013",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick.013",
+      "b": "SMELTER | flue founded side brick.012",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick.013",
+      "b": "SMELTER | flue founded side brick.013",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick.014",
+      "b": "SMELTER | flue founded side brick.014",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick.014",
+      "b": "SMELTER | flue founded side brick.015",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick.015",
+      "b": "SMELTER | flue founded side brick.014",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick.015",
+      "b": "SMELTER | flue founded side brick.015",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick.016",
+      "b": "SMELTER | flue founded side brick.016",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick.016",
+      "b": "SMELTER | flue founded side brick.017",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick.017",
+      "b": "SMELTER | flue founded side brick.016",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick.017",
+      "b": "SMELTER | flue founded side brick.017",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick.018",
+      "b": "SMELTER | flue founded side brick.018",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick.018",
+      "b": "SMELTER | flue founded side brick.019",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick.018",
+      "b": "SMELTER | open ceramic flue crown",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick.019",
+      "b": "SMELTER | flue founded side brick.018",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick.019",
+      "b": "SMELTER | flue founded side brick.019",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded front back brick.019",
+      "b": "SMELTER | open ceramic flue crown",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded side brick",
+      "b": "SMELTER | founded rear kiln wall",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded side brick",
+      "b": "SMELTER | sealed refractory floor",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded side brick.001",
+      "b": "SMELTER | founded rear kiln wall",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded side brick.001",
+      "b": "SMELTER | masonry strap grounded seat.007",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded side brick.001",
+      "b": "SMELTER | sealed refractory floor",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded side brick.001",
+      "b": "SMELTER | staggered founded side brick.019",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded side brick.002",
+      "b": "SMELTER | founded rear kiln wall",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded side brick.003",
+      "b": "SMELTER | founded rear kiln wall",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded side brick.003",
+      "b": "SMELTER | masonry strap grounded seat.007",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded side brick.003",
+      "b": "SMELTER | staggered founded side brick.019",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded side brick.003",
+      "b": "SMELTER | staggered founded side brick.023",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded side brick.003",
+      "b": "SMELTER | staggered founded side brick.027",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded side brick.004",
+      "b": "SMELTER | flue retaining side band",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded side brick.004",
+      "b": "SMELTER | founded rear kiln wall",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded side brick.005",
+      "b": "SMELTER | flue retaining side band.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded side brick.005",
+      "b": "SMELTER | founded rear kiln wall",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded side brick.005",
+      "b": "SMELTER | masonry strap grounded seat.007",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded side brick.005",
+      "b": "SMELTER | staggered founded side brick.027",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded side brick.005",
+      "b": "SMELTER | staggered founded side brick.031",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded side brick.005",
+      "b": "SMELTER | vault retaining strap.012",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded side brick.006",
+      "b": "SMELTER | flue retaining side band",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded side brick.006",
+      "b": "SMELTER | founded rear kiln wall",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded side brick.007",
+      "b": "SMELTER | flue retaining side band.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded side brick.007",
+      "b": "SMELTER | founded rear kiln wall",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded side brick.007",
+      "b": "SMELTER | staggered founded side brick.031",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded side brick.007",
+      "b": "SMELTER | vault retaining strap.012",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded side brick.007",
+      "b": "SMELTER | vault retaining strap.013",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded side brick.008",
+      "b": "SMELTER | founded rear kiln wall",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded side brick.009",
+      "b": "SMELTER | founded rear kiln wall",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded side brick.009",
+      "b": "SMELTER | vault retaining strap.013",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded side brick.009",
+      "b": "SMELTER | vault retaining strap.014",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded side brick.010",
+      "b": "SMELTER | flue retaining side band.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded side brick.010",
+      "b": "SMELTER | vault retaining strap.016",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded side brick.011",
+      "b": "SMELTER | flue retaining side band.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded side brick.012",
+      "b": "SMELTER | flue retaining side band.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded side brick.013",
+      "b": "SMELTER | flue retaining side band.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded side brick.018",
+      "b": "SMELTER | flue retaining side band.004",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded side brick.018",
+      "b": "SMELTER | open ceramic flue crown",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded side brick.019",
+      "b": "SMELTER | flue retaining side band.005",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue founded side brick.019",
+      "b": "SMELTER | open ceramic flue crown",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue retaining front back band",
+      "b": "SMELTER | flue retaining side band",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue retaining front back band",
+      "b": "SMELTER | flue retaining side band.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue retaining front back band",
+      "b": "SMELTER | staggered founded side brick.031",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue retaining front back band",
+      "b": "SMELTER | vault retaining strap.012",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue retaining front back band.001",
+      "b": "SMELTER | flue retaining side band",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue retaining front back band.001",
+      "b": "SMELTER | flue retaining side band.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue retaining front back band.002",
+      "b": "SMELTER | flue retaining side band.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue retaining front back band.002",
+      "b": "SMELTER | flue retaining side band.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue retaining front back band.002",
+      "b": "SMELTER | vault retaining strap.016",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue retaining front back band.002",
+      "b": "SMELTER | vault retaining strap.017",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue retaining front back band.003",
+      "b": "SMELTER | flue retaining side band.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue retaining front back band.003",
+      "b": "SMELTER | flue retaining side band.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue retaining front back band.004",
+      "b": "SMELTER | flue retaining side band.004",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue retaining front back band.004",
+      "b": "SMELTER | flue retaining side band.005",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue retaining front back band.005",
+      "b": "SMELTER | flue retaining side band.004",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue retaining front back band.005",
+      "b": "SMELTER | flue retaining side band.005",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue retaining side band",
+      "b": "SMELTER | founded rear kiln wall",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue retaining side band.001",
+      "b": "SMELTER | staggered founded side brick.031",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue retaining side band.001",
+      "b": "SMELTER | vault retaining strap.012",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue retaining side band.002",
+      "b": "SMELTER | vault retaining strap.016",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | flue retaining side band.002",
+      "b": "SMELTER | vault retaining strap.017",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | foundation corner keeper",
+      "b": "SMELTER | keeper grounded head",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | foundation corner keeper.001",
+      "b": "SMELTER | keeper grounded head.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | foundation corner keeper.002",
+      "b": "SMELTER | keeper grounded head.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | foundation corner keeper.003",
+      "b": "SMELTER | keeper grounded head.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | founded charge tray",
+      "b": "SMELTER | retained door sill",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | founded charge tray",
+      "b": "SMELTER | sealed refractory floor",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | founded circuit terminal block",
+      "b": "SMELTER | founded rear kiln wall",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | founded circuit terminal block",
+      "b": "SMELTER | left founded service chest",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | founded circuit terminal block",
+      "b": "SMELTER | staggered founded side brick.011",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | founded circuit terminal block",
+      "b": "SMELTER | staggered founded side brick.015",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | founded rear kiln wall",
+      "b": "SMELTER | sealed refractory floor",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | green shield founded rim",
+      "b": "SMELTER | retained green roof inspection shield",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | green shield founded rim.001",
+      "b": "SMELTER | retained green roof inspection shield",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | green shield founded rim.002",
+      "b": "SMELTER | retained green roof inspection shield.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | green shield founded rim.003",
+      "b": "SMELTER | retained green roof inspection shield.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | green shield founded rim.004",
+      "b": "SMELTER | retained green roof inspection shield.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | green shield founded rim.005",
+      "b": "SMELTER | retained green roof inspection shield.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | green shield seated transverse trace",
+      "b": "SMELTER | retained green roof inspection shield",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | green shield seated transverse trace.001",
+      "b": "SMELTER | retained green roof inspection shield",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | green shield seated transverse trace.002",
+      "b": "SMELTER | retained green roof inspection shield.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | green shield seated transverse trace.003",
+      "b": "SMELTER | retained green roof inspection shield.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | green shield seated transverse trace.004",
+      "b": "SMELTER | retained green roof inspection shield.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | green shield seated transverse trace.005",
+      "b": "SMELTER | retained green roof inspection shield.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | left founded service chest",
+      "b": "SMELTER | masonry strap grounded seat.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | left founded service chest",
+      "b": "SMELTER | masonry strap grounded seat.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | left founded service chest",
+      "b": "SMELTER | masonry strap grounded seat.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | left founded service chest",
+      "b": "SMELTER | masonry strap rivet.002",
+      "basis": "contained solid volume contact",
+      "surface_distance": 0.016999997198581696
+    },
+    {
+      "a": "SMELTER | left founded service chest",
+      "b": "SMELTER | masonry strap rivet.003",
+      "basis": "contained solid volume contact",
+      "surface_distance": 0.030500024557113647
+    },
+    {
+      "a": "SMELTER | left founded service chest",
+      "b": "SMELTER | masonry strap rivet.004",
+      "basis": "contained solid volume contact",
+      "surface_distance": 0.016999997198581696
+    },
+    {
+      "a": "SMELTER | left founded service chest",
+      "b": "SMELTER | masonry strap rivet.005",
+      "basis": "contained solid volume contact",
+      "surface_distance": 0.030500024557113647
+    },
+    {
+      "a": "SMELTER | left founded service chest",
+      "b": "SMELTER | masonry strap rivet.006",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | left founded service chest",
+      "b": "SMELTER | masonry strap rivet.007",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | left founded service chest",
+      "b": "SMELTER | sealed refractory floor",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | left founded service chest",
+      "b": "SMELTER | service chest blind vent",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | left founded service chest",
+      "b": "SMELTER | service chest blind vent.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | left founded service chest",
+      "b": "SMELTER | service chest blind vent.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | left founded service chest",
+      "b": "SMELTER | service chest blind vent.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | left founded service chest",
+      "b": "SMELTER | service chest retaining rib",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | left founded service chest",
+      "b": "SMELTER | service chest retaining rib.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | left founded service chest",
+      "b": "SMELTER | staggered founded side brick.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | left founded service chest",
+      "b": "SMELTER | staggered founded side brick.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | left founded service chest",
+      "b": "SMELTER | staggered founded side brick.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | left founded service chest",
+      "b": "SMELTER | staggered founded side brick.005",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | left founded service chest",
+      "b": "SMELTER | staggered founded side brick.006",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | left founded service chest",
+      "b": "SMELTER | staggered founded side brick.007",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | left founded service chest",
+      "b": "SMELTER | staggered founded side brick.009",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | left founded service chest",
+      "b": "SMELTER | staggered founded side brick.010",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | left founded service chest",
+      "b": "SMELTER | staggered founded side brick.011",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | left founded service chest",
+      "b": "SMELTER | staggered founded side brick.013",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | left founded service chest",
+      "b": "SMELTER | staggered founded side brick.014",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | left founded service chest",
+      "b": "SMELTER | staggered founded side brick.015",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | left founded service chest",
+      "b": "SMELTER | vault retaining strap.023",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | left founded service chest",
+      "b": "SMELTER | vault strap seated head.023",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap grounded seat",
+      "b": "SMELTER | masonry strap rivet",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap grounded seat",
+      "b": "SMELTER | masonry strap rivet.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap grounded seat",
+      "b": "SMELTER | sealed refractory floor",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap grounded seat",
+      "b": "SMELTER | staggered founded side brick",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap grounded seat",
+      "b": "SMELTER | staggered founded side brick.004",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap grounded seat",
+      "b": "SMELTER | staggered founded side brick.008",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap grounded seat.001",
+      "b": "SMELTER | masonry strap rivet.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap grounded seat.001",
+      "b": "SMELTER | masonry strap rivet.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap grounded seat.001",
+      "b": "SMELTER | sealed refractory floor",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap grounded seat.001",
+      "b": "SMELTER | staggered founded side brick.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap grounded seat.001",
+      "b": "SMELTER | staggered founded side brick.005",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap grounded seat.001",
+      "b": "SMELTER | staggered founded side brick.009",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap grounded seat.002",
+      "b": "SMELTER | masonry strap rivet.004",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap grounded seat.002",
+      "b": "SMELTER | masonry strap rivet.005",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap grounded seat.002",
+      "b": "SMELTER | sealed refractory floor",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap grounded seat.002",
+      "b": "SMELTER | staggered founded side brick.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap grounded seat.002",
+      "b": "SMELTER | staggered founded side brick.006",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap grounded seat.002",
+      "b": "SMELTER | staggered founded side brick.010",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap grounded seat.003",
+      "b": "SMELTER | masonry strap rivet.006",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap grounded seat.003",
+      "b": "SMELTER | masonry strap rivet.007",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap grounded seat.003",
+      "b": "SMELTER | sealed refractory floor",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap grounded seat.003",
+      "b": "SMELTER | staggered founded side brick.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap grounded seat.003",
+      "b": "SMELTER | staggered founded side brick.007",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap grounded seat.003",
+      "b": "SMELTER | staggered founded side brick.011",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap grounded seat.004",
+      "b": "SMELTER | masonry strap rivet.008",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap grounded seat.004",
+      "b": "SMELTER | masonry strap rivet.009",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap grounded seat.004",
+      "b": "SMELTER | sealed refractory floor",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap grounded seat.004",
+      "b": "SMELTER | staggered founded side brick.016",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap grounded seat.004",
+      "b": "SMELTER | staggered founded side brick.020",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap grounded seat.004",
+      "b": "SMELTER | staggered founded side brick.024",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap grounded seat.005",
+      "b": "SMELTER | masonry strap rivet.010",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap grounded seat.005",
+      "b": "SMELTER | masonry strap rivet.011",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap grounded seat.005",
+      "b": "SMELTER | sealed refractory floor",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap grounded seat.005",
+      "b": "SMELTER | staggered founded side brick.017",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap grounded seat.005",
+      "b": "SMELTER | staggered founded side brick.021",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap grounded seat.005",
+      "b": "SMELTER | staggered founded side brick.025",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap grounded seat.006",
+      "b": "SMELTER | masonry strap rivet.012",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap grounded seat.006",
+      "b": "SMELTER | masonry strap rivet.013",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap grounded seat.006",
+      "b": "SMELTER | sealed refractory floor",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap grounded seat.006",
+      "b": "SMELTER | staggered founded side brick.018",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap grounded seat.006",
+      "b": "SMELTER | staggered founded side brick.022",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap grounded seat.006",
+      "b": "SMELTER | staggered founded side brick.026",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap grounded seat.007",
+      "b": "SMELTER | masonry strap rivet.014",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap grounded seat.007",
+      "b": "SMELTER | masonry strap rivet.015",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap grounded seat.007",
+      "b": "SMELTER | sealed refractory floor",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap grounded seat.007",
+      "b": "SMELTER | staggered founded side brick.019",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap grounded seat.007",
+      "b": "SMELTER | staggered founded side brick.023",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap grounded seat.007",
+      "b": "SMELTER | staggered founded side brick.027",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap rivet",
+      "b": "SMELTER | sealed refractory floor",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap rivet",
+      "b": "SMELTER | staggered founded side brick",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap rivet.001",
+      "b": "SMELTER | staggered founded side brick.008",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap rivet.002",
+      "b": "SMELTER | sealed refractory floor",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap rivet.002",
+      "b": "SMELTER | staggered founded side brick.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap rivet.003",
+      "b": "SMELTER | staggered founded side brick.009",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap rivet.004",
+      "b": "SMELTER | sealed refractory floor",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap rivet.004",
+      "b": "SMELTER | staggered founded side brick.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap rivet.005",
+      "b": "SMELTER | staggered founded side brick.010",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap rivet.006",
+      "b": "SMELTER | sealed refractory floor",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap rivet.006",
+      "b": "SMELTER | staggered founded side brick.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap rivet.007",
+      "b": "SMELTER | staggered founded side brick.011",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap rivet.008",
+      "b": "SMELTER | sealed refractory floor",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap rivet.008",
+      "b": "SMELTER | staggered founded side brick.016",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap rivet.009",
+      "b": "SMELTER | staggered founded side brick.024",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap rivet.010",
+      "b": "SMELTER | sealed refractory floor",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap rivet.010",
+      "b": "SMELTER | staggered founded side brick.017",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap rivet.011",
+      "b": "SMELTER | staggered founded side brick.025",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap rivet.012",
+      "b": "SMELTER | sealed refractory floor",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap rivet.012",
+      "b": "SMELTER | staggered founded side brick.018",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap rivet.013",
+      "b": "SMELTER | staggered founded side brick.026",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap rivet.014",
+      "b": "SMELTER | sealed refractory floor",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap rivet.014",
+      "b": "SMELTER | staggered founded side brick.019",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | masonry strap rivet.015",
+      "b": "SMELTER | staggered founded side brick.027",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | open ceramic flue crown",
+      "b": "SMELTER | spark arrestor top grille",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | open ceramic flue crown",
+      "b": "SMELTER | spark arrestor top grille.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | open ceramic flue crown",
+      "b": "SMELTER | spark arrestor top grille.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | open ceramic flue crown",
+      "b": "SMELTER | spark guard founded upright",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | open ceramic flue crown",
+      "b": "SMELTER | spark guard founded upright.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | retained door lintel",
+      "b": "SMELTER | retained firebox jamb",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | retained door lintel",
+      "b": "SMELTER | retained firebox jamb.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | retained door sill",
+      "b": "SMELTER | retained firebox jamb",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | retained door sill",
+      "b": "SMELTER | retained firebox jamb.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | retained door sill",
+      "b": "SMELTER | sealed refractory floor",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | retained door sill",
+      "b": "SMELTER | staggered founded side brick",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | retained door sill",
+      "b": "SMELTER | staggered founded side brick.016",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | retained firebox jamb",
+      "b": "SMELTER | sealed refractory floor",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | retained firebox jamb",
+      "b": "SMELTER | staggered founded side brick",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | retained firebox jamb",
+      "b": "SMELTER | staggered founded side brick.004",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | retained firebox jamb",
+      "b": "SMELTER | staggered founded side brick.008",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | retained firebox jamb",
+      "b": "SMELTER | staggered founded side brick.012",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | retained firebox jamb.001",
+      "b": "SMELTER | sealed refractory floor",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | retained firebox jamb.001",
+      "b": "SMELTER | staggered founded side brick.016",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | retained firebox jamb.001",
+      "b": "SMELTER | staggered founded side brick.020",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | retained firebox jamb.001",
+      "b": "SMELTER | staggered founded side brick.024",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | retained firebox jamb.001",
+      "b": "SMELTER | staggered founded side brick.028",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | sealed refractory floor",
+      "b": "SMELTER | staggered founded side brick",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | sealed refractory floor",
+      "b": "SMELTER | staggered founded side brick.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | sealed refractory floor",
+      "b": "SMELTER | staggered founded side brick.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | sealed refractory floor",
+      "b": "SMELTER | staggered founded side brick.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | sealed refractory floor",
+      "b": "SMELTER | staggered founded side brick.016",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | sealed refractory floor",
+      "b": "SMELTER | staggered founded side brick.017",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | sealed refractory floor",
+      "b": "SMELTER | staggered founded side brick.018",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | sealed refractory floor",
+      "b": "SMELTER | staggered founded side brick.019",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | service chest blind vent.001",
+      "b": "SMELTER | service chest seated plaque",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | service chest blind vent.001",
+      "b": "SMELTER | service chest seated plaque.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | service chest blind vent.001",
+      "b": "SMELTER | service chest seated plaque.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | service chest blind vent.002",
+      "b": "SMELTER | service chest seated plaque",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | service chest blind vent.002",
+      "b": "SMELTER | service chest seated plaque.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | service chest blind vent.002",
+      "b": "SMELTER | service chest seated plaque.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | service chest seated plaque",
+      "b": "SMELTER | service plaque raised glyph",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | service chest seated plaque",
+      "b": "SMELTER | service plaque raised glyph.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | service chest seated plaque",
+      "b": "SMELTER | service plaque raised glyph.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | service chest seated plaque.001",
+      "b": "SMELTER | service plaque raised glyph.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | service chest seated plaque.001",
+      "b": "SMELTER | service plaque raised glyph.004",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | service chest seated plaque.001",
+      "b": "SMELTER | service plaque raised glyph.005",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | service chest seated plaque.002",
+      "b": "SMELTER | service plaque raised glyph.006",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | service chest seated plaque.002",
+      "b": "SMELTER | service plaque raised glyph.007",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | service chest seated plaque.002",
+      "b": "SMELTER | service plaque raised glyph.008",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | spark arrestor top grille.001",
+      "b": "SMELTER | spark guard founded upright",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | spark arrestor top grille.001",
+      "b": "SMELTER | spark guard founded upright.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | spark guard founded upright",
+      "b": "SMELTER | spark guard supported hood",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | spark guard founded upright.001",
+      "b": "SMELTER | spark guard supported hood",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | staggered founded side brick.012",
+      "b": "SMELTER | vault retaining strap.011",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | staggered founded side brick.015",
+      "b": "SMELTER | vault retaining strap.023",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | staggered founded side brick.028",
+      "b": "SMELTER | vault retaining strap",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | staggered founded side brick.030",
+      "b": "SMELTER | upper bearing grounded side arm",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | staggered founded side brick.031",
+      "b": "SMELTER | vault retaining strap.012",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | thermal regulator grounded support",
+      "b": "SMELTER | upper bearing grounded side arm.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | vault retaining strap",
+      "b": "SMELTER | vault retaining strap.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | vault retaining strap",
+      "b": "SMELTER | vault strap seated head",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | vault retaining strap.001",
+      "b": "SMELTER | vault retaining strap.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | vault retaining strap.001",
+      "b": "SMELTER | vault strap seated head.001",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | vault retaining strap.002",
+      "b": "SMELTER | vault retaining strap.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | vault retaining strap.002",
+      "b": "SMELTER | vault strap seated head.002",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | vault retaining strap.003",
+      "b": "SMELTER | vault retaining strap.004",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | vault retaining strap.003",
+      "b": "SMELTER | vault strap seated head.003",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | vault retaining strap.004",
+      "b": "SMELTER | vault retaining strap.005",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | vault retaining strap.004",
+      "b": "SMELTER | vault strap seated head.004",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | vault retaining strap.005",
+      "b": "SMELTER | vault retaining strap.006",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | vault retaining strap.005",
+      "b": "SMELTER | vault strap seated head.005",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | vault retaining strap.006",
+      "b": "SMELTER | vault retaining strap.007",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | vault retaining strap.006",
+      "b": "SMELTER | vault strap seated head.006",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | vault retaining strap.007",
+      "b": "SMELTER | vault retaining strap.008",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | vault retaining strap.007",
+      "b": "SMELTER | vault strap seated head.007",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | vault retaining strap.008",
+      "b": "SMELTER | vault retaining strap.009",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | vault retaining strap.008",
+      "b": "SMELTER | vault strap seated head.008",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | vault retaining strap.009",
+      "b": "SMELTER | vault retaining strap.010",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | vault retaining strap.009",
+      "b": "SMELTER | vault strap seated head.009",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | vault retaining strap.010",
+      "b": "SMELTER | vault retaining strap.011",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | vault retaining strap.010",
+      "b": "SMELTER | vault strap seated head.010",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | vault retaining strap.011",
+      "b": "SMELTER | vault strap seated head.011",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | vault retaining strap.012",
+      "b": "SMELTER | vault retaining strap.013",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | vault retaining strap.012",
+      "b": "SMELTER | vault strap seated head.012",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | vault retaining strap.013",
+      "b": "SMELTER | vault retaining strap.014",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | vault retaining strap.013",
+      "b": "SMELTER | vault strap seated head.013",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | vault retaining strap.014",
+      "b": "SMELTER | vault retaining strap.015",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | vault retaining strap.014",
+      "b": "SMELTER | vault strap seated head.014",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | vault retaining strap.015",
+      "b": "SMELTER | vault retaining strap.016",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | vault retaining strap.015",
+      "b": "SMELTER | vault strap seated head.015",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | vault retaining strap.016",
+      "b": "SMELTER | vault retaining strap.017",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | vault retaining strap.016",
+      "b": "SMELTER | vault strap seated head.016",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | vault retaining strap.017",
+      "b": "SMELTER | vault retaining strap.018",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | vault retaining strap.017",
+      "b": "SMELTER | vault strap seated head.017",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | vault retaining strap.018",
+      "b": "SMELTER | vault retaining strap.019",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | vault retaining strap.018",
+      "b": "SMELTER | vault strap seated head.018",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | vault retaining strap.019",
+      "b": "SMELTER | vault retaining strap.020",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | vault retaining strap.019",
+      "b": "SMELTER | vault strap seated head.019",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | vault retaining strap.020",
+      "b": "SMELTER | vault retaining strap.021",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | vault retaining strap.020",
+      "b": "SMELTER | vault strap seated head.020",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | vault retaining strap.021",
+      "b": "SMELTER | vault retaining strap.022",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | vault retaining strap.021",
+      "b": "SMELTER | vault strap seated head.021",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | vault retaining strap.022",
+      "b": "SMELTER | vault retaining strap.023",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | vault retaining strap.022",
+      "b": "SMELTER | vault strap seated head.022",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | vault retaining strap.023",
+      "b": "SMELTER | vault strap seated head.023",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | moving damper lever",
+      "b": "SMELTER | moving retained damper spindle",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | moving damper lever",
+      "b": "SMELTER | moving spindle upper retaining head",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | moving retained damper spindle",
+      "b": "SMELTER | moving round damper butterfly",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | moving retained damper spindle",
+      "b": "SMELTER | moving spindle lower retaining head",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    },
+    {
+      "a": "SMELTER | moving retained damper spindle",
+      "b": "SMELTER | moving spindle upper retaining head",
+      "basis": "actual triangle intersection/contact",
+      "surface_distance": null
+    }
+  ],
+  "passed_without_manual_exclusions": false,
+  "note": "Raw support graph. Volume contacts still require intended-interface review; a contact is not proof that two unrelated components should intersect. Bearings need clearance and explicit support design."
+}

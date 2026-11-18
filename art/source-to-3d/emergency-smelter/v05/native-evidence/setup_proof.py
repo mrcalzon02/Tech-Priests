@@ -1,0 +1,6 @@
+from pathlib import Path
+import json
+R=Path(__file__).resolve().parent;M=R.parent/'tp-sterling-contract-main01/mods';d=M/'smelter-v1-proof_0.0.1';d.mkdir(exist_ok=True);(d/'info.json').write_text(json.dumps({'name':'smelter-v1-proof','version':'0.0.1','title':'Actual Emergency Smelter operation','author':'local','factorio_version':'2.1','dependencies':['base','space-age','tech-priests']}));(d/'control.lua').write_bytes((R/'smelter-proof-control.lua').read_bytes());(d/'data.lua').write_text('data:extend({{type="electric-energy-interface",name="smelter-proof-power",flags={"not-on-map"},collision_mask={layers={}},energy_source={type="electric",buffer_capacity="1GJ",usage_priority="primary-output",output_flow_limit="50MW"},energy_production="50MW",energy_usage="0W",picture={filename="__core__/graphics/empty.png",width=1,height=1}}})\n');p=M/'mod-list.json';m=json.loads(p.read_text());m['mods']=[x for x in m['mods']if x['name']!='smelter-v1-proof']
+for x in m['mods']:
+ if x['name']not in('base','space-age','elevated-rails','quality','recycler','tech-priests'):x['enabled']=False
+m['mods'].append({'name':'smelter-v1-proof','enabled':True});p.write_text(json.dumps(m))

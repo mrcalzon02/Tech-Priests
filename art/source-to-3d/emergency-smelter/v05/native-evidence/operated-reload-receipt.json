@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "actual_operated_save": "smelter-operated.zip",
+  "save_sha256": "2ff1770dc674fa13aa0646c3bf45e09f88fbfd8c247328c3b89bf078612d0dd8",
+  "actual_reload_test_ticks": 600,
+  "reload_exit_code": 0,
+  "reload_log_sha256": "91b87f666c88299047590818e7194757198883d4a3b10d04b5d201f1d4695cbe",
+  "six_actual_automatic_recipe_paths_and_operating_modes_passed": true,
+  "hidden_emergency_wrappers_not_forced": true,
+  "no_target_or_accumulator_energy_assignments": true
+}

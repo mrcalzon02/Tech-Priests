@@ -1,0 +1,143 @@
+{
+  "passed": true,
+  "source_sha256": "50fae2883f2fe0870c90c32cc7259a4b33012d71cb9d9adbf1a9b8e986bab6a3",
+  "runtime_sha256": "68eec69b5c8be25e226b422b672803ae53ce5dc3dfe11573fbf89964051c66c5",
+  "materials": [
+    {
+      "role": "iron",
+      "fmpl_material_id": "iron",
+      "actual_glb_pixels_max_error": {
+        "albedo": 0.0,
+        "normal": 0.0,
+        "roughness_from_original_green": 0.0,
+        "metallic_from_original_blue": 0.0
+      },
+      "correct_orm_green_roughness_blue_metallic": true,
+      "normal_scale": 0.2800000011920929,
+      "passed": true
+    },
+    {
+      "role": "machine_steel",
+      "fmpl_material_id": "machine_steel",
+      "actual_glb_pixels_max_error": {
+        "albedo": 0.0,
+        "normal": 0.0,
+        "roughness_from_original_green": 0.0,
+        "metallic_from_original_blue": 0.0
+      },
+      "correct_orm_green_roughness_blue_metallic": true,
+      "normal_scale": 0.2800000011920929,
+      "passed": true
+    },
+    {
+      "role": "alert",
+      "fmpl_material_id": "alert",
+      "actual_glb_pixels_max_error": {
+        "albedo": 0.0,
+        "normal": 0.0,
+        "roughness_from_original_green": 0.0,
+        "metallic_from_original_blue": 0.0
+      },
+      "correct_orm_green_roughness_blue_metallic": true,
+      "normal_scale": 0.2800000011920929,
+      "passed": true
+    },
+    {
+      "role": "brass",
+      "fmpl_material_id": "brass",
+      "actual_glb_pixels_max_error": {
+        "albedo": 0.0,
+        "normal": 0.0,
+        "roughness_from_original_green": 0.0,
+        "metallic_from_original_blue": 0.0
+      },
+      "correct_orm_green_roughness_blue_metallic": true,
+      "normal_scale": 0.2800000011920929,
+      "passed": true
+    },
+    {
+      "role": "insulator",
+      "fmpl_material_id": "insulator",
+      "actual_glb_pixels_max_error": {
+        "albedo": 0.0,
+        "normal": 0.0,
+        "roughness_from_original_green": 0.0,
+        "metallic_from_original_blue": 0.0
+      },
+      "correct_orm_green_roughness_blue_metallic": true,
+      "normal_scale": 0.2800000011920929,
+      "passed": true
+    },
+    {
+      "role": "oxide_red",
+      "fmpl_material_id": "oxide_red",
+      "actual_glb_pixels_max_error": {
+        "albedo": 0.0,
+        "normal": 0.0,
+        "roughness_from_original_green": 0.0,
+        "metallic_from_original_blue": 0.0
+      },
+      "correct_orm_green_roughness_blue_metallic": true,
+      "normal_scale": 0.2800000011920929,
+      "passed": true
+    },
+    {
+      "role": "indicator_green",
+      "fmpl_material_id": "indicator_green",
+      "actual_glb_pixels_max_error": {
+        "albedo": 0.0,
+        "normal": 0.0,
+        "roughness_from_original_green": 0.0,
+        "metallic_from_original_blue": 0.0
+      },
+      "correct_orm_green_roughness_blue_metallic": true,
+      "normal_scale": 0.2800000011920929,
+      "passed": true
+    },
+    {
+      "role": "dark_recess",
+      "fmpl_material_id": "dark_recess",
+      "actual_glb_pixels_max_error": {
+        "albedo": 0.0,
+        "normal": 0.0,
+        "roughness_from_original_green": 0.0,
+        "metallic_from_original_blue": 0.0
+      },
+      "correct_orm_green_roughness_blue_metallic": true,
+      "normal_scale": 0.2800000011920929,
+      "passed": true
+    },
+    {
+      "role": "ferrocrete_dark",
+      "fmpl_material_id": "ferrocrete_dark",
+      "actual_glb_pixels_max_error": {
+        "albedo": 0.0,
+        "normal": 0.0,
+        "roughness_from_original_green": 0.0,
+        "metallic_from_original_blue": 0.0
+      },
+      "correct_orm_green_roughness_blue_metallic": true,
+      "normal_scale": 0.44999998807907104,
+      "passed": true
+    },
+    {
+      "role": "ferrocrete",
+      "fmpl_material_id": "ferrocrete",
+      "actual_glb_pixels_max_error": {
+        "albedo": 0.0,
+        "normal": 0.0,
+        "roughness_from_original_green": 0.0,
+        "metallic_from_original_blue": 0.0
+      },
+      "correct_orm_green_roughness_blue_metallic": true,
+      "normal_scale": 0.44999998807907104,
+      "passed": true
+    }
+  ],
+  "original_source_maps_git_blob_verified": true,
+  "albedo_color_space": "sRGB",
+  "normal_and_orm_color_space": "Non-Color",
+  "all_actual_exported_pixels_checked": true,
+  "correct_source_indexed_fmpl_materials": true,
+  "owner_visual_approved": false
+}

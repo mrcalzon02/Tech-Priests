@@ -1,0 +1,18 @@
+{
+  "base_commit": "8263531d659c885ec36a15767ff844c863d82fd1",
+  "source_sha256": "50fae2883f2fe0870c90c32cc7259a4b33012d71cb9d9adbf1a9b8e986bab6a3",
+  "runtime_sha256": "68eec69b5c8be25e226b422b672803ae53ce5dc3dfe11573fbf89964051c66c5",
+  "sprites": {
+    "icon.png": "b01c27762662fdbee6dbe874259fce915b2119b3c6e98fc319273ae194dd06c5",
+    "idle.png": "88db51bd66157c78ccf6e43001417adba47cd3b96952b9f9cfec4c2d4571aad6",
+    "shadow.png": "1ab7bde7f149373ecf4b0c1272624da44d976be6839341e6824f54677b51ec41",
+    "working.png": "65dfb64f66743c9d1204facb2e4fbbc01b77cf68f61ba0c64deed5d629c9bb8b"
+  },
+  "native_verification_pending": true,
+  "production_repository_integrated": false,
+  "only_visual_fields_and_existing_recipe_output_capacity_repair": true,
+  "result_inventory_size_before": 1,
+  "result_inventory_size_after": 8,
+  "smoke_position_matches_actual_chimney": true,
+  "owner_visual_approved": false
+}

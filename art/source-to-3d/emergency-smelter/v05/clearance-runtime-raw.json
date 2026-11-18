@@ -1,0 +1,5316 @@
+{
+  "artifact": "tanks-structure-production\\build\\tp-emergency-smelter-main01\\authored-v05\\smelter-v05.glb",
+  "sha256": "68eec69b5c8be25e226b422b672803ae53ce5dc3dfe11573fbf89964051c66c5",
+  "sampled_poses": 193,
+  "authored_frames": 97,
+  "includes_half_frames": true,
+  "moving_meshes": [
+    "SMELTER | moving damper lever",
+    "SMELTER | moving retained damper spindle",
+    "SMELTER | moving round damper butterfly",
+    "SMELTER | moving spindle lower retaining head",
+    "SMELTER | moving spindle upper retaining head"
+  ],
+  "motion_owners": {
+    "SMELTER | air intake founded foot": null,
+    "SMELTER | air intake retained grille": null,
+    "SMELTER | air intake retained grille.001": null,
+    "SMELTER | air intake retained grille.002": null,
+    "SMELTER | bearing grounded pillar": null,
+    "SMELTER | bearing grounded pillar.001": null,
+    "SMELTER | burner grille grounded rail": null,
+    "SMELTER | burner grille grounded rail.001": null,
+    "SMELTER | burner sight slit": null,
+    "SMELTER | burner sight slit.001": null,
+    "SMELTER | burner sight slit.002": null,
+    "SMELTER | charge plate seated mark": null,
+    "SMELTER | charge plate seated mark.001": null,
+    "SMELTER | charge plate seated mark.002": null,
+    "SMELTER | charge tray upstand": null,
+    "SMELTER | charge tray upstand.001": null,
+    "SMELTER | circuit ceramic terminal seat": null,
+    "SMELTER | circuit ceramic terminal seat.001": null,
+    "SMELTER | circuit terminal head": null,
+    "SMELTER | circuit terminal head.001": null,
+    "SMELTER | closed thermal draft regulator": null,
+    "SMELTER | combustion air intake": null,
+    "SMELTER | damper fixed lower bearing": null,
+    "SMELTER | damper fixed upper bearing": null,
+    "SMELTER | dark closed iron firebox door": null,
+    "SMELTER | door charge plate": null,
+    "SMELTER | door retained hinge eye": null,
+    "SMELTER | door retained hinge eye.001": null,
+    "SMELTER | door retained hinge eye.002": null,
+    "SMELTER | door retained hinge eye.003": null,
+    "SMELTER | door seated hinge pintle": null,
+    "SMELTER | door seated hinge pintle.001": null,
+    "SMELTER | door seated hinge pintle.002": null,
+    "SMELTER | door seated hinge pintle.003": null,
+    "SMELTER | dressed foundation": null,
+    "SMELTER | firebox retained rivet": null,
+    "SMELTER | firebox retained rivet.001": null,
+    "SMELTER | firebox retained rivet.002": null,
+    "SMELTER | firebox retained rivet.003": null,
+    "SMELTER | fitted refractory vault voussoir": null,
+    "SMELTER | fitted refractory vault voussoir.001": null,
+    "SMELTER | fitted refractory vault voussoir.002": null,
+    "SMELTER | fitted refractory vault voussoir.003": null,
+    "SMELTER | fitted refractory vault voussoir.004": null,
+    "SMELTER | fitted refractory vault voussoir.005": null,
+    "SMELTER | fitted refractory vault voussoir.006": null,
+    "SMELTER | fitted refractory vault voussoir.007": null,
+    "SMELTER | fitted refractory vault voussoir.008": null,
+    "SMELTER | fitted refractory vault voussoir.009": null,
+    "SMELTER | fitted refractory vault voussoir.010": null,
+    "SMELTER | fitted refractory vault voussoir.011": null,
+    "SMELTER | fitted refractory vault voussoir.012": null,
+    "SMELTER | fitted refractory vault voussoir.013": null,
+    "SMELTER | fitted refractory vault voussoir.014": null,
+    "SMELTER | fitted refractory vault voussoir.015": null,
+    "SMELTER | fitted refractory vault voussoir.016": null,
+    "SMELTER | fitted refractory vault voussoir.017": null,
+    "SMELTER | fitted refractory vault voussoir.018": null,
+    "SMELTER | fitted refractory vault voussoir.019": null,
+    "SMELTER | fitted refractory vault voussoir.020": null,
+    "SMELTER | fitted refractory vault voussoir.021": null,
+    "SMELTER | fitted refractory vault voussoir.022": null,
+    "SMELTER | fitted refractory vault voussoir.023": null,
+    "SMELTER | fitted refractory vault voussoir.024": null,
+    "SMELTER | fitted refractory vault voussoir.025": null,
+    "SMELTER | fitted refractory vault voussoir.026": null,
+    "SMELTER | fitted refractory vault voussoir.027": null,
+    "SMELTER | fitted refractory vault voussoir.028": null,
+    "SMELTER | fitted refractory vault voussoir.029": null,
+    "SMELTER | fitted refractory vault voussoir.030": null,
+    "SMELTER | fitted refractory vault voussoir.031": null,
+    "SMELTER | fitted refractory vault voussoir.032": null,
+    "SMELTER | fitted refractory vault voussoir.033": null,
+    "SMELTER | fitted refractory vault voussoir.034": null,
+    "SMELTER | fitted refractory vault voussoir.035": null,
+    "SMELTER | fixed retained burner grille": null,
+    "SMELTER | fixed retained burner grille.001": null,
+    "SMELTER | fixed retained burner grille.002": null,
+    "SMELTER | fixed retained burner grille.003": null,
+    "SMELTER | fixed retained burner grille.004": null,
+    "SMELTER | fixed retained burner grille.005": null,
+    "SMELTER | fixed retained burner grille.006": null,
+    "SMELTER | fixed retained burner grille.007": null,
+    "SMELTER | fixed retained burner grille.008": null,
+    "SMELTER | fixed retained burner grille.009": null,
+    "SMELTER | fixed retained burner grille.010": null,
+    "SMELTER | flue continuous front back mortar liner": null,
+    "SMELTER | flue continuous front back mortar liner.001": null,
+    "SMELTER | flue continuous refractory mortar liner": null,
+    "SMELTER | flue continuous refractory mortar liner.001": null,
+    "SMELTER | flue founded front back brick": null,
+    "SMELTER | flue founded front back brick.001": null,
+    "SMELTER | flue founded front back brick.002": null,
+    "SMELTER | flue founded front back brick.003": null,
+    "SMELTER | flue founded front back brick.004": null,
+    "SMELTER | flue founded front back brick.005": null,
+    "SMELTER | flue founded front back brick.006": null,
+    "SMELTER | flue founded front back brick.007": null,
+    "SMELTER | flue founded front back brick.008": null,
+    "SMELTER | flue founded front back brick.009": null,
+    "SMELTER | flue founded front back brick.010": null,
+    "SMELTER | flue founded front back brick.011": null,
+    "SMELTER | flue founded front back brick.012": null,
+    "SMELTER | flue founded front back brick.013": null,
+    "SMELTER | flue founded front back brick.014": null,
+    "SMELTER | flue founded front back brick.015": null,
+    "SMELTER | flue founded front back brick.016": null,
+    "SMELTER | flue founded front back brick.017": null,
+    "SMELTER | flue founded front back brick.018": null,
+    "SMELTER | flue founded front back brick.019": null,
+    "SMELTER | flue founded side brick": null,
+    "SMELTER | flue founded side brick.001": null,
+    "SMELTER | flue founded side brick.002": null,
+    "SMELTER | flue founded side brick.003": null,
+    "SMELTER | flue founded side brick.004": null,
+    "SMELTER | flue founded side brick.005": null,
+    "SMELTER | flue founded side brick.006": null,
+    "SMELTER | flue founded side brick.007": null,
+    "SMELTER | flue founded side brick.008": null,
+    "SMELTER | flue founded side brick.009": null,
+    "SMELTER | flue founded side brick.010": null,
+    "SMELTER | flue founded side brick.011": null,
+    "SMELTER | flue founded side brick.012": null,
+    "SMELTER | flue founded side brick.013": null,
+    "SMELTER | flue founded side brick.014": null,
+    "SMELTER | flue founded side brick.015": null,
+    "SMELTER | flue founded side brick.016": null,
+    "SMELTER | flue founded side brick.017": null,
+    "SMELTER | flue founded side brick.018": null,
+    "SMELTER | flue founded side brick.019": null,
+    "SMELTER | flue retaining front back band": null,
+    "SMELTER | flue retaining front back band.001": null,
+    "SMELTER | flue retaining front back band.002": null,
+    "SMELTER | flue retaining front back band.003": null,
+    "SMELTER | flue retaining front back band.004": null,
+    "SMELTER | flue retaining front back band.005": null,
+    "SMELTER | flue retaining side band": null,
+    "SMELTER | flue retaining side band.001": null,
+    "SMELTER | flue retaining side band.002": null,
+    "SMELTER | flue retaining side band.003": null,
+    "SMELTER | flue retaining side band.004": null,
+    "SMELTER | flue retaining side band.005": null,
+    "SMELTER | foundation corner keeper": null,
+    "SMELTER | foundation corner keeper.001": null,
+    "SMELTER | foundation corner keeper.002": null,
+    "SMELTER | foundation corner keeper.003": null,
+    "SMELTER | founded charge tray": null,
+    "SMELTER | founded circuit terminal block": null,
+    "SMELTER | founded rear kiln wall": null,
+    "SMELTER | green shield founded rim": null,
+    "SMELTER | green shield founded rim.001": null,
+    "SMELTER | green shield founded rim.002": null,
+    "SMELTER | green shield founded rim.003": null,
+    "SMELTER | green shield founded rim.004": null,
+    "SMELTER | green shield founded rim.005": null,
+    "SMELTER | green shield seated transverse trace": null,
+    "SMELTER | green shield seated transverse trace.001": null,
+    "SMELTER | green shield seated transverse trace.002": null,
+    "SMELTER | green shield seated transverse trace.003": null,
+    "SMELTER | green shield seated transverse trace.004": null,
+    "SMELTER | green shield seated transverse trace.005": null,
+    "SMELTER | keeper grounded head": null,
+    "SMELTER | keeper grounded head.001": null,
+    "SMELTER | keeper grounded head.002": null,
+    "SMELTER | keeper grounded head.003": null,
+    "SMELTER | left founded service chest": null,
+    "SMELTER | masonry strap grounded seat": null,
+    "SMELTER | masonry strap grounded seat.001": null,
+    "SMELTER | masonry strap grounded seat.002": null,
+    "SMELTER | masonry strap grounded seat.003": null,
+    "SMELTER | masonry strap grounded seat.004": null,
+    "SMELTER | masonry strap grounded seat.005": null,
+    "SMELTER | masonry strap grounded seat.006": null,
+    "SMELTER | masonry strap grounded seat.007": null,
+    "SMELTER | masonry strap rivet": null,
+    "SMELTER | masonry strap rivet.001": null,
+    "SMELTER | masonry strap rivet.002": null,
+    "SMELTER | masonry strap rivet.003": null,
+    "SMELTER | masonry strap rivet.004": null,
+    "SMELTER | masonry strap rivet.005": null,
+    "SMELTER | masonry strap rivet.006": null,
+    "SMELTER | masonry strap rivet.007": null,
+    "SMELTER | masonry strap rivet.008": null,
+    "SMELTER | masonry strap rivet.009": null,
+    "SMELTER | masonry strap rivet.010": null,
+    "SMELTER | masonry strap rivet.011": null,
+    "SMELTER | masonry strap rivet.012": null,
+    "SMELTER | masonry strap rivet.013": null,
+    "SMELTER | masonry strap rivet.014": null,
+    "SMELTER | masonry strap rivet.015": null,
+    "SMELTER | open ceramic flue crown": null,
+    "SMELTER | retained door lintel": null,
+    "SMELTER | retained door sill": null,
+    "SMELTER | retained firebox jamb": null,
+    "SMELTER | retained firebox jamb.001": null,
+    "SMELTER | retained green roof inspection shield": null,
+    "SMELTER | retained green roof inspection shield.001": null,
+    "SMELTER | retained green roof inspection shield.002": null,
+    "SMELTER | sealed refractory floor": null,
+    "SMELTER | service chest blind vent": null,
+    "SMELTER | service chest blind vent.001": null,
+    "SMELTER | service chest blind vent.002": null,
+    "SMELTER | service chest blind vent.003": null,
+    "SMELTER | service chest retaining rib": null,
+    "SMELTER | service chest retaining rib.001": null,
+    "SMELTER | service chest seated plaque": null,
+    "SMELTER | service chest seated plaque.001": null,
+    "SMELTER | service chest seated plaque.002": null,
+    "SMELTER | service plaque raised glyph": null,
+    "SMELTER | service plaque raised glyph.001": null,
+    "SMELTER | service plaque raised glyph.002": null,
+    "SMELTER | service plaque raised glyph.003": null,
+    "SMELTER | service plaque raised glyph.004": null,
+    "SMELTER | service plaque raised glyph.005": null,
+    "SMELTER | service plaque raised glyph.006": null,
+    "SMELTER | service plaque raised glyph.007": null,
+    "SMELTER | service plaque raised glyph.008": null,
+    "SMELTER | spark arrestor top grille": null,
+    "SMELTER | spark arrestor top grille.001": null,
+    "SMELTER | spark arrestor top grille.002": null,
+    "SMELTER | spark guard founded upright": null,
+    "SMELTER | spark guard founded upright.001": null,
+    "SMELTER | spark guard supported hood": null,
+    "SMELTER | staggered founded side brick": null,
+    "SMELTER | staggered founded side brick.001": null,
+    "SMELTER | staggered founded side brick.002": null,
+    "SMELTER | staggered founded side brick.003": null,
+    "SMELTER | staggered founded side brick.004": null,
+    "SMELTER | staggered founded side brick.005": null,
+    "SMELTER | staggered founded side brick.006": null,
+    "SMELTER | staggered founded side brick.007": null,
+    "SMELTER | staggered founded side brick.008": null,
+    "SMELTER | staggered founded side brick.009": null,
+    "SMELTER | staggered founded side brick.010": null,
+    "SMELTER | staggered founded side brick.011": null,
+    "SMELTER | staggered founded side brick.012": null,
+    "SMELTER | staggered founded side brick.013": null,
+    "SMELTER | staggered founded side brick.014": null,
+    "SMELTER | staggered founded side brick.015": null,
+    "SMELTER | staggered founded side brick.016": null,
+    "SMELTER | staggered founded side brick.017": null,
+    "SMELTER | staggered founded side brick.018": null,
+    "SMELTER | staggered founded side brick.019": null,
+    "SMELTER | staggered founded side brick.020": null,
+    "SMELTER | staggered founded side brick.021": null,
+    "SMELTER | staggered founded side brick.022": null,
+    "SMELTER | staggered founded side brick.023": null,
+    "SMELTER | staggered founded side brick.024": null,
+    "SMELTER | staggered founded side brick.025": null,
+    "SMELTER | staggered founded side brick.026": null,
+    "SMELTER | staggered founded side brick.027": null,
+    "SMELTER | staggered founded side brick.028": null,
+    "SMELTER | staggered founded side brick.029": null,
+    "SMELTER | staggered founded side brick.030": null,
+    "SMELTER | staggered founded side brick.031": null,
+    "SMELTER | thermal regulator grounded support": null,
+    "SMELTER | thermal regulator sealed crown": null,
+    "SMELTER | upper bearing grounded side arm": null,
+    "SMELTER | upper bearing grounded side arm.001": null,
+    "SMELTER | vault retaining strap": null,
+    "SMELTER | vault retaining strap.001": null,
+    "SMELTER | vault retaining strap.002": null,
+    "SMELTER | vault retaining strap.003": null,
+    "SMELTER | vault retaining strap.004": null,
+    "SMELTER | vault retaining strap.005": null,
+    "SMELTER | vault retaining strap.006": null,
+    "SMELTER | vault retaining strap.007": null,
+    "SMELTER | vault retaining strap.008": null,
+    "SMELTER | vault retaining strap.009": null,
+    "SMELTER | vault retaining strap.010": null,
+    "SMELTER | vault retaining strap.011": null,
+    "SMELTER | vault retaining strap.012": null,
+    "SMELTER | vault retaining strap.013": null,
+    "SMELTER | vault retaining strap.014": null,
+    "SMELTER | vault retaining strap.015": null,
+    "SMELTER | vault retaining strap.016": null,
+    "SMELTER | vault retaining strap.017": null,
+    "SMELTER | vault retaining strap.018": null,
+    "SMELTER | vault retaining strap.019": null,
+    "SMELTER | vault retaining strap.020": null,
+    "SMELTER | vault retaining strap.021": null,
+    "SMELTER | vault retaining strap.022": null,
+    "SMELTER | vault retaining strap.023": null,
+    "SMELTER | vault strap seated head": null,
+    "SMELTER | vault strap seated head.001": null,
+    "SMELTER | vault strap seated head.002": null,
+    "SMELTER | vault strap seated head.003": null,
+    "SMELTER | vault strap seated head.004": null,
+    "SMELTER | vault strap seated head.005": null,
+    "SMELTER | vault strap seated head.006": null,
+    "SMELTER | vault strap seated head.007": null,
+    "SMELTER | vault strap seated head.008": null,
+    "SMELTER | vault strap seated head.009": null,
+    "SMELTER | vault strap seated head.010": null,
+    "SMELTER | vault strap seated head.011": null,
+    "SMELTER | vault strap seated head.012": null,
+    "SMELTER | vault strap seated head.013": null,
+    "SMELTER | vault strap seated head.014": null,
+    "SMELTER | vault strap seated head.015": null,
+    "SMELTER | vault strap seated head.016": null,
+    "SMELTER | vault strap seated head.017": null,
+    "SMELTER | vault strap seated head.018": null,
+    "SMELTER | vault strap seated head.019": null,
+    "SMELTER | vault strap seated head.020": null,
+    "SMELTER | vault strap seated head.021": null,
+    "SMELTER | vault strap seated head.022": null,
+    "SMELTER | vault strap seated head.023": null,
+    "SMELTER | moving damper lever": "SMELTER | WORKING captive thermal draft damper",
+    "SMELTER | moving retained damper spindle": "SMELTER | WORKING captive thermal draft damper",
+    "SMELTER | moving round damper butterfly": "SMELTER | WORKING captive thermal draft damper",
+    "SMELTER | moving spindle lower retaining head": "SMELTER | WORKING captive thermal draft damper",
+    "SMELTER | moving spindle upper retaining head": "SMELTER | WORKING captive thermal draft damper"
+  },
+  "fixed_mesh_count": 307,
+  "pairs": {
+    "SMELTER | air intake founded foot <> SMELTER | combustion air intake": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 257,
+      "moving": false
+    },
+    "SMELTER | air intake founded foot <> SMELTER | damper fixed lower bearing": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 323,
+      "moving": false
+    },
+    "SMELTER | air intake founded foot <> SMELTER | dressed foundation": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 124,
+      "moving": false
+    },
+    "SMELTER | air intake founded foot <> SMELTER | masonry strap grounded seat.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 58,
+      "moving": false
+    },
+    "SMELTER | air intake founded foot <> SMELTER | sealed refractory floor": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 66,
+      "moving": false
+    },
+    "SMELTER | air intake founded foot <> SMELTER | staggered founded side brick.017": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 47,
+      "moving": false
+    },
+    "SMELTER | air intake founded foot <> SMELTER | staggered founded side brick.018": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 49,
+      "moving": false
+    },
+    "SMELTER | air intake founded foot <> SMELTER | staggered founded side brick.021": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 58,
+      "moving": false
+    },
+    "SMELTER | air intake founded foot <> SMELTER | staggered founded side brick.022": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 61,
+      "moving": false
+    },
+    "SMELTER | bearing grounded pillar <> SMELTER | combustion air intake": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 176,
+      "moving": false
+    },
+    "SMELTER | bearing grounded pillar <> SMELTER | fitted refractory vault voussoir.009": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 55,
+      "moving": false
+    },
+    "SMELTER | bearing grounded pillar <> SMELTER | staggered founded side brick.030": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 84,
+      "moving": false
+    },
+    "SMELTER | bearing grounded pillar <> SMELTER | upper bearing grounded side arm": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "SMELTER | bearing grounded pillar.001 <> SMELTER | combustion air intake": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 176,
+      "moving": false
+    },
+    "SMELTER | bearing grounded pillar.001 <> SMELTER | thermal regulator grounded support": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 45,
+      "moving": false
+    },
+    "SMELTER | bearing grounded pillar.001 <> SMELTER | upper bearing grounded side arm.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "SMELTER | burner grille grounded rail <> SMELTER | dark closed iron firebox door": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 54,
+      "moving": false
+    },
+    "SMELTER | burner grille grounded rail <> SMELTER | door retained hinge eye": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 72,
+      "moving": false
+    },
+    "SMELTER | burner grille grounded rail <> SMELTER | door retained hinge eye.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 72,
+      "moving": false
+    },
+    "SMELTER | burner grille grounded rail <> SMELTER | door seated hinge pintle": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 60,
+      "moving": false
+    },
+    "SMELTER | burner grille grounded rail <> SMELTER | door seated hinge pintle.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 60,
+      "moving": false
+    },
+    "SMELTER | burner grille grounded rail <> SMELTER | fixed retained burner grille": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "SMELTER | burner grille grounded rail <> SMELTER | fixed retained burner grille.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "SMELTER | burner grille grounded rail <> SMELTER | fixed retained burner grille.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | burner grille grounded rail <> SMELTER | fixed retained burner grille.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | burner grille grounded rail <> SMELTER | fixed retained burner grille.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | burner grille grounded rail <> SMELTER | fixed retained burner grille.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | burner grille grounded rail <> SMELTER | fixed retained burner grille.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | burner grille grounded rail <> SMELTER | fixed retained burner grille.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | burner grille grounded rail <> SMELTER | fixed retained burner grille.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | burner grille grounded rail <> SMELTER | fixed retained burner grille.009": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "SMELTER | burner grille grounded rail <> SMELTER | fixed retained burner grille.010": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "SMELTER | burner grille grounded rail <> SMELTER | retained firebox jamb": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 47,
+      "moving": false
+    },
+    "SMELTER | burner grille grounded rail <> SMELTER | retained firebox jamb.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 47,
+      "moving": false
+    },
+    "SMELTER | burner grille grounded rail.001 <> SMELTER | dark closed iron firebox door": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 54,
+      "moving": false
+    },
+    "SMELTER | burner grille grounded rail.001 <> SMELTER | fixed retained burner grille": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "SMELTER | burner grille grounded rail.001 <> SMELTER | fixed retained burner grille.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "SMELTER | burner grille grounded rail.001 <> SMELTER | fixed retained burner grille.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | burner grille grounded rail.001 <> SMELTER | fixed retained burner grille.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | burner grille grounded rail.001 <> SMELTER | fixed retained burner grille.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | burner grille grounded rail.001 <> SMELTER | fixed retained burner grille.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | burner grille grounded rail.001 <> SMELTER | fixed retained burner grille.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | burner grille grounded rail.001 <> SMELTER | fixed retained burner grille.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | burner grille grounded rail.001 <> SMELTER | fixed retained burner grille.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | burner grille grounded rail.001 <> SMELTER | fixed retained burner grille.009": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "SMELTER | burner grille grounded rail.001 <> SMELTER | fixed retained burner grille.010": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "SMELTER | burner grille grounded rail.001 <> SMELTER | retained firebox jamb": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 49,
+      "moving": false
+    },
+    "SMELTER | burner grille grounded rail.001 <> SMELTER | retained firebox jamb.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 49,
+      "moving": false
+    },
+    "SMELTER | burner sight slit <> SMELTER | dark closed iron firebox door": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | burner sight slit.001 <> SMELTER | dark closed iron firebox door": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | burner sight slit.002 <> SMELTER | dark closed iron firebox door": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | charge plate seated mark <> SMELTER | door charge plate": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | charge plate seated mark.001 <> SMELTER | door charge plate": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | charge plate seated mark.002 <> SMELTER | door charge plate": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | charge tray upstand <> SMELTER | founded charge tray": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 56,
+      "moving": false
+    },
+    "SMELTER | charge tray upstand <> SMELTER | retained door sill": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 56,
+      "moving": false
+    },
+    "SMELTER | charge tray upstand <> SMELTER | retained firebox jamb": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 51,
+      "moving": false
+    },
+    "SMELTER | charge tray upstand <> SMELTER | sealed refractory floor": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | charge tray upstand <> SMELTER | staggered founded side brick": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 45,
+      "moving": false
+    },
+    "SMELTER | charge tray upstand.001 <> SMELTER | founded charge tray": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 57,
+      "moving": false
+    },
+    "SMELTER | charge tray upstand.001 <> SMELTER | retained door sill": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 56,
+      "moving": false
+    },
+    "SMELTER | charge tray upstand.001 <> SMELTER | retained firebox jamb.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 54,
+      "moving": false
+    },
+    "SMELTER | charge tray upstand.001 <> SMELTER | sealed refractory floor": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "SMELTER | charge tray upstand.001 <> SMELTER | staggered founded side brick.016": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 45,
+      "moving": false
+    },
+    "SMELTER | circuit ceramic terminal seat <> SMELTER | circuit terminal head": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 56,
+      "moving": false
+    },
+    "SMELTER | circuit ceramic terminal seat <> SMELTER | founded circuit terminal block": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "SMELTER | circuit ceramic terminal seat.001 <> SMELTER | circuit terminal head.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 56,
+      "moving": false
+    },
+    "SMELTER | circuit ceramic terminal seat.001 <> SMELTER | fitted refractory vault voussoir.033": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 53,
+      "moving": false
+    },
+    "SMELTER | circuit ceramic terminal seat.001 <> SMELTER | fitted refractory vault voussoir.034": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 24,
+      "moving": false
+    },
+    "SMELTER | circuit ceramic terminal seat.001 <> SMELTER | founded circuit terminal block": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "SMELTER | circuit terminal head.001 <> SMELTER | fitted refractory vault voussoir.033": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 37,
+      "moving": false
+    },
+    "SMELTER | closed thermal draft regulator <> SMELTER | thermal regulator grounded support": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 66,
+      "moving": false
+    },
+    "SMELTER | combustion air intake <> SMELTER | damper fixed lower bearing": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 342,
+      "moving": false
+    },
+    "SMELTER | combustion air intake <> SMELTER | damper fixed upper bearing": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 329,
+      "moving": false
+    },
+    "SMELTER | combustion air intake <> SMELTER | fitted refractory vault voussoir.009": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 64,
+      "moving": false
+    },
+    "SMELTER | combustion air intake <> SMELTER | fitted refractory vault voussoir.018": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 29,
+      "moving": false
+    },
+    "SMELTER | combustion air intake <> SMELTER | masonry strap grounded seat.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 84,
+      "moving": false
+    },
+    "SMELTER | combustion air intake <> SMELTER | staggered founded side brick.021": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 58,
+      "moving": false
+    },
+    "SMELTER | combustion air intake <> SMELTER | staggered founded side brick.022": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 131,
+      "moving": false
+    },
+    "SMELTER | combustion air intake <> SMELTER | staggered founded side brick.025": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 57,
+      "moving": false
+    },
+    "SMELTER | combustion air intake <> SMELTER | staggered founded side brick.026": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 57,
+      "moving": false
+    },
+    "SMELTER | combustion air intake <> SMELTER | staggered founded side brick.029": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 56,
+      "moving": false
+    },
+    "SMELTER | combustion air intake <> SMELTER | staggered founded side brick.030": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 129,
+      "moving": false
+    },
+    "SMELTER | combustion air intake <> SMELTER | upper bearing grounded side arm": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 84,
+      "moving": false
+    },
+    "SMELTER | combustion air intake <> SMELTER | upper bearing grounded side arm.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 84,
+      "moving": false
+    },
+    "SMELTER | damper fixed upper bearing <> SMELTER | upper bearing grounded side arm": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 54,
+      "moving": false
+    },
+    "SMELTER | damper fixed upper bearing <> SMELTER | upper bearing grounded side arm.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 54,
+      "moving": false
+    },
+    "SMELTER | dark closed iron firebox door <> SMELTER | door charge plate": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 30,
+      "moving": false
+    },
+    "SMELTER | dark closed iron firebox door <> SMELTER | firebox retained rivet": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 19,
+      "moving": false
+    },
+    "SMELTER | dark closed iron firebox door <> SMELTER | firebox retained rivet.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 24,
+      "moving": false
+    },
+    "SMELTER | dark closed iron firebox door <> SMELTER | firebox retained rivet.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 17,
+      "moving": false
+    },
+    "SMELTER | dark closed iron firebox door <> SMELTER | firebox retained rivet.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 24,
+      "moving": false
+    },
+    "SMELTER | dark closed iron firebox door <> SMELTER | retained door sill": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 40,
+      "moving": false
+    },
+    "SMELTER | dark closed iron firebox door <> SMELTER | retained firebox jamb": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 31,
+      "moving": false
+    },
+    "SMELTER | dark closed iron firebox door <> SMELTER | retained firebox jamb.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 31,
+      "moving": false
+    },
+    "SMELTER | dark closed iron firebox door <> SMELTER | staggered founded side brick": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 44,
+      "moving": false
+    },
+    "SMELTER | dark closed iron firebox door <> SMELTER | staggered founded side brick.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 45,
+      "moving": false
+    },
+    "SMELTER | dark closed iron firebox door <> SMELTER | staggered founded side brick.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 43,
+      "moving": false
+    },
+    "SMELTER | dark closed iron firebox door <> SMELTER | staggered founded side brick.012": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 41,
+      "moving": false
+    },
+    "SMELTER | dark closed iron firebox door <> SMELTER | staggered founded side brick.016": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 42,
+      "moving": false
+    },
+    "SMELTER | dark closed iron firebox door <> SMELTER | staggered founded side brick.020": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 41,
+      "moving": false
+    },
+    "SMELTER | dark closed iron firebox door <> SMELTER | staggered founded side brick.024": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 43,
+      "moving": false
+    },
+    "SMELTER | dark closed iron firebox door <> SMELTER | staggered founded side brick.028": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 45,
+      "moving": false
+    },
+    "SMELTER | door retained hinge eye <> SMELTER | door seated hinge pintle": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 96,
+      "moving": false
+    },
+    "SMELTER | door retained hinge eye <> SMELTER | retained firebox jamb": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 36,
+      "moving": false
+    },
+    "SMELTER | door retained hinge eye.001 <> SMELTER | door seated hinge pintle.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 96,
+      "moving": false
+    },
+    "SMELTER | door retained hinge eye.001 <> SMELTER | retained firebox jamb": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | door retained hinge eye.002 <> SMELTER | door seated hinge pintle.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 96,
+      "moving": false
+    },
+    "SMELTER | door retained hinge eye.002 <> SMELTER | retained firebox jamb.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | door retained hinge eye.003 <> SMELTER | door seated hinge pintle.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 96,
+      "moving": false
+    },
+    "SMELTER | door retained hinge eye.003 <> SMELTER | retained firebox jamb.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 36,
+      "moving": false
+    },
+    "SMELTER | door seated hinge pintle <> SMELTER | retained firebox jamb": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | door seated hinge pintle.001 <> SMELTER | retained firebox jamb": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | door seated hinge pintle.002 <> SMELTER | retained firebox jamb.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 36,
+      "moving": false
+    },
+    "SMELTER | door seated hinge pintle.003 <> SMELTER | retained firebox jamb.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | dressed foundation <> SMELTER | foundation corner keeper": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 38,
+      "moving": false
+    },
+    "SMELTER | dressed foundation <> SMELTER | foundation corner keeper.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 40,
+      "moving": false
+    },
+    "SMELTER | dressed foundation <> SMELTER | foundation corner keeper.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 40,
+      "moving": false
+    },
+    "SMELTER | dressed foundation <> SMELTER | foundation corner keeper.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 38,
+      "moving": false
+    },
+    "SMELTER | firebox retained rivet <> SMELTER | retained door sill": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 17,
+      "moving": false
+    },
+    "SMELTER | firebox retained rivet.002 <> SMELTER | retained door sill": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 17,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir <> SMELTER | fitted refractory vault voussoir.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 1,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir <> SMELTER | staggered founded side brick.028": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 54,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir <> SMELTER | staggered founded side brick.029": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 53,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir <> SMELTER | vault retaining strap": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir <> SMELTER | vault retaining strap.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.001 <> SMELTER | fitted refractory vault voussoir.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 8,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.001 <> SMELTER | green shield founded rim.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 47,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.001 <> SMELTER | retained green roof inspection shield.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 44,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.001 <> SMELTER | vault retaining strap.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 35,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.001 <> SMELTER | vault retaining strap.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.002 <> SMELTER | fitted refractory vault voussoir.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 2,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.002 <> SMELTER | green shield founded rim.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 66,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.002 <> SMELTER | green shield seated transverse trace.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 44,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.002 <> SMELTER | retained green roof inspection shield.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 53,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.002 <> SMELTER | vault retaining strap.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 33,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.002 <> SMELTER | vault retaining strap.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.003 <> SMELTER | fitted refractory vault voussoir.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 7,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.003 <> SMELTER | green shield founded rim.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 55,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.003 <> SMELTER | green shield founded rim.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 49,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.003 <> SMELTER | green shield seated transverse trace.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 44,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.003 <> SMELTER | retained green roof inspection shield.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 49,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.003 <> SMELTER | retained green roof inspection shield.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 49,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.003 <> SMELTER | vault retaining strap.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.003 <> SMELTER | vault retaining strap.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.004 <> SMELTER | fitted refractory vault voussoir.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 9,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.004 <> SMELTER | green shield founded rim.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 74,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.004 <> SMELTER | retained green roof inspection shield.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 57,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.004 <> SMELTER | vault retaining strap.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 35,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.004 <> SMELTER | vault retaining strap.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.005 <> SMELTER | fitted refractory vault voussoir.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 1,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.005 <> SMELTER | green shield founded rim": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 49,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.005 <> SMELTER | green shield founded rim.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 55,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.005 <> SMELTER | green shield seated transverse trace": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 44,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.005 <> SMELTER | retained green roof inspection shield": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 51,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.005 <> SMELTER | retained green roof inspection shield.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 51,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.005 <> SMELTER | vault retaining strap.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.005 <> SMELTER | vault retaining strap.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.006 <> SMELTER | fitted refractory vault voussoir.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 6,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.006 <> SMELTER | green shield founded rim": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 66,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.006 <> SMELTER | green shield seated transverse trace": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 46,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.006 <> SMELTER | retained green roof inspection shield": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 53,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.006 <> SMELTER | vault retaining strap.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 13,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.006 <> SMELTER | vault retaining strap.009": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.007 <> SMELTER | fitted refractory vault voussoir.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 1,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.007 <> SMELTER | green shield founded rim": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 47,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.007 <> SMELTER | retained green roof inspection shield": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 43,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.007 <> SMELTER | vault retaining strap.009": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.007 <> SMELTER | vault retaining strap.010": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 35,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.008 <> SMELTER | left founded service chest": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 45,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.008 <> SMELTER | staggered founded side brick.012": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 54,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.008 <> SMELTER | staggered founded side brick.013": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 53,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.008 <> SMELTER | vault retaining strap.010": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 33,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.008 <> SMELTER | vault retaining strap.011": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.009 <> SMELTER | fitted refractory vault voussoir.010": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 2,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.009 <> SMELTER | staggered founded side brick.029": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 54,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.009 <> SMELTER | staggered founded side brick.030": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 53,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.009 <> SMELTER | upper bearing grounded side arm": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 36,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.010 <> SMELTER | fitted refractory vault voussoir.011": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 8,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.010 <> SMELTER | retained green roof inspection shield.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 42,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.011 <> SMELTER | retained green roof inspection shield.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.012 <> SMELTER | fitted refractory vault voussoir.013": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 8,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.012 <> SMELTER | retained green roof inspection shield.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 46,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.012 <> SMELTER | retained green roof inspection shield.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.013 <> SMELTER | fitted refractory vault voussoir.014": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 8,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.013 <> SMELTER | retained green roof inspection shield.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.014 <> SMELTER | fitted refractory vault voussoir.015": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 2,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.014 <> SMELTER | retained green roof inspection shield": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 47,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.014 <> SMELTER | retained green roof inspection shield.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 47,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.015 <> SMELTER | fitted refractory vault voussoir.016": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 7,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.015 <> SMELTER | retained green roof inspection shield": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.016 <> SMELTER | fitted refractory vault voussoir.017": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 2,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.016 <> SMELTER | retained green roof inspection shield": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 42,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.017 <> SMELTER | left founded service chest": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.017 <> SMELTER | staggered founded side brick.013": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 55,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.017 <> SMELTER | staggered founded side brick.014": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 54,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.018 <> SMELTER | fitted refractory vault voussoir.019": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 2,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.018 <> SMELTER | staggered founded side brick.030": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 54,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.018 <> SMELTER | staggered founded side brick.031": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 53,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.019 <> SMELTER | fitted refractory vault voussoir.020": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 7,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.019 <> SMELTER | green shield founded rim.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 56,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.019 <> SMELTER | retained green roof inspection shield.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 46,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.020 <> SMELTER | green shield founded rim.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 66,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.020 <> SMELTER | green shield seated transverse trace.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 46,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.020 <> SMELTER | retained green roof inspection shield.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 55,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.021 <> SMELTER | fitted refractory vault voussoir.022": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 9,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.021 <> SMELTER | green shield founded rim.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 60,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.021 <> SMELTER | green shield founded rim.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 59,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.021 <> SMELTER | green shield seated transverse trace.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 44,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.021 <> SMELTER | retained green roof inspection shield.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 52,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.021 <> SMELTER | retained green roof inspection shield.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 52,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.022 <> SMELTER | fitted refractory vault voussoir.023": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 9,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.022 <> SMELTER | green shield founded rim.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 71,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.022 <> SMELTER | retained green roof inspection shield.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 59,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.023 <> SMELTER | fitted refractory vault voussoir.024": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 2,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.023 <> SMELTER | green shield founded rim.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 56,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.023 <> SMELTER | green shield founded rim.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 61,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.023 <> SMELTER | green shield seated transverse trace.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 44,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.023 <> SMELTER | retained green roof inspection shield": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 51,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.023 <> SMELTER | retained green roof inspection shield.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 51,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.024 <> SMELTER | fitted refractory vault voussoir.025": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 9,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.024 <> SMELTER | green shield founded rim.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 67,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.024 <> SMELTER | green shield seated transverse trace.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 46,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.024 <> SMELTER | retained green roof inspection shield": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 55,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.025 <> SMELTER | fitted refractory vault voussoir.026": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 2,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.025 <> SMELTER | green shield founded rim.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 57,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.025 <> SMELTER | retained green roof inspection shield": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 46,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.026 <> SMELTER | left founded service chest": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 44,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.026 <> SMELTER | staggered founded side brick.014": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 55,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.026 <> SMELTER | staggered founded side brick.015": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 54,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.027 <> SMELTER | fitted refractory vault voussoir.028": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 3,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.027 <> SMELTER | flue continuous front back mortar liner": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 66,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.027 <> SMELTER | flue continuous refractory mortar liner.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 74,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.027 <> SMELTER | flue founded front back brick.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 47,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.027 <> SMELTER | flue founded front back brick.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 51,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.027 <> SMELTER | flue founded side brick.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 49,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.027 <> SMELTER | flue founded side brick.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 51,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.027 <> SMELTER | flue retaining front back band": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 78,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.027 <> SMELTER | founded rear kiln wall": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 49,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.027 <> SMELTER | staggered founded side brick.031": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 55,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.027 <> SMELTER | vault retaining strap.012": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 11,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.027 <> SMELTER | vault retaining strap.013": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 36,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.028 <> SMELTER | fitted refractory vault voussoir.029": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 6,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.028 <> SMELTER | flue continuous front back mortar liner": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 82,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.028 <> SMELTER | flue continuous refractory mortar liner.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 43,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.028 <> SMELTER | flue founded front back brick.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 51,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.028 <> SMELTER | flue founded front back brick.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 63,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.028 <> SMELTER | flue founded side brick.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 47,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.028 <> SMELTER | flue founded side brick.009": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 39,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.028 <> SMELTER | founded rear kiln wall": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 54,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.028 <> SMELTER | vault retaining strap.013": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 36,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.028 <> SMELTER | vault retaining strap.014": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 38,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.029 <> SMELTER | fitted refractory vault voussoir.030": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 2,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.029 <> SMELTER | flue continuous front back mortar liner": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 80,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.029 <> SMELTER | flue continuous refractory mortar liner": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 42,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.029 <> SMELTER | flue founded front back brick.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 63,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.029 <> SMELTER | flue founded front back brick.010": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 47,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.029 <> SMELTER | flue founded side brick.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 49,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.029 <> SMELTER | flue founded side brick.010": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 38,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.029 <> SMELTER | founded rear kiln wall": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 39,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.029 <> SMELTER | vault retaining strap.014": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 36,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.029 <> SMELTER | vault retaining strap.015": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 11,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.030 <> SMELTER | fitted refractory vault voussoir.031": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 10,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.030 <> SMELTER | flue continuous front back mortar liner": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 44,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.030 <> SMELTER | flue continuous refractory mortar liner": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 74,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.030 <> SMELTER | flue founded front back brick.010": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 44,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.030 <> SMELTER | flue founded side brick.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 46,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.030 <> SMELTER | flue founded side brick.010": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 73,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.030 <> SMELTER | vault retaining strap.016": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 11,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.030 <> SMELTER | vault retaining strap.017": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 36,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.031 <> SMELTER | fitted refractory vault voussoir.032": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 6,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.031 <> SMELTER | vault retaining strap.017": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 36,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.031 <> SMELTER | vault retaining strap.018": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 38,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.032 <> SMELTER | fitted refractory vault voussoir.033": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 2,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.032 <> SMELTER | vault retaining strap.018": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 36,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.032 <> SMELTER | vault retaining strap.019": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 11,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.033 <> SMELTER | fitted refractory vault voussoir.034": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 7,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.033 <> SMELTER | founded circuit terminal block": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.033 <> SMELTER | founded rear kiln wall": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 37,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.033 <> SMELTER | vault retaining strap.020": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 13,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.033 <> SMELTER | vault retaining strap.021": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 36,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.034 <> SMELTER | fitted refractory vault voussoir.035": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 2,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.034 <> SMELTER | founded circuit terminal block": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 58,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.034 <> SMELTER | founded rear kiln wall": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 55,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.034 <> SMELTER | vault retaining strap.021": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 36,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.034 <> SMELTER | vault retaining strap.022": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 38,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.035 <> SMELTER | founded circuit terminal block": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.035 <> SMELTER | founded rear kiln wall": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 47,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.035 <> SMELTER | left founded service chest": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 44,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.035 <> SMELTER | staggered founded side brick.015": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 55,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.035 <> SMELTER | vault retaining strap.022": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 36,
+      "moving": false
+    },
+    "SMELTER | fitted refractory vault voussoir.035 <> SMELTER | vault retaining strap.023": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 11,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner <> SMELTER | flue founded front back brick": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 128,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner <> SMELTER | flue founded front back brick.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 121,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner <> SMELTER | flue founded front back brick.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 125,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner <> SMELTER | flue founded front back brick.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 124,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner <> SMELTER | flue founded front back brick.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 121,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner <> SMELTER | flue founded front back brick.010": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 124,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner <> SMELTER | flue founded front back brick.012": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 126,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner <> SMELTER | flue founded front back brick.014": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 121,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner <> SMELTER | flue founded front back brick.016": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 120,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner <> SMELTER | flue founded front back brick.018": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 126,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner <> SMELTER | flue founded side brick": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 21,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner <> SMELTER | flue founded side brick.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 21,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner <> SMELTER | flue founded side brick.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner <> SMELTER | flue founded side brick.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner <> SMELTER | flue founded side brick.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner <> SMELTER | flue founded side brick.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner <> SMELTER | flue founded side brick.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner <> SMELTER | flue founded side brick.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner <> SMELTER | flue founded side brick.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner <> SMELTER | flue founded side brick.009": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner <> SMELTER | flue founded side brick.010": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner <> SMELTER | flue founded side brick.011": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner <> SMELTER | flue founded side brick.012": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner <> SMELTER | flue founded side brick.013": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner <> SMELTER | flue founded side brick.014": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner <> SMELTER | flue founded side brick.015": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner <> SMELTER | flue founded side brick.016": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner <> SMELTER | flue founded side brick.017": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner <> SMELTER | flue founded side brick.018": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 21,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner <> SMELTER | flue founded side brick.019": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 21,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner <> SMELTER | open ceramic flue crown": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 75,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner <> SMELTER | sealed refractory floor": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 46,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner <> SMELTER | staggered founded side brick.019": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 68,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner <> SMELTER | staggered founded side brick.023": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 68,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner <> SMELTER | staggered founded side brick.027": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 68,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner <> SMELTER | staggered founded side brick.031": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 68,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner <> SMELTER | vault retaining strap.014": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner <> SMELTER | vault retaining strap.015": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 29,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner <> SMELTER | vault retaining strap.016": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 27,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner.001 <> SMELTER | flue founded front back brick.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 127,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner.001 <> SMELTER | flue founded front back brick.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 118,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner.001 <> SMELTER | flue founded front back brick.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 122,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner.001 <> SMELTER | flue founded front back brick.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 121,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner.001 <> SMELTER | flue founded front back brick.009": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 119,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner.001 <> SMELTER | flue founded front back brick.011": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 121,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner.001 <> SMELTER | flue founded front back brick.013": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 118,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner.001 <> SMELTER | flue founded front back brick.015": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 124,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner.001 <> SMELTER | flue founded front back brick.017": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 118,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner.001 <> SMELTER | flue founded front back brick.019": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 125,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner.001 <> SMELTER | flue founded side brick": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 21,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner.001 <> SMELTER | flue founded side brick.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 21,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner.001 <> SMELTER | flue founded side brick.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner.001 <> SMELTER | flue founded side brick.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner.001 <> SMELTER | flue founded side brick.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner.001 <> SMELTER | flue founded side brick.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner.001 <> SMELTER | flue founded side brick.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner.001 <> SMELTER | flue founded side brick.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner.001 <> SMELTER | flue founded side brick.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner.001 <> SMELTER | flue founded side brick.009": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner.001 <> SMELTER | flue founded side brick.010": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner.001 <> SMELTER | flue founded side brick.011": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner.001 <> SMELTER | flue founded side brick.012": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner.001 <> SMELTER | flue founded side brick.013": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner.001 <> SMELTER | flue founded side brick.014": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner.001 <> SMELTER | flue founded side brick.015": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner.001 <> SMELTER | flue founded side brick.016": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner.001 <> SMELTER | flue founded side brick.017": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner.001 <> SMELTER | flue founded side brick.018": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 21,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner.001 <> SMELTER | flue founded side brick.019": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 21,
+      "moving": false
+    },
+    "SMELTER | flue continuous front back mortar liner.001 <> SMELTER | open ceramic flue crown": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 74,
+      "moving": false
+    },
+    "SMELTER | flue continuous refractory mortar liner <> SMELTER | flue founded side brick": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 74,
+      "moving": false
+    },
+    "SMELTER | flue continuous refractory mortar liner <> SMELTER | flue founded side brick.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 80,
+      "moving": false
+    },
+    "SMELTER | flue continuous refractory mortar liner <> SMELTER | flue founded side brick.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 80,
+      "moving": false
+    },
+    "SMELTER | flue continuous refractory mortar liner <> SMELTER | flue founded side brick.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 80,
+      "moving": false
+    },
+    "SMELTER | flue continuous refractory mortar liner <> SMELTER | flue founded side brick.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 80,
+      "moving": false
+    },
+    "SMELTER | flue continuous refractory mortar liner <> SMELTER | flue founded side brick.010": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 80,
+      "moving": false
+    },
+    "SMELTER | flue continuous refractory mortar liner <> SMELTER | flue founded side brick.012": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 80,
+      "moving": false
+    },
+    "SMELTER | flue continuous refractory mortar liner <> SMELTER | flue founded side brick.014": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 80,
+      "moving": false
+    },
+    "SMELTER | flue continuous refractory mortar liner <> SMELTER | flue founded side brick.016": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 80,
+      "moving": false
+    },
+    "SMELTER | flue continuous refractory mortar liner <> SMELTER | flue founded side brick.018": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 74,
+      "moving": false
+    },
+    "SMELTER | flue continuous refractory mortar liner <> SMELTER | founded rear kiln wall": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 68,
+      "moving": false
+    },
+    "SMELTER | flue continuous refractory mortar liner <> SMELTER | open ceramic flue crown": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 79,
+      "moving": false
+    },
+    "SMELTER | flue continuous refractory mortar liner <> SMELTER | sealed refractory floor": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 60,
+      "moving": false
+    },
+    "SMELTER | flue continuous refractory mortar liner.001 <> SMELTER | flue founded side brick.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 74,
+      "moving": false
+    },
+    "SMELTER | flue continuous refractory mortar liner.001 <> SMELTER | flue founded side brick.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 80,
+      "moving": false
+    },
+    "SMELTER | flue continuous refractory mortar liner.001 <> SMELTER | flue founded side brick.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 80,
+      "moving": false
+    },
+    "SMELTER | flue continuous refractory mortar liner.001 <> SMELTER | flue founded side brick.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 80,
+      "moving": false
+    },
+    "SMELTER | flue continuous refractory mortar liner.001 <> SMELTER | flue founded side brick.009": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 80,
+      "moving": false
+    },
+    "SMELTER | flue continuous refractory mortar liner.001 <> SMELTER | flue founded side brick.011": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 80,
+      "moving": false
+    },
+    "SMELTER | flue continuous refractory mortar liner.001 <> SMELTER | flue founded side brick.013": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 80,
+      "moving": false
+    },
+    "SMELTER | flue continuous refractory mortar liner.001 <> SMELTER | flue founded side brick.015": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 80,
+      "moving": false
+    },
+    "SMELTER | flue continuous refractory mortar liner.001 <> SMELTER | flue founded side brick.017": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 80,
+      "moving": false
+    },
+    "SMELTER | flue continuous refractory mortar liner.001 <> SMELTER | flue founded side brick.019": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 74,
+      "moving": false
+    },
+    "SMELTER | flue continuous refractory mortar liner.001 <> SMELTER | founded rear kiln wall": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | flue continuous refractory mortar liner.001 <> SMELTER | masonry strap grounded seat.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "SMELTER | flue continuous refractory mortar liner.001 <> SMELTER | open ceramic flue crown": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 78,
+      "moving": false
+    },
+    "SMELTER | flue continuous refractory mortar liner.001 <> SMELTER | sealed refractory floor": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 62,
+      "moving": false
+    },
+    "SMELTER | flue continuous refractory mortar liner.001 <> SMELTER | staggered founded side brick.019": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 64,
+      "moving": false
+    },
+    "SMELTER | flue continuous refractory mortar liner.001 <> SMELTER | staggered founded side brick.023": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 64,
+      "moving": false
+    },
+    "SMELTER | flue continuous refractory mortar liner.001 <> SMELTER | staggered founded side brick.027": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 64,
+      "moving": false
+    },
+    "SMELTER | flue continuous refractory mortar liner.001 <> SMELTER | staggered founded side brick.031": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 62,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick <> SMELTER | flue founded side brick": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 16,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick <> SMELTER | flue founded side brick.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 16,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick <> SMELTER | sealed refractory floor": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick <> SMELTER | staggered founded side brick.019": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 55,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick.001 <> SMELTER | flue founded side brick": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 18,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick.001 <> SMELTER | flue founded side brick.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 17,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick.002 <> SMELTER | flue founded side brick.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 16,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick.002 <> SMELTER | flue founded side brick.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 16,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick.002 <> SMELTER | staggered founded side brick.019": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 55,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick.002 <> SMELTER | staggered founded side brick.023": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 72,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick.002 <> SMELTER | staggered founded side brick.027": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 53,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick.003 <> SMELTER | flue founded side brick.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 18,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick.003 <> SMELTER | flue founded side brick.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 19,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick.004 <> SMELTER | flue founded side brick.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 15,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick.004 <> SMELTER | flue founded side brick.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 15,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick.004 <> SMELTER | staggered founded side brick.027": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 55,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick.004 <> SMELTER | staggered founded side brick.031": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 59,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick.005 <> SMELTER | flue founded side brick.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 17,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick.005 <> SMELTER | flue founded side brick.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 18,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick.006 <> SMELTER | flue founded side brick.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 15,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick.006 <> SMELTER | flue founded side brick.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 15,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick.007 <> SMELTER | flue founded side brick.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 17,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick.007 <> SMELTER | flue founded side brick.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 18,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick.008 <> SMELTER | flue founded side brick.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 16,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick.008 <> SMELTER | flue founded side brick.009": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 16,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick.008 <> SMELTER | vault retaining strap.014": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 51,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick.008 <> SMELTER | vault retaining strap.015": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 28,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick.009 <> SMELTER | flue founded side brick.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 17,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick.009 <> SMELTER | flue founded side brick.009": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 17,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick.010 <> SMELTER | flue founded side brick.010": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 15,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick.010 <> SMELTER | flue founded side brick.011": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 15,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick.010 <> SMELTER | vault retaining strap.014": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 25,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick.010 <> SMELTER | vault retaining strap.015": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 45,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick.010 <> SMELTER | vault retaining strap.016": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 40,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick.011 <> SMELTER | flue founded side brick.010": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 17,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick.011 <> SMELTER | flue founded side brick.011": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 17,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick.012 <> SMELTER | flue founded side brick.012": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 16,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick.012 <> SMELTER | flue founded side brick.013": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 15,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick.013 <> SMELTER | flue founded side brick.012": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 16,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick.013 <> SMELTER | flue founded side brick.013": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 17,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick.014 <> SMELTER | flue founded side brick.014": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 17,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick.014 <> SMELTER | flue founded side brick.015": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 17,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick.015 <> SMELTER | flue founded side brick.014": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 18,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick.015 <> SMELTER | flue founded side brick.015": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 18,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick.016 <> SMELTER | flue founded side brick.016": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 16,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick.016 <> SMELTER | flue founded side brick.017": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 16,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick.017 <> SMELTER | flue founded side brick.016": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 18,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick.017 <> SMELTER | flue founded side brick.017": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 18,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick.018 <> SMELTER | flue founded side brick.018": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 15,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick.018 <> SMELTER | flue founded side brick.019": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 15,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick.018 <> SMELTER | open ceramic flue crown": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 54,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick.019 <> SMELTER | flue founded side brick.018": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 17,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick.019 <> SMELTER | flue founded side brick.019": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 17,
+      "moving": false
+    },
+    "SMELTER | flue founded front back brick.019 <> SMELTER | open ceramic flue crown": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 56,
+      "moving": false
+    },
+    "SMELTER | flue founded side brick <> SMELTER | founded rear kiln wall": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 64,
+      "moving": false
+    },
+    "SMELTER | flue founded side brick <> SMELTER | sealed refractory floor": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 57,
+      "moving": false
+    },
+    "SMELTER | flue founded side brick.001 <> SMELTER | founded rear kiln wall": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 47,
+      "moving": false
+    },
+    "SMELTER | flue founded side brick.001 <> SMELTER | masonry strap grounded seat.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 51,
+      "moving": false
+    },
+    "SMELTER | flue founded side brick.001 <> SMELTER | sealed refractory floor": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 57,
+      "moving": false
+    },
+    "SMELTER | flue founded side brick.001 <> SMELTER | staggered founded side brick.019": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 49,
+      "moving": false
+    },
+    "SMELTER | flue founded side brick.002 <> SMELTER | founded rear kiln wall": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 66,
+      "moving": false
+    },
+    "SMELTER | flue founded side brick.003 <> SMELTER | founded rear kiln wall": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 60,
+      "moving": false
+    },
+    "SMELTER | flue founded side brick.003 <> SMELTER | masonry strap grounded seat.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 66,
+      "moving": false
+    },
+    "SMELTER | flue founded side brick.003 <> SMELTER | staggered founded side brick.019": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 47,
+      "moving": false
+    },
+    "SMELTER | flue founded side brick.003 <> SMELTER | staggered founded side brick.023": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 66,
+      "moving": false
+    },
+    "SMELTER | flue founded side brick.003 <> SMELTER | staggered founded side brick.027": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 47,
+      "moving": false
+    },
+    "SMELTER | flue founded side brick.004 <> SMELTER | founded rear kiln wall": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 66,
+      "moving": false
+    },
+    "SMELTER | flue founded side brick.005 <> SMELTER | founded rear kiln wall": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 60,
+      "moving": false
+    },
+    "SMELTER | flue founded side brick.005 <> SMELTER | masonry strap grounded seat.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 45,
+      "moving": false
+    },
+    "SMELTER | flue founded side brick.005 <> SMELTER | staggered founded side brick.027": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 47,
+      "moving": false
+    },
+    "SMELTER | flue founded side brick.005 <> SMELTER | staggered founded side brick.031": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 55,
+      "moving": false
+    },
+    "SMELTER | flue founded side brick.005 <> SMELTER | vault retaining strap.012": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | flue founded side brick.006 <> SMELTER | founded rear kiln wall": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 66,
+      "moving": false
+    },
+    "SMELTER | flue founded side brick.007 <> SMELTER | founded rear kiln wall": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 60,
+      "moving": false
+    },
+    "SMELTER | flue founded side brick.007 <> SMELTER | vault retaining strap.012": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 43,
+      "moving": false
+    },
+    "SMELTER | flue founded side brick.007 <> SMELTER | vault retaining strap.013": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 52,
+      "moving": false
+    },
+    "SMELTER | flue founded side brick.008 <> SMELTER | founded rear kiln wall": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 60,
+      "moving": false
+    },
+    "SMELTER | flue founded side brick.009 <> SMELTER | founded rear kiln wall": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 45,
+      "moving": false
+    },
+    "SMELTER | flue founded side brick.009 <> SMELTER | vault retaining strap.013": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 36,
+      "moving": false
+    },
+    "SMELTER | flue founded side brick.009 <> SMELTER | vault retaining strap.014": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 40,
+      "moving": false
+    },
+    "SMELTER | flue founded side brick.010 <> SMELTER | vault retaining strap.016": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 57,
+      "moving": false
+    },
+    "SMELTER | flue founded side brick.018 <> SMELTER | open ceramic flue crown": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 58,
+      "moving": false
+    },
+    "SMELTER | flue founded side brick.019 <> SMELTER | open ceramic flue crown": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 57,
+      "moving": false
+    },
+    "SMELTER | flue retaining front back band <> SMELTER | staggered founded side brick.031": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 66,
+      "moving": false
+    },
+    "SMELTER | flue retaining front back band <> SMELTER | vault retaining strap.012": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 98,
+      "moving": false
+    },
+    "SMELTER | flue retaining front back band.002 <> SMELTER | vault retaining strap.016": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "SMELTER | flue retaining front back band.002 <> SMELTER | vault retaining strap.017": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 47,
+      "moving": false
+    },
+    "SMELTER | flue retaining side band <> SMELTER | founded rear kiln wall": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 66,
+      "moving": false
+    },
+    "SMELTER | flue retaining side band.001 <> SMELTER | staggered founded side brick.031": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 45,
+      "moving": false
+    },
+    "SMELTER | flue retaining side band.001 <> SMELTER | vault retaining strap.012": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 54,
+      "moving": false
+    },
+    "SMELTER | flue retaining side band.002 <> SMELTER | vault retaining strap.016": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 36,
+      "moving": false
+    },
+    "SMELTER | flue retaining side band.002 <> SMELTER | vault retaining strap.017": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 52,
+      "moving": false
+    },
+    "SMELTER | foundation corner keeper <> SMELTER | keeper grounded head": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "SMELTER | foundation corner keeper.001 <> SMELTER | keeper grounded head.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "SMELTER | foundation corner keeper.002 <> SMELTER | keeper grounded head.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "SMELTER | foundation corner keeper.003 <> SMELTER | keeper grounded head.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "SMELTER | founded charge tray <> SMELTER | retained door sill": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 49,
+      "moving": false
+    },
+    "SMELTER | founded charge tray <> SMELTER | sealed refractory floor": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 47,
+      "moving": false
+    },
+    "SMELTER | founded circuit terminal block <> SMELTER | founded rear kiln wall": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 49,
+      "moving": false
+    },
+    "SMELTER | founded circuit terminal block <> SMELTER | left founded service chest": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "SMELTER | founded circuit terminal block <> SMELTER | staggered founded side brick.011": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 47,
+      "moving": false
+    },
+    "SMELTER | founded circuit terminal block <> SMELTER | staggered founded side brick.015": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 49,
+      "moving": false
+    },
+    "SMELTER | founded rear kiln wall <> SMELTER | sealed refractory floor": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 47,
+      "moving": false
+    },
+    "SMELTER | green shield founded rim <> SMELTER | retained green roof inspection shield": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 38,
+      "moving": false
+    },
+    "SMELTER | green shield founded rim.001 <> SMELTER | retained green roof inspection shield": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 38,
+      "moving": false
+    },
+    "SMELTER | green shield founded rim.002 <> SMELTER | retained green roof inspection shield.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 42,
+      "moving": false
+    },
+    "SMELTER | green shield founded rim.003 <> SMELTER | retained green roof inspection shield.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 42,
+      "moving": false
+    },
+    "SMELTER | green shield founded rim.004 <> SMELTER | retained green roof inspection shield.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 38,
+      "moving": false
+    },
+    "SMELTER | green shield founded rim.005 <> SMELTER | retained green roof inspection shield.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 38,
+      "moving": false
+    },
+    "SMELTER | green shield seated transverse trace <> SMELTER | retained green roof inspection shield": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | green shield seated transverse trace.001 <> SMELTER | retained green roof inspection shield": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | green shield seated transverse trace.002 <> SMELTER | retained green roof inspection shield.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 41,
+      "moving": false
+    },
+    "SMELTER | green shield seated transverse trace.003 <> SMELTER | retained green roof inspection shield.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 41,
+      "moving": false
+    },
+    "SMELTER | green shield seated transverse trace.004 <> SMELTER | retained green roof inspection shield.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | green shield seated transverse trace.005 <> SMELTER | retained green roof inspection shield.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | left founded service chest <> SMELTER | masonry strap grounded seat.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "SMELTER | left founded service chest <> SMELTER | masonry strap grounded seat.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "SMELTER | left founded service chest <> SMELTER | masonry strap grounded seat.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 47,
+      "moving": false
+    },
+    "SMELTER | left founded service chest <> SMELTER | masonry strap rivet.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 21,
+      "moving": false
+    },
+    "SMELTER | left founded service chest <> SMELTER | masonry strap rivet.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 21,
+      "moving": false
+    },
+    "SMELTER | left founded service chest <> SMELTER | sealed refractory floor": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 47,
+      "moving": false
+    },
+    "SMELTER | left founded service chest <> SMELTER | service chest blind vent": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 30,
+      "moving": false
+    },
+    "SMELTER | left founded service chest <> SMELTER | service chest blind vent.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 30,
+      "moving": false
+    },
+    "SMELTER | left founded service chest <> SMELTER | service chest blind vent.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 30,
+      "moving": false
+    },
+    "SMELTER | left founded service chest <> SMELTER | service chest blind vent.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 30,
+      "moving": false
+    },
+    "SMELTER | left founded service chest <> SMELTER | service chest retaining rib": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 50,
+      "moving": false
+    },
+    "SMELTER | left founded service chest <> SMELTER | service chest retaining rib.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "SMELTER | left founded service chest <> SMELTER | staggered founded side brick.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 49,
+      "moving": false
+    },
+    "SMELTER | left founded service chest <> SMELTER | staggered founded side brick.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "SMELTER | left founded service chest <> SMELTER | staggered founded side brick.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 49,
+      "moving": false
+    },
+    "SMELTER | left founded service chest <> SMELTER | staggered founded side brick.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 47,
+      "moving": false
+    },
+    "SMELTER | left founded service chest <> SMELTER | staggered founded side brick.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | left founded service chest <> SMELTER | staggered founded side brick.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 47,
+      "moving": false
+    },
+    "SMELTER | left founded service chest <> SMELTER | staggered founded side brick.009": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 49,
+      "moving": false
+    },
+    "SMELTER | left founded service chest <> SMELTER | staggered founded side brick.010": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | left founded service chest <> SMELTER | staggered founded side brick.011": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 47,
+      "moving": false
+    },
+    "SMELTER | left founded service chest <> SMELTER | staggered founded side brick.013": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 49,
+      "moving": false
+    },
+    "SMELTER | left founded service chest <> SMELTER | staggered founded side brick.014": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "SMELTER | left founded service chest <> SMELTER | staggered founded side brick.015": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 49,
+      "moving": false
+    },
+    "SMELTER | left founded service chest <> SMELTER | vault retaining strap.023": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "SMELTER | left founded service chest <> SMELTER | vault strap seated head.023": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "SMELTER | masonry strap grounded seat <> SMELTER | masonry strap rivet": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 27,
+      "moving": false
+    },
+    "SMELTER | masonry strap grounded seat <> SMELTER | masonry strap rivet.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "SMELTER | masonry strap grounded seat <> SMELTER | sealed refractory floor": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 53,
+      "moving": false
+    },
+    "SMELTER | masonry strap grounded seat <> SMELTER | staggered founded side brick": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 82,
+      "moving": false
+    },
+    "SMELTER | masonry strap grounded seat <> SMELTER | staggered founded side brick.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 82,
+      "moving": false
+    },
+    "SMELTER | masonry strap grounded seat <> SMELTER | staggered founded side brick.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 40,
+      "moving": false
+    },
+    "SMELTER | masonry strap grounded seat.001 <> SMELTER | masonry strap rivet.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "SMELTER | masonry strap grounded seat.001 <> SMELTER | masonry strap rivet.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "SMELTER | masonry strap grounded seat.001 <> SMELTER | sealed refractory floor": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 53,
+      "moving": false
+    },
+    "SMELTER | masonry strap grounded seat.001 <> SMELTER | staggered founded side brick.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 82,
+      "moving": false
+    },
+    "SMELTER | masonry strap grounded seat.001 <> SMELTER | staggered founded side brick.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 82,
+      "moving": false
+    },
+    "SMELTER | masonry strap grounded seat.001 <> SMELTER | staggered founded side brick.009": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 40,
+      "moving": false
+    },
+    "SMELTER | masonry strap grounded seat.002 <> SMELTER | masonry strap rivet.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 28,
+      "moving": false
+    },
+    "SMELTER | masonry strap grounded seat.002 <> SMELTER | masonry strap rivet.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "SMELTER | masonry strap grounded seat.002 <> SMELTER | sealed refractory floor": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 53,
+      "moving": false
+    },
+    "SMELTER | masonry strap grounded seat.002 <> SMELTER | staggered founded side brick.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 82,
+      "moving": false
+    },
+    "SMELTER | masonry strap grounded seat.002 <> SMELTER | staggered founded side brick.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 82,
+      "moving": false
+    },
+    "SMELTER | masonry strap grounded seat.002 <> SMELTER | staggered founded side brick.010": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 40,
+      "moving": false
+    },
+    "SMELTER | masonry strap grounded seat.003 <> SMELTER | masonry strap rivet.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "SMELTER | masonry strap grounded seat.003 <> SMELTER | masonry strap rivet.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "SMELTER | masonry strap grounded seat.003 <> SMELTER | sealed refractory floor": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 53,
+      "moving": false
+    },
+    "SMELTER | masonry strap grounded seat.003 <> SMELTER | staggered founded side brick.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 92,
+      "moving": false
+    },
+    "SMELTER | masonry strap grounded seat.003 <> SMELTER | staggered founded side brick.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 92,
+      "moving": false
+    },
+    "SMELTER | masonry strap grounded seat.003 <> SMELTER | staggered founded side brick.011": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 47,
+      "moving": false
+    },
+    "SMELTER | masonry strap grounded seat.004 <> SMELTER | masonry strap rivet.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 27,
+      "moving": false
+    },
+    "SMELTER | masonry strap grounded seat.004 <> SMELTER | masonry strap rivet.009": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 27,
+      "moving": false
+    },
+    "SMELTER | masonry strap grounded seat.004 <> SMELTER | sealed refractory floor": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 53,
+      "moving": false
+    },
+    "SMELTER | masonry strap grounded seat.004 <> SMELTER | staggered founded side brick.016": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 82,
+      "moving": false
+    },
+    "SMELTER | masonry strap grounded seat.004 <> SMELTER | staggered founded side brick.020": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 82,
+      "moving": false
+    },
+    "SMELTER | masonry strap grounded seat.004 <> SMELTER | staggered founded side brick.024": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 42,
+      "moving": false
+    },
+    "SMELTER | masonry strap grounded seat.005 <> SMELTER | masonry strap rivet.010": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 27,
+      "moving": false
+    },
+    "SMELTER | masonry strap grounded seat.005 <> SMELTER | masonry strap rivet.011": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "SMELTER | masonry strap grounded seat.005 <> SMELTER | sealed refractory floor": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 53,
+      "moving": false
+    },
+    "SMELTER | masonry strap grounded seat.005 <> SMELTER | staggered founded side brick.017": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 82,
+      "moving": false
+    },
+    "SMELTER | masonry strap grounded seat.005 <> SMELTER | staggered founded side brick.021": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 82,
+      "moving": false
+    },
+    "SMELTER | masonry strap grounded seat.005 <> SMELTER | staggered founded side brick.025": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 42,
+      "moving": false
+    },
+    "SMELTER | masonry strap grounded seat.006 <> SMELTER | masonry strap rivet.012": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 27,
+      "moving": false
+    },
+    "SMELTER | masonry strap grounded seat.006 <> SMELTER | masonry strap rivet.013": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "SMELTER | masonry strap grounded seat.006 <> SMELTER | sealed refractory floor": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 53,
+      "moving": false
+    },
+    "SMELTER | masonry strap grounded seat.006 <> SMELTER | staggered founded side brick.018": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 82,
+      "moving": false
+    },
+    "SMELTER | masonry strap grounded seat.006 <> SMELTER | staggered founded side brick.022": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 82,
+      "moving": false
+    },
+    "SMELTER | masonry strap grounded seat.006 <> SMELTER | staggered founded side brick.026": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 42,
+      "moving": false
+    },
+    "SMELTER | masonry strap grounded seat.007 <> SMELTER | masonry strap rivet.014": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 27,
+      "moving": false
+    },
+    "SMELTER | masonry strap grounded seat.007 <> SMELTER | masonry strap rivet.015": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "SMELTER | masonry strap grounded seat.007 <> SMELTER | sealed refractory floor": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 51,
+      "moving": false
+    },
+    "SMELTER | masonry strap grounded seat.007 <> SMELTER | staggered founded side brick.019": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 92,
+      "moving": false
+    },
+    "SMELTER | masonry strap grounded seat.007 <> SMELTER | staggered founded side brick.023": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 92,
+      "moving": false
+    },
+    "SMELTER | masonry strap grounded seat.007 <> SMELTER | staggered founded side brick.027": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 45,
+      "moving": false
+    },
+    "SMELTER | masonry strap rivet <> SMELTER | sealed refractory floor": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 24,
+      "moving": false
+    },
+    "SMELTER | masonry strap rivet <> SMELTER | staggered founded side brick": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 4,
+      "moving": false
+    },
+    "SMELTER | masonry strap rivet.001 <> SMELTER | staggered founded side brick.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "SMELTER | masonry strap rivet.002 <> SMELTER | sealed refractory floor": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 24,
+      "moving": false
+    },
+    "SMELTER | masonry strap rivet.002 <> SMELTER | staggered founded side brick.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 4,
+      "moving": false
+    },
+    "SMELTER | masonry strap rivet.003 <> SMELTER | staggered founded side brick.009": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 28,
+      "moving": false
+    },
+    "SMELTER | masonry strap rivet.004 <> SMELTER | sealed refractory floor": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "SMELTER | masonry strap rivet.004 <> SMELTER | staggered founded side brick.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 4,
+      "moving": false
+    },
+    "SMELTER | masonry strap rivet.005 <> SMELTER | staggered founded side brick.010": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 28,
+      "moving": false
+    },
+    "SMELTER | masonry strap rivet.006 <> SMELTER | sealed refractory floor": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 24,
+      "moving": false
+    },
+    "SMELTER | masonry strap rivet.006 <> SMELTER | staggered founded side brick.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 4,
+      "moving": false
+    },
+    "SMELTER | masonry strap rivet.007 <> SMELTER | staggered founded side brick.011": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 28,
+      "moving": false
+    },
+    "SMELTER | masonry strap rivet.008 <> SMELTER | sealed refractory floor": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 26,
+      "moving": false
+    },
+    "SMELTER | masonry strap rivet.008 <> SMELTER | staggered founded side brick.016": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 8,
+      "moving": false
+    },
+    "SMELTER | masonry strap rivet.009 <> SMELTER | staggered founded side brick.024": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 28,
+      "moving": false
+    },
+    "SMELTER | masonry strap rivet.010 <> SMELTER | sealed refractory floor": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 24,
+      "moving": false
+    },
+    "SMELTER | masonry strap rivet.010 <> SMELTER | staggered founded side brick.017": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 8,
+      "moving": false
+    },
+    "SMELTER | masonry strap rivet.011 <> SMELTER | staggered founded side brick.025": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 28,
+      "moving": false
+    },
+    "SMELTER | masonry strap rivet.012 <> SMELTER | sealed refractory floor": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 24,
+      "moving": false
+    },
+    "SMELTER | masonry strap rivet.012 <> SMELTER | staggered founded side brick.018": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 8,
+      "moving": false
+    },
+    "SMELTER | masonry strap rivet.013 <> SMELTER | staggered founded side brick.026": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 28,
+      "moving": false
+    },
+    "SMELTER | masonry strap rivet.014 <> SMELTER | sealed refractory floor": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 24,
+      "moving": false
+    },
+    "SMELTER | masonry strap rivet.014 <> SMELTER | staggered founded side brick.019": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 8,
+      "moving": false
+    },
+    "SMELTER | masonry strap rivet.015 <> SMELTER | staggered founded side brick.027": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 28,
+      "moving": false
+    },
+    "SMELTER | open ceramic flue crown <> SMELTER | spark arrestor top grille": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 105,
+      "moving": false
+    },
+    "SMELTER | open ceramic flue crown <> SMELTER | spark arrestor top grille.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 73,
+      "moving": false
+    },
+    "SMELTER | open ceramic flue crown <> SMELTER | spark arrestor top grille.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 104,
+      "moving": false
+    },
+    "SMELTER | open ceramic flue crown <> SMELTER | spark guard founded upright": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 41,
+      "moving": false
+    },
+    "SMELTER | open ceramic flue crown <> SMELTER | spark guard founded upright.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 42,
+      "moving": false
+    },
+    "SMELTER | retained door lintel <> SMELTER | retained firebox jamb": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 61,
+      "moving": false
+    },
+    "SMELTER | retained door lintel <> SMELTER | retained firebox jamb.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 59,
+      "moving": false
+    },
+    "SMELTER | retained door sill <> SMELTER | retained firebox jamb": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 40,
+      "moving": false
+    },
+    "SMELTER | retained door sill <> SMELTER | retained firebox jamb.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 40,
+      "moving": false
+    },
+    "SMELTER | retained door sill <> SMELTER | sealed refractory floor": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 47,
+      "moving": false
+    },
+    "SMELTER | retained door sill <> SMELTER | staggered founded side brick": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 45,
+      "moving": false
+    },
+    "SMELTER | retained door sill <> SMELTER | staggered founded side brick.016": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 45,
+      "moving": false
+    },
+    "SMELTER | retained firebox jamb <> SMELTER | sealed refractory floor": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 47,
+      "moving": false
+    },
+    "SMELTER | retained firebox jamb <> SMELTER | staggered founded side brick": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 64,
+      "moving": false
+    },
+    "SMELTER | retained firebox jamb <> SMELTER | staggered founded side brick.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 68,
+      "moving": false
+    },
+    "SMELTER | retained firebox jamb <> SMELTER | staggered founded side brick.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 66,
+      "moving": false
+    },
+    "SMELTER | retained firebox jamb <> SMELTER | staggered founded side brick.012": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 68,
+      "moving": false
+    },
+    "SMELTER | retained firebox jamb.001 <> SMELTER | sealed refractory floor": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 45,
+      "moving": false
+    },
+    "SMELTER | retained firebox jamb.001 <> SMELTER | staggered founded side brick.016": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 63,
+      "moving": false
+    },
+    "SMELTER | retained firebox jamb.001 <> SMELTER | staggered founded side brick.020": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 68,
+      "moving": false
+    },
+    "SMELTER | retained firebox jamb.001 <> SMELTER | staggered founded side brick.024": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 66,
+      "moving": false
+    },
+    "SMELTER | retained firebox jamb.001 <> SMELTER | staggered founded side brick.028": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 66,
+      "moving": false
+    },
+    "SMELTER | sealed refractory floor <> SMELTER | staggered founded side brick": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 55,
+      "moving": false
+    },
+    "SMELTER | sealed refractory floor <> SMELTER | staggered founded side brick.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 51,
+      "moving": false
+    },
+    "SMELTER | sealed refractory floor <> SMELTER | staggered founded side brick.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 51,
+      "moving": false
+    },
+    "SMELTER | sealed refractory floor <> SMELTER | staggered founded side brick.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 55,
+      "moving": false
+    },
+    "SMELTER | sealed refractory floor <> SMELTER | staggered founded side brick.016": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 56,
+      "moving": false
+    },
+    "SMELTER | sealed refractory floor <> SMELTER | staggered founded side brick.017": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 51,
+      "moving": false
+    },
+    "SMELTER | sealed refractory floor <> SMELTER | staggered founded side brick.018": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 51,
+      "moving": false
+    },
+    "SMELTER | sealed refractory floor <> SMELTER | staggered founded side brick.019": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 51,
+      "moving": false
+    },
+    "SMELTER | service chest blind vent.001 <> SMELTER | service chest seated plaque": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 39,
+      "moving": false
+    },
+    "SMELTER | service chest blind vent.001 <> SMELTER | service chest seated plaque.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 39,
+      "moving": false
+    },
+    "SMELTER | service chest blind vent.001 <> SMELTER | service chest seated plaque.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 39,
+      "moving": false
+    },
+    "SMELTER | service chest blind vent.002 <> SMELTER | service chest seated plaque": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 39,
+      "moving": false
+    },
+    "SMELTER | service chest blind vent.002 <> SMELTER | service chest seated plaque.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 46,
+      "moving": false
+    },
+    "SMELTER | service chest blind vent.002 <> SMELTER | service chest seated plaque.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "SMELTER | service chest seated plaque <> SMELTER | service plaque raised glyph": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | service chest seated plaque <> SMELTER | service plaque raised glyph.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | service chest seated plaque <> SMELTER | service plaque raised glyph.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | service chest seated plaque.001 <> SMELTER | service plaque raised glyph.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | service chest seated plaque.001 <> SMELTER | service plaque raised glyph.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | service chest seated plaque.001 <> SMELTER | service plaque raised glyph.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | service chest seated plaque.002 <> SMELTER | service plaque raised glyph.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | service chest seated plaque.002 <> SMELTER | service plaque raised glyph.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | service chest seated plaque.002 <> SMELTER | service plaque raised glyph.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | spark arrestor top grille.001 <> SMELTER | spark guard founded upright": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 68,
+      "moving": false
+    },
+    "SMELTER | spark arrestor top grille.001 <> SMELTER | spark guard founded upright.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 68,
+      "moving": false
+    },
+    "SMELTER | spark guard founded upright <> SMELTER | spark guard supported hood": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "SMELTER | spark guard founded upright.001 <> SMELTER | spark guard supported hood": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "SMELTER | staggered founded side brick.012 <> SMELTER | vault retaining strap.011": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 51,
+      "moving": false
+    },
+    "SMELTER | staggered founded side brick.015 <> SMELTER | vault retaining strap.023": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 51,
+      "moving": false
+    },
+    "SMELTER | staggered founded side brick.028 <> SMELTER | vault retaining strap": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 57,
+      "moving": false
+    },
+    "SMELTER | staggered founded side brick.030 <> SMELTER | upper bearing grounded side arm": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "SMELTER | staggered founded side brick.031 <> SMELTER | vault retaining strap.012": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 55,
+      "moving": false
+    },
+    "SMELTER | thermal regulator grounded support <> SMELTER | upper bearing grounded side arm.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 74,
+      "moving": false
+    },
+    "SMELTER | vault retaining strap <> SMELTER | vault retaining strap.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 37,
+      "moving": false
+    },
+    "SMELTER | vault retaining strap <> SMELTER | vault strap seated head": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | vault retaining strap.001 <> SMELTER | vault retaining strap.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 35,
+      "moving": false
+    },
+    "SMELTER | vault retaining strap.001 <> SMELTER | vault strap seated head.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | vault retaining strap.002 <> SMELTER | vault retaining strap.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 39,
+      "moving": false
+    },
+    "SMELTER | vault retaining strap.002 <> SMELTER | vault strap seated head.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | vault retaining strap.003 <> SMELTER | vault retaining strap.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 35,
+      "moving": false
+    },
+    "SMELTER | vault retaining strap.003 <> SMELTER | vault strap seated head.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | vault retaining strap.004 <> SMELTER | vault retaining strap.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 39,
+      "moving": false
+    },
+    "SMELTER | vault retaining strap.004 <> SMELTER | vault strap seated head.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | vault retaining strap.005 <> SMELTER | vault retaining strap.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 29,
+      "moving": false
+    },
+    "SMELTER | vault retaining strap.005 <> SMELTER | vault strap seated head.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | vault retaining strap.006 <> SMELTER | vault retaining strap.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 37,
+      "moving": false
+    },
+    "SMELTER | vault retaining strap.006 <> SMELTER | vault strap seated head.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | vault retaining strap.007 <> SMELTER | vault retaining strap.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | vault retaining strap.007 <> SMELTER | vault strap seated head.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | vault retaining strap.008 <> SMELTER | vault retaining strap.009": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 38,
+      "moving": false
+    },
+    "SMELTER | vault retaining strap.008 <> SMELTER | vault strap seated head.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | vault retaining strap.009 <> SMELTER | vault retaining strap.010": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 37,
+      "moving": false
+    },
+    "SMELTER | vault retaining strap.009 <> SMELTER | vault strap seated head.009": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | vault retaining strap.010 <> SMELTER | vault retaining strap.011": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 37,
+      "moving": false
+    },
+    "SMELTER | vault retaining strap.010 <> SMELTER | vault strap seated head.010": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | vault retaining strap.011 <> SMELTER | vault strap seated head.011": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | vault retaining strap.012 <> SMELTER | vault retaining strap.013": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 38,
+      "moving": false
+    },
+    "SMELTER | vault retaining strap.012 <> SMELTER | vault strap seated head.012": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | vault retaining strap.013 <> SMELTER | vault retaining strap.014": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | vault retaining strap.013 <> SMELTER | vault strap seated head.013": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | vault retaining strap.014 <> SMELTER | vault retaining strap.015": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 36,
+      "moving": false
+    },
+    "SMELTER | vault retaining strap.014 <> SMELTER | vault strap seated head.014": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | vault retaining strap.015 <> SMELTER | vault retaining strap.016": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | vault retaining strap.015 <> SMELTER | vault strap seated head.015": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | vault retaining strap.016 <> SMELTER | vault retaining strap.017": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 37,
+      "moving": false
+    },
+    "SMELTER | vault retaining strap.016 <> SMELTER | vault strap seated head.016": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | vault retaining strap.017 <> SMELTER | vault retaining strap.018": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 27,
+      "moving": false
+    },
+    "SMELTER | vault retaining strap.017 <> SMELTER | vault strap seated head.017": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | vault retaining strap.018 <> SMELTER | vault retaining strap.019": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 36,
+      "moving": false
+    },
+    "SMELTER | vault retaining strap.018 <> SMELTER | vault strap seated head.018": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | vault retaining strap.019 <> SMELTER | vault retaining strap.020": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | vault retaining strap.019 <> SMELTER | vault strap seated head.019": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | vault retaining strap.020 <> SMELTER | vault retaining strap.021": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 37,
+      "moving": false
+    },
+    "SMELTER | vault retaining strap.020 <> SMELTER | vault strap seated head.020": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | vault retaining strap.021 <> SMELTER | vault retaining strap.022": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | vault retaining strap.021 <> SMELTER | vault strap seated head.021": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | vault retaining strap.022 <> SMELTER | vault retaining strap.023": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 37,
+      "moving": false
+    },
+    "SMELTER | vault retaining strap.022 <> SMELTER | vault strap seated head.022": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | vault retaining strap.023 <> SMELTER | vault strap seated head.023": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "SMELTER | moving damper lever <> SMELTER | moving retained damper spindle": {
+      "first_frame": 1.0,
+      "last_frame": 97.0,
+      "frames": 193,
+      "maximum_triangle_intersections": 128,
+      "moving": true
+    },
+    "SMELTER | moving damper lever <> SMELTER | moving spindle upper retaining head": {
+      "first_frame": 1.0,
+      "last_frame": 97.0,
+      "frames": 193,
+      "maximum_triangle_intersections": 52,
+      "moving": true
+    },
+    "SMELTER | moving retained damper spindle <> SMELTER | moving round damper butterfly": {
+      "first_frame": 1.0,
+      "last_frame": 97.0,
+      "frames": 193,
+      "maximum_triangle_intersections": 94,
+      "moving": true
+    },
+    "SMELTER | moving retained damper spindle <> SMELTER | moving spindle lower retaining head": {
+      "first_frame": 1.0,
+      "last_frame": 97.0,
+      "frames": 193,
+      "maximum_triangle_intersections": 108,
+      "moving": true
+    },
+    "SMELTER | moving retained damper spindle <> SMELTER | moving spindle upper retaining head": {
+      "first_frame": 1.0,
+      "last_frame": 97.0,
+      "frames": 193,
+      "maximum_triangle_intersections": 108,
+      "moving": true
+    }
+  },
+  "note": "Raw triangle contacts include intentional fitted joints, tooth engagement and fasteners. Every pair requires adjudication; this inventory is not a clearance pass."
+}

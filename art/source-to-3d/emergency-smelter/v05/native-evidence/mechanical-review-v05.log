@@ -1,0 +1,319 @@
+00:00.797  blend            | Read blend: "C:\Users\Admin\Documents\ChatGPT\Tech priests\tanks-structure-production\build\tp-emergency-smelter-main01\authored-v05\smelter-v05.blend"
+16:36:38 | INFO: Data are loaded, start creating Blender stuff
+16:36:38 | INFO: Blender create Mesh node SMELTER | air intake founded foot.001
+16:36:38 | INFO: Blender create Mesh node SMELTER | air intake retained grille.003
+16:36:38 | INFO: Blender create Mesh node SMELTER | air intake retained grille.004
+16:36:38 | INFO: Blender create Mesh node SMELTER | air intake retained grille.005
+16:36:38 | INFO: Blender create Mesh node SMELTER | bearing grounded pillar.002
+16:36:38 | INFO: Blender create Mesh node SMELTER | bearing grounded pillar.003
+16:36:38 | INFO: Blender create Mesh node SMELTER | burner grille grounded rail.002
+16:36:38 | INFO: Blender create Mesh node SMELTER | burner grille grounded rail.003
+16:36:38 | INFO: Blender create Mesh node SMELTER | burner sight slit.003
+16:36:38 | INFO: Blender create Mesh node SMELTER | burner sight slit.004
+16:36:38 | INFO: Blender create Mesh node SMELTER | burner sight slit.005
+16:36:38 | INFO: Blender create Mesh node SMELTER | charge plate seated mark.003
+16:36:38 | INFO: Blender create Mesh node SMELTER | charge plate seated mark.004
+16:36:38 | INFO: Blender create Mesh node SMELTER | charge plate seated mark.005
+16:36:38 | INFO: Blender create Mesh node SMELTER | charge tray upstand.002
+16:36:38 | INFO: Blender create Mesh node SMELTER | charge tray upstand.003
+16:36:38 | INFO: Blender create Mesh node SMELTER | circuit ceramic terminal seat
+16:36:38 | INFO: Blender create Mesh node SMELTER | circuit ceramic terminal seat.001
+16:36:38 | INFO: Blender create Mesh node SMELTER | circuit terminal head
+16:36:38 | INFO: Blender create Mesh node SMELTER | circuit terminal head.001
+16:36:38 | INFO: Blender create Mesh node SMELTER | closed thermal draft regulator
+16:36:38 | INFO: Blender create Mesh node SMELTER | combustion air intake.001
+16:36:38 | INFO: Blender create Mesh node SMELTER | damper fixed lower bearing
+16:36:38 | INFO: Blender create Mesh node SMELTER | damper fixed upper bearing
+16:36:38 | INFO: Blender create Mesh node SMELTER | dark closed iron firebox door.001
+16:36:38 | INFO: Blender create Mesh node SMELTER | door charge plate.001
+16:36:38 | INFO: Blender create Mesh node SMELTER | door retained hinge eye
+16:36:38 | INFO: Blender create Mesh node SMELTER | door retained hinge eye.001
+16:36:38 | INFO: Blender create Mesh node SMELTER | door retained hinge eye.002
+16:36:38 | INFO: Blender create Mesh node SMELTER | door retained hinge eye.003
+16:36:38 | INFO: Blender create Mesh node SMELTER | door seated hinge pintle
+16:36:38 | INFO: Blender create Mesh node SMELTER | door seated hinge pintle.001
+16:36:38 | INFO: Blender create Mesh node SMELTER | door seated hinge pintle.002
+16:36:38 | INFO: Blender create Mesh node SMELTER | door seated hinge pintle.003
+16:36:38 | INFO: Blender create Mesh node SMELTER | dressed foundation.001
+16:36:38 | INFO: Blender create Mesh node SMELTER | firebox retained rivet
+16:36:38 | INFO: Blender create Mesh node SMELTER | firebox retained rivet.001
+16:36:38 | INFO: Blender create Mesh node SMELTER | firebox retained rivet.002
+16:36:38 | INFO: Blender create Mesh node SMELTER | firebox retained rivet.003
+16:36:38 | INFO: Blender create Mesh node SMELTER | fitted refractory vault voussoir.036
+16:36:38 | INFO: Blender create Mesh node SMELTER | fitted refractory vault voussoir.037
+16:36:38 | INFO: Blender create Mesh node SMELTER | fitted refractory vault voussoir.038
+16:36:38 | INFO: Blender create Mesh node SMELTER | fitted refractory vault voussoir.039
+16:36:38 | INFO: Blender create Mesh node SMELTER | fitted refractory vault voussoir.040
+16:36:38 | INFO: Blender create Mesh node SMELTER | fitted refractory vault voussoir.041
+16:36:38 | INFO: Blender create Mesh node SMELTER | fitted refractory vault voussoir.042
+16:36:38 | INFO: Blender create Mesh node SMELTER | fitted refractory vault voussoir.043
+16:36:38 | INFO: Blender create Mesh node SMELTER | fitted refractory vault voussoir.044
+16:36:38 | INFO: Blender create Mesh node SMELTER | fitted refractory vault voussoir.045
+16:36:38 | INFO: Blender create Mesh node SMELTER | fitted refractory vault voussoir.046
+16:36:38 | INFO: Blender create Mesh node SMELTER | fitted refractory vault voussoir.047
+16:36:38 | INFO: Blender create Mesh node SMELTER | fitted refractory vault voussoir.048
+16:36:38 | INFO: Blender create Mesh node SMELTER | fitted refractory vault voussoir.049
+16:36:38 | INFO: Blender create Mesh node SMELTER | fitted refractory vault voussoir.050
+16:36:38 | INFO: Blender create Mesh node SMELTER | fitted refractory vault voussoir.051
+16:36:38 | INFO: Blender create Mesh node SMELTER | fitted refractory vault voussoir.052
+16:36:38 | INFO: Blender create Mesh node SMELTER | fitted refractory vault voussoir.053
+16:36:38 | INFO: Blender create Mesh node SMELTER | fitted refractory vault voussoir.054
+16:36:38 | INFO: Blender create Mesh node SMELTER | fitted refractory vault voussoir.055
+16:36:38 | INFO: Blender create Mesh node SMELTER | fitted refractory vault voussoir.056
+16:36:38 | INFO: Blender create Mesh node SMELTER | fitted refractory vault voussoir.057
+16:36:38 | INFO: Blender create Mesh node SMELTER | fitted refractory vault voussoir.058
+16:36:38 | INFO: Blender create Mesh node SMELTER | fitted refractory vault voussoir.059
+16:36:38 | INFO: Blender create Mesh node SMELTER | fitted refractory vault voussoir.060
+16:36:38 | INFO: Blender create Mesh node SMELTER | fitted refractory vault voussoir.061
+16:36:38 | INFO: Blender create Mesh node SMELTER | fitted refractory vault voussoir.062
+16:36:38 | INFO: Blender create Mesh node SMELTER | fitted refractory vault voussoir.063
+16:36:38 | INFO: Blender create Mesh node SMELTER | fitted refractory vault voussoir.064
+16:36:38 | INFO: Blender create Mesh node SMELTER | fitted refractory vault voussoir.065
+16:36:38 | INFO: Blender create Mesh node SMELTER | fitted refractory vault voussoir.066
+16:36:38 | INFO: Blender create Mesh node SMELTER | fitted refractory vault voussoir.067
+16:36:38 | INFO: Blender create Mesh node SMELTER | fitted refractory vault voussoir.068
+16:36:38 | INFO: Blender create Mesh node SMELTER | fitted refractory vault voussoir.069
+16:36:38 | INFO: Blender create Mesh node SMELTER | fitted refractory vault voussoir.070
+16:36:38 | INFO: Blender create Mesh node SMELTER | fitted refractory vault voussoir.071
+16:36:38 | INFO: Blender create Mesh node SMELTER | fixed retained burner grille.011
+16:36:38 | INFO: Blender create Mesh node SMELTER | fixed retained burner grille.012
+16:36:38 | INFO: Blender create Mesh node SMELTER | fixed retained burner grille.013
+16:36:38 | INFO: Blender create Mesh node SMELTER | fixed retained burner grille.014
+16:36:38 | INFO: Blender create Mesh node SMELTER | fixed retained burner grille.015
+16:36:38 | INFO: Blender create Mesh node SMELTER | fixed retained burner grille.016
+16:36:38 | INFO: Blender create Mesh node SMELTER | fixed retained burner grille.017
+16:36:38 | INFO: Blender create Mesh node SMELTER | fixed retained burner grille.018
+16:36:38 | INFO: Blender create Mesh node SMELTER | fixed retained burner grille.019
+16:36:38 | INFO: Blender create Mesh node SMELTER | fixed retained burner grille.020
+16:36:38 | INFO: Blender create Mesh node SMELTER | fixed retained burner grille.021
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue continuous front back mortar liner.002
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue continuous front back mortar liner.003
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue continuous refractory mortar liner.002
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue continuous refractory mortar liner.003
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue founded front back brick.020
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue founded front back brick.021
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue founded front back brick.022
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue founded front back brick.023
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue founded front back brick.024
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue founded front back brick.025
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue founded front back brick.026
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue founded front back brick.027
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue founded front back brick.028
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue founded front back brick.029
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue founded front back brick.030
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue founded front back brick.031
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue founded front back brick.032
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue founded front back brick.033
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue founded front back brick.034
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue founded front back brick.035
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue founded front back brick.036
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue founded front back brick.037
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue founded front back brick.038
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue founded front back brick.039
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue founded side brick.020
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue founded side brick.021
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue founded side brick.022
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue founded side brick.023
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue founded side brick.024
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue founded side brick.025
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue founded side brick.026
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue founded side brick.027
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue founded side brick.028
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue founded side brick.029
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue founded side brick.030
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue founded side brick.031
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue founded side brick.032
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue founded side brick.033
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue founded side brick.034
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue founded side brick.035
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue founded side brick.036
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue founded side brick.037
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue founded side brick.038
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue founded side brick.039
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue retaining front back band.006
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue retaining front back band.007
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue retaining front back band.008
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue retaining front back band.009
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue retaining front back band.010
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue retaining front back band.011
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue retaining side band.006
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue retaining side band.007
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue retaining side band.008
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue retaining side band.009
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue retaining side band.010
+16:36:38 | INFO: Blender create Mesh node SMELTER | flue retaining side band.011
+16:36:38 | INFO: Blender create Mesh node SMELTER | foundation corner keeper.004
+16:36:38 | INFO: Blender create Mesh node SMELTER | foundation corner keeper.005
+16:36:38 | INFO: Blender create Mesh node SMELTER | foundation corner keeper.006
+16:36:38 | INFO: Blender create Mesh node SMELTER | foundation corner keeper.007
+16:36:38 | INFO: Blender create Mesh node SMELTER | founded charge tray.001
+16:36:38 | INFO: Blender create Mesh node SMELTER | founded circuit terminal block.001
+16:36:38 | INFO: Blender create Mesh node SMELTER | founded rear kiln wall.001
+16:36:38 | INFO: Blender create Mesh node SMELTER | green shield founded rim.006
+16:36:38 | INFO: Blender create Mesh node SMELTER | green shield founded rim.007
+16:36:38 | INFO: Blender create Mesh node SMELTER | green shield founded rim.008
+16:36:38 | INFO: Blender create Mesh node SMELTER | green shield founded rim.009
+16:36:38 | INFO: Blender create Mesh node SMELTER | green shield founded rim.010
+16:36:38 | INFO: Blender create Mesh node SMELTER | green shield founded rim.011
+16:36:38 | INFO: Blender create Mesh node SMELTER | green shield seated transverse trace.006
+16:36:38 | INFO: Blender create Mesh node SMELTER | green shield seated transverse trace.007
+16:36:38 | INFO: Blender create Mesh node SMELTER | green shield seated transverse trace.008
+16:36:38 | INFO: Blender create Mesh node SMELTER | green shield seated transverse trace.009
+16:36:38 | INFO: Blender create Mesh node SMELTER | green shield seated transverse trace.010
+16:36:38 | INFO: Blender create Mesh node SMELTER | green shield seated transverse trace.011
+16:36:38 | INFO: Blender create Mesh node SMELTER | keeper grounded head
+16:36:38 | INFO: Blender create Mesh node SMELTER | keeper grounded head.001
+16:36:38 | INFO: Blender create Mesh node SMELTER | keeper grounded head.002
+16:36:38 | INFO: Blender create Mesh node SMELTER | keeper grounded head.003
+16:36:38 | INFO: Blender create Mesh node SMELTER | left founded service chest.001
+16:36:38 | INFO: Blender create Mesh node SMELTER | masonry strap grounded seat.008
+16:36:38 | INFO: Blender create Mesh node SMELTER | masonry strap grounded seat.009
+16:36:38 | INFO: Blender create Mesh node SMELTER | masonry strap grounded seat.010
+16:36:38 | INFO: Blender create Mesh node SMELTER | masonry strap grounded seat.011
+16:36:38 | INFO: Blender create Mesh node SMELTER | masonry strap grounded seat.012
+16:36:38 | INFO: Blender create Mesh node SMELTER | masonry strap grounded seat.013
+16:36:38 | INFO: Blender create Mesh node SMELTER | masonry strap grounded seat.014
+16:36:38 | INFO: Blender create Mesh node SMELTER | masonry strap grounded seat.015
+16:36:38 | INFO: Blender create Mesh node SMELTER | masonry strap rivet
+16:36:38 | INFO: Blender create Mesh node SMELTER | masonry strap rivet.001
+16:36:38 | INFO: Blender create Mesh node SMELTER | masonry strap rivet.002
+16:36:38 | INFO: Blender create Mesh node SMELTER | masonry strap rivet.003
+16:36:38 | INFO: Blender create Mesh node SMELTER | masonry strap rivet.004
+16:36:38 | INFO: Blender create Mesh node SMELTER | masonry strap rivet.005
+16:36:38 | INFO: Blender create Mesh node SMELTER | masonry strap rivet.006
+16:36:38 | INFO: Blender create Mesh node SMELTER | masonry strap rivet.007
+16:36:38 | INFO: Blender create Mesh node SMELTER | masonry strap rivet.008
+16:36:38 | INFO: Blender create Mesh node SMELTER | masonry strap rivet.009
+16:36:38 | INFO: Blender create Mesh node SMELTER | masonry strap rivet.010
+16:36:38 | INFO: Blender create Mesh node SMELTER | masonry strap rivet.011
+16:36:38 | INFO: Blender create Mesh node SMELTER | masonry strap rivet.012
+16:36:38 | INFO: Blender create Mesh node SMELTER | masonry strap rivet.013
+16:36:38 | INFO: Blender create Mesh node SMELTER | masonry strap rivet.014
+16:36:38 | INFO: Blender create Mesh node SMELTER | masonry strap rivet.015
+16:36:38 | INFO: Blender create Mesh node SMELTER | open ceramic flue crown
+16:36:38 | INFO: Blender create Mesh node SMELTER | retained door lintel.001
+16:36:38 | INFO: Blender create Mesh node SMELTER | retained door sill.001
+16:36:38 | INFO: Blender create Mesh node SMELTER | retained firebox jamb.002
+16:36:38 | INFO: Blender create Mesh node SMELTER | retained firebox jamb.003
+16:36:38 | INFO: Blender create Mesh node SMELTER | retained green roof inspection shield.003
+16:36:38 | INFO: Blender create Mesh node SMELTER | retained green roof inspection shield.004
+16:36:38 | INFO: Blender create Mesh node SMELTER | retained green roof inspection shield.005
+16:36:38 | INFO: Blender create Mesh node SMELTER | sealed refractory floor.001
+16:36:38 | INFO: Blender create Mesh node SMELTER | service chest blind vent.004
+16:36:38 | INFO: Blender create Mesh node SMELTER | service chest blind vent.005
+16:36:38 | INFO: Blender create Mesh node SMELTER | service chest blind vent.006
+16:36:38 | INFO: Blender create Mesh node SMELTER | service chest blind vent.007
+16:36:38 | INFO: Blender create Mesh node SMELTER | service chest retaining rib.002
+16:36:38 | INFO: Blender create Mesh node SMELTER | service chest retaining rib.003
+16:36:38 | INFO: Blender create Mesh node SMELTER | service chest seated plaque.003
+16:36:38 | INFO: Blender create Mesh node SMELTER | service chest seated plaque.004
+16:36:38 | INFO: Blender create Mesh node SMELTER | service chest seated plaque.005
+16:36:38 | INFO: Blender create Mesh node SMELTER | service plaque raised glyph.009
+16:36:38 | INFO: Blender create Mesh node SMELTER | service plaque raised glyph.010
+16:36:38 | INFO: Blender create Mesh node SMELTER | service plaque raised glyph.011
+16:36:38 | INFO: Blender create Mesh node SMELTER | service plaque raised glyph.012
+16:36:38 | INFO: Blender create Mesh node SMELTER | service plaque raised glyph.013
+16:36:38 | INFO: Blender create Mesh node SMELTER | service plaque raised glyph.014
+16:36:38 | INFO: Blender create Mesh node SMELTER | service plaque raised glyph.015
+16:36:38 | INFO: Blender create Mesh node SMELTER | service plaque raised glyph.016
+16:36:38 | INFO: Blender create Mesh node SMELTER | service plaque raised glyph.017
+16:36:38 | INFO: Blender create Mesh node SMELTER | spark arrestor top grille.003
+16:36:38 | INFO: Blender create Mesh node SMELTER | spark arrestor top grille.004
+16:36:38 | INFO: Blender create Mesh node SMELTER | spark arrestor top grille.005
+16:36:38 | INFO: Blender create Mesh node SMELTER | spark guard founded upright.002
+16:36:38 | INFO: Blender create Mesh node SMELTER | spark guard founded upright.003
+16:36:38 | INFO: Blender create Mesh node SMELTER | spark guard supported hood.001
+16:36:38 | INFO: Blender create Mesh node SMELTER | staggered founded side brick.032
+16:36:38 | INFO: Blender create Mesh node SMELTER | staggered founded side brick.033
+16:36:38 | INFO: Blender create Mesh node SMELTER | staggered founded side brick.034
+16:36:38 | INFO: Blender create Mesh node SMELTER | staggered founded side brick.035
+16:36:38 | INFO: Blender create Mesh node SMELTER | staggered founded side brick.036
+16:36:38 | INFO: Blender create Mesh node SMELTER | staggered founded side brick.037
+16:36:38 | INFO: Blender create Mesh node SMELTER | staggered founded side brick.038
+16:36:38 | INFO: Blender create Mesh node SMELTER | staggered founded side brick.039
+16:36:38 | INFO: Blender create Mesh node SMELTER | staggered founded side brick.040
+16:36:38 | INFO: Blender create Mesh node SMELTER | staggered founded side brick.041
+16:36:38 | INFO: Blender create Mesh node SMELTER | staggered founded side brick.042
+16:36:38 | INFO: Blender create Mesh node SMELTER | staggered founded side brick.043
+16:36:38 | INFO: Blender create Mesh node SMELTER | staggered founded side brick.044
+16:36:38 | INFO: Blender create Mesh node SMELTER | staggered founded side brick.045
+16:36:38 | INFO: Blender create Mesh node SMELTER | staggered founded side brick.046
+16:36:38 | INFO: Blender create Mesh node SMELTER | staggered founded side brick.047
+16:36:38 | INFO: Blender create Mesh node SMELTER | staggered founded side brick.048
+16:36:38 | INFO: Blender create Mesh node SMELTER | staggered founded side brick.049
+16:36:38 | INFO: Blender create Mesh node SMELTER | staggered founded side brick.050
+16:36:38 | INFO: Blender create Mesh node SMELTER | staggered founded side brick.051
+16:36:38 | INFO: Blender create Mesh node SMELTER | staggered founded side brick.052
+16:36:38 | INFO: Blender create Mesh node SMELTER | staggered founded side brick.053
+16:36:38 | INFO: Blender create Mesh node SMELTER | staggered founded side brick.054
+16:36:38 | INFO: Blender create Mesh node SMELTER | staggered founded side brick.055
+16:36:38 | INFO: Blender create Mesh node SMELTER | staggered founded side brick.056
+16:36:38 | INFO: Blender create Mesh node SMELTER | staggered founded side brick.057
+16:36:38 | INFO: Blender create Mesh node SMELTER | staggered founded side brick.058
+16:36:38 | INFO: Blender create Mesh node SMELTER | staggered founded side brick.059
+16:36:38 | INFO: Blender create Mesh node SMELTER | staggered founded side brick.060
+16:36:38 | INFO: Blender create Mesh node SMELTER | staggered founded side brick.061
+16:36:38 | INFO: Blender create Mesh node SMELTER | staggered founded side brick.062
+16:36:38 | INFO: Blender create Mesh node SMELTER | staggered founded side brick.063
+16:36:38 | INFO: Blender create Mesh node SMELTER | thermal regulator grounded support.001
+16:36:38 | INFO: Blender create Mesh node SMELTER | thermal regulator sealed crown
+16:36:38 | INFO: Blender create Mesh node SMELTER | upper bearing grounded side arm.002
+16:36:38 | INFO: Blender create Mesh node SMELTER | upper bearing grounded side arm.003
+16:36:38 | INFO: Blender create Mesh node SMELTER | vault retaining strap.024
+16:36:38 | INFO: Blender create Mesh node SMELTER | vault retaining strap.025
+16:36:38 | INFO: Blender create Mesh node SMELTER | vault retaining strap.026
+16:36:38 | INFO: Blender create Mesh node SMELTER | vault retaining strap.027
+16:36:38 | INFO: Blender create Mesh node SMELTER | vault retaining strap.028
+16:36:38 | INFO: Blender create Mesh node SMELTER | vault retaining strap.029
+16:36:38 | INFO: Blender create Mesh node SMELTER | vault retaining strap.030
+16:36:38 | INFO: Blender create Mesh node SMELTER | vault retaining strap.031
+16:36:38 | INFO: Blender create Mesh node SMELTER | vault retaining strap.032
+16:36:38 | INFO: Blender create Mesh node SMELTER | vault retaining strap.033
+16:36:38 | INFO: Blender create Mesh node SMELTER | vault retaining strap.034
+16:36:38 | INFO: Blender create Mesh node SMELTER | vault retaining strap.035
+16:36:38 | INFO: Blender create Mesh node SMELTER | vault retaining strap.036
+16:36:38 | INFO: Blender create Mesh node SMELTER | vault retaining strap.037
+16:36:38 | INFO: Blender create Mesh node SMELTER | vault retaining strap.038
+16:36:38 | INFO: Blender create Mesh node SMELTER | vault retaining strap.039
+16:36:38 | INFO: Blender create Mesh node SMELTER | vault retaining strap.040
+16:36:38 | INFO: Blender create Mesh node SMELTER | vault retaining strap.041
+16:36:38 | INFO: Blender create Mesh node SMELTER | vault retaining strap.042
+16:36:38 | INFO: Blender create Mesh node SMELTER | vault retaining strap.043
+16:36:38 | INFO: Blender create Mesh node SMELTER | vault retaining strap.044
+16:36:38 | INFO: Blender create Mesh node SMELTER | vault retaining strap.045
+16:36:38 | INFO: Blender create Mesh node SMELTER | vault retaining strap.046
+16:36:38 | INFO: Blender create Mesh node SMELTER | vault retaining strap.047
+16:36:38 | INFO: Blender create Mesh node SMELTER | vault strap seated head
+16:36:38 | INFO: Blender create Mesh node SMELTER | vault strap seated head.001
+16:36:38 | INFO: Blender create Mesh node SMELTER | vault strap seated head.002
+16:36:38 | INFO: Blender create Mesh node SMELTER | vault strap seated head.003
+16:36:38 | INFO: Blender create Mesh node SMELTER | vault strap seated head.004
+16:36:38 | INFO: Blender create Mesh node SMELTER | vault strap seated head.005
+16:36:38 | INFO: Blender create Mesh node SMELTER | vault strap seated head.006
+16:36:38 | INFO: Blender create Mesh node SMELTER | vault strap seated head.007
+16:36:38 | INFO: Blender create Mesh node SMELTER | vault strap seated head.008
+16:36:38 | INFO: Blender create Mesh node SMELTER | vault strap seated head.009
+16:36:38 | INFO: Blender create Mesh node SMELTER | vault strap seated head.010
+16:36:38 | INFO: Blender create Mesh node SMELTER | vault strap seated head.011
+16:36:38 | INFO: Blender create Mesh node SMELTER | vault strap seated head.012
+16:36:38 | INFO: Blender create Mesh node SMELTER | vault strap seated head.013
+16:36:38 | INFO: Blender create Mesh node SMELTER | vault strap seated head.014
+16:36:38 | INFO: Blender create Mesh node SMELTER | vault strap seated head.015
+16:36:38 | INFO: Blender create Mesh node SMELTER | vault strap seated head.016
+16:36:38 | INFO: Blender create Mesh node SMELTER | vault strap seated head.017
+16:36:38 | INFO: Blender create Mesh node SMELTER | vault strap seated head.018
+16:36:38 | INFO: Blender create Mesh node SMELTER | vault strap seated head.019
+16:36:38 | INFO: Blender create Mesh node SMELTER | vault strap seated head.020
+16:36:38 | INFO: Blender create Mesh node SMELTER | vault strap seated head.021
+16:36:38 | INFO: Blender create Mesh node SMELTER | vault strap seated head.022
+16:36:38 | INFO: Blender create Mesh node SMELTER | vault strap seated head.023
+16:36:38 | INFO: Blender create Mesh node SMELTER | moving damper lever.001
+16:36:38 | INFO: Blender create Mesh node SMELTER | moving retained damper spindle
+16:36:38 | INFO: Blender create Mesh node SMELTER | moving round damper butterfly
+16:36:38 | INFO: Blender create Mesh node SMELTER | moving spindle lower retaining head
+16:36:38 | INFO: Blender create Mesh node SMELTER | moving spindle upper retaining head
+16:36:38 | INFO: glTF import finished in 0.22s
+SMELTER_SUPPORT_AND_MOVING_CLEARANCE_PASS
+Blender 5.0.0 (hash a37564c4df7a built 2025-11-18 11:06:54)
+
+Blender quit

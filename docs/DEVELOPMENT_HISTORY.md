@@ -5,6 +5,22 @@
 **Packaged baseline:** `0.1.672`  
 **Active development lane:** `0.1.674-dev`
 
+## 2026-11-17 - Emergency Smelter operational delivery
+
+Authored closed1x1 refractory kiln, founded flue and captive draft damper.
+Correct indexed FMPL image channels/physicalUVs, reopened editable source,
+inspected animated GLB and193-pose source/runtime moving-clearance pass.
+Native furnace auto-selection exposed a preexisting one-output-slot defect
+after extra recipe results were appended. Eight output slots now fit existing
+recipes; all other recipe/fuel/rate/footprint/port fields are preserved.
+Six automatic recipe input paths, normal four-sided inserters, red/green
+wires and circuit controls, actual fuel exhaustion/resupply, blocked output,
+input loss, script stop/restart, building craft/place/mine and actual operated-
+save reload pass.12 genuine native idle/working/logistics PNGs retained.
+Delegated operational close-enough delivery; owner visual approval not claimed.
+Evidence:art/source-to-3d/emergency-smelter/v05/FMPL_MODEL.json.
+Preserved accepted Citadel, closed Entropic, delivered Orbital and concurrent work.
+
 ## 2026-11-17 - Orbital Trader operational delivery
 
 Closed6x6 FMPL exchange altar with four supported hinged wedge lids.
