@@ -22,6 +22,10 @@ end
 local function event_key(id)return safe(id)end
 local function sort_routes(routes)table.sort(routes,function(a,b)if a.priority==b.priority then if a.sequence==b.sequence then return a.id<b.id end;return a.sequence<b.sequence end;return a.priority<b.priority end)end
 local function upsert(routes,entry)
+ -- The profile-key identity is immutable for the lifetime of a route. Avoid
+ -- reconstructing it for every damage/build/nth-tick callback.
+ entry.profile_key=(entry.event and("event:"..entry.event)
+   or entry.tick and("nth:"..entry.tick)or entry.lifecycle or"route")..":"..entry.id
  for i,v in ipairs(routes)do if v.id==entry.id then entry.sequence=v.sequence;routes[i]=entry;sort_routes(routes);return"replaced"end end
  Registry.sequence=Registry.sequence+1;entry.sequence=Registry.sequence;routes[#routes+1]=entry;sort_routes(routes);return"added"
 end
@@ -33,6 +37,12 @@ local function candidate(event)return event and(event.entity or event.created_en
 local function expected_match(actual,expected)
  if type(expected)=="table"then for _,v in pairs(expected)do if expected_match(actual,v)then return true end end;return false end
  if actual==expected then return true end
+ -- Most filtered events compare ordinary name/type strings. Do not allocate
+ -- two failing pcall closures for a primitive value that cannot have fields.
+ local actual_type=type(actual)
+ if actual_type~="table"and actual_type~="userdata"then
+  return safe(actual)==safe(expected)
+ end
  if actual~=nil then local ok_name,name=pcall(function()return actual.name end);if ok_name and name~=nil and expected_match(name,expected)then return true end;local ok_index,index=pcall(function()return actual.index end);if ok_index and index~=nil and expected_match(index,expected)then return true end end
  return safe(actual)==safe(expected)
 end
@@ -53,17 +63,41 @@ local function one_filter(event,f)
 end
 local function matches(event,filters)
  if filters==nil then return true end;if type(filters)~="table"then return true end
- local list=filters.filter and{filters}or filters;local acc=nil
- for _,f in ipairs(list)do local ok,r=pcall(one_filter,event,f);if not ok then r=true;stat("filter_errors");remember("filter-error",nil,r)end;local mode=f.mode or"or";if acc==nil then acc=r elseif mode=="and"then acc=acc and r else acc=acc or r end end
+ -- The common single-filter form needs no one-element temporary table.
+ if filters.filter then
+  local ok,r=pcall(one_filter,event,filters)
+  if not ok then stat("filter_errors");remember("filter-error",nil,r);return true end
+  return r~=false
+ end
+ local acc=nil
+ for _,f in ipairs(filters)do local ok,r=pcall(one_filter,event,f);if not ok then r=true;stat("filter_errors");remember("filter-error",nil,r)end;local mode=f.mode or"or";if acc==nil then acc=r elseif mode=="and"then acc=acc and r else acc=acc or r end end
  return acc~=false
 end
 
 local function profile(entry,ok,elapsed)
- local key=(entry.event and("event:"..entry.event)or entry.tick and("nth:"..entry.tick)or entry.lifecycle or"route")..":"..entry.id;local r=Registry.stats[key]or{calls=0,errors=0,total_ms=0,worst_ms=0};r.calls=r.calls+1;if not ok then r.errors=r.errors+1 end;if elapsed then r.total_ms=r.total_ms+elapsed;r.worst_ms=math.max(r.worst_ms,elapsed);r.avg_ms=r.total_ms/r.calls end;Registry.stats[key]=r
+ local key=entry.profile_key
+ if not key then
+  key=(entry.event and("event:"..entry.event)or entry.tick and("nth:"..entry.tick)
+    or entry.lifecycle or"route")..":"..entry.id
+  entry.profile_key=key
+ end
+ local r=Registry.stats[key]or{calls=0,errors=0,total_ms=0,worst_ms=0};r.calls=r.calls+1;if not ok then r.errors=r.errors+1 end;if elapsed then r.total_ms=r.total_ms+elapsed;r.worst_ms=math.max(r.worst_ms,elapsed);r.avg_ms=r.total_ms/r.calls end;Registry.stats[key]=r
+end
+local function profiler_factory()
+ -- Factorio 2.1.7+ provides LuaProfiler on helpers, not game.
+ if helpers and type(helpers.create_profiler)=="function"then
+  return helpers.create_profiler
+ end
+ return game and type(game.create_profiler)=="function"
+   and game.create_profiler or nil
 end
 local function call(entry,event)
  if not(entry and type(entry.handler)=="function")then return nil end
- local profiler;if Registry.profiler_enabled and game and game.create_profiler then local ok,p=pcall(game.create_profiler,false);if ok then profiler=p end end
+ local profiler
+ if Registry.profiler_enabled then
+  local create=profiler_factory()
+  if create then local ok,p=pcall(create,false);if ok then profiler=p end end
+ end
  local ok,result=pcall(entry.handler,event)
  local ms;if profiler then pcall(function()profiler.stop()end);local text=safe(profiler);ms=tonumber(text:match("([%d%.]+)"))end;profile(entry,ok,ms)
  if not ok then stat("handler_errors");remember("handler-error",entry,result);if log then log("[Tech Priests event registry] isolated handler failure owner="..entry.owner.." route="..entry.route.." source="..entry.source..":"..entry.line.." error="..safe(result))end;return nil end
@@ -125,10 +159,10 @@ local function install_tick(tick)
   local sample = rawget(_G,"TP_CI_SAVE_RELOAD_SMOKE")==true
     and rawget(_G,"TP_CI_RUNTIME_PROFILE_1064")==true
     and event and event.tick and event.tick%(tick*60)==0
-    and game and game.create_profiler
+    and profiler_factory()
   local profiler
   if sample then
-    local measured,p=pcall(game.create_profiler,false)
+    local measured,p=pcall(profiler_factory(),false)
     if measured then profiler=p end
   end
   dispatch_tick(key,event)
