@@ -8,12 +8,15 @@
 -- overlapping stations do not double-count the same rock, tree, or ore patch.
 
 local Catalog = {}
+local DenseScan1478 = require("scripts.core.catalog_dense_scan_1478")
 
 Catalog.version = "0.1.579"
 Catalog.storage_key = "station_catalog_0327"
 Catalog.legacy_storage_key = "station_catalog_0326"
 Catalog.scan_period = 60
 Catalog.scan_limit = 768
+Catalog.max_dense_scan_queries_1478 = 13
+Catalog.max_dense_scan_entities_1478 = 3072
 Catalog.clean_reuse_ticks_0570 = 60 * 10
 Catalog.max_instances_per_item = 256
 Catalog.gui_name = "tech_priests_known_resources_0326"
@@ -573,35 +576,60 @@ function Catalog.scan_pair(pair)
   local area = { { station.position.x - radius, station.position.y - radius }, { station.position.x + radius, station.position.y + radius } }
   local catalog = empty_catalog(pair, radius)
 
-  local ok_ents, entities = false, nil
+  local ok_ents, entities, scan_complete = false, nil, false
   local indexed_provider = rawget(_G, "tech_priests_efficiency_0579_entities_for_area")
   if type(indexed_provider) == "function" then
     local ok_idx, idx_entities = pcall(indexed_provider, station.surface, area, Catalog.scan_limit)
     if ok_idx and type(idx_entities) == "table" then
-      ok_ents, entities = true, idx_entities
+      ok_ents, entities, scan_complete = true, idx_entities, true
+      catalog.scan_source_1478 = "indexed-cache"
+      catalog.scan_queries_1478 = 0
       root.stats.indexed_area_reuse_0579 = (root.stats.indexed_area_reuse_0579 or 0) + 1
     end
   end
   if not ok_ents then
-    ok_ents, entities = pcall(function()
-      return station.surface.find_entities_filtered({ area = area, limit = Catalog.scan_limit })
-    end)
+    -- A saturated root query is subdivided into deterministic quadrants.
+    -- Hard call/result/depth ceilings bound the work on crowded planets.
+    local scan_info
+    entities, scan_info = DenseScan1478.scan(station.surface, area, {
+      limit = Catalog.scan_limit,
+      max_queries = Catalog.max_dense_scan_queries_1478,
+      max_entities = Catalog.max_dense_scan_entities_1478,
+      key_of = entity_key
+    })
+    ok_ents = type(entities) == "table"
+    scan_complete = scan_info ~= nil and scan_info.complete == true
+    catalog.scan_source_1478 = "direct"
+    catalog.scan_queries_1478 = scan_info and scan_info.queries or 0
+    catalog.scan_reason_1478 = scan_info and scan_info.reason or "unknown"
+    root.stats.scan_queries_1478 = (root.stats.scan_queries_1478 or 0)
+      + catalog.scan_queries_1478
+    if catalog.scan_queries_1478 > 1 and scan_complete then
+      root.stats.dense_scans_completed_1478 =
+        (root.stats.dense_scans_completed_1478 or 0) + 1
+    end
     local note_scan = rawget(_G, "tech_priests_efficiency_0579_note_area_scan")
-    if ok_ents and entities and type(note_scan) == "function" then
-      pcall(note_scan, station.surface, area, entities, Catalog.scan_limit)
-      root.stats.indexed_area_learning_scans_0579 = (root.stats.indexed_area_learning_scans_0579 or 0) + 1
+    if ok_ents and type(note_scan) == "function" then
+      local noted, accepted = pcall(note_scan, station.surface, area, entities,
+        Catalog.scan_limit, scan_complete)
+      if noted and accepted ~= false then
+        root.stats.indexed_area_learning_scans_0579 =
+          (root.stats.indexed_area_learning_scans_0579 or 0) + 1
+      end
     end
   end
-  -- Factorio's limit may return a truncated collection. Retain partial
-  -- information, but never present it as a complete local-world ledger.
-  catalog.scan_limit_reached_1477 = not not
-    (ok_ents and entities and #entities >= Catalog.scan_limit)
-  if catalog.scan_limit_reached_1477 then
+  catalog.scan_entities_1478 = ok_ents and #entities or 0
+  catalog.scan_incomplete_1478 = not scan_complete
+  -- Retain the old flag for existing UI/clean-reuse callers.
+  catalog.scan_limit_reached_1477 = catalog.scan_incomplete_1478
+  if catalog.scan_incomplete_1478 then
     root.stats.scan_limit_reached_1477 =
       (root.stats.scan_limit_reached_1477 or 0) + 1
+    root.stats.dense_scans_incomplete_1478 =
+      (root.stats.dense_scans_incomplete_1478 or 0) + 1
   end
   if ok_ents and entities then
-    for _, e in pairs(entities) do add_entity_to_catalog(root, pair, catalog, e, station) end
+    for _, e in ipairs(entities) do add_entity_to_catalog(root, pair, catalog, e, station) end
   end
 
   local station_inv = _G.get_station_inventory and _G.get_station_inventory(station) or safe_inventory(station, defines.inventory.chest)
@@ -636,7 +664,11 @@ function Catalog.scan_pair(pair)
   for _ in pairs(catalog.storage_items) do catalog.stored_item_kinds = catalog.stored_item_kinds + 1 end
   for _ in pairs(catalog.owned_keys) do catalog.owned_resource_count = catalog.owned_resource_count + 1 end
 
-  release_absent_owned_keys(root, pair, catalog.owned_keys)
+  -- Truncated scans cannot prove a previously claimed resource vanished.
+  -- Preserve existing ownership until a complete scan or actual death event.
+  if scan_complete then
+    release_absent_owned_keys(root, pair, catalog.owned_keys)
+  end
   root.stations[unit] = catalog
   pair.known_resources_0326 = catalog
   pair.known_resources_0327 = catalog
@@ -761,10 +793,14 @@ function Catalog.show_gui(player, pair)
   frame.tags = { station_unit = unit }
   frame.add({ type = "label", caption = "Station seal: " .. tostring(cat.station_backer_name or cat.station_name or cat.station_unit) })
   frame.add({ type = "label", caption = "Sweep radius: " .. tostring(math.floor(cat.radius or 0)) .. " | last rite tick: " .. tostring(cat.tick or 0) .. " | next auspex sweep: " .. tostring((root.next_scan[unit] or 0) - now()) .. " ticks" })
+  frame.add({ type = "label", caption =
+    "Spatial evidence: " .. tostring(cat.scan_entities_1478 or "?") ..
+    " entities | " .. tostring(cat.scan_queries_1478 or 0) ..
+    " queries | " .. tostring(cat.scan_source_1478 or "legacy") })
   if cat.scan_limit_reached_1477 then
     frame.add({ type = "label", caption =
-      "Auspex scan reached the " .. tostring(Catalog.scan_limit) ..
-      "-entity limit. This ledger may omit nearby machines or resources." })
+      "Auspex INCOMPLETE (" .. tostring(cat.scan_reason_1478 or "bounded scan") ..
+      "). Some resources or machines may be omitted; no absent claims released." })
   end
   frame.add({ type = "button", name = "tech_priests_known_resources_refresh_0326", caption = "Recast Auspex Ledger" })
   -- Keep station identity, freshness and manual refresh visible while the
@@ -849,7 +885,10 @@ local function run_catalog_command(event, compact)
       .. " storage-items=" .. tostring(cat and cat.stored_item_kinds or 0)
       .. " owned=" .. tostring(cat and cat.owned_resource_count or 0)
       .. " next-sweep=" .. tostring((root.next_scan[station_unit(pair)] or 0) - now()) .. " ticks"
-      .. " scan-limit-reached=" .. tostring(cat and cat.scan_limit_reached_1477 == true))
+      .. " scan-complete=" .. tostring(cat and cat.scan_incomplete_1478 == false)
+      .. " queries=" .. tostring(cat and cat.scan_queries_1478 or 0)
+      .. " entities=" .. tostring(cat and cat.scan_entities_1478 or 0)
+      .. " reason=" .. tostring(cat and cat.scan_reason_1478 or "-"))
   end
   Catalog.show_gui(player, pair)
 end
