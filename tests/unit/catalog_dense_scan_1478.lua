@@ -59,4 +59,24 @@ local failures={find_entities_filtered=function() error("forced-failure") end}
 local empty,err=M.scan(failures,area,{limit=768})
 assert(not empty and not err.complete and err.reason=="surface-query-failed",
   "engine query failure was concealed")
+-- Deterministic stress across both sides of the native query limit.
+for _,population in ipairs({1,767,768,769,1500,2000,3000,5000}) do
+  local samples={}
+  for i=1,population do
+    samples[i]=entity(i,((i*37)%6398)/100+0.01,
+      ((i*71)%6398)/100+0.01)
+  end
+  local scanned,check=M.scan(surface(samples),area,{limit=768})
+  assert(scanned and check.queries<=13 and #scanned<=3072,
+    "population scan exceeded a resource budget")
+  local got={}
+  for _,item in ipairs(scanned) do
+    assert(not got[item.unit_number],"population scan duplicated an entity")
+    got[item.unit_number]=true
+  end
+  if check.complete then
+    assert(#scanned==population,
+      "complete population scan failed to enumerate the world")
+  end
+end
 print("[catalog-dense-scan-1478] PASS: 500/768/800/1100/2400, budgets and failures")
