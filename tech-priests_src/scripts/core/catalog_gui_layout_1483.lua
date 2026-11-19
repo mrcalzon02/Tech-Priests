@@ -38,4 +38,12 @@ function M.for_player(player)
   }
 end
 
+-- Wrap long readouts instead of permitting labels to stretch a narrow panel.
+function M.add_label(parent, caption, max_width)
+  local label = parent.add({type = "label", caption = caption})
+  label.style.single_line = false
+  label.style.maximal_width = math.max(1, math.floor(tonumber(max_width) or 420))
+  return label
+end
+
 return M
