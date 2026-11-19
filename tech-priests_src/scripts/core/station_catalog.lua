@@ -574,7 +574,7 @@ function Catalog.scan_pair(pair)
   local ok_ents, entities = false, nil
   local indexed_provider = rawget(_G, "tech_priests_efficiency_0579_entities_for_area")
   if type(indexed_provider) == "function" then
-    local ok_idx, idx_entities = pcall(indexed_provider, station.surface, area)
+    local ok_idx, idx_entities = pcall(indexed_provider, station.surface, area, Catalog.scan_limit)
     if ok_idx and type(idx_entities) == "table" then
       ok_ents, entities = true, idx_entities
       root.stats.indexed_area_reuse_0579 = (root.stats.indexed_area_reuse_0579 or 0) + 1
