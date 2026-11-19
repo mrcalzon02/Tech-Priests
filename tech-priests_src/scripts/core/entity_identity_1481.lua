@@ -2,7 +2,9 @@
 -- Never use object addresses or coarse tile rounding for resource ownership.
 local M = {}
 local function numeric(v)
-  return string.format("%.17g", tonumber(v) or 0)
+  -- MapPosition is stored as a signed fixed-point integer (8 fractional bits).
+  -- Convert back to its exact engine coordinate instead of formatting floats.
+  return tostring(math.floor((tonumber(v) or 0) * 256 + 0.5))
 end
 function M.key(entity)
   if not (entity and entity.valid) then return nil end
