@@ -486,6 +486,8 @@ end
 
 local function clean_reuse_allowed_0570(pair, catalog, radius)
   if not (pair and pair.station and pair.station.valid and catalog) then return false end
+  -- A truncated snapshot must never receive the clean-reuse extension.
+  if catalog.scan_limit_reached_1477 then return false end
   local age = now() - (tonumber(catalog.tick or 0) or 0)
   if age < 0 or age > Catalog.clean_reuse_ticks_0570 then return false end
   local dirty_check = rawget(_G, "tech_priests_efficiency_0570_dirty_near_pair")
