@@ -112,7 +112,8 @@ def parse_observations(log: str, preset: str, seed: int, ticks: int) -> dict:
     latest = {x["force"]: x for x in events.get("SAMPLE", [])}
     participants = {x["force"]: x for x in roster}
     if set(latest) != set(participants) or any(
-            x["elapsed"] != ticks for x in latest.values()):
+            x["elapsed"] != ticks or x.get("tick") != end["tick"]
+            for x in latest.values()):
         raise ValueError("Missing exact final native force observations")
 
     def nonnegative(value: object) -> bool:
