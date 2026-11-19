@@ -617,6 +617,11 @@ function Catalog.scan_pair(pair)
     catalog.scan_source_1478 = "direct"
     catalog.scan_queries_1478 = scan_info and scan_info.queries or 0
     catalog.scan_reason_1478 = scan_info and scan_info.reason or "unknown"
+    catalog.scan_identity_collisions_1481 = scan_info and scan_info.identity_collisions or 0
+    if catalog.scan_identity_collisions_1481 > 0 then
+      root.stats.scan_identity_collisions_1481 =
+        (root.stats.scan_identity_collisions_1481 or 0) + catalog.scan_identity_collisions_1481
+    end
     root.stats.scan_queries_1478 = (root.stats.scan_queries_1478 or 0)
       + catalog.scan_queries_1478
     if catalog.scan_queries_1478 > 1 and scan_complete then
@@ -811,7 +816,8 @@ function Catalog.show_gui(player, pair)
   frame.add({ type = "label", caption =
     "Spatial evidence: " .. tostring(cat.scan_entities_1478 or "?") ..
     " entities | " .. tostring(cat.scan_queries_1478 or 0) ..
-    " queries | " .. tostring(cat.scan_source_1478 or "legacy") })
+    " queries | " .. tostring(cat.scan_source_1478 or "legacy") ..
+    " | ambiguous IDs " .. tostring(cat.scan_identity_collisions_1481 or 0) })
   if cat.scan_limit_reached_1477 then
     frame.add({ type = "label", caption =
       "Auspex INCOMPLETE (" .. tostring(cat.scan_reason_1478 or "bounded scan") ..
@@ -907,6 +913,7 @@ local function run_catalog_command(event, compact)
       .. " scan-complete=" .. tostring(cat and cat.scan_incomplete_1478 == false)
       .. " queries=" .. tostring(cat and cat.scan_queries_1478 or 0)
       .. " entities=" .. tostring(cat and cat.scan_entities_1478 or 0)
+      .. " ambiguous-ids=" .. tostring(cat and cat.scan_identity_collisions_1481 or 0)
       .. " reason=" .. tostring(cat and cat.scan_reason_1478 or "-"))
   end
   Catalog.show_gui(player, pair)
