@@ -28,7 +28,8 @@ function M.scan(surface, area, opts)
   local x1, y1, x2, y2 = bounds(area)
   local info = { complete = true, queries = 0, splits = 0,
     saturated_queries = 0, truncated_leaves = 0, unique = 0,
-    identity_collisions = 0, budget_exhausted = false, reason = "complete" }
+    identity_collisions = 0, budget_exhausted = false, reason = "complete",
+    filtered_queries = 0, prefilter_fallbacks = 0 }
   if not (surface and type(surface.find_entities_filtered) == "function"
       and x1 and x2 > x1 and y2 > y1) then
     info.complete, info.reason = false, "invalid-scan-request"
@@ -44,13 +45,38 @@ function M.scan(surface, area, opts)
   -- LuaEntity == compares identity, while reference keys would be unsafe if
   -- persisted. These references live only for this synchronous scan.
   local cursor, out, seen, collisions = 1, {}, {}, {}
+  local prefilter_available = type(opts.exclude_types) == "table"
+    and #opts.exclude_types > 0
   while cursor <= #pending and info.queries < max_queries do
     local item = pending[cursor]
     cursor = cursor + 1
     local ax, ay, bx, by, depth = item[1], item[2], item[3], item[4], item[5]
+    local query = {area = {{ax, ay}, {bx, by}}, limit = limit}
+    -- Catalog explicitly excludes these same types after scanning. Filter
+    -- in the engine first so irrelevant belts/characters cannot saturate the
+    -- native query cap or trigger unnecessary dense subdivision.
+    local filtered = prefilter_available
+    if filtered then
+      query.type, query.invert = opts.exclude_types, true
+      info.filtered_queries = info.filtered_queries + 1
+    end
     info.queries = info.queries + 1
-    local ok, found = pcall(surface.find_entities_filtered,
-      {area = {{ax, ay}, {bx, by}}, limit = limit})
+    local ok, found = pcall(surface.find_entities_filtered, query)
+    if (not ok or type(found) ~= "table") and filtered then
+      -- The engine/prototype may reject an inverted type array. Preserve the
+      -- original unfiltered behavior, but count both real engine calls against
+      -- the hard limit; never claim complete coverage without the retry.
+      info.prefilter_fallbacks = info.prefilter_fallbacks + 1
+      prefilter_available = false -- do not repeat failed engine calls
+      if info.queries >= max_queries then
+        info.complete, info.budget_exhausted = false, true
+        info.reason = "prefilter-fallback-budget"
+        break
+      end
+      query.type, query.invert = nil, nil
+      info.queries = info.queries + 1
+      ok, found = pcall(surface.find_entities_filtered, query)
+    end
     if not ok or type(found) ~= "table" then
       info.complete = false
       info.reason = "surface-query-failed"
