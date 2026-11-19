@@ -586,7 +586,7 @@ function Catalog.scan_pair(pair)
     end)
     local note_scan = rawget(_G, "tech_priests_efficiency_0579_note_area_scan")
     if ok_ents and entities and type(note_scan) == "function" then
-      pcall(note_scan, station.surface, area, entities)
+      pcall(note_scan, station.surface, area, entities, Catalog.scan_limit)
       root.stats.indexed_area_learning_scans_0579 = (root.stats.indexed_area_learning_scans_0579 or 0) + 1
     end
   end

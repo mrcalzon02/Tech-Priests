@@ -41,6 +41,7 @@ local function root()
   r.skipped = r.skipped or {}
   r.ran = r.ran or {}
   r.route_keys = r.route_keys or {}
+  r.route_pulses = r.route_pulses or {}
   return r
 end
 
@@ -139,12 +140,26 @@ local function is_critical(entry)
   return false
 end
 
-local function deterministic_bucket(event_tick, entry, mult)
+-- nth-tick callbacks only occur on multiples of their registered cadence.
+-- Counting callbacks for EACH route, rather than game.tick residues, prevents
+-- permanent starvation when cadence and throttling window share a divisor.
+local function deterministic_bucket(entry, mult)
   if mult <= 1 then return true end
-  local key = tostring(entry.owner or "?") .. ":" .. tostring(entry.category or "?") .. ":" .. tostring(entry.tick or "?")
-  local h = 0
-  for i = 1, #key do h = (h + string.byte(key, i) * i) % 1000003 end
-  return ((event_tick + h) % mult) == 0
+  local r = root()
+  local key = entry.tech_priests_0594_pulse_key
+  if not key then
+    key = tostring(entry.id or entry.owner or "?") .. ":" .. tostring(entry.tick or "?")
+    entry.tech_priests_0594_pulse_key = key
+  end
+  local pulse = (tonumber(r.route_pulses[key]) or 0) + 1
+  r.route_pulses[key] = pulse
+  local phase = entry.tech_priests_0594_phase
+  if phase == nil then
+    phase = 0
+    for i = 1, #key do phase = (phase + string.byte(key, i) * i) % 1000003 end
+    entry.tech_priests_0594_phase = phase
+  end
+  return ((pulse + phase) % mult) == 0
 end
 
 local function wrap_entry(entry)
@@ -157,8 +172,18 @@ local function wrap_entry(entry)
     local r = root()
     if r.enabled == false then return prev(event) end
     local mult, reason = category_multiplier(entry.category, entry.owner)
-    local tick = (event and event.tick) or now()
-    if mult > 1 and not deterministic_bucket(tick, entry, mult) then
+    -- 0598 has already admitted this route by its own pulse counter.
+    -- Never multiply two independent background windows: this can make a GUI
+    -- or visual route effectively run only once per minute.
+    if reason == "diagnostics-off" then
+      stat("skipped", reason)
+      return false
+    end
+    if mult > 1 and entry.tech_priests_0598_budgeted == true then
+      stat("ran", "budgeted-by-0598")
+      return prev(event)
+    end
+    if mult > 1 and not deterministic_bucket(entry, mult) then
       stat("skipped", reason or "skipped")
       return false
     end

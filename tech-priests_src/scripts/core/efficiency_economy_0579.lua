@@ -148,7 +148,8 @@ function M.index_entity(entity, reason)
   local ck = cell_key(cx, cy)
   local sidx = surface_index(r, entity.surface)
   local rec = cell_record(sidx, ck)
-  rec.known_tick = math.max(tonumber(rec.known_tick or -1) or -1, now())
+  -- A single build event updates the entity index, not knowledge of the
+  -- entire cell. Only a complete area scan may mark a cell fully known.
   rec.entities[key] = entity
   r.entity_cells[key] = { surface = surface_key(entity.surface), cell = ck, tick = now(), name = entity.name, type = entity.type }
   stat("entity_indexed")
@@ -171,19 +172,28 @@ function M.mark_entity_dirty(entity, reason)
   mark_cell_dirty(entity.surface, cx, cy, reason)
 end
 
-function M.note_area_scan(surface, area, entities)
+function M.note_area_scan(surface, area, entities, scan_limit)
   local r = M.root()
   if r.enabled == false then return false end
   local sidx = surface_index(r, surface)
+  local limit = tonumber(scan_limit)
+  -- A capped Factorio surface scan is not proof that every entity was seen.
+  local incomplete = limit and limit > 0 and type(entities) == "table"
+      and #entities >= limit
   local x1,y1,x2,y2 = area_cells(area)
   for cx=x1,x2 do
     for cy=y1,y2 do
       local ck = cell_key(cx, cy)
       local rec = cell_record(sidx, ck)
-      rec.known_tick = now()
-      sidx.dirty[ck] = nil
+      if incomplete then
+        sidx.dirty[ck] = { tick = now(), reason = "capped-area-scan" }
+      else
+        rec.known_tick = now()
+        sidx.dirty[ck] = nil
+      end
     end
   end
+  if incomplete then stat("capped_scans_not_cached") end
   local indexed = 0
   if type(entities) == "table" then
     for _, entity in pairs(entities) do

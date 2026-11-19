@@ -25,17 +25,27 @@ local function inc(key, n)
   r.stats[key] = (r.stats[key] or 0) + (n or 1)
 end
 
-local function pair_count()
+local function pair_count(r)
+  r = r or root()
+  local tick = game and game.tick or 0
+  if r.cached_pair_count ~= nil
+      and tick < (tonumber(r.next_pair_scan_tick) or 0) then
+    return r.cached_pair_count
+  end
   local tp = storage and storage.tech_priests
   local map = tp and tp.pairs_by_station
-  if type(map) ~= "table" then return 0 end
   local n = 0
-  for _, pair in pairs(map) do
-    if pair and ((pair.station and pair.station.valid) or (pair.priest and pair.priest.valid)) then
-      n = n + 1
-      if n > 500 then break end
+  if type(map) == "table" then
+    for _, pair in pairs(map) do
+      if pair and ((pair.station and pair.station.valid) or (pair.priest and pair.priest.valid)) then
+        n = n + 1
+        if n > 500 then break end
+      end
     end
   end
+  r.cached_pair_count = n
+  -- The empty -> first-station transition must not wait through a long TTL.
+  r.next_pair_scan_tick = tick + (n == 0 and 5 or 60)
   return n
 end
 
@@ -88,13 +98,15 @@ end
 
 function M.route_budget(entry, event, cadence)
   local r = root()
-  if not r.enabled then return true end
   if type(entry) ~= "table" then return true end
-  local category = tostring(entry.category or "")
+  -- The 0594 wrapper checks this flag only for the CURRENT route dispatch.
+  entry.tech_priests_0598_budgeted = false
+  if not r.enabled then return true end
+  local category = string.lower(tostring(entry.category or ""))
   if critical_categories[category] then return true end
   if not background_categories[category] then return true end
 
-  local count = pair_count()
+  local count = pair_count(r)
   if count <= 0 then
     -- Dormant gate should already catch the fully idle case, but keep this
     -- secondary defense cheap and explicit for old raw handlers.
@@ -104,10 +116,21 @@ function M.route_budget(entry, event, cadence)
 
   local window = window_for_load(count)
   if window <= 1 then return true end
-  local tick = (event and event.tick) or (game and game.tick) or 0
-  local owner = tostring(entry.owner or "legacy")
-  local phase = stable_hash(owner .. ":" .. category .. ":" .. tostring(cadence or "")) % window
-  if (tick % window) ~= phase then
+  entry.tech_priests_0598_budgeted = true
+  local key = entry.tech_priests_0598_pulse_key
+  if not key then
+    key = tostring(entry.id or (tostring(entry.owner or "legacy") .. ":" .. tostring(entry.route or category)))
+      .. ":" .. tostring(cadence or entry.tick or "")
+    entry.tech_priests_0598_pulse_key = key
+  end
+  local pulse = (tonumber(r.buckets[key]) or 0) + 1
+  r.buckets[key] = pulse
+  local phase = entry.tech_priests_0598_phase
+  if phase == nil then
+    phase = stable_hash(key)
+    entry.tech_priests_0598_phase = phase
+  end
+  if ((pulse + phase) % window) ~= 0 then
     inc("deferred_" .. category)
     return false
   end
@@ -141,6 +164,7 @@ function M.install()
       if player and player.valid then player.print(msg) elseif game and game.print then game.print(msg) end
     end)
   end
+  return true
 end
 
 return M
