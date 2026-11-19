@@ -15,6 +15,7 @@ M.cell_size = 32
 M.known_keep_ticks = 60 * 60 * 20
 M.cleanup_interval = 60 * 17
 M.max_indexed_entities_per_area = 2048
+M.max_cache_age_ticks = 600 -- Revalidate untracked script movement after ten seconds.
 
 local function now() return game and game.tick or 0 end
 local function valid(e) return e and e.valid end
@@ -43,11 +44,14 @@ local function cell_key(cx, cy) return tostring(cx) .. ":" .. tostring(cy) end
 local function area_cells(area)
   local lt = area and area[1] or {0,0}
   local rb = area and area[2] or {0,0}
-  local x1, y1 = cell_xy({x = lt.x or lt[1] or 0, y = lt.y or lt[2] or 0})
-  local x2, y2 = cell_xy({x = rb.x or rb[1] or 0, y = rb.y or rb[2] or 0})
-  if x2 < x1 then x1,x2 = x2,x1 end
-  if y2 < y1 then y1,y2 = y2,y1 end
-  return x1,y1,x2,y2
+  local ax,ay = tonumber(lt.x or lt[1]) or 0,tonumber(lt.y or lt[2]) or 0
+  local bx,by = tonumber(rb.x or rb[1]) or 0,tonumber(rb.y or rb[2]) or 0
+  local x1,y1,x2,y2=math.min(ax,bx),math.min(ay,by),math.max(ax,bx),math.max(ay,by)
+  local c1,d1=math.floor(x1/M.cell_size),math.floor(y1/M.cell_size)
+  -- A box ending exactly at a cell boundary does not include its neighbor.
+  local c2=math.max(c1,math.ceil(x2/M.cell_size)-1)
+  local d2=math.max(d1,math.ceil(y2/M.cell_size)-1)
+  return c1,d1,c2,d2,x1,y1,x2,y2
 end
 
 local function in_area(entity, area)
@@ -100,6 +104,13 @@ function M.root()
   r.entity_cells = r.entity_cells or {}
   r.stats = r.stats or {}
   r.recent = r.recent or {}
+  if r.cache_schema_1476 ~= 1 then
+    -- Earlier versions could mark partially scanned cells complete.
+    -- This invalidates only derived cache data, never game entities or claims.
+    r.surfaces, r.entity_cells = {}, {}
+    r.cache_schema_1476 = 1
+    r.stats.cache_reseeds_1476 = (r.stats.cache_reseeds_1476 or 0) + 1
+  end
   return r
 end
 
@@ -177,19 +188,32 @@ function M.note_area_scan(surface, area, entities, scan_limit)
   if r.enabled == false then return false end
   local sidx = surface_index(r, surface)
   local limit = tonumber(scan_limit)
-  -- A capped Factorio surface scan is not proof that every entity was seen.
-  local incomplete = limit and limit > 0 and type(entities) == "table"
-      and #entities >= limit
-  local x1,y1,x2,y2 = area_cells(area)
+  -- Only a demonstrably complete, bounded scan may certify an entire cell.
+  local incomplete = type(entities)~="table" or not limit or limit<=0
+      or #entities >= limit or #entities >= M.max_indexed_entities_per_area
+  local x1,y1,x2,y2,ax,ay,bx,by = area_cells(area)
+  local stamp=now()
   for cx=x1,x2 do
     for cy=y1,y2 do
-      local ck = cell_key(cx, cy)
-      local rec = cell_record(sidx, ck)
+      local ck=cell_key(cx,cy)
       if incomplete then
-        sidx.dirty[ck] = { tick = now(), reason = "capped-area-scan" }
+        sidx.dirty[ck]={tick=stamp,reason="incomplete-area-scan"}
+      elseif ax<=cx*M.cell_size and ay<=cy*M.cell_size
+          and bx>=(cx+1)*M.cell_size and by>=(cy+1)*M.cell_size then
+        local rec=cell_record(sidx,ck)
+        -- Clear formerly cached entities missing from this full direct scan.
+        for key in pairs(rec.entities) do
+          local old=r.entity_cells[key]
+          if old and old.surface==surface_key(surface) and old.cell==ck then
+            r.entity_cells[key]=nil
+          end
+        end
+        rec.entities={}
+        rec.known_tick=stamp
+        sidx.dirty[ck]=nil
       else
-        rec.known_tick = now()
-        sidx.dirty[ck] = nil
+        -- Partial coverage must not certify the unobserved remainder.
+        stat("partial_cells_not_certified")
       end
     end
   end
@@ -208,20 +232,24 @@ function M.note_area_scan(surface, area, entities, scan_limit)
   return true
 end
 
-function M.entities_for_area(surface, area)
+function M.entities_for_area(surface, area, scan_limit)
   local r = M.root()
-  if r.enabled == false or r.use_indexed_catalog_cells == false then return nil end
+  if r.enabled == false or r.use_indexed_catalog_cells == false or not area then return nil end
   local sidx = r.surfaces[surface_key(surface)]
   if not (sidx and sidx.cells) then stat("area_index_miss_no_surface"); metric("indexed_cache_misses",1); return nil end
   local x1,y1,x2,y2 = area_cells(area)
   local out = {}
   local seen = {}
+  local cap=math.min(M.max_indexed_entities_per_area,
+    math.max(1,math.floor(tonumber(scan_limit) or M.max_indexed_entities_per_area)))
+  local tick=now()
   for cx=x1,x2 do
     for cy=y1,y2 do
       local ck = cell_key(cx, cy)
       local rec = sidx.cells[ck]
       local dirty = sidx.dirty and sidx.dirty[ck]
-      if not rec or (tonumber(rec.known_tick or -1) or -1) < 0 or dirty then
+      local known=rec and tonumber(rec.known_tick) or -1
+      if known<0 or known>tick or tick-known>M.max_cache_age_ticks or dirty then
         stat("area_index_miss_dirty_or_unknown"); metric("indexed_cache_misses",1)
         return nil
       end
@@ -233,7 +261,10 @@ function M.entities_for_area(surface, area)
         elseif not seen[key] and in_area(entity, area) and should_index(entity) then
           seen[key] = true
           out[#out + 1] = entity
-          if #out >= M.max_indexed_entities_per_area then break end
+          if #out >= cap then
+            stat("area_index_miss_result_cap"); metric("indexed_cache_misses",1)
+            return nil
+          end
         end
       end
     end
@@ -324,8 +355,8 @@ function M.install()
     M.root()
     if install_events() ~= true then error("catalog index event routes rejected") end
     install_command()
-    _G.tech_priests_efficiency_0579_entities_for_area = function(surface, area) return M.entities_for_area(surface, area) end
-    _G.tech_priests_efficiency_0579_note_area_scan = function(surface, area, entities) return M.note_area_scan(surface, area, entities) end
+    _G.tech_priests_efficiency_0579_entities_for_area = function(surface, area, limit) return M.entities_for_area(surface, area, limit) end
+    _G.tech_priests_efficiency_0579_note_area_scan = function(surface, area, entities, limit) return M.note_area_scan(surface, area, entities, limit) end
     _G.TechPriestsEfficiencyEconomy0579 = M
   end)
   if not ok then
