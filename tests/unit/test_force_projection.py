@@ -76,7 +76,9 @@ class Verdict(unittest.TestCase):
                     [x for x in rows if x[0] != "SUPPLY"],
                     [x for x in rows if x[0] != "SAMPLE"],
                     [x for x in rows if x[0] != "DEPOSIT"],
-                    rows + [("FAIL", {"reason": "broken"})]]
+                    rows + [("FAIL", {"reason": "broken"})],
+                    rows + [("PAIR_FAILURE", {"force": "f0", "station_unit": 12,
+                                              "spawn_search_candidate": None})]]
         for variant in variants:
             with self.assertRaises(ValueError):
                 arena.parse_observations(encode(variant), "2p2b", 42, 3600)
