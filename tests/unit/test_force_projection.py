@@ -11,7 +11,8 @@ import run_force_projection as arena
 
 
 def observations():
-    roster = [{"force": "f"+str(i), "kind": "p" if i in (0, 2) else "b"}
+    roster = [{"force": "f"+str(i), "kind": "p" if i in (0, 2) else "b",
+               "team": ("left-a", "bugs-a", "left-b", "bugs-b")[i]}
               for i in range(4)]
     rows = [("CONFIG", {"preset": "2p2b", "seed": 42, "active_ticks": 3600,
                         "participants": roster, "side": 2048}),
@@ -27,7 +28,18 @@ def observations():
             rows.append(("DEPOSIT", {"cell": cell, "name": name,
                                      "entities_or_tiles": 1}))
     for p in roster:
-        rows.append(("SAMPLE", {"force": p["force"], "elapsed": 3600}))
+        is_priest = p["kind"] == "p"
+        record = {"force": p["force"], "kind": p["kind"], "team": p["team"],
+                  "tick": 33600, "elapsed": 3600, "station_alive": is_priest,
+                  "priest_alive": is_priest, "build_events": 0, "lost": 0,
+                  "research_finished": 0, "damage_dealt": 0,
+                  "damage_received": 0, "max_build_distance": 0,
+                  "supply_remaining": 0,
+                  "ore_production": {"iron-ore": 0, "copper-ore": 0,
+                                     "coal": 0, "stone": 0}}
+        if is_priest:
+            record.update(initial_expansion_kits=3, senior_kits_in_magos=3)
+        rows.append(("SAMPLE", record))
     rows.append(("COMPLETE", {"preset": "2p2b", "seed": 42, "tick": 33600,
                               "elapsed": 3600, "participants": 4}))
     return rows
@@ -101,6 +113,46 @@ class Verdict(unittest.TestCase):
         self.assertTrue(result["observation_complete"])
         self.assertFalse(result["combat_observed"])
         self.assertTrue(result["expansion_success_not_assumed"])
+        self.assertFalse(result["hostile_contact_observed"])
+        self.assertEqual(result["observed_progress"]["native_build_events"], 0)
+        self.assertEqual(result["observed_progress"]["native_ore_stat_inputs"], 0)
+
+    def test_native_sample_counters_required_even_for_no_progress(self):
+        for field, invalid in (
+                ("build_events", -1), ("research_finished", -1),
+                ("damage_dealt", -0.5), ("station_alive", None),
+                ("priest_alive", "yes"), ("max_build_distance", -1),
+                ("tick", 33601), ("team", "wrong")):
+            rows = copy.deepcopy(observations())
+            sample = next(r for kind, r in rows if kind == "SAMPLE")
+            sample[field] = invalid
+            with self.assertRaises(ValueError, msg=field):
+                arena.parse_observations(encode(rows), "2p2b", 42, 3600)
+        rows = copy.deepcopy(observations())
+        next(r for kind, r in rows if kind == "SAMPLE")["ore_production"].pop("coal")
+        with self.assertRaises(ValueError):
+            arena.parse_observations(encode(rows), "2p2b", 42, 3600)
+
+    def test_real_contact_counters_not_a_fabricated_victory(self):
+        rows = copy.deepcopy(observations())
+        rows.insert(-1, ("CONTACT", {"tick": 30012, "attacker": "f0",
+                                     "defender": "f1", "damage": 4}))
+        result = arena.parse_observations(encode(rows), "2p2b", 42, 3600)
+        self.assertTrue(result["combat_observed"])
+        self.assertTrue(result["hostile_contact_observed"])
+        self.assertEqual(result["observed_progress"]["cross_force_damage_contacts"], 1)
+        self.assertEqual(result["observed_progress"]["native_build_events"], 0)
+        for bad in ({"tick": 29999, "attacker": "f0", "defender": "f1", "damage": 4},
+                    {"tick": 30012, "attacker": "f0", "defender": "f0", "damage": 4},
+                    {"tick": 30012, "attacker": "unknown", "defender": "f1", "damage": 4},
+                    {"tick": 30012, "attacker": "f0", "defender": "f1", "damage": 0}):
+            invalid = copy.deepcopy(observations())
+            invalid.insert(-1, ("CONTACT", bad))
+            with self.assertRaises(ValueError):
+                arena.parse_observations(encode(invalid), "2p2b", 42, 3600)
+        with self.assertRaises(ValueError):
+            arena.parse_observations(encode(rows[:-1]+[rows[-2],rows[-1]]),
+                                     "2p2b", 42, 3600)
 
     def test_missing_mismatched_duplicate_and_failed_receipts(self):
         rows = observations()
