@@ -767,16 +767,21 @@ function Catalog.show_gui(player, pair)
       "-entity limit. This ledger may omit nearby machines or resources." })
   end
   frame.add({ type = "button", name = "tech_priests_known_resources_refresh_0326", caption = "Recast Auspex Ledger" })
-  add_section(frame, "Active resources", cat.resources, 8)
-  add_section(frame, "Mineable products", cat.mineable_products, 8)
-  add_section(frame, "Items in storage", cat.storage_items, 10)
-  frame.add({ type = "label", caption = "Subordinate command lattice" })
+  -- Keep station identity, freshness and manual refresh visible while the
+  -- ledger's potentially long resource/command lists scroll independently.
+  local details = frame.add({ type = "scroll-pane", name = "tech_priests_catalog_details_1477" })
+  details.style.minimal_width = 420
+  details.style.maximal_height = 500
+  add_section(details, "Active resources", cat.resources, 8)
+  add_section(details, "Mineable products", cat.mineable_products, 8)
+  add_section(details, "Items in storage", cat.storage_items, 10)
+  details.add({ type = "label", caption = "Subordinate command lattice" })
   if #(cat.subordinate_stations or {}) == 0 then
-    frame.add({ type = "label", caption = "  no lower-rank subordinate stations sealed into the lattice" })
+    details.add({ type = "label", caption = "  no lower-rank subordinate stations sealed into the lattice" })
   else
     for i, sub in ipairs(cat.subordinate_stations) do
       if i > 10 then break end
-      frame.add({ type = "label", caption = "  rank " .. tostring(sub.rank) .. " | " .. tostring(sub.backer_name or sub.name or sub.unit) .. " | mode " .. tostring(sub.mode or "idle") .. " | emergency " .. tostring(sub.emergency) })
+      details.add({ type = "label", caption = "  rank " .. tostring(sub.rank) .. " | " .. tostring(sub.backer_name or sub.name or sub.unit) .. " | mode " .. tostring(sub.mode or "idle") .. " | emergency " .. tostring(sub.emergency) })
     end
   end
 end
