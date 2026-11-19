@@ -22,6 +22,32 @@ PRESETS = ("2p2b", "1v4-bugs", "2v2", "3v1", "4v4-priests")
 TAG = "[TP-FORCE-PROJECTION] "
 
 
+def drain_complete_lines(carry: str, chunk: str) -> tuple[list[str], str]:
+    """Return complete native log lines, retaining only a fragmented last line.
+
+    The full engine transcript is already written to native-server.log. Keeping
+    its entire contents in the one-second poll loop makes every subsequent
+    marker search increasingly expensive during endurance testing.
+    """
+    parts = (carry + chunk).splitlines(keepends=True)
+    if not parts:
+        return [], ""
+    trailing = "" if parts[-1].endswith("\n") else parts.pop()
+    return [part.rstrip("\r\n") for part in parts], trailing
+
+
+def latest_native_receipt(log_text: str, kind: str) -> dict | None:
+    """Failure-only bounded receipt, without fabricating a native verdict."""
+    marker = TAG + kind + " "
+    for line in reversed(log_text.splitlines()):
+        if marker in line:
+            try:
+                return json.loads(line.split(marker, 1)[1])
+            except (ValueError, TypeError):
+                return {"invalid_native_payload": True}
+    return None
+
+
 def parse_process_observations(create_log: str, server_log: str,
                                preset: str, seed: int, ticks: int) -> dict:
     if (create_log.count(TAG + "CONFIG ") != 1 or TAG + "CONFIG " in server_log
@@ -180,7 +206,10 @@ def main() -> int:
         log_path = output / "native-server.log"
         terminal_save = runtime / "saves" / f"tp-arena-{args.preset}-{seed}-final.zip"
         reason = "timeout"; actual_exit = None; native_started = time.monotonic()
-        observed = ""; offset = 0
+        offset = 0
+        line_carry = ""
+        failure_seen = False
+        complete_seen = False
         with log_path.open("w", encoding="utf-8") as log_output:
             process = subprocess.Popen(common + ["--start-server", str(save),
                 "--server-settings", str(server_settings), "--bind", "127.0.0.1",
@@ -191,14 +220,19 @@ def main() -> int:
                 while time.monotonic() < deadline:
                     with log_path.open(encoding="utf-8", errors="replace") as reader:
                         reader.seek(offset); fresh = reader.read(); offset = reader.tell()
-                    observed += fresh
-                    for line in fresh.splitlines():
+                    lines, line_carry = drain_complete_lines(line_carry, fresh)
+                    for line in lines:
+                        if TAG + "FAIL " in line or TAG + "PAIR_FAILURE " in line:
+                            failure_seen = True
+                        if TAG + "COMPLETE " in line:
+                            complete_seen = True
                         if any(TAG + kind + " " in line for kind in
-                               ("READY", "SAMPLE", "CONTACT", "FAIL", "COMPLETE")):
+                               ("READY", "SAMPLE", "CONTACT", "PAIR_FAILURE",
+                                "FAIL", "COMPLETE")):
                             print(line, flush=True)
-                    if TAG + "FAIL " in observed:
+                    if failure_seen:
                         reason = "fixture_failure"; break
-                    if TAG + "COMPLETE " in observed and terminal_save.is_file():
+                    if complete_seen and terminal_save.is_file():
                         try:
                             with zipfile.ZipFile(terminal_save) as archive:
                                 if archive.testzip() is None:
@@ -218,6 +252,13 @@ def main() -> int:
         result.update(engine_exit=actual_exit, driver_stop_reason=reason,
                       native_wall_seconds=round(time.monotonic()-native_started, 3))
         observed = log_path.read_text(encoding="utf-8", errors="replace")
+        native_pair_failure = latest_native_receipt(observed, "PAIR_FAILURE")
+        if native_pair_failure is not None:
+            result["native_pair_failure"] = native_pair_failure
+            # A real pairing failure must never become a successful run even
+            # if the terminal save and COMPLETE marker somehow both exist.
+            reason = "fixture_failure"
+            result["driver_stop_reason"] = reason
         if reason != "complete_with_verified_save":
             raise RuntimeError("Native endurance incomplete: " + reason)
         # CONFIG is emitted by native on_init during --create; READY and
