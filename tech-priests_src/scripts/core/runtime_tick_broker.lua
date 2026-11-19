@@ -65,12 +65,18 @@ end
 local function remember_window(metric, amount)
   local root = M.root()
   local key = window_key(now())
-  root.windows[key] = root.windows[key] or {}
-  root.windows[key][metric] =
-    (root.windows[key][metric] or 0) + (tonumber(amount) or 1)
-  for old in pairs(root.windows) do
-    if tonumber(old) and tonumber(old) < key - 30 then root.windows[old] = nil end
+  local window = root.windows[key]
+  if not window then
+    -- A five-tick broker service emits many independent telemetry counters.
+    -- Pruning every saved window for EVERY counter dominates the bookkeeping.
+    -- The retention boundary only changes when a new 3600-tick window opens.
+    window = {}
+    root.windows[key] = window
+    for old in pairs(root.windows) do
+      if tonumber(old) and tonumber(old) < key - 30 then root.windows[old] = nil end
+    end
   end
+  window[metric] = (window[metric] or 0) + (tonumber(amount) or 1)
 end
 local function stat(key, amount)
   local root = M.root()
