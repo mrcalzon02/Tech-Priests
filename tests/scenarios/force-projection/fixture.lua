@@ -189,6 +189,33 @@ local function seed_participant(s,surface)
       position=p.origin,force=force,raise_built=true}
     assert(station and station.valid,"Magos station creation refused")
     local pair=storage.tech_priests.pairs_by_station[station.unit_number]
+    if not (pair and pair.priest and pair.priest.valid) then
+      -- Diagnostic only: never fabricate a priest, retry a failed placement,
+      -- or bypass canonical create_pair. The failing native seed is evidence.
+      local proto="planetary-magos-tech-priest"
+      local candidate=nil
+      local can_place_east=nil
+      local spawn_search_ok,position=pcall(function()
+        return surface.find_non_colliding_position(proto,station.position,8,0.5,false)
+      end)
+      if spawn_search_ok and position then
+        candidate={x=position.x,y=position.y}
+      end
+      local east_ok,east=pcall(function()
+        return surface.can_place_entity{name=proto,
+          position={x=station.position.x+4,y=station.position.y},
+          force=station.force}
+      end)
+      if east_ok then can_place_east=east==true end
+      emit("PAIR_FAILURE",{force=p.force,tick=game.tick,
+        station_unit=station.unit_number,station_name=station.name,
+        x=station.position.x,y=station.position.y,
+        priest_prototype_present=prototypes.entity[proto]~=nil,
+        spawn_search_api_ok=spawn_search_ok,
+        spawn_search_candidate=candidate,can_place_east=can_place_east,
+        pair_record_present=pair~=nil,
+        priest_record_present=pair and pair.priest~=nil or false})
+    end
     assert(pair and pair.priest and pair.priest.valid,"original Magos pairing absent")
     p.station=station;p.priest=pair.priest
     p.initial[station.unit_number]=true;p.initial[pair.priest.unit_number]=true
