@@ -24,8 +24,15 @@ helpers are internal presentation adapters, not a fallback authority.
 ## Verification and packaging
 
 Run `texlua tests/unit/pair_lifecycle_install.lua` from repository root.
+For performance governors, Auspex spatial scans, UI bounds and station snapshot
+invalidation, run `python tests/run_hotpath_regressions.py` (six bounded smoke
+fixtures) or `python tests/run_hotpath_regressions.py --all` (thirteen fixtures,
+including the older integration coverage). Both commands require `texlua` and
+a full repository checkout and exit nonzero on missing files or test failures.
+These checks do not alter Factorio saves, start CI workflows, or publish releases.
+
 A passing unit test does not prove Factorio loading, migration, save/reload,
-runtime behavior, or profiler acceptance.
+runtime behavior, visual layout or profiler/UPS acceptance.
 
 The canonical packager is `tools/package_local.py` at repository root.
 Release authorization remains blocked. Published `v0.1.674-rc.3` is
