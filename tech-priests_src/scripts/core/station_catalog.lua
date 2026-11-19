@@ -18,6 +18,12 @@ Catalog.scan_period = 60
 Catalog.scan_limit = 768
 Catalog.max_dense_scan_queries_1478 = 13
 Catalog.max_dense_scan_entities_1478 = 3072
+-- Exactly the entity types should_catalog_entity rejects; keep all other
+-- prototype families, including resources, machines and modded structures.
+Catalog.noise_prefilter_types_1482 = {
+  "transport-belt", "underground-belt", "splitter", "loader",
+  "loader-1x1", "linked-belt", "character"
+}
 Catalog.clean_reuse_ticks_0570 = 60 * 10
 Catalog.max_instances_per_item = 256
 Catalog.gui_name = "tech_priests_known_resources_0326"
@@ -610,7 +616,8 @@ function Catalog.scan_pair(pair)
       limit = Catalog.scan_limit,
       max_queries = Catalog.max_dense_scan_queries_1478,
       max_entities = Catalog.max_dense_scan_entities_1478,
-      key_of = entity_key
+      key_of = entity_key,
+      exclude_types = Catalog.noise_prefilter_types_1482
     })
     ok_ents = type(entities) == "table"
     scan_complete = scan_info ~= nil and scan_info.complete == true
@@ -618,6 +625,14 @@ function Catalog.scan_pair(pair)
     catalog.scan_queries_1478 = scan_info and scan_info.queries or 0
     catalog.scan_reason_1478 = scan_info and scan_info.reason or "unknown"
     catalog.scan_identity_collisions_1481 = scan_info and scan_info.identity_collisions or 0
+    catalog.scan_filtered_queries_1482 = scan_info and scan_info.filtered_queries or 0
+    catalog.scan_prefilter_fallbacks_1482 = scan_info and scan_info.prefilter_fallbacks or 0
+    root.stats.scan_prefilter_filtered_queries_1482 =
+      (root.stats.scan_prefilter_filtered_queries_1482 or 0) +
+      catalog.scan_filtered_queries_1482
+    root.stats.scan_prefilter_fallbacks_1482 =
+      (root.stats.scan_prefilter_fallbacks_1482 or 0) +
+      catalog.scan_prefilter_fallbacks_1482
     if catalog.scan_identity_collisions_1481 > 0 then
       root.stats.scan_identity_collisions_1481 =
         (root.stats.scan_identity_collisions_1481 or 0) + catalog.scan_identity_collisions_1481
@@ -817,7 +832,8 @@ function Catalog.show_gui(player, pair)
     "Spatial evidence: " .. tostring(cat.scan_entities_1478 or "?") ..
     " entities | " .. tostring(cat.scan_queries_1478 or 0) ..
     " queries | " .. tostring(cat.scan_source_1478 or "legacy") ..
-    " | ambiguous IDs " .. tostring(cat.scan_identity_collisions_1481 or 0) })
+    " | ambiguous IDs " .. tostring(cat.scan_identity_collisions_1481 or 0) ..
+    " | prefilter retries " .. tostring(cat.scan_prefilter_fallbacks_1482 or 0) })
   if cat.scan_limit_reached_1477 then
     frame.add({ type = "label", caption =
       "Auspex INCOMPLETE (" .. tostring(cat.scan_reason_1478 or "bounded scan") ..
@@ -914,6 +930,8 @@ local function run_catalog_command(event, compact)
       .. " queries=" .. tostring(cat and cat.scan_queries_1478 or 0)
       .. " entities=" .. tostring(cat and cat.scan_entities_1478 or 0)
       .. " ambiguous-ids=" .. tostring(cat and cat.scan_identity_collisions_1481 or 0)
+      .. " native-filtered=" .. tostring(cat and cat.scan_filtered_queries_1482 or 0)
+      .. " prefilter-retries=" .. tostring(cat and cat.scan_prefilter_fallbacks_1482 or 0)
       .. " reason=" .. tostring(cat and cat.scan_reason_1478 or "-"))
   end
   Catalog.show_gui(player, pair)
