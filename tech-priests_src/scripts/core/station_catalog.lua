@@ -804,13 +804,18 @@ local function top_keys(tbl, limit)
   return out
 end
 
-local function add_section(frame, title, tbl, limit)
-  frame.add({ type = "label", caption = title })
+local function add_section(frame, title, tbl, limit, width)
+  AuspexLayout1483.add_label(frame, title, width)
   local rows = top_keys(tbl, limit)
-  if #rows == 0 then frame.add({ type = "label", caption = "  none sealed into the ledger" }); return end
+  if #rows == 0 then
+    AuspexLayout1483.add_label(frame, "  none sealed into the ledger", width)
+    return
+  end
   for _, row in ipairs(rows) do
     local owner = row.owner and (" | owner station#" .. tostring(row.owner)) or ""
-    frame.add({ type = "label", caption = "  " .. tostring(row.name) .. " x" .. tostring(row.count) .. " (sources " .. tostring(row.sources) .. ")" .. owner })
+    AuspexLayout1483.add_label(frame,
+      "  " .. tostring(row.name) .. " x" .. tostring(row.count) ..
+      " (sources " .. tostring(row.sources) .. ")" .. owner, width)
   end
 end
 
@@ -829,18 +834,27 @@ function Catalog.show_gui(player, pair)
   frame.style.maximal_width = layout.frame_width
   frame.style.maximal_height = layout.frame_height
   frame.tags = { station_unit = unit }
-  frame.add({ type = "label", caption = "Station seal: " .. tostring(cat.station_backer_name or cat.station_name or cat.station_unit) })
-  frame.add({ type = "label", caption = "Sweep radius: " .. tostring(math.floor(cat.radius or 0)) .. " | last rite tick: " .. tostring(cat.tick or 0) .. " | next auspex sweep: " .. tostring((root.next_scan[unit] or 0) - now()) .. " ticks" })
-  frame.add({ type = "label", caption =
+  local header_width = math.max(1, layout.frame_width - 24)
+  AuspexLayout1483.add_label(frame,
+    "Station seal: " .. tostring(cat.station_backer_name or cat.station_name or cat.station_unit),
+    header_width)
+  AuspexLayout1483.add_label(frame,
+    "Sweep radius: " .. tostring(math.floor(cat.radius or 0)) ..
+    " | last rite tick: " .. tostring(cat.tick or 0) ..
+    " | next auspex sweep: " .. tostring((root.next_scan[unit] or 0) - now()) .. " ticks",
+    header_width)
+  AuspexLayout1483.add_label(frame,
     "Spatial evidence: " .. tostring(cat.scan_entities_1478 or "?") ..
     " entities | " .. tostring(cat.scan_queries_1478 or 0) ..
     " queries | " .. tostring(cat.scan_source_1478 or "legacy") ..
     " | ambiguous IDs " .. tostring(cat.scan_identity_collisions_1481 or 0) ..
-    " | prefilter retries " .. tostring(cat.scan_prefilter_fallbacks_1482 or 0) })
+    " | prefilter retries " .. tostring(cat.scan_prefilter_fallbacks_1482 or 0),
+    header_width)
   if cat.scan_limit_reached_1477 then
-    frame.add({ type = "label", caption =
+    AuspexLayout1483.add_label(frame,
       "Auspex INCOMPLETE (" .. tostring(cat.scan_reason_1478 or "bounded scan") ..
-      "). Some resources or machines may be omitted; no absent claims released." })
+      "). Some resources or machines may be omitted; no absent claims released.",
+      header_width)
   end
   frame.add({ type = "button", name = "tech_priests_known_resources_refresh_0326", caption = "Recast Auspex Ledger" })
   -- Keep station identity, freshness and manual refresh visible while the
@@ -849,16 +863,22 @@ function Catalog.show_gui(player, pair)
   details.style.minimal_width = layout.details_width
   details.style.maximal_width = layout.details_width
   details.style.maximal_height = layout.details_height
-  add_section(details, "Active resources", cat.resources, 8)
-  add_section(details, "Mineable products", cat.mineable_products, 8)
-  add_section(details, "Items in storage", cat.storage_items, 10)
-  details.add({ type = "label", caption = "Subordinate command lattice" })
+  local details_text_width = math.max(1, layout.details_width - 24)
+  add_section(details, "Active resources", cat.resources, 8, details_text_width)
+  add_section(details, "Mineable products", cat.mineable_products, 8, details_text_width)
+  add_section(details, "Items in storage", cat.storage_items, 10, details_text_width)
+  AuspexLayout1483.add_label(details, "Subordinate command lattice", details_text_width)
   if #(cat.subordinate_stations or {}) == 0 then
-    details.add({ type = "label", caption = "  no lower-rank subordinate stations sealed into the lattice" })
+    AuspexLayout1483.add_label(details,
+      "  no lower-rank subordinate stations sealed into the lattice", details_text_width)
   else
     for i, sub in ipairs(cat.subordinate_stations) do
       if i > 10 then break end
-      details.add({ type = "label", caption = "  rank " .. tostring(sub.rank) .. " | " .. tostring(sub.backer_name or sub.name or sub.unit) .. " | mode " .. tostring(sub.mode or "idle") .. " | emergency " .. tostring(sub.emergency) })
+      AuspexLayout1483.add_label(details,
+        "  rank " .. tostring(sub.rank) ..
+        " | " .. tostring(sub.backer_name or sub.name or sub.unit) ..
+        " | mode " .. tostring(sub.mode or "idle") ..
+        " | emergency " .. tostring(sub.emergency), details_text_width)
     end
   end
 end
