@@ -590,6 +590,14 @@ function Catalog.scan_pair(pair)
       root.stats.indexed_area_learning_scans_0579 = (root.stats.indexed_area_learning_scans_0579 or 0) + 1
     end
   end
+  -- Factorio's limit may return a truncated collection. Retain partial
+  -- information, but never present it as a complete local-world ledger.
+  catalog.scan_limit_reached_1477 = not not
+    (ok_ents and entities and #entities >= Catalog.scan_limit)
+  if catalog.scan_limit_reached_1477 then
+    root.stats.scan_limit_reached_1477 =
+      (root.stats.scan_limit_reached_1477 or 0) + 1
+  end
   if ok_ents and entities then
     for _, e in pairs(entities) do add_entity_to_catalog(root, pair, catalog, e, station) end
   end
@@ -751,6 +759,11 @@ function Catalog.show_gui(player, pair)
   frame.tags = { station_unit = unit }
   frame.add({ type = "label", caption = "Station seal: " .. tostring(cat.station_backer_name or cat.station_name or cat.station_unit) })
   frame.add({ type = "label", caption = "Sweep radius: " .. tostring(math.floor(cat.radius or 0)) .. " | last rite tick: " .. tostring(cat.tick or 0) .. " | next auspex sweep: " .. tostring((root.next_scan[unit] or 0) - now()) .. " ticks" })
+  if cat.scan_limit_reached_1477 then
+    frame.add({ type = "label", caption =
+      "Auspex scan reached the " .. tostring(Catalog.scan_limit) ..
+      "-entity limit. This ledger may omit nearby machines or resources." })
+  end
   frame.add({ type = "button", name = "tech_priests_known_resources_refresh_0326", caption = "Recast Auspex Ledger" })
   add_section(frame, "Active resources", cat.resources, 8)
   add_section(frame, "Mineable products", cat.mineable_products, 8)
@@ -828,7 +841,8 @@ local function run_catalog_command(event, compact)
       .. " mineables=" .. tostring(mineable_kinds)
       .. " storage-items=" .. tostring(cat and cat.stored_item_kinds or 0)
       .. " owned=" .. tostring(cat and cat.owned_resource_count or 0)
-      .. " next-sweep=" .. tostring((root.next_scan[station_unit(pair)] or 0) - now()) .. " ticks")
+      .. " next-sweep=" .. tostring((root.next_scan[station_unit(pair)] or 0) - now()) .. " ticks"
+      .. " scan-limit-reached=" .. tostring(cat and cat.scan_limit_reached_1477 == true))
   end
   Catalog.show_gui(player, pair)
 end
