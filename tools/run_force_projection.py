@@ -38,8 +38,10 @@ def parse_observations(log: str, preset: str, seed: int, ticks: int) -> dict:
             continue
         kind, _, payload = line.split(TAG, 1)[1].partition(" ")
         events.setdefault(kind, []).append(json.loads(payload))
-    if events.get("FAIL"):
-        raise ValueError("Native fixture failed: " + str(events["FAIL"]))
+    if events.get("FAIL") or events.get("PAIR_FAILURE"):
+        raise ValueError("Native fixture failed: " + str({
+            "fail": events.get("FAIL", []),
+            "pair_failure": events.get("PAIR_FAILURE", [])}))
     for name in ("CONFIG", "READY", "COMPLETE"):
         if len(events.get(name, [])) != 1:
             raise ValueError("Missing or duplicate native " + name)
