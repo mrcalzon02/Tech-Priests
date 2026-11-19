@@ -339,7 +339,12 @@ local function install_command()
       for _, rec in pairs(sidx.cells or {}) do cells = cells + 1; for _ in pairs(rec.entities or {}) do entities = entities + 1 end end
       for _ in pairs(sidx.dirty or {}) do dirty = dirty + 1 end
     end
-    local msg = "[tp-efficiency-economy-0579] enabled="..safe(r.enabled).." index="..safe(r.use_indexed_catalog_cells).." cells="..safe(cells).." entities="..safe(entities).." dirty="..safe(dirty).." hits="..safe(r.stats.area_index_hits or 0).." misses="..safe(r.stats.area_index_miss_dirty_or_unknown or 0)
+    local msg = "[tp-efficiency-economy-0579] enabled="..safe(r.enabled).." index="..safe(r.use_indexed_catalog_cells).." cells="..safe(cells).." entities="..safe(entities).." dirty="..safe(dirty).." hits="..safe(r.stats.area_index_hits or 0)
+      .." misses="..safe(r.stats.area_index_miss_dirty_or_unknown or 0)
+      .." capped="..safe(r.stats.capped_scans_not_cached or 0)
+      .." partial-cells="..safe(r.stats.partial_cells_not_certified or 0)
+      .." cache-cap-misses="..safe(r.stats.area_index_miss_result_cap or 0)
+      .." cache-reseeds="..safe(r.stats.cache_reseeds_1476 or 0)
     if player and player.valid then player.print(msg) elseif game and game.print then game.print(msg) end
   end)
 end
