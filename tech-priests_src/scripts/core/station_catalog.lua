@@ -579,7 +579,7 @@ function Catalog.scan_pair(pair)
   local ok_ents, entities, scan_complete = false, nil, false
   local indexed_provider = rawget(_G, "tech_priests_efficiency_0579_entities_for_area")
   if type(indexed_provider) == "function" then
-    local ok_idx, idx_entities = pcall(indexed_provider, station.surface, area, Catalog.scan_limit)
+    local ok_idx, idx_entities = pcall(indexed_provider, station.surface, area, Catalog.scan_limit, true)
     if ok_idx and type(idx_entities) == "table" then
       ok_ents, entities, scan_complete = true, idx_entities, true
       catalog.scan_source_1478 = "indexed-cache"
