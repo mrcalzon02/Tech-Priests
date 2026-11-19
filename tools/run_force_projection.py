@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import math
 import pathlib
 import re
 import secrets
@@ -109,14 +110,73 @@ def parse_observations(log: str, preset: str, seed: int, ticks: int) -> dict:
     if seen != {(i, name) for i in range(cells) for name in required}:
         raise ValueError("Predefined resource field incomplete")
     latest = {x["force"]: x for x in events.get("SAMPLE", [])}
-    if set(latest) != {x["force"] for x in roster} or any(
+    participants = {x["force"]: x for x in roster}
+    if set(latest) != set(participants) or any(
             x["elapsed"] != ticks for x in latest.values()):
         raise ValueError("Missing exact final native force observations")
+
+    def nonnegative(value: object) -> bool:
+        return type(value) in (int, float) and math.isfinite(value) and value >= 0
+
+    for name, sample in latest.items():
+        expected = participants[name]
+        if (sample.get("kind") != expected["kind"]
+                or sample.get("team") != expected["team"]
+                or type(sample.get("station_alive")) is not bool
+                or type(sample.get("priest_alive")) is not bool
+                or any(type(sample.get(field)) is not int or sample[field] < 0
+                       for field in ("build_events", "lost", "research_finished"))
+                or any(not nonnegative(sample.get(field))
+                       for field in ("damage_dealt", "damage_received",
+                                     "max_build_distance", "supply_remaining"))):
+            raise ValueError("Missing or invalid native force counters: " + name)
+        ores = sample.get("ore_production")
+        if (not isinstance(ores, dict)
+                or set(ores) != {"iron-ore", "copper-ore", "coal", "stone"}
+                or any(not nonnegative(amount) for amount in ores.values())):
+            raise ValueError("Missing or invalid native ore statistics: " + name)
+        if expected["kind"] == "p":
+            if (type(sample.get("initial_expansion_kits")) is not int
+                    or not 1 <= sample["initial_expansion_kits"] <= 5
+                    or type(sample.get("senior_kits_in_magos")) is not int
+                    or sample["senior_kits_in_magos"] < 0):
+                raise ValueError("Missing physical senior-kit readback: " + name)
+
+    contacts = events.get("CONTACT", [])
+    seen_contacts: set[tuple[str, str]] = set()
+    for contact in contacts:
+        attacker, defender = contact.get("attacker"), contact.get("defender")
+        identity = (attacker, defender)
+        if (attacker not in participants or defender not in participants
+                or attacker == defender or identity in seen_contacts
+                or not nonnegative(contact.get("damage")) or contact["damage"] <= 0
+                or type(contact.get("tick")) is not int
+                or not ready["tick"] <= contact["tick"] <= end["tick"]):
+            raise ValueError("Invalid or fabricated native combat contact")
+        seen_contacts.add(identity)
+
+    # Read-only summary: these counts do NOT prove material custody, production
+    # chains, sustained SPM, hostile victory, or expansion policy acceptance.
+    progress = {
+        "native_build_events": sum(x["build_events"] for x in latest.values()),
+        "native_ore_stat_inputs": sum(
+            sum(x["ore_production"].values()) for x in latest.values()),
+        "native_research_completions": sum(
+            x["research_finished"] for x in latest.values()),
+        "cross_force_damage_contacts": len(contacts),
+        "live_original_priests": sum(
+            1 for x in latest.values() if x["kind"] == "p" and x["priest_alive"]),
+    }
+    hostile_contact = any(
+        participants[x["attacker"]]["team"] != participants[x["defender"]]["team"]
+        for x in contacts)
     return {"observation_complete": True, "preset": preset, "seed": seed,
             "active_ticks": ticks, "setup_ticks": ready["tick"],
-            "forces": latest, "contacts": events.get("CONTACT", []),
+            "forces": latest, "contacts": contacts,
             "supply_manifests": supplies, "resource_deposits": len(deposits),
-            "combat_observed": bool(events.get("CONTACT")),
+            "combat_observed": bool(contacts),
+            "hostile_contact_observed": hostile_contact,
+            "observed_progress": progress,
             "expansion_success_not_assumed": True,
             "native_script_ms_per_tick": None,
             "timing_note": "Wall UPS includes setup/telemetry/save costs; script time unmeasured"}
