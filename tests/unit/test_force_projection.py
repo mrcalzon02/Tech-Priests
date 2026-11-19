@@ -37,6 +37,38 @@ def encode(rows):
     return "\n".join(arena.TAG + kind + " " + json.dumps(data) for kind, data in rows)
 
 
+class StreamingDiagnostics(unittest.TestCase):
+    def test_fragmented_native_markers_preserve_complete_lines(self):
+        first = "000 [TP-FORCE-PROJECTION] PAIR_FAI"
+        second = 'LURE {"force":"tp-arena-1","pair_record_present":false}\\n'
+        lines, carry = arena.drain_complete_lines("", first)
+        self.assertEqual(lines, [])
+        self.assertEqual(carry, first)
+        lines, carry = arena.drain_complete_lines(carry, second)
+        self.assertEqual(carry, "")
+        self.assertEqual(len(lines), 1)
+        self.assertIn("PAIR_FAILURE", lines[0])
+        self.assertEqual(
+            arena.latest_native_receipt(lines[0], "PAIR_FAILURE"),
+            {"force": "tp-arena-1", "pair_record_present": False})
+
+    def test_only_complete_native_lines_are_emitted(self):
+        lines, carry = arena.drain_complete_lines("", "a\\nb\\npartial")
+        self.assertEqual(lines, ["a", "b"])
+        self.assertEqual(carry, "partial")
+        lines, carry = arena.drain_complete_lines(carry, "-end\\n")
+        self.assertEqual(lines, ["partial-end"])
+        self.assertEqual(carry, "")
+
+    def test_failure_receipt_does_not_invent_success(self):
+        self.assertIsNone(arena.latest_native_receipt("unrelated log", "PAIR_FAILURE"))
+        self.assertEqual(
+            arena.latest_native_receipt(
+                "[TP-FORCE-PROJECTION] PAIR_FAILURE invalid\\n",
+                "PAIR_FAILURE"),
+            {"invalid_native_payload": True})
+
+
 class Verdict(unittest.TestCase):
     def test_expansion_kits_must_be_one_to_five_real_undeployed_items(self):
         for count in (1,5):
