@@ -235,7 +235,7 @@ function M.note_area_scan(surface, area, entities, scan_limit, scan_complete)
   return true
 end
 
-function M.entities_for_area(surface, area, scan_limit)
+function M.entities_for_area(surface, area, scan_limit, allow_expanded)
   local r = M.root()
   if r.enabled == false or r.use_indexed_catalog_cells == false or not area then return nil end
   local sidx = r.surfaces[surface_key(surface)]
@@ -243,8 +243,12 @@ function M.entities_for_area(surface, area, scan_limit)
   local x1,y1,x2,y2 = area_cells(area)
   local out = {}
   local seen = {}
-  local cap=math.min(M.max_indexed_entities_per_area,
-    math.max(1,math.floor(tonumber(scan_limit) or M.max_indexed_entities_per_area)))
+  -- Factorio's 768-result cap applies to a SINGLE engine query, not a
+  -- fully indexed and completeness-proven multi-query snapshot. Retain the
+  -- old cap for general callers; station catalog explicitly opts in.
+  local cap=allow_expanded==true and M.max_indexed_entities_per_area
+    or math.min(M.max_indexed_entities_per_area,
+      math.max(1,math.floor(tonumber(scan_limit) or M.max_indexed_entities_per_area)))
   local tick=now()
   for cx=x1,x2 do
     for cy=y1,y2 do
@@ -270,6 +274,16 @@ function M.entities_for_area(surface, area, scan_limit)
           end
         end
       end
+    end
+  end
+  if allow_expanded==true then
+    -- Cached cell maps are sets; enforce deterministic order when the cached
+    -- result replaces a fully enumerated multi-query live scan.
+    table.sort(out,function(a,b)
+      return tostring(entity_key(a) or "") < tostring(entity_key(b) or "")
+    end)
+    if #out > (tonumber(scan_limit) or 768) then
+      stat("expanded_area_cache_hits_1480")
     end
   end
   stat("area_index_hits"); metric("indexed_cache_hits",1); metric("scans_redirected_to_cache",1)
@@ -363,7 +377,7 @@ function M.install()
     M.root()
     if install_events() ~= true then error("catalog index event routes rejected") end
     install_command()
-    _G.tech_priests_efficiency_0579_entities_for_area = function(surface, area, limit) return M.entities_for_area(surface, area, limit) end
+    _G.tech_priests_efficiency_0579_entities_for_area = function(surface, area, limit, expanded) return M.entities_for_area(surface, area, limit, expanded) end
     _G.tech_priests_efficiency_0579_note_area_scan = function(surface, area, entities, limit, complete) return M.note_area_scan(surface, area, entities, limit, complete) end
     _G.TechPriestsEfficiencyEconomy0579 = M
   end)
