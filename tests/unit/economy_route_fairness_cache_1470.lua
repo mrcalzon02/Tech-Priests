@@ -59,12 +59,16 @@ storage={tech_priests={}}
 game.tick=0
 local E579=require("scripts.core.efficiency_economy_0579")
 local surface={index=1}
-local area={{0,0},{16,16}}
+local area={{0,0},{32,32}}
+local partial={{0,0},{16,16}}
 local entity={valid=true,type="assembling-machine",name="assembling-machine-1",
   unit_number=123,surface=surface,position={x=4,y=4}}
 assert(E579.index_entity(entity,"built"))
 assert(E579.entities_for_area(surface,area)==nil,
   "one build event must not mark a whole catalog cell known")
+assert(E579.note_area_scan(surface,partial,{entity},768))
+assert(E579.entities_for_area(surface,area)==nil,
+  "partial area must not certify a full cell")
 assert(E579.note_area_scan(surface,area,{entity},768))
 local indexed=E579.entities_for_area(surface,area)
 assert(type(indexed)=="table" and #indexed==1,
