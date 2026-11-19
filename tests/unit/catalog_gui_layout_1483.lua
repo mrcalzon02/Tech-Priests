@@ -37,4 +37,17 @@ assert(missing.frame_width==440 and missing.frame_height==720,
 local broken=L.for_player({valid=true,display_resolution={width=0,height=0},display_scale=0})
 assert(broken.frame_width>0 and broken.frame_height>0,
   "bogus display values produced nonpositive dimensions")
-print("[catalog-gui-layout-1483] PASS: resolution, scaling, frame bounds")
+local labels={}
+local parent={add=function(spec)
+  local label={valid=true,style={},caption=spec.caption,type=spec.type}
+  labels[#labels+1]=label
+  return label
+end}
+local label=L.add_label(parent,"Long diagnostic text that must wrap",128)
+assert(label.type=="label" and label.caption:find("Long diagnostic"),
+  "responsive helper changed label contents")
+assert(label.style.single_line==false and label.style.maximal_width==128,
+  "long diagnostic label cannot wrap inside fixed width")
+assert(L.add_label(parent,"x",-4).style.maximal_width==1,
+  "invalid width was not bounded")
+print("[catalog-gui-layout-1483] PASS: resolution, scaling, frame bounds and wrapping")
