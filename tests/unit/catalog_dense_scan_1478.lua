@@ -79,4 +79,21 @@ for _,population in ipairs({1,767,768,769,1500,2000,3000,5000}) do
       "complete population scan failed to enumerate the world")
   end
 end
+-- Two resources without unit_number share the catalog's quantized fallback key.
+-- They are physically distinct and must not be merged by dense deduplication.
+local a={valid=true,name="stone",type="simple-entity",position={x=10.011,y=11.02}}
+local b={valid=true,name="stone",type="simple-entity",position={x=10.019,y=11.02}}
+local collision,proof=M.scan(surface({a,b}),area,{
+  limit=768,key_of=function(e)
+    return e.name..":"..math.floor(e.position.x*10)..":"..math.floor(e.position.y*10)
+  end})
+assert(not proof.complete and proof.reason=="identity-collision"
+  and #collision==2 and collision[1]~=collision[2]
+  and proof.identity_collisions==1,
+  "a fallback key collision must not silently drop or certify distinct entities")
+-- The replacement identity helper distinguishes their actual positions.
+local Identity=require("scripts.core.entity_identity_1481")
+local precise,exact=M.scan(surface({a,b}),area,{limit=768,key_of=Identity.key})
+assert(exact.complete and #precise==2 and exact.identity_collisions==0,
+  "precise keys failed to preserve both real resources")
 print("[catalog-dense-scan-1478] PASS: 500/768/800/1100/2400, budgets and failures")
