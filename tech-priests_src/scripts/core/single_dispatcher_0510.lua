@@ -966,8 +966,39 @@ function M.service_pair(pair,reason)
  local selected=family_owned(r,family)and execute(pair,family,"dispatcher-0510:"..safe(reason))or{processed=1,waiting=family~="idle"and 1 or 0,detail=family=="idle"and"idle"or"compatibility-leaf-family"};local execution=normalize_execution(selected)
  local status=execution.failed>0 and"failed"or execution.acted>0 and"acted"or execution.blocked>0 and"blocked"or execution.waiting>0 and"waiting"or"idle";publish_action(pair,action,family,status,execution.detail);if status~="idle"then record("dispatch-"..family,pair,status.." "..safe(execution.detail))end;stat("pairs_processed");stat("actions",execution.acted);stat("failures",execution.failed);return execution
 end
+-- Read-only module-local roster: never persisted, reconstructed after reload.
+-- Every pulse still checks the live pair map, so station create/remove/rebind
+-- takes effect immediately. Only the O(N log N) sort/allocation is amortized.
+local roster_cache={map=nil,list=nil,by_key={},count=0}
+local function ordered_pair_roster()
+ local map=pair_map()
+ local count=0
+ local changed=roster_cache.map~=map or roster_cache.list==nil
+ for key,pair in pairs(map)do
+  if valid_pair(pair)then
+   count=count+1
+   if not changed and roster_cache.by_key[key]~=pair then changed=true end
+  end
+ end
+ if not changed and count~=roster_cache.count then changed=true end
+ if not changed then return roster_cache.list,false end
+ local list,by_key={},{}
+ for key,pair in pairs(map)do
+  if valid_pair(pair)then
+   list[#list+1]={key=tostring(key),pair=pair}
+   by_key[key]=pair
+  end
+ end
+ table.sort(list,function(a,b)return a.key<b.key end)
+ roster_cache={map=map,list=list,by_key=by_key,count=#list}
+ return list,true
+end
 function M.service_all(reason,budget)
- local r=root();if r.enabled==false then return{processed=0,acted=0,detail="disabled"}end;local list={};for key,pair in pairs(pair_map())do if valid_pair(pair)then list[#list+1]={key=tostring(key),pair=pair}end end;table.sort(list,function(a,b)return a.key<b.key end);if #list==0 then return{processed=0,acted=0,detail="no-pairs"}end
+ local r=root();if r.enabled==false then return{processed=0,acted=0,detail="disabled"}end
+ local list,rebuilt=ordered_pair_roster()
+ if rebuilt then r.stats.roster_rebuilds=(r.stats.roster_rebuilds or 0)+1
+ else r.stats.roster_reuses=(r.stats.roster_reuses or 0)+1 end
+ if #list==0 then return{processed=0,acted=0,detail="no-pairs"}end
  local limit=math.max(1,math.min(#list,math.floor(tonumber(budget)or M.max_pairs_per_pulse)));local start=r.cursor%#list+1;local aggregate={processed=0,acted=0,blocked=0,waiting=0,failed=0,exhausted=#list>limit};r.dispatching=true
  for i=0,limit-1 do local pair=list[((start+i-1)%#list)+1].pair;local ok,out=pcall(M.service_pair,pair,reason or"broker");aggregate.processed=aggregate.processed+1;if ok and type(out)=="table"then for _,key in ipairs{"acted","blocked","waiting","failed"}do aggregate[key]=aggregate[key]+(tonumber(out[key])or 0)end else aggregate.failed=aggregate.failed+1;record("dispatcher-error",pair,ok and"invalid-result"or out)end end
  r.dispatching=false;r.cursor=(start+limit-2)%#list+1;aggregate.detail="pairs="..aggregate.processed.." acted="..aggregate.acted.." failed="..aggregate.failed;return aggregate
