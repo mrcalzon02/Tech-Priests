@@ -28,7 +28,7 @@ function M.scan(surface, area, opts)
   local x1, y1, x2, y2 = bounds(area)
   local info = { complete = true, queries = 0, splits = 0,
     saturated_queries = 0, truncated_leaves = 0, unique = 0,
-    budget_exhausted = false, reason = "complete" }
+    identity_collisions = 0, budget_exhausted = false, reason = "complete" }
   if not (surface and type(surface.find_entities_filtered) == "function"
       and x1 and x2 > x1 and y2 > y1) then
     info.complete, info.reason = false, "invalid-scan-request"
@@ -40,7 +40,10 @@ function M.scan(surface, area, opts)
   local max_entities = math.max(1, math.floor(tonumber(opts.max_entities) or M.max_entities))
   local min_extent = tonumber(opts.min_extent) or M.min_extent
   local pending = { {x1, y1, x2, y2, 0} }
-  local cursor, out, seen = 1, {}, {}
+  -- A few different unitless entities can share an approximate fallback key.
+  -- LuaEntity == compares identity, while reference keys would be unsafe if
+  -- persisted. These references live only for this synchronous scan.
+  local cursor, out, seen, collisions = 1, {}, {}, {}
   while cursor <= #pending and info.queries < max_queries do
     local item = pending[cursor]
     cursor = cursor + 1
@@ -58,14 +61,32 @@ function M.scan(surface, area, opts)
     for _, entity in ipairs(found) do
       if entity and entity.valid then
         local key = identity(entity, opts.key_of)
-        if not seen[key] then
+        local first = seen[key]
+        local duplicate = first ~= nil and first == entity
+        if first and not duplicate then
+          -- Distinct unitless rocks/resources may have identical truncated
+          -- positional keys. Compare the actual LuaObjects before coalescing.
+          local group = collisions[key]
+          if not group then group = {first}; collisions[key] = group end
+          for i = 1, #group do
+            if group[i] == entity then duplicate = true; break end
+          end
+          if not duplicate then
+            group[#group + 1] = entity
+            info.identity_collisions = info.identity_collisions + 1
+            info.complete = false
+            info.reason = "identity-collision"
+          end
+        elseif not first then
+          seen[key] = entity
+        end
+        if not duplicate then
           if #out >= max_entities then
             info.complete, info.budget_exhausted = false, true
             info.reason = "entity-budget"
             info.unique = #out
             return out, info
           end
-          seen[key] = true
           out[#out + 1] = entity
         end
       end
