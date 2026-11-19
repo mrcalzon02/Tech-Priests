@@ -10,6 +10,7 @@
 local Catalog = {}
 local DenseScan1478 = require("scripts.core.catalog_dense_scan_1478")
 local EntityIdentity1481 = require("scripts.core.entity_identity_1481")
+local AuspexLayout1483 = require("scripts.core.catalog_gui_layout_1483")
 
 Catalog.version = "0.1.579"
 Catalog.storage_key = "station_catalog_0327"
@@ -820,11 +821,13 @@ function Catalog.show_gui(player, pair)
   if not cat then return end
   local root = ensure_root()
   local unit = station_unit(pair)
+  local layout = AuspexLayout1483.for_player(player)
   local frame = player.gui.screen.add({ type = "frame", name = Catalog.gui_name, direction = "vertical", caption = "Cogitator Auspex Ledger" })
   frame.auto_center = false
-  frame.location = { x = 24, y = 96 }
-  frame.style.minimal_width = 440
-  frame.style.maximal_height = 720
+  frame.location = layout.position
+  frame.style.minimal_width = layout.frame_width
+  frame.style.maximal_width = layout.frame_width
+  frame.style.maximal_height = layout.frame_height
   frame.tags = { station_unit = unit }
   frame.add({ type = "label", caption = "Station seal: " .. tostring(cat.station_backer_name or cat.station_name or cat.station_unit) })
   frame.add({ type = "label", caption = "Sweep radius: " .. tostring(math.floor(cat.radius or 0)) .. " | last rite tick: " .. tostring(cat.tick or 0) .. " | next auspex sweep: " .. tostring((root.next_scan[unit] or 0) - now()) .. " ticks" })
@@ -843,8 +846,9 @@ function Catalog.show_gui(player, pair)
   -- Keep station identity, freshness and manual refresh visible while the
   -- ledger's potentially long resource/command lists scroll independently.
   local details = frame.add({ type = "scroll-pane", name = "tech_priests_catalog_details_1477" })
-  details.style.minimal_width = 420
-  details.style.maximal_height = 500
+  details.style.minimal_width = layout.details_width
+  details.style.maximal_width = layout.details_width
+  details.style.maximal_height = layout.details_height
   add_section(details, "Active resources", cat.resources, 8)
   add_section(details, "Mineable products", cat.mineable_products, 8)
   add_section(details, "Items in storage", cat.storage_items, 10)
