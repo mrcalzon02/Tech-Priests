@@ -183,14 +183,17 @@ function M.mark_entity_dirty(entity, reason)
   mark_cell_dirty(entity.surface, cx, cy, reason)
 end
 
-function M.note_area_scan(surface, area, entities, scan_limit)
+function M.note_area_scan(surface, area, entities, scan_limit, scan_complete)
   local r = M.root()
   if r.enabled == false then return false end
   local sidx = surface_index(r, surface)
   local limit = tonumber(scan_limit)
-  -- Only a demonstrably complete, bounded scan may certify an entire cell.
-  local incomplete = type(entities)~="table" or not limit or limit<=0
-      or #entities >= limit or #entities >= M.max_indexed_entities_per_area
+  -- A split scan can safely return more than one query's engine limit,
+  -- provided ALL its partitions completed. Still fail closed at index limits.
+  local incomplete = scan_complete == false or type(entities)~="table"
+      or not limit or limit<=0
+      or (scan_complete~=true and #entities>=limit)
+      or #entities>=M.max_indexed_entities_per_area
   local x1,y1,x2,y2,ax,ay,bx,by = area_cells(area)
   local stamp=now()
   for cx=x1,x2 do
@@ -361,7 +364,7 @@ function M.install()
     if install_events() ~= true then error("catalog index event routes rejected") end
     install_command()
     _G.tech_priests_efficiency_0579_entities_for_area = function(surface, area, limit) return M.entities_for_area(surface, area, limit) end
-    _G.tech_priests_efficiency_0579_note_area_scan = function(surface, area, entities, limit) return M.note_area_scan(surface, area, entities, limit) end
+    _G.tech_priests_efficiency_0579_note_area_scan = function(surface, area, entities, limit, complete) return M.note_area_scan(surface, area, entities, limit, complete) end
     _G.TechPriestsEfficiencyEconomy0579 = M
   end)
   if not ok then
