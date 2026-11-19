@@ -11,6 +11,7 @@ local Catalog = {}
 local DenseScan1478 = require("scripts.core.catalog_dense_scan_1478")
 local EntityIdentity1481 = require("scripts.core.entity_identity_1481")
 local AuspexLayout1483 = require("scripts.core.catalog_gui_layout_1483")
+local CatalogReuseGuard1484 = require("scripts.core.station_catalog_reuse_guard_1484")
 
 Catalog.version = "0.1.579"
 Catalog.storage_key = "station_catalog_0327"
@@ -484,8 +485,12 @@ end
 
 local function empty_catalog(pair, radius)
   local station = pair.station
+  local geometry = CatalogReuseGuard1484.snapshot(pair, radius)
   return {
     version = Catalog.version,
+    station_surface_1484 = geometry and geometry.station_surface_1484 or nil,
+    station_force_1484 = geometry and geometry.station_force_1484 or nil,
+    station_position_1484 = geometry and geometry.station_position_1484 or nil,
     tick = now(),
     station_unit = station_unit(pair),
     station_name = station.name,
@@ -511,6 +516,8 @@ end
 
 local function clean_reuse_allowed_0570(pair, catalog, radius)
   if not (pair and pair.station and pair.station.valid and catalog) then return false end
+  -- No old or relocated snapshot may hide a different physical station area.
+  if not CatalogReuseGuard1484.matches(pair, catalog, radius) then return false end
   -- A truncated snapshot must never receive the clean-reuse extension.
   if catalog.scan_limit_reached_1477 then return false end
   local age = now() - (tonumber(catalog.tick or 0) or 0)
