@@ -55,7 +55,7 @@ local function forced_bucket_active(pair, bucket)
   return until_tick > now()
 end
 
-local function is_repair(pair)
+local function is_repair(pair, shared_repair_queued)
   local s = pair and pair.repair_0516
   if s and s.phase and s.phase ~= "none" and s.phase ~= "complete" and s.phase ~= "no-target" then return true end
   if forced_bucket_active(pair, "repair") or (tonumber(pair and pair._tp_repair_wake_until_0608 or 0) or 0) > now() then return true end
@@ -67,8 +67,7 @@ local function is_repair(pair)
   -- Legacy safety fallback: if a shared repair queue exists, broad bucket
   -- eligibility remains available until all repair discovery is directed.
   -- Event-driven 0.1.608 wake hints above are the preferred fast path.
-  local okQ, Q = pcall(require, "scripts.core.work_queue_authority")
-  if okQ and Q and Q.count and (Q.count("repair") or 0) > 0 then return true end
+  if shared_repair_queued() then return true end
   return false
 end
 
@@ -100,6 +99,37 @@ function M.rebuild(reason)
   local r = M.root()
   for _, name in ipairs(M.bucket_names) do r.buckets[name] = {} end
   r.pair_refs = {}
+  -- Observe the shared repair queue once, lazily, for the whole rebuild.
+  local queue_has_repairs
+  local function shared_repair_queued()
+    if queue_has_repairs == nil then
+      local okQ, Q = pcall(require, "scripts.core.work_queue_authority")
+      queue_has_repairs = (okQ and Q and type(Q.count) == "function"
+        and (Q.count("repair") or 0) > 0) or false
+    end
+    return queue_has_repairs
+  end
+  -- Build a pair-ID lookup once, instead of searching F forced records
+  -- for each of P priests. Prune expired/orphaned records without a full scan.
+  local forced_for_pair, expired_forced, live_forced = {}, 0, 0
+  local tick = now()
+  for fb_key, rec in pairs(r.forced_buckets) do
+    local bucket = type(rec) == "table" and tostring(rec.bucket or "") or ""
+    local suffix = ":" .. bucket
+    local id = type(fb_key) == "string" and bucket ~= ""
+      and fb_key:sub(-#suffix) == suffix
+      and fb_key:sub(1, #fb_key - #suffix) or nil
+    if id and r.buckets[bucket]
+        and (tonumber(rec.until_tick or 0) or 0) > tick then
+      local group = forced_for_pair[id]
+      if not group then group = {}; forced_for_pair[id] = group end
+      group[#group + 1] = bucket
+      live_forced = live_forced + 1
+    else
+      r.forced_buckets[fb_key] = nil
+      expired_forced = expired_forced + 1
+    end
+  end
   local total, valid_count, invalid_count = 0, 0, 0
   for key, pair in pairs(pair_map()) do
     total = total + 1
@@ -111,18 +141,16 @@ function M.rebuild(reason)
     else
       valid_count = valid_count + 1
       if pair._tp_bucket_dirty_0600 then bucket_add(r, "dirty", id) end
-      if is_repair(pair) then bucket_add(r, "repair", id); bucket_add(r, "active", id)
+      if is_repair(pair, shared_repair_queued) then bucket_add(r, "repair", id); bucket_add(r, "active", id)
       elseif is_logistics(pair) then bucket_add(r, "logistics", id); bucket_add(r, "active", id)
       elseif is_combat(pair) then bucket_add(r, "combat", id); bucket_add(r, "active", id)
       elseif is_movement(pair) then bucket_add(r, "movement", id); bucket_add(r, "active", id)
       else bucket_add(r, "idle", id) end
-      for fb_key, rec in pairs(r.forced_buckets or {}) do
-        if fb_key == (id .. ":" .. tostring(rec.bucket or "")) then
-          if (tonumber(rec.until_tick or 0) or 0) > now() and r.buckets[rec.bucket] then
-            bucket_add(r, rec.bucket, id); bucket_add(r, "active", id)
-          else
-            r.forced_buckets[fb_key] = nil
-          end
+      local forced = forced_for_pair[id]
+      if forced then
+        for _, bucket in ipairs(forced) do
+          bucket_add(r, bucket, id)
+          bucket_add(r, "active", id)
         end
       end
     end
@@ -132,6 +160,9 @@ function M.rebuild(reason)
   r.last_total = total
   r.last_valid = valid_count
   r.last_invalid = invalid_count
+  r.last_forced_active = live_forced
+  r.last_forced_pruned = expired_forced
+  if expired_forced > 0 then stat("expired_forced_records", expired_forced) end
   stat("rebuilds")
   return r
 end
@@ -196,7 +227,7 @@ end
 function M.report_lines()
   local r = M.rebuild("report")
   local lines = {}
-  lines[#lines + 1] = "[tp-runtime-report] pair-buckets total=" .. safe(r.last_total or 0) .. " valid=" .. safe(r.last_valid or 0) .. " invalid=" .. safe(r.last_invalid or 0) .. " rebuilds=" .. safe(r.stats.rebuilds or 0) .. " forced=" .. safe(count_table and count_table(r.forced_buckets) or 0)
+  lines[#lines + 1] = "[tp-runtime-report] pair-buckets total=" .. safe(r.last_total or 0) .. " valid=" .. safe(r.last_valid or 0) .. " invalid=" .. safe(r.last_invalid or 0) .. " rebuilds=" .. safe(r.stats.rebuilds or 0) .. " forced=" .. safe(r.last_forced_active or 0) .. " forced_expired=" .. safe(r.stats.expired_forced_records or 0)
   local parts = {}
   for _, name in ipairs(M.bucket_names) do parts[#parts + 1] = name .. "=" .. safe(M.count(name)) end
   lines[#lines + 1] = "  buckets " .. table.concat(parts, " ")
