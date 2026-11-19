@@ -12,14 +12,15 @@ local function populate(n)
     }
   end
 end
-local R={nth_tick_routes={},on_nth_tick=function(tick,fn,opts)
+local R={nth_tick_routes={}}
+R.on_nth_tick=function(tick,fn,opts)
   local key=tostring(tick)
   R.nth_tick_routes[key]=R.nth_tick_routes[key] or {}
   local entry={tick=tick,handler=fn,owner=opts.owner,route=opts.route,
     category=opts.category,id=opts.owner..":"..opts.route}
   R.nth_tick_routes[key][#R.nth_tick_routes[key]+1]=entry
   return entry
-end}
+end
 _G.TechPriestsRuntimeEventRegistry=R
 local E594=require("scripts.core.efficiency_economy_0594")
 populate(100)
