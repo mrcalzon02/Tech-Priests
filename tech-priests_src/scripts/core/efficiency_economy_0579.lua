@@ -9,6 +9,7 @@
 -- cells dirty and update the index so normal world changes invalidate the cache.
 
 local M = {}
+local EntityIdentity1481 = require("scripts.core.entity_identity_1481")
 M.version = "0.1.606"
 M.storage_key = "efficiency_economy_0579"
 M.cell_size = 32
@@ -29,10 +30,7 @@ local function surface_key(surface)
 end
 
 local function entity_key(entity)
-  if not valid(entity) then return nil end
-  if entity.unit_number then return "u:" .. tostring(entity.unit_number) end
-  local p = entity.position or {x=0,y=0}
-  return surface_key(entity.surface) .. ":" .. tostring(entity.name or entity.type or "?") .. ":" .. tostring(math.floor((p.x or 0)*10)) .. ":" .. tostring(math.floor((p.y or 0)*10))
+  return EntityIdentity1481.key(entity)
 end
 
 local function cell_xy(pos)
@@ -104,11 +102,11 @@ function M.root()
   r.entity_cells = r.entity_cells or {}
   r.stats = r.stats or {}
   r.recent = r.recent or {}
-  if r.cache_schema_1476 ~= 1 then
+  if r.cache_schema_1476 ~= 2 then
     -- Earlier versions could mark partially scanned cells complete.
     -- This invalidates only derived cache data, never game entities or claims.
     r.surfaces, r.entity_cells = {}, {}
-    r.cache_schema_1476 = 1
+    r.cache_schema_1476 = 2
     r.stats.cache_reseeds_1476 = (r.stats.cache_reseeds_1476 or 0) + 1
   end
   return r
