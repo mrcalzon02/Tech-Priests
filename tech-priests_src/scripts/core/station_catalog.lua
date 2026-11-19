@@ -9,6 +9,7 @@
 
 local Catalog = {}
 local DenseScan1478 = require("scripts.core.catalog_dense_scan_1478")
+local EntityIdentity1481 = require("scripts.core.entity_identity_1481")
 
 Catalog.version = "0.1.579"
 Catalog.storage_key = "station_catalog_0327"
@@ -92,11 +93,19 @@ local function sweep_ticks_for(pair)
 end
 
 local function entity_key(entity)
+  return EntityIdentity1481.key(entity)
+end
+
+-- Read legacy ownership without using its coarse key for any new claim.
+-- Old unitless resources can be reindexed incrementally by complete sweeps.
+local function legacy_entity_key(entity)
   if not valid(entity) then return nil end
   if entity.unit_number then return "u:" .. tostring(entity.unit_number) end
   local p = entity.position or { x = 0, y = 0 }
   local surface = entity.surface and entity.surface.name or "?"
-  return tostring(surface) .. ":" .. tostring(entity.name or entity.type) .. ":" .. tostring(math.floor((p.x or 0) * 10)) .. ":" .. tostring(math.floor((p.y or 0) * 10))
+  return tostring(surface) .. ":" .. tostring(entity.name or entity.type)
+    .. ":" .. tostring(math.floor((p.x or 0) * 10))
+    .. ":" .. tostring(math.floor((p.y or 0) * 10))
 end
 
 local function is_station_entity(entity)
@@ -156,6 +165,12 @@ local function claim_entity(root, pair, entity, kind)
   local key = entity_key(entity)
   if not (unit and key) then return false end
   local owner = root.owned_resources[key]
+  if not owner then
+    -- Compatibility for old saves: a previously claimed unitless resource
+    -- should not switch owners during the identity upgrade. New claims always
+    -- use the precise key, while complete scans retire old claim keys.
+    owner = root.owned_resources[legacy_entity_key(entity)]
+  end
   if owner and owner ~= unit and station_owner_valid(root, owner) then return false end
   root.owned_resources[key] = unit
   local old = pair.catalog_owned_resource_keys_0327 or {}
@@ -857,6 +872,10 @@ function Catalog.handle_destroyed_entity(entity, reason)
   local root = ensure_root()
   local key = entity_key(entity)
   if key and root.owned_resources[key] then release_entity_ownership(root, key) end
+  local legacy_key = legacy_entity_key(entity)
+  if legacy_key and legacy_key ~= key and root.owned_resources[legacy_key] then
+    release_entity_ownership(root, legacy_key)
+  end
 end
 
 local function run_catalog_command(event, compact)
