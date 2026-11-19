@@ -40,7 +40,7 @@ def encode(rows):
 class StreamingDiagnostics(unittest.TestCase):
     def test_fragmented_native_markers_preserve_complete_lines(self):
         first = "000 [TP-FORCE-PROJECTION] PAIR_FAI"
-        second = 'LURE {"force":"tp-arena-1","pair_record_present":false}\\n'
+        second = 'LURE {"force":"tp-arena-1","pair_record_present":false}\n'
         lines, carry = arena.drain_complete_lines("", first)
         self.assertEqual(lines, [])
         self.assertEqual(carry, first)
@@ -53,10 +53,10 @@ class StreamingDiagnostics(unittest.TestCase):
             {"force": "tp-arena-1", "pair_record_present": False})
 
     def test_only_complete_native_lines_are_emitted(self):
-        lines, carry = arena.drain_complete_lines("", "a\\nb\\npartial")
+        lines, carry = arena.drain_complete_lines("", "a\nb\npartial")
         self.assertEqual(lines, ["a", "b"])
         self.assertEqual(carry, "partial")
-        lines, carry = arena.drain_complete_lines(carry, "-end\\n")
+        lines, carry = arena.drain_complete_lines(carry, "-end\n")
         self.assertEqual(lines, ["partial-end"])
         self.assertEqual(carry, "")
 
@@ -64,7 +64,7 @@ class StreamingDiagnostics(unittest.TestCase):
         self.assertIsNone(arena.latest_native_receipt("unrelated log", "PAIR_FAILURE"))
         self.assertEqual(
             arena.latest_native_receipt(
-                "[TP-FORCE-PROJECTION] PAIR_FAILURE invalid\\n",
+                "[TP-FORCE-PROJECTION] PAIR_FAILURE invalid\n",
                 "PAIR_FAILURE"),
             {"invalid_native_payload": True})
 
