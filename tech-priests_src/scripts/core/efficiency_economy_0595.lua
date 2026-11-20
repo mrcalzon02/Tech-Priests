@@ -36,15 +36,24 @@ local function stat(name, n)
   r.stats[name] = (r.stats[name] or 0) + (n or 1)
 end
 
+-- Prototype and research names come from a finite, immutable set in a
+-- loaded Factorio game. A module-local memo avoids repeated pattern searches
+-- on unrelated belt, biter and construction events without growing saves.
+local is_runtime_name = {}
 local function looks_like_tp_name(name)
   name = tostring(name or "")
-  return name == "void-fusion-thruster" or name == "large-void-fusion-thruster"
-    or name:find("tech%-priests", 1, false)
-    or name:find("cogitator", 1, false)
-    or name:find("tech%-priest", 1, false)
-    or name:find("conclave", 1, false)
-    or name:find("martian%-micro", 1, false)
-    or name:find("machine%-spirit", 1, false)
+  local cached = is_runtime_name[name]
+  if cached ~= nil then return cached end
+  local matched = name == "void-fusion-thruster"
+    or name == "large-void-fusion-thruster"
+    or name:find("tech%-priests", 1, false) ~= nil
+    or name:find("cogitator", 1, false) ~= nil
+    or name:find("tech%-priest", 1, false) ~= nil
+    or name:find("conclave", 1, false) ~= nil
+    or name:find("martian%-micro", 1, false) ~= nil
+    or name:find("machine%-spirit", 1, false) ~= nil
+  is_runtime_name[name] = matched
+  return matched
 end
 
 local function has_valid_pairs()
