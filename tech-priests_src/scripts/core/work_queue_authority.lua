@@ -5,6 +5,7 @@
 
 local M = {}
 local DuplicateWake1490 = require("scripts.core.work_queue_duplicate_wake_1490")
+local RepairScanCursor1503 = require("scripts.core.repair_scan_cursor_1503")
 M.version = "0.1.620"
 M.storage_key = "work_queue_authority_0601"
 M.default_ttl = 1800
@@ -431,22 +432,28 @@ function M.claim_nearest(pair, category, opts)
 end
 
 function M.discover_repair_near(pair, opts)
-  -- Authority boundary: work_queue_authority discovers/records shared work only.
-  -- It does not execute repair behavior and does not assign per-priest orders.
+  -- Discovers work, never executes repair or assigns an individual priest.
   local r=M.root(); if r.enabled == false then return 0, "disabled" end
   if not (valid(pair and pair.station)) then return 0, "invalid-pair" end
   opts = opts or {}
   local station = pair.station
   local radius = tonumber(opts.radius or pair.radius) or 32
-  local limit = tonumber(opts.limit) or 32
-  local submitted = 0
-  local checked = 0
+  local limit = opts.limit or 32
+  local submitted, checked, damaged_seen = 0, 0, 0
   local area = {{station.position.x-radius, station.position.y-radius},{station.position.x+radius, station.position.y+radius}}
   local Scan = rawget(_G, "TechPriestsScanRouting0610")
   if not Scan then local okS, mod = pcall(require, "scripts.core.scan_routing_0610"); if okS then Scan = mod end end
+  -- Old versions recorded an entire base as empty after just 32 entities.
+  -- A versioned key avoids inheriting false empty records from older saves.
+  local negative_key_1503 = "repair-sweep-1503:" ..
+    safe(station.surface.index) .. ":" .. safe(station.force.index) ..
+    ":" .. safe(pair_id(pair))
   local entities, source
   if Scan and type(Scan.find_entities) == "function" then
-    entities, source = Scan.find_entities(station.surface, { area = area, force = station.force }, { category = "repair", negative_key = "repair:" .. safe(station.surface.index) .. ":" .. safe(station.force.index) .. ":" .. safe(pair_id(pair)), negative_ttl = 60 * 4, record_negative = false })
+    entities, source = Scan.find_entities(station.surface,
+      { area = area, force = station.force },
+      { category = "repair", negative_key = negative_key_1503,
+        negative_ttl = 60 * 4, record_negative = false })
   else
     entities, source = indexed_entities_for_area(station.surface, area)
   end
@@ -462,10 +469,19 @@ function M.discover_repair_near(pair, opts)
     stat("repair_discovery_direct_scans"); metric("direct_surface_scans",1); metric("scans_attempted",1)
     note_area_scan(station.surface, area, entities)
   end
-  for _, entity in pairs(entities) do
+  if source == "negative-skip" then
+    -- Never renew a negative TTL just because the previous result skipped.
+    stat("repair_discovery_negative_skips_1503")
+    return 0, "source=negative-skip checked=0 submitted=0"
+  end
+  -- The rotating window bounds Lua inspection and eventually covers the
+  -- entire stable result, including damaged targets past the old prefix.
+  local start, count, full = RepairScanCursor1503.window(pair, #entities, limit)
+  for offset = 0, count - 1 do
+    local entity = entities[((start + offset - 1) % #entities) + 1]
     checked = checked + 1
-    if checked > limit then break end
     if is_damaged_repair_target(entity, station.force) then
+      damaged_seen = damaged_seen + 1
       local did = select(1, M.submit("repair", entity, {
         priority = repair_priority(entity, station.position),
         ttl = tonumber(opts.ttl) or 900,
@@ -474,13 +490,21 @@ function M.discover_repair_near(pair, opts)
       if did then submitted = submitted + 1 end
     end
   end
-  if submitted == 0 and Scan and type(Scan.record_negative) == "function" then
-    Scan.record_negative("repair", "repair:" .. safe(station.surface.index) .. ":" .. safe(station.force.index) .. ":" .. safe(pair_id(pair)), 60 * 4)
+  if full then
+    stat("repair_discovery_full_windows_1503")
+    -- Only a COMPLETE inspection with zero damaged candidates can establish
+    -- short negative knowledge, whether or not submission is available.
+    if damaged_seen == 0 and Scan and type(Scan.record_negative) == "function" then
+      Scan.record_negative("repair", negative_key_1503, 60 * 4)
+    end
+  else
+    stat("repair_discovery_partial_windows_1503")
   end
   stat("repair_discovery_scans")
   stat("repair_discovery_checked", checked)
   stat("repair_discovery_submitted", submitted)
-  return submitted, "source=" .. safe(source) .. " checked=" .. safe(checked) .. " submitted=" .. safe(submitted)
+  return submitted, "source=" .. safe(source) .. " checked=" .. safe(checked) ..
+    " submitted=" .. safe(submitted) .. " complete=" .. tostring(full)
 end
 
 function M.cleanup(category, budget)
@@ -524,7 +548,7 @@ function M.report_lines()
   M.cleanup(nil, 200)
   local r=M.root(); local parts={}
   for _, cat in ipairs(M.categories) do parts[#parts+1]=cat .. "=" .. safe(M.count(cat)) end
-  return { "[tp-runtime-report] work-queues " .. table.concat(parts," ") .. " submitted=" .. safe(r.stats.submitted_total or 0) .. " claimed=" .. safe(r.stats.claimed_total or 0) .. " folded=" .. safe(r.stats.duplicates_folded or 0) .. " refreshed=" .. safe(r.stats.duplicates_refreshed or 0) .. " claim_examined=" .. safe(r.stats.claim_examined_total or 0) .. " spatial_hit=" .. safe(r.stats.claim_spatial_hit or 0) .. " spatial_miss=" .. safe(r.stats.claim_spatial_miss or 0) .. " spatial_examined=" .. safe(r.stats.claim_spatial_examined or 0) .. " full_fallback=" .. safe(r.stats.claim_full_fallbacks or 0) .. " fallback_examined=" .. safe(r.stats.claim_full_fallback_examined or 0) .. " fallback_budget_exhausted=" .. safe(r.stats.claim_full_fallback_budget_exhausted or 0) .. " no_work_set=" .. safe(r.stats.no_work_set or 0) .. " no_work_skip=" .. safe(r.stats.no_work_skip_total or 0) .. " no_work_gen_clear=" .. safe(r.stats.no_work_cleared_by_generation or 0) .. " duplicates_no_wake=" .. safe(r.stats.duplicates_no_work_preserved_1490 or 0) .. " duplicates_meaningful_wake=" .. safe(r.stats.duplicates_meaningful_wake_1490 or 0) .. " removed=" .. safe(r.stats.cleanup_removed or 0) .. " cleanup_rotations=" .. safe(r.stats.cleanup_rotated_categories or 0) .. " cleanup_budget_exhausted=" .. safe(r.stats.cleanup_budget_exhausted or 0) .. " repair_scans=" .. safe(r.stats.repair_discovery_scans or 0) .. " repair_index_hits=" .. safe(r.stats.repair_discovery_index_hits or 0) .. " repair_direct_scans=" .. safe(r.stats.repair_discovery_direct_scans or 0) .. " repair_checked=" .. safe(r.stats.repair_discovery_checked or 0) .. " repair_submitted=" .. safe(r.stats.repair_discovery_submitted or 0) }
+  return { "[tp-runtime-report] work-queues " .. table.concat(parts," ") .. " submitted=" .. safe(r.stats.submitted_total or 0) .. " claimed=" .. safe(r.stats.claimed_total or 0) .. " folded=" .. safe(r.stats.duplicates_folded or 0) .. " refreshed=" .. safe(r.stats.duplicates_refreshed or 0) .. " claim_examined=" .. safe(r.stats.claim_examined_total or 0) .. " spatial_hit=" .. safe(r.stats.claim_spatial_hit or 0) .. " spatial_miss=" .. safe(r.stats.claim_spatial_miss or 0) .. " spatial_examined=" .. safe(r.stats.claim_spatial_examined or 0) .. " full_fallback=" .. safe(r.stats.claim_full_fallbacks or 0) .. " fallback_examined=" .. safe(r.stats.claim_full_fallback_examined or 0) .. " fallback_budget_exhausted=" .. safe(r.stats.claim_full_fallback_budget_exhausted or 0) .. " no_work_set=" .. safe(r.stats.no_work_set or 0) .. " no_work_skip=" .. safe(r.stats.no_work_skip_total or 0) .. " no_work_gen_clear=" .. safe(r.stats.no_work_cleared_by_generation or 0) .. " duplicates_no_wake=" .. safe(r.stats.duplicates_no_work_preserved_1490 or 0) .. " duplicates_meaningful_wake=" .. safe(r.stats.duplicates_meaningful_wake_1490 or 0) .. " removed=" .. safe(r.stats.cleanup_removed or 0) .. " cleanup_rotations=" .. safe(r.stats.cleanup_rotated_categories or 0) .. " cleanup_budget_exhausted=" .. safe(r.stats.cleanup_budget_exhausted or 0) .. " repair_scans=" .. safe(r.stats.repair_discovery_scans or 0) .. " repair_index_hits=" .. safe(r.stats.repair_discovery_index_hits or 0) .. " repair_direct_scans=" .. safe(r.stats.repair_discovery_direct_scans or 0) .. " repair_checked=" .. safe(r.stats.repair_discovery_checked or 0) .. " repair_submitted=" .. safe(r.stats.repair_discovery_submitted or 0) .. " repair_partial_windows=" .. safe(r.stats.repair_discovery_partial_windows_1503 or 0) .. " repair_full_windows=" .. safe(r.stats.repair_discovery_full_windows_1503 or 0) .. " repair_negative_skips=" .. safe(r.stats.repair_discovery_negative_skips_1503 or 0) }
 end
 
 function M.install()
