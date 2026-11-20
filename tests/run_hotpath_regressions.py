@@ -32,6 +32,7 @@ SMOKE = (
     "work_queue_duplicate_wake_1490.lua",
     "idle_invalidation_epoch_1491.lua",
     "idle_activity_classification_1492.lua",
+    "indexed_entity_sort_1494.lua",
 )
 EXTENDED = (
     "economy_route_fairness_cache_1470.lua",

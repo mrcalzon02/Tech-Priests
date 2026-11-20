@@ -27,7 +27,7 @@ These are **source implementation claims**, not proof of native performance.
 | T1-07 | Chunk seeding map settings copy per event | Open |
 | T1-08 | Station catalog per-entity inventory, wire and tag work | **Partial source fix** `a70250d`: settings per sweep, connector IDs reused, non-inventory wire checks skipped, distance per inventory source cached; legacy tag cleanup retained. Fixture `1493` committed; full/native behavior pending. Dynamic wired connectivity is never TTL-cached |
 | T1-09 | Broker telemetry formatting and budgeting | Open; benchmark on 80+ pairs first |
-| T1-10 | 0579 expanded-cache comparator key regeneration | Open; optimize only if T2-01 hit data justifies it |
+| T1-10 | 0579 expanded-cache comparator key regeneration | **Source fix** `ad59e1b`: calculate entity keys once per lookup, preserve lexicographic order. Regression `1494` passed locally (1,800 entities); synthetic benchmark about 4× faster in this sort only. Native hit rate/UPS unmeasured |
 | T1-11 | Dispatcher per-priest record churn | Open; preserve action reporting and custody evidence |
 | T1-12 | 0582 active-order and reason helper allocations | **Partial source fix** `81bc0f1`: hoisted active field list and 128-entry bounded reason memo; policy regression `1492` passed locally; other helper costs/UPS pending |
 | T2-01 | Nonaligned station scans may miss 0579 cache indefinitely | **Counters enhanced** `0a8f06b`; regression `1489`; native hit-rate baseline needed before geometry change |
