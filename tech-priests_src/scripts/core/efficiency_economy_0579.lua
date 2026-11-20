@@ -10,6 +10,7 @@
 
 local M = {}
 local EntityIdentity1481 = require("scripts.core.entity_identity_1481")
+local IndexedEntitySort1494 = require("scripts.core.indexed_entity_sort_1494")
 M.version = "0.1.606"
 M.storage_key = "efficiency_economy_0579"
 M.cell_size = 32
@@ -309,9 +310,9 @@ function M.entities_for_area(surface, area, scan_limit, allow_expanded)
   if allow_expanded==true then
     -- Cached cell maps are sets; enforce deterministic order when the cached
     -- result replaces a fully enumerated multi-query live scan.
-    table.sort(out,function(a,b)
-      return tostring(entity_key(a) or "") < tostring(entity_key(b) or "")
-    end)
+    -- Expensive LuaEntity identity/API access happens once per result,
+    -- rather than O(N log N) times inside the sort comparator.
+    IndexedEntitySort1494.sort(out, entity_key)
     if #out > (tonumber(scan_limit) or 768) then
       stat("expanded_area_cache_hits_1480")
     end
