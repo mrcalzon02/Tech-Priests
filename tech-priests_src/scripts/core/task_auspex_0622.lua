@@ -134,10 +134,10 @@ local function add_heading(parent, caption)
   return e
 end
 
-local function add_subtle(parent, caption)
+local function add_subtle(parent, caption, width)
   local e = parent.add({ type = "label", caption = "[color=0.72,0.9,0.72]" .. caption .. "[/color]" })
   e.style.single_line = false
-  e.style.maximal_width = usable_width(parent)
+  e.style.maximal_width = usable_width(parent, width)
   return e
 end
 
@@ -409,7 +409,7 @@ function M.render(parent, player)
   stat("renders")
   local layout = Layout.for_player(player)
   add_section_buttons(parent, player, layout)
-  add_subtle(parent, "Task Auspex reads existing telemetry only. It does not schedule, claim, queue, reserve, move, scan, sleep, or wake work by itself.")
+  add_subtle(parent, "Task Auspex reads existing telemetry only. It does not schedule, claim, queue, reserve, move, scan, sleep, or wake work by itself.", layout.scroll_width)
 
   local scroll = parent.add({ type = "scroll-pane", name = "tech_priests_task_auspex_scroll_0622", direction = "vertical" })
   scroll.style.horizontally_stretchable = true
