@@ -28,6 +28,7 @@ SMOKE = (
     "uncertified_scan_preserves_cache_1486.lua",
     "runtime_name_memo_1487.lua",
     "scan_negative_bounded_1488.lua",
+    "spatial_cache_effectiveness_1489.lua",
 )
 EXTENDED = (
     "economy_route_fairness_cache_1470.lua",
