@@ -42,6 +42,24 @@ end
 function M.is_claimed(category,target,pair_or_id,meta)
  local res=M.get(category,target,meta);if not res then return false end;if pair_or_id and safe(res.pair_id)==M.pair_id(pair_or_id)then return false end;return true,res
 end
+-- A hot-path lookup by an already canonicalized reservation key.
+-- The caller must provide a key derived from M.target_key for a stable
+-- identity. Position-only/moving targets continue through M.is_claimed.
+function M.is_claimed_key(category,key,pair_or_id)
+ if type(key)~="string" or key=="" then return false end
+ local r=M.root()
+ local bucket=r.reservations[tostring(category or"misc")]
+ if not bucket then return false end
+ local res=bucket[key]
+ if res and (tonumber(res.expires_tick) or 0)<=now() then
+  bucket[key]=nil
+  stat("expired_seen")
+  return false
+ end
+ if not res then return false end
+ if pair_or_id and safe(res.pair_id)==M.pair_id(pair_or_id)then return false end
+ return true,res
+end
 function M.claim(category,target,pair_or_id,ttl,meta)
  local r=M.root();if r.enabled==false then stat("claim_denied_disabled");return false,"disabled"end;category=ensure_category(category);local key=M.target_key(target,meta);local pair_id=M.pair_id(pair_or_id);local existing=r.reservations[category][key];if existing and(tonumber(existing.expires_tick)or 0)<=now()then r.reservations[category][key]=nil;existing=nil;stat("expired_seen")end
  if existing and safe(existing.pair_id)~=pair_id then stat("claim_denied");return false,"claimed",existing end

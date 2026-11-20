@@ -241,6 +241,15 @@ function M.submit(category, target, opts)
   }
   local bucket = category_bucket(order.surface_index, order.force_index, category)
   local existing = bucket[order.id]
+  -- Unit numbers are immutable for a living Factorio entity. Cache the
+  -- canonical unit key once, not for every candidate reservation probe.
+  -- Do not memoize positional targets: they can move or change scope.
+  if valid(target) and target.unit_number and
+      (not existing or not existing.reservation_lookup_key_1500) then
+    local key = "unit:" .. tostring(target.unit_number)
+    if existing then existing.reservation_lookup_key_1500 = key
+    else order.reservation_lookup_key_1500 = key end
+  end
   if existing then
     -- 0.1.613: duplicate submissions fold into the existing backlog order but
     -- still refresh useful urgency/expiry metadata. This keeps event-fed work
@@ -293,7 +302,15 @@ local function consider_order_for_claim(bucket, id, order, pair, category, R, st
     if not ok or accepted~=true then return end
   end
   if state.radius_sq and dist_sq(pair.station.position,order.position)>state.radius_sq then return end
-  local claimed = R and R.is_claimed and R.is_claimed(category, order.target, pair)
+  local claimed
+  if R and type(R.is_claimed_key) == "function"
+      and type(order.reservation_lookup_key_1500) == "string" then
+    claimed = R.is_claimed_key(category, order.reservation_lookup_key_1500, pair)
+  else
+    -- Older saved orders and position-only targets keep the original,
+    -- scope-sensitive target-key path. No reservation semantics change.
+    claimed = R and R.is_claimed and R.is_claimed(category, order.target, pair)
+  end
   if claimed then return end
   local score = (tonumber(order.priority) or 0) * 100000 - dist_sq(pair.station.position, order.position)
   if not state.best_score or score > state.best_score then
