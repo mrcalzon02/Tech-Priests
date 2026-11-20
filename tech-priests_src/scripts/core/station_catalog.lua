@@ -472,6 +472,8 @@ local function collect_inventory(catalog, entity, station, scan_context)
   local inv_ids = inventory_ids_for_entity_0578(entity, context)
   if #inv_ids == 0 then return end
   if context.skip_wired and entity_has_circuit_wire_0741(entity) then
+    catalog.wired_sources_skipped_1495 =
+      (catalog.wired_sources_skipped_1495 or 0) + 1
     local root = ensure_root()
     root.stats.wired_inventory_sources_skipped_0741 =
       (root.stats.wired_inventory_sources_skipped_0741 or 0) + 1
@@ -556,6 +558,7 @@ local function empty_catalog(pair, radius)
     entity_count = 0,
     stored_item_kinds = 0,
     owned_resource_count = 0,
+    wired_sources_skipped_1495 = 0,
     sweep_ticks = sweep_ticks_for(pair),
     source = "radar-sweep-snapshot-0327"
   }
@@ -914,6 +917,13 @@ function Catalog.show_gui(player, pair)
       "). Some resources or machines may be omitted; no absent claims released.",
       header_width)
   end
+  if (tonumber(cat.wired_sources_skipped_1495) or 0) > 0 then
+    AuspexLayout1483.add_label(frame,
+      tostring(cat.wired_sources_skipped_1495) ..
+      " wired inventory source(s) omitted. To include them, change " ..
+      "'Skip wired inventory sources' in mod settings.",
+      header_width)
+  end
   frame.add({ type = "button", name = "tech_priests_known_resources_refresh_0326", caption = "Recast Auspex Ledger" })
   -- Keep station identity, freshness and manual refresh visible while the
   -- ledger's potentially long resource/command lists scroll independently.
@@ -1014,6 +1024,7 @@ local function run_catalog_command(event, compact)
       .. " ambiguous-ids=" .. tostring(cat and cat.scan_identity_collisions_1481 or 0)
       .. " native-filtered=" .. tostring(cat and cat.scan_filtered_queries_1482 or 0)
       .. " prefilter-retries=" .. tostring(cat and cat.scan_prefilter_fallbacks_1482 or 0)
+      .. " wired-inventories-omitted=" .. tostring(cat and cat.wired_sources_skipped_1495 or 0)
       .. " reason=" .. tostring(cat and cat.scan_reason_1478 or "-"))
   end
   Catalog.show_gui(player, pair)

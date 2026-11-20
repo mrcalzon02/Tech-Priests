@@ -55,6 +55,7 @@ assert(setting_reads==2,'runtime settings reread per entity')
 assert(rock_wires==0,'non-inventory rocks received wire checks')
 assert(first.storage_items['iron-plate'].count==20,'wired inventories were included')
 assert(first.storage_items['copper-plate'].count==10)
+assert(first.wired_sources_skipped_1495==3,'wired omissions are not reported')
 local root=storage.tech_priests[C.storage_key]
 local key=C.entity_key(ore)
 local destroyed=0
@@ -65,5 +66,6 @@ assert(destroyed==2 and root.render_tags[key]==nil,'legacy visual tags leaked')
 wired[1].wired=false;game.tick=1000
 local second=C.scan_pair(pair)
 assert(second.storage_items['iron-plate'].count==22,'newly disconnected inventory unavailable')
+assert(second.wired_sources_skipped_1495==2,'wire omission count did not refresh')
 assert(setting_reads==4 and rock_wires==0,'settings or non-inventory wire checks regressed')
 print('[station-catalog-scan-context-1493] PASS')
