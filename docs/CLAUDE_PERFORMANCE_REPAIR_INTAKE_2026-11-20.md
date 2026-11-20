@@ -32,7 +32,7 @@ These are **source implementation claims**, not proof of native performance.
 | T1-12 | 0582 active-order and reason helper allocations | **Partial source fix** `81bc0f1`: hoisted active field list and 128-entry bounded reason memo; policy regression `1492` passed locally; other helper costs/UPS pending |
 | T2-01 | Nonaligned station scans may miss 0579 cache indefinitely | **Counters enhanced** `0a8f06b`; regression `1489`; native hit-rate baseline needed before geometry change |
 | T2-02 | 0582 globally invalidates every priest on ordinary world events | **Stage 1 source fix** `98e2189`: epoch-based lazy invalidation eliminates whole-table allocation/history churn; pure regression `1491` passed locally, integration `1491` pending. Still globally wakes all priests logically; localized work needed |
-| T2-03 | Catalog prune/cleanup scans all owned-resource keys | Open; retain per-owner lookup and slow rotating prune |
+| T2-03 | Catalog prune/cleanup scans all owned-resource keys | **Source fix** `d7589eb`: transient, per-owner reverse index rebuilt once from saved ownership; station cleanup visits only that owner's keys, scheduled prune checks station groups. `1496` unit test passed locally with 10k claims and no repeat full scan; integrated fixture committed but not executed. Synthetic 100k/50-owner diagnostic and native save/UPS baseline required |
 | T2-04 | Uncertified scans dirty fully known 0579 cells | **Source fixed** `0ec9fca`; regression `1486`; native validation pending |
 | T2-05 | Narrow filtered query loops all cached entities | Open; direct-vs-cache comparison needed |
 | T2-06 | Repair discovery stops after first 32 entities | Open; preserve discovery coverage, audit event feeder |
