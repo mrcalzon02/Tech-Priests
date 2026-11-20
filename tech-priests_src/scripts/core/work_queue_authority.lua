@@ -4,6 +4,7 @@
 -- then claimed by suitable pairs through the reservation authority.
 
 local M = {}
+local DuplicateWake1490 = require("scripts.core.work_queue_duplicate_wake_1490")
 M.version = "0.1.620"
 M.storage_key = "work_queue_authority_0601"
 M.default_ttl = 1800
@@ -245,6 +246,9 @@ function M.submit(category, target, opts)
     -- still refresh useful urgency/expiry metadata. This keeps event-fed work
     -- responsive without creating another queue layer or accumulating duplicate
     -- orders for the same target.
+    -- Repeated observations of the *same live work* are not new eligibility.
+    -- Only newly raised urgency or revival after expiry resets no-work caches.
+    local wake_reason = DuplicateWake1490.reason(existing, order, now())
     existing.priority = math.max(tonumber(existing.priority) or 0, tonumber(order.priority) or 0)
     existing.expires_tick = math.max(tonumber(existing.expires_tick) or 0, tonumber(order.expires_tick) or 0)
     existing.position = existing.position or order.position
@@ -252,7 +256,12 @@ function M.submit(category, target, opts)
     existing.last_duplicate_tick_0613 = now()
     existing.duplicate_count_0613 = (existing.duplicate_count_0613 or 0) + 1
     existing.last_duplicate_source_0613 = order.source or existing.last_duplicate_source_0613
-    bump_category_generation(order.surface_index, order.force_index, category)
+    if wake_reason then
+      bump_category_generation(order.surface_index, order.force_index, category)
+      stat("duplicates_meaningful_wake_1490")
+    else
+      stat("duplicates_no_work_preserved_1490")
+    end
     stat("duplicates_folded")
     stat("duplicates_refreshed")
     metric("work_queue_duplicates_refreshed", 1)
@@ -498,7 +507,7 @@ function M.report_lines()
   M.cleanup(nil, 200)
   local r=M.root(); local parts={}
   for _, cat in ipairs(M.categories) do parts[#parts+1]=cat .. "=" .. safe(M.count(cat)) end
-  return { "[tp-runtime-report] work-queues " .. table.concat(parts," ") .. " submitted=" .. safe(r.stats.submitted_total or 0) .. " claimed=" .. safe(r.stats.claimed_total or 0) .. " folded=" .. safe(r.stats.duplicates_folded or 0) .. " refreshed=" .. safe(r.stats.duplicates_refreshed or 0) .. " claim_examined=" .. safe(r.stats.claim_examined_total or 0) .. " spatial_hit=" .. safe(r.stats.claim_spatial_hit or 0) .. " spatial_miss=" .. safe(r.stats.claim_spatial_miss or 0) .. " spatial_examined=" .. safe(r.stats.claim_spatial_examined or 0) .. " full_fallback=" .. safe(r.stats.claim_full_fallbacks or 0) .. " fallback_examined=" .. safe(r.stats.claim_full_fallback_examined or 0) .. " fallback_budget_exhausted=" .. safe(r.stats.claim_full_fallback_budget_exhausted or 0) .. " no_work_set=" .. safe(r.stats.no_work_set or 0) .. " no_work_skip=" .. safe(r.stats.no_work_skip_total or 0) .. " no_work_gen_clear=" .. safe(r.stats.no_work_cleared_by_generation or 0) .. " removed=" .. safe(r.stats.cleanup_removed or 0) .. " cleanup_rotations=" .. safe(r.stats.cleanup_rotated_categories or 0) .. " cleanup_budget_exhausted=" .. safe(r.stats.cleanup_budget_exhausted or 0) .. " repair_scans=" .. safe(r.stats.repair_discovery_scans or 0) .. " repair_index_hits=" .. safe(r.stats.repair_discovery_index_hits or 0) .. " repair_direct_scans=" .. safe(r.stats.repair_discovery_direct_scans or 0) .. " repair_checked=" .. safe(r.stats.repair_discovery_checked or 0) .. " repair_submitted=" .. safe(r.stats.repair_discovery_submitted or 0) }
+  return { "[tp-runtime-report] work-queues " .. table.concat(parts," ") .. " submitted=" .. safe(r.stats.submitted_total or 0) .. " claimed=" .. safe(r.stats.claimed_total or 0) .. " folded=" .. safe(r.stats.duplicates_folded or 0) .. " refreshed=" .. safe(r.stats.duplicates_refreshed or 0) .. " claim_examined=" .. safe(r.stats.claim_examined_total or 0) .. " spatial_hit=" .. safe(r.stats.claim_spatial_hit or 0) .. " spatial_miss=" .. safe(r.stats.claim_spatial_miss or 0) .. " spatial_examined=" .. safe(r.stats.claim_spatial_examined or 0) .. " full_fallback=" .. safe(r.stats.claim_full_fallbacks or 0) .. " fallback_examined=" .. safe(r.stats.claim_full_fallback_examined or 0) .. " fallback_budget_exhausted=" .. safe(r.stats.claim_full_fallback_budget_exhausted or 0) .. " no_work_set=" .. safe(r.stats.no_work_set or 0) .. " no_work_skip=" .. safe(r.stats.no_work_skip_total or 0) .. " no_work_gen_clear=" .. safe(r.stats.no_work_cleared_by_generation or 0) .. " duplicates_no_wake=" .. safe(r.stats.duplicates_no_work_preserved_1490 or 0) .. " duplicates_meaningful_wake=" .. safe(r.stats.duplicates_meaningful_wake_1490 or 0) .. " removed=" .. safe(r.stats.cleanup_removed or 0) .. " cleanup_rotations=" .. safe(r.stats.cleanup_rotated_categories or 0) .. " cleanup_budget_exhausted=" .. safe(r.stats.cleanup_budget_exhausted or 0) .. " repair_scans=" .. safe(r.stats.repair_discovery_scans or 0) .. " repair_index_hits=" .. safe(r.stats.repair_discovery_index_hits or 0) .. " repair_direct_scans=" .. safe(r.stats.repair_discovery_direct_scans or 0) .. " repair_checked=" .. safe(r.stats.repair_discovery_checked or 0) .. " repair_submitted=" .. safe(r.stats.repair_discovery_submitted or 0) }
 end
 
 function M.install()
