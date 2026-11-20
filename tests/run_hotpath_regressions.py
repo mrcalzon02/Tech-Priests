@@ -34,6 +34,7 @@ SMOKE = (
     "idle_activity_classification_1492.lua",
     "indexed_entity_sort_1494.lua",
     "catalog_owner_index_1496.lua",
+    "idle_player_observation_1497.lua",
 )
 EXTENDED = (
     "economy_route_fairness_cache_1470.lua",
@@ -45,6 +46,7 @@ EXTENDED = (
     "idle_world_event_integration_1491.lua",
     "station_catalog_scan_context_1493.lua",
     "catalog_owner_cleanup_1496.lua",
+    "idle_adaptive_observation_integration_1497.lua",
 )
 
 

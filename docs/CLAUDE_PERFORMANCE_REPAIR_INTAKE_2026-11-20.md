@@ -19,7 +19,7 @@ These are **source implementation claims**, not proof of native performance.
 | ID | Topic | Current status / gate |
 | --- | --- | --- |
 | T1-01 | 0594 reclassifies routes per pulse | Open; cache route identity/class once, validate settings refresh |
-| T1-02 | 0599 sleep observation costs | Open; preserve visible and damage wake latency |
+| T1-02 | 0599 sleep observation costs | **Partial source fix** `b69d068`: per-tick player position snapshots, live GUI checks, in-place sleep-state reset. `1497` unit+full wrapper integration passed locally against byte-identical Git blobs; synthetic 80-priest/500-tick benchmark cut list reads 40,000→500, local Lua 39.2→30.2ms (not native UPS). Sleep-window-first/reduced damage-key costs remain under review; preserve immediate wakeups |
 | T1-03 | 0595 prototype-name string tests | **Source fixed** `98629c9`; regression `1487`; native validation pending |
 | T1-04 | Work-queue duplicate submissions invalidate no-work caches | **Source fixed** `11f7985`: suppress generation bumps on unchanged repeats; preserve new/priority/expired wakes. Policy regression `1490` passed locally; integration fixture `1490` pending |
 | T1-05 | Reservation target-key work | Open; optimize after key stability review |
