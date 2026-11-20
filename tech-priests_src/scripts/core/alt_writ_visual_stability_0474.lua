@@ -6,6 +6,7 @@
 --   * Restored held-station radius preview without filled disks or green flashes.
 
 local M = {}
+local LinkTruth = require("scripts.core.command_link_visual_truth_1499")
 M.version = "0.1.489" -- retained storage key, hardened context gating
 M.storage_key = "alt_writ_visual_stability_0474"
 M.refresh_period = 15
@@ -147,48 +148,8 @@ local function collect_pairs_for_player(player)
   return out
 end
 
-local function connected(a, b)
-  if not (a and b and a.station and a.station.valid and b.station and b.station.valid) then return false end
-  if a.station.force ~= b.station.force or a.station.surface ~= b.station.surface then return false end
-  local ar = radius_for(a)
-  local br = radius_for(b)
-  local d = distance_sq(a.station.position, b.station.position)
-  local maxr = math.max(ar, br)
-  return d <= (maxr * 3) * (maxr * 3)
-end
-
-local function connection_key(a, b)
-  local au = station_unit(a) or (a.station and a.station.valid and a.station.unit_number) or 0
-  local bu = station_unit(b) or (b.station and b.station.valid and b.station.unit_number) or 0
-  if au > bu then au, bu = bu, au end
-  return tostring(au) .. ":" .. tostring(bu)
-end
-
-local function best_connection_for(subject, list)
-  if not (subject and subject.station and subject.station.valid) then return nil, nil end
-  local sr = pair_rank(subject)
-  local best_superior, best_superior_score = nil, nil
-  local best_equal, best_equal_score = nil, nil
-  local best_fallback, best_fallback_score = nil, nil
-  for _, other in pairs(list) do
-    if other ~= subject and connected(subject, other) then
-      local orank = pair_rank(other)
-      local d = distance_sq(subject.station.position, other.station.position)
-      if orank > sr then
-        local score = d - (orank * 0.01)
-        if not best_superior_score or score < best_superior_score then best_superior, best_superior_score = other, score end
-      elseif orank == sr then
-        if not best_equal_score or d < best_equal_score then best_equal, best_equal_score = other, d end
-      else
-        if not best_fallback_score or d < best_fallback_score then best_fallback, best_fallback_score = other, d end
-      end
-    end
-  end
-  if best_superior then return best_superior, "hierarchy" end
-  if best_equal then return best_equal, "equal" end
-  if best_fallback then return best_fallback, "fallback" end
-  return nil, nil
-end
+-- Command-link selection has moved to 1499. Proximity alone never
+-- constitutes a superior or Junior peer command link.
 
 local function destroy(obj)
   if obj then pcall(function() if obj.valid then obj.destroy() end end) end
@@ -278,45 +239,26 @@ local function draw_circle(out, player, pair, faint)
 end
 
 local function draw_connections(out, player, list)
+  -- Only the broker-installed 0480 command ledger authorizes an overlay link.
+  -- Read existing paired slates; do not invoke hierarchy rebuilds or claim work.
+  local authority = rawget(_G, "TECH_PRIESTS_COMMAND_HIERARCHY_0480")
+  local root = storage and storage.tech_priests
+    and storage.tech_priests.command_hierarchy_0480
+  if not (authority and authority._installed == true and root
+      and root.enabled == true) then return 0 end
+  local links = LinkTruth.collect(list, M.max_pairs, authority.max_link_distance)
   local gray = { r = 0.72, g = 0.72, b = 0.72, a = 0.42 }
   local equal = { r = 1.00, g = 0.72, b = 0.16, a = 0.62 }
-  local used = {}
-  local superior_for = {}
-  local drawn = 0
   local players = { player }
-  for _, subject in pairs(list) do
-    local target, mode = best_connection_for(subject, list)
-    if target and mode == "hierarchy" then
-      superior_for[station_unit(subject) or 0] = station_unit(target) or 0
-      local key = connection_key(subject, target)
-      if not used[key] then
-        used[key] = true
-        draw_line(out, subject.station.surface, subject.station.position, target.station.position, gray, 1, players)
-        drawn = drawn + 1
-        if drawn >= M.max_pairs then return drawn end
-      end
+  for _, link in ipairs(links) do
+    local a, b = link.from.station, link.to.station
+    if link.kind == "direct" then
+      draw_line(out, a.surface, a.position, b.position, gray, 1, players)
+    elseif link.kind == "peer" then
+      draw_dashed_line(out, a.surface, a.position, b.position, equal, 2, players)
     end
   end
-  for i = 1, #list do
-    local a = list[i]
-    for j = i + 1, #list do
-      local b = list[j]
-      if a and b and connected(a, b) and pair_rank(a) == pair_rank(b) then
-        local au, bu = station_unit(a) or 0, station_unit(b) or 0
-        local asup, bsup = superior_for[au], superior_for[bu]
-        if (asup and bsup and asup == bsup) or ((not asup) and (not bsup)) then
-          local key = connection_key(a, b)
-          if not used[key] then
-            used[key] = true
-            draw_dashed_line(out, a.station.surface, a.station.position, b.station.position, equal, 2, players)
-            drawn = drawn + 1
-            if drawn >= M.max_pairs then return drawn end
-          end
-        end
-      end
-    end
-  end
-  return drawn
+  return #links
 end
 
 local function draw_pair_link(out, player, pair, selected_pair)
