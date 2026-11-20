@@ -10,6 +10,7 @@
 
 local M = {}
 local IdleEpoch1491 = require("scripts.core.idle_invalidation_epoch_1491")
+local IdleActivity1492 = require("scripts.core.idle_activity_classification_1492")
 M.version = "0.1.582"
 M.storage_key = "efficiency_economy_0582"
 M.idle_skip_ticks = 97
@@ -65,43 +66,8 @@ local function station_key(pair)
   return tostring(pair.station_unit or (valid(pair.station) and pair.station.unit_number) or "")
 end
 
-local function has_active_order(pair)
-  if type(pair) ~= "table" then return false end
-  -- Current/pending queue work.
-  local oq = pair.order_queue_0469 or pair.orders_0469 or pair.order_queue or pair.orders
-  if type(oq) == "table" then
-    if oq.current or oq.active or oq.current_order then return true end
-    if type(oq.pending) == "table" and next(oq.pending) ~= nil then return true end
-    if type(oq.queue) == "table" and next(oq.queue) ~= nil then return true end
-  end
-  -- Common active work fields from legacy/generated fragments and current executors.
-  local active_keys = {
-    "emergency_craft", "direct_acquisition_task_0336", "active_acquisition_0333",
-    "construction_task", "combat_target", "repair_target", "consecration_target",
-    "active_consecration_0515", "active_repair_0516", "combat_repair_0517",
-    "logistics_fetch_task", "active_logistics_fetch", "machine_fulfillment_task",
-  }
-  for _, k in ipairs(active_keys) do
-    local v = pair[k]
-    if valid(v) then return true end
-    if type(v) == "table" then
-      if v.current or v.target or v.entity or v.item or v.item_name or v.output_item or v.status == "active" then return true end
-    elseif v then
-      return true
-    end
-  end
-  local mode = lower(pair.mode)
-  if mode ~= "" and mode ~= "idle" and mode ~= "returning" and mode ~= "no-managed-priority-claimed" then
-    if mode:find("combat",1,true) or mode:find("repair",1,true) or mode:find("consecr",1,true) or mode:find("gather",1,true) or mode:find("craft",1,true) or mode:find("construct",1,true) or mode:find("mine",1,true) or mode:find("acquir",1,true) then return true end
-  end
-  return false
-end
-
-local function should_never_skip(reason)
-  local rs = lower(reason or "")
-  if rs:find("manual",1,true) or rs:find("combat",1,true) or rs:find("recovery",1,true) or rs:find("repair",1,true) or rs:find("force",1,true) or rs:find("debug",1,true) then return true end
-  return false
-end
+local has_active_order = IdleActivity1492.has_active_order
+local should_never_skip = IdleActivity1492.should_never_skip
 
 local function cache_record(pair)
   local key = station_key(pair)
