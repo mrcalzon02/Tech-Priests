@@ -25,13 +25,18 @@ function M.for_player(player)
   local logical_height = math.max(1, math.floor(height / scale))
   -- Leave space for the Command Overview's own frame and headers.
   local scroll_width = clamp(logical_width - 64, 1, 1040)
-  local scroll_height = clamp(logical_height - 180, 1, 590)
   local interior = math.max(1, scroll_width - 24)
   local key_width = math.max(1, math.floor(interior * 0.24))
   local value_width = math.max(1, interior - key_width)
   local button_columns = scroll_width >= 980 and 7
     or scroll_width >= 720 and 4
     or scroll_width >= 480 and 3 or 2
+  -- On desktop the section row remains outside the scrolling content.
+  -- On narrow screens the navigation/intro live inside the scroll, so
+  -- they cannot crowd the actual diagnostics completely off-screen.
+  local nav_inside_scroll = button_columns < 7
+  local scroll_height = clamp(
+    logical_height - (nav_inside_scroll and 120 or 240), 1, 590)
   return {
     scroll_width = scroll_width,
     scroll_height = scroll_height,
@@ -39,6 +44,7 @@ function M.for_player(player)
     key_width = key_width,
     value_width = value_width,
     button_columns = button_columns,
+    nav_inside_scroll = nav_inside_scroll,
     page_height = math.min(640, math.max(1, logical_height - 80)),
     logical_width = logical_width,
     logical_height = logical_height,
