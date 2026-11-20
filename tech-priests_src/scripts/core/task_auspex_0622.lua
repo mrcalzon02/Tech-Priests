@@ -456,8 +456,11 @@ function M.render(parent, player)
   if not auspex_enabled() then stat("disabled_blocks"); return false end
   stat("renders")
   local layout = Layout.for_player(player)
-  add_section_buttons(parent, player, layout)
-  add_subtle(parent, "Task Auspex reads existing telemetry only. It does not schedule, claim, queue, reserve, move, scan, sleep, or wake work by itself.", layout.scroll_width)
+  local intro = "Task Auspex reads existing telemetry only. It does not schedule, claim, queue, reserve, move, scan, sleep, or wake work by itself."
+  if not layout.nav_inside_scroll then
+    add_section_buttons(parent, player, layout)
+    add_subtle(parent, intro, layout.scroll_width)
+  end
 
   local scroll = parent.add({ type = "scroll-pane", name = "tech_priests_task_auspex_scroll_0622", direction = "vertical" })
   scroll.style.horizontally_stretchable = true
@@ -465,6 +468,10 @@ function M.render(parent, player)
   scroll.style.height = layout.scroll_height
   scroll.style.maximal_height = layout.scroll_height
   scroll.style.width = layout.scroll_width
+  if layout.nav_inside_scroll then
+    add_section_buttons(scroll, player, layout)
+    add_subtle(scroll, intro, layout.scroll_width)
+  end
 
   local section = selected_section(player)
   if section == "tasks" then
