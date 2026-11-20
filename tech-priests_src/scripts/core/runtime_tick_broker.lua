@@ -3,6 +3,8 @@
 -- Central budgeted broker with strict service-result normalization and one
 -- owner-keyed runtime-event-registry cadence. No direct script fallback exists.
 
+local PressureCache1502 = require("scripts.core.broker_pressure_cache_1502")
+
 local M = {
   version = "0.1.674-dev",
   storage_key = "runtime_tick_broker_0600",
@@ -107,6 +109,9 @@ function M.note_metric(metric, amount)
   root.external_stats[metric] =
     (root.external_stats[metric] or 0) + (tonumber(amount) or 1)
   remember_window(metric, amount)
+  -- A service may publish a new work/damage pressure counter mid-pulse.
+  -- Later services must immediately see its updated scheduling pressure.
+  PressureCache1502.note_external_metric(metric)
   return true
 end
 function M.rolling_sum(metric, windows_back)
@@ -213,7 +218,7 @@ function M.profiler_report_lines(limit)
   return lines
 end
 
-local function pressure_value(category)
+local function raw_pressure_value(category)
   category = tostring(category or "")
   if category == "repair" then
     return M.rolling_sum("event_repair_submitted", 1)
@@ -235,6 +240,9 @@ local function pressure_value(category)
       + M.rolling_sum("combat_wake_issued", 1)
   end
   return 0
+end
+local function pressure_value(category)
+  return PressureCache1502.read(category, raw_pressure_value)
 end
 local function effective_budget(service)
   local base = math.max(1, tonumber(service.budget) or 8)
@@ -482,6 +490,9 @@ end
 function M.pulse(event)
   local root = M.root()
   if root.enabled == false then stat("skipped_disabled") return end
+  -- Each invocation is a fresh scheduling decision. Pressure only stays
+  -- cached while relevant external counters remain unchanged this pulse.
+  PressureCache1502.begin_pulse()
   local tick = event and event.tick or now()
   -- CI-only native timing: LuaProfiler exposes elapsed time only when
   -- rendered as a LocalisedString, never as a Lua numeric value.
