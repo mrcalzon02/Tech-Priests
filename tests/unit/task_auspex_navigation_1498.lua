@@ -75,4 +75,38 @@ for _, child in ipairs(scroll.children) do
       "visible content label overflowed its scroll container")
   end
 end
-print("[task-auspex-navigation-1498] PASS: immediate tabs, bounded refresh, responsive GUI")
+
+-- A selected priest's real work state must be visible without changing it.
+local priest = {valid=true,unit_number=56,name="senior-tech-priest"}
+local station = {valid=true,unit_number=55,name="senior-cogitator-station"}
+local pair = {
+  station=station,priest=priest,station_unit=55,mode="moving-to-source",
+  movement_request_0418={owner="logistics-fetch-0527",reason="known-source",expires_tick=600},
+  logistics_fetch_0527={item="coal",phase="moving-to-source",source_name="steel-chest"},
+  infrastructure_recipe_request_0647={item="iron-plate",missing="iron-ore",status="blocked"},
+  last_recipe_fanout_refusal_0284={item="iron-plate",reason="incumbent",incumbent_item="coal"},
+  construction_task_0338={item_name="stone-furnace",phase="awaiting-cargo"},
+  dispatcher_0510={kind="acquisition",reason="material-not-delivered"},
+}
+storage.tech_priests.pairs_by_station = {[55]=pair}
+_G.tech_priests_command_overview_storage_0189 = function() return {[1]=55} end
+local selected_root = gui_node{type="flow"}
+assert(A.render(selected_root,p) == true)
+local captions = {}
+local function collect(node)
+  if node.caption then captions[#captions + 1] = tostring(node.caption) end
+  for _, child in ipairs(node.children) do collect(child) end
+end
+collect(selected_root)
+local joined = table.concat(captions," | ")
+for _,needle in ipairs({
+  "Live task blockers and ownership", "Movement lease", "logistics-fetch-0527",
+  "Physical fetch", "phase=moving-to-source", "Recipe need",
+  "Fanout refusal", "Construction", "Dispatcher",
+}) do
+  assert(joined:find(needle,1,true),"selected-priest blocker missing: "..needle)
+end
+assert(pair.logistics_fetch_0527.phase == "moving-to-source"
+  and pair.movement_request_0418.owner == "logistics-fetch-0527",
+  "read-only task panel mutated live worker state")
+print("[task-auspex-navigation-1498] PASS: immediate tabs, bounded refresh, responsive GUI and selected blockers")
