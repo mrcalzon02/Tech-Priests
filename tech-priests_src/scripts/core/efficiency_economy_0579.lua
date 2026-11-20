@@ -16,6 +16,7 @@ M.cell_size = 32
 M.known_keep_ticks = 60 * 60 * 20
 M.cleanup_interval = 60 * 17
 M.max_indexed_entities_per_area = 2048
+M.max_index_cells_per_area = 256 -- 16x16 Factorio chunks, bounded cache bookkeeping.
 M.max_cache_age_ticks = 600 -- Revalidate untracked script movement after ten seconds.
 
 local function now() return game and game.tick or 0 end
@@ -193,6 +194,12 @@ function M.note_area_scan(surface, area, entities, scan_limit, scan_complete)
       or (scan_complete~=true and #entities>=limit)
       or #entities>=M.max_indexed_entities_per_area
   local x1,y1,x2,y2,ax,ay,bx,by = area_cells(area)
+  if (x2-x1+1)*(y2-y1+1)>M.max_index_cells_per_area then
+    -- Scan results remain valid for the station; only the opportunistic
+    -- all-cell cache is skipped, to avoid unbounded map-sized cache churn.
+    stat("area_scans_skipped_cell_budget")
+    return false
+  end
   local stamp=now()
   for cx=x1,x2 do
     for cy=y1,y2 do
@@ -219,18 +226,31 @@ function M.note_area_scan(surface, area, entities, scan_limit, scan_complete)
     end
   end
   if incomplete then stat("capped_scans_not_cached") end
-  local indexed = 0
+  local indexed, ambiguous = 0, 0
+  local seen_keys = {}
   if type(entities) == "table" then
     for _, entity in pairs(entities) do
-      if valid(entity) and in_area(entity, area) and M.index_entity(entity, "area-scan") then
-        indexed = indexed + 1
-        if indexed >= M.max_indexed_entities_per_area then break end
+      if valid(entity) and in_area(entity, area) then
+        local key = entity_key(entity)
+        if key and seen_keys[key] and seen_keys[key] ~= entity then
+          -- Distinct LuaEntity objects with identical fallback identities
+          -- cannot be represented as a unique-key cache. Fail closed.
+          ambiguous = ambiguous + 1
+          M.mark_entity_dirty(entity, "ambiguous-index-key")
+        elseif key then
+          seen_keys[key] = entity
+        end
+        if M.index_entity(entity, "area-scan") then
+          indexed = indexed + 1
+          if indexed >= M.max_indexed_entities_per_area then break end
+        end
       end
     end
   end
+  if ambiguous > 0 then stat("ambiguous_area_index_keys", ambiguous) end
   stat("area_scans_noted"); metric("direct_surface_scans",1); metric("scans_attempted",1)
   stat("area_scan_entities_indexed", indexed)
-  return true
+  return ambiguous == 0
 end
 
 function M.entities_for_area(surface, area, scan_limit, allow_expanded)
@@ -239,6 +259,11 @@ function M.entities_for_area(surface, area, scan_limit, allow_expanded)
   local sidx = r.surfaces[surface_key(surface)]
   if not (sidx and sidx.cells) then stat("area_index_miss_no_surface"); metric("indexed_cache_misses",1); return nil end
   local x1,y1,x2,y2 = area_cells(area)
+  if (x2-x1+1)*(y2-y1+1)>M.max_index_cells_per_area then
+    stat("area_index_miss_cell_budget")
+    metric("indexed_cache_misses",1)
+    return nil
+  end
   local out = {}
   local seen = {}
   -- Factorio's 768-result cap applies to a SINGLE engine query, not a
@@ -360,6 +385,9 @@ local function install_command()
       .." partial-cells="..safe(r.stats.partial_cells_not_certified or 0)
       .." cache-cap-misses="..safe(r.stats.area_index_miss_result_cap or 0)
       .." cache-reseeds="..safe(r.stats.cache_reseeds_1476 or 0)
+      .." area-cell-budget="..safe(M.max_index_cells_per_area)
+      .." huge-areas="..safe(r.stats.area_scans_skipped_cell_budget or 0)
+      .." ambiguous-keys="..safe(r.stats.ambiguous_area_index_keys or 0)
     if player and player.valid then player.print(msg) elseif game and game.print then game.print(msg) end
   end)
 end
