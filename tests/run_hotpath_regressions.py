@@ -35,6 +35,7 @@ SMOKE = (
     "indexed_entity_sort_1494.lua",
     "catalog_owner_index_1496.lua",
     "idle_player_observation_1497.lua",
+    "enemy_seed_config_cache_1498.lua",
 )
 EXTENDED = (
     "economy_route_fairness_cache_1470.lua",
@@ -47,6 +48,7 @@ EXTENDED = (
     "station_catalog_scan_context_1493.lua",
     "catalog_owner_cleanup_1496.lua",
     "idle_adaptive_observation_integration_1497.lua",
+    "enemy_planet_seeding_integration_1498.lua",
 )
 
 
