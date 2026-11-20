@@ -31,6 +31,12 @@ including the older integration coverage). Both commands require `texlua` and
 a full repository checkout and exit nonzero on missing files or test failures.
 These checks do not alter Factorio saves, start CI workflows, or publish releases.
 
+For a complete self-hosted source-level run, launch the manual-only GitHub
+Actions workflow `Tech Priests manual Lua hot-path validation` and select
+`all` (14 checks) or `smoke` (9 checks). It targets the Linux runner labeled
+`self-hosted` and `headless` and requires Python 3 plus `texlua` or Lua 5.3+.
+No push/PR trigger is enabled. Native Factorio acceptance remains separate.
+
 A passing unit test does not prove Factorio loading, migration, save/reload,
 runtime behavior, visual layout or profiler/UPS acceptance.
 
