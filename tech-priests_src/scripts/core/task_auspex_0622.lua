@@ -220,6 +220,53 @@ local function order_label(order)
     .. " target=" .. entity_name(order.target or order.entity or order.source_entity)
 end
 
+-- One bounded, read-only view of the selected priest's actual blockers.
+-- These observations do not establish custody transfer or production.
+local function add_active_custody(parent, pair)
+  local rows = {}
+  local function add(name, value)
+    rows[#rows + 1] = {name, value}
+  end
+  local move = pair.movement_request_0418
+  if type(move) == "table" then
+    add("Movement lease", "owner=" .. safe(move.owner or "unknown")
+      .. " reason=" .. safe(move.reason or "unknown")
+      .. " expiry=" .. safe(move.expires_tick or "?"))
+  end
+  local fetch = pair.logistics_fetch_0527
+  if type(fetch) == "table" then
+    add("Physical fetch", "item=" .. safe(fetch.item or "unknown")
+      .. " phase=" .. safe(fetch.phase or "unknown")
+      .. " source=" .. safe(fetch.source_name or fetch.source_unit or "?"))
+  end
+  local recipe = pair.infrastructure_recipe_request_0647
+  if type(recipe) == "table" then
+    add("Recipe need", "item=" .. safe(recipe.item or "?")
+      .. " missing=" .. safe(recipe.missing or "?")
+      .. " status=" .. safe(recipe.status or "unknown"))
+  end
+  local refusal = pair.last_recipe_fanout_refusal_0284
+  if type(refusal) == "table" then
+    add("Fanout refusal", "item=" .. safe(refusal.item or "?")
+      .. " reason=" .. safe(refusal.reason or "unknown")
+      .. " incumbent=" .. safe(refusal.incumbent_item or "none"))
+  end
+  local construction = pair.construction_task_0338
+  if type(construction) == "table" then
+    add("Construction", "item=" .. safe(construction.item_name or "?")
+      .. " phase=" .. safe(construction.phase or "unknown"))
+  end
+  local dispatch = pair.dispatcher_0510
+  if type(dispatch) == "table" then
+    add("Dispatcher", "kind=" .. safe(dispatch.kind or "?")
+      .. " reason=" .. safe(dispatch.reason or dispatch.detail or "none"))
+  end
+  if #rows == 0 then return end
+  add_heading(parent, "Live task blockers and ownership")
+  add_kv_table(parent, rows)
+  add_subtle(parent, "Read-only state: a plan, lease or fetch phase is not a physical item-delivery receipt.")
+end
+
 local function add_selected_pair(parent, player)
   local pair = selected_pair(player)
   add_heading(parent, "Selected task slate")
@@ -236,6 +283,7 @@ local function add_selected_pair(parent, player)
     {"Combat target", entity_name(pair.combat_target)},
     {"Station unit", unit},
   })
+  add_active_custody(parent, pair)
 
   if pair.master_infrastructure_plan_0644 then
     local plan = pair.master_infrastructure_plan_0644
