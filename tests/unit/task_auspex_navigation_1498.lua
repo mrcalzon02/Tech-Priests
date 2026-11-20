@@ -58,17 +58,17 @@ end
 local root = gui_node{type = "flow"}
 assert(click(prefix .. "selected") == true and builds == 5)
 assert(A.render(root, p) == true)
-local grid = root.children[1]
-local caption = root.children[2]
-local scroll = root.children[3]
-assert(grid.type == "table" and grid.column_count == 2,
-  "high-DPI section navigation must wrap into two columns")
-assert(#grid.children == 7, "all six sections and refresh button must remain")
-assert(scroll.type == "scroll-pane"
-  and scroll.style.width == 336 and scroll.style.height == 120,
+local scroll = root.children[1]
+local grid = scroll and scroll.children[1]
+local caption = scroll and scroll.children[2]
+assert(scroll and scroll.type == "scroll-pane"
+  and scroll.style.width == 336 and scroll.style.height == 180,
   "render must use the player's logical viewport")
-assert(caption.style.maximal_width <= 336,
-  "the Task Auspex intro must wrap instead of widening the parent GUI")
+assert(grid and grid.type == "table" and grid.column_count == 2,
+  "high-DPI section navigation must wrap into two columns inside scroll")
+assert(#grid.children == 7, "all six sections and refresh button must remain")
+assert(caption and caption.style.maximal_width <= 336,
+  "the Task Auspex intro must wrap inside the scroll pane")
 for _, child in ipairs(scroll.children) do
   if child.type == "label" then
     assert(child.style.maximal_width <= scroll.style.width,
