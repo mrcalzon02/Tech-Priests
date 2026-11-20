@@ -15,7 +15,7 @@ ownership* readout displays only existing nonempty records: movement lease
 owner/reason/expiry, physical-fetch item/phase/source, recipe missing input,
 fanout refusal and incumbent, construction phase, and dispatcher reason.
 An absent record is not promoted to a success or inferred from a planned
-inventory. The panel does not call scheduling, set targets, create items,
+inventory. Only the selected pair is inspected; no new world scan is added. The panel does not call scheduling, set targets, create items,
 mine structures, or claim delivery. No persistent schema migration required.
 
 ## Responsive layout
@@ -25,7 +25,9 @@ Factorio uses **logical pixels** for GUI sizes. The read-only
 physical display resolution using their GUI scale and caps the scroll pane
 at 1040 × 590 logical pixels on desktop. On narrower screens the scroll
 pane, line wrapping, key/value columns, and 2–4-column button grid shrink
-together. Desktop retains its original single row of seven buttons.
+together. Desktop retains its original single row of seven buttons outside
+the scroll; on narrower displays the navigation and introduction are moved
+*inside* the scroll so diagnostics are not clipped beneath a tall header.
 
 The enclosing Command Overview frame remains independently owned. A native
 client screenshot is still required to establish complete end-to-end
