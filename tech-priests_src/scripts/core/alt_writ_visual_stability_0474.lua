@@ -81,13 +81,6 @@ local function radius_for(pair)
   return tonumber(pair and pair.radius) or 24
 end
 
-local function distance_sq(a, b)
-  if not (a and b) then return 999999999 end
-  local dx = (a.x or a[1] or 0) - (b.x or b[1] or 0)
-  local dy = (a.y or a[2] or 0) - (b.y or b[2] or 0)
-  return dx * dx + dy * dy
-end
-
 local function entity_is_station_or_priest(entity)
   if not valid(entity) then return false end
   local n = tostring(entity.name or "")
@@ -245,20 +238,23 @@ local function draw_connections(out, player, list)
   local root = storage and storage.tech_priests
     and storage.tech_priests.command_hierarchy_0480
   if not (authority and authority._installed == true and root
-      and root.enabled == true) then return 0 end
+      and root.enabled == true) then return 0, 0, 0 end
   local links = LinkTruth.collect(list, M.max_pairs, authority.max_link_distance)
   local gray = { r = 0.72, g = 0.72, b = 0.72, a = 0.42 }
   local equal = { r = 1.00, g = 0.72, b = 0.16, a = 0.62 }
   local players = { player }
+  local direct_count, peer_count = 0, 0
   for _, link in ipairs(links) do
     local a, b = link.from.station, link.to.station
     if link.kind == "direct" then
       draw_line(out, a.surface, a.position, b.position, gray, 1, players)
+      direct_count = direct_count + 1
     elseif link.kind == "peer" then
       draw_dashed_line(out, a.surface, a.position, b.position, equal, 2, players)
+      peer_count = peer_count + 1
     end
   end
-  return #links
+  return direct_count + peer_count, direct_count, peer_count
 end
 
 local function draw_pair_link(out, player, pair, selected_pair)
@@ -471,13 +467,14 @@ function M.refresh_player(player)
 
   local out = {}
   local circles, lines, pairlinks, station_icons, known_icons = 0, 0, 0, 0, 0
+  local direct_links, peer_links = 0, 0
   if show_overlay then
     local faint = held_name ~= nil and not (selected_pair and entity_is_station_or_priest(player.selected))
     for _, pair in ipairs(list) do
       if draw_circle(out, player, pair, faint) then circles = circles + 1 end
       if circles >= M.max_pairs then break end
     end
-    lines = draw_connections(out, player, list)
+    lines, direct_links, peer_links = draw_connections(out, player, list)
     if selected_pair then
       if draw_pair_link(out, player, selected_pair, selected_pair) then pairlinks = pairlinks + 1 end
     end
@@ -504,6 +501,8 @@ function M.refresh_player(player)
   root.stats.last_objects = #out
   root.stats.last_circles = circles
   root.stats.last_lines = lines
+  root.stats.last_direct_links = direct_links
+  root.stats.last_peer_links = peer_links
   root.stats.last_pairlinks = pairlinks
   root.stats.last_station_icons = station_icons
   root.stats.last_known_icons = known_icons
@@ -538,6 +537,9 @@ function M.describe()
     .. " objects=" .. tostring(root.stats.last_objects or 0)
     .. " circles=" .. tostring(root.stats.last_circles or 0)
     .. " lines=" .. tostring(root.stats.last_lines or 0)
+    .. " verified-direct=" .. tostring(root.stats.last_direct_links or 0)
+    .. " mutual-junior-peers=" .. tostring(root.stats.last_peer_links or 0)
+    .. " link-policy=0480-verified-only"
     .. " pair-links=" .. tostring(root.stats.last_pairlinks or 0)
     .. " writ-icons=" .. tostring(root.stats.last_station_icons or 0)
     .. " known-icons=" .. tostring(root.stats.last_known_icons or 0)
