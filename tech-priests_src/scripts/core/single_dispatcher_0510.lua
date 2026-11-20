@@ -2,6 +2,7 @@
 -- Tech Priests 0.1.674-dev base-state recovery.
 -- One fair per-pair scheduler/executor dispatcher and canonical action owner.
 
+local CustodyProbe1504 = require("scripts.core.dispatcher_custody_probe_1504")
 local M={version="0.1.674-dev",storage_key="single_dispatcher_0510",tick_interval=5,max_pairs_per_pulse=24,legacy_gate_window=30}
 local function now()return game and game.tick or 0 end
 local function valid(e)return e and e.valid end
@@ -108,38 +109,18 @@ function M.service_pair(pair,reason)
  local pending_machine=pair.machine_logistics_0528
  if type(pending_machine)=="table"
      and lower(pending_machine.phase)=="return-custody-to-station" then
-  local previous=pair.machine_return_entry_probe_0510
-  local flags={
-   "0528-custody="..safe(pending_machine.custody~=nil),
-   "pair-0528-custody="..safe(pair.machine_logistics_custody_0528~=nil),
-   "direct-custody="..safe(pair.direct_acquisition_custody_0513~=nil),
-   "direct-active="..safe(direct_active(pair)),
-   "defense-task="..safe(pair.defense_task_0259~=nil),
-   "combat-target="..safe(valid(pair.combat_target)),
-   "machine-valid="..safe(valid(pending_machine.machine)),
-   "order="..safe((pair.order_queue_0469 and pair.order_queue_0469.current
-     or pair.active_order_0469) and
-     (pair.order_queue_0469 and pair.order_queue_0469.current
-       or pair.active_order_0469).kind),
-   "movement-owner="..safe(pair.movement_request_0418
-     and pair.movement_request_0418.owner),
-  }
-  local signature=table.concat(flags,",")
-  local emit=not previous or previous.signature~=signature
-    or now()-(tonumber(previous.last_log_tick)or 0)>=600
+  local probe_tick = now()
+  local emit, signature = CustodyProbe1504.update(
+    pair, pending_machine, probe_tick, direct_active(pair),
+    valid(pair.combat_target), valid(pending_machine.machine))
   if emit and log then
-   log("[TP-0528-ENTRY-0510] tick="..safe(now())
+   log("[TP-0528-ENTRY-0510] tick="..safe(probe_tick)
      .." station="..safe(station_unit(pair))
      .." priest="..safe(priest_unit(pair))
      .." last-service="..safe(pending_machine.active_updated_tick)
      .." phase="..safe(pending_machine.phase)
      .." "..signature)
   end
-  pair.machine_return_entry_probe_0510={
-   tick=now(),last_log_tick=emit and now()
-     or previous.last_log_tick,signature=signature,
-   last_service_tick=pending_machine.active_updated_tick,
-  }
  end
  -- 1141: A committed, counted ranked ore receipt must receive another real
  -- 0837 service attempt even while the final Magos is completing its OWN
