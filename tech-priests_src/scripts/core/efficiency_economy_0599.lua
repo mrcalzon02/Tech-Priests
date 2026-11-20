@@ -6,6 +6,7 @@
 -- explicit movement/work state still run immediately.
 
 local M = { version = "0.1.608", storage_key = "efficiency_economy_0599" }
+local IdlePlayerObservation1497 = require("scripts.core.idle_player_observation_1497")
 
 local function root()
   storage.tech_priests = storage.tech_priests or {}
@@ -98,22 +99,7 @@ local function pair_dirty(pair)
 end
 
 local function observed(pair)
-  local priest = pair and pair.priest
-  local station = pair and pair.station
-  local ent = valid(priest) and priest or station
-  if not valid(ent) or not game then return false end
-  local surf = ent.surface
-  local pos = ent.position
-  for _, player in pairs(game.connected_players or {}) do
-    if player and player.valid and player.character and player.character.valid and player.character.surface == surf then
-      local pp = player.character.position
-      local dx, dy = (pp.x or 0) - (pos.x or 0), (pp.y or 0) - (pos.y or 0)
-      if (dx * dx + dy * dy) <= (80 * 80) then return true end
-    end
-    if player and player.valid and player.opened == station then return true end
-    if player and player.valid and player.selected and (player.selected == station or player.selected == priest) then return true end
-  end
-  return false
+  return IdlePlayerObservation1497.observed(pair, game)
 end
 
 local function sleep_window(state)
@@ -129,9 +115,19 @@ end
 local function should_skip(pair)
   local r = root()
   if not r.enabled then return false end
-  if not pair or pair_has_work(pair) or observed(pair) or pair_dirty(pair) then
+  if not pair then return false end
+  local has_work = pair_has_work(pair)
+  if has_work or observed(pair) or pair_dirty(pair) then
     local k = pair_key(pair)
-    if k then r.pair_state[k] = { sleep_level = 0, next_tick = 0 } end
+    if k then
+      local state = r.pair_state[k]
+      if type(state) ~= "table" then
+        state = {}
+        r.pair_state[k] = state
+      end
+      state.sleep_level, state.next_tick = 0, 0
+      state.wake_reason, state.wake_tick = nil, nil
+    end
     return false
   end
   local k = pair_key(pair)
