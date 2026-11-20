@@ -4,6 +4,7 @@ local M = {}
 local Registry = require("scripts.core.runtime_event_registry")
 local Colony = require("scripts.core.enemy_colony")
 local Options = require("scripts.core.enemy_colony_options")
+local SeedConfig = require("scripts.core.enemy_seed_config_1498")
 local NAME = "planetary-magos-cogitator-station"
 -- One candidate chunk per square region: priority planets have twice the density.
 
@@ -13,26 +14,24 @@ local function enabled()
 end
 
 function M.seed_chunk(surface, chunk)
-  if not enabled() or not (surface and surface.valid) or surface.platform
-      or (surface.peaceful_mode and Options.get("respect-peaceful",true)) then return false end
-  local planet = surface.planet and surface.planet.name or surface.name
-  if not Options.allowed_planet(planet)then return false end
-  local size=Options.get((planet=="fulgora"or planet=="vulcanus")
-    and "priority-spacing"or "other-spacing",24)
-  local seed = surface.map_gen_settings.seed or 0
+  if not enabled() or not (surface and surface.valid) or surface.platform then return false end
+  local cfg = SeedConfig.for_surface(surface, Options)
+  if not cfg or (surface.peaceful_mode and cfg.respect_peaceful)
+      or not cfg.allowed then return false end
+  local planet, size, seed = cfg.planet, cfg.spacing, cfg.seed
   local rx, ry = math.floor(chunk.x / size), math.floor(chunk.y / size)
   -- Coordinate hash avoids consuming gameplay RNG or depending on exploration order.
   local hash = (rx * 73856093 + ry * 19349663 + seed) % 2147483647
   if chunk.x % size ~= hash % size
       or chunk.y % size ~= math.floor(hash / size) % size then return false end
   local center = {x = chunk.x * 32 + 16, y = chunk.y * 32 + 16}
-  local clearance=Options.get("spawn-clearance",384)
+  local clearance = cfg.spawn_clearance
   if center.x * center.x + center.y * center.y < clearance^2 then return false end
   for _, force in pairs(game.forces) do
     if force.name ~= "enemy" and force.name ~= "neutral" then
       local spawn = force.get_spawn_position(surface)
       if (center.x-spawn.x)^2 + (center.y-spawn.y)^2 < clearance^2 then return false end
-      if surface.count_entities_filtered{position = center, radius = Options.get("base-clearance",96),
+      if surface.count_entities_filtered{position = center, radius = cfg.base_clearance,
           force = force, limit = 1} > 0 then return false end
     end
   end
@@ -47,7 +46,7 @@ function M.seed_chunk(surface, chunk)
   -- Stay inside the delivered chunk: never force terrain generation or landfill.
   local position = center
   if not Colony.can_place(surface,position) then return false end
-  if surface.count_entities_filtered{position = position, radius = Options.get("colony-clearance",192),
+  if surface.count_entities_filtered{position = position, radius = cfg.colony_clearance,
       name = NAME, limit = 1} > 0 then return false end
   local colony=Colony.create(surface,position,planet)
   if not colony then return false end
@@ -66,11 +65,28 @@ function M.install()
     M.seed_chunk(game.surfaces[event.surface_index], event.position)
   end, nil, opts), "Enemy planetary chart route unavailable")
   assert(Registry.on_event(defines.events.on_surface_deleted, function(event)
+    SeedConfig.invalidate(event.surface_index)
     local root = storage.tech_priests
     if root and root.enemy_planetary_seeding then
       root.enemy_planetary_seeding[event.surface_index] = nil
     end
   end, nil, opts), "Enemy planetary surface-deletion route unavailable")
+  -- Runtime startup settings may change during a save; clear the cached
+  -- read-only snapshot without touching existing colonies or random state.
+  if defines.events.on_runtime_mod_setting_changed then
+    assert(Registry.on_event(defines.events.on_runtime_mod_setting_changed,
+      function(event)
+        local name = event and event.setting
+        if type(name) == "string" and name:sub(1, 19) == "tech-priests-enemy-" then
+          SeedConfig.invalidate_all()
+        end
+      end, nil, opts), "Enemy seeding settings invalidation route unavailable")
+  end
+  if defines.events.on_surface_renamed then
+    assert(Registry.on_event(defines.events.on_surface_renamed, function(event)
+      SeedConfig.invalidate(event.surface_index)
+    end, nil, opts), "Enemy seeding surface-rename route unavailable")
+  end
   return true
 end
 return M
