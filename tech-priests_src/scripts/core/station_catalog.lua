@@ -184,7 +184,12 @@ local function claim_entity(root, pair, entity, kind)
   local old = pair.catalog_owned_resource_keys_0327 or {}
   old[key] = true
   pair.catalog_owned_resource_keys_0327 = old
-  Catalog.draw_tag(pair, entity, key, kind)
+  -- 0.1.328 rendered world tags are obsolete. Keep cleaning old saved
+  -- tag objects, but avoid normalizing the entire catalog root for every
+  -- claimed ore tile or mineable in a hot Auspex sweep.
+  if root.render_tags and root.render_tags[key] then
+    release_render_tag(root, key)
+  end
   return true
 end
 
@@ -328,16 +333,33 @@ local function connector_has_connections_0741(connector)
   return false
 end
 
-local function entity_has_circuit_wire_0741(entity)
-  if not valid(entity) then return false end
-  local ids = {}
-  local wire_connector_id = defines and defines.wire_connector_id or nil
-  if wire_connector_id then
-    for _, name in ipairs({ "circuit_red", "circuit_green", "combinator_input_red", "combinator_input_green", "combinator_output_red", "combinator_output_green" }) do
-      local id = wire_connector_id[name]
-      if id then ids[#ids + 1] = id end
+-- These Factorio connector IDs do not change while a game is running.
+-- Keep one resolved list per defines table instead of creating two arrays
+-- for every potentially wired inventory entity on every station sweep.
+local CONNECTOR_NAMES_1493 = {
+  "circuit_red", "circuit_green", "combinator_input_red",
+  "combinator_input_green", "combinator_output_red", "combinator_output_green",
+}
+local connector_defs_1493 = nil
+local connector_ids_1493 = {}
+local function circuit_ids_1493()
+  local defs = defines and defines.wire_connector_id or nil
+  if defs ~= connector_defs_1493 then
+    connector_defs_1493 = defs
+    connector_ids_1493 = {}
+    if defs then
+      for _, name in ipairs(CONNECTOR_NAMES_1493) do
+        local id = defs[name]
+        if id then connector_ids_1493[#connector_ids_1493 + 1] = id end
+      end
     end
   end
+  return connector_ids_1493
+end
+
+local function entity_has_circuit_wire_0741(entity)
+  if not valid(entity) then return false end
+  local ids = circuit_ids_1493()
   if #ids > 0 and entity.get_wire_connector then
     for _, id in ipairs(ids) do
       local ok, connector = pcall(function() return entity.get_wire_connector(id, false) end)
@@ -353,7 +375,8 @@ local function entity_has_circuit_wire_0741(entity)
   end
   local wire_type = defines and defines.wire_type or nil
   if wire_type and entity.get_circuit_network then
-    for _, wire in ipairs({ wire_type.red, wire_type.green }) do
+    for i=1,2 do
+      local wire = i == 1 and wire_type.red or wire_type.green
       if wire then
         local ok, network = pcall(function() return entity.get_circuit_network(wire) end)
         if ok and network then return true end
@@ -408,14 +431,30 @@ local function inventory_probe_ids_0578()
   return universal_inventory_scavenging_enabled_0741() and broad_inventory_probe_ids_0741() or conservative_inventory_probe_ids_0741()
 end
 
-local function inventory_ids_for_entity_0578(entity)
+local function inventory_scan_context_1493(station)
+  -- These are runtime settings; a single scan executes synchronously, so
+  -- reading them once preserves immediate config updates between sweeps.
+  local universal = universal_inventory_scavenging_enabled_0741()
+  return {
+    universal = universal,
+    skip_wired = skip_wired_inventory_sources_enabled_0741(),
+    inventory_ids = universal and broad_inventory_probe_ids_0741()
+      or conservative_inventory_probe_ids_0741(),
+    station_position = station and station.position,
+  }
+end
+
+local function inventory_ids_for_entity_0578(entity, context)
   if not valid(entity) then return {} end
-  local mode = universal_inventory_scavenging_enabled_0741() and "universal" or "conservative"
+  local mode = context
+    and (context.universal and "universal" or "conservative")
+    or (universal_inventory_scavenging_enabled_0741()
+      and "universal" or "conservative")
   local key = prototype_cache_key(entity) .. ":inventory-mode=" .. mode
   local cached = prototype_inventory_cache_0578[key]
   if cached ~= nil then return cached end
   local out = {}
-  for _, inv_id in ipairs(inventory_probe_ids_0578()) do
+  for _, inv_id in ipairs(context and context.inventory_ids or inventory_probe_ids_0578()) do
     local ok, inv = pcall(function() return entity.get_inventory(inv_id) end)
     if ok and inv and inv.valid then out[#out + 1] = inv_id end
   end
@@ -425,23 +464,32 @@ local function inventory_ids_for_entity_0578(entity)
   return out
 end
 
-local function collect_inventory(catalog, entity, station)
-  if not valid(entity) then return end
-  if not should_catalog_entity(entity) then return end
-  if entity_inventory_blocked_by_wire_0741(entity) then
+local function collect_inventory(catalog, entity, station, scan_context)
+  if not valid(entity) or not should_catalog_entity(entity) then return end
+  local context = scan_context or inventory_scan_context_1493(station)
+  -- Machines with no supported inventory need no wire-connector probes.
+  -- Connected inventories remain excluded exactly as before.
+  local inv_ids = inventory_ids_for_entity_0578(entity, context)
+  if #inv_ids == 0 then return end
+  if context.skip_wired and entity_has_circuit_wire_0741(entity) then
     local root = ensure_root()
-    root.stats.wired_inventory_sources_skipped_0741 = (root.stats.wired_inventory_sources_skipped_0741 or 0) + 1
+    root.stats.wired_inventory_sources_skipped_0741 =
+      (root.stats.wired_inventory_sources_skipped_0741 or 0) + 1
     return
   end
-  local inv_ids = inventory_ids_for_entity_0578(entity)
-  if #inv_ids == 0 then return end
+  local source_distance = distance_sq(entity.position,
+    context.station_position or station.position)
   for _, inv_id in ipairs(inv_ids) do
     local inv = safe_inventory(entity, inv_id)
     if inv then
       local ok, contents = pcall(function() return inv.get_contents() end)
       if ok and contents then
         for_each_inventory_item(contents, function(item, count)
-          add_source(catalog.storage_items, item, { entity = entity, inventory_id = inv_id, count = count, kind = "inventory", distance_sq = distance_sq(entity.position, station.position) })
+          add_source(catalog.storage_items, item, {
+            entity = entity, inventory_id = inv_id,
+            count = count, kind = "inventory",
+            distance_sq = source_distance,
+          })
         end)
       end
     end
@@ -530,11 +578,11 @@ local function clean_reuse_allowed_0570(pair, catalog, radius)
   return true
 end
 
-local function add_entity_to_catalog(root, pair, catalog, entity, station)
+local function add_entity_to_catalog(root, pair, catalog, entity, station, scan_context)
   if not valid(entity) then return end
   if entity == station or not should_catalog_entity(entity) then return end
   add_count(catalog.entities, entity.name or entity.type, 1)
-  collect_inventory(catalog, entity, station)
+  collect_inventory(catalog, entity, station, scan_context)
   if entity.type == "resource" then
     if claim_entity(root, pair, entity, "resource") then
       local key = entity_key(entity)
@@ -672,7 +720,10 @@ function Catalog.scan_pair(pair)
       (root.stats.dense_scans_incomplete_1478 or 0) + 1
   end
   if ok_ents and entities then
-    for _, e in ipairs(entities) do add_entity_to_catalog(root, pair, catalog, e, station) end
+    local scan_context = inventory_scan_context_1493(station)
+    for _, e in ipairs(entities) do
+      add_entity_to_catalog(root, pair, catalog, e, station, scan_context)
+    end
   end
 
   local station_inv = _G.get_station_inventory and _G.get_station_inventory(station) or safe_inventory(station, defines.inventory.chest)
