@@ -5,12 +5,12 @@ local Layout = require("scripts.core.task_auspex_layout_1498")
 
 local cases = {
   {1920, 1080, 1, 1040, 590, 7},
-  {1366, 768, 1, 1040, 588, 7},
-  {1280, 720, 1.5, 789, 300, 4},
-  {960, 540, 1.5, 576, 180, 3},
-  {800, 600, 2, 336, 120, 2},
-  {640, 480, 1, 576, 300, 3},
-  {800, 600, 1.25, 576, 300, 3},
+  {1366, 768, 1, 1040, 528, 7},
+  {1280, 720, 1.5, 789, 360, 4},
+  {960, 540, 1.5, 576, 240, 3},
+  {800, 600, 2, 336, 180, 2},
+  {640, 480, 1, 576, 360, 3},
+  {800, 600, 1.25, 576, 360, 3},
 }
 for _, case in ipairs(cases) do
   local player = {
@@ -27,6 +27,8 @@ for _, case in ipairs(cases) do
   assert(v.label_width <= v.scroll_width and v.key_width + v.value_width <= v.label_width,
     "Task Auspex text columns exceed scroll width")
   assert(v.page_height <= v.logical_height, "Task Auspex page exceeds viewport")
+  assert(v.nav_inside_scroll == (case[6] < 7),
+    "narrow screens must keep navigation inside the scroll pane")
 end
 local fallback = Layout.for_player(nil)
 assert(fallback.scroll_width == 1040 and fallback.scroll_height == 590,
