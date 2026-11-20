@@ -22,14 +22,15 @@ SMOKE = (
     "entity_identity_1481.lua",
     "catalog_gui_layout_1483.lua",
     "station_catalog_reuse_guard_1484.lua",
+    "station_cache_completeness_1476.lua",
+    "catalog_expanded_cache_1480.lua",
+    "spatial_index_bounds_1485.lua",
 )
 EXTENDED = (
     "economy_route_fairness_cache_1470.lua",
     "event_registry_hot_path_1473.lua",
     "dispatcher_roster_cache_1475.lua",
-    "station_cache_completeness_1476.lua",
     "station_catalog_dense_integration_1479.lua",
-    "catalog_expanded_cache_1480.lua",
     "identity_catalog_index_integration_1481.lua",
 )
 
