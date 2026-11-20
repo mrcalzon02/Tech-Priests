@@ -4,6 +4,7 @@
 -- priests, perform physical work, or own any family-specific terminal state.
 
 local M={version="0.1.674-dev",storage_key="work_reservations_0601",default_ttl=600,position_scope_integrated=true,categories={"repair","sanctify","resource","construction","pickup","combat"}}
+local RootFast1501 = require("scripts.core.reservation_root_fast_1501")
 local function now()return game and game.tick or 0 end
 local function valid(e)return e and e.valid end
 local function safe(v)if v==nil then return"nil"end;local ok,s=pcall(tostring,v);return ok and s or"?"end
@@ -29,8 +30,7 @@ function M.pair_id(pair_or_id)
  if type(pair_or_id)~="table"then return safe(pair_or_id)end;if valid(pair_or_id.station)and pair_or_id.station.unit_number then return safe(pair_or_id.station.unit_number)end;return safe(pair_or_id.station_unit or pair_or_id.id or"unknown-pair")
 end
 function M.root()
- storage.tech_priests=storage.tech_priests or{};local r=storage.tech_priests[M.storage_key]or{version=M.version,enabled=true,position_scope_integrated=true,reservations={},stats={},cleanup_cursor_0620=1};storage.tech_priests[M.storage_key]=r;r.version=M.version
- if r.enabled==nil then r.enabled=true end;r.position_scope_integrated=true;r.reservations=r.reservations or{};r.stats=r.stats or{};for _,cat in ipairs(M.categories)do r.reservations[cat]=r.reservations[cat]or{}end;return r
+ return RootFast1501.get(storage, M.storage_key, M.version, M.categories)
 end
 local function stat(k,n)local r=M.root();r.stats[k]=(r.stats[k]or 0)+(tonumber(n)or 1)end
 local function ensure_category(category)
