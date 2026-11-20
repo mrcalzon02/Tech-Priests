@@ -64,8 +64,9 @@ function M.root()
   return root
 end
 
-local function remember_window(metric, amount)
-  local root = M.root()
+-- This helper receives the already-normalized root and numeric increment.
+-- Re-running M.root() for every service counter was a major broker hot path.
+local function remember_window(root, metric, amount)
   local key = window_key(now())
   local window = root.windows[key]
   if not window then
@@ -78,19 +79,26 @@ local function remember_window(metric, amount)
       if tonumber(old) and tonumber(old) < key - 30 then root.windows[old] = nil end
     end
   end
-  window[metric] = (window[metric] or 0) + (tonumber(amount) or 1)
+  window[metric] = (window[metric] or 0) + amount
 end
 local function stat(key, amount)
   local root = M.root()
-  root.stats[key] = (root.stats[key] or 0) + (tonumber(amount) or 1)
-  remember_window(key, amount)
+  local n = tonumber(amount) or 1
+  root.stats[key] = (root.stats[key] or 0) + n
+  remember_window(root, key, n)
 end
 local function service_stat(name, key, amount)
   local root = M.root()
-  root.service_stats[name] = root.service_stats[name] or {}
-  root.service_stats[name][key] =
-    (root.service_stats[name][key] or 0) + (tonumber(amount) or 1)
-  remember_window("service:" .. safe(name) .. ":" .. safe(key), amount)
+  local stats = root.service_stats[name]
+  if not stats then
+    stats = {}
+    root.service_stats[name] = stats
+  end
+  local n = tonumber(amount) or 1
+  stats[key] = (stats[key] or 0) + n
+  -- Names are normalized to strings in normalize_service; keys are literals.
+  -- Avoid protected tostring() twice per counter while preserving metric IDs.
+  remember_window(root, "service:" .. name .. ":" .. key, n)
 end
 local function remember(name, action, detail)
   local root = M.root()
@@ -106,9 +114,9 @@ end
 function M.note_metric(metric, amount)
   local root = M.root()
   metric = tostring(metric or "unknown")
-  root.external_stats[metric] =
-    (root.external_stats[metric] or 0) + (tonumber(amount) or 1)
-  remember_window(metric, amount)
+  local n = tonumber(amount) or 1
+  root.external_stats[metric] = (root.external_stats[metric] or 0) + n
+  remember_window(root, metric, n)
   -- A service may publish a new work/damage pressure counter mid-pulse.
   -- Later services must immediately see its updated scheduling pressure.
   PressureCache1502.note_external_metric(metric)

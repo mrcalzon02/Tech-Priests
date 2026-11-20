@@ -61,6 +61,7 @@ EXTENDED = (
     "broker_pressure_integration_1502.lua",
     "repair_discovery_rotation_1503.lua",
     "route_governor_integration_1505.lua",
+    "broker_telemetry_window_1506.lua",
 )
 
 
