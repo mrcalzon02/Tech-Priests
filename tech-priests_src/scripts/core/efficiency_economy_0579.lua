@@ -201,31 +201,38 @@ function M.note_area_scan(surface, area, entities, scan_limit, scan_complete)
     return false
   end
   local stamp=now()
-  for cx=x1,x2 do
-    for cy=y1,y2 do
-      local ck=cell_key(cx,cy)
-      if incomplete then
-        sidx.dirty[ck]={tick=stamp,reason="incomplete-area-scan"}
-      elseif ax<=cx*M.cell_size and ay<=cy*M.cell_size
-          and bx>=(cx+1)*M.cell_size and by>=(cy+1)*M.cell_size then
-        local rec=cell_record(sidx,ck)
-        -- Clear formerly cached entities missing from this full direct scan.
-        for key in pairs(rec.entities) do
-          local old=r.entity_cells[key]
-          if old and old.surface==surface_key(surface) and old.cell==ck then
-            r.entity_cells[key]=nil
+  if incomplete then
+    -- Router and work-queue observations may be filtered, uncapped or
+    -- otherwise incomplete. They contribute entities to the index below,
+    -- but cannot prove that a previously complete cell is stale. Only
+    -- explicit build/mine/death events and authoritative full scans change
+    -- completeness or dirty-state. Preserve clean cells on observations.
+    stat("uncertified_observations_preserved")
+    stat("capped_scans_not_cached")
+  else
+    for cx=x1,x2 do
+      for cy=y1,y2 do
+        local ck=cell_key(cx,cy)
+        if ax<=cx*M.cell_size and ay<=cy*M.cell_size
+            and bx>=(cx+1)*M.cell_size and by>=(cy+1)*M.cell_size then
+          local rec=cell_record(sidx,ck)
+          -- Clear formerly cached entities missing from this full direct scan.
+          for key in pairs(rec.entities) do
+            local old=r.entity_cells[key]
+            if old and old.surface==surface_key(surface) and old.cell==ck then
+              r.entity_cells[key]=nil
+            end
           end
+          rec.entities={}
+          rec.known_tick=stamp
+          sidx.dirty[ck]=nil
+        else
+          -- Partial coverage must not certify the unobserved remainder.
+          stat("partial_cells_not_certified")
         end
-        rec.entities={}
-        rec.known_tick=stamp
-        sidx.dirty[ck]=nil
-      else
-        -- Partial coverage must not certify the unobserved remainder.
-        stat("partial_cells_not_certified")
       end
     end
   end
-  if incomplete then stat("capped_scans_not_cached") end
   local indexed, ambiguous = 0, 0
   local seen_keys = {}
   if type(entities) == "table" then
@@ -382,6 +389,7 @@ local function install_command()
     local msg = "[tp-efficiency-economy-0579] enabled="..safe(r.enabled).." index="..safe(r.use_indexed_catalog_cells).." cells="..safe(cells).." entities="..safe(entities).." dirty="..safe(dirty).." hits="..safe(r.stats.area_index_hits or 0)
       .." misses="..safe(r.stats.area_index_miss_dirty_or_unknown or 0)
       .." capped="..safe(r.stats.capped_scans_not_cached or 0)
+      .." observations-preserved="..safe(r.stats.uncertified_observations_preserved or 0)
       .." partial-cells="..safe(r.stats.partial_cells_not_certified or 0)
       .." cache-cap-misses="..safe(r.stats.area_index_miss_result_cap or 0)
       .." cache-reseeds="..safe(r.stats.cache_reseeds_1476 or 0)
