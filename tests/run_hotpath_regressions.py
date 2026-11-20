@@ -42,6 +42,7 @@ SMOKE = (
     "broker_pressure_cache_1502.lua",
     "repair_scan_cursor_1503.lua",
     "dispatcher_custody_probe_1504.lua",
+    "route_classification_1505.lua",
 )
 EXTENDED = (
     "economy_route_fairness_cache_1470.lua",
@@ -59,6 +60,7 @@ EXTENDED = (
     "reservation_root_integration_1501.lua",
     "broker_pressure_integration_1502.lua",
     "repair_discovery_rotation_1503.lua",
+    "route_governor_integration_1505.lua",
 )
 
 

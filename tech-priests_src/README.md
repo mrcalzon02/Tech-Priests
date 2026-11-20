@@ -25,15 +25,15 @@ helpers are internal presentation adapters, not a fallback authority.
 
 Run `texlua tests/unit/pair_lifecycle_install.lua` from repository root.
 For performance governors, Auspex spatial scans, UI bounds and station snapshot
-invalidation, run `python tests/run_hotpath_regressions.py` (twenty-six bounded smoke
-fixtures) or `python tests/run_hotpath_regressions.py --all` (forty-one fixtures,
+invalidation, run `python tests/run_hotpath_regressions.py` (twenty-seven bounded smoke
+fixtures) or `python tests/run_hotpath_regressions.py --all` (forty-three fixtures,
 including the older integration coverage). Both commands require `texlua` and
 a full repository checkout and exit nonzero on missing files or test failures.
 These checks do not alter Factorio saves, start CI workflows, or publish releases.
 
 For a complete self-hosted source-level run, launch the manual-only GitHub
 Actions workflow `Tech Priests manual Lua hot-path validation` and select
-`all` (41 checks) or `smoke` (26 checks). It targets the Linux runner labeled
+`all` (43 checks) or `smoke` (27 checks). It targets the Linux runner labeled
 `self-hosted` and `headless` and requires Python 3 plus `texlua` or Lua 5.3+.
 No push/PR trigger is enabled. Native Factorio acceptance remains separate.
 
