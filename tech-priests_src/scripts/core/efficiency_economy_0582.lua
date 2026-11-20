@@ -9,6 +9,7 @@
 -- existing authority chain.
 
 local M = {}
+local IdleEpoch1491 = require("scripts.core.idle_invalidation_epoch_1491")
 M.version = "0.1.582"
 M.storage_key = "efficiency_economy_0582"
 M.idle_skip_ticks = 97
@@ -46,6 +47,7 @@ function M.root()
   if r.dispatcher_idle_cache == nil then r.dispatcher_idle_cache = true end
   if r.legacy_idle_gate == nil then r.legacy_idle_gate = true end
   r.pair = r.pair or {}
+  r.world_change_epoch_1491 = tonumber(r.world_change_epoch_1491) or 0
   r.stats = r.stats or {}
   r.recent = r.recent or {}
   return r
@@ -105,8 +107,11 @@ local function cache_record(pair)
   local key = station_key(pair)
   if not key or key == "" then return nil end
   local r=M.root()
-  r.pair[key] = r.pair[key] or {}
-  return r.pair[key]
+  local rec, woken = IdleEpoch1491.cache_record(r, key)
+  if woken then
+    r.stats.lazy_world_wakes_1491 = (r.stats.lazy_world_wakes_1491 or 0) + 1
+  end
+  return rec
 end
 
 local function dispatcher_cache_allows_skip(pair, reason)
@@ -219,9 +224,13 @@ local function invalidate_from_entity(entity, reason)
     if not pair and u and tp.pairs_by_priest then pair = tp.pairs_by_priest[u] end
     if pair then return M.invalidate_pair(pair, reason) end
   end
-  -- World changes can create new work for nearby idle priests, so clear the
-  -- short cache globally instead of risking a stale calm window.
-  M.invalidate_all(reason or "entity-change")
+  -- World changes can create work for any priest. Advance one shared epoch
+  -- instead of replacing the entire persisted per-priest cache table on
+  -- every wall hit or construction event. Each priest still wakes on its next
+  -- read, including when events occur more than once within one tick.
+  local r=M.root()
+  IdleEpoch1491.world_changed(r)
+  r.stats.world_change_events_1491=(r.stats.world_change_events_1491 or 0)+1
 end
 
 local function install_events()
@@ -266,7 +275,7 @@ local function install_command()
     elseif p == "legacy-on" then r.legacy_idle_gate = true elseif p == "legacy-off" then r.legacy_idle_gate = false
     elseif p == "clear" then M.invalidate_all("command") end
     local tracked=0; for _ in pairs(r.pair or {}) do tracked=tracked+1 end
-    local msg = "[tp-efficiency-economy-0582] enabled="..safe(r.enabled).." dispatcher_cache="..safe(r.dispatcher_idle_cache).." legacy_idle_gate="..safe(r.legacy_idle_gate).." tracked="..safe(tracked).." dispatcher_skipped="..safe(r.stats.dispatcher_idle_skipped or 0).." legacy_skipped="..safe(r.stats.legacy_idle_skipped or 0).." active_passthrough="..safe(r.stats.dispatcher_active_passthrough or 0)
+    local msg = "[tp-efficiency-economy-0582] enabled="..safe(r.enabled).." dispatcher_cache="..safe(r.dispatcher_idle_cache).." legacy_idle_gate="..safe(r.legacy_idle_gate).." tracked="..safe(tracked).." dispatcher_skipped="..safe(r.stats.dispatcher_idle_skipped or 0).." legacy_skipped="..safe(r.stats.legacy_idle_skipped or 0).." active_passthrough="..safe(r.stats.dispatcher_active_passthrough or 0).." world_events="..safe(r.stats.world_change_events_1491 or 0).." lazy_wakes="..safe(r.stats.lazy_world_wakes_1491 or 0)
     if player and player.valid then player.print(msg) elseif game and game.print then game.print(msg) end
   end)
 end
