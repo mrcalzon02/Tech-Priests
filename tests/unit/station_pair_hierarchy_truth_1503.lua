@@ -92,7 +92,18 @@ assert(disabled.hierarchy.superior_label=="unverified")
 assert(disabled.hierarchy.direct_subordinate_count==nil)
 assert(table.concat(Ledger.describe_pair(magos),"\n"):find("0480 disabled",1,true))
 storage.tech_priests.command_hierarchy_0480.enabled=true
+magos.command_hierarchy_0480.tick=480
+assert(Ledger.refresh_pair(magos).hierarchy.topology_tick==480,
+  "visible slate timestamp must be from canonical hierarchy")
+magos.command_hierarchy_0480.direct_subordinate_units={11,11,11,11,11,11,11,11,11}
+assert(Ledger.refresh_pair(magos).hierarchy.status=="slate-over-capacity",
+  "corrupt direct subordinate list must fail closed")
+magos.command_hierarchy_0480.direct_subordinate_units={}
+magos.command_hierarchy_0480.peer_units={}
+for i=1,17 do magos.command_hierarchy_0480.peer_units[i]=i end
+assert(Ledger.refresh_pair(magos).hierarchy.status=="slate-over-capacity",
+  "corrupt oversized peer slate must fail closed")
 magos.command_hierarchy_0480=nil
 assert(Ledger.refresh_pair(magos).hierarchy.status=="slate-pending")
 
-print("[station-pair-hierarchy-truth-1503] PASS: canonical links only; missing/disabled authority distinguished")
+print("[station-pair-hierarchy-truth-1503] PASS: canonical links, bounded slates, unavailable and stale authority")
