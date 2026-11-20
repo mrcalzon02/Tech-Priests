@@ -12,6 +12,7 @@ local DenseScan1478 = require("scripts.core.catalog_dense_scan_1478")
 local EntityIdentity1481 = require("scripts.core.entity_identity_1481")
 local AuspexLayout1483 = require("scripts.core.catalog_gui_layout_1483")
 local CatalogReuseGuard1484 = require("scripts.core.station_catalog_reuse_guard_1484")
+local OwnerIndex1496 = require("scripts.core.catalog_owner_index_1496")
 
 Catalog.version = "0.1.579"
 Catalog.storage_key = "station_catalog_0327"
@@ -163,7 +164,9 @@ end
 
 local function release_entity_ownership(root, key)
   if not key then return end
-  root.owned_resources[key] = nil
+  -- Keep one module-local reverse index synchronized with the canonical
+  -- persisted owner map; no extra keys are stored in Factorio saves.
+  OwnerIndex1496.release(root, key)
   release_render_tag(root, key)
 end
 
@@ -180,7 +183,7 @@ local function claim_entity(root, pair, entity, kind)
     owner = root.owned_resources[legacy_entity_key(entity)]
   end
   if owner and owner ~= unit and station_owner_valid(root, owner) then return false end
-  root.owned_resources[key] = unit
+  OwnerIndex1496.assign(root, key, unit)
   local old = pair.catalog_owned_resource_keys_0327 or {}
   old[key] = true
   pair.catalog_owned_resource_keys_0327 = old
@@ -619,9 +622,13 @@ function Catalog.cleanup_station(unit, reason)
   if not unit then return end
   root.stations[unit] = nil
   root.next_scan[unit] = nil
-  for key, owner in pairs(root.owned_resources or {}) do
-    if owner == unit then release_entity_ownership(root, key) end
-  end
+  -- O(claims owned by this station), rather than O(all claimed resources).
+  -- The reverse index is rebuilt once after load from canonical saved claims.
+  local removed = OwnerIndex1496.release_station(root, unit, function(key)
+    release_render_tag(root, key)
+  end)
+  root.stats.owner_index_cleanup_keys_1496 =
+    (root.stats.owner_index_cleanup_keys_1496 or 0) + removed
   root.stats.station_cleanups = (root.stats.station_cleanups or 0) + 1
   root.stats.last_cleanup_reason = reason
   root.stats.last_cleanup_tick = now()
@@ -630,11 +637,21 @@ end
 function Catalog.prune_invalid()
   local root = ensure_root()
   for unit in pairs(root.stations or {}) do
-    if not station_owner_valid(root, unit) then Catalog.cleanup_station(unit, "invalid-station") end
+    if not station_owner_valid(root, unit) then
+      Catalog.cleanup_station(unit, "invalid-station")
+    end
   end
-  for key, unit in pairs(root.owned_resources or {}) do
-    if not station_owner_valid(root, unit) then release_entity_ownership(root, key) end
+  -- Check one entry per *owning station*, not one per rock/ore/tree claim.
+  -- Also detects orphan claims from old saves without catalog snapshots.
+  local owners_checked = 0
+  for unit in pairs(OwnerIndex1496.for_root(root)) do
+    owners_checked = owners_checked + 1
+    if not station_owner_valid(root, unit) then
+      Catalog.cleanup_station(unit, "orphan-ownership")
+    end
   end
+  root.stats.owner_index_owner_checks_1496 =
+    (root.stats.owner_index_owner_checks_1496 or 0) + owners_checked
 end
 
 function Catalog.scan_pair(pair)
@@ -1025,6 +1042,9 @@ local function run_catalog_command(event, compact)
       .. " native-filtered=" .. tostring(cat and cat.scan_filtered_queries_1482 or 0)
       .. " prefilter-retries=" .. tostring(cat and cat.scan_prefilter_fallbacks_1482 or 0)
       .. " wired-inventories-omitted=" .. tostring(cat and cat.wired_sources_skipped_1495 or 0)
+      .. " owner-index-rebuilds=" .. tostring(root.stats.owner_index_rebuilds_1496 or 0)
+      .. " owner-groups-checked=" .. tostring(root.stats.owner_index_owner_checks_1496 or 0)
+      .. " owner-claims-cleaned=" .. tostring(root.stats.owner_index_cleanup_keys_1496 or 0)
       .. " reason=" .. tostring(cat and cat.scan_reason_1478 or "-"))
   end
   Catalog.show_gui(player, pair)
