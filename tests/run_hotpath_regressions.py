@@ -29,6 +29,9 @@ SMOKE = (
     "runtime_name_memo_1487.lua",
     "scan_negative_bounded_1488.lua",
     "spatial_cache_effectiveness_1489.lua",
+    "work_queue_duplicate_wake_1490.lua",
+    "idle_invalidation_epoch_1491.lua",
+    "idle_activity_classification_1492.lua",
 )
 EXTENDED = (
     "economy_route_fairness_cache_1470.lua",
@@ -36,6 +39,8 @@ EXTENDED = (
     "dispatcher_roster_cache_1475.lua",
     "station_catalog_dense_integration_1479.lua",
     "identity_catalog_index_integration_1481.lua",
+    "work_queue_duplicate_integration_1490.lua",
+    "idle_world_event_integration_1491.lua",
 )
 
 

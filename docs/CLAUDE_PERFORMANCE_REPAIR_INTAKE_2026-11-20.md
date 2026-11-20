@@ -21,7 +21,7 @@ These are **source implementation claims**, not proof of native performance.
 | T1-01 | 0594 reclassifies routes per pulse | Open; cache route identity/class once, validate settings refresh |
 | T1-02 | 0599 sleep observation costs | Open; preserve visible and damage wake latency |
 | T1-03 | 0595 prototype-name string tests | **Source fixed** `98629c9`; regression `1487`; native validation pending |
-| T1-04 | Work-queue duplicate submissions invalidate no-work caches | Open; prioritize event storms, preserve genuine reprioritization |
+| T1-04 | Work-queue duplicate submissions invalidate no-work caches | **Source fixed** `11f7985`: suppress generation bumps on unchanged repeats; preserve new/priority/expired wakes. Policy regression `1490` passed locally; integration fixture `1490` pending |
 | T1-05 | Reservation target-key work | Open; optimize after key stability review |
 | T1-06 | Scan-routing negative-cache retention | **Source fixed** `7fedb01`; regression `1488`; native save-size validation pending. The cached scan already honored `filters.limit` on the audited head; do not redo that subclaim |
 | T1-07 | Chunk seeding map settings copy per event | Open |
@@ -29,9 +29,9 @@ These are **source implementation claims**, not proof of native performance.
 | T1-09 | Broker telemetry formatting and budgeting | Open; benchmark on 80+ pairs first |
 | T1-10 | 0579 expanded-cache comparator key regeneration | Open; optimize only if T2-01 hit data justifies it |
 | T1-11 | Dispatcher per-priest record churn | Open; preserve action reporting and custody evidence |
-| T1-12 | 0582 active-order and reason helper allocations | Open; pair with T2-02 |
+| T1-12 | 0582 active-order and reason helper allocations | **Partial source fix** `81bc0f1`: hoisted active field list and 128-entry bounded reason memo; policy regression `1492` passed locally; other helper costs/UPS pending |
 | T2-01 | Nonaligned station scans may miss 0579 cache indefinitely | **Counters enhanced** `0a8f06b`; regression `1489`; native hit-rate baseline needed before geometry change |
-| T2-02 | 0582 globally invalidates every priest on ordinary world events | Confirmed in live source; open; localize/coalesce without missing wakeups |
+| T2-02 | 0582 globally invalidates every priest on ordinary world events | **Stage 1 source fix** `98e2189`: epoch-based lazy invalidation eliminates whole-table allocation/history churn; pure regression `1491` passed locally, integration `1491` pending. Still globally wakes all priests logically; localized work needed |
 | T2-03 | Catalog prune/cleanup scans all owned-resource keys | Open; retain per-owner lookup and slow rotating prune |
 | T2-04 | Uncertified scans dirty fully known 0579 cells | **Source fixed** `0ec9fca`; regression `1486`; native validation pending |
 | T2-05 | Narrow filtered query loops all cached entities | Open; direct-vs-cache comparison needed |
