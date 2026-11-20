@@ -9,6 +9,9 @@ local M = {}
 M.version = "0.1.612"
 M.storage_key = "scan_routing_0610"
 M.default_negative_ttl = 60 * 8
+M.max_negative_entries = 2048
+M.negative_trim_target = 1536
+M.negative_sweep_interval = 600
 
 local function now() return game and game.tick or 0 end
 local function valid(e) return e and e.valid end
@@ -50,28 +53,94 @@ local function matches(entity, filters)
   if not in_radius(entity, filters) then return false end
   return true
 end
+-- Existing saves may contain unbounded old negatives. Prune expired entries
+-- and, at capacity, discard the soonest-expiring keys in one amortized pass.
+-- No added 60-tick service and no full-table work on every entity event.
+local function compact_negatives(r, target)
+  local tick = now()
+  local live, expired, capacity_evicted = {}, 0, 0
+  for key, expiry in pairs(r.negative_until) do
+    local until_tick = tonumber(expiry) or 0
+    if until_tick <= tick then
+      r.negative_until[key] = nil
+      expired = expired + 1
+    else
+      live[#live + 1] = { key = key, until_tick = until_tick }
+    end
+  end
+  if #live > target then
+    table.sort(live,function(a,b)
+      if a.until_tick == b.until_tick then
+        return tostring(a.key) < tostring(b.key)
+      end
+      return a.until_tick < b.until_tick
+    end)
+    for i=1,#live-target do
+      r.negative_until[live[i].key] = nil
+      capacity_evicted = capacity_evicted + 1
+    end
+  end
+  r.negative_entry_count = #live-capacity_evicted
+  r.next_negative_sweep_tick = tick + M.negative_sweep_interval
+  r.stats.negative_expired_pruned = (r.stats.negative_expired_pruned or 0) + expired
+  r.stats.negative_capacity_evicted = (r.stats.negative_capacity_evicted or 0) + capacity_evicted
+  r.stats.negative_sweeps = (r.stats.negative_sweeps or 0) + 1
+  return expired, capacity_evicted
+end
+
 function M.root()
   storage.tech_priests = storage.tech_priests or {}
   local r = storage.tech_priests[M.storage_key]
-  if type(r) ~= "table" then r = { version=M.version, enabled=true, stats={}, negative_until={} }; storage.tech_priests[M.storage_key]=r end
-  r.version=M.version; if r.enabled==nil then r.enabled=true end; r.stats=r.stats or {}; r.negative_until=r.negative_until or {}; return r
+  if type(r) ~= "table" then
+    r = { version=M.version, enabled=true, stats={}, negative_until={} }
+    storage.tech_priests[M.storage_key] = r
+  end
+  r.version=M.version
+  if r.enabled==nil then r.enabled=true end
+  r.stats=r.stats or {}
+  if type(r.negative_until)~="table" then r.negative_until={} end
+  if r.negative_schema_1488 ~= 1 then
+    -- One-time save-compatible repair: only discard expired/old negative hints.
+    compact_negatives(r, M.negative_trim_target)
+    r.negative_schema_1488 = 1
+  elseif now() >= (tonumber(r.next_negative_sweep_tick) or 0) then
+    compact_negatives(r, M.max_negative_entries)
+  end
+  return r
 end
 local function stat(k,n) local r=M.root(); r.stats[k]=(r.stats[k] or 0)+(n or 1) end
 local function negative_key(category, key) return tostring(category or "scan") .. ":" .. tostring(key or "global") end
 function M.should_skip_negative(category, key)
   local r=M.root(); local k=negative_key(category,key); local until_tick=tonumber(r.negative_until[k] or 0) or 0
   if until_tick > now() then stat("negative_skip_"..tostring(category or "scan")); metric("scan_routing_negative_skips",1); metric("negative_cache_skips",1); return true, until_tick end
-  if r.negative_until[k] then r.negative_until[k]=nil end
+  if r.negative_until[k] then
+    r.negative_until[k]=nil
+    r.negative_entry_count=math.max(0,(r.negative_entry_count or 1)-1)
+  end
   return false
 end
 function M.record_negative(category, key, ttl)
-  local r=M.root(); r.negative_until[negative_key(category,key)] = now() + (tonumber(ttl) or M.default_negative_ttl); stat("negative_recorded_"..tostring(category or "scan")); return true
+  local r=M.root()
+  local k=negative_key(category,key)
+  if r.negative_until[k]==nil then
+    r.negative_entry_count=(r.negative_entry_count or 0)+1
+  end
+  r.negative_until[k]=now()+(tonumber(ttl) or M.default_negative_ttl)
+  if r.negative_entry_count > M.max_negative_entries then
+    compact_negatives(r, M.negative_trim_target)
+  end
+  stat("negative_recorded_"..tostring(category or "scan"))
+  return true
 end
 function M.clear_negative(category, key)
   local r=M.root(); local n=0
   if key then local k=negative_key(category,key); if r.negative_until[k] then r.negative_until[k]=nil; n=1 end
   else for k in pairs(r.negative_until or {}) do if tostring(k):find(tostring(category or "scan")..":",1,true)==1 then r.negative_until[k]=nil; n=n+1 end end end
-  if n>0 then stat("negative_cleared", n); metric("scan_routing_negative_clears", n) end
+  if n>0 then
+    r.negative_entry_count=math.max(0,(r.negative_entry_count or n)-n)
+    stat("negative_cleared", n)
+    metric("scan_routing_negative_clears", n)
+  end
   return n
 end
 local function indexed_entities(surface, area)
@@ -149,7 +218,10 @@ function M.report_lines()
     if tostring(k):find("direct_scan_", 1, true) == 1 then direct = direct + nval end
     if tostring(k):find("negative_skip_", 1, true) == 1 then neg = neg + nval end
   end
-  return {"[tp-runtime-report] scan-routing-0610 enabled="..safe(r.enabled).." negative_entries="..safe(n).." attempted="..safe(attempted).." cache_hits="..safe(hits).." direct_scans="..safe(direct).." neg_skips="..safe(neg)}
+  return {"[tp-runtime-report] scan-routing-0610 enabled="..safe(r.enabled).." negative_entries="..safe(n).." attempted="..safe(attempted).." cache_hits="..safe(hits).." direct_scans="..safe(direct).." neg_skips="..safe(neg)
+    .." expired_pruned="..safe(s.negative_expired_pruned or 0)
+    .." capacity_evicted="..safe(s.negative_capacity_evicted or 0)
+    .." max_entries="..safe(M.max_negative_entries)}
 end
 function M.install()
   M.root(); _G.TechPriestsScanRouting0610=M; return true
