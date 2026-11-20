@@ -25,7 +25,7 @@ These are **source implementation claims**, not proof of native performance.
 | T1-05 | Reservation target-key work | Open; optimize after key stability review |
 | T1-06 | Scan-routing negative-cache retention | **Source fixed** `7fedb01`; regression `1488`; native save-size validation pending. The cached scan already honored `filters.limit` on the audited head; do not redo that subclaim |
 | T1-07 | Chunk seeding map settings copy per event | Open |
-| T1-08 | Station catalog per-entity inventory, wire and tag work | Open; high impact but preserve actual inventory and circuit behavior |
+| T1-08 | Station catalog per-entity inventory, wire and tag work | **Partial source fix** `a70250d`: settings per sweep, connector IDs reused, non-inventory wire checks skipped, distance per inventory source cached; legacy tag cleanup retained. Fixture `1493` committed; full/native behavior pending. Dynamic wired connectivity is never TTL-cached |
 | T1-09 | Broker telemetry formatting and budgeting | Open; benchmark on 80+ pairs first |
 | T1-10 | 0579 expanded-cache comparator key regeneration | Open; optimize only if T2-01 hit data justifies it |
 | T1-11 | Dispatcher per-priest record churn | Open; preserve action reporting and custody evidence |

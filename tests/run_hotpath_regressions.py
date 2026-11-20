@@ -41,6 +41,7 @@ EXTENDED = (
     "identity_catalog_index_integration_1481.lua",
     "work_queue_duplicate_integration_1490.lua",
     "idle_world_event_integration_1491.lua",
+    "station_catalog_scan_context_1493.lua",
 )
 
 
