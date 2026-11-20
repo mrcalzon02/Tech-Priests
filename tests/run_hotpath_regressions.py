@@ -38,6 +38,8 @@ SMOKE = (
     "enemy_seed_config_cache_1498.lua",
     "broker_profiler_off_1499.lua",
     "reservation_key_lookup_1500.lua",
+    "reservation_root_fast_1501.lua",
+    "broker_pressure_cache_1502.lua",
 )
 EXTENDED = (
     "economy_route_fairness_cache_1470.lua",
@@ -52,6 +54,8 @@ EXTENDED = (
     "idle_adaptive_observation_integration_1497.lua",
     "enemy_planet_seeding_integration_1498.lua",
     "work_queue_reservation_key_1500.lua",
+    "reservation_root_integration_1501.lua",
+    "broker_pressure_integration_1502.lua",
 )
 
 
