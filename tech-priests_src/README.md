@@ -1,10 +1,10 @@
 # Tech Priests — Authoritative Source
 
-Tech Priests is a Factorio 2.0 mod with Cogitator Stations, paired
+Tech Priests is a Factorio 2.1 mod with Cogitator Stations, paired
 Tech-Priests, emergency industry, logistics and autonomous construction.
 
-**Protected packaged baseline:** `0.1.672` (`info.json`).  
-**Development lane:** `0.1.674-dev` on `main`.  
+**Historical protected packaged baseline:** `0.1.672` (reference package; not the current source version).  
+**Active development source:** `main`; read `tech-priests_src/info.json` for the actual mod version before testing or packaging.  
 **Recovery:** Stages 0–4 source-implemented; Stage 5 engine acceptance open.
 
 ## Recovery work order
