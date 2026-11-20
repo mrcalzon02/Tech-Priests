@@ -1,0 +1,90 @@
+name: Tech Priests manual Lua hot-path validation
+
+on:
+  workflow_dispatch:
+    inputs:
+      suite:
+        description: "Lua regression scope (source-only; not native Factorio)"
+        required: true
+        type: choice
+        options: [all, smoke]
+        default: all
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tech-priests-manual-hotpath-lua
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    # No push/PR triggers and no GitHub-hosted minutes. Uses the Linux
+    # self-hosted headless runner, not a remote fork or untrusted PR.
+    runs-on: [self-hosted, headless]
+    timeout-minutes: 20
+    steps:
+      - name: Checkout exact revision for source-level regression
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout: |
+            tech-priests_src/scripts/core
+            tests
+          sparse-checkout-cone-mode: true
+
+      - name: Check source and available Lua interpreter
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "TEST_SOURCE_SHA=$(git rev-parse HEAD)"
+          python3 --version
+          for candidate in texlua lua lua5.4 lua5.3; do
+            if command -v "$candidate" >/dev/null 2>&1; then
+              echo "LUA_INTERPRETER=$(command -v "$candidate")"
+              exit 0
+            fi
+          done
+          echo "BLOCKED: install texlua or Lua 5.3+ on this runner" >&2
+          exit 2
+
+      - name: Execute bounded Lua regression suite
+        shell: bash
+        run: |
+          set -euo pipefail
+          for candidate in texlua lua lua5.4 lua5.3; do
+            if command -v "$candidate" >/dev/null 2>&1; then
+              LUA_EXE=$(command -v "$candidate")
+              break
+            fi
+          done
+          if [ "${{ inputs.suite }}" = "all" ]; then
+            python3 -u tests/run_hotpath_regressions.py --all --lua "$LUA_EXE" 2>&1 | tee hotpath-regressions.log
+          else
+            python3 -u tests/run_hotpath_regressions.py --lua "$LUA_EXE" 2>&1 | tee hotpath-regressions.log
+          fi
+
+      - name: Summarize evidence and remaining engine gate
+        if: always()
+        shell: bash
+        run: |
+          {
+            echo "### Tech Priests Lua hot-path validation"
+            echo
+            echo "Source: \`$(git rev-parse HEAD)\`"
+            echo
+            echo "Requested suite: \`${{ inputs.suite }}\`"
+            echo
+            echo "Results:"
+            echo "```text"
+            if [ -f hotpath-regressions.log ]; then
+              grep -E '\[hotpath-regressions\]' hotpath-regressions.log || true
+            else
+              echo "Blocked before Lua regression execution"
+            fi
+            echo "```"
+            echo
+            echo "Source-level Lua tests are not a native Factorio launch, save/reload, GUI capture, or UPS acceptance."
+          } >> "$GITHUB_STEP_SUMMARY"
