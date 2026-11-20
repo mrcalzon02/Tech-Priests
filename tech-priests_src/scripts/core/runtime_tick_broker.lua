@@ -151,6 +151,9 @@ local function profiler_ms(profiler)
   return tonumber(text:match("([%d%.]+)")), text
 end
 function M.record_profile(section, name, category, profiler, ok)
+  -- A disabled/unavailable profiler produces no timing evidence. Avoid
+  -- formatting route keys or persisting an artificial zero-time call.
+  if not profiler then return nil end
   local root = M.root()
   local key = safe(section) .. ":" .. safe(name)
   local milliseconds, text = profiler_ms(profiler)
