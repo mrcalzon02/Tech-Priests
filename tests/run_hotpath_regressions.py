@@ -40,6 +40,7 @@ SMOKE = (
     "reservation_key_lookup_1500.lua",
     "reservation_root_fast_1501.lua",
     "broker_pressure_cache_1502.lua",
+    "repair_scan_cursor_1503.lua",
 )
 EXTENDED = (
     "economy_route_fairness_cache_1470.lua",
@@ -56,6 +57,7 @@ EXTENDED = (
     "work_queue_reservation_key_1500.lua",
     "reservation_root_integration_1501.lua",
     "broker_pressure_integration_1502.lua",
+    "repair_discovery_rotation_1503.lua",
 )
 
 
