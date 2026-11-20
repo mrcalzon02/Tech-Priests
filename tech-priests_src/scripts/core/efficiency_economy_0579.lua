@@ -371,6 +371,27 @@ local function install_events()
   return true
 end
 
+-- T2-01: aggregate all mutually exclusive cache miss paths at report time.
+-- No per-pulse instrumentation and no cache behavior change.
+function M.cache_effectiveness()
+  local s=M.root().stats
+  local hits=tonumber(s.area_index_hits) or 0
+  local no_surface=tonumber(s.area_index_miss_no_surface) or 0
+  local unknown=tonumber(s.area_index_miss_dirty_or_unknown) or 0
+  local cell_budget=tonumber(s.area_index_miss_cell_budget) or 0
+  local result_cap=tonumber(s.area_index_miss_result_cap) or 0
+  local misses=no_surface+unknown+cell_budget+result_cap
+  local total=hits+misses
+  return {
+    hits=hits, misses=misses, total=total,
+    hit_percent=total>0 and (math.floor(hits*1000/total+0.5)/10) or nil,
+    no_surface=no_surface, unknown=unknown, cell_budget=cell_budget,
+    result_cap=result_cap,
+    partial_cells=tonumber(s.partial_cells_not_certified) or 0,
+    observed_only=tonumber(s.uncertified_observations_preserved) or 0,
+  }
+end
+
 local function install_command()
   if not (commands and commands.add_command) then return end
   pcall(function() if commands.remove_command then commands.remove_command("tp-efficiency-economy-0579") end end)
@@ -386,8 +407,14 @@ local function install_command()
       for _, rec in pairs(sidx.cells or {}) do cells = cells + 1; for _ in pairs(rec.entities or {}) do entities = entities + 1 end end
       for _ in pairs(sidx.dirty or {}) do dirty = dirty + 1 end
     end
-    local msg = "[tp-efficiency-economy-0579] enabled="..safe(r.enabled).." index="..safe(r.use_indexed_catalog_cells).." cells="..safe(cells).." entities="..safe(entities).." dirty="..safe(dirty).." hits="..safe(r.stats.area_index_hits or 0)
-      .." misses="..safe(r.stats.area_index_miss_dirty_or_unknown or 0)
+    local effectiveness=M.cache_effectiveness()
+    local msg = "[tp-efficiency-economy-0579] enabled="..safe(r.enabled).." index="..safe(r.use_indexed_catalog_cells).." cells="..safe(cells).." entities="..safe(entities).." dirty="..safe(dirty)
+      .." hits="..safe(effectiveness.hits)
+      .." misses="..safe(effectiveness.misses)
+      .." hit-pct="..safe(effectiveness.hit_percent or "unmeasured")
+      .." misses-no-surface="..safe(effectiveness.no_surface)
+      .." misses-unknown-or-dirty="..safe(effectiveness.unknown)
+      .." misses-cell-budget="..safe(effectiveness.cell_budget)
       .." capped="..safe(r.stats.capped_scans_not_cached or 0)
       .." observations-preserved="..safe(r.stats.uncertified_observations_preserved or 0)
       .." partial-cells="..safe(r.stats.partial_cells_not_certified or 0)
