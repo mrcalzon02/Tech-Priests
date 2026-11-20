@@ -10,6 +10,7 @@
 -- low-value background routes skip deterministic pulses instead of all waking
 -- together.
 
+local RouteClass1505 = require("scripts.core.route_classification_1505")
 local M = {}
 M.version = "0.1.594"
 M.storage_key = "efficiency_economy_0594"
@@ -88,41 +89,14 @@ local function pair_count(force_rescan)
   return n
 end
 
-local function category_multiplier(category, owner)
-  category = lower(category)
-  owner = lower(owner)
+local function category_multiplier(route_class)
+  -- The registered route's category/owner do not change. Classify once in
+  -- wrap_entry instead of lowercasing and pattern-matching them per callback.
   local n = pair_count(false)
-  local diag = diagnostics_enabled()
-
-  -- Diagnostics are entirely suppressed in normal play.  If diagnostics are on,
-  -- they still receive a multiplier so pair dumps cannot synchronize with every
-  -- other background service in a large priest population.
-  if category == "diagnostics" or owner:find("diagnostics", 1, true) or owner:find("pair_dump", 1, true) then
-    if not diag then return 999999, "diagnostics-off" end
-    if n >= 80 then return 8, "diagnostics-heavy" end
-    return 3, "diagnostics" 
-  end
-
-  -- Player-facing but noncritical services: visual sugar, audio, status refresh,
-  -- command cameras, hover panels.  These are allowed to get slightly stale
-  -- before gameplay logic gets expensive.
-  if category == "visuals" or category == "audio" or category == "gui" or owner:find("visual", 1, true) or owner:find("overhead", 1, true) or owner:find("sound", 1, true) or owner:find("voice", 1, true) or owner:find("chatter", 1, true) then
-    if n >= 160 then return 8, "presentation-extreme" end
-    if n >= 80 then return 5, "presentation-heavy" end
-    if n >= 35 then return 3, "presentation-busy" end
-    return 1, "presentation-quiet"
-  end
-
-  -- Logistics/inventory/scheduler background pulses should still run, but not
-  -- all at once under a huge priest count.  Combat, movement, recovery, and
-  -- lifecycle are handled below and are not throttled here.
-  if category == "inventory" or category == "scheduler" or category == "crafting" or owner:find("order_queue", 1, true) or owner:find("planning", 1, true) or owner:find("reserve", 1, true) or owner:find("inventory", 1, true) then
-    if n >= 160 then return 3, "background-extreme" end
-    if n >= 80 then return 2, "background-heavy" end
-    return 1, "background-quiet"
-  end
-
-  return 1, "critical-or-unknown"
+  -- Only diagnostic routes need to inspect diagnostic settings. Keep this
+  -- live, so a settings toggle changes admission on the next callback.
+  local diagnostics = route_class == "diagnostics" and diagnostics_enabled()
+  return RouteClass1505.multiplier(route_class, n, diagnostics)
 end
 
 local function is_critical(entry)
@@ -166,12 +140,13 @@ local function wrap_entry(entry)
   if not entry or type(entry.handler) ~= "function" or entry.tech_priests_0594_wrapped then return false end
   if is_critical(entry) then return false end
   local prev = entry.handler
+  local route_class = RouteClass1505.classify(entry.category, entry.owner)
   entry.tech_priests_0594_wrapped = true
   entry.tech_priests_0594_prev_handler = prev
   entry.handler = function(event)
     local r = root()
     if r.enabled == false then return prev(event) end
-    local mult, reason = category_multiplier(entry.category, entry.owner)
+    local mult, reason = category_multiplier(route_class)
     -- 0598 has already admitted this route by its own pulse counter.
     -- Never multiply two independent background windows: this can make a GUI
     -- or visual route effectively run only once per minute.
