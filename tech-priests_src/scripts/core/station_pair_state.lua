@@ -10,6 +10,7 @@
 --   Tech-Priest = mobile actuator and temporary carrier only.
 
 local M = {}
+local LinkTruth = require("scripts.core.command_link_visual_truth_1499")
 M.version = "0.1.362"
 M.storage_key = "station_pair_state_0362"
 M.max_items = 12
@@ -222,27 +223,78 @@ local function short_value(v, depth)
 end
 
 local function relation_summary(pair)
-  local out = { superior = nil, juniors = {}, peers = {} }
-  if not (pair and valid(pair.station)) then return out end
-  local rank = station_rank(pair)
-  local radius = tonumber(pair.radius) or 36
-  if _G.get_station_operating_radius then
-    local ok, r = pcall(_G.get_station_operating_radius, pair.station)
-    if ok and tonumber(r) then radius = tonumber(r) end
+  -- Read the installed 0480 hierarchy slate; a nearby station is not
+  -- necessarily a subordinate, superior, or mutual Junior peer.
+  local out = { superior = nil, juniors = {}, peers = {},
+    status = "unavailable", refused_reason = nil }
+  if not (pair and valid(pair.station) and valid(pair.priest)) then
+    out.status = "unpaired"
+    return out
   end
-  local best_rank = -1
-  for _, other in pairs(pair_map()) do
-    if other ~= pair and valid(other and other.station) and other.station.surface == pair.station.surface then
-      local dx = (other.station.position.x or 0) - (pair.station.position.x or 0)
-      local dy = (other.station.position.y or 0) - (pair.station.position.y or 0)
-      if dx * dx + dy * dy <= radius * radius * 4 then
-        local orank = station_rank(other)
-        if orank > rank and orank > best_rank then out.superior = other; best_rank = orank end
-        if orank < rank then out.juniors[#out.juniors+1] = other end
-        if orank == rank then out.peers[#out.peers+1] = other end
+  local tp = storage and storage.tech_priests
+  local authority = rawget(_G, "TECH_PRIESTS_COMMAND_HIERARCHY_0480")
+  local root = tp and tp.command_hierarchy_0480
+  if not (authority and authority._installed == true and root) then
+    return out
+  end
+  if root.enabled ~= true then
+    out.status = "disabled"
+    return out
+  end
+  local h = pair.command_hierarchy_0480
+  local distance = tonumber(authority.max_link_distance)
+  if not (type(h) == "table"
+      and type(h.direct_subordinate_units) == "table"
+      and type(h.peer_units) == "table"
+      and distance and distance > 0) then
+    out.status = "slate-pending"
+    return out
+  end
+  local map = pair_map()
+  local function pair_for(id)
+    if type(id) ~= "number" then return nil end
+    return map[id] or map[tostring(id)]
+  end
+  local inconsistent = false
+  if h.superior_unit ~= nil then
+    local superior = pair_for(h.superior_unit)
+    local kind, verified_parent, verified_child =
+      LinkTruth.classify(superior, pair, distance)
+    if kind == "direct" and verified_parent == superior
+        and verified_child == pair then
+      out.superior = superior
+    else
+      inconsistent = true
+    end
+  end
+  local seen = {}
+  for _, id in ipairs(h.direct_subordinate_units) do
+    if seen[id] then inconsistent = true else
+      seen[id] = true
+      local child = pair_for(id)
+      local kind, parent, verified_child =
+        LinkTruth.classify(pair, child, distance)
+      if kind == "direct" and parent == pair and verified_child == child then
+        out.juniors[#out.juniors + 1] = child
+      else
+        inconsistent = true
       end
     end
   end
+  seen = {}
+  for _, id in ipairs(h.peer_units) do
+    if seen[id] then inconsistent = true else
+      seen[id] = true
+      local peer = pair_for(id)
+      if LinkTruth.classify(pair, peer, distance) == "peer" then
+        out.peers[#out.peers + 1] = peer
+      else
+        inconsistent = true
+      end
+    end
+  end
+  out.status = inconsistent and "inconsistent-slate" or "verified"
+  out.refused_reason = h.refused_reason
   return out
 end
 
@@ -315,10 +367,18 @@ function M.refresh_pair(pair, source)
   ledger.identity.station_name = valid(pair and pair.station) and safe_tostring(pair.station.backer_name or pair.station.name) or nil
   ledger.identity.priest_name = valid(pair and pair.priest) and safe_tostring(pair.priest.backer_name or pair.priest.name) or nil
 
+  ledger.hierarchy.status = relation.status
+  ledger.hierarchy.source = "0480-command-ledger"
+  ledger.hierarchy.refused_reason = relation.refused_reason
   ledger.hierarchy.superior_station_unit = relation.superior and station_unit(relation.superior) or nil
-  ledger.hierarchy.superior_label = relation.superior and station_label(relation.superior) or "none"
-  ledger.hierarchy.junior_count = #relation.juniors
-  ledger.hierarchy.peer_count = #relation.peers
+  ledger.hierarchy.superior_label = relation.superior and station_label(relation.superior)
+    or (relation.status == "verified" and "none" or "unverified")
+  -- Retain the historical field name for compatibility; its meaning is now
+  -- genuinely assigned *direct* subordinates, not nearby lower-ranked stations.
+  local ready = relation.status == "verified" or relation.status == "inconsistent-slate"
+  ledger.hierarchy.junior_count = ready and #relation.juniors or nil
+  ledger.hierarchy.direct_subordinate_count = ready and #relation.juniors or nil
+  ledger.hierarchy.peer_count = ready and #relation.peers or nil
 
   ledger.logistics.station_item_kinds = station_total
   ledger.logistics.station_items = station_rows
@@ -364,7 +424,13 @@ function M.describe_pair(pair)
   local lines = {}
   lines[#lines+1] = "Ledger: station pair state 0.1.362 | station_unit=" .. safe_tostring(ledger.station_unit) .. " priest_unit=" .. safe_tostring(ledger.priest_unit or "missing")
   lines[#lines+1] = "Identity: " .. safe_tostring(ledger.identity.station_label) .. " -> " .. safe_tostring(ledger.identity.priest_label) .. " | rank " .. safe_tostring(ledger.rank)
-  lines[#lines+1] = "Hierarchy: superior=" .. safe_tostring(ledger.hierarchy.superior_label or "none") .. " | juniors=" .. safe_tostring(ledger.hierarchy.junior_count or 0) .. " | peers=" .. safe_tostring(ledger.hierarchy.peer_count or 0)
+  lines[#lines+1] = "Hierarchy [0480 " .. safe_tostring(ledger.hierarchy.status or "unavailable")
+    .. "]: superior=" .. safe_tostring(ledger.hierarchy.superior_label or "unverified")
+    .. " | direct subordinates=" .. safe_tostring(ledger.hierarchy.direct_subordinate_count or "?")
+    .. " | mutual Junior peers=" .. safe_tostring(ledger.hierarchy.peer_count or "?")
+  if ledger.hierarchy.refused_reason then
+    lines[#lines+1] = "Hierarchy refusal: " .. safe_tostring(ledger.hierarchy.refused_reason)
+  end
   lines[#lines+1] = "Task: behavior=" .. safe_tostring(ledger.planning.active_behavior or "idle") .. " | " .. safe_tostring(ledger.planning.active_task_name or "none") .. " :: " .. safe_tostring(ledger.planning.active_task_summary or "nil")
   lines[#lines+1] = "Facilities: personal Martian machinery=" .. safe_tostring(ledger.logistics.facility_count or 0)
   for _, rec in ipairs(ledger.logistics.facilities or {}) do
