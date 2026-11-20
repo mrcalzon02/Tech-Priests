@@ -9,6 +9,17 @@
 -- invalidation.
 
 local M = {}
+local Layout = require("scripts.core.task_auspex_layout_1498")
+local SECTIONS = {
+  {"overview", "General Auspex"},
+  {"tasks", "Task Economy"},
+  {"sleep", "Sleep/Wake"},
+  {"scanpath", "Scan/Path"},
+  {"profiler", "Profiler"},
+  {"selected", "Selected Pair"},
+}
+local VALID_SECTIONS = {}
+for _, sec in ipairs(SECTIONS) do VALID_SECTIONS[sec[1]] = true end
 M.version = "0.1.644"
 M.storage_key = "task_auspex_0622"
 M.tab_key = "task_auspex"
@@ -98,34 +109,50 @@ local function select_task_tab(player)
   end
 end
 
+local function usable_width(parent, requested)
+  local width = tonumber(requested) or 980
+  -- Read the scroll pane's actual logical width; never force 980px labels
+  -- inside a 400px/high-DPI GUI. Parent styles may be mocked or unavailable.
+  local ok, actual = pcall(function() return parent.style and parent.style.width end)
+  if ok and type(actual) == "number" and actual > 0 then
+    width = math.min(width, math.max(1, actual - 24))
+  end
+  return math.max(1, math.floor(width))
+end
+
 local function add_label(parent, caption, width)
   local e = parent.add({ type = "label", caption = caption })
   e.style.single_line = false
-  if width then e.style.width = width end
+  e.style.maximal_width = usable_width(parent, width)
   return e
 end
 
 local function add_heading(parent, caption)
   local e = parent.add({ type = "label", caption = "[color=green]" .. caption .. "[/color]" })
   e.style.single_line = false
+  e.style.maximal_width = usable_width(parent)
   return e
 end
 
 local function add_subtle(parent, caption)
   local e = parent.add({ type = "label", caption = "[color=0.72,0.9,0.72]" .. caption .. "[/color]" })
   e.style.single_line = false
+  e.style.maximal_width = usable_width(parent)
   return e
 end
 
 local function add_kv_table(parent, rows)
   local t = parent.add({ type = "table", column_count = 2 })
   t.style.horizontally_stretchable = true
+  local available = usable_width(parent)
+  local key_width = math.max(1, math.floor(available * 0.24))
+  local value_width = math.max(1, available - key_width)
   for _, row in ipairs(rows or {}) do
     local k = t.add({ type = "label", caption = "[color=green]" .. safe(row[1]) .. "[/color]" })
-    k.style.width = 230
+    k.style.width = key_width
     k.style.single_line = false
     local v = t.add({ type = "label", caption = safe(row[2]) })
-    v.style.width = 730
+    v.style.width = value_width
     v.style.single_line = false
   end
   return t
@@ -363,37 +390,33 @@ local function add_profiler(parent)
   end
 end
 
-local function add_section_buttons(parent, player)
-  local flow = parent.add({ type = "flow", direction = "horizontal" })
-  local sections = {
-    {"overview", "General Auspex"},
-    {"tasks", "Task Economy"},
-    {"sleep", "Sleep/Wake"},
-    {"scanpath", "Scan/Path"},
-    {"profiler", "Profiler"},
-    {"selected", "Selected Pair"},
-  }
+local function add_section_buttons(parent, player, layout)
+  -- Factorio horizontal flows do not wrap. Keep every navigation button on
+  -- screen when the overview is opened at low resolution or high GUI scale.
+  local grid = parent.add({ type = "table", column_count = layout.button_columns })
+  grid.style.horizontally_stretchable = true
   local active = selected_section(player)
-  for _, sec in ipairs(sections) do
+  for _, sec in ipairs(SECTIONS) do
     local caption = (active == sec[1] and "▶ " or "") .. sec[2]
-    flow.add({ type = "button", name = M.button_prefix .. sec[1], caption = caption })
+    grid.add({ type = "button", name = M.button_prefix .. sec[1], caption = caption })
   end
-  flow.add({ type = "button", name = M.refresh_button, caption = "Re-read noosphere" })
+  grid.add({ type = "button", name = M.refresh_button, caption = "Re-read noosphere" })
 end
 
 function M.render(parent, player)
   if not (parent and parent.valid and player and player.valid) then return false end
   if not auspex_enabled() then stat("disabled_blocks"); return false end
   stat("renders")
-  add_section_buttons(parent, player)
+  local layout = Layout.for_player(player)
+  add_section_buttons(parent, player, layout)
   add_subtle(parent, "Task Auspex reads existing telemetry only. It does not schedule, claim, queue, reserve, move, scan, sleep, or wake work by itself.")
 
   local scroll = parent.add({ type = "scroll-pane", name = "tech_priests_task_auspex_scroll_0622", direction = "vertical" })
   scroll.style.horizontally_stretchable = true
   scroll.style.vertically_stretchable = true
-  scroll.style.height = 590
-  scroll.style.maximal_height = 590
-  scroll.style.width = 1040
+  scroll.style.height = layout.scroll_height
+  scroll.style.maximal_height = layout.scroll_height
+  scroll.style.width = layout.scroll_width
 
   local section = selected_section(player)
   if section == "tasks" then
@@ -428,7 +451,7 @@ local function attach_tab(player)
   local page = tabs.add({ type = "flow", name = "tech_priests_task_auspex_page_0622", direction = "vertical" })
   page.style.vertically_stretchable = true
   page.style.horizontally_stretchable = true
-  page.style.height = 640
+  page.style.height = Layout.for_player(player).page_height
   tabs.add_tab(tab, page)
 
   local ok, err = pcall(M.render, page, player)
@@ -476,9 +499,13 @@ function M.handle_click(event)
     return true
   end
   local section = string.sub(name, #M.button_prefix + 1)
+  if not VALID_SECTIONS[section] then return false end
+  if selected_section(player) == section then return true end
   set_section(player, section)
   stat("section_changes")
-  if not refresh_allowed(player, "section-change") then return true end
+  -- A deliberate section change must immediately display that section.
+  -- The 30-tick refresh throttle applies to manual re-read, not navigation.
+  stat("section_navigation_immediate")
   rebuild(player)
   return true
 end
@@ -498,7 +525,7 @@ end
 
 function M.report_lines()
   local r = root()
-  return { "[tp-runtime-report] task-auspex-0622 enabled=" .. safe(auspex_enabled()) .. " renders=" .. safe(r.stats.renders or 0) .. " section_changes=" .. safe(r.stats.section_changes or 0) .. " manual_refreshes=" .. safe(r.stats.manual_refreshes or 0) .. " refresh_throttled=" .. safe(r.stats.refresh_throttled or 0) .. " disabled_blocks=" .. safe(r.stats.disabled_blocks or 0) .. " last_throttle=" .. safe(r.stats.last_throttle_reason or "none") }
+  return { "[tp-runtime-report] task-auspex-0622 enabled=" .. safe(auspex_enabled()) .. " renders=" .. safe(r.stats.renders or 0) .. " section_changes=" .. safe(r.stats.section_changes or 0) .. " manual_refreshes=" .. safe(r.stats.manual_refreshes or 0) .. " refresh_throttled=" .. safe(r.stats.refresh_throttled or 0) .. " navigation_immediate=" .. safe(r.stats.section_navigation_immediate or 0) .. " disabled_blocks=" .. safe(r.stats.disabled_blocks or 0) .. " last_throttle=" .. safe(r.stats.last_throttle_reason or "none") }
 end
 
 local function install_infrastructure_plan_0644()
