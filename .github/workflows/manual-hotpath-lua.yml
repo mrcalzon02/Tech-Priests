@@ -78,13 +78,13 @@ jobs:
             echo "Requested suite: \`${{ inputs.suite }}\`"
             echo
             echo "Results:"
-            echo "```text"
+            printf '%s\n' '```text'
             if [ -f hotpath-regressions.log ]; then
               grep -E '\[hotpath-regressions\]' hotpath-regressions.log || true
             else
               echo "Blocked before Lua regression execution"
             fi
-            echo "```"
+            printf '%s\n' '```'
             echo
             echo "Source-level Lua tests are not a native Factorio launch, save/reload, GUI capture, or UPS acceptance."
           } >> "$GITHUB_STEP_SUMMARY"
