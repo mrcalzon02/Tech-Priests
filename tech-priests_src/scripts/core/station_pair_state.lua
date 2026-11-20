@@ -250,6 +250,13 @@ local function relation_summary(pair)
     out.status = "slate-pending"
     return out
   end
+  -- 0480 capacity is at most eight direct children or sixteen Junior peers.
+  -- Never scan an unbounded or corrupted list from a stale save.
+  if #h.direct_subordinate_units > 8 or #h.peer_units > 16 then
+    out.status = "slate-over-capacity"
+    return out
+  end
+  out.topology_tick = h.tick
   local map = pair_map()
   local function pair_for(id)
     if type(id) ~= "number" then return nil end
@@ -369,6 +376,7 @@ function M.refresh_pair(pair, source)
 
   ledger.hierarchy.status = relation.status
   ledger.hierarchy.source = "0480-command-ledger"
+  ledger.hierarchy.topology_tick = relation.topology_tick
   ledger.hierarchy.refused_reason = relation.refused_reason
   ledger.hierarchy.superior_station_unit = relation.superior and station_unit(relation.superior) or nil
   ledger.hierarchy.superior_label = relation.superior and station_label(relation.superior)
@@ -428,6 +436,9 @@ function M.describe_pair(pair)
     .. "]: superior=" .. safe_tostring(ledger.hierarchy.superior_label or "unverified")
     .. " | direct subordinates=" .. safe_tostring(ledger.hierarchy.direct_subordinate_count or "?")
     .. " | mutual Junior peers=" .. safe_tostring(ledger.hierarchy.peer_count or "?")
+  if ledger.hierarchy.topology_tick then
+    lines[#lines+1] = "Hierarchy slate built at tick " .. safe_tostring(ledger.hierarchy.topology_tick)
+  end
   if ledger.hierarchy.refused_reason then
     lines[#lines+1] = "Hierarchy refusal: " .. safe_tostring(ledger.hierarchy.refused_reason)
   end
