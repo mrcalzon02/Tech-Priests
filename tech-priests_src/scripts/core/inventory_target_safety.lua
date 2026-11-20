@@ -23,11 +23,21 @@ function M.is_direct_player_entity(entity)
   return is_direct_player_entity(entity)
 end
 
+-- Idle-scan providers normally return {entity=...} records. Some legacy/modded
+-- providers return LuaEntity values directly; avoid indexing an unsupported
+-- LuaEntity property outside a pcall and protect both candidate shapes.
+local function candidate_entity(candidate)
+  if is_direct_player_entity(candidate) then return candidate end
+  local ok, entity = pcall(function() return candidate and candidate.entity end)
+  if ok then return entity end
+  return nil
+end
+
 function M.install()
   _G.tech_priests_0324_is_direct_player_inventory_target = is_direct_player_entity
 
   local previous_candidate_filter = _G.is_logistic_scan_candidate_entity
-  if previous_candidate_filter then
+  if type(previous_candidate_filter) == "function" then
     _G.TECH_PRIESTS_0324_PRE_IS_LOGISTIC_SCAN_CANDIDATE_ENTITY = previous_candidate_filter
     _G.is_logistic_scan_candidate_entity = function(pair, entity)
       if is_direct_player_entity(entity) then return false end
@@ -41,15 +51,14 @@ function M.install()
   end
 
   local previous_idle_candidates = _G.get_idle_scan_candidates
-  if previous_idle_candidates then
+  if type(previous_idle_candidates) == "function" then
     _G.TECH_PRIESTS_0324_PRE_GET_IDLE_SCAN_CANDIDATES = previous_idle_candidates
     _G.get_idle_scan_candidates = function(pair)
       local ok, candidates = pcall(function() return previous_idle_candidates(pair) end)
       if not (ok and type(candidates) == "table") then return {} end
       local filtered = {}
       for _, candidate in pairs(candidates) do
-        local entity = candidate and candidate.entity
-        if not is_direct_player_entity(entity) then
+        if not is_direct_player_entity(candidate_entity(candidate)) then
           filtered[#filtered + 1] = candidate
         end
       end
