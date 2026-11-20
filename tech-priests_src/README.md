@@ -25,8 +25,8 @@ helpers are internal presentation adapters, not a fallback authority.
 
 Run `texlua tests/unit/pair_lifecycle_install.lua` from repository root.
 For performance governors, Auspex spatial scans, UI bounds and station snapshot
-invalidation, run `python tests/run_hotpath_regressions.py` (six bounded smoke
-fixtures) or `python tests/run_hotpath_regressions.py --all` (thirteen fixtures,
+invalidation, run `python tests/run_hotpath_regressions.py` (nine bounded smoke
+fixtures) or `python tests/run_hotpath_regressions.py --all` (fourteen fixtures,
 including the older integration coverage). Both commands require `texlua` and
 a full repository checkout and exit nonzero on missing files or test failures.
 These checks do not alter Factorio saves, start CI workflows, or publish releases.
