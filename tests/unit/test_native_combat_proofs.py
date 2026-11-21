@@ -135,6 +135,11 @@ class ProofSafety(unittest.TestCase):
         self.assertIn("owner=combat-batch-native route=record-proof", launcher)
         self.assertIn("TP_COMBAT_FIRST_NATIVE_DIAGNOSTIC", launcher)
         self.assertIn("diagnostics[:12]", launcher)
+        self.assertIn("'[TP-COMBAT-BATCH] FAIL'", launcher)
+        self.assertIn("'TP_COMBAT_GRAPHICAL_LOG_TAIL '", launcher)
+        self.assertIn("TP_COMBAT_TICK_STALL", launcher)
+        self.assertNotIn("or\n          '[TP-COMBAT-BATCH]' in line", launcher)
+        self.assertIn('HEARTBEAT elapsed=', FIXTURE.read_text(encoding="utf-8"))
         # Other native scenarios intentionally retain their own broad abort
         # conditions. This regression only owns the graphical batch lane.
         batch_visual = launcher.split("if args.scenario=='batch-visual':", 1)[1].split(
