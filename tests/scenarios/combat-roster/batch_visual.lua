@@ -5,6 +5,7 @@
 local Registry=require("scripts.core.runtime_event_registry")
 local C=require("shared.combat_roster_catalog")
 local Bridge=require("scripts.core.combat_roster_bridge")
+local BunkerVisuals=require("scripts.bunker_family_visuals")
 local MARK="[TP-COMBAT-BATCH] "
 local AMMO={
  {"tech-priests-bunker-autocannon","tech-priests-autocannon-magazine"},
@@ -97,10 +98,16 @@ local function init()
        tried[#tried+1]=string.format("(%.1f,%.1f):%s",
          pos.x,pos.y,can and "free" or "blocked")
        if can then
+         -- Script-raised built events are production deployment hooks.
+         -- Opposing-force fixtures stage genuine turrets directly to avoid
+         -- those player-owned construction handlers deleting hostile props.
+         -- This remains a native battle proof, never a factory-cost proof.
+         local raise_event=(side==1)
          local placed=s.create_entity{name=def[1],position=pos,force=force,
-           direction=defines.direction.north,raise_built=true}
+           direction=defines.direction.north,raise_built=raise_event}
          if placed and placed.valid then
            gun=placed
+           if not raise_event then BunkerVisuals.add(gun) end
            if pos.x~=x or pos.y~=y then
              log(MARK.."BUNKER_POSITION_ADJUST name="..def[1]
                .." side="..side.." x="..pos.x.." y="..pos.y)
@@ -115,7 +122,8 @@ local function init()
        .." requested_x="..x.." requested_y="..y
        .." attempts="..table.concat(tried,","))
      log(MARK.."BUNKER_PLACED name="..def[1].." side="..side
-       .." x="..gun.position.x.." y="..gun.position.y)
+       .." x="..gun.position.x.." y="..gun.position.y
+       .." staging="..(side==1 and "script-raised" or "native-hostile-direct"))
      local record={entity=gun,name=def[1],force=force.name,
        unit=gun.unit_number,ammo=def[2],initial=0}
      if def[2] then
