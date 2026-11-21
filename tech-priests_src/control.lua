@@ -1250,3 +1250,16 @@ assert(require("scripts.martian_infrastructure").install_main(require("scripts.c
 -- Presentation only; existing worker owners retain behavior and inventory.
 assert(require("scripts.core.character_skin_picker").install(),
  "[Tech-Priests] character appearance owner unavailable")
+
+-- Built-in combat roster: the existing 0338 builder, 0702 logistics,
+-- 0510 dispatcher and native AAI controller retain their respective ownership.
+-- Failing any bridge is a real gameplay blocker; never expose inert actors.
+assert(require("scripts.core.character_visuals").install() == true,
+ "[Tech-Priests] combat character presentation unavailable")
+assert(require("scripts.core.combat_roster_bridge").install() == true,
+ "[Tech-Priests] required native AAI combat bridge unavailable")
+assert(require("scripts.core.combat_roster_orders").install() == true,
+ "[Tech-Priests] physical combat muster authority unavailable")
+assert(require("scripts.core.combat_muster_gui").install() == true,
+ "[Tech-Priests] combat muster controls unavailable")
+
