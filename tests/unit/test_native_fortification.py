@@ -63,7 +63,7 @@ class NativeFortificationContract(unittest.TestCase):
         ):
             self.assertIn(marker, source)
         event = source.split("local function on_damaged(event)", 1)[1].split(
-            "\\nlocal function on_died(event)", 1)[0]
+            "\nlocal function on_died(event)", 1)[0]
         self.assertIn("event.final_damage_amount", event)
         self.assertIn("event.cause", event)
         self.assertIn("entity.force and entity.force.name", event)
