@@ -131,6 +131,10 @@ def main():
     for clip in CLIPS:
         rows = frame_rows(native, clip, report.get("frames", {}).get(clip))
         paths = [pathlib.Path(row["path"]) for row in rows]
+        # Exact untouched native screenshot, useful as an inline visual check
+        # alongside the derived frame-accurate GIF and MP4.
+        poster = output / (clip + "-native-frame.png")
+        shutil.copy2(paths[len(paths) // 2], poster)
         gif = output / (clip + ".gif")
         mp4 = output / (clip + ".mp4")
         gitlog = output / (clip + "-gif-encoder.log")
@@ -160,6 +164,9 @@ def main():
             "engine_first_tick": rows[0]["tick"],
             "engine_last_tick": rows[-1]["tick"],
             "sources": rows, "gif": None, "mp4": None,
+            "native_frame": {"path": str(poster), "sha256": digest(poster),
+                             "bytes": poster.stat().st_size,
+                             "source_tick": rows[len(rows) // 2]["tick"]},
         }
         if gif_ok:
             clip_receipt["gif"] = {"path": str(gif), "sha256": digest(gif),
