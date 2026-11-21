@@ -159,13 +159,17 @@ class ProofSafety(unittest.TestCase):
         timestamps = []
         for name, start, stop, step in clips:
             ticks = list(range(int(start), int(stop)+1, int(step)))
-            self.assertGreaterEqual(len(ticks), 16, name)
-            self.assertLessEqual(len(ticks), 24, name)
+            self.assertEqual(len(ticks), 16, name)
+            # Repeated headful runs stalled after 42 renders at the old
+            # 48-tick/view cadence. Preserve full native proof while
+            # halving screenshot demand instead of reducing simulation UPS.
+            self.assertEqual(int(step), 96, name)
             timestamps.extend(ticks)
         self.assertEqual(len(timestamps), len(set(timestamps)),
                          "Never queue two native 960x540 screenshots on one game tick")
-        self.assertGreaterEqual(len(timestamps), 48)
-        self.assertLessEqual(len(timestamps), 72)
+        self.assertEqual(len(timestamps), 48)
+        self.assertIn("if elapsed>=1620 then", fixture)
+        self.assertGreater(max(timestamps), 1530)
         self.assertIn('resolution={960,540}', fixture)
         self.assertIn('force_render=true', fixture)
         self.assertIn('game.take_screenshot', fixture)
