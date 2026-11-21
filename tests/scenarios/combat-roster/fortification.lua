@@ -6,7 +6,6 @@
 local Registry=require("scripts.core.runtime_event_registry")
 local Catalog=require("shared.combat_roster_catalog")
 local Bridge=require("scripts.core.combat_roster_bridge")
-local BunkerVisuals=require("scripts.bunker_family_visuals")
 local MARK="[TP-FORT] "
 local TOWERS={
  autocannon={"tech-priests-bunker-autocannon","tech-priests-autocannon-magazine"},
@@ -168,7 +167,7 @@ local function init()
   local gun=s.create_entity{name=def[1],position=position,force=player,
     direction=defines.direction.north,raise_built=true}
   require_native(gun and gun.valid,"native turret placement failed "..kind.." slot="..i)
-  BunkerVisuals.add(gun)
+  -- The raised native build event installs the production visual hook.
   local rec={entity=gun,unit=gun.unit_number,kind=kind,name=def[1],
     initial_health=gun.health,ammo=def[2],initial_ammo=0}
   if def[2] then
