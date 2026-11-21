@@ -9,8 +9,15 @@ EXE=Path(r'C:\Program Files (x86)\Steam\steamapps\common\Factorio\bin\x64\factor
 OUT=ROOT/'build/combat-roster/native'
 
 def main():
- global OUT
- parser=argparse.ArgumentParser();parser.add_argument('--scenario',choices=['battle','deployment','negative','progression','duels'],default='battle')
+ global OUT, EXE
+ parser=argparse.ArgumentParser()
+ parser.add_argument('--factorio',type=Path,default=EXE,
+   help='Exact installed Factorio 2.1 executable; never installed or fetched here')
+ parser.add_argument('--output-dir',type=Path,
+   help='Fresh isolated test directory; never overwrite installed game data')
+ parser.add_argument('--dependency-mods',type=Path,
+   help='Local AAI 0.9.2, AAI Signals 0.8.0 and Informatron 0.5.0 ZIP directory')
+ parser.add_argument('--scenario',choices=['battle','deployment','negative','progression','duels'],default='battle')
  parser.add_argument('--limit',type=int,default=15)
  parser.add_argument('--run-id',default='')
  parser.add_argument('--persistence',action='store_true')
@@ -21,6 +28,8 @@ def main():
  parser.add_argument('--ownership-overlap',action='store_true',help='Reissue an older owned actor while its priest has a new pending muster')
  parser.add_argument('--source',type=Path,help='Read-only prepared mod source to validate instead of the working source')
  parser.add_argument('--faction-off',choices=['mechanicus','astra-militarum','sororitas']);args=parser.parse_args()
+ EXE=args.factorio.resolve()
+ if not EXE.is_file():parser.error('Installed Factorio executable missing: '+str(EXE))
  if args.scenario=='deployment': OUT=ROOT/'build/combat-roster/deployment'
  if args.scenario=='negative': OUT=ROOT/'build/combat-roster/negative'
  if args.scenario=='progression': OUT=ROOT/'build/combat-roster/progression'
@@ -28,8 +37,15 @@ def main():
  if args.run_id:
   if not args.run_id.replace('-','').isalnum(): parser.error('run-id must contain letters, numbers or hyphens')
   OUT=OUT/args.run_id
+ if args.output_dir:OUT=args.output_dir.resolve()
+ if OUT.exists() and any(OUT.iterdir()):
+  parser.error('Refusing to overwrite nonempty test output directory: '+str(OUT))
  source=args.source.resolve() if args.source else ROOT/'tech-priests_src'
- assert json.loads((source/'info.json').read_text())['name']=='tech-priests'
+ info=json.loads((source/'info.json').read_text())
+ assert info['name']=='tech-priests' and info['factorio_version']=='2.1'
+ assert any(d.startswith('aai-programmable-vehicles >= 0.9.2') for d in info['dependencies']), 'Integrated units need AAI hard dependency'
+ assert (source/'prototypes/combat_roster.lua').is_file(), 'Production actor prototypes unavailable'
+ assert (source/'scripts/core/combat_roster_bridge.lua').is_file(), 'Native AAI bridge unavailable'
  mod=OUT/'mods/tech-priests';mod.mkdir(parents=True,exist_ok=True)
  for path in source.rglob('*'):
   if not path.is_file(): continue
@@ -66,8 +82,14 @@ for _,name in ipairs(names) do
 end
 ''')
  names=['base','space-age','quality','recycler','elevated-rails','tech-priests']
+ dependency_root=args.dependency_mods.resolve() if args.dependency_mods else (
+  Path(os.environ.get('APPDATA',str(Path.home()/'AppData/Roaming')))/'Factorio/mods')
  for name,version in [('aai-programmable-vehicles','0.9.2'),('aai-signals','0.8.0'),('informatron','0.5.0')]:
-  archive=f'{name}_{version}.zip';shutil.copy2(Path.home()/'AppData/Roaming/Factorio/mods'/archive,OUT/'mods'/archive);names.append(name)
+  archive=f'{name}_{version}.zip'
+  location=dependency_root/archive
+  if not location.is_file():
+   raise FileNotFoundError('AAI_NATIVE_DEPENDENCY_MISSING: '+str(location))
+  shutil.copy2(location,OUT/'mods'/archive);names.append(name)
  if args.full_pack:
   installed=Path(os.environ['APPDATA'])/'Factorio/mods'
   desired=json.loads((installed/'mod-list.json').read_text())['mods']
