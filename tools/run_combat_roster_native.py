@@ -17,7 +17,9 @@ def main():
    help='Fresh isolated test directory; never overwrite installed game data')
  parser.add_argument('--dependency-mods',type=Path,
    help='Local AAI 0.9.2, AAI Signals 0.8.0 and Informatron 0.5.0 ZIP directory')
- parser.add_argument('--scenario',choices=['battle','deployment','negative','progression','duels'],default='battle')
+ parser.add_argument('--scenario',choices=['battle','deployment','negative','progression','duels','batch-visual'],default='battle')
+ parser.add_argument('--source-sha',default=None,
+   help='Exact 40-hex source revision for visual proof provenance')
  parser.add_argument('--limit',type=int,default=15)
  parser.add_argument('--run-id',default='')
  parser.add_argument('--persistence',action='store_true')
@@ -58,9 +60,9 @@ def main():
  if args.faction_off:
   path=mod/'settings-final-fixes.lua'
   path.write_text(path.read_text(encoding='utf-8')+f'\ndata.raw["bool-setting"]["tech-priests-combat-allow-{args.faction_off}"].default_value=false\n',encoding='utf-8')
- fixture={'deployment':'deployment.lua','negative':'negative.lua','battle':'fixture.lua','progression':'progression.lua','duels':'duels.lua'}[args.scenario]
+ fixture={'deployment':'deployment.lua','negative':'negative.lua','battle':'fixture.lua','progression':'progression.lua','duels':'duels.lua','batch-visual':'batch_visual.lua'}[args.scenario]
  shutil.copy2(ROOT/'tests/scenarios/combat-roster'/fixture,mod/'combat-fixture.lua')
- (mod/'control.lua').write_text((source/'control.lua').read_text(encoding='utf-8')+f'\nTP_COMBAT_TEST_LIMIT={args.limit}\nTP_COMBAT_GUI_PROOF=true\nTP_COMBAT_ORDINARY_CONSTRUCTION={str(args.ordinary_construction).lower()}\nTP_COMBAT_QUALITY_SUPPLIES={str(args.quality_supplies).lower()}\nTP_COMBAT_OWNERSHIP_OVERLAP={str(args.ownership_overlap).lower()}\nrequire("combat-fixture")\n',encoding='utf-8')
+ (mod/'control.lua').write_text((source/'control.lua').read_text(encoding='utf-8')+f'\nTP_COMBAT_TEST_LIMIT={args.limit}\nTP_COMBAT_GUI_PROOF=true\nTP_COMBAT_ORDINARY_CONSTRUCTION={str(args.ordinary_construction).lower()}\nTP_COMBAT_QUALITY_SUPPLIES={str(args.quality_supplies).lower()}\nTP_COMBAT_OWNERSHIP_OVERLAP={str(args.ownership_overlap).lower()}\nTP_COMBAT_BATCH_VISUALS={str(args.scenario=='batch-visual').lower()}\nrequire("combat-fixture")\n',encoding='utf-8')
  (mod/'data-final-fixes.lua').write_text((source/'data-final-fixes.lua').read_text(encoding='utf-8')+'''
 local target=table.deepcopy(data.raw.container["wooden-chest"])
 target.name="tech-priests-combat-test-target";target.max_health=100000;target.resistances={}
@@ -110,6 +112,77 @@ end
  config=OUT/'config.ini';config.write_text('[path]\nread-data='+str(EXE.parents[2]/'data').replace('\\','/')+'\nwrite-data='+str(user.resolve()).replace('\\','/')+'\n[other]\ncheck-updates=false\n')
  common=[str(EXE),'--config',str(config.resolve()),'--mod-directory',str((OUT/'mods').resolve())]
  save=OUT/'test.zip'
+ if args.scenario=='batch-visual':
+  import re
+  import sys
+  if not args.source_sha or not re.fullmatch('[0-9a-f]{40}',args.source_sha):
+   parser.error('--source-sha must pin exact integrated commit for genuine visual proof')
+  # A headless engine can simulate a combatant; it cannot render a native
+  # visual frame. Launch an actual desktop Factorio 2.1 graphical client.
+  with config.open('a',encoding='utf-8') as stream:
+   stream.write('[graphics]\nfull-screen=false\nwindow-width=1280\nwindow-height=800\n')
+  environment=os.environ.copy()
+  environment.update(SteamAppId='427520',SteamGameId='427520')
+  (OUT/'steam_appid.txt').write_text('427520',encoding='utf-8')
+  create_log=OUT/'create.log'
+  with create_log.open('w',encoding='utf-8') as log:
+   result=subprocess.run(common+['--create',str(save.resolve()),
+    '--map-gen-seed','907260'],stdout=log,stderr=subprocess.STDOUT,
+    timeout=240,env=environment,cwd=OUT)
+  if result.returncode or not save.is_file():
+   raise RuntimeError('Native batch save creation failed: '+
+      create_log.read_text(errors='replace')[-4500:])
+  gui_log=OUT/'graphical-client.log'
+  native=OUT/'user-data/script-output/combat-roster/batch-native'
+  marker='[TP-COMBAT-BATCH] NATIVE_COMBAT_PASS'
+  child=None
+  seen=False
+  deadline=time.monotonic()+600
+  with gui_log.open('w',encoding='utf-8') as log:
+   child=subprocess.Popen(common+['--load-game',str(save.resolve()),
+    '--disable-audio'],stdout=log,stderr=subprocess.STDOUT,
+    env=environment,cwd=OUT)
+   try:
+    while time.monotonic()<deadline:
+     if child.poll() is not None:break
+     output=gui_log.read_text(errors='replace')
+     if 'isolated handler failure' in output or 'Error Util.cpp' in output:
+      break
+     if marker in output and (native/'manifest.json').is_file():
+      # The final native client may still be finishing queued screenshot
+      # writes; require every numbered original source file on disk.
+      try:
+       receipt=json.loads((native/'manifest.json').read_text(encoding='utf-8-sig'))
+       expected=receipt['frames']
+       count=sum(len(frames) for frames in expected.values())
+       actual=sum(1 for frames in expected.values() for rec in frames
+         if (native/next(k for k,v in expected.items() if v is frames)/
+             ('frame-%04d.png'%rec['frame'])).is_file())
+       if count>=100 and actual==count:
+        seen=True
+        break
+      except (ValueError,KeyError,StopIteration,TypeError):
+       pass
+     time.sleep(.8)
+   finally:
+    if child.poll() is None:
+     child.terminate()
+     try:child.wait(timeout=20)
+     except subprocess.TimeoutExpired:child.kill();child.wait(timeout=15)
+  if not seen:
+   raise RuntimeError('Native headful frame capture incomplete: '+
+     gui_log.read_text(errors='replace')[-7500:])
+  proof=OUT/'proof-clips'
+  encoder=[sys.executable,str(ROOT/'tools/assemble_native_combat_proofs.py'),
+    '--native-root',str(native),'--output-dir',str(proof),
+    '--source-sha',args.source_sha]
+  result=subprocess.run(encoder,cwd=ROOT,env=environment,timeout=600)
+  if result.returncode:
+   raise RuntimeError('Native Factorio frames exist but one or more real GIF/MP4 encodes failed; see '+str(proof))
+  print(json.dumps({'status':'PASS','native':True,
+   'actors_staged':30,'bunkers':14,'biters':48,'source_sha':args.source_sha,
+   'manifest':str(proof/'proof-manifest.json'),'proof_dir':str(proof)}),flush=True)
+  return
  for label,arguments,marker in [('create',['--create',str(save.resolve())],None),
                             ('behavior',['--test-save',str(save.resolve()),'--test-ticks','24000' if args.scenario=='deployment' else '15000' if args.scenario=='negative' else '18000' if args.scenario=='progression' else '7200' if args.scenario=='duels' else '3600'],
                              {'deployment':'[TP-COMBAT-DEPLOY] PASS','negative':'[TP-COMBAT-NEGATIVE] PASS','battle':'[TP-COMBAT-TEST] PASS','progression':'[TP-COMBAT-PROGRESSION] PASS','duels':'[TP-COMBAT-DUELS] PASS'}[args.scenario])]:
