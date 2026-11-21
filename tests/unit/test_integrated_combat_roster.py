@@ -86,6 +86,12 @@ class IntegratedCombatRoster(unittest.TestCase):
         self.assertIn('if (not allowed or allowed.value) and', gui)
         self.assertIn('local order=entry.pair.combat_muster_order', gui)
         self.assertIn('tostring(order.phase or "pending")', gui)
+        # Refuse a busy/deleted station before overwriting the player's
+        # cursor or asking for two map coordinates.
+        self.assertIn('if pair.combat_muster_order or pair.combat_construction_request then', gui)
+        guard = gui.index('if pair.combat_muster_order or pair.combat_construction_request then')
+        cursor = gui.index('if not player.clear_cursor() then return false end')
+        self.assertLess(guard, cursor)
 
     def test_native_battle_fixture_is_not_wip(self):
         self.assertTrue((ROOT / "tests/scenarios/combat-roster/fixture.lua").is_file())
