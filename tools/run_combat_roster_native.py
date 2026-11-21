@@ -62,7 +62,8 @@ def main():
   path.write_text(path.read_text(encoding='utf-8')+f'\ndata.raw["bool-setting"]["tech-priests-combat-allow-{args.faction_off}"].default_value=false\n',encoding='utf-8')
  fixture={'deployment':'deployment.lua','negative':'negative.lua','battle':'fixture.lua','progression':'progression.lua','duels':'duels.lua','batch-visual':'batch_visual.lua'}[args.scenario]
  shutil.copy2(ROOT/'tests/scenarios/combat-roster'/fixture,mod/'combat-fixture.lua')
- (mod/'control.lua').write_text((source/'control.lua').read_text(encoding='utf-8')+f'\nTP_COMBAT_TEST_LIMIT={args.limit}\nTP_COMBAT_GUI_PROOF=true\nTP_COMBAT_ORDINARY_CONSTRUCTION={str(args.ordinary_construction).lower()}\nTP_COMBAT_QUALITY_SUPPLIES={str(args.quality_supplies).lower()}\nTP_COMBAT_OWNERSHIP_OVERLAP={str(args.ownership_overlap).lower()}\nTP_COMBAT_BATCH_VISUALS={str(args.scenario=='batch-visual').lower()}\nrequire("combat-fixture")\n',encoding='utf-8')
+ batch_flag='true' if args.scenario=='batch-visual' else 'false'
+ (mod/'control.lua').write_text((source/'control.lua').read_text(encoding='utf-8')+f'\nTP_COMBAT_TEST_LIMIT={args.limit}\nTP_COMBAT_GUI_PROOF=true\nTP_COMBAT_ORDINARY_CONSTRUCTION={str(args.ordinary_construction).lower()}\nTP_COMBAT_QUALITY_SUPPLIES={str(args.quality_supplies).lower()}\nTP_COMBAT_OWNERSHIP_OVERLAP={str(args.ownership_overlap).lower()}\nTP_COMBAT_BATCH_VISUALS={batch_flag}\nrequire("combat-fixture")\n',encoding='utf-8')
  (mod/'data-final-fixes.lua').write_text((source/'data-final-fixes.lua').read_text(encoding='utf-8')+'''
 local target=table.deepcopy(data.raw.container["wooden-chest"])
 target.name="tech-priests-combat-test-target";target.max_health=100000;target.resistances={}
@@ -155,9 +156,9 @@ end
        receipt=json.loads((native/'manifest.json').read_text(encoding='utf-8-sig'))
        expected=receipt['frames']
        count=sum(len(frames) for frames in expected.values())
-       actual=sum(1 for frames in expected.values() for rec in frames
-         if (native/next(k for k,v in expected.items() if v is frames)/
-             ('frame-%04d.png'%rec['frame'])).is_file())
+       actual=sum(1 for clip_id,frames in expected.items()
+         for rec in frames
+         if (native/clip_id/('frame-%04d.png'%rec['frame'])).is_file())
        if count>=100 and actual==count:
         seen=True
         break
