@@ -386,6 +386,19 @@ local function tick(event)
  if not(t and t.ready) or t.done then return end
  local elapsed=game.tick-t.start
  capture(t,elapsed)
+ -- Detect the first real hostile crossing every tick, not only at sampled
+ -- 300-tick checkpoints; a brief breach must not disappear between samples.
+ if not t.enemy_first_inside_tick then
+  for _,rec in ipairs(t.attackers)do
+   local b=rec.entity
+   if b.valid and math.abs(b.position.x)<t.inner_half.x-1 and
+    math.abs(b.position.y)<t.inner_half.y-1 then
+    t.enemy_first_inside_tick=elapsed
+    log(MARK.."NATIVE_BREACH tick="..elapsed.." attacker="..rec.name)
+    break
+   end
+  end
+ end
  if elapsed>0 and elapsed%120==0 then
   log(MARK.."HEARTBEAT elapsed="..elapsed.." engine_tick="..game.tick)
  end
