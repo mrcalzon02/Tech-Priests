@@ -125,7 +125,13 @@ class ProofSafety(unittest.TestCase):
         self.assertIn("owner=combat-batch-native route=record-proof", launcher)
         self.assertIn("TP_COMBAT_FIRST_NATIVE_DIAGNOSTIC", launcher)
         self.assertIn("diagnostics[:12]", launcher)
-        self.assertNotIn("if 'isolated handler failure' in output or 'Error Util.cpp'", launcher)
+        # Other native scenarios intentionally retain their own broad abort
+        # conditions. This regression only owns the graphical batch lane.
+        batch_visual = launcher.split("if args.scenario=='batch-visual':", 1)[1].split(
+            "\n for label,arguments,marker", 1)[0]
+        self.assertNotIn(
+            "if 'isolated handler failure' in output or 'Error Util.cpp'",
+            batch_visual)
 
     def test_only_live_native_capture_can_satisfy_visual_gate(self):
         fixture = FIXTURE.read_text(encoding="utf-8")
