@@ -19,7 +19,7 @@ local TOWERS={
 local MONO={autocannon=true,chicago=true,minigun=true,cannon=true,
  lobber=true,rocket=true,dish=true}
 local CLIPS={
- {id="01-massed-units",start=80,stop=1568,step=48,x=0,y=0,zoom=.27},
+ {id="01-massed-units",start=80,stop=1568,step=48,x=0,y=0,zoom=.26},
  {id="02-bunker-lines",start=96,stop=1584,step=48,x=0,y=-18,zoom=.40},
  {id="03-enemy-flank",start=112,stop=1600,step=48,x=0,y=18,zoom=.40},
 }
@@ -33,13 +33,13 @@ local function tower_key(preset,index)
   return key
  end
  if preset=="mix-autocannon-minigun-3to1" then
-  return index<=9 and "autocannon" or "minigun"
+  return index%4==0 and "minigun" or "autocannon"
  elseif preset=="mix-autocannon-minigun-1to1" then
-  return index<=6 and "autocannon" or "minigun"
+  return index%2==0 and "minigun" or "autocannon"
  elseif preset=="mix-autocannon-minigun-1to3" then
-  return index<=3 and "autocannon" or "minigun"
+  return index%4==0 and "autocannon" or "minigun"
  elseif preset=="mix-rocket-dish-3to1" then
-  return index<=9 and "rocket" or "dish"
+  return index%4==0 and "dish" or "rocket"
  elseif preset=="mix-all-seven" then
   local keys={"autocannon","chicago","minigun","cannon",
     "lobber","rocket","dish"}
@@ -365,7 +365,7 @@ local function capture(t,elapsed)
    local index=math.floor((elapsed-clip.start)/clip.step)
    local path=string.format("combat-roster/batch-native/%s/frame-%04d.png",clip.id,index)
    game.take_screenshot{surface=game.surfaces[t.surface],
-    position={x=clip.x,y=clip.y},resolution={960,540},
+    position={x=clip.x,y=clip.y},resolution={1280,720},
     zoom=clip.zoom,path=path,show_gui=false,force_render=true,daytime=0}
    t.clips[clip.id]=t.clips[clip.id] or {}
    t.clips[clip.id][#t.clips[clip.id]+1]={frame=index,tick=game.tick}
