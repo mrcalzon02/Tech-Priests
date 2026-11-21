@@ -148,6 +148,8 @@ end
   seen=False
   wall_start=time.monotonic()
   next_report=wall_start+30
+  last_heartbeat=''
+  last_heartbeat_wall=None
   deadline=wall_start+600
   clips=('01-massed-units','02-bunker-lines','03-enemy-flank')
   def frame_inventory():
@@ -164,6 +166,12 @@ end
      if child.poll() is not None:break
      output=gui_log.read_text(errors='replace')
      now=time.monotonic()
+     beats=[line.strip() for line in output.splitlines()
+       if '[TP-COMBAT-BATCH] HEARTBEAT elapsed=' in line]
+     beat=beats[-1] if beats else ''
+     if beat and beat!=last_heartbeat:
+      last_heartbeat=beat
+      last_heartbeat_wall=now
      if now>=next_report:
       samples=[line.strip() for line in output.splitlines()
        if '[TP-COMBAT-BATCH] SAMPLE elapsed=' in line]
@@ -171,8 +179,16 @@ end
       print('TP_COMBAT_LIVE_PROGRESS wall_s='+str(int(now-wall_start))+
         ' frames='+json.dumps(frame_inventory(),sort_keys=True)+
         ' manifest='+str((native/'manifest.json').is_file())+
-        ' last_sample='+last_sample,flush=True)
+        ' last_sample='+last_sample+
+        ' last_heartbeat='+(last_heartbeat[-250:] if last_heartbeat else 'none'),flush=True)
       next_report=now+30
+     # If game ticks stop for two minutes, fail with real logs instead of
+     # misreporting a successful SAMPLE as the first native error.
+     if last_heartbeat_wall is not None and now-last_heartbeat_wall>120:
+      print('TP_COMBAT_TICK_STALL wall_s='+str(int(now-wall_start))+
+        ' last_heartbeat='+last_heartbeat[-300:]+
+        ' frames='+json.dumps(frame_inventory(),sort_keys=True),flush=True)
+      break
      # A failure from an unrelated registry owner is not itself a failed
      # native combat test. Stop early only for this fixture's own broken
      # setup/capture path, or an actual engine-level fatal error.
@@ -211,14 +227,19 @@ end
    print('TP_COMBAT_FRAME_DIAGNOSTIC frames='+json.dumps(files,sort_keys=True)+
      ' manifest='+str((native/'manifest.json').is_file())+
      ' last_sample='+(samples[-1][:350] if samples else 'none')+
-     ' graphical_process_exit='+str(child.returncode),flush=True)
+     ' graphical_process_exit='+str(child.returncode)+
+     ' last_heartbeat='+(last_heartbeat[-250:] if last_heartbeat else 'none'),flush=True)
+   # SAMPLE and HEARTBEAT are positive evidence, NEVER error messages.
    diagnostics=[line.strip() for line in output.splitlines()
-      if ('owner=combat-batch-native' in line or
-          '[TP-COMBAT-BATCH]' in line or 'Error Util.cpp' in line)]
+      if ('owner=combat-batch-native route=' in line or
+          '[TP-COMBAT-BATCH] FAIL' in line or 'Error Util.cpp' in line)]
    # Capture the FIRST true failure, not the last repetitive secondary tick.
    for line in diagnostics[:12]:
     print('TP_COMBAT_FIRST_NATIVE_DIAGNOSTIC '+line[:700],flush=True)
-   reason=diagnostics[0] if diagnostics else 'no combat fixture marker or engine error observed'
+   print('TP_COMBAT_GRAPHICAL_LOG_TAIL '+repr(output[-4500:]),flush=True)
+   reason=(diagnostics[0] if diagnostics else
+      'no native fixture/engine error in log; game or capture stalled at '+
+      (last_heartbeat[-300:] if last_heartbeat else 'no heartbeat'))
    raise RuntimeError('Native headful frame capture incomplete: first_event='+
      reason[:800]+'; tail='+output[-1800:])
   proof=OUT/'proof-clips'
