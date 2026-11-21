@@ -154,4 +154,6 @@ if not mods["tp-hydrogen-production"] then require("hydrogen.production") end
 
 -- Independent authored faction factories and the existing armory slice.
 require("prototypes.faction_factories").register()
-require("prototypes.combat_armory").register()
+-- Authoritative production roster: 15 recruitable AAI actors and shared arsenal.
+-- Never register combat_armory separately (it would duplicate weapons/technologies).
+require("prototypes.combat_roster").register()
