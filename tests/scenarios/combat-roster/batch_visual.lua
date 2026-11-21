@@ -35,6 +35,48 @@ local function allied(a,b,friend)
  a.set_friend(b,friend);b.set_friend(a,friend)
  a.set_cease_fire(b,true);b.set_cease_fire(a,true)
 end
+-- Factorio 2.1 exposes the native enemy-spawner evolution weights at runtime.
+-- Deterministic stratified selection provides comparable 48-hostile waves
+-- without inventing an evolution-to-tier curve or changing production data.
+local function spawn_weight(points,evolution)
+ if not points or #points==0 then return 0 end
+ if evolution<points[1].evolution_factor then return 0 end
+ if evolution==points[1].evolution_factor then return points[1].weight end
+ for i=2,#points do
+  local a,b=points[i-1],points[i]
+  if evolution<=b.evolution_factor then
+   local span=b.evolution_factor-a.evolution_factor
+   if span<=0 then return b.weight end
+   local fraction=(evolution-a.evolution_factor)/span
+   return a.weight+(b.weight-a.weight)*fraction
+  end
+ end
+ return points[#points].weight
+end
+local function spawn_profile(spawner,evolution)
+ local proto=prototypes.entity[spawner]
+ check(proto and proto.result_units,
+  "native Factorio spawner profile unavailable "..spawner)
+ local result={}
+ for _,rule in pairs(proto.result_units)do
+  local weight=spawn_weight(rule.spawn_points,evolution)
+  if weight>0 then result[#result+1]={name=rule.unit,weight=weight} end
+ end
+ table.sort(result,function(a,b)return a.name<b.name end)
+ return result
+end
+local function weighted_unit(profile,fraction)
+ local total=0
+ for _,rec in ipairs(profile)do total=total+rec.weight end
+ check(total>0,"no native enemy weights available for evolution")
+ local position=math.min(0.999999999,math.max(0,fraction))*total
+ local sum=0
+ for _,rec in ipairs(profile)do
+  sum=sum+rec.weight
+  if position<sum then return rec.name end
+ end
+ return profile[#profile].name
+end
 local function init()
  -- This unattended GUI proof must not stop at freeplay's first-player
  -- cutscene/intro dialog when the --create save is loaded graphically.
@@ -69,6 +111,19 @@ local function init()
  local renegade=game.forces["tech-priests-renegades-nauvis"]
    or game.create_force("tech-priests-renegades-nauvis")
  local enemy=game.forces.enemy
+ local requested=TP_COMBAT_EVOLUTION
+ if requested~=nil then
+  check(type(requested)=="number" and requested>=0 and requested<=1,
+    "invalid requested evolution factor")
+  enemy.set_evolution_factor(requested,s)
+  local observed=enemy.get_evolution_factor(s)
+  check(type(observed)=="number" and math.abs(observed-requested)<0.00001,
+    "native surface evolution readback mismatch")
+  t.evolution_requested=requested
+  t.evolution_initial=observed
+  log(MARK.."EVOLUTION_SET "..helpers.table_to_json{
+    requested=requested,observed=observed,surface=s.name})
+ end
  local friend=game.forces["tp-batch-allied"] or game.create_force("tp-batch-allied")
  local truce=game.forces["tp-batch-ceasefire"] or game.create_force("tp-batch-ceasefire")
  enemies(player,renegade);enemies(player,enemy);enemies(renegade,enemy)
@@ -183,8 +238,29 @@ local function init()
    end
  end
  log(MARK.."SETUP_ACTORS_AND_BUNKERS_READY actors="..#t.actors.." bunkers="..#t.turrets)
+ local biter_profile=nil
+ local spitter_profile=nil
+ local spitter_count=0
+ if t.evolution_requested~=nil then
+  biter_profile=spawn_profile("biter-spawner",t.evolution_initial)
+  spitter_profile=spawn_profile("spitter-spawner",t.evolution_initial)
+  check(#biter_profile>0,"native biter-spawner offers no units")
+  if #spitter_profile>0 then spitter_count=16 end
+ end
+ local biter_index,spitter_index=0,0
+ t.enemy_roster={}
  for i=1,48 do
-   local name=i%3==0 and "medium-biter" or "small-biter"
+   local name
+   if t.evolution_requested==nil then
+    name=i%3==0 and "medium-biter" or "small-biter"
+   elseif spitter_count>0 and i%3==0 then
+    spitter_index=spitter_index+1
+    name=weighted_unit(spitter_profile,(spitter_index-0.5)/spitter_count)
+   else
+    biter_index=biter_index+1
+    name=weighted_unit(biter_profile,(biter_index-0.5)/(48-spitter_count))
+   end
+   t.enemy_roster[name]=(t.enemy_roster[name] or 0)+1
    local x=((i-1)%16-7.5)*4.2
    local y=34+math.floor((i-1)/16)*4
    local b=s.create_entity{name=name,position={x=x,y=y},force=enemy}
@@ -199,6 +275,10 @@ local function init()
      radius=8,distraction=defines.distraction.by_enemy}
    t.biters[#t.biters+1]=b
  end
+ log(MARK.."EVOLUTION_ROSTER "..helpers.table_to_json{
+   requested=t.evolution_requested,observed=t.evolution_initial,
+   native_spawner_weights=t.evolution_requested~=nil,
+   native_enemy_count=#t.biters,roster=t.enemy_roster})
  t.expected={aai_actors=30,types=15,native_bunkers=14,
    native_biters=48,forces=3}
  check(#t.actors==30 and #t.turrets==14 and #t.biters==48,
@@ -291,16 +371,29 @@ local function tick(event)
     if not condition then blockers[#blockers+1]=reason end
   end
   require_native(t.sample_count>=4,"native combat checkpoints absent")
-  require_native(t.damage.player>0 and t.hits.player>0,
-    "native enemy/biter force did not damage a player entity")
-  require_native(t.damage.renegade>0 and t.hits.renegade>0,
-    "player did not inflict any native damage on hostile renegades")
-  require_native(state.rounds_missing_from_surviving_turrets>0,
-    "no physical bunker ammunition consumption observed")
+  if t.evolution_requested==nil then
+   -- Legacy baseline retains its original mutual-damage and survival gates.
+   require_native(t.damage.player>0 and t.hits.player>0,
+     "native enemy/biter force did not damage a player entity")
+   require_native(t.damage.renegade>0 and t.hits.renegade>0,
+     "player did not inflict any native damage on hostile renegades")
+   require_native(state.rounds_missing_from_surviving_turrets>0,
+     "no physical bunker ammunition consumption observed")
+  else
+   local surface=game.surfaces[t.surface]
+   t.evolution_final=game.forces.enemy.get_evolution_factor(surface)
+   require_native(math.abs(t.evolution_final-t.evolution_requested)<0.01,
+     "native evolution drifted from selected sweep stage")
+   require_native(t.damage.enemy>0 and t.hits.enemy>0,
+     "native enemies never took real combat damage")
+   -- Defeat is an observed outcome, not a broken test infrastructure.
+  end
   require_native(state.aai_registry_available,
     "AAI managed unit registry unavailable in native battle")
-  require_native(state.actors_alive>0 and state.turrets_alive>0,
-    "no surviving AAI-managed combatant and native bunker at end of battle")
+  if t.evolution_requested==nil then
+   require_native(state.actors_alive>0 and state.turrets_alive>0,
+     "no surviving AAI-managed combatant and native bunker at end of battle")
+  end
   for _,rec in ipairs(t.protected)do
     require_native(rec.entity.valid and rec.entity.health==rec.health,
       "ceasefire/friendly target damaged "..rec.role)
@@ -310,6 +403,11 @@ local function tick(event)
     source="Factorio GUI 2.1",engine_version=script.active_mods.base,
     scenario="fixture-staged-physical-units-and-ammo-not-factory-recruitment",
     expected=t.expected,counts=state,damage=t.damage,hits=t.hits,
+    evolution_requested=t.evolution_requested,
+    evolution_observed_initial=t.evolution_initial,
+    evolution_observed_final=t.evolution_final,
+    enemy_roster=t.enemy_roster,
+    defenses_held=(state.actors_alive>0 and state.turrets_alive>0),
     frames=t.clips,samples=t.sample_count,blockers=blockers,
     no_scripted_damage=true,allied_safety=t.damage.protected==0}
   helpers.write_file("combat-roster/batch-native/manifest.json",
@@ -317,6 +415,9 @@ local function tick(event)
   t.done=true
   log(MARK.."NATIVE_COMBAT_COMPLETE "..helpers.table_to_json{
     status=verdict,blockers=blockers,damage=t.damage,hits=t.hits,
+    evolution_requested=t.evolution_requested,
+    evolution_observed_final=t.evolution_final,
+    roster=t.enemy_roster,defenses_held=proof.defenses_held,
     remaining=state,
     clip_counts={#(t.clips["01-massed-units"] or {}),
       #(t.clips["02-bunker-lines"] or {}),
