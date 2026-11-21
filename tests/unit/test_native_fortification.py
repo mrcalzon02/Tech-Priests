@@ -59,7 +59,7 @@ class NativeFortificationContract(unittest.TestCase):
             'mix-all-seven',
         ):
             self.assertIn(name, source)
-        for cutoff in ('index<=9', 'index<=6', 'index<=3'):
+        for cutoff in ('index%4==0', 'index%2==0'):
             self.assertIn(cutoff, source)
         self.assertIn('require_native(#t.towers==12', source)
         self.assertIn('t.tower_roster[kind]=', source)
@@ -106,7 +106,8 @@ class NativeFortificationContract(unittest.TestCase):
             if text == "gameplay":
                 continue
             self.assertIn(text, launcher)
-        self.assertIn('zoom=.27', FORT.read_text(encoding="utf-8"))
+        self.assertIn('zoom=.26', FORT.read_text(encoding="utf-8"))
+        self.assertIn('resolution={1280,720}', FORT.read_text(encoding="utf-8"))
         self.assertIn('step=48', FORT.read_text(encoding="utf-8"))
         self.assertIn('zoom=.37', batch)
         self.assertIn('step=48', batch)
