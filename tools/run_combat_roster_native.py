@@ -168,7 +168,9 @@ end
   creation_output=create_log.read_text(errors='replace')
   fixture_setup_errors=[line.strip() for line in creation_output.splitlines()
     if ('owner=combat-batch-native route=setup' in line or
-        '[TP-COMBAT-BATCH] FAIL' in line)]
+        'owner=fortification-native route=setup' in line or
+        '[TP-COMBAT-BATCH] FAIL' in line or
+        '[TP-FORT] FAIL' in line)]
   if fixture_setup_errors:
    for line in fixture_setup_errors[:5]:
     print('TP_COMBAT_FIRST_INIT_FAILURE '+line[:900],flush=True)
@@ -324,7 +326,9 @@ end
     'measured_min_wall_clearance':receipt.get('measured_min_wall_clearance'),
     'first_enemy_inside_tick':receipt.get('first_enemy_inside_tick')},sort_keys=True),flush=True)
   print(json.dumps({'status':'PASS','native':True,
-   'actors_staged':30,'bunkers':14,'biters':48,'source_sha':args.source_sha,
+   'actors_staged':receipt.get('defenders_requested',30) if fortification else 30,
+   'bunkers':receipt.get('towers_requested',14) if fortification else 14,
+   'biters':48,'source_sha':args.source_sha,
    'evolution':args.evolution if not fortification else args.fort_evolution,
    'enemy_roster':receipt.get('enemy_roster',{}),
    'defenses_held':receipt.get('defenses_held') if not fortification else receipt.get('defense_held'),
