@@ -43,7 +43,7 @@ jobs:
           expected = os.environ['EXPECTED_DOWNLOADER_BLOB']
           assert item['sha']==expected,'Pinned Mod Portal downloader Git blob changed'
           raw = base64.b64decode(''.join(item['content'].split()),validate=True)
-          observed = hashlib.sha1(b'blob '+str(len(raw)).encode()+b'\\x00'+raw).hexdigest()
+          observed = hashlib.sha1(b'blob '+str(len(raw)).encode()+b'\x00'+raw).hexdigest()
           assert observed==expected,'Source bytes do not match immutable Git blob'
           output = pathlib.Path(path)
           output.parent.mkdir(parents=True,exist_ok=True)
