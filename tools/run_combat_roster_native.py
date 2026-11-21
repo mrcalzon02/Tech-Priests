@@ -2,7 +2,7 @@
 Never alters live saves, installed mods or installed actor prototypes.
 """
 from pathlib import Path
-import argparse, json, os, shutil, subprocess, time
+import argparse, json, math, os, shutil, subprocess, time
 
 ROOT=Path(__file__).resolve().parents[1]
 EXE=Path(r'C:\Program Files (x86)\Steam\steamapps\common\Factorio\bin\x64\factorio.exe')
@@ -28,7 +28,8 @@ def main():
    'none','guardsmen-6','guardsmen-12','rangers-12','breachers-12',
    'sisters-12','mixed-12','mixed-24'),default=None)
  parser.add_argument('--fort-thickness',type=int,choices=(1,2,3),default=None)
- parser.add_argument('--fort-clearance',type=int,choices=(3,7,13),default=None)
+ parser.add_argument('--fort-clearance',type=int,choices=(0,3,5,7,10,13),default=None,
+    help='Nominal minimum wall-to-defense edge gap in tiles; 0 selects closest legal ring')
  parser.add_argument('--fort-evolution',type=float,choices=(0.0,0.25,0.5,0.75,1.0),default=None)
  parser.add_argument('--evolution',type=float,choices=(0.0,0.25,0.5,0.75,1.0),default=None,
    help='Five-stage native biter/spitter evolution sweep, batch-visual only')
@@ -316,6 +317,12 @@ end
               'evolution':args.fort_evolution}
    if any(cfg.get(k)!=v for k,v in requested.items()):
     raise RuntimeError('Native fortification proof config differs from actual request')
+   measured=receipt.get('measured_min_wall_clearance')
+   if type(measured) not in (int,float) or not math.isfinite(measured) or measured+1e-6<args.fort_clearance:
+    raise RuntimeError('Native fortification proof omitted valid measured wall clearance')
+   turret_gap=receipt.get('measured_min_turret_wall_clearance')
+   if type(turret_gap) not in (int,float) or not math.isfinite(turret_gap) or turret_gap+1e-6<measured:
+    raise RuntimeError('Native fortification proof omitted valid turret-edge wall clearance')
    if receipt.get('walls_requested',0)<=0 or receipt.get('towers_requested')!=12:
     raise RuntimeError('Native fortification proof omitted physical wall or turret evidence')
    print('NATIVE_FORTIFICATION_VERDICT '+json.dumps({
@@ -323,7 +330,8 @@ end
     'wall_held':receipt.get('wall_held'),
     'final':receipt.get('final'),
     'walls_requested':receipt.get('walls_requested'),
-    'measured_min_wall_clearance':receipt.get('measured_min_wall_clearance'),
+    'measured_min_wall_clearance':measured,
+    'measured_min_turret_wall_clearance':turret_gap,
     'first_enemy_inside_tick':receipt.get('first_enemy_inside_tick')},sort_keys=True),flush=True)
   print(json.dumps({'status':'PASS','native':True,
    'actors_staged':receipt.get('defenders_requested',30) if fortification else 30,

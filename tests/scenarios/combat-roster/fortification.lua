@@ -113,8 +113,9 @@ local function init()
  require_native(type(settings)=="table","fortification config missing")
  require_native(settings.thickness==1 or settings.thickness==2 or settings.thickness==3,
   "wall thickness must be 1/2/3")
- require_native(settings.clearance==3 or settings.clearance==7 or settings.clearance==13,
-  "wall clearance must be 3/7/13")
+ require_native(settings.clearance==0 or settings.clearance==3 or settings.clearance==5 or
+  settings.clearance==7 or settings.clearance==10 or settings.clearance==13,
+  "nominal wall clearance must be 0/3/5/7/10/13")
  require_native(type(settings.evolution)=="number" and
   settings.evolution>=0 and settings.evolution<=1,"evolution outside 0..1")
  require_native(type(settings.towers)=="string" and
@@ -154,7 +155,7 @@ local function init()
   damage_by_attacker={},damage_by_tower={},damage_by_tower_target={},
   wall_kills_by_source={},wall_losses_by_layer={},
   wall_first_loss_tick=nil,wall_first_inner_loss_tick=nil,
-  enemy_first_inside_tick=nil,clips={},bounds={x=0,y=0},
+  enemy_first_inside_tick=nil,clips={},bounds={x=0,y=0},turret_bounds={x=0,y=0},
   ammo_consumed=0,attacker_losses=0}
  -- 12 actual bunkers in four columns by three rows, identical positions
  -- across every mono/mixed ratio. All turrets are genuine native entities.
@@ -190,6 +191,7 @@ local function init()
    include_extent(t.bounds,power);include_extent(t.bounds,pole)
   end
   include_extent(t.bounds,gun)
+  include_extent(t.turret_bounds,gun)
   t.towers[#t.towers+1]=rec
   if rec.unit then t.tower_units[rec.unit]=kind end
   t.tower_roster[kind]=(t.tower_roster[kind] or 0)+1
@@ -238,6 +240,8 @@ local function init()
   t.defender_roster[id]=(t.defender_roster[id] or 0)+1
  end
  log(MARK.."SETUP_AAI_DEFENDERS_READY count="..#t.defenders)
+ -- Nominal 0 uses the closest legal tile-aligned ring. Retain actual
+ -- measured edge clearance; a fractional gap is expected from alignment.
  local inner_x=math.ceil(t.bounds.x+settings.clearance+0.5)
  local inner_y=math.ceil(t.bounds.y+settings.clearance+0.5)
  require_native(inner_x<=66 and inner_y<=66,
@@ -248,6 +252,8 @@ local function init()
  require_native(first_wall_distance>=settings.clearance-0.00001,
   "first wall ring closer to native defenses than required clearance")
  t.measured_min_clearance=first_wall_distance
+ t.measured_min_turret_clearance=math.min(inner_x-0.5-t.turret_bounds.x,
+  inner_y-0.5-t.turret_bounds.y)
  -- Continuous closed concentric rectangles: no gates, pre-placed breaches,
  -- or fake wall health. Every tile is a physically placed stone-wall entity.
  for layer=0,settings.thickness-1 do
@@ -436,6 +442,7 @@ local function tick(event)
    towers_requested=12,defenders_requested=#t.defenders,
    walls_requested=#t.walls,enemies_requested=48,
    measured_min_wall_clearance=t.measured_min_clearance,
+   measured_min_turret_wall_clearance=t.measured_min_turret_clearance,
    wall_inner_half=t.inner_half,tower_roster=t.tower_roster,
    defender_roster=t.defender_roster,enemy_roster=t.enemy_roster,
    final=final,damage=t.damage,damage_by_attacker=t.damage_by_attacker,

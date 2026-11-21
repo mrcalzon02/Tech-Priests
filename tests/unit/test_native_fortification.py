@@ -2,6 +2,8 @@
 """Contracts for real Factorio fortification fixtures; never gameplay PASS."""
 import pathlib
 import re
+import subprocess
+import sys
 import unittest
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
@@ -111,13 +113,39 @@ class NativeFortificationContract(unittest.TestCase):
     def test_real_wall_ring_clearances_are_measured_not_reported_from_request(self):
         source = FORT.read_text(encoding="utf-8")
         self.assertIn('settings.thickness==1 or settings.thickness==2', source)
-        self.assertIn('settings.clearance==3 or settings.clearance==7', source)
+        check = re.search(r'require_native\((settings\.clearance==[^,]+),', source)
+        self.assertIsNotNone(check)
+        allowed = tuple(map(int, re.findall(r'settings\.clearance==(\d+)', check.group(1))))
+        self.assertEqual(allowed, (0, 3, 5, 7, 10, 13))
+        launcher = LAUNCHER.read_text(encoding="utf-8")
+        self.assertIn("'--fort-clearance',type=int,choices=(0,3,5,7,10,13)", launcher)
+        self.assertIn('math.ceil(t.bounds.x+settings.clearance+0.5)', source)
+        self.assertIn('math.ceil(t.bounds.y+settings.clearance+0.5)', source)
         self.assertIn('for layer=0,settings.thickness-1 do', source)
         self.assertIn('for x=-hx,hx do place_wall(x,-hy);place_wall(x,hy) end', source)
         self.assertIn('for y=-hy+1,hy-1 do place_wall(-hx,y);place_wall(hx,y) end', source)
         self.assertIn('first_wall_distance=math.min(', source)
         self.assertIn('measured_min_wall_clearance=t.measured_min_clearance', source)
+        self.assertIn('include_extent(t.turret_bounds,gun)', source)
+        self.assertNotIn('include_extent(t.turret_bounds,car)', source)
+        self.assertIn('measured_min_turret_wall_clearance=t.measured_min_turret_clearance', source)
         self.assertIn('require_native(#t.walls==expected_walls', source)
+
+    def test_clearance_cli_is_bounded_and_zero_is_present(self):
+        args = [sys.executable, str(LAUNCHER), '--factorio', str(LAUNCHER / 'no-engine'),
+                '--scenario', 'fortification-visual', '--fort-towers', 'mix-all-seven',
+                '--fort-defenders', 'mixed-12', '--fort-thickness', '1', '--fort-evolution', '1']
+        for gap in (0, 3, 5, 7, 10, 13, -1, 6, 14):
+            result = subprocess.run(args + ['--fort-clearance', str(gap)],
+                                    capture_output=True, text=True, timeout=10)
+            self.assertEqual(result.returncode, 2, result.stderr)
+            expected = ('Installed Factorio executable missing' if gap in (0, 3, 5, 7, 10, 13)
+                        else 'invalid choice')
+            self.assertIn(expected, result.stderr)
+        result = subprocess.run(args, capture_output=True, text=True, timeout=10)
+        self.assertEqual(result.returncode, 2)
+        self.assertIn('fortification requires turret, defenders, thickness, clearance and evolution',
+                      result.stderr)
 
     def test_headless_benchmarks_and_wider_smoother_real_gui_capture(self):
         launcher = LAUNCHER.read_text(encoding="utf-8")
