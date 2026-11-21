@@ -649,5 +649,8 @@ require("prototypes.generated_graphics.emergency-power-grid-v1")
 
 -- Synced native character appearance and canonical item artwork.
 require("prototypes.character_skins").register()
+-- AAI 0.9.2 generated composite bodies are normalized only after its data-updates.
+-- Missing composites are fatal; never silently ship inert actor items.
+require("prototypes.combat_roster").finalize()
 require("prototypes.generated_graphics.unit-arsenal-icons-v02")
 require("prototypes.generated_graphics.material-icons-v01")
