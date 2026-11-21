@@ -307,6 +307,63 @@ def auth_check():
     return 1
 
 
+
+def download_exact_combat(args):
+    """Stage the three official AAI 2.1 ZIPs for the private native combat test.
+
+    Reuses the existing authenticated Mod Portal transport and SHA-1/ZIP
+    verification. No full modpack, credentials, URLs or redistributed ZIPs are
+    included in the manifest. Caller supplies a fresh, isolated mod folder.
+    """
+    pins = (
+        ("aai-programmable-vehicles", "0.9.2"),
+        ("aai-signals", "0.8.0"),
+        ("informatron", "0.5.0"),
+    )
+    username = os.getenv("FACTORIO_USERNAME", "").strip()
+    token = os.getenv("FACTORIO_TOKEN", "").strip()
+    if not username or not token:
+        print("[COMBAT-AAI] BLOCKED GitHub Actions mod download credentials missing")
+        return 2
+    mods = Path(args.mods_dir).resolve()
+    report = Path(args.artifact_dir).resolve()
+    mods.mkdir(parents=True, exist_ok=True)
+    report.mkdir(parents=True, exist_ok=True)
+    records = []
+    for name, pinned_version in pins:
+        expected_name = f"{name}_{pinned_version}.zip"
+        if (mods / expected_name).exists():
+            # Never silently accept an unverified existing ZIP as the required
+            # exact Factorio archive; all inputs pass the original validator.
+            print("[COMBAT-AAI] BLOCKED preexisting unverified archive: " + expected_name)
+            return 2
+        try:
+            metadata = json_from_portal(name)
+            candidates = [item for item in metadata.get("releases", [])
+                          if item.get("version") == pinned_version
+                          and item.get("info_json", {}).get("factorio_version") == "2.1"]
+            if len(candidates) != 1:
+                raise ValueError(f"{name}: pinned {pinned_version} 2.1 release not unique/available")
+            record = download_checked(name, candidates[0], mods, username, token)
+            records.append(record)
+            print("[COMBAT-AAI] VERIFIED official ZIP " + expected_name, flush=True)
+        except (OSError, ValueError, KeyError) as error:
+            # Original downloader already sanitizes network errors. Never
+            # print exception repr, credential-bearing URL or HTTP redirect.
+            print("[COMBAT-AAI] BLOCKED " + str(error), flush=True)
+            return 1
+    manifest = {
+        "schema": "tech-priests.native-aai-official-downloads.v1",
+        "engine_series": "2.1",
+        "mod_portal_sha1_verified": True,
+        "archives": records,
+        "gameplay_test_passed": False,
+    }
+    (report / "combat-aai-download-manifest.json").write_text(
+        json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+    print("[COMBAT-AAI] PASS three exact official Mod Portal ZIPs integrity-verified", flush=True)
+    return 0
+
 def install(args):
     mods = Path(args.mods_dir)
     mods.mkdir(parents=True, exist_ok=True)
@@ -436,13 +493,16 @@ def main():
     operation.add_argument("--gate", action="store_true")
     operation.add_argument("--selftest", action="store_true")
     operation.add_argument("--auth-check", action="store_true")
+    operation.add_argument("--download-exact-combat", action="store_true")
     args = parser.parse_args()
     if args.selftest:
         return selftest()
     if args.auth_check:
         return auth_check()
-    if args.install and not args.mods_dir:
-        parser.error("--install requires --mods-dir")
+    if (args.install or args.download_exact_combat) and not args.mods_dir:
+        parser.error("--install and --download-exact-combat require --mods-dir")
+    if args.download_exact_combat:
+        return download_exact_combat(args)
     return install(args) if args.install else gate(args)
 
 
