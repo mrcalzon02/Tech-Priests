@@ -146,7 +146,12 @@ end
   marker='[TP-COMBAT-BATCH] NATIVE_COMBAT_COMPLETE'
   child=None
   seen=False
-  deadline=time.monotonic()+600
+  wall_start=time.monotonic()
+  next_report=wall_start+30
+  deadline=wall_start+600
+  clips=('01-massed-units','02-bunker-lines','03-enemy-flank')
+  def frame_inventory():
+   return {clip:len(list((native/clip).glob('frame-*.png'))) for clip in clips}
   with gui_log.open('w',encoding='utf-8') as log:
    # Verified on this exact Steam/Core30 renderer: Windows Session 0 needs
    # explicit OpenGL rather than DirectX, or DXGI can reject the session.
@@ -158,6 +163,16 @@ end
     while time.monotonic()<deadline:
      if child.poll() is not None:break
      output=gui_log.read_text(errors='replace')
+     now=time.monotonic()
+     if now>=next_report:
+      samples=[line.strip() for line in output.splitlines()
+       if '[TP-COMBAT-BATCH] SAMPLE elapsed=' in line]
+      last_sample=samples[-1][:350] if samples else 'none'
+      print('TP_COMBAT_LIVE_PROGRESS wall_s='+str(int(now-wall_start))+
+        ' frames='+json.dumps(frame_inventory(),sort_keys=True)+
+        ' manifest='+str((native/'manifest.json').is_file())+
+        ' last_sample='+last_sample,flush=True)
+      next_report=now+30
      # A failure from an unrelated registry owner is not itself a failed
      # native combat test. Stop early only for this fixture's own broken
      # setup/capture path, or an actual engine-level fatal error.
@@ -190,6 +205,13 @@ end
      except subprocess.TimeoutExpired:child.kill();child.wait(timeout=15)
   if not seen:
    output=gui_log.read_text(errors='replace')
+   samples=[line.strip() for line in output.splitlines()
+     if '[TP-COMBAT-BATCH] SAMPLE elapsed=' in line]
+   files=frame_inventory()
+   print('TP_COMBAT_FRAME_DIAGNOSTIC frames='+json.dumps(files,sort_keys=True)+
+     ' manifest='+str((native/'manifest.json').is_file())+
+     ' last_sample='+(samples[-1][:350] if samples else 'none')+
+     ' graphical_process_exit='+str(child.returncode),flush=True)
    diagnostics=[line.strip() for line in output.splitlines()
       if ('owner=combat-batch-native' in line or
           '[TP-COMBAT-BATCH]' in line or 'Error Util.cpp' in line)]
