@@ -118,3 +118,15 @@ A3. Trace `mechanical-detritus` production, recycling, and physical custody end 
 A4. Enumerate machine eligibility and module slot definitions including Space Age; document quality event semantics and migration behavior.
 A5. Produce a current-versus-target research graph and locate localized strings for each unlock.
 A6. Only then implement the smallest bounded change on `main` with source tests and native game evidence.
+
+
+### Phase A follow-up — verified canonical research calculations
+- `scripts/generated/control_legacy_part_001.lua` defines `STARTING_SANCTIFICATION_TECH_BONUSES`: initial-consecration-1 = +20, initial-consecration-2 = +20.
+- The same file defines `MAX_SANCTIFICATION_TECH_BONUSES`: capacity-1 = +10, capacity-2 = +10.
+- `get_base_sanctification_max(force)` reads configured base maximum plus force research bonus; `get_base_sanctification_start(force)` reads configured starting value plus research bonus, clamped to maximum. Neither function currently accepts an entity/quality argument.
+- `get_current_consecration_config_snapshot(force)` already exposes base start/max, decay, damage and degradation settings; extend this interface rather than duplicating it.
+- `scripts/generated/control_legacy_part_003.lua` defines `sanctify_target_with_priest`; `scripts/core/consecration_executor_0515.lua` wraps that function and references `record.sanctification` / `record.max_sanctification`.
+- **Design correction:** do not assume proposed quality-tier bases 50/60/70/85/100 are immediately compatible with configured defaults, +40 start research and +20 capacity research. Specify quality bonuses relative to existing settings or explicitly migrate the entire scale. Preserve degradation and research meaning.
+- GitHub code search returned no matches even for known symbols; direct file reads are authoritative for this pass, but do not infer repository-wide absence from empty search results.
+
+**Next bounded task:** trace creation of sanctification records and `apply_completed_sanctification_operation` in generated fragments, then implement a pure tested quality-aware calculation at that owner. Do not change game behavior until the ownership path is established.
