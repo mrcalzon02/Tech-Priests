@@ -153,9 +153,9 @@ def main():
     if not report_file.is_file():
         parser.error("No original Factorio GUI screenshot manifest; refusing fabricated proof")
     report = json.loads(report_file.read_text(encoding="utf-8-sig"))
-    if (report.get("status") != "PASS" or report.get("native") is not True
+    if (report.get("status") not in ("PASS", "FAIL") or report.get("native") is not True
             or report.get("no_scripted_damage") is not True):
-        parser.error("Fixture did not report genuine native combat PASS")
+        parser.error("No authentic Factorio combat PASS or FAIL receipt")
     output = args.output_dir.resolve()
     output.mkdir(parents=True, exist_ok=True)
     if any(output.iterdir()):
@@ -165,6 +165,7 @@ def main():
         "schema": "tech-priests.native-combat-visual-proof.v1",
         "source_sha": args.source_sha, "native_screenshot_root": str(native),
         "engine_receipt": report,
+        "gameplay_accepted": report["status"] == "PASS",
         "status": "native-frame-verified", "clips": {},
     }
     for clip in CLIPS:
