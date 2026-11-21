@@ -31,9 +31,12 @@ function M.request(pair,id,deploy,rally,quality)
  quality=quality or "normal"
  if not prototypes.quality[quality] then return false,"unknown-quality" end
  if quality~="normal" then
-  local upgrade=pair.station.force.technologies[u.name.."-reinforcement"]
-  if not(upgrade and upgrade.researched) then return false,"reinforcement-not-researched" end
+  -- The live 0338 builder currently debits by item name, not an exact
+  -- ItemWithQuality stack identity. Do not silently lose paid uncommon
+  -- quality, manufacture a free upgraded actor, or claim a build receipt.
+  return false,"reinforced-unit-needs-exact-native-stack-custody"
  end
+
  local s=root();local token=s.next_id;s.next_id=token+1
  local request={item_name=u.name,entity_name=u.name,position={x=deploy.x,y=deploy.y},quality=quality,combat_muster_token=token,source="combat-muster"}
  pair.combat_muster_order={id=token,unit_id=id,quality=quality,phase="construction",issued_tick=game.tick,request=request,
