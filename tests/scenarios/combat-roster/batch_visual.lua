@@ -16,14 +16,14 @@ local AMMO={
  {"tech-priests-bunker-rocket-salvo","rocket"},
  {"tech-priests-bunker-energy-dish",nil},
 }
--- Real GUI capture from the first active engagement. Offset the three
--- viewpoints so force_render never schedules multiple 960x540 shots in one
--- update; the native simulation still runs at full 60-tick cadence.
--- 20 original frames per clip; no synthetic interpolation or skipped battles.
+-- Native GUI capture. Sixteen authentic, unblended 960x540 frames per
+-- viewpoint. Offset start times spread renderer work at one image per 16
+-- game ticks rather than 3 overlapping images or one every 9 ticks.
+-- No Factorio simulation tick reduction, scripted damage, or fake frames.
 local CLIPS={
- {id="01-massed-units",start=80,stop=612,step=28,x=0,y=0,zoom=.51},
- {id="02-bunker-lines",start=90,stop=622,step=28,x=0,y=-17,zoom=.78},
- {id="03-enemy-flank",start=100,stop=632,step=28,x=0,y=16,zoom=.78},
+ {id="01-massed-units",start=80,stop=800,step=48,x=0,y=0,zoom=.51},
+ {id="02-bunker-lines",start=96,stop=816,step=48,x=0,y=-17,zoom=.78},
+ {id="03-enemy-flank",start=112,stop=832,step=48,x=0,y=16,zoom=.78},
 }
 local function check(v,why) assert(v,MARK.."FAIL "..tostring(why)) end
 local function enemies(a,b)
