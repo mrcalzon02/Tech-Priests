@@ -7,6 +7,12 @@ local M={handlers={}}
 local replacement_handler
 function M.set_replacement_handler(fn) replacement_handler=fn end
 local function valid(e) return e and e.valid end
+local function finite_position(pos)
+ return type(pos)=="table" and type(pos.x)=="number" and type(pos.y)=="number"
+  and pos.x==pos.x and pos.y==pos.y
+  and pos.x<1000000 and pos.x> -1000000
+  and pos.y<1000000 and pos.y> -1000000
+end
 function M.unit(entity)
  if not(valid(entity) and entity.type=="car" and C.for_entity_name(entity.name)) then return nil end
  return remote.call("aai-programmable-vehicles","get_unit_by_entity",entity)
@@ -55,8 +61,8 @@ function M.command(entity,force,order)
  local unit=M.unit(entity)
  if not unit then return false,"not-managed-by-aai" end
  local data={unit_id=unit.unit_id}
- if order.stop then data.target_speed=0
- elseif order.position and type(order.position.x)=="number" and type(order.position.y)=="number" then
+ if order.stop==true then data.target_speed=0
+ elseif finite_position(order.position) then
   data.target_position={x=order.position.x,y=order.position.y}
  else return false,"invalid-order" end
  -- AAI leaves an unfuelled navigator passive but retains its destination.
