@@ -35,12 +35,24 @@ function M.open(player)
  for i,entry in ipairs(entries) do
   if i>128 then break end
   local p=entry.pair.station.position
-  labels[#labels+1]={"",entry.pair.station.localised_name," (",math.floor(p.x),", ",math.floor(p.y),")"}
+  local order=entry.pair.combat_muster_order
+  -- Distinguish busy stations before sending a new muster request. This
+  -- presentation is read-only and never changes the original 0338 queue.
+  local pending=""
+  if type(order)=="table" then
+   local unit=C.by_id[order.unit_id]
+   pending=" ["..(unit and unit.label or "Unit")..": "..tostring(order.phase or "pending").."]"
+  end
+  labels[#labels+1]={"",entry.pair.station.localised_name," (",math.floor(p.x),", ",math.floor(p.y),")",pending}
   keys[#keys+1]=entry.key
  end
  local ids,names={},{}
  for _,u in ipairs(C.units) do
-  if player.force.recipes[u.name] and player.force.recipes[u.name].enabled then
+  -- Match the existing production admission check. A disabled faction must
+  -- not advertise recruitable units which its muster action will reject.
+  local allowed=settings.startup["tech-priests-combat-allow-"..u.faction]
+  if (not allowed or allowed.value) and
+     player.force.recipes[u.name] and player.force.recipes[u.name].enabled then
    ids[#ids+1]={id=u.id,quality="normal"};names[#names+1]=u.label
    -- The reinforced recipes remain physically craftable as item-with-entity-data
    -- through the native building UI. Automated uncommon deployment is withheld
