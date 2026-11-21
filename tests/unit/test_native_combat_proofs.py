@@ -80,6 +80,32 @@ class ProofSafety(unittest.TestCase):
         self.assertIn("AAI managed unit registry unavailable in native battle",
                       fixture)
 
+    def test_batch_initialization_is_atomic_and_failure_is_not_repeated_per_tick(self):
+        fixture = FIXTURE.read_text(encoding="utf-8")
+        init_section = fixture.split("local function init()", 1)[1].split(
+            "\nlocal function capture(t,elapsed)", 1)[0]
+        self.assertIn("SETUP_BEGIN", init_section)
+        self.assertIn("SETUP_SURFACE_READY", init_section)
+        self.assertIn("SETUP_ACTORS_AND_BUNKERS_READY", init_section)
+        self.assertIn("t.ready=true", init_section)
+        self.assertLess(init_section.index("t.surface=s.index"),
+                        init_section.index("storage.combat_batch_visual=t"))
+        self.assertLess(init_section.index("t.expected="),
+                        init_section.index("storage.combat_batch_visual=t"))
+        self.assertLess(init_section.index("t.ready=true"),
+                        init_section.index("storage.combat_batch_visual=t"))
+        tick_section = fixture.split("local function tick(event)", 1)[1]
+        self.assertIn("t.ready==true", tick_section)
+        self.assertIn('type(t.surface)=="number"', tick_section)
+
+    def test_native_failure_reports_first_fixture_handler_not_unrelated_errors(self):
+        launcher = LAUNCHER.read_text(encoding="utf-8")
+        self.assertIn("owner=combat-batch-native route=setup", launcher)
+        self.assertIn("owner=combat-batch-native route=record-proof", launcher)
+        self.assertIn("TP_COMBAT_FIRST_NATIVE_DIAGNOSTIC", launcher)
+        self.assertIn("diagnostics[:12]", launcher)
+        self.assertNotIn("if 'isolated handler failure' in output or 'Error Util.cpp'", launcher)
+
     def test_only_live_native_capture_can_satisfy_visual_gate(self):
         fixture = FIXTURE.read_text(encoding="utf-8")
         self.assertIn("game.take_screenshot", fixture)
