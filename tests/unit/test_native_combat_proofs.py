@@ -166,6 +166,9 @@ class ProofSafety(unittest.TestCase):
         self.assertIn('game.take_screenshot', fixture)
         self.assertIn('count>=48 and actual==count', launcher)
         self.assertIn("len(expected.get(clip, []))>=16", launcher)
+        self.assertIn("TP_COMBAT_LIVE_PROGRESS", launcher)
+        self.assertIn("TP_COMBAT_FRAME_DIAGNOSTIC", launcher)
+        self.assertIn("'frame-*.png'", launcher)
 
     def test_only_live_native_capture_can_satisfy_visual_gate(self):
         fixture = FIXTURE.read_text(encoding="utf-8")
