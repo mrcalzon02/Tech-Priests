@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import pathlib
 import re
 import shutil
@@ -156,11 +157,40 @@ def main():
     if (report.get("status") not in ("PASS", "FAIL") or report.get("native") is not True
             or report.get("no_scripted_damage") is not True):
         parser.error("No authentic Factorio combat PASS or FAIL receipt")
+    # Report the engine verdict even if the host has no media codecs.
+    # Never mistake a successful 48-frame screenshot sequence for gameplay PASS.
+    print("NATIVE_COMBAT_ENGINE_VERDICT " + json.dumps({
+        "status": report["status"],
+        "blockers": report.get("blockers", []),
+        "samples": report.get("samples", 0),
+        "damage": report.get("damage", {}),
+        "hits": report.get("hits", {}),
+    }), flush=True)
     output = args.output_dir.resolve()
     output.mkdir(parents=True, exist_ok=True)
     if any(output.iterdir()):
         parser.error("Evidence output folder must be empty; no replacing historic proof")
     ffmpeg = args.ffmpeg or shutil.which("ffmpeg")
+    if not ffmpeg:
+        # The Windows homebrew runner may have FFmpeg installed but omitted
+        # from PATH. Read only known local executable locations; never install.
+        candidates = (
+            os.environ.get("FFMPEG_EXE"),
+            r"C:\ProgramData\chocolatey\bin\ffmpeg.exe",
+            r"C:\ffmpeg\bin\ffmpeg.exe",
+            r"D:\ffmpeg\bin\ffmpeg.exe",
+            r"C:\tools\ffmpeg\bin\ffmpeg.exe",
+        )
+        ffmpeg = next((str(pathlib.Path(p)) for p in candidates
+                       if p and pathlib.Path(p).is_file()), None)
+    try:
+        import PIL
+        pillow_version = getattr(PIL, "__version__", "present")
+    except ImportError:
+        pillow_version = None
+    print("NATIVE_PROOF_ENCODER_CAPABILITIES " + json.dumps({
+        "ffmpeg": ffmpeg, "pillow": pillow_version, "python": sys.executable,
+    }), flush=True)
     master = {
         "schema": "tech-priests.native-combat-visual-proof.v1",
         "source_sha": args.source_sha, "native_screenshot_root": str(native),
@@ -198,6 +228,14 @@ def main():
                  "-movflags", "+faststart", str(mp4)], mp4, videolog)
         if not gif_ok:
             gif_ok = gif_pillow(paths, gif, args.fps)
+        if not gif_ok and gitlog.exists():
+            print("NATIVE_PROOF_GIF_ENCODER_ERROR " + clip + " " +
+                  repr(gitlog.read_text(encoding="utf-8", errors="replace")[-1400:]),
+                  flush=True)
+        if not mp4_ok and videolog.exists():
+            print("NATIVE_PROOF_MP4_ENCODER_ERROR " + clip + " " +
+                  repr(videolog.read_text(encoding="utf-8", errors="replace")[-1400:]),
+                  flush=True)
         clip_receipt = {
             "source_kind": "original-factorio-client-png-sequence",
             "frames": len(rows), "fps": args.fps,

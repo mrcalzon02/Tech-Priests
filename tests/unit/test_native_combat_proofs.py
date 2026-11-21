@@ -219,6 +219,15 @@ class ProofSafety(unittest.TestCase):
         self.assertIn("graphical-client.log", source)
         self.assertIn("Refusing to overwrite nonempty test output directory", source)
         self.assertIn("assemble_native_combat_proofs.py", source)
+        # A complete original native screenshot batch still must not hide
+        # its actual gameplay verdict or a missing/broken encoder executable.
+        encoder = ENCODER.read_text(encoding="utf-8")
+        self.assertIn("NATIVE_COMBAT_ENGINE_VERDICT", encoder)
+        self.assertIn("NATIVE_PROOF_ENCODER_CAPABILITIES", encoder)
+        self.assertIn("NATIVE_PROOF_GIF_ENCODER_ERROR", encoder)
+        self.assertIn("NATIVE_PROOF_MP4_ENCODER_ERROR", encoder)
+        self.assertIn("FFMPEG_EXE", encoder)
+        self.assertIn('report["status"]', encoder)
 
 
 if __name__ == "__main__":
