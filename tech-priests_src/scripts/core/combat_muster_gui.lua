@@ -81,6 +81,19 @@ function M.begin(player)
  local unit=type(selected)=="table" and selected.id or selected
  local quality=type(selected)=="table" and selected.quality or "normal"
  local station=tags.stations[frame.station.selected_index]
+ local pair=storage.tech_priests.pairs_by_station and
+   storage.tech_priests.pairs_by_station[station]
+ if not (pair and valid(pair.station) and valid(pair.priest)
+    and pair.station.force==player.force and pair.station.surface==player.surface) then
+  player.print({"tech-priests-combat.order-invalid"})
+  return false
+ end
+ -- Don't consume the player's cursor or request two map selections when the
+ -- chosen station is already recruiting. Both reservations belong to 0338.
+ if pair.combat_muster_order or pair.combat_construction_request then
+  player.print({"tech-priests-combat.order-refused","muster-already-pending"})
+  return false
+ end
  if not player.clear_cursor() then return false end
  if not player.cursor_stack.set_stack{name=M.tool,count=1} then return false end
  state().pending[player.index]={station=station,unit=unit,quality=quality,surface=player.surface.index,phase="deploy"}
