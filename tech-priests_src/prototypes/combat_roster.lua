@@ -107,7 +107,7 @@ function M.register()
    order=string.format("%02d-",u.stage)..u.id,place_result=u.name,stack_size=1}
   add(recipe(u.name,u.ingredients,1,categories[u.faction],u.technology==nil and enabled(u.faction),15+u.stage*10))
   if enabled(u.faction) then unlock(u.technology,u.name) end
-  if data.raw.quality.uncommon then
+  if data.raw.quality and data.raw.quality.uncommon then
    -- Paid advanced training produces a fresh uncommon actor. Native quality
    -- raises maximum health; existing mined actors never enter a recipe that
    -- would erase their health, names, fuel, ammunition or stored state.
