@@ -111,6 +111,13 @@ class ProofSafety(unittest.TestCase):
         self.assertIn("s.can_place_entity", setup)
         self.assertIn("BUNKER_PLACED", setup)
         self.assertIn("BUNKER_POSITION_ADJUST", setup)
+        # Native hostile staging must still create actual Factorio turrets.
+        # Raised build callbacks belong to player construction acceptance,
+        # not to the test fixture's hostile-force deployments.
+        self.assertIn("local raise_event=(side==1)", setup)
+        self.assertIn("raise_built=raise_event", setup)
+        self.assertIn("BunkerVisuals.add(gun)", setup)
+        self.assertIn("native-hostile-direct", setup)
         self.assertIn("native bunker absent ", setup)
         self.assertIn("attempts=", setup)
         self.assertIn("SETUP_ACTORS_AND_BUNKERS_READY", setup)
