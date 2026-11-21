@@ -13,6 +13,14 @@ BATCH = ROOT / "tests/scenarios/combat-roster/batch_visual.lua"
 
 
 class NativeFortificationContract(unittest.TestCase):
+    def test_collinear_cannon_ejection_preserves_stock_shells(self):
+        source = (ROOT / "tech-priests_src/prototypes/bunker_twin_cannon.lua").read_text(
+            encoding="utf-8")
+        self.assertIn("t.attack_parameters=table.deepcopy(data.raw.gun['tank-cannon'].attack_parameters)", source)
+        self.assertIn("t.attack_parameters.true_collinear_ejection=true", source)
+        self.assertIn("for _,ammo in pairs(data.raw.ammo) do if ammo.ammo_category=='cannon-shell'", source)
+        self.assertNotIn("t.attack_parameters.ammo_categories=", source)
+
     def test_no_scripted_damage_or_skipped_native_engine(self):
         source = FORT.read_text(encoding="utf-8")
         for mandatory in (
