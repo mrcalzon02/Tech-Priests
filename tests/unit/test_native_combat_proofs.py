@@ -123,6 +123,9 @@ class ProofSafety(unittest.TestCase):
         self.assertIn("SETUP_ACTORS_AND_BUNKERS_READY", setup)
         self.assertIn("t.expected={aai_actors=30,types=15,native_bunkers=14", setup)
         self.assertIn("native_biters=48", setup)
+        self.assertIn("local commander=b.commandable", setup)
+        self.assertIn("commander.set_command{", setup)
+        self.assertNotIn("b.set_command{", setup)
         self.assertIn("check(#t.actors==30 and #t.turrets==14 and #t.biters==48", setup)
         self.assertIn("game.take_screenshot", fixture)
 
