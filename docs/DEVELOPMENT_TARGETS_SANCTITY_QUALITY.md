@@ -164,3 +164,13 @@ A6. Only then implement the smallest bounded change on `main` with source tests 
 8. Test Normal and Legendary with no research, +40 starting research, +20 capacity research, custom settings, save/reload, and module insertion/removal before broader rollout.
 
 **Status:** implementation intentionally held pending exact record-owner discovery; no runtime code or native evidence changed in this pass.
+
+
+### Phase B1 — first code integration: quality-aware initial sanctity (2026-11-21)
+- Implemented in `scripts/core/consecration/quality_baseline.lua` and wired directly into canonical `consecration/registry.lua` record creation; no alternate record store, new tick service or new event handler.
+- Quality occupies a fraction of **remaining headroom** between the researched/configured starting sanctity and maximum: Normal 0%, Uncommon 20%, Rare 40%, Epic 70%, Legendary 100%. With default 50/100 values this yields the proposed 50/60/70/85/100. With researched 90/120 this yields 90/96/102/111/120, preserving quality differences rather than saturating most tiers.
+- Quality **does not raise capacity** at this stage. Existing force research (+40 starting, +20 capacity), mod settings, degradation, detritus and rituals remain authoritative.
+- Only **newly registered records** get a quality-adjusted start. Re-registering, scanning, save/load and existing machine records retain their worn sanctity; no automatic healing of pre-existing high-quality machines. Quality upgrade/replacement lifecycle rules remain a separate target.
+- No Quality mod or unknown custom quality defaults to Normal rather than inventing additional benefits.
+- Unit regression added at `tests/unit/machine_spirit_quality_baseline.lua` for five quality tiers, researched headroom, clamping, no-Quality fallback and existing-record preservation. Local pure-Lua calculation smoke test passed; repository-integrated unit test and native Factorio load/scenario execution remain to be verified.
+- Law & Order / Chaos & Anarchy module prototypes, research branches and doctrine runtime effects remain **unimplemented** by this patch.

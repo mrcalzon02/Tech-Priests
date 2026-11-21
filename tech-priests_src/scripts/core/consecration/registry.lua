@@ -1,6 +1,8 @@
 -- Tech Priests 0.1.347 consecration modularization pass 1.
 -- Extracted from control.lua to isolate machine-spirit state logic.
 
+local QualityBaseline = require("scripts.core.consecration.quality_baseline")
+
 CONSECRATION_TARGET_TYPE_SET = CONSECRATION_TARGET_TYPE_SET or {
   ["assembling-machine"] = true,
   ["furnace"] = true,
@@ -75,11 +77,17 @@ get_consecration_record = function(entity)
   local unit = entity.unit_number
   local record = storage.tech_priests.consecration.machines[unit]
   if not record then
+    -- Only newly registered machines receive the quality-based foundation.
+    -- Existing records retain their worn condition across scanning and saves.
+    local base_start = get_base_sanctification_start(entity.force)
+    local base_max = get_base_sanctification_max(entity.force)
+    local quality_name = QualityBaseline.entity_quality_name(entity)
     record = {
       entity = entity,
       unit_number = unit,
-      sanctification = get_base_sanctification_start(entity.force),
-      max_sanctification = get_base_sanctification_max(entity.force),
+      sanctification = QualityBaseline.starting_sanctification(base_start, base_max, quality_name),
+      max_sanctification = base_max,
+      quality_at_initial_consecration = quality_name,
       last_progress = nil,
       machine_id_0446 = tech_priests_0446_next_machine_id(),
       first_registered_tick_0446 = game and game.tick or 0,
