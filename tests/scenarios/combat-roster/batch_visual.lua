@@ -80,9 +80,42 @@ local function init()
    local y=side==1 and -23 or 23
    for i,def in ipairs(AMMO) do
      local x=(i-4)*11
-     local gun=s.create_entity{name=def[1],position={x=x,y=y},force=force,
-       direction=defines.direction.north,raise_built=true}
-     check(gun and gun.valid,"native bunker absent "..def[1].." side="..side)
+     -- Complete both physical bunker lines before issuing *any* AAI
+     -- vehicle orders; a built unit must never obstruct later placements.
+     -- Some surface/prototype placements can be rejected even on concrete.
+     -- Probe bounded nearby positions, never create phantom proof entities.
+     local offset=side==1 and -1 or 1
+     local candidates={
+       {x=x,y=y},{x=x,y=y+offset*4},
+       {x=x+4,y=y},{x=x-4,y=y},
+       {x=x,y=y-offset*4}}
+     local gun=nil
+     local tried={}
+     for _,pos in ipairs(candidates)do
+       local can=s.can_place_entity{
+         name=def[1],position=pos,force=force,direction=defines.direction.north}
+       tried[#tried+1]=string.format("(%.1f,%.1f):%s",
+         pos.x,pos.y,can and "free" or "blocked")
+       if can then
+         local placed=s.create_entity{name=def[1],position=pos,force=force,
+           direction=defines.direction.north,raise_built=true}
+         if placed and placed.valid then
+           gun=placed
+           if pos.x~=x or pos.y~=y then
+             log(MARK.."BUNKER_POSITION_ADJUST name="..def[1]
+               .." side="..side.." x="..pos.x.." y="..pos.y)
+           end
+           break
+         end
+         tried[#tried+1]="create_entity_rejected"
+       end
+     end
+     check(gun and gun.valid,"native bunker absent "..def[1]
+       .." side="..side.." force="..force.name
+       .." requested_x="..x.." requested_y="..y
+       .." attempts="..table.concat(tried,","))
+     log(MARK.."BUNKER_PLACED name="..def[1].." side="..side
+       .." x="..gun.position.x.." y="..gun.position.y)
      local record={entity=gun,name=def[1],force=force.name,
        unit=gun.unit_number,ammo=def[2],initial=0}
      if def[2] then
@@ -91,9 +124,9 @@ local function init()
        record.initial=count
      else
        local power=s.create_entity{name="electric-energy-interface",
-         position={x=x+3,y=y+(side==1 and -5 or 5)},force=force}
+         position={x=gun.position.x+3,y=gun.position.y+(side==1 and -5 or 5)},force=force}
        local pole=s.create_entity{name="substation",
-         position={x=x+3,y=y+(side==1 and -2 or 2)},force=force}
+         position={x=gun.position.x+3,y=gun.position.y+(side==1 and -2 or 2)},force=force}
        check(power and pole,"energy dish physical electrical feed unavailable")
        power.power_production=1000000000
        power.electric_buffer_size=1000000000
@@ -101,6 +134,10 @@ local function init()
      end
      t.turrets[#t.turrets+1]=record
    end
+ end
+ log(MARK.."SETUP_BUNKER_LINES_READY bunkers="..#t.turrets)
+ for side,force in ipairs({player,renegade}) do
+   local y=side==1 and -9 or 9
    for i,u in ipairs(C.units) do
      local x=(i-8)*4.8
      local start={x=x,y=side==1 and -9 or 9}
