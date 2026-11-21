@@ -930,6 +930,47 @@ function M.service_pair(pair,reason)
     end
    end
  end
+ -- Buildable AAI combat recruits share the canonical 0510 dispatcher.
+ -- The original 0338 and 0702 executors alone own actual construction,
+ -- inventory movement, ammunition and field fuel. All earlier incumbent
+ -- defense, rail, physical-custody and infrastructure priorities stay above.
+ local muster=package.loaded["scripts.core.combat_roster_orders"]
+ if muster and type(muster.service_pair)=="function"
+     and pair.combat_muster_order then
+  local ok,progress=pcall(muster.service_pair,pair)
+  if not ok then
+   record("combat-muster-owner-error",pair,safe(progress))
+   stat("failures")
+   return {processed=1,failed=1,detail="combat-muster-owner-error:"..safe(progress)}
+  end
+  if progress==true then stat("combat-muster-orders-commanded") end
+  if pair.combat_muster_order
+     and type(muster.recommend_action)=="function" then
+   local selected_ok,action=pcall(muster.recommend_action,pair)
+   if not selected_ok then
+    record("combat-muster-recommendation-error",pair,safe(action))
+    stat("failures")
+    return {processed=1,failed=1,detail="combat-muster-recommendation-error:"..safe(action)}
+   end
+   if action then
+    local family=family_for(pair,action)
+    if (family=="construction" or family=="item-family-logistics")
+       and family_owned(r,family) then
+     publish_action(pair,action,family,"selected","paid-combat-muster")
+     local result=execute(pair,family,"dispatcher-0510:paid-combat-muster")
+     local status=result.failed>0 and "failed"
+       or result.acted>0 and "acted"
+       or result.blocked>0 and "blocked"
+       or result.waiting>0 and "waiting" or "idle"
+     publish_action(pair,action,family,status,result.detail)
+     stat("pairs_processed");stat("actions",result.acted)
+     stat("failures",result.failed)
+     record("dispatch-paid-combat-muster",pair,safe(result.detail))
+     return result
+    end
+   end
+  end
+ end
  -- Only issue routine orders after defense/expansion can take a free priest.
  order_tick(pair)
  local craft=pair.emergency_craft
