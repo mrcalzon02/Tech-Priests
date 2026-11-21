@@ -29,7 +29,13 @@ function M.request(pair,id,deploy,rally,quality)
  if allowed and not allowed.value then return false,"faction-disabled" end
  if not(pair.station.force.recipes[u.name] and pair.station.force.recipes[u.name].enabled) then return false,"unit-not-researched" end
  quality=quality or "normal"
- if not prototypes.quality[quality] then return false,"unknown-quality" end
+ -- Quality is an optional Factorio 2.1 feature for this mod. A normal
+ -- physical muster must work even when the quality prototype table is absent;
+ -- reject malformed/unknown upgraded quality before touching 0338 custody.
+ if type(quality)~="string" or quality=="" then return false,"unknown-quality" end
+ if quality~="normal" and not (prototypes.quality and prototypes.quality[quality]) then
+  return false,"unknown-quality"
+ end
  if quality~="normal" then
   -- The live 0338 builder currently debits by item name, not an exact
   -- ItemWithQuality stack identity. Do not silently lose paid uncommon
@@ -58,7 +64,10 @@ function M.on_built(pair,task,built)
   -- subsequent commander orders still go through native AAI.
   local state=root();local id=state.next_id;state.next_id=id+1
   local p=built.position
-  order={id=id,unit_id=unit.id,quality=built.quality.name,phase="supply",issued_tick=game.tick,
+  -- Factorio 2.1 can run without the optional Quality DLC; a physical
+  -- normal-quality car still belongs to the original builder.
+  local built_quality=built.quality and built.quality.name or "normal"
+  order={id=id,unit_id=unit.id,quality=built_quality,phase="supply",issued_tick=game.tick,
    deploy={x=p.x,y=p.y},rally={x=p.x,y=p.y},source="ordinary-priest-construction"}
   pair.combat_muster_order=order
  elseif not(type(task.request_value)=="table" and task.request_value.combat_muster_token==order.id) then
