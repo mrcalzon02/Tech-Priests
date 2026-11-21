@@ -170,6 +170,18 @@ class ProofSafety(unittest.TestCase):
         self.assertIn("TP_COMBAT_FRAME_DIAGNOSTIC", launcher)
         self.assertIn("'frame-*.png'", launcher)
 
+    def test_dish_charge_visibility_is_strict_boolean_without_target(self):
+        # Native Factorio LuaRenderObject.visible rejects nil. A gun with no
+        # shooting_target must not make the charge-effect expression nil.
+        source = (ROOT / "tech-priests_src/scripts/bunker_family_visuals.lua").read_text(
+            encoding="utf-8")
+        charge_fx = source.split("local function charge_fx(event)", 1)[1].split(
+            "\nfunction M.tick(event)", 1)[0]
+        self.assertIn("target~=nil and target.valid", charge_fx)
+        self.assertNotIn("(target and target.valid", charge_fx)
+        self.assertIn("visible=visible", charge_fx)
+        self.assertIn("entry.object.visible=visible", charge_fx)
+
     def test_only_live_native_capture_can_satisfy_visual_gate(self):
         fixture = FIXTURE.read_text(encoding="utf-8")
         self.assertIn("game.take_screenshot", fixture)
