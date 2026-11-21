@@ -47,6 +47,30 @@ class NativeFortificationContract(unittest.TestCase):
         ):
             self.assertNotIn(forbidden, source)
 
+    def test_native_damage_ledger_separates_enemy_hits_from_friendly_fire(self):
+        source = FORT.read_text(encoding="utf-8")
+        for marker in (
+            'damage_by_tower_target={}',
+            'wall_kills_by_source={}',
+            'target_class="wall"',
+            'target_class="friendly_tower"',
+            'target_class="enemy"',
+            'target_class="defender_or_support"',
+            't.damage_by_tower_target[kind]=by_target',
+            'by_target[target_class]=by_target[target_class]+amount',
+            'wall_kills_by_source=t.wall_kills_by_source',
+            'damage_by_tower_target=t.damage_by_tower_target',
+        ):
+            self.assertIn(marker, source)
+        event = source.split("local function on_damaged(event)", 1)[1].split(
+            "\\nlocal function on_died(event)", 1)[0]
+        self.assertIn("event.final_damage_amount", event)
+        self.assertIn("event.cause", event)
+        self.assertIn("entity.force and entity.force.name", event)
+        self.assertNotIn("entity.damage(", event)
+        self.assertNotIn("entity.health=", event)
+        self.assertNotIn("game.speed=", event)
+
     def test_seven_distinct_mono_towers_and_explicit_mixed_ratios(self):
         source = FORT.read_text(encoding="utf-8")
         for name in (
