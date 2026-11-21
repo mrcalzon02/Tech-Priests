@@ -139,6 +139,111 @@ def gif_pillow(paths: list[pathlib.Path], target: pathlib.Path, fps: int) -> boo
             img.close()
 
 
+
+PINNED_FFMPEG_WHEEL = "imageio_ffmpeg-0.8.1-py3-none-win_amd64.whl"
+PINNED_FFMPEG_SHA256 = "f27ca4cb85e2d4946deedbce1a81245dfd942a2bcf94b53676fb3956aa95bf1b"
+
+
+def pinned_local_ffmpeg() -> str | None:
+    """One-time checksum-pinned portable FFmpeg; leave runner installations alone.
+
+    The approved Windows runner's Blender Python has neither ffmpeg on PATH
+    nor Pillow. Store the vetted binary in the user's persistent local cache,
+    never in a per-run report or the immutable Factorio graphics cache.
+    """
+    if os.name != "nt" or sys.maxsize <= 2**32:
+        return None
+    import tempfile
+    import urllib.parse
+    import urllib.request
+    import zipfile
+
+    cache = pathlib.Path(os.environ.get("LOCALAPPDATA") or
+                         pathlib.Path.home() / ".cache") / "tech-priests" / "native-ffmpeg"
+    exe = cache / "ffmpeg-imageio-0.8.1-win_amd64.exe"
+    manifest = cache / "encoder-pin.json"
+    try:
+        if exe.is_file() and manifest.is_file():
+            pin = json.loads(manifest.read_text(encoding="utf-8"))
+            if (pin.get("wheel_sha256") == PINNED_FFMPEG_SHA256
+                    and pin.get("executable_sha256") == digest(exe)
+                    and exe.stat().st_size > 1024 * 1024):
+                print("NATIVE_PROOF_ENCODER_CACHE_HIT source=pinned-imageio-ffmpeg-0.8.1",
+                      flush=True)
+                return str(exe)
+        cache.mkdir(parents=True, exist_ok=True)
+        metadata_url = "https://pypi.org/pypi/imageio-ffmpeg/0.8.1/json"
+        with urllib.request.urlopen(metadata_url, timeout=25) as response:
+            metadata = json.load(response)
+        matches = [r for r in metadata.get("urls", [])
+                   if r.get("filename") == PINNED_FFMPEG_WHEEL
+                   and r.get("digests", {}).get("sha256") == PINNED_FFMPEG_SHA256]
+        if len(matches) != 1:
+            raise ValueError("Official PyPI wheel/digest pin not found")
+        wheel_url = matches[0]["url"]
+        location = urllib.parse.urlsplit(wheel_url)
+        if (location.scheme != "https" or
+                location.hostname != "files.pythonhosted.org"):
+            raise ValueError("Unexpected pinned wheel download origin")
+        wheel_tmp = None
+        exe_tmp = None
+        manifest_tmp = None
+        try:
+            with tempfile.NamedTemporaryFile(dir=cache, suffix=".whl",
+                                             delete=False) as temporary:
+                wheel_tmp = pathlib.Path(temporary.name)
+                size = 0
+                with urllib.request.urlopen(wheel_url, timeout=90) as response:
+                    if urllib.parse.urlsplit(response.geturl()).hostname != "files.pythonhosted.org":
+                        raise ValueError("Wheel download redirected to unapproved origin")
+                    while True:
+                        chunk = response.read(1024 * 1024)
+                        if not chunk:
+                            break
+                        size += len(chunk)
+                        if size > 96 * 1024 * 1024:
+                            raise ValueError("Pinned wheel exceeds size limit")
+                        temporary.write(chunk)
+            if digest(wheel_tmp) != PINNED_FFMPEG_SHA256:
+                raise ValueError("Pinned wheel SHA256 mismatch; refusing executable")
+            with zipfile.ZipFile(wheel_tmp) as archive:
+                binaries = [item for item in archive.infolist()
+                            if item.filename.startswith("imageio_ffmpeg/binaries/ffmpeg-")
+                            and item.filename.endswith(".exe")
+                            and 1024 * 1024 < item.file_size < 160 * 1024 * 1024]
+                if len(binaries) != 1:
+                    raise ValueError("Pinned wheel contains no unique Windows FFmpeg executable")
+                with tempfile.NamedTemporaryFile(dir=cache, suffix=".exe",
+                                                 delete=False) as temporary:
+                    exe_tmp = pathlib.Path(temporary.name)
+                    with archive.open(binaries[0]) as source:
+                        shutil.copyfileobj(source, temporary, 1024 * 1024)
+            exe_digest = digest(exe_tmp)
+            # Atomic publish: no partially downloaded or extracted codec is reusable.
+            os.replace(exe_tmp, exe)
+            exe_tmp = None
+            with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8",
+                                             dir=cache, suffix=".json",
+                                             delete=False) as temporary:
+                manifest_tmp = pathlib.Path(temporary.name)
+                json.dump({"wheel_sha256": PINNED_FFMPEG_SHA256,
+                           "executable_sha256": exe_digest}, temporary)
+            os.replace(manifest_tmp, manifest)
+            manifest_tmp = None
+            print("NATIVE_PROOF_ENCODER_PINNED_CACHED wheel_sha256=" +
+                  PINNED_FFMPEG_SHA256 + " executable_sha256=" + exe_digest, flush=True)
+            return str(exe)
+        finally:
+            for temp in (wheel_tmp, exe_tmp, manifest_tmp):
+                if temp is not None:
+                    temp.unlink(missing_ok=True)
+    except (OSError, ValueError, KeyError, json.JSONDecodeError,
+            zipfile.BadZipFile) as error:
+        print("NATIVE_PROOF_ENCODER_PROVISION_BLOCKED " +
+              type(error).__name__ + ": " + str(error)[:350], flush=True)
+        return None
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--native-root", type=pathlib.Path, required=True)
@@ -183,6 +288,8 @@ def main():
         )
         ffmpeg = next((str(pathlib.Path(p)) for p in candidates
                        if p and pathlib.Path(p).is_file()), None)
+    if not ffmpeg:
+        ffmpeg = pinned_local_ffmpeg()
     try:
         import PIL
         pillow_version = getattr(PIL, "__version__", "present")
