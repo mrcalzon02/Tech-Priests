@@ -24,6 +24,9 @@ jobs:
           persist-credentials: false
           sparse-checkout: |
             tools/ci_factorio_combined_modpack.py
+          # File-level patterns need non-cone mode; cone mode checked out a
+          # broken unrelated gitlink under build/package_checkout.
+          sparse-checkout-cone-mode: false
       - name: Verify downloader parses without executing secrets
         run: python3 -m py_compile tools/ci_factorio_combined_modpack.py
       - name: Download three pinned Factorio 2.1 official mods with owner secrets
