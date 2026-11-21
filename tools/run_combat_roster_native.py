@@ -135,7 +135,7 @@ end
       create_log.read_text(errors='replace')[-4500:])
   gui_log=OUT/'graphical-client.log'
   native=OUT/'user-data/script-output/combat-roster/batch-native'
-  marker='[TP-COMBAT-BATCH] NATIVE_COMBAT_PASS'
+  marker='[TP-COMBAT-BATCH] NATIVE_COMBAT_COMPLETE'
   child=None
   seen=False
   deadline=time.monotonic()+600
@@ -183,6 +183,9 @@ end
   result=subprocess.run(encoder,cwd=ROOT,env=environment,timeout=600)
   if result.returncode:
    raise RuntimeError('Native Factorio frames exist but one or more real GIF/MP4 encodes failed; see '+str(proof))
+  receipt=json.loads((native/'manifest.json').read_text(encoding='utf-8-sig'))
+  if receipt['status']!='PASS':
+   raise RuntimeError('Native combat gameplay FAIL; original GIF/MP4 diagnostic evidence preserved at '+str(proof)+': '+json.dumps(receipt.get('blockers',[])))
   print(json.dumps({'status':'PASS','native':True,
    'actors_staged':30,'bunkers':14,'biters':48,'source_sha':args.source_sha,
    'manifest':str(proof/'proof-manifest.json'),'proof_dir':str(proof)}),flush=True)
