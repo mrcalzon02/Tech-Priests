@@ -130,3 +130,16 @@ A6. Only then implement the smallest bounded change on `main` with source tests 
 - GitHub code search returned no matches even for known symbols; direct file reads are authoritative for this pass, but do not infer repository-wide absence from empty search results.
 
 **Next bounded task:** trace creation of sanctification records and `apply_completed_sanctification_operation` in generated fragments, then implement a pure tested quality-aware calculation at that owner. Do not change game behavior until the ownership path is established.
+
+
+### Phase A continued — generated-fragment call-site audit
+- Directly inspected all 22 `scripts/generated/control_legacy_part_001..022.lua` files for exact declarations/calls of `get_consecration_record`, `register_consecration_target`, and `apply_completed_sanctification_operation`.
+- `control_legacy_part_002.lua` invokes `register_consecration_target(entity)` (near line 994) and queries records (near 1225).
+- `control_legacy_part_003.lua` invokes `get_consecration_record`, restores `record.sanctification` in `sanctify_target_with_priest` (near lines 1018–1051).
+- `control_legacy_part_004.lua` invokes record lookups in existing research/state logic.
+- Additional record lookups are in parts 014, 016, and 017.
+- Exact definitions of the record owner and `apply_completed_sanctification_operation` were **not located in these generated fragments** by this scan. They may live in other runtime files; this is **not** evidence that they are missing.
+- Existing default settings in fragment 001 are base max = 100, base start = 50, decay = 3–10 per operation, with configurable jitter, pollution, malfunction and damage parameters.
+- Therefore proposed quality values 50/60/70/85/100 match the **unresearched defaults only**, not all configurations. Preserve settings and force research; quality adjustment must be designed relative to them.
+
+**Open blocker to gameplay edits:** locate and inspect the actual record-definition and operation-completion owner outside generated fragments. Avoid altering the generated fragments speculatively or introducing a parallel state store.
