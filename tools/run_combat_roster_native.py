@@ -17,7 +17,19 @@ def main():
    help='Fresh isolated test directory; never overwrite installed game data')
  parser.add_argument('--dependency-mods',type=Path,
    help='Local AAI 0.9.2, AAI Signals 0.8.0 and Informatron 0.5.0 ZIP directory')
- parser.add_argument('--scenario',choices=['battle','deployment','negative','progression','duels','batch-visual'],default='battle')
+ parser.add_argument('--scenario',choices=['battle','deployment','negative','progression','duels','batch-visual','fortification','fortification-visual'],default='battle')
+ parser.add_argument('--fort-towers',choices=(
+   'mono-autocannon','mono-chicago','mono-minigun','mono-cannon',
+   'mono-lobber','mono-rocket','mono-dish',
+   'mix-autocannon-minigun-3to1','mix-autocannon-minigun-1to1',
+   'mix-autocannon-minigun-1to3','mix-rocket-dish-3to1',
+   'mix-all-seven'),default=None)
+ parser.add_argument('--fort-defenders',choices=(
+   'none','guardsmen-6','guardsmen-12','rangers-12','breachers-12',
+   'sisters-12','mixed-12','mixed-24'),default=None)
+ parser.add_argument('--fort-thickness',type=int,choices=(1,2,3),default=None)
+ parser.add_argument('--fort-clearance',type=int,choices=(3,7,13),default=None)
+ parser.add_argument('--fort-evolution',type=float,choices=(0.0,0.25,0.5,0.75,1.0),default=None)
  parser.add_argument('--evolution',type=float,choices=(0.0,0.25,0.5,0.75,1.0),default=None,
    help='Five-stage native biter/spitter evolution sweep, batch-visual only')
  parser.add_argument('--source-sha',default=None,
@@ -35,11 +47,19 @@ def main():
  EXE=args.factorio.resolve()
  if args.evolution is not None and args.scenario!='batch-visual':
   parser.error('--evolution is allowed only in the native GUI batch-visual scenario')
+ fortification=args.scenario in ('fortification','fortification-visual')
+ fort_flags=(args.fort_towers,args.fort_defenders,args.fort_thickness,
+             args.fort_clearance,args.fort_evolution)
+ if fortification and any(value is None for value in fort_flags):
+  parser.error('fortification requires turret, defenders, thickness, clearance and evolution')
+ if not fortification and any(value is not None for value in fort_flags):
+  parser.error('fortification flags belong only to fortification scenarios')
  if not EXE.is_file():parser.error('Installed Factorio executable missing: '+str(EXE))
  if args.scenario=='deployment': OUT=ROOT/'build/combat-roster/deployment'
  if args.scenario=='negative': OUT=ROOT/'build/combat-roster/negative'
  if args.scenario=='progression': OUT=ROOT/'build/combat-roster/progression'
  if args.scenario=='duels': OUT=ROOT/'build/combat-roster/duels'
+ if fortification: OUT=ROOT/'build/combat-roster/fortification'
  if args.run_id:
   if not args.run_id.replace('-','').isalnum(): parser.error('run-id must contain letters, numbers or hyphens')
   OUT=OUT/args.run_id
@@ -64,11 +84,21 @@ def main():
  if args.faction_off:
   path=mod/'settings-final-fixes.lua'
   path.write_text(path.read_text(encoding='utf-8')+f'\ndata.raw["bool-setting"]["tech-priests-combat-allow-{args.faction_off}"].default_value=false\n',encoding='utf-8')
- fixture={'deployment':'deployment.lua','negative':'negative.lua','battle':'fixture.lua','progression':'progression.lua','duels':'duels.lua','batch-visual':'batch_visual.lua'}[args.scenario]
+ fixture={'deployment':'deployment.lua','negative':'negative.lua','battle':'fixture.lua','progression':'progression.lua','duels':'duels.lua','batch-visual':'batch_visual.lua',
+          'fortification':'fortification.lua',
+          'fortification-visual':'fortification.lua'}[args.scenario]
  shutil.copy2(ROOT/'tests/scenarios/combat-roster'/fixture,mod/'combat-fixture.lua')
- batch_flag='true' if args.scenario=='batch-visual' else 'false'
+ batch_flag='true' if args.scenario in ('batch-visual','fortification-visual') else 'false'
  evolution_flag=repr(args.evolution) if args.evolution is not None else 'nil'
- (mod/'control.lua').write_text((source/'control.lua').read_text(encoding='utf-8')+f'\nTP_COMBAT_TEST_LIMIT={args.limit}\nTP_COMBAT_GUI_PROOF=true\nTP_COMBAT_ORDINARY_CONSTRUCTION={str(args.ordinary_construction).lower()}\nTP_COMBAT_QUALITY_SUPPLIES={str(args.quality_supplies).lower()}\nTP_COMBAT_OWNERSHIP_OVERLAP={str(args.ownership_overlap).lower()}\nTP_COMBAT_BATCH_VISUALS={batch_flag}\nTP_COMBAT_EVOLUTION={evolution_flag}\nrequire("combat-fixture")\n',encoding='utf-8')
+ fort_config='nil'
+ if fortification:
+  # Every string is argparse choice-allowlisted; never accept an arbitrary
+  # Lua expression from a local runner request.
+  fort_config=(
+   '{thickness=%d,clearance=%d,evolution=%.2f,towers="%s",defenders="%s"}'
+   % (args.fort_thickness,args.fort_clearance,args.fort_evolution,
+      args.fort_towers,args.fort_defenders))
+ (mod/'control.lua').write_text((source/'control.lua').read_text(encoding='utf-8')+f'\nTP_COMBAT_TEST_LIMIT={args.limit}\nTP_COMBAT_GUI_PROOF=true\nTP_COMBAT_ORDINARY_CONSTRUCTION={str(args.ordinary_construction).lower()}\nTP_COMBAT_QUALITY_SUPPLIES={str(args.quality_supplies).lower()}\nTP_COMBAT_OWNERSHIP_OVERLAP={str(args.ownership_overlap).lower()}\nTP_COMBAT_BATCH_VISUALS={batch_flag}\nTP_COMBAT_EVOLUTION={evolution_flag}\nTP_FORT_CONFIG={fort_config}\nrequire("combat-fixture")\n',encoding='utf-8')
  (mod/'data-final-fixes.lua').write_text((source/'data-final-fixes.lua').read_text(encoding='utf-8')+'''
 local target=table.deepcopy(data.raw.container["wooden-chest"])
 target.name="tech-priests-combat-test-target";target.max_health=100000;target.resistances={}
@@ -118,7 +148,7 @@ end
  config=OUT/'config.ini';config.write_text('[path]\nread-data='+str(EXE.parents[2]/'data').replace('\\','/')+'\nwrite-data='+str(user.resolve()).replace('\\','/')+'\n[other]\ncheck-updates=false\n')
  common=[str(EXE),'--config',str(config.resolve()),'--mod-directory',str((OUT/'mods').resolve())]
  save=OUT/'test.zip'
- if args.scenario=='batch-visual':
+ if args.scenario in ('batch-visual','fortification-visual'):
   import re
   import sys
   if not args.source_sha or not re.fullmatch('[0-9a-f]{40}',args.source_sha):
@@ -148,14 +178,15 @@ end
    raise RuntimeError('Native batch save creation failed: '+creation_output[-4500:])
   gui_log=OUT/'graphical-client.log'
   native=OUT/'user-data/script-output/combat-roster/batch-native'
-  marker='[TP-COMBAT-BATCH] NATIVE_COMBAT_COMPLETE'
+  marker=('[TP-FORT] NATIVE_COMBAT_COMPLETE' if fortification else
+          '[TP-COMBAT-BATCH] NATIVE_COMBAT_COMPLETE')
   child=None
   seen=False
   wall_start=time.monotonic()
   next_report=wall_start+30
   last_heartbeat=''
   last_heartbeat_wall=None
-  deadline=wall_start+600
+  deadline=wall_start+900
   clips=('01-massed-units','02-bunker-lines','03-enemy-flank')
   def frame_inventory():
    return {clip:len(list((native/clip).glob('frame-*.png'))) for clip in clips}
@@ -199,6 +230,8 @@ end
      # setup/capture path, or an actual engine-level fatal error.
      if ('owner=combat-batch-native route=setup' in output
          or 'owner=combat-batch-native route=record-proof' in output
+         or 'owner=fortification-native route=setup' in output
+         or 'owner=fortification-native route=record-proof' in output
          or 'Error Util.cpp' in output):
       break
      if marker in output and (native/'manifest.json').is_file():
@@ -211,8 +244,8 @@ end
        actual=sum(1 for clip_id,frames in expected.items()
          for rec in frames
          if (native/clip_id/('frame-%04d.png'%rec['frame'])).is_file())
-       if (count>=48 and actual==count and
-           all(len(expected.get(clip, []))>=16 for clip in
+       if (count>=96 and actual==count and
+           all(len(expected.get(clip, []))>=32 for clip in
                ('01-massed-units','02-bunker-lines','03-enemy-flank'))):
         seen=True
         break
@@ -237,7 +270,9 @@ end
    # SAMPLE and HEARTBEAT are positive evidence, NEVER error messages.
    diagnostics=[line.strip() for line in output.splitlines()
       if ('owner=combat-batch-native route=' in line or
-          '[TP-COMBAT-BATCH] FAIL' in line or 'Error Util.cpp' in line)]
+          'owner=fortification-native route=' in line or
+          '[TP-COMBAT-BATCH] FAIL' in line or
+          '[TP-FORT] FAIL' in line or 'Error Util.cpp' in line)]
    # Capture the FIRST true failure, not the last repetitive secondary tick.
    for line in diagnostics[:12]:
     print('TP_COMBAT_FIRST_NATIVE_DIAGNOSTIC '+line[:700],flush=True)
@@ -250,7 +285,7 @@ end
   proof=OUT/'proof-clips'
   encoder=[sys.executable,str(ROOT/'tools/assemble_native_combat_proofs.py'),
     '--native-root',str(native),'--output-dir',str(proof),
-    '--source-sha',args.source_sha]
+    '--source-sha',args.source_sha,'--fps','12']
   result=subprocess.run(encoder,cwd=ROOT,env=environment,timeout=600)
   if result.returncode:
    raise RuntimeError('Native Factorio frames exist but one or more real GIF/MP4 encodes failed; see '+str(proof))
@@ -272,11 +307,87 @@ end
     'hits':receipt.get('hits')},sort_keys=True),flush=True)
   if receipt['status']!='PASS':
    raise RuntimeError('Native combat gameplay FAIL; original GIF/MP4 diagnostic evidence preserved at '+str(proof)+': '+json.dumps(receipt.get('blockers',[])))
+  if fortification:
+   cfg=receipt.get('config',{})
+   requested={'towers':args.fort_towers,'defenders':args.fort_defenders,
+              'thickness':args.fort_thickness,'clearance':args.fort_clearance,
+              'evolution':args.fort_evolution}
+   if any(cfg.get(k)!=v for k,v in requested.items()):
+    raise RuntimeError('Native fortification proof config differs from actual request')
+   if receipt.get('walls_requested',0)<=0 or receipt.get('towers_requested')!=12:
+    raise RuntimeError('Native fortification proof omitted physical wall or turret evidence')
+   print('NATIVE_FORTIFICATION_VERDICT '+json.dumps({
+    'config':cfg,'defense_held':receipt.get('defense_held'),
+    'wall_held':receipt.get('wall_held'),
+    'final':receipt.get('final'),
+    'walls_requested':receipt.get('walls_requested'),
+    'measured_min_wall_clearance':receipt.get('measured_min_wall_clearance'),
+    'first_enemy_inside_tick':receipt.get('first_enemy_inside_tick')},sort_keys=True),flush=True)
   print(json.dumps({'status':'PASS','native':True,
    'actors_staged':30,'bunkers':14,'biters':48,'source_sha':args.source_sha,
-   'evolution':args.evolution,'enemy_roster':receipt.get('enemy_roster',{}),
-   'defenses_held':receipt.get('defenses_held'),
+   'evolution':args.evolution if not fortification else args.fort_evolution,
+   'enemy_roster':receipt.get('enemy_roster',{}),
+   'defenses_held':receipt.get('defenses_held') if not fortification else receipt.get('defense_held'),
    'manifest':str(proof/'proof-manifest.json'),'proof_dir':str(proof)}),flush=True)
+  return
+ if args.scenario=='fortification':
+  # Headless native Factorio combat at full simulation speed; geometry,
+  # missile damage, AAI drivers, and native wall destruction are real.
+  # No fabricated timelapse images are produced by a headless engine.
+  checkpoints=(
+   ('create',['--create',str(save.resolve()),'--map-gen-seed','907260'],240),
+   ('battle',['--test-save',str(save.resolve()),'--test-ticks','3660'],600))
+  for stage,commands,seconds in checkpoints:
+   path=OUT/(stage+'.log')
+   with path.open('w',encoding='utf-8') as log:
+    proc=subprocess.run(common+commands,stdout=log,stderr=subprocess.STDOUT,
+                        cwd=OUT,timeout=seconds)
+   lines=path.read_text(encoding='utf-8',errors='replace')
+   failures=[line for line in lines.splitlines()
+             if ('owner=fortification-native route=' in line or
+                 '[TP-FORT] FAIL' in line or 'Error Util.cpp' in line)]
+   if proc.returncode or failures or (stage=='create' and not save.is_file()):
+    print('TP_FORT_NATIVE_FIRST_FAILURE stage='+stage+' '+
+          ((failures[0][:900]) if failures else lines[-3000:]),flush=True)
+    raise SystemExit('Native fortification '+stage+' failed (exit '+
+                     str(proc.returncode)+')')
+  native=OUT/'user-data/script-output/combat-roster/fortification-native/manifest.json'
+  if not native.is_file():
+   output=(OUT/'battle.log').read_text(errors='replace')
+   raise RuntimeError('Original native fortification receipt missing: '+output[-5000:])
+  receipt=json.loads(native.read_text(encoding='utf-8-sig'))
+  cfg={'towers':args.fort_towers,'defenders':args.fort_defenders,
+       'thickness':args.fort_thickness,'clearance':args.fort_clearance,
+       'evolution':args.fort_evolution}
+  if (receipt.get('schema')!='tech-priests.native-fortification.v1'
+      or receipt.get('native') is not True
+      or receipt.get('no_scripted_damage') is not True
+      or receipt.get('config')!=cfg
+      or receipt.get('towers_requested')!=12
+      or receipt.get('enemies_requested')!=48
+      or receipt.get('walls_requested',0)<=0
+      or not isinstance(receipt.get('measured_min_wall_clearance'),(int,float))):
+   raise RuntimeError('Real engine fortification setup/receipt identity mismatch')
+  # Raw minimum wall clearance may exceed the requested minimum due to
+  # integer tile coordinates; it must never be smaller.
+  if receipt['measured_min_wall_clearance']+1e-6<args.fort_clearance:
+   raise RuntimeError('Genuine wall-to-defense clearance below selected minimum')
+  if receipt.get('status')!='PASS':
+   raise RuntimeError('Native fortification fixture blocked: '+str(receipt.get('blockers')))
+  print('NATIVE_FORTIFICATION_VERDICT '+json.dumps({
+   'status':receipt['status'],'config':cfg,
+   'walls_requested':receipt['walls_requested'],
+   'min_clearance':receipt['measured_min_wall_clearance'],
+   'defense_held':receipt['defense_held'],
+   'wall_held':receipt['wall_held'],
+   'remaining':receipt['final'],
+   'first_breach_tick':receipt.get('first_enemy_inside_tick'),
+   'tower_roster':receipt.get('tower_roster'),
+   'defender_roster':receipt.get('defender_roster'),
+   'enemy_roster':receipt.get('enemy_roster'),
+   'damage':receipt.get('damage'),
+   'damage_by_tower':receipt.get('damage_by_tower'),
+   'native_receipt':str(native)},sort_keys=True),flush=True)
   return
  for label,arguments,marker in [('create',['--create',str(save.resolve())],None),
                             ('behavior',['--test-save',str(save.resolve()),'--test-ticks','24000' if args.scenario=='deployment' else '15000' if args.scenario=='negative' else '18000' if args.scenario=='progression' else '7200' if args.scenario=='duels' else '3600'],
