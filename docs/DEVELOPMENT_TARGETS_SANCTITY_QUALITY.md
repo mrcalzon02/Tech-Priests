@@ -31,3 +31,22 @@ Values are provisional. Legendary base 100 must not imply immunity from decay or
 3. Native Factorio tests for placement, quality changes, module insertion/removal, save/reload, migrations, and actual sanctity/malfunction outcomes.
 4. Report measured results and failures; attach native screenshots or short captures where useful. Do not label the feature implemented without commit and runtime evidence.
 5. Commit on `main` only; report exact commit SHA and read back the committed file.
+
+
+## Bilateral technology doctrines: Law & Order versus Chaos & Anarchy
+**Design authority:** sanctity is not a one-directional good/bad score. Two research routes and corresponding module families must make high-sanctity and low-sanctity machinery viable, with differentiated outputs.
+
+| Dimension | Law & Order (high sanctity) | Chaos & Anarchy (low sanctity) |
+| --- | --- | --- |
+| Research route | Consecration, precision, efficiency | Degradation tolerance, detritus and salvage |
+| Module family | Raise/support effective sanctity; high-sanctity performance | Lower/hold effective sanctity; low-sanctity survival and detritus output |
+| Rewards | Efficient, reliable, high-quality production | Continued operation at low sanctity; resource/detritus generation |
+| Tradeoff | Requires maintaining sanctity; weak when degraded | Sacrifices pristine efficiency or other clean-production benefits for low-sanctity advantages |
+
+### Design requirements
+- Model the two doctrines as explicit technology unlocks and module recipes/effects, not just positive and negative sanctity values.
+- Low-sanctity Chaos machinery must have meaningful strengths, not merely reduced penalties; evaluate detritus as an actual defined product/byproduct with mass/resource accounting, rather than free material from nowhere.
+- Keep quality-derived **inherent** sanctity distinct from doctrine/module-driven **effective** sanctity; high-quality machines may be deliberately driven toward low effective sanctity.
+- Specify stacking, unlock prerequisites, recipes, balancing costs, side effects and compatibility with all eligible machines during implementation. Do not assume mutually exclusive research unless separately authorized.
+- Test mono-doctrine and mixed-module configurations across all five quality tiers and sanctity bands, including actual detritus yields, efficiency, malfunction/survival behavior and UPS impact.
+- Existing baseline quality numbers are provisional; balance both routes so neither universally dominates.
