@@ -61,6 +61,16 @@ class IntegratedCombatRoster(unittest.TestCase):
         self.assertIn("paid-combat-muster", dispatcher)
         self.assertIn("reinforced-unit-needs-exact-native-stack-custody", orders)
 
+    def test_aai_command_coordinates_are_finite(self):
+        bridge = read("scripts/core/combat_roster_bridge.lua")
+        self.assertIn("local function finite_position(pos)", bridge)
+        self.assertIn("pos.x==pos.x and pos.y==pos.y", bridge)
+        self.assertIn("pos.x<1000000 and pos.x> -1000000", bridge)
+        self.assertIn("pos.y<1000000 and pos.y> -1000000", bridge)
+        self.assertIn("if order.stop==true then data.target_speed=0", bridge)
+        self.assertIn("elseif finite_position(order.position) then", bridge)
+        self.assertIn('else return false,"invalid-order" end', bridge)
+
     def test_normal_quality_and_muster_ui_fail_closed(self):
         orders = read("scripts/core/combat_roster_orders.lua")
         gui = read("scripts/core/combat_muster_gui.lua")
