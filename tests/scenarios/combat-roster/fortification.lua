@@ -151,7 +151,8 @@ local function init()
   wall_units={},towers={},defenders={},attackers={},
   defender_roster={},tower_roster={},enemy_roster={},samples={},damage={
    wall=0,tower=0,defender=0,enemy=0,other=0},
-  damage_by_attacker={},damage_by_tower={},wall_losses_by_layer={},
+  damage_by_attacker={},damage_by_tower={},damage_by_tower_target={},
+  wall_kills_by_source={},wall_losses_by_layer={},
   wall_first_loss_tick=nil,wall_first_inner_loss_tick=nil,
   enemy_first_inside_tick=nil,clips={},bounds={x=0,y=0},
   ammo_consumed=0,attacker_losses=0}
@@ -439,6 +440,8 @@ local function tick(event)
    defender_roster=t.defender_roster,enemy_roster=t.enemy_roster,
    final=final,damage=t.damage,damage_by_attacker=t.damage_by_attacker,
    damage_by_tower=t.damage_by_tower,
+   damage_by_tower_target=t.damage_by_tower_target,
+   wall_kills_by_source=t.wall_kills_by_source,
    wall_losses_by_layer=t.wall_losses_by_layer,
    first_wall_loss_tick=t.wall_first_loss_tick,
    first_inner_wall_loss_tick=t.wall_first_inner_loss_tick,
@@ -478,14 +481,21 @@ local function on_damaged(event)
  local entity=event.entity
  local n=entity.unit_number
  local amount=event.final_damage_amount
+ local target_class="other"
  if n and t.wall_units[n]~=nil then
+  target_class="wall"
   t.damage.wall=t.damage.wall+amount
  elseif n and t.tower_units[n] then
+  target_class="friendly_tower"
   t.damage.tower=t.damage.tower+amount
  else
   local force=entity.force and entity.force.name
-  if force=="enemy" then t.damage.enemy=t.damage.enemy+amount
-  elseif force=="player" then t.damage.defender=t.damage.defender+amount
+  if force=="enemy" then
+   target_class="enemy"
+   t.damage.enemy=t.damage.enemy+amount
+  elseif force=="player" then
+   target_class="defender_or_support"
+   t.damage.defender=t.damage.defender+amount
   else t.damage.other=t.damage.other+amount end
  end
  local attacker=event.cause
@@ -493,7 +503,16 @@ local function on_damaged(event)
  t.damage_by_attacker[attacker_name]=(t.damage_by_attacker[attacker_name] or 0)+amount
  if attacker and attacker.valid and t.tower_units[attacker.unit_number] then
   local kind=t.tower_units[attacker.unit_number]
+  -- These are original Factorio on_entity_damaged events. Splitting by the
+  -- physically damaged entity prevents friendly splash from masquerading as
+  -- offensive DPS. No test damage is inflicted or altered here.
   t.damage_by_tower[kind]=(t.damage_by_tower[kind] or 0)+amount
+  local by_target=t.damage_by_tower_target[kind]
+  if not by_target then
+   by_target={enemy=0,wall=0,friendly_tower=0,defender_or_support=0,other=0}
+   t.damage_by_tower_target[kind]=by_target
+  end
+  by_target[target_class]=by_target[target_class]+amount
  end
 end
 local function on_died(event)
@@ -503,6 +522,13 @@ local function on_died(event)
  if unit and t.wall_units[unit]~=nil then
   local layer=t.wall_units[unit]
   t.wall_losses_by_layer[layer+1]=t.wall_losses_by_layer[layer+1]+1
+  local killer=event.cause
+  local source="unattributed"
+  if killer and killer.valid then
+   local friendly_kind=t.tower_units[killer.unit_number]
+   source=friendly_kind and ("friendly-"..friendly_kind) or killer.name
+  end
+  t.wall_kills_by_source[source]=(t.wall_kills_by_source[source] or 0)+1
   if not t.wall_first_loss_tick then t.wall_first_loss_tick=game.tick-t.start end
   if layer==0 and not t.wall_first_inner_loss_tick then
    t.wall_first_inner_loss_tick=game.tick-t.start
