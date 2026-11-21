@@ -304,6 +304,13 @@ local function target_inventory(task)
   if task.family == "turret-ammo" then
     return inventory(task.target, defines.inventory.turret_ammo)
   end
+  if task.family == "combat-ammo" and task.target.type == "car" then
+    return inventory(task.target, defines.inventory.car_ammo)
+  end
+  if task.family == "combat-supply" and task.target.type == "car" then
+    local ok, inv = pcall(function() return task.target.get_fuel_inventory() end)
+    return ok and inv and inv.valid and inv or nil
+  end
   return nil
 end
 
@@ -553,6 +560,58 @@ local function scan_candidate(pair)
   return best
 end
 
+-- Explicit recruitment supply offer. It admits no new scheduler or item;
+-- all actual stock debit, movement and insertion remain in 0702's custody.
+function M.combat_supply_count(inv,item)
+  return inv_count(inv,item)
+end
+
+function M.offer_combat_supply(pair, actor, item, kind, count)
+  local family = kind=="ammo" and "combat-ammo"
+    or kind=="supply" and "combat-supply" or nil
+  local catalog=package.loaded["shared.combat_roster_catalog"]
+  local unit=catalog and valid(actor) and catalog.for_entity_name(actor.name)
+  if not (family and valid_pair(pair) and unit
+      and actor.type=="car" and actor.unit_number
+      and actor.force==pair.station.force
+      and actor.surface==pair.station.surface
+      and type(item)=="string") then return false,"invalid-combat-supply" end
+  local ammo=catalog.ammo[unit.ammo_family]
+  if family=="combat-ammo" and not (ammo and ammo.name==item) then
+    return false,"wrong-unit-ammunition"
+  end
+  if family=="combat-supply" and item~="tech-priests-field-supply-pack" then
+    return false,"wrong-field-supply"
+  end
+  local target={target=actor,family=family}
+  local inv=target_inventory(target)
+  if not inv or not inv_can_insert(inv,item,1) then
+    return false,"combat-inventory-refused"
+  end
+  if pair.item_family_logistics_0702 or pair.item_family_custody_0702 then
+    return false,"item-family-busy"
+  end
+  local old=pair.item_family_candidate_0702
+  if old then
+    if old.target==actor and old.item==item and old.family==family then
+      return true,"existing-combat-supply-offer"
+    end
+    return false,"existing-family-candidate"
+  end
+  local want=math.max(1,math.min(2,math.floor(tonumber(count)or 1)))
+  if inv_count(inv,item)>=want then return false,"already-stocked" end
+  local source=source_for_item(pair,item,inv)
+  pair.item_family_candidate_0702={
+    family=family,target=actor,target_unit=actor.unit_number,
+    target_name=actor.name,item=item,count=want-inv_count(inv,item),
+    source=source,priority=950,discovered_tick=now(),
+    source_name=source and source.entity.name,
+    reason="physical-combat-muster-supply"
+  }
+  record(pair,"combat-supply-offered",item.." for "..actor.name)
+  return true,source and "physically-stocked" or "waiting-for-real-source"
+end
+
 local function candidate_valid(pair, candidate)
   if not (valid_pair(pair) and type(candidate) == "table" and valid(candidate.target)) then
     return false
@@ -566,6 +625,19 @@ local function candidate_valid(pair, candidate)
   if not inv then return false end
   if candidate.family == "turret-ammo" then
     return is_ammo(candidate.item) and inv_can_insert(inv, candidate.item, 1)
+  end
+  if candidate.family == "combat-ammo" or candidate.family == "combat-supply" then
+    local catalog = package.loaded["shared.combat_roster_catalog"]
+    local unit = catalog and catalog.for_entity_name(candidate.target.name)
+    if not (unit and candidate.target.type == "car"
+        and candidate.target.unit_number == candidate.target_unit) then return false end
+    if candidate.family == "combat-ammo" then
+      local ammo = catalog.ammo[unit.ammo_family]
+      return ammo and candidate.item == ammo.name
+        and inv_can_insert(inv, candidate.item, 1)
+    end
+    return candidate.item == "tech-priests-field-supply-pack"
+      and inv_can_insert(inv, candidate.item, 1)
   end
   if candidate.family == "lab-science" then
     local technology = pair.station.force and pair.station.force.current_research
@@ -997,6 +1069,24 @@ local function normalize_task(pair, task)
       end
       return false, "abort:research-changed"
     end
+  elseif task.family == "combat-ammo" or task.family == "combat-supply" then
+    local inv = target_inventory(task)
+    local catalog = package.loaded["shared.combat_roster_catalog"]
+    local unit = catalog and valid(task.target)
+      and catalog.for_entity_name(task.target.name)
+    local ammo = unit and catalog.ammo[unit.ammo_family]
+    local named = task.family == "combat-ammo"
+      and ammo and task.item == ammo.name
+      or task.family == "combat-supply"
+      and task.item == "tech-priests-field-supply-pack"
+    if not (inv and unit and named and inv_can_insert(inv, task.item, 1)) then
+      if task.carried and (tonumber(task.carried.count) or 0) > 0 then
+        task.phase = "return-custody"
+        sync_custody(pair, task, "combat-target-lost-or-incompatible")
+        return false, "combat-target-lost-or-incompatible"
+      end
+      return false, "abort:combat-target-lost-or-incompatible"
+    end
   elseif task.family == "turret-ammo" then
     local inv = target_inventory(task)
     if not inv then
@@ -1366,6 +1456,8 @@ function M.recommend_action(pair)
     item = candidate.item,
     phase = "candidate",
     label = candidate.family == "lab-science" and "Laboratory supply"
+      or (candidate.family == "combat-ammo" or candidate.family == "combat-supply")
+        and "Combat recruitment supply"
       or "Turret ammunition supply",
     reason = "broker-discovered-candidate",
     source = "item_family_logistics_0702",
