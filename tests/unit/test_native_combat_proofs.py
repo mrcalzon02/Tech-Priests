@@ -98,6 +98,23 @@ class ProofSafety(unittest.TestCase):
         self.assertIn("t.ready==true", tick_section)
         self.assertIn('type(t.surface)=="number"', tick_section)
 
+    def test_protected_targets_are_separate_from_native_actor_spawns(self):
+        fixture = FIXTURE.read_text(encoding="utf-8")
+        import re
+        protected = re.findall(
+            r'\{force=(player|friend|truce),x=(-?\d+),y=(-?\d+),role="([^"]+)"\}',
+            fixture,
+        )
+        self.assertEqual(len(protected), 3)
+        self.assertEqual(set(x[0] for x in protected),
+                         {"player", "friend", "truce"})
+        # Player's leftmost initial AAI car is at x=-33.6, y=-9.
+        # All safety targets remain close to combat but >=9 tiles away.
+        self.assertTrue(all(int(x) <= -43 and int(y) == -9
+                            for _, x, y, _ in protected))
+        self.assertIn("PROTECTED_DAMAGE role=", fixture)
+        self.assertIn("ceasefire/friendly target damaged ", fixture)
+
     def test_batch_gui_disables_unattended_freeplay_intro(self):
         fixture = FIXTURE.read_text(encoding="utf-8")
         init = fixture.split("local function init()", 1)[1].split(

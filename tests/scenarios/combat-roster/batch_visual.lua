@@ -75,10 +75,13 @@ local function init()
  for _,force in ipairs({player,renegade,enemy}) do
    allied(force,friend,true);allied(force,truce,false)
  end
+ -- Retain protected targets near the battle (and within turret range),
+ -- but not physically on top of the first player combatant at x=-33.6.
+ -- Splash damage to a car must not be mistaken for hostile target selection.
  local targets={
-  {force=player,x=-46,y=-9,role="same-force"},
-  {force=friend,x=-40,y=-9,role="allied"},
-  {force=truce,x=-34,y=-9,role="ceasefire"},
+  {force=player,x=-61,y=-9,role="same-force"},
+  {force=friend,x=-52,y=-9,role="allied"},
+  {force=truce,x=-43,y=-9,role="ceasefire"},
  }
  for _,rec in ipairs(targets) do
    local e=s.create_entity{name="tech-priests-combat-test-target",
@@ -338,7 +341,19 @@ local function damaged(e)
    t.hits.enemy=t.hits.enemy+1
  end
  for _,rec in ipairs(t.protected or {})do
-  if rec.entity==target then t.damage.protected=t.damage.protected+e.final_damage_amount end
+  if rec.entity==target then
+   t.damage.protected=t.damage.protected+e.final_damage_amount
+   -- Native collateral/safety violations remain hard FAIL. Preserve the
+   -- first actual cause, instead of guessing from the aggregate damage sum.
+   if not rec.first_damage then
+    local cause=e.cause
+    rec.first_damage=true
+    log(MARK.."PROTECTED_DAMAGE role="..rec.role
+      .." amount="..e.final_damage_amount
+      .." cause="..(cause and cause.valid and cause.name or "none")
+      .." x="..target.position.x.." y="..target.position.y)
+   end
+  end
  end
 end
 Registry.on_init(init,{owner="combat-batch-native",route="setup",priority=2200})
