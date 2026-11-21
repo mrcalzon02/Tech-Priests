@@ -155,9 +155,19 @@ local function snapshot(t)
  local alive_actor,alive_bunker,alive_biter=0,0,0
  local spent=0
  local force_counts={player=0,renegade=0}
+ -- AAI may replace a car when entering/exiting a command mode. The old
+ -- LuaEntity in the creation receipt then becomes invalid even though the
+ -- SAME real AAI actor, physical ammo, force and driver still exist.
+ -- Resolve current native managed bodies by the original immutable AAI ID.
+ -- This is read-only: never spawn, teleport or move a combatant here.
+ local registry_ok,managed=pcall(remote.call,
+   "aai-programmable-vehicles","get_units")
+ local aai_registry_available=registry_ok and type(managed)=="table"
  for _,rec in ipairs(t.actors)do
-  local entity=rec.entity
-  if entity and entity.valid then
+  local unit=aai_registry_available and managed[rec.unit] or nil
+  local entity=unit and unit.vehicle or nil
+  if entity and entity.valid and entity.type=="car"
+    and entity.force and entity.force.name==rec.force then
    alive_actor=alive_actor+1
    if rec.force=="player"then force_counts.player=force_counts.player+1
    else force_counts.renegade=force_counts.renegade+1 end
@@ -176,6 +186,7 @@ local function snapshot(t)
  for _,b in ipairs(t.biters)do if b.valid then alive_biter=alive_biter+1 end end
  return {actors_alive=alive_actor,turrets_alive=alive_bunker,
    biters_alive=alive_biter,rounds_missing_from_surviving_turrets=spent,
+   aai_registry_available=aai_registry_available,
    force_actors_alive=force_counts}
 end
 local function tick(event)
@@ -200,8 +211,10 @@ local function tick(event)
     "player did not inflict any native damage on hostile renegades")
   require_native(state.rounds_missing_from_surviving_turrets>0,
     "no physical bunker ammunition consumption observed")
+  require_native(state.aai_registry_available,
+    "AAI managed unit registry unavailable in native battle")
   require_native(state.actors_alive>0 and state.turrets_alive>0,
-    "every native combat entity destroyed before final evidence")
+    "no surviving AAI-managed combatant and native bunker at end of battle")
   for _,rec in ipairs(t.protected)do
     require_native(rec.entity.valid and rec.entity.health==rec.health,
       "ceasefire/friendly target damaged "..rec.role)
