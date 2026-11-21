@@ -260,6 +260,14 @@ local function tick(event)
  if not (t and t.ready==true and type(t.surface)=="number") or t.done then return end
  local elapsed=game.tick-t.start
  capture(t,elapsed)
+ -- Distinguish an engine/tick stall from a screenshot writer backlog.
+ -- Observational only: never advance simulation or synthesize proof.
+ if elapsed>0 and elapsed%60==0 then
+  log(MARK.."HEARTBEAT elapsed="..elapsed.." engine_tick="..game.tick
+    .." frames="..#(t.clips["01-massed-units"] or {})
+    ..","..#(t.clips["02-bunker-lines"] or {})
+    ..","..#(t.clips["03-enemy-flank"] or {}))
+ end
  if elapsed>0 and elapsed%300==0 then
   local status=snapshot(t)
   log(MARK.."SAMPLE elapsed="..elapsed.." "..helpers.table_to_json(status))
