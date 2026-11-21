@@ -96,3 +96,25 @@ This is an **evaluation and development backlog**, not a claim that the features
 - **Phase F — verification:** run Factorio native scenario matrix, inspect visual evidence and profiler results; report failures separately from release-blocking criteria.
 
 **Scope:** development targets only. No runtime behavior, prototype integration, native game testing, or publication is asserted by this document update.
+
+
+## Phase A audit — first verified source pass (2026-11-21)
+**Evidence scope:** direct reads from `main`; not a full repository search or native Factorio run.
+
+- `prototypes/technology.lua` (628 lines): defines initial-consecration tiers 1/2, capacity tiers 1/2, maintenance litanies and incense; comments describe capacity 100/110/120. **Present as prototypes; runtime application still to trace.**
+- `prototypes/compatibility/quality.lua` (9 lines): comments describe station-radius and priest/proxy quality; no sanctity baseline code in this file. **Quality-sanctity behavior not demonstrated.**
+- `prototypes/item.lua`: `mechanical-detritus` item defined. **Item present; production formula not established.**
+- `scripts/core/logistics_machine_fulfillment_0528.lua`: detritus counted and routed from machine inventory. **Logistics path present; no evidence of Chaos-specific yields.**
+- `scripts/core/consecration_executor_0515.lua`: uses record `max_sanctification`, `sanctification`, global `get_base_sanctification_max`, and wraps existing `sanctify_target_with_priest`. **This is a scheduling/execution wrapper, not proof of canonical sanctity-state ownership.**
+- `scripts/core/consecration/mining_sensor_0495.lua`: invokes global `apply_completed_sanctification_operation` and overlay refresh. **Potential production-hook integration point, pending ownership audit.**
+- `data.lua`: explicitly loads Quality compatibility conditionally and defines machine-specific grime/sheen overlays. **Rendering exists; gameplay effects unverified.**
+- `prototypes/modules.lua`: path not found; this does **not** prove no modules elsewhere.
+- Existing `control.lua` comments describe the consecration and detritus machine logistics subsystems. **Loader presence is not native behavior proof.**
+
+### Next audit tasks (must precede implementation)
+A1. Locate exact definitions and callers of `get_base_sanctification_max`, `apply_completed_sanctification_operation`, `sanctify_target_with_priest` and state initialization; identify one canonical writer.
+A2. Enumerate all module-type prototypes and any data-final-fixes or compatibility injections, not just a guessed `modules.lua` path.
+A3. Trace `mechanical-detritus` production, recycling, and physical custody end to end.
+A4. Enumerate machine eligibility and module slot definitions including Space Age; document quality event semantics and migration behavior.
+A5. Produce a current-versus-target research graph and locate localized strings for each unlock.
+A6. Only then implement the smallest bounded change on `main` with source tests and native game evidence.
