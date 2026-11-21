@@ -77,6 +77,12 @@ class NativeFortificationContract(unittest.TestCase):
         self.assertIn('get_inventory(defines.inventory.car_ammo)', source)
         self.assertIn('get_fuel_inventory()', source)
         self.assertIn('aai-programmable-vehicles","get_units"', source)
+        defender_stage = source.split('local requested=defender_types', 1)[1].split(
+            'local inner_x=math.ceil', 1)[0]
+        # The AAI command can replace/invalidate the original LuaEntity.
+        # Never read its bounding box AFTER handing control to AAI.
+        self.assertLess(defender_stage.index('include_extent(t.bounds,car)'),
+                        defender_stage.index('Bridge.command(car,player'))
 
     def test_real_wall_ring_clearances_are_measured_not_reported_from_request(self):
         source = FORT.read_text(encoding="utf-8")
