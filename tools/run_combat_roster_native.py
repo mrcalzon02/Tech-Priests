@@ -150,7 +150,12 @@ end
     while time.monotonic()<deadline:
      if child.poll() is not None:break
      output=gui_log.read_text(errors='replace')
-     if 'isolated handler failure' in output or 'Error Util.cpp' in output:
+     # A failure from an unrelated registry owner is not itself a failed
+     # native combat test. Stop early only for this fixture's own broken
+     # setup/capture path, or an actual engine-level fatal error.
+     if ('owner=combat-batch-native route=setup' in output
+         or 'owner=combat-batch-native route=record-proof' in output
+         or 'Error Util.cpp' in output):
       break
      if marker in output and (native/'manifest.json').is_file():
       # The final native client may still be finishing queued screenshot
@@ -174,8 +179,16 @@ end
      try:child.wait(timeout=20)
      except subprocess.TimeoutExpired:child.kill();child.wait(timeout=15)
   if not seen:
-   raise RuntimeError('Native headful frame capture incomplete: '+
-     gui_log.read_text(errors='replace')[-7500:])
+   output=gui_log.read_text(errors='replace')
+   diagnostics=[line.strip() for line in output.splitlines()
+      if ('owner=combat-batch-native' in line or
+          '[TP-COMBAT-BATCH]' in line or 'Error Util.cpp' in line)]
+   # Capture the FIRST true failure, not the last repetitive secondary tick.
+   for line in diagnostics[:12]:
+    print('TP_COMBAT_FIRST_NATIVE_DIAGNOSTIC '+line[:700],flush=True)
+   reason=diagnostics[0] if diagnostics else 'no combat fixture marker or engine error observed'
+   raise RuntimeError('Native headful frame capture incomplete: first_event='+
+     reason[:800]+'; tail='+output[-1800:])
   proof=OUT/'proof-clips'
   encoder=[sys.executable,str(ROOT/'tools/assemble_native_combat_proofs.py'),
     '--native-root',str(native),'--output-dir',str(proof),
