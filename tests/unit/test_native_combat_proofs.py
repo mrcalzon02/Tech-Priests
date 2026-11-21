@@ -143,6 +143,30 @@ class ProofSafety(unittest.TestCase):
             "if 'isolated handler failure' in output or 'Error Util.cpp'",
             batch_visual)
 
+    def test_staggered_genuine_camera_frames_and_matching_launcher_gate(self):
+        import re
+        fixture = FIXTURE.read_text(encoding="utf-8")
+        launcher = LAUNCHER.read_text(encoding="utf-8")
+        clips = re.findall(
+            r'\{id="(0[123]-[^"]+)",start=(\d+),stop=(\d+),step=(\d+),'
+            r'x=[^,]+,y=[^,]+,zoom=[^}]+\}', fixture)
+        self.assertEqual(len(clips), 3)
+        timestamps = []
+        for name, start, stop, step in clips:
+            ticks = list(range(int(start), int(stop)+1, int(step)))
+            self.assertGreaterEqual(len(ticks), 16, name)
+            self.assertLessEqual(len(ticks), 24, name)
+            timestamps.extend(ticks)
+        self.assertEqual(len(timestamps), len(set(timestamps)),
+                         "Never queue two native 960x540 screenshots on one game tick")
+        self.assertGreaterEqual(len(timestamps), 48)
+        self.assertLessEqual(len(timestamps), 72)
+        self.assertIn('resolution={960,540}', fixture)
+        self.assertIn('force_render=true', fixture)
+        self.assertIn('game.take_screenshot', fixture)
+        self.assertIn('count>=48 and actual==count', launcher)
+        self.assertIn("len(expected.get(clip, []))>=16", launcher)
+
     def test_only_live_native_capture_can_satisfy_visual_gate(self):
         fixture = FIXTURE.read_text(encoding="utf-8")
         self.assertIn("game.take_screenshot", fixture)
