@@ -167,6 +167,7 @@ local function init()
   local gun=s.create_entity{name=def[1],position=position,force=player,
     direction=defines.direction.north,raise_built=true}
   require_native(gun and gun.valid,"native turret placement failed "..kind.." slot="..i)
+  log(MARK.."SETUP_TURRET_VALID slot="..i.." kind="..kind)
   -- The raised native build event installs the production visual hook.
   local rec={entity=gun,unit=gun.unit_number,kind=kind,name=def[1],
     initial_health=gun.health,ammo=def[2],initial_ammo=0}
@@ -193,6 +194,7 @@ local function init()
   t.tower_roster[kind]=(t.tower_roster[kind] or 0)+1
  end
  require_native(#t.towers==12,"physical turret count differs from 12")
+ log(MARK.."SETUP_TOWERS_READY count="..#t.towers)
  local requested=defender_types(settings.defenders)
  for i,id in ipairs(requested)do
   local unit=Catalog.by_id[id]
@@ -219,16 +221,22 @@ local function init()
   local armed=inventory.insert{name=ammo.name,count=8}
   local fueled=fuel_inventory.insert{name="tech-priests-field-supply-pack",count=12}
   require_native(armed==8 and fueled==12,"native defender refused ammo/fuel "..id)
+  -- AAI Bridge.command may replace the original LuaEntity immediately.
+  -- Capture its physical collision envelope BEFORE that ownership handoff.
+  require_native(car.valid,"native vehicle invalid before AAI command "..id)
+  include_extent(t.bounds,car)
+  log(MARK.."SETUP_AAI_PRECOMMAND slot="..i.." id="..id)
   -- Position goal remains inside the courtyard. Movement and shooting are
   -- delegated to AAI; the fixture cannot apply scripted damage or teleport.
   local goal={x=x+(x<0 and 1 or -1),y=y}
   local ok,reason=Bridge.command(car,player,{position=goal})
   require_native(ok==true,"native AAI defender command refused "..id.."/"..tostring(reason))
-  include_extent(t.bounds,car)
+  -- Never dereference the possibly replaced original car after issuing AAI orders.
   t.defenders[#t.defenders+1]={unit=registered.unit_id,id=id,
     initial_ammo=armed,initial_fuel=fueled}
   t.defender_roster[id]=(t.defender_roster[id] or 0)+1
  end
+ log(MARK.."SETUP_AAI_DEFENDERS_READY count="..#t.defenders)
  local inner_x=math.ceil(t.bounds.x+settings.clearance+0.5)
  local inner_y=math.ceil(t.bounds.y+settings.clearance+0.5)
  require_native(inner_x<=66 and inner_y<=66,
@@ -261,6 +269,7 @@ local function init()
  end
  require_native(#t.walls==expected_walls,
   "continuous native wall ring identity/quantity mismatch")
+ log(MARK.."SETUP_NATIVE_WALLS_READY count="..#t.walls)
  -- 48 exactly, native spawner-weighted for the requested surface evolution,
  -- with attack corridors originating on all four sides of the compound.
  local biters=native_spawn_profile("biter-spawner",observed)
