@@ -115,6 +115,23 @@ class ProofSafety(unittest.TestCase):
         self.assertIn("PROTECTED_DAMAGE role=", fixture)
         self.assertIn("ceasefire/friendly target damaged ", fixture)
 
+    def test_missing_runner_video_codecs_use_only_sha_pinned_persistent_cache(self):
+        encoder = ENCODER.read_text(encoding="utf-8")
+        self.assertIn("imageio_ffmpeg-0.8.1-py3-none-win_amd64.whl", encoder)
+        self.assertIn(
+            "f27ca4cb85e2d4946deedbce1a81245dfd942a2bcf94b53676fb3956aa95bf1b",
+            encoder)
+        self.assertIn("https://pypi.org/pypi/imageio-ffmpeg/0.8.1/json", encoder)
+        self.assertIn('location.hostname != "files.pythonhosted.org"', encoder)
+        self.assertIn("if digest(wheel_tmp) != PINNED_FFMPEG_SHA256:", encoder)
+        self.assertIn('pin.get("executable_sha256") == digest(exe)', encoder)
+        self.assertIn('os.environ.get("LOCALAPPDATA")', encoder)
+        self.assertIn('os.replace(exe_tmp, exe)', encoder)
+        self.assertIn('ffmpeg = pinned_local_ffmpeg()', encoder)
+        self.assertIn("NATIVE_PROOF_ENCODER_PROVISION_BLOCKED", encoder)
+        self.assertNotIn("pip install", encoder)
+        self.assertNotIn("shell=True", encoder)
+
     def test_batch_gui_disables_unattended_freeplay_intro(self):
         fixture = FIXTURE.read_text(encoding="utf-8")
         init = fixture.split("local function init()", 1)[1].split(
