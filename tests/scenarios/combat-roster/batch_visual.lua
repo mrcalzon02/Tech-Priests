@@ -174,10 +174,14 @@ local function init()
    local y=34+math.floor((i-1)/16)*4
    local b=s.create_entity{name=name,position={x=x,y=y},force=enemy}
    check(b and b.valid,"native biter placement failed "..i)
-   local ok=pcall(function() b.set_command{
+   -- Factorio 2.1 migrated unit orders to LuaCommandable. A biter is a
+   -- genuine LuaEntity; only its commandable owns set_command().
+   local commander=b.commandable
+   check(commander and commander.valid,
+     "native biter missing Factorio 2.1 commandable "..i)
+   commander.set_command{
      type=defines.command.attack_area,destination={x=x*.35,y=-14},
-     radius=8,distraction=defines.distraction.by_enemy} end)
-   check(ok,"native biter attack order unavailable "..i)
+     radius=8,distraction=defines.distraction.by_enemy}
    t.biters[#t.biters+1]=b
  end
  t.expected={aai_actors=30,types=15,native_bunkers=14,
