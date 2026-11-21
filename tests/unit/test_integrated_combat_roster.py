@@ -61,6 +61,22 @@ class IntegratedCombatRoster(unittest.TestCase):
         self.assertIn("paid-combat-muster", dispatcher)
         self.assertIn("reinforced-unit-needs-exact-native-stack-custody", orders)
 
+    def test_normal_quality_and_muster_ui_fail_closed(self):
+        orders = read("scripts/core/combat_roster_orders.lua")
+        gui = read("scripts/core/combat_muster_gui.lua")
+        info = json.loads(read("info.json"))
+        self.assertIn("? quality >= 2.1.0", info["dependencies"])
+        # Normal physical actors do not require the optional quality table.
+        self.assertNotIn("if not prototypes.quality[quality]", orders)
+        self.assertIn('if type(quality)~="string" or quality==""', orders)
+        self.assertIn('quality~="normal" and not (prototypes.quality and prototypes.quality[quality])', orders)
+        self.assertIn('local built_quality=built.quality and built.quality.name or "normal"', orders)
+        # GUI must not present a faction that the production request refuses.
+        self.assertIn('settings.startup["tech-priests-combat-allow-"..u.faction]', gui)
+        self.assertIn('if (not allowed or allowed.value) and', gui)
+        self.assertIn('local order=entry.pair.combat_muster_order', gui)
+        self.assertIn('tostring(order.phase or "pending")', gui)
+
     def test_native_battle_fixture_is_not_wip(self):
         self.assertTrue((ROOT / "tests/scenarios/combat-roster/fixture.lua").is_file())
         self.assertTrue((ROOT / "tools/run_combat_roster_native.py").is_file())
