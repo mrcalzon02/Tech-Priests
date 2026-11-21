@@ -143,3 +143,24 @@ A6. Only then implement the smallest bounded change on `main` with source tests 
 - Therefore proposed quality values 50/60/70/85/100 match the **unresearched defaults only**, not all configurations. Preserve settings and force research; quality adjustment must be designed relative to them.
 
 **Open blocker to gameplay edits:** locate and inspect the actual record-definition and operation-completion owner outside generated fragments. Avoid altering the generated fragments speculatively or introducing a parallel state store.
+
+
+### Phase A investigation — record ownership and integration risks (continued)
+- Confirmed `control.lua` loads generated fragments 001–022 **before** installing newer runtime wrappers. This matters for preserving existing sanctification globals and avoiding shadow ownership.
+- The `consecration_executor_0515` wrapper delegates to the original `sanctify_target_with_priest`; its `maximum(record, entity)` first trusts `record.max_sanctification`, then falls back to `get_base_sanctification_max(force)`. A quality-aware maximum must reconcile existing persisted record maxima, not merely change a global default.
+- The `mining_sensor_0495` explicitly calls `apply_completed_sanctification_operation(record_obj, pseudo_recipe(...))` and requests overlay refresh; production-completion hooks must remain compatible with this path.
+- The current `quality.lua` compatibility file contains **comments only**, describing station quality radius and priest/proxy quality. It is not a machine-sanctity modifier implementation.
+- Direct reads of 22 generated fragments found consumers but not the target record definitions. Guessed filenames under `scripts/core/consecration/` did not resolve; filename guesses are not an exhaustive inventory. GitHub code search is not returning known symbols, so it cannot establish absence.
+- Canonical owner discovery is still required before touching production code. Next reliable method is a full repository file-tree/content scan through a runner or checked-out workspace, searching exact symbols and recording actual paths and line numbers; do not claim a native test or completed integration without that evidence.
+
+#### Required quality integration contract (provisional)
+1. Preserve `DEFAULT_BASE_SANCTIFICATION_START=50` and `DEFAULT_BASE_SANCTIFICATION_MAX=100` as the configurable Normal baseline; preserve +20/+20 starting and +10/+10 capacity research.
+2. Define a quality delta table relative to Normal (proposed +0/+10/+20/+35/+50) rather than hardcoding absolute values that override settings.
+3. Decide whether quality affects only initial sanctity or also max capacity. Current design asks for **higher base sanctity**, not necessarily higher capacity; do not silently increase max.
+4. At machine registration, derive the quality-adjusted initial value, clamp against researched/current capacity, and persist without overwriting existing wear/decay on reload.
+5. On quality change, define whether current sanctity is preserved, raised proportionally, or reset; default safety rule: never heal a worn machine just because it is reloaded or moved.
+6. Module modifiers must operate on **effective** sanctity, leaving stored condition and quality baseline intact; mixed modules need deterministic stacking and bounds.
+7. Preserve low-sanctity penalties unless Chaos research/modules explicitly modify their susceptibility. Do not make Legendary quality immune to degradation.
+8. Test Normal and Legendary with no research, +40 starting research, +20 capacity research, custom settings, save/reload, and module insertion/removal before broader rollout.
+
+**Status:** implementation intentionally held pending exact record-owner discovery; no runtime code or native evidence changed in this pass.
