@@ -351,6 +351,10 @@ end
              if ('owner=fortification-native route=' in line or
                  '[TP-FORT] FAIL' in line or 'Error Util.cpp' in line)]
    if proc.returncode or failures or (stage=='create' and not save.is_file()):
+    for entry in [line.strip() for line in lines.splitlines()
+                  if ('[TP-FORT] SETUP_' in line or
+                      '[TP-FORT] FAIL' in line)][-30:]:
+     print('TP_FORT_NATIVE_SETUP_TRACE stage='+stage+' '+entry[:500],flush=True)
     print('TP_FORT_NATIVE_FIRST_FAILURE stage='+stage+' '+
           ((failures[0][:900]) if failures else lines[-3000:]),flush=True)
     raise SystemExit('Native fortification '+stage+' failed (exit '+
