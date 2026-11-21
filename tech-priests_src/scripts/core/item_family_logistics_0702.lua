@@ -1339,6 +1339,64 @@ function M.abort_pair(pair, reason)
   return false, result.detail
 end
 
+-- AAI changes a managed car's entity identity between active/passive modes.
+-- Preserve the same pending 0702 duty and physical cargo; release and reclaim
+-- only the reservation for this vehicle, never another family's reservation.
+function M.on_combat_replaced(pair,old_actor,new_actor)
+  local catalog=package.loaded["shared.combat_roster_catalog"]
+  local old=valid(old_actor) and catalog
+    and catalog.for_entity_name(old_actor.name)
+  local new=valid(new_actor) and catalog
+    and catalog.for_entity_name(new_actor.name)
+  if not (valid_pair(pair) and old and new and old.id==new.id
+      and old_actor.force==pair.station.force
+      and new_actor.force==pair.station.force
+      and old_actor.surface==pair.station.surface
+      and new_actor.surface==pair.station.surface
+      and new_actor.unit_number) then return false,"foreign-or-unmanaged-actor" end
+  local candidate=pair.item_family_candidate_0702
+  if candidate and candidate.target==old_actor then
+    candidate.target=new_actor
+    candidate.target_unit=new_actor.unit_number
+    candidate.target_name=new_actor.name
+  end
+  local task=pair.item_family_logistics_0702
+  if task and task.target==old_actor then
+    if task.reserved_0702 then release_target(pair,task) end
+    task.target=new_actor
+    task.target_unit=new_actor.unit_number
+    task.target_name=new_actor.name
+    local ok,reason=claim_target(pair,task)
+    if not ok then
+      if task.carried and (tonumber(task.carried.count)or 0)>0 then
+        task.phase="return-custody"
+        sync_custody(pair,task,"aai-replacement-target-reservation-refused")
+      else
+        abort_without_custody(pair,task,
+          "aai-replacement-target-reservation-refused")
+      end
+      record(pair,"combat-replacement-reservation-refused",safe(reason))
+      return false,reason
+    end
+  end
+  local custody=pair.item_family_custody_0702
+  if custody and custody.target==old_actor then
+    custody.target=new_actor
+    custody.target_unit=new_actor.unit_number
+    custody.target_name=new_actor.name
+  end
+  -- Original source inventory may belong to the old AAI body. Do not trust
+  -- its copied stack pointer after native replacement; re-source ordinarily.
+  if task and task.source_entity==old_actor and not task.carried then
+    task.source_entity=nil
+    task.source_inv=nil
+    task.source_label=nil
+    task.phase="waiting-source"
+    task.request_tick=now()
+  end
+  return true,"native-aai-body-identity-rebound"
+end
+
 function M.service_pair(pair, reason)
   local state = M.root()
   if state.enabled == false or not valid_pair(pair) then
