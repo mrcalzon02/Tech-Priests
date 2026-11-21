@@ -18,6 +18,8 @@ def main():
  parser.add_argument('--dependency-mods',type=Path,
    help='Local AAI 0.9.2, AAI Signals 0.8.0 and Informatron 0.5.0 ZIP directory')
  parser.add_argument('--scenario',choices=['battle','deployment','negative','progression','duels','batch-visual'],default='battle')
+ parser.add_argument('--evolution',type=float,choices=(0.0,0.25,0.5,0.75,1.0),default=None,
+   help='Five-stage native biter/spitter evolution sweep, batch-visual only')
  parser.add_argument('--source-sha',default=None,
    help='Exact 40-hex source revision for visual proof provenance')
  parser.add_argument('--limit',type=int,default=15)
@@ -31,6 +33,8 @@ def main():
  parser.add_argument('--source',type=Path,help='Read-only prepared mod source to validate instead of the working source')
  parser.add_argument('--faction-off',choices=['mechanicus','astra-militarum','sororitas']);args=parser.parse_args()
  EXE=args.factorio.resolve()
+ if args.evolution is not None and args.scenario!='batch-visual':
+  parser.error('--evolution is allowed only in the native GUI batch-visual scenario')
  if not EXE.is_file():parser.error('Installed Factorio executable missing: '+str(EXE))
  if args.scenario=='deployment': OUT=ROOT/'build/combat-roster/deployment'
  if args.scenario=='negative': OUT=ROOT/'build/combat-roster/negative'
@@ -63,7 +67,8 @@ def main():
  fixture={'deployment':'deployment.lua','negative':'negative.lua','battle':'fixture.lua','progression':'progression.lua','duels':'duels.lua','batch-visual':'batch_visual.lua'}[args.scenario]
  shutil.copy2(ROOT/'tests/scenarios/combat-roster'/fixture,mod/'combat-fixture.lua')
  batch_flag='true' if args.scenario=='batch-visual' else 'false'
- (mod/'control.lua').write_text((source/'control.lua').read_text(encoding='utf-8')+f'\nTP_COMBAT_TEST_LIMIT={args.limit}\nTP_COMBAT_GUI_PROOF=true\nTP_COMBAT_ORDINARY_CONSTRUCTION={str(args.ordinary_construction).lower()}\nTP_COMBAT_QUALITY_SUPPLIES={str(args.quality_supplies).lower()}\nTP_COMBAT_OWNERSHIP_OVERLAP={str(args.ownership_overlap).lower()}\nTP_COMBAT_BATCH_VISUALS={batch_flag}\nrequire("combat-fixture")\n',encoding='utf-8')
+ evolution_flag=repr(args.evolution) if args.evolution is not None else 'nil'
+ (mod/'control.lua').write_text((source/'control.lua').read_text(encoding='utf-8')+f'\nTP_COMBAT_TEST_LIMIT={args.limit}\nTP_COMBAT_GUI_PROOF=true\nTP_COMBAT_ORDINARY_CONSTRUCTION={str(args.ordinary_construction).lower()}\nTP_COMBAT_QUALITY_SUPPLIES={str(args.quality_supplies).lower()}\nTP_COMBAT_OWNERSHIP_OVERLAP={str(args.ownership_overlap).lower()}\nTP_COMBAT_BATCH_VISUALS={batch_flag}\nTP_COMBAT_EVOLUTION={evolution_flag}\nrequire("combat-fixture")\n',encoding='utf-8')
  (mod/'data-final-fixes.lua').write_text((source/'data-final-fixes.lua').read_text(encoding='utf-8')+'''
 local target=table.deepcopy(data.raw.container["wooden-chest"])
 target.name="tech-priests-combat-test-target";target.max_health=100000;target.resistances={}
@@ -250,10 +255,27 @@ end
   if result.returncode:
    raise RuntimeError('Native Factorio frames exist but one or more real GIF/MP4 encodes failed; see '+str(proof))
   receipt=json.loads((native/'manifest.json').read_text(encoding='utf-8-sig'))
+  if args.evolution is not None:
+   actual=receipt.get('evolution_observed_initial')
+   final=receipt.get('evolution_observed_final')
+   roster=receipt.get('enemy_roster',{})
+   if (receipt.get('evolution_requested')!=args.evolution
+       or not isinstance(actual,(int,float)) or abs(actual-args.evolution)>0.00001
+       or not isinstance(final,(int,float)) or abs(final-args.evolution)>0.01
+       or not isinstance(roster,dict) or sum(roster.values())!=48
+       or receipt.get('expected',{}).get('native_biters')!=48):
+    raise RuntimeError('Native engine evolution/roster receipt failed selected stage '+repr(args.evolution))
+   print('NATIVE_EVOLUTION_VERIFIED '+json.dumps({
+    'requested':args.evolution,'measured_initial':actual,'measured_final':final,
+    'enemy_roster':roster,'defenses_held':receipt.get('defenses_held'),
+    'remaining':receipt.get('counts'), 'damage':receipt.get('damage'),
+    'hits':receipt.get('hits')},sort_keys=True),flush=True)
   if receipt['status']!='PASS':
    raise RuntimeError('Native combat gameplay FAIL; original GIF/MP4 diagnostic evidence preserved at '+str(proof)+': '+json.dumps(receipt.get('blockers',[])))
   print(json.dumps({'status':'PASS','native':True,
    'actors_staged':30,'bunkers':14,'biters':48,'source_sha':args.source_sha,
+   'evolution':args.evolution,'enemy_roster':receipt.get('enemy_roster',{}),
+   'defenses_held':receipt.get('defenses_held'),
    'manifest':str(proof/'proof-manifest.json'),'proof_dir':str(proof)}),flush=True)
   return
  for label,arguments,marker in [('create',['--create',str(save.resolve())],None),
