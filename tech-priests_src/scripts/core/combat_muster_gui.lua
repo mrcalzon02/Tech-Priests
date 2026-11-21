@@ -42,10 +42,9 @@ function M.open(player)
  for _,u in ipairs(C.units) do
   if player.force.recipes[u.name] and player.force.recipes[u.name].enabled then
    ids[#ids+1]={id=u.id,quality="normal"};names[#names+1]=u.label
-   local reinforced=player.force.recipes[u.name.."-reinforced"]
-   if reinforced and reinforced.enabled then
-    ids[#ids+1]={id=u.id,quality="uncommon"};names[#names+1]={"tech-priests-combat.reinforced-unit",u.label}
-   end
+   -- The reinforced recipes remain physically craftable as item-with-entity-data
+   -- through the native building UI. Automated uncommon deployment is withheld
+   -- until 0338 can debit and place the exact original quality stack.
   end
  end
  if #ids==0 then player.print({"tech-priests-combat.no-units"});return false end
