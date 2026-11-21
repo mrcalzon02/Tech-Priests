@@ -1,0 +1,63 @@
+name: Verify authorized AAI mod downloads
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/native-aai-mod-portal-download.yml
+      - tests/modpacks/native-aai-download-request.json
+
+permissions:
+  contents: read
+
+jobs:
+  official-aai-download:
+    if: github.repository == 'mrcalzon02/Tech-Priests' && github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out existing authenticated mod downloader only
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+          sparse-checkout: |
+            tools/ci_factorio_combined_modpack.py
+      - name: Verify downloader parses without executing secrets
+        run: python3 -m py_compile tools/ci_factorio_combined_modpack.py
+      - name: Download three pinned Factorio 2.1 official mods with owner secrets
+        env:
+          FACTORIO_USERNAME: ${{ secrets.FACTORIO_USERNAME }}
+          FACTORIO_TOKEN: ${{ secrets.FACTORIO_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Do not print environment values, authenticated URLs, or archive bytes.
+          python3 tools/ci_factorio_combined_modpack.py --download-exact-combat \
+            --mods-dir "$RUNNER_TEMP/aai-official-mods" \
+            --artifact-dir "$RUNNER_TEMP/aai-verified-receipts"
+          python3 - <<'PY'
+          import hashlib, json, os, pathlib
+          root=pathlib.Path(os.environ['RUNNER_TEMP'])
+          report=json.loads((root/'aai-verified-receipts/combat-aai-download-manifest.json').read_text())
+          want={'aai-programmable-vehicles':'0.9.2','aai-signals':'0.8.0','informatron':'0.5.0'}
+          assert report['schema']=='tech-priests.native-aai-official-downloads.v1'
+          assert report['engine_series']=='2.1' and report['mod_portal_sha1_verified'] is True
+          records=report['archives']
+          assert len(records)==3 and {x['name']:x['version'] for x in records}==want
+          for entry in records:
+              file=root/'aai-official-mods'/entry['filename']
+              assert file.is_file() and file.stat().st_size>1024
+              assert hashlib.sha1(file.read_bytes()).hexdigest()==entry['sha1']
+              assert entry['factorio_version']=='2.1'
+              print('NATIVE_AAI_OFFICIAL_ZIP_VERIFIED',entry['filename'],file.stat().st_size)
+          print('COMBAT_AAI_MOD_PORTAL_DOWNLOAD_PASS 3 official 2.1 mods verified')
+          PY
+      - name: Erase authenticated ZIP copies from temporary hosted runner
+        if: always()
+        shell: bash
+        run: |
+          # The mods have Limited Distribution Only licenses. No ZIPs or
+          # authenticated download links are published as Actions artifacts.
+          rm -rf "$RUNNER_TEMP/aai-official-mods"
