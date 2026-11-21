@@ -98,6 +98,27 @@ class ProofSafety(unittest.TestCase):
         self.assertIn("t.ready==true", tick_section)
         self.assertIn('type(t.surface)=="number"', tick_section)
 
+    def test_both_real_bunker_lines_precede_aai_actor_commands(self):
+        fixture = FIXTURE.read_text(encoding="utf-8")
+        setup = fixture.split("local function init()", 1)[1].split(
+            "\nlocal function capture(t,elapsed)", 1)[0]
+        # Former first failure: opposing side-2 autocannon placement returned
+        # no entity after side-1 AAI actors were already activated.
+        self.assertEqual(
+            setup.count("for side,force in ipairs({player,renegade}) do"), 2)
+        self.assertLess(setup.index("SETUP_BUNKER_LINES_READY"),
+                        setup.index("for i,u in ipairs(C.units)"))
+        self.assertIn("s.can_place_entity", setup)
+        self.assertIn("BUNKER_PLACED", setup)
+        self.assertIn("BUNKER_POSITION_ADJUST", setup)
+        self.assertIn("native bunker absent ", setup)
+        self.assertIn("attempts=", setup)
+        self.assertIn("SETUP_ACTORS_AND_BUNKERS_READY", setup)
+        self.assertIn("t.expected={aai_actors=30,types=15,native_bunkers=14", setup)
+        self.assertIn("native_biters=48", setup)
+        self.assertIn("check(#t.actors==30 and #t.turrets==14 and #t.biters==48", setup)
+        self.assertIn("game.take_screenshot", fixture)
+
     def test_native_failure_reports_first_fixture_handler_not_unrelated_errors(self):
         launcher = LAUNCHER.read_text(encoding="utf-8")
         self.assertIn("owner=combat-batch-native route=setup", launcher)
