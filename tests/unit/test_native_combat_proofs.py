@@ -132,6 +132,33 @@ class ProofSafety(unittest.TestCase):
         self.assertNotIn("pip install", encoder)
         self.assertNotIn("shell=True", encoder)
 
+    def test_five_native_evolution_levels_have_real_surface_and_spawner_rosters(self):
+        fixture = FIXTURE.read_text(encoding="utf-8")
+        launcher = LAUNCHER.read_text(encoding="utf-8")
+        self.assertIn("choices=(0.0,0.25,0.5,0.75,1.0)", launcher)
+        self.assertIn("'--evolution is allowed only in the native GUI", launcher)
+        self.assertIn("TP_COMBAT_EVOLUTION={evolution_flag}", launcher)
+        self.assertIn("NATIVE_EVOLUTION_VERIFIED", launcher)
+        self.assertIn("enemy.set_evolution_factor(requested,s)", fixture)
+        self.assertIn("enemy.get_evolution_factor(s)", fixture)
+        self.assertIn("game.forces.enemy.get_evolution_factor(surface)", fixture)
+        self.assertIn('spawn_profile("biter-spawner",t.evolution_initial)', fixture)
+        self.assertIn('spawn_profile("spitter-spawner",t.evolution_initial)', fixture)
+        self.assertIn("proto.result_units", fixture)
+        self.assertIn("rule.spawn_points", fixture)
+        self.assertIn("a.weight+(b.weight-a.weight)*fraction", fixture)
+        self.assertIn("weighted_unit(biter_profile", fixture)
+        self.assertIn("weighted_unit(spitter_profile", fixture)
+        self.assertIn("t.enemy_roster[name]", fixture)
+        self.assertIn("evolution_observed_final=t.evolution_final", fixture)
+        self.assertIn("defenses_held=(state.actors_alive>0", fixture)
+        self.assertIn("Defeat is an observed outcome", fixture)
+        self.assertIn("no_scripted_damage=true", fixture)
+        self.assertIn("on_entity_damaged", fixture)
+        self.assertIn("game.take_screenshot", fixture)
+        self.assertNotIn("game.speed=", fixture)
+        self.assertNotIn("game.tick_paused=", fixture)
+
     def test_batch_gui_disables_unattended_freeplay_intro(self):
         fixture = FIXTURE.read_text(encoding="utf-8")
         init = fixture.split("local function init()", 1)[1].split(
