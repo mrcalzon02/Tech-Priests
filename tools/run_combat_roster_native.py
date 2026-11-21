@@ -140,8 +140,11 @@ end
   seen=False
   deadline=time.monotonic()+600
   with gui_log.open('w',encoding='utf-8') as log:
+   # Verified on this exact Steam/Core30 renderer: Windows Session 0 needs
+   # explicit OpenGL rather than DirectX, or DXGI can reject the session.
    child=subprocess.Popen(common+['--load-game',str(save.resolve()),
-    '--disable-audio'],stdout=log,stderr=subprocess.STDOUT,
+    '--force-opengl','--fullscreen=false','--disable-audio'],
+    stdout=log,stderr=subprocess.STDOUT,
     env=environment,cwd=OUT)
    try:
     while time.monotonic()<deadline:
