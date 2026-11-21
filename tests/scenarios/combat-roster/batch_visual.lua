@@ -189,32 +189,40 @@ local function tick(event)
  end
  if elapsed>=1530 then
   local state=snapshot(t)
-  check(t.sample_count>=4,"native combat checkpoints absent")
-  check(t.damage.player>0 and t.hits.player>0,
+  local blockers={}
+  local function require_native(condition,reason)
+    if not condition then blockers[#blockers+1]=reason end
+  end
+  require_native(t.sample_count>=4,"native combat checkpoints absent")
+  require_native(t.damage.player>0 and t.hits.player>0,
     "native enemy/biter force did not damage a player entity")
-  check(t.damage.renegade>0 and t.hits.renegade>0,
+  require_native(t.damage.renegade>0 and t.hits.renegade>0,
     "player did not inflict any native damage on hostile renegades")
-  check(state.rounds_missing_from_surviving_turrets>0,
+  require_native(state.rounds_missing_from_surviving_turrets>0,
     "no physical bunker ammunition consumption observed")
-  check(state.actors_alive>0 and state.turrets_alive>0,
+  require_native(state.actors_alive>0 and state.turrets_alive>0,
     "every native combat entity destroyed before final evidence")
   for _,rec in ipairs(t.protected)do
-   check(rec.entity.valid and rec.entity.health==rec.health,
-     "ceasefire/friendly target damaged "..rec.role)
+    require_native(rec.entity.valid and rec.entity.health==rec.health,
+      "ceasefire/friendly target damaged "..rec.role)
   end
-  local proof={status="PASS",native=true,source="Factorio GUI 2.1",
+  local verdict=#blockers==0 and "PASS" or "FAIL"
+  local proof={status=verdict,native=true,
+    source="Factorio GUI 2.1",engine_version=script.active_mods.base,
     scenario="fixture-staged-physical-units-and-ammo-not-factory-recruitment",
     expected=t.expected,counts=state,damage=t.damage,hits=t.hits,
-    frames=t.clips,samples=t.sample_count,
+    frames=t.clips,samples=t.sample_count,blockers=blockers,
     no_scripted_damage=true,allied_safety=t.damage.protected==0}
   helpers.write_file("combat-roster/batch-native/manifest.json",
     helpers.table_to_json(proof),false)
   t.done=true
-  log(MARK.."NATIVE_COMBAT_PASS "..helpers.table_to_json{
-    damage=t.damage,hits=t.hits,remaining=state,
+  log(MARK.."NATIVE_COMBAT_COMPLETE "..helpers.table_to_json{
+    status=verdict,blockers=blockers,damage=t.damage,hits=t.hits,
+    remaining=state,
     clip_counts={#(t.clips["01-massed-units"] or {}),
       #(t.clips["02-bunker-lines"] or {}),
       #(t.clips["03-enemy-flank"] or {})}})
+  -- Even a genuine combat FAIL deserves saved, original frame evidence.
   game.auto_save("combat-batch-native")
  end
 end
