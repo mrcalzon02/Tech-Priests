@@ -17,13 +17,14 @@ local AMMO={
  {"tech-priests-bunker-energy-dish",nil},
 }
 -- Native GUI capture. Sixteen authentic, unblended 960x540 frames per
--- viewpoint. Offset start times spread renderer work at one image per 16
--- game ticks rather than 3 overlapping images or one every 9 ticks.
+-- viewpoint. Offset start times spread renderer work at one image per 32
+-- game ticks. This halves GUI screenshot pressure without altering engine
+-- ticks, resolution, combat simulation or required original frame count.
 -- No Factorio simulation tick reduction, scripted damage, or fake frames.
 local CLIPS={
- {id="01-massed-units",start=80,stop=800,step=48,x=0,y=0,zoom=.51},
- {id="02-bunker-lines",start=96,stop=816,step=48,x=0,y=-17,zoom=.78},
- {id="03-enemy-flank",start=112,stop=832,step=48,x=0,y=16,zoom=.78},
+ {id="01-massed-units",start=80,stop=1520,step=96,x=0,y=0,zoom=.51},
+ {id="02-bunker-lines",start=96,stop=1536,step=96,x=0,y=-17,zoom=.78},
+ {id="03-enemy-flank",start=112,stop=1552,step=96,x=0,y=16,zoom=.78},
 }
 local function check(v,why) assert(v,MARK.."FAIL "..tostring(why)) end
 local function enemies(a,b)
@@ -273,7 +274,7 @@ local function tick(event)
   log(MARK.."SAMPLE elapsed="..elapsed.." "..helpers.table_to_json(status))
   t.sample_count=t.sample_count+1
  end
- if elapsed>=1530 then
+ if elapsed>=1620 then
   local state=snapshot(t)
   local blockers={}
   local function require_native(condition,reason)
