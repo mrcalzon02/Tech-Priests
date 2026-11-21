@@ -130,9 +130,17 @@ end
    result=subprocess.run(common+['--create',str(save.resolve()),
     '--map-gen-seed','907260'],stdout=log,stderr=subprocess.STDOUT,
     timeout=240,env=environment,cwd=OUT)
+  creation_output=create_log.read_text(errors='replace')
+  fixture_setup_errors=[line.strip() for line in creation_output.splitlines()
+    if ('owner=combat-batch-native route=setup' in line or
+        '[TP-COMBAT-BATCH] FAIL' in line)]
+  if fixture_setup_errors:
+   for line in fixture_setup_errors[:5]:
+    print('TP_COMBAT_FIRST_INIT_FAILURE '+line[:900],flush=True)
+   raise RuntimeError('Native combat fixture setup failed in --create; '+
+      fixture_setup_errors[0][:900])
   if result.returncode or not save.is_file():
-   raise RuntimeError('Native batch save creation failed: '+
-      create_log.read_text(errors='replace')[-4500:])
+   raise RuntimeError('Native batch save creation failed: '+creation_output[-4500:])
   gui_log=OUT/'graphical-client.log'
   native=OUT/'user-data/script-output/combat-roster/batch-native'
   marker='[TP-COMBAT-BATCH] NATIVE_COMBAT_COMPLETE'
