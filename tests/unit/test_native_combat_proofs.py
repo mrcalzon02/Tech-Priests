@@ -67,6 +67,19 @@ class ProofSafety(unittest.TestCase):
             with self.assertRaises(ValueError):
                 proof.frame_rows(root, "../fake-proof", expected)
 
+    def test_aai_survivor_accounting_uses_live_managed_body(self):
+        fixture = FIXTURE.read_text(encoding="utf-8")
+        start = fixture.index("local function snapshot(t)")
+        finish = fixture.index("\nlocal function tick(event)", start)
+        snapshot = fixture[start:finish]
+        self.assertIn('"aai-programmable-vehicles","get_units"', snapshot)
+        self.assertIn("managed[rec.unit]", snapshot)
+        self.assertIn("entity.force.name==rec.force", snapshot)
+        self.assertIn("aai_registry_available=aai_registry_available", snapshot)
+        self.assertNotIn("local entity=rec.entity", snapshot)
+        self.assertIn("AAI managed unit registry unavailable in native battle",
+                      fixture)
+
     def test_only_live_native_capture_can_satisfy_visual_gate(self):
         fixture = FIXTURE.read_text(encoding="utf-8")
         self.assertIn("game.take_screenshot", fixture)
