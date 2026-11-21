@@ -98,6 +98,20 @@ class ProofSafety(unittest.TestCase):
         self.assertIn("t.ready==true", tick_section)
         self.assertIn('type(t.surface)=="number"', tick_section)
 
+    def test_batch_gui_disables_unattended_freeplay_intro(self):
+        fixture = FIXTURE.read_text(encoding="utf-8")
+        init = fixture.split("local function init()", 1)[1].split(
+            "\nlocal function capture(t,elapsed)", 1)[0]
+        # The --create path has no GUI player yet. Without these freeplay
+        # flags, the later headful client can enter a modal intro/cutscene
+        # rather than continuing live native combat and frame capture.
+        self.assertIn('remote.interfaces.freeplay.set_skip_intro', init)
+        self.assertIn('remote.call("freeplay","set_skip_intro",true)', init)
+        self.assertIn('remote.call("freeplay","set_disable_crashsite",true)', init)
+        self.assertLess(init.index('set_disable_crashsite'),
+                        init.index('game.create_surface('))
+        self.assertNotIn("game.tick_paused=", init)
+
     def test_both_real_bunker_lines_precede_aai_actor_commands(self):
         fixture = FIXTURE.read_text(encoding="utf-8")
         setup = fixture.split("local function init()", 1)[1].split(

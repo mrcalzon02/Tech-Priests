@@ -36,6 +36,13 @@ local function allied(a,b,friend)
  a.set_cease_fire(b,true);b.set_cease_fire(a,true)
 end
 local function init()
+ -- This unattended GUI proof must not stop at freeplay's first-player
+ -- cutscene/intro dialog when the --create save is loaded graphically.
+ -- Use the same supported remote controls as the native battle fixture.
+ if remote.interfaces.freeplay and remote.interfaces.freeplay.set_skip_intro then
+  remote.call("freeplay","set_skip_intro",true)
+  remote.call("freeplay","set_disable_crashsite",true)
+ end
  local t={start=game.tick,actors={},turrets={},biters={},clips={},damage={
    player=0,renegade=0,enemy=0,protected=0},hits={player=0,renegade=0,enemy=0},
    sample_count=0,scenario="genuine-aai-native-batch",saved=false,ready=false}
