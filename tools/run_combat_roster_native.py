@@ -175,7 +175,9 @@ end
        actual=sum(1 for clip_id,frames in expected.items()
          for rec in frames
          if (native/clip_id/('frame-%04d.png'%rec['frame'])).is_file())
-       if count>=100 and actual==count:
+       if (count>=48 and actual==count and
+           all(len(expected.get(clip, []))>=16 for clip in
+               ('01-massed-units','02-bunker-lines','03-enemy-flank'))):
         seen=True
         break
       except (ValueError,KeyError,StopIteration,TypeError):
