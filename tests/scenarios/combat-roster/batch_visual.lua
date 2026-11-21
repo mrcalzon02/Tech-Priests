@@ -32,11 +32,15 @@ end
 local function init()
  local t={start=game.tick,actors={},turrets={},biters={},clips={},damage={
    player=0,renegade=0,enemy=0,protected=0},hits={player=0,renegade=0,enemy=0},
-   sample_count=0,scenario="genuine-aa i-native-batch",saved=false}
- storage.combat_batch_visual=t
+   sample_count=0,scenario="genuine-aai-native-batch",saved=false,ready=false}
+ -- Do not publish half-built battle state. The event registry catches setup
+ -- failures, but later ticks must never read an incomplete surface or roster.
+ log(MARK.."SETUP_BEGIN")
  local s=game.create_surface("combat-batch-2_1-proof",{
    water=0,starting_area=0,default_enable_all_autoplace_controls=false,
    autoplace_settings={entity={treat_missing_as_default=false,settings={}}}})
+ t.surface=s.index
+ log(MARK.."SETUP_SURFACE_READY index="..tostring(t.surface))
  s.always_day=true;s.peaceful_mode=false
  s.request_to_generate_chunks({x=0,y=0},4);s.force_generate_chunk_requests()
  for _,e in pairs(s.find_entities_filtered{area={{-85,-60},{85,65}}}) do
@@ -47,6 +51,7 @@ local function init()
    tiles[#tiles+1]={name="refined-concrete",position={x=x,y=y}}
  end end
  s.set_tiles(tiles)
+ log(MARK.."SETUP_TERRAIN_READY")
  local player=game.forces.player
  local renegade=game.forces["tech-priests-renegades-nauvis"]
    or game.create_force("tech-priests-renegades-nauvis")
@@ -70,6 +75,7 @@ local function init()
    rec.entity=e;rec.health=e.health
  end
  t.protected=targets
+ log(MARK.."SETUP_PROTECTED_TARGETS_READY count="..#targets)
  for side,force in ipairs({player,renegade}) do
    local y=side==1 and -23 or 23
    for i,def in ipairs(AMMO) do
@@ -116,6 +122,7 @@ local function init()
        force=force.name,ammo=ammo.name,initial=count,spawn=start}
    end
  end
+ log(MARK.."SETUP_ACTORS_AND_BUNKERS_READY actors="..#t.actors.." bunkers="..#t.turrets)
  for i=1,48 do
    local name=i%3==0 and "medium-biter" or "small-biter"
    local x=((i-1)%16-7.5)*4.2
@@ -128,9 +135,15 @@ local function init()
    check(ok,"native biter attack order unavailable "..i)
    t.biters[#t.biters+1]=b
  end
- t.surface=s.index
  t.expected={aai_actors=30,types=15,native_bunkers=14,
    native_biters=48,forces=3}
+ check(#t.actors==30 and #t.turrets==14 and #t.biters==48,
+   "native setup did not stage the expected physical actors/turrets/biters")
+ check(t.surface and s.valid and game.surfaces[t.surface]==s,
+   "native setup surface not retained")
+ -- Publish atomically after all native placements and identities exist.
+ t.ready=true
+ storage.combat_batch_visual=t
  log(MARK.."INIT "..helpers.table_to_json(t.expected))
 end
 
@@ -190,7 +203,8 @@ local function snapshot(t)
    force_actors_alive=force_counts}
 end
 local function tick(event)
- local t=storage.combat_batch_visual;if not t or t.done then return end
+ local t=storage.combat_batch_visual
+ if not (t and t.ready==true and type(t.surface)=="number") or t.done then return end
  local elapsed=game.tick-t.start
  capture(t,elapsed)
  if elapsed>0 and elapsed%300==0 then
