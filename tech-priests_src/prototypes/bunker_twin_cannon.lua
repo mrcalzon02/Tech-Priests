@@ -32,6 +32,8 @@ function M.register(mod_name,options)
   t.attack_parameters.cooldown=t.attack_parameters.cooldown/2
   t.attack_parameters.range=36;t.attack_parameters.min_range=8;t.attack_parameters.damage_modifier=1
   t.attack_parameters.shell_particle=nil
+  -- Native collinear ejection keeps the actual round on the aim line; no vanilla ammo mutation.
+  t.attack_parameters.true_collinear_ejection=true
   t.starting_attack_animation=nil;t.ending_attack_animation=nil;t.attacking_speed=1
   t.attack_from_start_frame=false
   t.start_attacking_only_when_can_shoot=true;t.leave_attacking_if_shoot_fails=false
