@@ -260,7 +260,7 @@ local function normalize_placeable(v)
  if type(v)=="string"then if item_exists(v)then local e=place_result(v);return e and{item_name=v,entity_name=e,category=category_for(e)}or nil end;if entity_exists(v)then local item=item_for_entity(v);return item and{item_name=item,entity_name=v,category=category_for(v)}or nil end;return nil end
  if type(v)~="table"then return nil end;local item=v.item_name or v.item or v.name;local entity=v.entity_name or v.entity or v.place_result;if entity and type(entity)=="table"then entity=entity.name end;if not entity and item then entity=place_result(item)end;if not item and entity then item=item_for_entity(entity)end;if not(item_exists(item)and entity_exists(entity))then return nil end;return{item_name=item,entity_name=entity,category=category_for(entity,v.category or v.class),source=v.source,direction=v.direction}
 end
-local request_fields={"structure_construction_requested_item","construction_requested_item","construction_request","pending_construction","build_request"}
+local request_fields={"structure_construction_requested_item","construction_requested_item","construction_request","combat_construction_request","pending_construction","build_request"}
 local function bootstrap_request(pair)
  local rec=pair and pair.construction_bootstrap_ghost_0645;if type(rec)~="table"then return nil end;local ghost=valid(rec.ghost)and rec.ghost or nil;if not ghost and rec.position and valid_pair(pair)then local ok,e=pcall(pair.station.surface.find_entity,pair.station.surface,"entity-ghost",rec.position);if ok and valid(e)then ghost=e end end
  local placeable=normalize_placeable({item_name=rec.item,entity_name=rec.entity_name,category=rec.category or rec.class,source="construction-bootstrap-ghost-0645",direction=rec.direction});if not placeable or not rec.position then return nil end;return{field="construction_bootstrap_ghost_0645",value=rec,placeable=placeable,position={x=rec.position.x,y=rec.position.y},ghost=ghost,site_reason="bootstrap-ghost",effectiveness=rec.effectiveness}
@@ -819,6 +819,30 @@ local function construction_request(pair)
  -- electricity-dependent factory work. Admit this exact requested machine
  -- ahead of any UNSTARTED bootstrap ghost, funded or unfunded. Keep that
  -- ghost intact; active physical construction and custody are never displaced.
+ -- A player-issued muster is an actual 0338 item-built actor, not a
+ -- spawned AI token. Validate the exact live order before offering any site.
+ -- Existing remote-drill, rail and physical tasks above retain their priority.
+ local muster=pair.combat_muster_order
+ local request=pair.combat_construction_request
+ if type(request)=="table" and type(muster)=="table"
+   and muster.phase=="construction" and muster.request==request
+   and request.combat_muster_token==muster.id
+   and request.source=="combat-muster"
+   and type(request.item_name)=="string"
+   and request.item_name==request.entity_name
+   and type(request.position)=="table"
+   and type(request.position.x)=="number"
+   and type(request.position.y)=="number"
+   and pair.station.force.recipes[request.item_name]
+   and pair.station.force.recipes[request.item_name].enabled==true then
+  local placeable=normalize_placeable(request)
+  if placeable and place_result(request.item_name)==request.entity_name
+    and entity_type(request.entity_name)=="car" then
+   return {field="combat_construction_request",value=request,
+     placeable=placeable,position=request.position,
+     site_reason="paid-combat-muster"}
+  end
+ end
  local power=pair.structure_construction_requested_item
  if type(power)=="table"and power.owner=="power-setup-1252"
    and type(power.item_name)=="string"then
@@ -1435,6 +1459,25 @@ local function finish(pair,task,built,reason)
    }
   end
  end
+ -- AAI owns physical actor management; 0338 merely reports the real,
+ -- already-debited built car to the original muster order adapter.
+ if built and built.type=="car" then
+  local roster=package.loaded["scripts.core.combat_roster_orders"]
+  local catalog=package.loaded["shared.combat_roster_catalog"]
+  if roster and type(roster.on_built)=="function"
+    and catalog and catalog.for_entity_name(built.name) then
+   local ok,accepted=pcall(roster.on_built,pair,task,built)
+   pair.combat_muster_build_receipt={
+    tick=now(),unit=built.unit_number,entity=built.name,
+    accepted=ok and accepted==true,
+    reason=not ok and safe(accepted) or accepted==true
+      and "physical-0338-actor-built" or "combat-build-owner-refused"}
+   if not (ok and accepted==true) then
+    record(pair,"combat-actor-build-receipt-refused",
+      pair.combat_muster_build_receipt.reason)
+   end
+  end
+ end
  if built then clear_request(pair,task)end
  -- A physically debited second starter must reach its source inventory
  -- before the obsolete non-ghost commissioning request is retired.
@@ -1735,6 +1778,23 @@ local function begin_task(pair,c)
  -- Recheck before reserving a site or debiting any native item. Retain the
  -- original request/cargo untouched on refusal.
  local request=c.request_value
+ if c.request_field=="combat_construction_request" then
+  local muster=pair.combat_muster_order
+  if not (type(request)=="table" and pair.combat_construction_request==request
+    and type(muster)=="table" and muster.request==request
+    and muster.phase=="construction" and muster.id==request.combat_muster_token
+    and request.item_name==c.item_name and request.entity_name==c.entity_name
+    and request.position and c.position
+    and request.position.x==c.position.x and request.position.y==c.position.y
+    and request.quality=="normal"
+    and type(request.item_name)=="string"
+    and place_result(request.item_name)==request.entity_name
+    and entity_type(request.entity_name)=="car"
+    and pair.station.force.recipes[request.item_name]
+    and pair.station.force.recipes[request.item_name].enabled==true) then
+   return nil,"combat-muster-request-revoked-or-invalid"
+  end
+ end
  local marked=type(request)=="table"
    and request.frontier_root_unit_1076~=nil
  if c.site_reason=="powered-roboport-frontier-1076" or marked then
