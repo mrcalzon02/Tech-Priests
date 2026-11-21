@@ -217,7 +217,7 @@ class ProofSafety(unittest.TestCase):
         self.assertIn('HEARTBEAT elapsed=', FIXTURE.read_text(encoding="utf-8"))
         # Other native scenarios intentionally retain their own broad abort
         # conditions. This regression only owns the graphical batch lane.
-        batch_visual = launcher.split("if args.scenario=='batch-visual':", 1)[1].split(
+        batch_visual = launcher.split("if args.scenario in ('batch-visual','fortification-visual'):", 1)[1].split(
             "\n for label,arguments,marker", 1)[0]
         self.assertNotIn(
             "if 'isolated handler failure' in output or 'Error Util.cpp'",
@@ -234,22 +234,21 @@ class ProofSafety(unittest.TestCase):
         timestamps = []
         for name, start, stop, step in clips:
             ticks = list(range(int(start), int(stop)+1, int(step)))
-            self.assertEqual(len(ticks), 16, name)
-            # Repeated headful runs stalled after 42 renders at the old
-            # 48-tick/view cadence. Preserve full native proof while
-            # halving screenshot demand instead of reducing simulation UPS.
-            self.assertEqual(int(step), 96, name)
+            self.assertEqual(len(ticks), 32, name)
+            # Widened camera with twice as many genuine frames. Render requests
+            # stay staggered across the three views; no simulation slowdown.
+            self.assertEqual(int(step), 48, name)
             timestamps.extend(ticks)
         self.assertEqual(len(timestamps), len(set(timestamps)),
                          "Never queue two native 960x540 screenshots on one game tick")
-        self.assertEqual(len(timestamps), 48)
-        self.assertIn("if elapsed>=1620 then", fixture)
+        self.assertEqual(len(timestamps), 96)
+        self.assertIn("if elapsed>=1680 then", fixture)
         self.assertGreater(max(timestamps), 1530)
         self.assertIn('resolution={960,540}', fixture)
         self.assertIn('force_render=true', fixture)
         self.assertIn('game.take_screenshot', fixture)
-        self.assertIn('count>=48 and actual==count', launcher)
-        self.assertIn("len(expected.get(clip, []))>=16", launcher)
+        self.assertIn('count>=96 and actual==count', launcher)
+        self.assertIn("len(expected.get(clip, []))>=32", launcher)
         self.assertIn("TP_COMBAT_LIVE_PROGRESS", launcher)
         self.assertIn("TP_COMBAT_FRAME_DIAGNOSTIC", launcher)
         self.assertIn("'frame-*.png'", launcher)
