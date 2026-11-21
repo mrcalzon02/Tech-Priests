@@ -61,7 +61,9 @@ local function charge_fx(event)
       storage.bunker_dish_charge[id]=nil
     else
       local target=entity.shooting_target
-      local visible=age<6 or (target and target.valid and entity.energy>=800000 and age<120)
+              -- Rendering.visible is a strict boolean: absent shooting_target must
+        -- never leak Lua nil into draw_animation or a render-object setter.
+        local visible=age<6 or (target~=nil and target.valid and entity.energy>=800000 and age<120)
       local heading=math.floor(entity.orientation*64+.5)%64
       local animation=string.format('tp-dish-electrical-%02d',heading)
       local frame=age<6 and 0 or math.min(15,1+math.floor((age-6)*15/114))
