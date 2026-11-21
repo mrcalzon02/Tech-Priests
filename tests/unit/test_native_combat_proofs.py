@@ -1,0 +1,86 @@
+#!/usr/bin/env python3
+"""Offline evidence-pipeline regressions; never a Factorio gameplay PASS."""
+import importlib.util
+import pathlib
+import struct
+import tempfile
+import unittest
+import zlib
+
+ROOT = pathlib.Path(__file__).resolve().parents[2]
+ENCODER = ROOT / "tools/assemble_native_combat_proofs.py"
+LAUNCHER = ROOT / "tools/run_combat_roster_native.py"
+FIXTURE = ROOT / "tests/scenarios/combat-roster/batch_visual.lua"
+
+spec = importlib.util.spec_from_file_location("native_combat_proofs", ENCODER)
+assert spec and spec.loader
+proof = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(proof)
+
+
+def png_chunk(kind, payload):
+    return (struct.pack(">I", len(payload)) + kind + payload +
+            struct.pack(">I", zlib.crc32(payload, zlib.crc32(kind)) & 0xFFFFFFFF))
+
+
+def tiny_valid_png():
+    """A synthetic parser fixture ONLY, never source gameplay evidence."""
+    w, h = 320, 200
+    header = struct.pack(">IIBBBBB", w, h, 8, 2, 0, 0, 0)
+    rows = (b"\0" + b"\x7F\0\x55" * w) * h
+    return (proof.PNG_MAGIC + png_chunk(b"IHDR", header) +
+            png_chunk(b"IDAT", zlib.compress(rows)) +
+            png_chunk(b"IEND", b""))
+
+
+class ProofSafety(unittest.TestCase):
+    def test_both_python_entrypoints_compile(self):
+        for source in (ENCODER, LAUNCHER):
+            compile(source.read_text(encoding="utf-8"), str(source), "exec")
+
+    def test_native_png_integrity_required(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            image = pathlib.Path(tmp) / "frame.png"
+            image.write_bytes(tiny_valid_png())
+            self.assertEqual(proof.verified_png(image), (320, 200))
+            invalid = bytearray(image.read_bytes())
+            invalid[-6] ^= 1  # IEND CRC, no valid original PNG.
+            image.write_bytes(invalid)
+            with self.assertRaises(ValueError):
+                proof.verified_png(image)
+            image.write_bytes(tiny_valid_png()[:-8])
+            with self.assertRaises(ValueError):
+                proof.verified_png(image)
+
+    def test_no_missing_or_repeated_frame_receipts(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = pathlib.Path(tmp)
+            expected = [{"frame": i, "tick": 100 + i * 20} for i in range(16)]
+            with self.assertRaisesRegex(ValueError, "Missing or empty"):
+                proof.frame_rows(root, "01-massed-units", expected)
+            for i in range(16):
+                path = root / "01-massed-units" / ("frame-%04d.png" % i)
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_bytes(tiny_valid_png() + b"\0" * 4096)
+            with self.assertRaisesRegex(ValueError, "trailing bytes"):
+                proof.frame_rows(root, "01-massed-units", expected)
+            with self.assertRaises(ValueError):
+                proof.frame_rows(root, "../fake-proof", expected)
+
+    def test_only_live_native_capture_can_satisfy_visual_gate(self):
+        fixture = FIXTURE.read_text(encoding="utf-8")
+        self.assertIn("game.take_screenshot", fixture)
+        self.assertIn("on_entity_damaged", fixture)
+        self.assertIn("NATIVE_COMBAT_PASS", fixture)
+        self.assertIn("Bridge.command(", fixture)
+        self.assertIn("game.auto_save(", fixture)
+        source = LAUNCHER.read_text(encoding="utf-8")
+        self.assertIn("batch-visual", source)
+        self.assertIn("--source-sha", source)
+        self.assertIn("graphical-client.log", source)
+        self.assertIn("Refusing to overwrite nonempty test output directory", source)
+        self.assertIn("assemble_native_combat_proofs.py", source)
+
+
+if __name__ == "__main__":
+    unittest.main(verbosity=2)
