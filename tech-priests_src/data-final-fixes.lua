@@ -654,3 +654,23 @@ require("prototypes.character_skins").register()
 require("prototypes.combat_roster").finalize()
 require("prototypes.generated_graphics.unit-arsenal-icons-v02")
 require("prototypes.generated_graphics.material-icons-v01")
+
+-- Machine Spirit doctrine effects are local machine rites, not beacon transmissions.
+-- Preserve a beacon's explicit category permissions; restrict only previously
+-- unrestricted beacons, retaining every other registered module category.
+local machine_spirit_excluded_beacon_categories = {
+  ["tech-priests-machine-spirit-order"] = true,
+  ["tech-priests-machine-spirit-chaos"] = true
+}
+local general_beacon_module_categories = {}
+for category_name in pairs(data.raw["module-category"] or {}) do
+  if not machine_spirit_excluded_beacon_categories[category_name] then
+    general_beacon_module_categories[#general_beacon_module_categories+1] = category_name
+  end
+end
+table.sort(general_beacon_module_categories)
+for _, beacon in pairs(data.raw.beacon or {}) do
+  if beacon.allowed_module_categories == nil then
+    beacon.allowed_module_categories = table.deepcopy(general_beacon_module_categories)
+  end
+end

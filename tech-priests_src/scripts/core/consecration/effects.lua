@@ -5,6 +5,7 @@ local function tech_priests_effect_text_0448(entity, offset_y, text, color, ttl,
   return tech_priests_safe_floating_text_0448(entity.surface, { x = entity.position.x, y = entity.position.y + (tonumber(offset_y) or 0) }, text, color, { ttl = ttl or 120, scale = scale or 0.76 }) and true or false
 end
 -- Extracted from control.lua to isolate machine-spirit state logic.
+local Doctrine = require("scripts.core.consecration.doctrine_effects")
 
 function apply_low_sanctification_pollution(record)
   if not (record and record.entity and record.entity.valid) then return end
@@ -35,7 +36,7 @@ function apply_sanctification_performance(record)
   if record.waste_jammed then return end
 
   local entity = record.entity
-  local ratio = get_sanctification_ratio(record)
+  local ratio = Doctrine.performance_ratio(record, get_sanctification_ratio(record))
   pcall(function() entity.disabled_by_script = false end)
   if entity.active == false then entity.active = true end
 
@@ -400,15 +401,16 @@ function apply_operation_degradation(record)
   if not (record and record.entity and record.entity.valid) then return end
 
   local entity = record.entity
-  local value = record.sanctification or 0
+  local value = Doctrine.effective_value(record)
   local max_value = record.max_sanctification or get_base_sanctification_max()
+  local doctrine_damage_multiplier = Doctrine.damage_multiplier(record)
 
   -- Below the configured threshold, the machine begins physically injuring itself.
   -- The closer it gets to zero, the more likely and more severe the damage is.
   local damage_threshold, damage_max_chance, damage_min_fraction, damage_max_fraction = get_physical_damage_config()
   if damage_threshold > 0 and value < damage_threshold and entity.health and entity.max_health and entity.health > 0 then
     local severity = math.max(0, math.min(1, (damage_threshold - value) / damage_threshold))
-    local chance = severity * damage_max_chance
+    local chance = severity * damage_max_chance * doctrine_damage_multiplier
     if math.random() < chance then
       local damage_fraction = damage_min_fraction + ((damage_max_fraction - damage_min_fraction) * severity * math.random())
       local damage = math.max(1, entity.max_health * damage_fraction)
@@ -426,7 +428,7 @@ function apply_operation_degradation(record)
   local max_damage_threshold, max_damage_chance, max_damage_min_amount, max_damage_max_amount = get_max_sanctification_degradation_config()
   if max_damage_threshold > 0 and value < max_damage_threshold and max_value > get_min_degraded_sanctification_max() then
     local severity = math.max(0, math.min(1, (max_damage_threshold - value) / max_damage_threshold))
-    local chance = severity * max_damage_chance
+    local chance = severity * max_damage_chance * doctrine_damage_multiplier
     if math.random() < chance then
       local amount = max_damage_min_amount
       if max_damage_max_amount > max_damage_min_amount then
@@ -454,7 +456,7 @@ function create_operation_waste(record, recipe)
   if not (record and record.entity and record.entity.valid) then return end
 
   local ratio = get_sanctification_ratio(record)
-  local waste_chance = get_waste_chance_from_ratio(ratio)
+  local waste_chance = Doctrine.detritus_chance(record, get_waste_chance_from_ratio(ratio))
   local product_units = get_recipe_item_output_units(recipe)
   local expected_waste = product_units * waste_chance
 

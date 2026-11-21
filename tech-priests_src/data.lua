@@ -6,6 +6,7 @@ require("prototypes.categories.item-group")
 require("prototypes.item")
 require("prototypes.recipe")
 require("prototypes.technology")
+require("prototypes.machine_spirit_doctrines")
 -- 0.1.313: equipment-grid experiment abandoned; priests use station inventory plus research-unlocked bonuses.
 -- equipment grid prototypes intentionally disabled as of 0.1.313/0.1.314
 require("prototypes.sound")

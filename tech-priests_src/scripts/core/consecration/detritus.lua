@@ -1,5 +1,6 @@
 -- Tech Priests 0.1.347 consecration modularization pass 1.
 -- Extracted from control.lua to isolate machine-spirit state logic.
+local Doctrine = require("scripts.core.consecration.doctrine_effects")
 
 function set_machine_waste_jam_status(entity)
   set_machine_ritual_status(entity, {
@@ -13,7 +14,7 @@ function get_sanctification_ratio(record)
   if not record then return MINIMUM_SANCTIFICATION_EFFICIENCY end
   local max_value = record.max_sanctification or get_base_sanctification_max()
   if max_value <= 0 then return MINIMUM_SANCTIFICATION_EFFICIENCY end
-  return math.max(MINIMUM_SANCTIFICATION_EFFICIENCY, math.min(1.0, (record.sanctification or 0) / max_value))
+  return math.max(MINIMUM_SANCTIFICATION_EFFICIENCY, math.min(1.0, Doctrine.effective_value(record) / max_value))
 end
 
 TECH_PRIESTS_BASE_DETRITUS_CHANCE_0423 = TECH_PRIESTS_BASE_DETRITUS_CHANCE_0423 or 0.015
