@@ -16,6 +16,7 @@ import shutil
 import struct
 import subprocess
 import sys
+import zlib
 
 CLIPS = ("01-massed-units", "02-bunker-lines", "03-enemy-flank")
 PNG_MAGIC = b"\x89PNG\r\n\x1a\n"
@@ -40,6 +41,42 @@ def png_header(path: pathlib.Path) -> tuple[int, int]:
     return w, h
 
 
+def verified_png(path: pathlib.Path) -> tuple[int, int]:
+    """Validate the complete native PNG chunk stream, not just its signature."""
+    dims = png_header(path)
+    with path.open("rb") as stream:
+        if stream.read(8) != PNG_MAGIC:
+            raise ValueError("Bad native PNG magic")
+        saw_ihdr, saw_idat, saw_iend = False, False, False
+        while True:
+            length_bytes = stream.read(4)
+            if len(length_bytes) != 4:
+                break
+            size = struct.unpack(">I", length_bytes)[0]
+            if size > 512 * 1024 * 1024:
+                raise ValueError("Unbounded PNG chunk")
+            kind = stream.read(4)
+            payload = stream.read(size)
+            check = stream.read(4)
+            if len(kind) != 4 or len(payload) != size or len(check) != 4:
+                raise ValueError("Truncated native PNG data")
+            crc = zlib.crc32(payload, zlib.crc32(kind)) & 0xFFFFFFFF
+            if struct.unpack(">I", check)[0] != crc:
+                raise ValueError("Native PNG checksum mismatch")
+            if kind == b"IHDR":
+                saw_ihdr = True
+            elif kind == b"IDAT":
+                saw_idat = True
+            elif kind == b"IEND":
+                saw_iend = True
+                break
+        if not (saw_ihdr and saw_idat and saw_iend):
+            raise ValueError("Incomplete native PNG stream")
+        if stream.read(1):
+            raise ValueError("Native PNG has unexpected trailing bytes")
+    return dims
+
+
 def frame_rows(root: pathlib.Path, clip: str, expected: list) -> list[dict]:
     if not re.fullmatch(r"[a-z0-9-]{3,40}", clip):
         raise ValueError("Unsafe clip identifier")
@@ -52,7 +89,7 @@ def frame_rows(root: pathlib.Path, clip: str, expected: list) -> list[dict]:
         path = root / clip / f"frame-{i:04d}.png"
         if not path.is_file() or path.stat().st_size < 4096:
             raise ValueError(f"Missing or empty actual Factorio screenshot: {path}")
-        w, h = png_header(path)
+        w, h = verified_png(path)
         rows.append({
             "path": str(path),
             "tick": item["tick"],
@@ -65,6 +102,8 @@ def frame_rows(root: pathlib.Path, clip: str, expected: list) -> list[dict]:
             raise ValueError(f"Non-monotonic engine screenshot receipt: {clip}")
     if len(set(tuple(x["resolution"]) for x in rows)) != 1:
         raise ValueError(f"Native source screenshot resolutions changed: {clip}")
+    if len(set(x["sha256"] for x in rows)) < 3:
+        raise ValueError(f"Native footage is static; no motion proof: {clip}")
     return rows
 
 
@@ -163,6 +202,9 @@ def main():
             "frames": len(rows), "fps": args.fps,
             "engine_first_tick": rows[0]["tick"],
             "engine_last_tick": rows[-1]["tick"],
+            "simulation_speedup_equivalent": round(
+                args.fps * (rows[-1]["tick"] - rows[0]["tick"])
+                / max(1, len(rows) - 1) / 60, 3),
             "sources": rows, "gif": None, "mp4": None,
             "native_frame": {"path": str(poster), "sha256": digest(poster),
                              "bytes": poster.stat().st_size,
