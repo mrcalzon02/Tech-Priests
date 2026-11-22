@@ -706,7 +706,11 @@ local function tech_priests_0260_position_has_power(pair, position)
   -- network identity/geometry rather than crediting an imaginary supply.
   if not (pair and pair.station and pair.station.valid and position) then return false end
   local surface = pair.station.surface
-  local area = {{position.x - 12, position.y - 12}, {position.x + 12, position.y + 12}}
+  -- A legendary substation covers farther than 12 tiles. Keep one bounded
+  -- native scan but include higher-quality and custom Martian power poles.
+  local search_radius = 24
+  local area = {{position.x - search_radius, position.y - search_radius},
+    {position.x + search_radius, position.y + search_radius}}
   local ok, poles = pcall(function()
     return surface.find_entities_filtered{
       area = area, type = "electric-pole", force = pair.station.force, limit = 64 }
@@ -722,7 +726,8 @@ local function tech_priests_0260_position_has_power(pair, position)
       pcall(function()
         local proto = pole.prototype
         if proto and type(proto.get_supply_area_distance) == "function" then
-          supply = tonumber(proto.get_supply_area_distance("normal"))
+          local quality_name = pole.quality and pole.quality.name or "normal"
+          supply = tonumber(proto.get_supply_area_distance(quality_name))
         end
       end)
       if connected and supply and supply > 0 then
@@ -811,11 +816,11 @@ local function tech_priests_0260_power_support_item(pair)
   return nil, nil
 end
 
-local function tech_priests_0260_native_pole_range(proto, method)
+local function tech_priests_0260_native_pole_range(proto, method, quality_name)
   if not proto then return nil end
   local ok,range=pcall(function()
     local getter=proto[method]
-    return type(getter)=="function" and getter("normal") or nil
+    return type(getter)=="function" and getter(quality_name or "normal") or nil
   end)
   range=ok and tonumber(range) or nil
   return range and range>0 and range or nil
@@ -830,7 +835,8 @@ local function tech_priests_0260_connected_pole_site(pair, new_proto, position, 
       local network_id
       pcall(function() network_id=pole.electric_network_id end)
       local old_wire=tech_priests_0260_native_pole_range(
-        pole.prototype,"get_max_wire_distance")
+        pole.prototype,"get_max_wire_distance",
+        pole.quality and pole.quality.name or "normal")
       if type(network_id)=="number" and network_id>0 and old_wire then
         local dx=pole.position.x-position.x
         local dy=pole.position.y-position.y

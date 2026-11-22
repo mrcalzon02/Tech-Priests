@@ -14,7 +14,8 @@ local function add(name,opts)
     force=opts.force or force,surface=surface,
     position={x=1,y=2},energy=opts.energy,
     electric_network_id=opts.grid,fluidbox=opts.fluidbox,
-    health=opts.health,prototype={max_health=opts.max_health},
+    health=opts.health,max_health=opts.native_max_health or opts.max_health,
+    prototype={max_health=opts.max_health},
     is_connected_to_electric_network=function()
       return opts.connected==true end,
     get_inventory=function()
@@ -134,6 +135,18 @@ assert(out.walls==2 and out.damaged_walls==1
   and out.gun_rounds_by_unit[gun.unit_number]==20
   and out.gun_rounds_by_unit[empty.unit_number]==0,
   "real defense entity identity, wall health or round-custody snapshots incorrect")
+-- High-quality walls have higher native max health than the Normal
+-- prototype. A damaged Legendary wall must not be marked healthy just
+-- because it remains above the Normal 350 HP baseline.
+local quality_wall=add("stone-wall",{health=875,max_health=350,native_max_health=875})
+local full_quality=assert(M.inspect(surface,force,{x=0,y=0},40))
+assert(full_quality.damaged_walls==1 and full_quality.walls==3,
+  "full-health Legendary wall falsely reported damaged")
+quality_wall.health=700
+local damaged_quality=assert(M.inspect(surface,force,{x=0,y=0},40))
+assert(damaged_quality.damaged_walls==2,
+  "damaged Legendary wall ignored because HP exceeded Normal prototype max")
+quality_wall.valid=false
 gun.get_inventory=function()
   return {valid=true,get_item_count=function()return 0 end}
 end

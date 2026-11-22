@@ -7,11 +7,13 @@ local function native_proto(supply)
   return setmetatable({
     get_supply_area_distance=function(_,quality)
       -- Factorio methods can be called as proto.method("normal").
-      assert(quality==nil or quality=="normal",
+      assert(quality==nil or quality=="normal" or quality=="legendary",
         "laser support requested unexpected quality")
-      return supply
+      if supply==nil then return nil end
+      return supply+(quality=="legendary" and 5 or 0)
     end,
-    get_max_wire_distance=function()return 9 end
+    get_max_wire_distance=function(_,quality)
+      return 9+(quality=="legendary" and 10 or 0) end
   },{__index=function(_,name)
     if name=="supply_area_distance" then
       error("Factorio 2.0 no longer exposes 1.1 supply_area_distance property")
@@ -86,6 +88,14 @@ assert(not powered(pair,position),
   "disconnected grid remained credited after engine-network loss")
 assert(find_calls>=9 and #poles==5,
   "not all real-grid negative controls were executed")
+-- Legendary substations reach 14 tiles; the old +/-12 search rectangle
+-- missed an actually powered laser even though native square reach includes it.
+local distant=pole(17,4,73,9)
+distant.quality={name="legendary"}
+assert(powered(pair,position),"Legendary pole beyond 12 tiles was ignored")
+distant.quality={name="normal"}
+assert(not powered(pair,position),"Normal pole gained Legendary reach")
+distant.valid=false
 local wire_connected=assert(bridge.connected_laser_pole_site)
 local next_proto=native_proto(3)
 assert(not wire_connected(pair,next_proto,{x=2,y=2},{}),
@@ -103,4 +113,13 @@ assert(not wire_connected(pair,next_proto,{x=9.9,y=0},{real_anchor}),
 real_anchor.force=enemy
 assert(not wire_connected(pair,next_proto,one_site,{real_anchor}),
   "laser power support wired to foreign-force grid")
+local upgraded=pole(0,0,73,3)
+upgraded.quality={name="legendary"}
+local future_pole={get_max_wire_distance=function(_,quality)
+  assert(quality=="normal") return 18 end}
+assert(wire_connected(pair,future_pole,{x=12,y=0},{upgraded}),
+  "legendary anchor's native wire range ignored")
+upgraded.quality={name="normal"}
+assert(not wire_connected(pair,future_pole,{x=12,y=0},{upgraded}),
+  "normal anchor illegally connected at Legendary range")
 print("[defense-native-laser-grid-1090] PASS actual electrical ID, native square supply geometry, force isolation, outage recovery")

@@ -166,7 +166,9 @@ function M.inspect(surface,force,center,radius,pair)
       elseif e.name=="stone-wall" then
         out.walls=out.walls+1
         local ok,h,max=pcall(function()
-          return e.health,e.prototype.max_health end)
+          -- LuaEntity.max_health includes the placed entity's native Quality.
+          -- Prototype.max_health is the Normal baseline, not its damage cap.
+          return e.health,e.max_health end)
         if ok and type(h)=="number" and type(max)=="number" then
           if e.unit_number then out.wall_health_by_unit[e.unit_number]=h end
           if h<max then out.damaged_walls=out.damaged_walls+1 end
