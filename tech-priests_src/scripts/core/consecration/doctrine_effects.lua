@@ -114,4 +114,18 @@ function M.detritus_chance(record, chance)
   return math.min(1, chance + (1 - chance) * M.snapshot(record).waste)
 end
 
+
+-- Expose doctrine effects without confusing stored machine condition with the
+-- effective sanctity used for performance and low-sanctity output decisions.
+function M.status_line(record)
+  if not record then return "" end
+  local current = tonumber(record.sanctification) or 0
+  local maximum = math.max(1, tonumber(record.max_sanctification) or 100)
+  local modifiers = M.snapshot(record)
+  if modifiers.order == 0 and modifiers.chaos == 0 then
+    return string.format("%.1f / %.1f", current, maximum)
+  end
+  return string.format("%.1f / %.1f (eff %.1f)", current, maximum, M.effective_value(record))
+end
+
 return M

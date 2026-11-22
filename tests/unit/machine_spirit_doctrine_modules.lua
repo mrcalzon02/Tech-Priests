@@ -36,6 +36,7 @@ local entity={valid=true,get_module_inventory=function()return {get_contents=fun
 game={tick=100}
 local record={entity=entity,sanctification=50,max_sanctification=100}
 near(M.effective_value(record),45.8,"effective sanctity")
+assert(M.status_line(record)=="50.0 / 100.0 (eff 45.8)", "mixed doctrine effect not displayed")
 near(M.performance_ratio(record,0.48),0.623,"low sanctity survival")
 near(M.detritus_chance(record,0.1),0.2386,"detritus uplift")
 near(M.detritus_quantity_multiplier(record,0.05),1.418,"floor yield increases despite capped chance")
@@ -55,6 +56,7 @@ near(M.effective_value(record),45.8,"within cache window")
 assert(reads==1,"module cache refreshed early")
 game.tick=160
 near(M.effective_value(record),90,"module change refresh")
+assert(M.status_line(record)=="50.0 / 100.0 (eff 90.0)", "doctrine label stale after module refresh")
 assert(reads==2,"module cache did not refresh")
 near(M.performance_ratio(record,0.9),0.9,"order does not gain chaos resilience")
 near(M.detritus_chance(record,0.1),0.1,"order no extra detritus")
@@ -62,6 +64,7 @@ near(M.detritus_quantity_multiplier(record,0.05),1,"order alone has no extractio
 near(M.damage_value(record),90,"order protects against physical wear")
 local none={valid=true,get_module_inventory=function() return nil end}
 near(M.effective_value({entity=none,sanctification=40,max_sanctification=100}),40,"no modules")
+assert(M.status_line({entity=none,sanctification=40,max_sanctification=100})=="40.0 / 100.0", "unmodified label changed")
 local caps=M.count_contents({{name="tech-priests-chaos-module-2",count=10}})
 near(caps.resilience,0.7,"resilience limit")
 near(caps.waste,0.45,"waste chance cap")

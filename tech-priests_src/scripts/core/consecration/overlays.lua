@@ -1,5 +1,6 @@
 -- Tech Priests 0.1.347 consecration modularization pass 1.
 -- Extracted from control.lua to isolate machine-spirit state logic.
+local Doctrine = require("scripts.core.consecration.doctrine_effects")
 
 clear_sanctification_overlay = function(entity_or_unit)
   ensure_storage()
@@ -367,7 +368,10 @@ draw_sanctification_label = function(record)
         time_to_live = SANCTIFICATION_RENDER_TTL
       })
     end
-    local current_text = string.format("%.1f / %.1f", tonumber(record.sanctification or 0) or 0, max_value)
+    -- The bar remains raw sanctity (and its red damage scar).  When installed
+    -- doctrine modules alter performance, the text also shows effective
+    -- sanctity.  One label, no extra rendering object or extra polling loop.
+    local current_text = Doctrine.status_line(record)
     label_current = rendering.draw_text({
       text = current_text,
       target = { entity = entity, offset = { label_x, y - 0.03 } },
