@@ -51,7 +51,28 @@ function M.register()
   entity.crafting_categories={def.category};entity.crafting_speed=def.speed
   entity.energy_usage=def.power
   entity.energy_source={type="electric",usage_priority="secondary-input",drain="5kW",emissions_per_minute={pollution=2}}
-  entity.module_slots=0;entity.allowed_effects={}
+  -- These factories assemble physical combat units from intermediate products.
+  -- Provide four fixed slots for researched Order/Chaos doctrines; keep all
+  -- native crafting and input/output custody in Factorio, not in this module.
+  entity.module_slots=4
+  entity.quality_affects_module_slots=false
+  entity.allowed_effects={"speed","consumption","pollution"}
+  if feature_flags and feature_flags.quality then
+    entity.allowed_effects[#entity.allowed_effects+1]="quality"
+  end
+  -- An upstream assembler may explicitly restrict module categories.
+  -- Preserve those restrictions while admitting our two machine-local
+  -- doctrines; do not globally open beacons or overwrite other categories.
+  if entity.allowed_module_categories then
+    local admitted={}
+    for _,category in ipairs(entity.allowed_module_categories) do admitted[category]=true end
+    for _,category in ipairs({"tech-priests-machine-spirit-order",
+                             "tech-priests-machine-spirit-chaos"}) do
+      if not admitted[category] then
+        entity.allowed_module_categories[#entity.allowed_module_categories+1]=category
+      end
+    end
+  end
   -- A real reagent/coolant inlet supports future weapon/supply recipes and
   -- native four-way rotation, including the square 4/5/6-tile footprints.
   entity.fluid_boxes={{production_type="input",volume=100,
