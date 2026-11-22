@@ -1,6 +1,10 @@
 -- Playable native prototypes for the existing six-station lobber and energy dish.
 -- Balance values are prototype defaults, distinct from the established cannon.
 local M = {}
+-- Factorio 2.1 quality range_multiplier is capped by the engine at 3.
+-- Delivery ceilings must not truncate the native turret's quality range;
+-- its unchanged attack_parameters.range still owns who can be targeted.
+local MAX_NATIVE_QUALITY_RANGE_MULTIPLIER = 3
 function M.register(mod_name)
   require('prototypes.bunker_autocannon').register(mod_name)
   if data.raw['ammo-turret']['tech-priests-bunker-lobber'] then return end
@@ -63,7 +67,8 @@ function M.register(mod_name)
     ammo_category='tech-priests-lobber-grenade',
     ammo_type={target_type='position',action={type='direct',action_delivery={type='projectile',
       source_effects={{type='script',effect_id='tech-priests-lobber-shot'}},
-      projectile=projectile.name,starting_speed=0.3,direction_deviation=0,range_deviation=0,max_range=32}}}}
+      projectile=projectile.name,starting_speed=0.3,direction_deviation=0,range_deviation=0,
+      max_range=lobber.attack_parameters.range*MAX_NATIVE_QUALITY_RANGE_MULTIPLIER}}}}
   if not data.raw.ammo['firearm-magazine'].ammo_category then
     ammo.ammo_category=nil;ammo.ammo_type.category='tech-priests-lobber-grenade'
   end
@@ -90,7 +95,8 @@ function M.register(mod_name)
   -- the horizontal reach; delivery offset supplies fixed projected height.
   dish.attack_parameters.source_offset={0,-1.095}
   dish.attack_parameters.ammo_type.action.action_delivery.source_offset={0,-2.022325394193526}
-  dish.attack_parameters.ammo_type.action.action_delivery.max_length=28
+  dish.attack_parameters.ammo_type.action.action_delivery.max_length=
+    dish.attack_parameters.range*MAX_NATIVE_QUALITY_RANGE_MULTIPLIER
   dish.attack_parameters.ammo_type.action.action_delivery.beam='tech-priests-dish-zap'
   dish.attack_parameters.ammo_type.action.action_delivery.duration=6
   dish.attack_parameters.ammo_type.action.action_delivery.source_effects={{type='script',effect_id='tech-priests-dish-discharge'}}

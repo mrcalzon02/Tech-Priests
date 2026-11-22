@@ -4,6 +4,18 @@ local M={}
 local NAME='tech-priests-bunker-twin-cannon'
 M.fire_effect='tp-twin-cannon-fire'
 M.projectile_effect='tp-twin-cannon-projectile-born'
+-- Native quality increases attack range. The line-through targeting pass must
+-- inspect the same quality-aware radius, not the Normal-only 36 tile cap.
+function M.effective_attack_range(gun)
+  if not (gun and gun.valid) then return 0 end
+  local proto=prototypes and prototypes.entity and prototypes.entity[NAME]
+  local attack=proto and proto.attack_parameters
+  local base=tonumber(attack and attack.range)
+  if not base or base<=0 then return 0 end
+  local quality=gun.quality
+  local multiplier=tonumber(quality and quality.range_multiplier) or 1
+  return base*math.max(1,math.min(3,multiplier))
+end
 local ROOT2=math.sqrt(2)
 local FLASH_LEAD=.16
 local function yaw(orientation)
@@ -165,7 +177,8 @@ local function aim_through_line(entry)
   -- farther enemy of the same priority type so their original piercing budget
   -- can carry through the nearer enemies. Ammo and projectiles stay unchanged.
   local chosen,furthest=target,length
-  for _,candidate in pairs(gun.surface.find_entities_filtered{name=target.name,force=target.force,position=p,radius=36}) do
+  for _,candidate in pairs(gun.surface.find_entities_filtered{name=target.name,force=target.force,
+    position=p,radius=M.effective_attack_range(gun)}) do
     if candidate.valid and candidate.health and candidate.health>0 then
       local x,y=candidate.position.x-p.x,candidate.position.y-p.y
       local along=x*dx+y*dy;local across=math.abs(x*dy-y*dx)
