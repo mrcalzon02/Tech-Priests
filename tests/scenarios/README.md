@@ -277,3 +277,26 @@ and special shell supply require a distinct acceptance scenario.
 This is a deterministic engine physics fixture, not a simulated battle or
 new scheduler. The original enemy health and inventory observations are
 logged and retained. **Status when authored: pending Core30 native run.**
+
+### Native Artillery Quality automatic-range proof
+
+```sh
+python3 tools/run_factorio_isolated_service_scenario.py \
+  --scenario quality-artillery-range --ticks 2400 \
+  --factorio /path/to/local/factorio \
+  --dependency-mods /path/to/cached/mods
+```
+
+Two actual `tech-priests-bunker-artillery` turrets at Normal and Legendary
+quality receive eight physical `artillery-shell` items each. Each has one
+real enemy spawner at 280 tiles on a separately charted test corridor. At
+zero artillery-range research, Normal automatic range is 224 tiles and
+Legendary automatic range is 336. The native fixture requires Normal
+**no target damage and no shell expenditure**, and Legendary **actual
+spawner health loss and at least one original shell consumed**. No firing
+orders, damage, or projectiles are injected by script. The source uses
+only the canonical dormant-safe tick broker for bounded observation;
+it does not install another global scheduler.
+
+This is distinct from the 6-family ammunition turret suite and the
+Energy Dish. **Native acceptance remains pending until Core30 runs it.**

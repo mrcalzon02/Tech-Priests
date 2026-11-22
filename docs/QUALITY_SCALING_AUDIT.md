@@ -134,3 +134,13 @@ projectiles are scripted. Artillery is a subsequent, separate native gate.
 **Units clarification:** `LuaEntityPrototype.get_max_power_output(quality)` yields joules **per tick**, not watts, so display MW as `output_joules_per_tick * 60 / 1,000,000`. The first fixture logged the correct *generated joule totals* but incorrectly labeled raw per-tick ratings as MW (0.017/0.033/0.067). The correction was separately committed in `9f04c47d1fa5d2a3438060520611b6d7550329de`. The original energy totals, which determine the pass, were unaffected.
 
 **Outstanding:** multi-fuel decay/storage independence, save/reload, space-platform real placement/power, graphical animation proof, and sustained network monitoring across varying demand. The test does not assert these.
+
+## Native automatic Artillery Quality range acceptance
+
+A separate `quality-artillery-range` isolated engine test completes the
+eight-type bunker weapon coverage. It places one Normal and one Legendary
+artillery turret with real `artillery-shell` inventories and separate
+charted enemy-spawner targets at 280 tiles, between the expected 224/336-tile
+automatic ranges. The native engine must produce a real Legendary target
+health loss and shell debit, with neither on the Normal side. The mod's
+actual turret/gun prototypes are unchanged; this is test-only source.
