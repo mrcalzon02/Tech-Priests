@@ -123,3 +123,14 @@ correct-category magazine/shell, independent enemy target and quality-aware
 range bracket. The case requires Normal no-damage, Legendary genuine enemy
 HP loss, and consumption of original ammunition. No combat results or
 projectiles are scripted. Artillery is a subsequent, separate native gate.
+
+
+## Core30 genuine plasma-generation output under load — accepted
+
+**Evidence:** [Dens-Mortis native run 44980837295](https://github.com/mrcalzon02/Dens-Mortis/actions/runs/44980837295), Factorio 2.1.24, source pin `99310f552ce3e8ed3b6cc2e1decdebf865c75dcb`, six physical isolated burner-generator entities and consumer-only electrical interfaces; native `--create` and 900-tick benchmark both exit 0. No game or graphics download.
+
+**Actual network production over 600 simulation ticks:** Minoris Normal 10,000,000 J versus Legendary 25,000,001 J; Majoris Normal 19,999,999 J versus Legendary 50,000,002 J; Maximus Normal 39,999,998 J versus Legendary 100,000,003 J. All three ratios **2.500x**. All six reactors accepted one original contained-pellet item in the native burner inventory. The engine checked the plasma-only fuel category and measured real electrical production under demand. This confirms 1/2/4 MW Normal sustained output and 2.5/5/10 MW Legendary output for those measured periods.
+
+**Units clarification:** `LuaEntityPrototype.get_max_power_output(quality)` yields joules **per tick**, not watts, so display MW as `output_joules_per_tick * 60 / 1,000,000`. The first fixture logged the correct *generated joule totals* but incorrectly labeled raw per-tick ratings as MW (0.017/0.033/0.067). The correction was separately committed in `9f04c47d1fa5d2a3438060520611b6d7550329de`. The original energy totals, which determine the pass, were unaffected.
+
+**Outstanding:** multi-fuel decay/storage independence, save/reload, space-platform real placement/power, graphical animation proof, and sustained network monitoring across varying demand. The test does not assert these.
