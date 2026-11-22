@@ -6,6 +6,7 @@ local function tech_priests_effect_text_0448(entity, offset_y, text, color, ttl,
 end
 -- Extracted from control.lua to isolate machine-spirit state logic.
 local Doctrine = require("scripts.core.consecration.doctrine_effects")
+local VehicleOperator = require("scripts.core.consecration.vehicle_operator")
 
 function apply_low_sanctification_pollution(record)
   if not (record and record.entity and record.entity.valid) then return end
@@ -259,12 +260,9 @@ end
 
 function get_player_operating_sanctified_entity(entity)
   if not (entity and entity.valid and game and game.connected_players) then return nil end
-  for _, player in pairs(game.connected_players) do
-    if player and player.valid and player.connected and player.vehicle and player.vehicle.valid and player.vehicle == entity then
-      return player
-    end
-  end
-  return nil
+  -- Native vehicle driver identity is the authority, never a seated passenger.
+  -- Empty vehicles avoid scanning every connected multiplayer player.
+  return VehicleOperator.get_player(entity, game.connected_players)
 end
 
 function spawn_vehicle_control_malfunction_text(entity)
