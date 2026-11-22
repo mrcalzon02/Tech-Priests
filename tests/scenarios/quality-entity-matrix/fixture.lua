@@ -119,14 +119,34 @@ local function setup()
       local e,proto=place(name,grade,x,y)
       if e.type=="assembling-machine" or e.type=="furnace" then
         local native_speed=proto.get_crafting_speed(grade)
+        local normal_speed=proto.get_crafting_speed("normal")
         if not near(e.crafting_speed,native_speed) then
           fail("NATIVE_CRAFT_SPEED_BAD "..name.." grade="..grade)
+        end
+        if grade=="legendary" and not (native_speed>normal_speed) then
+          fail("CRAFT_SPEED_DID_NOT_SCALE "..name)
+        end
+        -- Hydrogen quality improves crafting speed, not the number of
+        -- module slots. The purifier has none, the downstream six have four.
+        if name:find("^tp%-mh7%-") then
+          local module_inventory=e.get_module_inventory()
+          local slots=module_inventory and #module_inventory or 0
+          local expected_slots=name=="tp-mh7-review-purifier" and 0 or 4
+          if slots~=expected_slots then
+            fail("HYDROGEN_MODULE_SLOTS_DRIFT "..name.." grade="..grade
+              .." got="..slots.." expected="..expected_slots)
+          end
         end
       elseif e.type=="electric-pole" then
         local reach=proto.get_supply_area_distance(grade)
         local wire=proto.get_max_wire_distance(grade)
         if not(reach>0 and wire>0) then
           fail("NATIVE_POWER_GEOMETRY_BAD "..name.." grade="..grade)
+        end
+        if grade=="legendary" and not (
+          reach>proto.get_supply_area_distance("normal")
+          and wire>proto.get_max_wire_distance("normal")) then
+          fail("POWER_POLE_QUALITY_REACH_DID_NOT_SCALE "..name)
         end
         if name:find("^tech%-priests%-martian%-comms%-") then
           local radar=Martian.ensure(e)
@@ -137,8 +157,17 @@ local function setup()
         end
       elseif e.type=="burner-generator" then
         local power=proto.get_max_power_output(grade)
+        local normal_power=proto.get_max_power_output("normal")
+        if not(type(power)=="number" and power>0
+          and type(normal_power)=="number" and normal_power>0) then
+          fail("REACTOR_MAX_POWER_UNAVAILABLE "..name.." grade="..grade)
+        end
+        if grade=="legendary" and power<=normal_power then
+          fail("REACTOR_QUALITY_OUTPUT_DID_NOT_SCALE "..name)
+        end
         emit("NATIVE_REACTOR name="..name.." grade="..grade
-          .." prototype_power="..tostring(power))
+          .." prototype_power="..tostring(power)
+          .." normal_power="..tostring(normal_power))
       end
       utility_checks=utility_checks+1
     end
