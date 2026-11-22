@@ -22,6 +22,7 @@ SMOKE = (
     "machine_spirit_quality_baseline.lua",
     "machine_spirit_doctrine_modules.lua",
     "machine_spirit_doctrine_waste.lua",
+    "machine_spirit_module_refresh.lua",
     "faction_factory_doctrine_slots.lua",
     "pair_bucket_forced_index_1472.lua",
     "catalog_dense_scan_1478.lua",

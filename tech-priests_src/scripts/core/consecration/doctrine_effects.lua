@@ -10,6 +10,8 @@ local MODULES = {
 }
 local EMPTY = { order = 0, chaos = 0, resilience = 0, waste = 0, extraction = 0 }
 local SAMPLE_INTERVAL_TICKS = 60
+local FAILED_SAMPLE_RETRY_TICKS = 15
+local EFFECT_FIELDS = { "order", "chaos", "resilience", "waste", "extraction" }
 -- Factorio's native module effects scale with the module item's own quality.
 -- Scale these separate scripted Machine Spirit effects by item quality too.
 -- The five standard levels give Normal 1.0x through Legendary 1.5x.
@@ -33,7 +35,7 @@ function M.count_contents(contents)
     if spec then
       local count = math.max(0, math.floor(tonumber(entry.count) or 0))
       local quality_multiplier = M.quality_multiplier(entry.quality)
-      for _, field in ipairs({ "order", "chaos", "resilience", "waste", "extraction" }) do
+      for _, field in ipairs(EFFECT_FIELDS) do
         snapshot[field] = snapshot[field] + (spec[field] or 0) * count * quality_multiplier
       end
     end
@@ -42,6 +44,24 @@ function M.count_contents(contents)
   snapshot.waste = math.min(0.45, snapshot.waste)
   snapshot.extraction = math.min(1, snapshot.extraction)
   return snapshot
+end
+
+-- A direct, entity-specific inventory interaction may invalidate one record.
+-- Preserve the last good snapshot until a fresh engine inventory read succeeds.
+-- Indirect robot/script changes still use the existing 60-tick fallback.
+function M.invalidate(record)
+  if not record then return false end
+  record.machine_spirit_module_resample_tick = nil
+  return true
+end
+
+function M.snapshot_changed(before, after)
+  for _, field in ipairs(EFFECT_FIELDS) do
+    if (before and before[field] or 0) ~= (after and after[field] or 0) then
+      return true
+    end
+  end
+  return false
 end
 
 function M.snapshot(record)
@@ -62,7 +82,14 @@ function M.snapshot(record)
       contents = result
       record.machine_spirit_module_sample_error = nil
     else
+      -- A transient inventory API failure must not silently drop paid module
+      -- benefits or penalties. Retry on the next serviced access after 15 ticks,
+      -- never from an added tick loop or global scan.
       record.machine_spirit_module_sample_error = tostring(result)
+      record.machine_spirit_module_resample_tick = now + FAILED_SAMPLE_RETRY_TICKS
+      -- A never-sampled record must also honor the bounded retry interval.
+      record.machine_spirit_module_snapshot = record.machine_spirit_module_snapshot or M.count_contents(nil)
+      return record.machine_spirit_module_snapshot
     end
   end
   local snapshot = M.count_contents(contents)

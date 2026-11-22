@@ -4,6 +4,7 @@
 -- it makes registration/scanning/visible bar refresh auditable and resilient.
 
 local M = { name = "scripts.core.consecration.runtime_bridge", version = "0.1.452" }
+local Doctrine = require("scripts.core.consecration.doctrine_effects")
 
 local function safe_entity_from_built_event(event)
   if not event then return nil end
@@ -29,6 +30,28 @@ local function remove_entity(event)
   local entity = event and event.entity or nil
   if entity and entity.valid and remove_consecration_target then
     pcall(remove_consecration_target, entity)
+  end
+end
+
+-- Direct player inventory actions identify the exact machine in Factorio 2.1.
+-- Never scan a force/surface or register the machine merely to refresh modules.
+-- Cursor edits are also observed on closing the entity GUI; robot/script edits
+-- remain covered by the existing 60-tick on-demand doctrine snapshot.
+local function refresh_changed_modules(event)
+  local entity = event and event.entity
+  if not (entity and entity.valid and entity.unit_number) then return end
+  local tp = storage and storage.tech_priests
+  local consecration = tp and tp.consecration
+  local record = consecration and consecration.machines and consecration.machines[entity.unit_number]
+  if not record then return end
+  local previous = record.machine_spirit_module_snapshot
+  Doctrine.invalidate(record)
+  local updated = Doctrine.snapshot(record)
+  if not Doctrine.snapshot_changed(previous, updated) then return end
+  if tech_priests_0446_refresh_sanctification_label_if_due then
+    pcall(tech_priests_0446_refresh_sanctification_label_if_due, record, true)
+  elseif draw_sanctification_label then
+    pcall(draw_sanctification_label, record)
   end
 end
 
@@ -83,12 +106,22 @@ function M.install()
     priority = "front"
   })
 
+  local module_changes = registry.on_event({
+    defines.events.on_player_fast_transferred,
+    defines.events.on_gui_closed
+  }, refresh_changed_modules, nil, {
+    owner = "consecration-runtime-bridge",
+    route = "refresh-machine-modules-on-player-interaction",
+    category = "consecration",
+    priority = "front"
+  })
+
   local scan = registry.on_nth_tick(89, service_scan, {
     owner = "consecration-runtime-bridge",
     route = "periodic-target-scan",
     category = "consecration"
   })
-  if not (built and removed and scan) then
+  if not (built and removed and module_changes and scan) then
     if log then log("[Tech-Priests 0.1.452 consecration] runtime bridge not installed: canonical route registration failed") end
     return false
   end
