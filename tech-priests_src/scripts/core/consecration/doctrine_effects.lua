@@ -127,6 +127,26 @@ function M.damage_multiplier(record)
   return math.max(0.30, 1 - M.snapshot(record).resilience)
 end
 
+-- Distinguish a deliberately profane production stance from the physical
+-- condition that can destroy stored fuel or disable an occupied vehicle.
+-- Order may improve safety; Chaos never manufactures additional hazard merely
+-- by reducing effective sanctity for extraction. Clamp to the established
+-- engine-facing minimum so all hazards retain a nonzero failure possibility.
+function M.hazard_ratio(record, minimum_ratio)
+  local floor = math.max(0, math.min(1, tonumber(minimum_ratio) or 0))
+  if not record then return floor end
+  local maximum = math.max(1, tonumber(record.max_sanctification) or 100)
+  return math.max(floor, math.min(1, M.damage_value(record) / maximum))
+end
+
+-- A single capped resilience factor applies to each independently rolled
+-- malfunction hazard, not just the physical damage branch. Retain a 30%
+-- residual chance even at maximum Chaos resilience; never grant immunity.
+function M.hazard_chance(record, chance)
+  local base_chance = math.max(0, math.min(1, tonumber(chance) or 0))
+  return base_chance * M.damage_multiplier(record)
+end
+
 -- At very low sanctity the ordinary detritus chance already reaches 100%.
 -- Raising probability alone would make Chaos extraction bonuses inert.
 -- Increase operation-linked physical detritus quantity instead; preserve

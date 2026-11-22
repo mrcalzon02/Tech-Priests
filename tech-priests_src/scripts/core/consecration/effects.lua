@@ -216,7 +216,8 @@ end
 function maybe_delete_fuel_from_low_sanctification_burner(record, reason, severity)
   if not (record and record.entity and record.entity.valid) then return false end
   local entity = record.entity
-  local ratio = get_sanctification_ratio(record)
+  -- Physical hazard thresholds must not be driven down by Chaos extraction.
+  local ratio = Doctrine.hazard_ratio(record, MINIMUM_SANCTIFICATION_EFFICIENCY)
   if ratio > LOW_SANCTIFICATION_FUEL_LOSS_RATIO then return false end
 
   local inventory = get_entity_fuel_inventory(entity)
@@ -224,7 +225,8 @@ function maybe_delete_fuel_from_low_sanctification_burner(record, reason, severi
 
   severity = math.max(0, math.min(1, tonumber(severity) or 0))
   local threshold_severity = math.max(0, math.min(1, (LOW_SANCTIFICATION_FUEL_LOSS_RATIO - ratio) / LOW_SANCTIFICATION_FUEL_LOSS_RATIO))
-  local chance = LOW_SANCTIFICATION_FUEL_LOSS_MAX_CHANCE * math.max(severity, threshold_severity)
+  local chance = Doctrine.hazard_chance(record,
+    LOW_SANCTIFICATION_FUEL_LOSS_MAX_CHANCE * math.max(severity, threshold_severity))
   if math.random() >= chance then return false end
 
   local fuel_name = remove_one_fuel_from_inventory(inventory)
@@ -316,13 +318,15 @@ function maybe_start_vehicle_control_malfunction(record, operation_severity)
   local player = get_player_operating_sanctified_entity(entity)
   if not player then return false end
 
-  local ratio = get_sanctification_ratio(record)
+  -- Physical hazard thresholds must not be driven down by Chaos extraction.
+  local ratio = Doctrine.hazard_ratio(record, MINIMUM_SANCTIFICATION_EFFICIENCY)
   if ratio > LOW_SANCTIFICATION_CONTROL_MALFUNCTION_RATIO then return false end
 
   local range = math.max(0.001, LOW_SANCTIFICATION_CONTROL_MALFUNCTION_RATIO - LOW_SANCTIFICATION_CONTROL_FLOOR_RATIO)
   local severity = math.max(0, math.min(1, (LOW_SANCTIFICATION_CONTROL_MALFUNCTION_RATIO - ratio) / range))
   operation_severity = math.max(0, math.min(1, tonumber(operation_severity) or 0))
-  local chance = LOW_SANCTIFICATION_CONTROL_MALFUNCTION_MAX_CHANCE * math.max(severity, operation_severity)
+  local chance = Doctrine.hazard_chance(record,
+    LOW_SANCTIFICATION_CONTROL_MALFUNCTION_MAX_CHANCE * math.max(severity, operation_severity))
   if math.random() >= chance then return false end
 
   local duration = LOW_SANCTIFICATION_CONTROL_MALFUNCTION_MIN_TICKS + math.floor((LOW_SANCTIFICATION_CONTROL_MALFUNCTION_MAX_TICKS - LOW_SANCTIFICATION_CONTROL_MALFUNCTION_MIN_TICKS) * severity + 0.5)
@@ -334,7 +338,8 @@ function maybe_eject_player_from_low_sanctification_vehicle(record, reason, seve
   local entity = record.entity
   if not is_sanctification_player_operated_entity(entity) then return false end
 
-  local ratio = get_sanctification_ratio(record)
+  -- Physical hazard thresholds must not be driven down by Chaos extraction.
+  local ratio = Doctrine.hazard_ratio(record, MINIMUM_SANCTIFICATION_EFFICIENCY)
   if ratio > LOW_SANCTIFICATION_OPERATOR_EJECT_RATIO then return false end
 
   local player = get_player_operating_sanctified_entity(entity)
@@ -344,6 +349,7 @@ function maybe_eject_player_from_low_sanctification_vehicle(record, reason, seve
   local threshold_severity = math.max(0, math.min(1, (LOW_SANCTIFICATION_OPERATOR_EJECT_RATIO - ratio) / LOW_SANCTIFICATION_OPERATOR_EJECT_RATIO))
   local chance = 0.35 * math.max(severity, threshold_severity)
   if reason == "max-sanctification-damage" then chance = chance * 0.65 end
+  chance = Doctrine.hazard_chance(record, chance)
   if math.random() >= chance then return false end
 
   pcall(function() player.driving = false end)
@@ -377,7 +383,8 @@ function update_distance_based_sanctification_operation(record)
   local value = record.sanctification or 0
   local max_value = record.max_sanctification or get_base_sanctification_max(entity.force)
   local minimum_value = max_value * get_minimum_sanctification_value_fraction()
-  local ratio = get_sanctification_ratio(record)
+  -- Physical hazard thresholds must not be driven down by Chaos extraction.
+  local ratio = Doctrine.hazard_ratio(record, MINIMUM_SANCTIFICATION_EFFICIENCY)
   local operated_by_player = get_player_operating_sanctified_entity(entity) ~= nil
 
   -- Vehicles and trains degrade by distance travelled rather than recipe cycles.
