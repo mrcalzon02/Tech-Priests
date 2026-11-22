@@ -1,6 +1,6 @@
 # Development targets — machine sanctity, quality and custom modules
 
-Status: PLANNED / NOT IMPLEMENTATION-VERIFIED. This is a target specification, not evidence of working runtime behavior. Respect the current recovery and validation work order; implement only when the active milestone permits.
+Status: **PARTIALLY IMPLEMENTED / PARTIALLY NATIVE-VERIFIED**, not a completed Machine Spirit release gate. Initial quality sanctity, the two doctrine research routes, four module prototypes, runtime modifiers and several native machine-module/quality acceptance checks exist. The complete Order/Chaos production, detritus, damage, migration, faction-factory and save/load matrix remains outstanding. Earlier sections retain historical targets; see dated implementation/evidence sections below for current status.
 
 ## Goals
 - Verify whether the custom positive/negative machine-sanctity modules have prototype definitions, actual runtime effects, and Factorio behavioral evidence. Do not assume prior integration succeeded.
