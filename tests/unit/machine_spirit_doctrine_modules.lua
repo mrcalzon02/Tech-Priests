@@ -9,33 +9,49 @@ local stacks={
   {name="tech-priests-chaos-module-2",count=1,quality="uncommon"},
   {name="speed-module",count=1}
 }
+-- Standard and custom module quality grades scale scripted effects.
+near(M.quality_multiplier("normal"),1,"normal module quality")
+near(M.quality_multiplier("uncommon"),1.1,"uncommon module quality")
+near(M.quality_multiplier("legendary"),1.5,"legendary module quality")
+near(M.quality_multiplier("unsupported"),1,"unknown module quality")
+prototypes={quality={custom_sanctified={level=4},ridiculous={level=100}}}
+near(M.quality_multiplier("custom_sanctified"),1.4,"custom quality level")
+near(M.quality_multiplier("ridiculous"),1.5,"custom quality level cap")
+prototypes=nil
 local c=M.count_contents(stacks)
 near(c.order,20,"two order modules")
-near(c.chaos,22,"chaos sanctity")
-near(c.resilience,0.25,"chaos resilience")
-near(c.waste,0.14,"chaos waste")
-near(c.extraction,0.40,"chaos extraction")
+near(c.chaos,24.2,"uncommon chaos sanctity")
+near(c.resilience,0.275,"uncommon chaos resilience")
+near(c.waste,0.154,"uncommon chaos waste")
+near(c.extraction,0.44,"uncommon chaos extraction")
+-- A legendary module strengthens only its own scripted effects.
+local legendary=M.count_contents({
+  {name="tech-priests-order-module-2",count=1,quality="legendary"},
+  {name="tech-priests-chaos-module-1",count=1,quality="normal"}
+})
+near(legendary.order,30,"legendary Order II scales")
+near(legendary.chaos,12,"normal Chaos I unchanged")
 local reads=0
 local entity={valid=true,get_module_inventory=function()return {get_contents=function()reads=reads+1;return stacks end}end}
 game={tick=100}
 local record={entity=entity,sanctification=50,max_sanctification=100}
-near(M.effective_value(record),48,"effective sanctity")
-near(M.performance_ratio(record,0.48),0.61,"low sanctity survival")
-near(M.detritus_chance(record,0.1),0.226,"detritus uplift")
-near(M.detritus_quantity_multiplier(record,0.05),1.38,"floor yield increases despite capped chance")
+near(M.effective_value(record),45.8,"effective sanctity")
+near(M.performance_ratio(record,0.48),0.623,"low sanctity survival")
+near(M.detritus_chance(record,0.1),0.2386,"detritus uplift")
+near(M.detritus_quantity_multiplier(record,0.05),1.418,"floor yield increases despite capped chance")
 near(M.detritus_quantity_multiplier(record,1),1,"no yield uplift at perfect sanctity")
-near(M.damage_multiplier(record),0.75,"physical harm reduction")
+near(M.damage_multiplier(record),0.725,"physical harm reduction")
 near(M.damage_value(record),50,"chaos does not invent additional physical damage")
 local fragile={entity=entity,sanctification=20,max_sanctification=100,
   machine_spirit_module_snapshot=record.machine_spirit_module_snapshot,
   machine_spirit_module_resample_tick=record.machine_spirit_module_resample_tick}
-near(M.effective_value(fragile),18,"mixed modules change effective sanctity for waste")
+near(M.effective_value(fragile),15.8,"mixed modules change effective sanctity for waste")
 near(M.damage_value(fragile),20,"chaos cannot worsen actual wear exposure")
-near(M.damage_multiplier(fragile),0.75,"chaos reduces wear probability")
+near(M.damage_multiplier(fragile),0.725,"chaos reduces wear probability")
 assert(reads==1,"module inventory was scanned more than once during same window")
 stacks={{name="tech-priests-order-module-2",count=2}}
 game.tick=159
-near(M.effective_value(record),48,"within cache window")
+near(M.effective_value(record),45.8,"within cache window")
 assert(reads==1,"module cache refreshed early")
 game.tick=160
 near(M.effective_value(record),90,"module change refresh")

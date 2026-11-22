@@ -10,6 +10,21 @@ local MODULES = {
 }
 local EMPTY = { order = 0, chaos = 0, resilience = 0, waste = 0, extraction = 0 }
 local SAMPLE_INTERVAL_TICKS = 60
+-- Factorio's native module effects scale with the module item's own quality.
+-- Scale these separate scripted Machine Spirit effects by item quality too.
+-- The five standard levels give Normal 1.0x through Legendary 1.5x.
+local STANDARD_QUALITY_LEVELS = {normal=0,uncommon=1,rare=2,epic=3,legendary=5}
+
+function M.quality_multiplier(quality_name)
+  local level = STANDARD_QUALITY_LEVELS[quality_name] or 0
+  -- Support custom Quality prototypes without inventing a bonus for unknown
+  -- quality names; level is deliberately capped to bound balance.
+  if prototypes and prototypes.quality and prototypes.quality[quality_name] then
+    level = tonumber(prototypes.quality[quality_name].level) or level
+  end
+  level = math.max(0, math.min(5, level))
+  return 1 + 0.10 * level
+end
 
 function M.count_contents(contents)
   local snapshot = { order = 0, chaos = 0, resilience = 0, waste = 0, extraction = 0 }
@@ -17,8 +32,9 @@ function M.count_contents(contents)
     local spec = entry and MODULES[entry.name]
     if spec then
       local count = math.max(0, math.floor(tonumber(entry.count) or 0))
+      local quality_multiplier = M.quality_multiplier(entry.quality)
       for _, field in ipairs({ "order", "chaos", "resilience", "waste", "extraction" }) do
-        snapshot[field] = snapshot[field] + (spec[field] or 0) * count
+        snapshot[field] = snapshot[field] + (spec[field] or 0) * count * quality_multiplier
       end
     end
   end
