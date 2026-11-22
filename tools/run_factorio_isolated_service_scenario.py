@@ -48,6 +48,13 @@ CASES = {
         "pass": "PASS native five-tier bunker turrets and normal-legendary custom entities",
         "ticks": 300,
     },
+    "quality-turret-fire": {
+        "fixture": "tests/scenarios/quality-turret-fire/fixture.lua",
+        "module": "ci_quality_turret_firing",
+        "prefix": "[TP-QUALITY-TURRET-FIRE]",
+        "pass": "PASS native Legendary Energy Dish hit outside Normal range",
+        "ticks": 1200,
+    },
     "remote-robot-acquisition": {
         "fixture": "tests/scenarios/remote-robot-acquisition/fixture.lua",
         "module": "ci_remote_robot_acquisition",
