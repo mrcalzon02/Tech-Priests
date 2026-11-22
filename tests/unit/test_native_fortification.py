@@ -81,6 +81,24 @@ class NativeFortificationContract(unittest.TestCase):
         self.assertNotIn("entity.health=", event)
         self.assertNotIn("game.speed=", event)
 
+    def test_wall_integrity_is_distinct_from_enemy_breach_and_engine_pass(self):
+        source = FORT.read_text(encoding="utf-8")
+        # Real Factorio execution can PASS its fixture while a defense loses
+        # wall segments or enemies briefly enter before being eliminated.
+        for marker in (
+            'status=#blockers==0 and "PASS" or "FAIL"',
+            'defense_held=defense_held',
+            'wall_held=t.enemy_first_inside_tick==nil',
+            'wall_integrity_held=lost_walls==0',
+            'wall_segments_lost=lost_walls',
+            'wall_survival_fraction=final.walls_alive/#t.walls',
+            'inner_wall_damaged=t.wall_first_inner_loss_tick~=nil',
+            'wall_segments_lost=lost_walls,first_enemy_inside=',
+        ):
+            self.assertIn(marker, source)
+        self.assertNotIn('wall_integrity_held=defense_held', source)
+        self.assertNotIn('wall_integrity_held=t.enemy_first_inside_tick==nil', source)
+
     def test_seven_distinct_mono_towers_and_explicit_mixed_ratios(self):
         source = FORT.read_text(encoding="utf-8")
         for name in (
