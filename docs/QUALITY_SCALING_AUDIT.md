@@ -144,3 +144,12 @@ charted enemy-spawner targets at 280 tiles, between the expected 224/336-tile
 automatic ranges. The native engine must produce a real Legendary target
 health loss and shell debit, with neither on the Normal side. The mod's
 actual turret/gun prototypes are unchanged; this is test-only source.
+
+
+## Native ammunition bunker Quality firing — accepted
+
+[Core30 Factorio 2.1.24 run 44981406434](https://github.com/mrcalzon02/Dens-Mortis/actions/runs/44981406434) completed successfully from source pin `c667c4861172be094044aa58897d9e3097948755` using original physical ammunition and separated real hostile targets; no mod archive download.
+
+All six families fired **only at Legendary quality** beyond their Normal reach. At 33 tiles the Autocannon dealt 3000 HP of damage (2 magazines spent), at 25 tiles the Chicago Piano dealt 0.15 HP (14 magazines) and Twin Minigun dealt 45.65 HP (24 magazines), at 50 tiles Twin Cannon dealt 3000 HP (4 shells) and Rocket Salvo dealt 3000 HP (24 rockets), and at 39 tiles Lobber dealt 319.13 HP (3 magazines). Every Normal turret showed **0 enemy damage and 0 ammunition consumed**. The low Chicago Piano recorded HP loss is genuine but suggests a separate damage/balance investigation; it is not a quality-range failure.
+
+An earlier six-family run `44981200574` produced false Normal target damage in the Twin Cannon pair because the Legendary test cannon stood only 55 tiles from the Normal target. The corrected fixture moved quality rows 250 tiles apart, preventing cross-pair targeting, and changed the acceptance pass to log every weapon before aggregation. This was a **test geometry correction**, not a change to turret production definitions. No graphical GIF or in-game screenshot was claimed.
