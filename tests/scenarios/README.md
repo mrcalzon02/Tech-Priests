@@ -199,3 +199,26 @@ pass only from the loaded benchmark process, and does not fabricate production,
 turret kills or electrical power. **This is a native *quality-entity-stat* gate,
 not a distant-target shot test, power throughput test, or save/reload proof.**
 Those remain separate gates.
+
+
+### Native Legendary Energy Dish firing beyond Normal range
+
+```sh
+python3 tools/run_factorio_isolated_service_scenario.py \
+  --scenario quality-turret-fire \
+  --factorio /path/to/installed/factorio \
+  --dependency-mods /path/to/already-cached/mods
+```
+
+This **separate 1,200-tick test** creates two powered native
+`tech-priests-bunker-energy-dish` turrets at Normal and Legendary Quality,
+each facing one real stationary hostile worm 35 tiles away. This distance is
+outside the 28-tile Normal attack envelope but inside the 42-tile Legendary
+envelope. The fixture measures the minimum actual worm HP observed by the
+existing runtime broker service and requires **no Normal target damage** and
+**positive Legendary target damage**. It does not directly call
+`LuaEntity.damage`, create synthetic projectiles, or modify the released
+weapon definitions. Only the disposable fixture's electrical supply and
+test targets are created by script. The native game, not a calculation,
+must deliver the successful shot. The scenario has passed a local Lua
+syntax check but has **not yet completed a native Factorio 2.1 run**.
