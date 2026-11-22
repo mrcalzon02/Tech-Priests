@@ -461,12 +461,14 @@ function create_operation_waste(record, recipe)
   local ratio = get_sanctification_ratio(record)
   local waste_chance = Doctrine.detritus_chance(record, get_waste_chance_from_ratio(ratio))
   local product_units = get_recipe_item_output_units(recipe)
-  local expected_waste = product_units * waste_chance
+  local quantity_multiplier = Doctrine.detritus_quantity_multiplier(record, ratio)
+  local expected_waste = product_units * waste_chance * quantity_multiplier
 
   record.last_detritus_ratio_0417 = ratio
   record.last_detritus_waste_chance_0417 = waste_chance
   record.last_detritus_product_units_0417 = product_units
   record.last_detritus_expected_0417 = expected_waste
+  record.last_detritus_quantity_multiplier = quantity_multiplier
   record.last_detritus_attempt_tick_0417 = game and game.tick or 0
 
   if waste_chance <= 0 then

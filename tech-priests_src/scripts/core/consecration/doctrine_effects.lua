@@ -5,25 +5,26 @@ local M = {}
 local MODULES = {
   ["tech-priests-order-module-1"] = { order = 10 },
   ["tech-priests-order-module-2"] = { order = 20 },
-  ["tech-priests-chaos-module-1"] = { chaos = 12, resilience = 0.12, waste = 0.08 },
-  ["tech-priests-chaos-module-2"] = { chaos = 22, resilience = 0.25, waste = 0.14 }
+  ["tech-priests-chaos-module-1"] = { chaos = 12, resilience = 0.12, waste = 0.08, extraction = 0.20 },
+  ["tech-priests-chaos-module-2"] = { chaos = 22, resilience = 0.25, waste = 0.14, extraction = 0.40 }
 }
-local EMPTY = { order = 0, chaos = 0, resilience = 0, waste = 0 }
+local EMPTY = { order = 0, chaos = 0, resilience = 0, waste = 0, extraction = 0 }
 local SAMPLE_INTERVAL_TICKS = 60
 
 function M.count_contents(contents)
-  local snapshot = { order = 0, chaos = 0, resilience = 0, waste = 0 }
+  local snapshot = { order = 0, chaos = 0, resilience = 0, waste = 0, extraction = 0 }
   for _, entry in pairs(contents or {}) do
     local spec = entry and MODULES[entry.name]
     if spec then
       local count = math.max(0, math.floor(tonumber(entry.count) or 0))
-      for _, field in ipairs({ "order", "chaos", "resilience", "waste" }) do
+      for _, field in ipairs({ "order", "chaos", "resilience", "waste", "extraction" }) do
         snapshot[field] = snapshot[field] + (spec[field] or 0) * count
       end
     end
   end
   snapshot.resilience = math.min(0.70, snapshot.resilience)
   snapshot.waste = math.min(0.45, snapshot.waste)
+  snapshot.extraction = math.min(1, snapshot.extraction)
   return snapshot
 end
 
@@ -81,6 +82,15 @@ end
 
 function M.damage_multiplier(record)
   return math.max(0.30, 1 - M.snapshot(record).resilience)
+end
+
+-- At very low sanctity the ordinary detritus chance already reaches 100%.
+-- Raising probability alone would make Chaos extraction bonuses inert.
+-- Increase operation-linked physical detritus quantity instead; preserve
+-- recipe product-slot and output-inventory enforcement by the existing owner.
+function M.detritus_quantity_multiplier(record, ratio)
+  ratio = math.max(0, math.min(1, tonumber(ratio) or 1))
+  return 1 + M.snapshot(record).extraction * (1 - ratio)
 end
 
 function M.detritus_chance(record, chance)
