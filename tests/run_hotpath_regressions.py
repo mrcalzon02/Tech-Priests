@@ -26,7 +26,6 @@ SMOKE = (
     "machine_spirit_chaos_hazards.lua",
     "machine_spirit_chaos_hazard_handlers.lua",
     "machine_spirit_vehicle_operator.lua",
-    "machine_spirit_clone_condition.lua",
     "machine_spirit_clone_bridge.lua",
     "faction_factory_doctrine_slots.lua",
     "pair_bucket_forced_index_1472.lua",
