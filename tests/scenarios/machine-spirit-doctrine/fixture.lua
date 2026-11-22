@@ -1,6 +1,8 @@
 -- Isolated native Factorio 2.1 doctrine acceptance. Never packaged.
 -- Checks research unlocks, real module insertion and physical crafting/detritus.
 local M={}
+-- Parse-time import; never dynamically require from a runtime event.
+local Doctrine=require("scripts.core.consecration.doctrine_effects")
 local PREFIX="[TP-MACHINE-SPIRIT-DOCTRINE] "
 local KEY="ci_machine_spirit_doctrine"
 local CASES={
@@ -67,6 +69,11 @@ local function setup()
   for _,spec in ipairs(CASES) do
     local machine=place(surface,{name="assembling-machine-3",position={spec.x,0},
       force=force,raise_built=true})
+    -- Production-only acceptance: avoid nondeterministic destruction at 5/100.
+    -- The released mod's damage mechanics remain unchanged; destructive
+    -- survival endurance is a separate acceptance case.
+    machine.destructible=false
+    if machine.destructible~=false then fail("FIXTURE_DAMAGE_ISOLATION_FAILED "..spec.kind) end
     machine.set_recipe("iron-gear-wheel")
     local recipe=machine.get_recipe()
     if not(recipe and recipe.name=="iron-gear-wheel") then
@@ -130,11 +137,29 @@ local function sample()
       if not record then fail("MISSING_SANCTITY_RECORD "..entry.kind) end
       local ops=record.completed_operations_seen_0417 or 0
       local multiplier=record.last_detritus_quantity_multiplier or 1
+      local modules=Doctrine.snapshot(record)
+      local expected={
+        baseline={order=0,chaos=0},
+        order={order=20,chaos=0},
+        chaos={order=0,chaos=22},
+        mixed={order=10,chaos=12}
+      }
+      local want=expected[entry.kind]
+      if not(want and modules.order==want.order and modules.chaos==want.chaos) then
+        fail("DOCTRINE_MODULE_STATE_MISMATCH "..entry.kind)
+      end
       emit(string.format("NATIVE_RESULT case=%s gears=%d detritus=%d operations=%d multiplier=%.3f",
         entry.kind,entry.gears,entry.detritus,ops,multiplier))
       if ops<1 or entry.gears<1 then fail("NO_REAL_CRAFT "..entry.kind) end
-      if entry.detritus<1 then fail("NO_PHYSICAL_DETRITUS "..entry.kind) end
+      -- A clean Order machine may correctly generate zero detritus.
+      if (entry.kind=="baseline" or entry.kind=="chaos") and entry.detritus<1 then
+        fail("NO_PHYSICAL_DETRITUS "..entry.kind)
+      end
       if entry.kind=="chaos" and multiplier<1.30 then fail("CHAOS_NO_YIELD_BOOST") end
+      if entry.kind=="mixed" and multiplier<1.15 then fail("MIXED_EXTRACTION_MISSING") end
+      if entry.kind=="order" and math.abs(multiplier-1)>0.001 then
+        fail("ORDER_MUST_NOT_BONUS_DETRITUS")
+      end
       if entry.kind=="baseline" and math.abs(multiplier-1)>0.001 then
         fail("BASELINE_YIELD_MUTATED")
       end
