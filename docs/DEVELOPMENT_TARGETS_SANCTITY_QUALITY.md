@@ -225,3 +225,7 @@ A6. Only then implement the smallest bounded change on `main` with source tests 
 - **Repaired:** both delivery *ceilings* now cover native turret range × maximum permitted quality multiplier (3). Their actual native turret attack range is unchanged, so Normal weapons do not gain range. Native engine test must prove real hit/damage at range.
 - **Found/repaired:** `twin_cannon_controller.aim_through_line` searched for secondary piercing targets in a hard-coded 36-tile radius even when quality extended the native turret range. It now uses native prototype range × the placed turret quality's actual range multiplier.
 - **Evidence:** new pure Lua `tests/unit/quality_turret_range.lua` covers 5 tiers, custom multiplier cap, prototype changes and missing quality. No native turret shooting/range acceptance executed here.
+
+## Custom turret and entity quality audit
+
+See [Quality Scaling Audit — Tech-Priests custom entities](QUALITY_SCALING_AUDIT.md) for turret, power-grid, station, combat-unit, reactor, and manufacturing quality behavior, source defects, and native acceptance targets.
