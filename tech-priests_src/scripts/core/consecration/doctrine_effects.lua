@@ -68,6 +68,17 @@ function M.performance_ratio(record, ratio)
   return math.min(1, ratio + (1 - ratio) * mods.resilience)
 end
 
+-- Chaos lowers *effective* sanctity for extraction, not the stored machine
+-- condition. Suppressing sanctity for a doctrine must not itself inflict more
+-- physical wear than the same machine had before its profane module was fitted.
+-- Order may protect against wear through its positive effective sanctity.
+function M.damage_value(record)
+  if not record then return 0 end
+  local maximum = math.max(1, tonumber(record.max_sanctification) or 100)
+  local current = math.max(0, math.min(maximum, tonumber(record.sanctification) or 0))
+  return math.max(current, M.effective_value(record))
+end
+
 function M.damage_multiplier(record)
   return math.max(0.30, 1 - M.snapshot(record).resilience)
 end

@@ -401,7 +401,10 @@ function apply_operation_degradation(record)
   if not (record and record.entity and record.entity.valid) then return end
 
   local entity = record.entity
-  local value = Doctrine.effective_value(record)
+  -- Use the safer of stored and positive effective sanctity for physical wear.
+  -- Chaos's deliberate effective-sanctity reduction must not manufacture
+  -- extra self-damage; its resilience still reduces the remaining chance.
+  local value = Doctrine.damage_value(record)
   local max_value = record.max_sanctification or get_base_sanctification_max()
   local doctrine_damage_multiplier = Doctrine.damage_multiplier(record)
 
