@@ -10,6 +10,10 @@ local REACTORS={
   {name="mars-plasma-reactor-maximus",base_mw=4}
 }
 local FUEL="tp-mh7-contained-metallicized-pellet"
+-- get_max_power_output returns Joules/tick in Factorio. Convert to MW.
+local function output_megawatts(joules_per_tick)
+  return joules_per_tick*60/1000000
+end
 local function emit(message) log(PREFIX..message) end
 local function fail(message) error(PREFIX.."FAIL "..message,0) end
 local function root()
@@ -64,6 +68,10 @@ local function setup()
       if quality=="legendary" and scaled<=base then
         fail("REACTOR_QUALITY_PROTO_NOT_SCALED "..spec.name)
       end
+      if math.abs(output_megawatts(base)-spec.base_mw)>0.01 then
+        fail("REACTOR_BASE_WATTS_MISMATCH "..spec.name
+          .." got_MW="..tostring(output_megawatts(base)))
+      end
       local lane=(index-1)*2+j
       local x=8+(lane-1)*38
       local reactor=create(surface,{name=spec.name,force=force,
@@ -94,7 +102,7 @@ local function setup()
         fuel_name=FUEL,starting_tick=game.tick
       }
       emit(string.format("NATIVE_READY reactor=%s quality=%s nominal_MW=%.3f",
-        spec.name,quality,scaled/1000000))
+        spec.name,quality,output_megawatts(scaled)))
     end
   end
   state.cases=cases
@@ -128,7 +136,7 @@ local function sample()
       produced[key]=produced[key] or {}
       produced[key][entry.quality]=joules
       emit(string.format("NATIVE_POWER reactor=%s quality=%s generated_J=%.0f native_max_MW=%.3f sink_energy=%.0f",
-        key,entry.quality,joules,entry.max_power/1000000,entry.sink.energy))
+        key,entry.quality,joules,output_megawatts(entry.max_power),entry.sink.energy))
     end
     for _,spec in ipairs(REACTORS) do
       local values=produced[spec.name]
