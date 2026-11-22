@@ -22,6 +22,7 @@ local function exercise(quality_enabled,upstream_restricted)
   local output={}
   local prototype={
     name="assembling-machine-2",
+    type="assembling-machine",
     module_slots=2,
     allowed_effects={"speed","consumption","productivity"}
   }
