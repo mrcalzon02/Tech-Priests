@@ -42,3 +42,19 @@ In Factorio 2.1, native `LuaQualityPrototype` applies quality effects to compati
 - `27b1ce3f0c9da5cb8d3c8afd4afcf4de3e5f3041`: power geometry uses placed pole quality; wall damage diagnostics use actual quality-adjusted max HP.
 - Added source regressions for quality turret range, high-quality power coverage/wires, and damaged Legendary walls.
 - **No real-engine runs or published release claimed.** Preserve `main`, existing models/animations, no new runtime loops or scheduler changes.
+
+## Native matrix fixture added
+The existing isolated runner accepts `--scenario quality-entity-matrix` using
+`tests/scenarios/quality-entity-matrix/fixture.lua`. It requires the Quality
+feature and every vanilla grade, then physically creates all eight bunker
+weapons in five grades and 27 other custom entity prototypes at Normal and
+Legendary. It checks actual placed entity health/quality, Quality multiplier,
+where applicable native crafting speed and pole geometry, hidden Martian radar
+quality, and logs reactor engine power outputs. A broker-owned service emits
+the pass marker only in the later loaded benchmark process, not solely during
+`--create`. Existing local cached mods/Factorio are reused; no CI workflow,
+scheduler or dependency downloader was modified.
+
+**Evidence level:** fixture source authored, not yet executed in Factorio. It
+does not claim turret hit ranges, power production under load, reload/migration
+or active defended-combat acceptance. Those require additional native probes.
