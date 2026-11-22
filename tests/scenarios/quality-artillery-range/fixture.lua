@@ -45,7 +45,7 @@ local function setup()
     fail("NATIVE_AUTOMATIC_ARTILLERY_OR_SHELL_MISSING")
   end
   local force,surface=game.forces.player,game.surfaces[1]
-  if math.abs(force.artillery_range_modifier)>0.001 then
+  if math.abs(tonumber(force.artillery_range_modifier) or 0)>0.001 then
     fail("UNEXPECTED_ARTILLERY_RESEARCH_RANGE_BONUS")
   end
   -- Generate and chart only the necessary artillery corridors.
