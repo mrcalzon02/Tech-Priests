@@ -5,6 +5,7 @@
 
 local M = { name = "scripts.core.consecration.runtime_bridge", version = "0.1.452" }
 local Doctrine = require("scripts.core.consecration.doctrine_effects")
+local CloneCondition = require("scripts.core.consecration.clone_condition")
 
 local function safe_entity_from_built_event(event)
   if not event then return nil end
@@ -23,6 +24,36 @@ local function register_entity(event)
         pcall(draw_sanctification_label, record)
       end
     end
+  end
+end
+
+-- Factorio clone creation does not necessarily raise an ordinary built event.
+-- Register its new unit immediately; carry only previously tracked physical
+-- wear. Neither source state nor independently issued machine ID is copied.
+local function register_cloned_entity(event)
+  local source = event and event.source
+  local destination = event and event.destination
+  if not (source and source.valid and destination and destination.valid
+    and source.unit_number and destination.unit_number
+    and register_consecration_target) then return end
+  local machines = storage and storage.tech_priests and storage.tech_priests.consecration
+    and storage.tech_priests.consecration.machines
+  local source_record = machines and machines[source.unit_number] or nil
+  local destination_existed = machines and machines[destination.unit_number] ~= nil or false
+  local ok = pcall(register_consecration_target, destination)
+  if not ok or not (is_consecration_target and is_consecration_target(destination)) then return end
+  local record = get_consecration_record and get_consecration_record(destination) or nil
+  if not record then return end
+  if not destination_existed and source_record then
+    local transferred = CloneCondition.transfer(source_record, record, source, destination)
+    if transferred and clamp_machine_sanctification then
+      pcall(clamp_machine_sanctification, record)
+    end
+  end
+  if tech_priests_0446_refresh_sanctification_label_if_due then
+    pcall(tech_priests_0446_refresh_sanctification_label_if_due, record, true)
+  elseif draw_sanctification_label then
+    pcall(draw_sanctification_label, record)
   end
 end
 
@@ -94,6 +125,15 @@ function M.install()
     priority = "front"
   })
 
+  local cloned = registry.on_event({
+    defines.events.on_entity_cloned
+  }, register_cloned_entity, nil, {
+    owner = "consecration-runtime-bridge",
+    route = "register-native-clone",
+    category = "consecration",
+    priority = "front"
+  })
+
   local removed = registry.on_event({
     defines.events.on_entity_died,
     defines.events.on_pre_player_mined_item,
@@ -121,7 +161,7 @@ function M.install()
     route = "periodic-target-scan",
     category = "consecration"
   })
-  if not (built and removed and module_changes and scan) then
+  if not (built and cloned and removed and module_changes and scan) then
     if log then log("[Tech-Priests 0.1.452 consecration] runtime bridge not installed: canonical route registration failed") end
     return false
   end
