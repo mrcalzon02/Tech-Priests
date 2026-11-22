@@ -55,6 +55,13 @@ CASES = {
         "pass": "PASS native Legendary Energy Dish hit outside Normal range",
         "ticks": 1200,
     },
+    "quality-plasma-load": {
+        "fixture": "tests/scenarios/quality-plasma-load/fixture.lua",
+        "module": "ci_quality_plasma_load",
+        "prefix": "[TP-QUALITY-PLASMA-LOAD]",
+        "pass": "PASS physical plasma fuel and loaded Normal/Legendary output for all three reactor sizes",
+        "ticks": 900,
+    },
     "remote-robot-acquisition": {
         "fixture": "tests/scenarios/remote-robot-acquisition/fixture.lua",
         "module": "ci_remote_robot_acquisition",
