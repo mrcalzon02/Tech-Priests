@@ -25,7 +25,7 @@ local function create(surface,spec)
   return e
 end
 local function prepare(surface)
-  surface.request_to_generate_chunks({x=90,y=0},9)
+  surface.request_to_generate_chunks({x=110,y=0},5)
   surface.force_generate_chunk_requests()
   local tiles={}
   for x=-20,240 do for y=-20,20 do
