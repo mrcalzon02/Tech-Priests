@@ -41,6 +41,13 @@ CASES = {
         "pass": "PASS native doctrine modules and detritus production cases=4",
         "ticks": 4200,
     },
+    "quality-entity-matrix": {
+        "fixture": "tests/scenarios/quality-entity-matrix/fixture.lua",
+        "module": "ci_quality_entity_matrix",
+        "prefix": "[TP-QUALITY-ENTITY-MATRIX]",
+        "pass": "PASS native five-tier bunker turrets and normal-legendary custom entities",
+        "ticks": 300,
+    },
     "remote-robot-acquisition": {
         "fixture": "tests/scenarios/remote-robot-acquisition/fixture.lua",
         "module": "ci_remote_robot_acquisition",
