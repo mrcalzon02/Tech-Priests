@@ -2,6 +2,7 @@
 -- This adapter owns only identity/presentation and validated command handoff.
 local C=require("shared.combat_roster_catalog")
 local Visuals=require("scripts.core.character_visuals")
+local QualityAudit=require("scripts.core.combat_quality_contract")
 local Registry=require("scripts.core.runtime_event_registry")
 local M={handlers={}}
 local replacement_handler
@@ -33,6 +34,14 @@ function M.preserve_replaced_inventory(data)
  if not(valid(source) and valid(dest)) then return end
  local before,after=C.for_entity_name(source.name),C.for_entity_name(dest.name)
  if not(before and after and before.id==after.id) then return end
+ -- AAI's mode swap must preserve the exact entity quality. This read-only
+ -- custody report catches lost quality or unpaid gains in the same original
+ -- replacement callback without manufacturing an actor or interrupting the
+ -- independently correct inventory transfer.
+ if storage and storage.tech_priests then
+  QualityAudit.audit_replacement(storage.tech_priests,source,dest,
+   game and game.tick or 0,log)
+ end
  -- AAI 0.9.2 copies get_contents() during mode replacement. That loses
  -- partial magazine/durability/entity metadata. Both native inventories are
  -- still alive at this callback; swap the original stacks into the new body.

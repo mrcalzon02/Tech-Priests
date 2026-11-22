@@ -69,3 +69,9 @@ or active defended-combat acceptance. Those require additional native probes.
 - **Remaining:** native engine load/run with cached dependencies, actual turret shots for other families, quality-preserving AAI mode replacement/mustering custody, plasma electrical load test, reactor fuel lifecycle, save/reload/multiplayer and visual proof.
 
 No production/mod release has been published from this quality audit. Source readback and local source-only checks are not native acceptance.
+
+## 2026-11-21 — AAI combat-unit Quality replacement observation
+- `scripts/core/combat_quality_contract.lua` inspects exact source/destination `LuaEntity.quality.name` at the **existing** AAI replacement callback. Equal quality is a no-op; Normal-mode without Quality is supported. A quality loss or unpaid gain records only saveable primitive identity, Quality and tick in `storage.tech_priests.combat_quality_audit` and emits bounded logs (first 5, then each 100th).
+- `combat_roster_bridge.preserve_replaced_inventory` retains its original exact item-stack swap/custody behavior. The new audit does **not** change entity quality, create replacements, interrupt AAI, alter 0338 custody, or grant items.
+- Native 2.1 test must still exercise AAI's mode switch on a physically paid Legendary/Uncommon actor, then verify body and inventory Quality; **muster >Normal remains blocked** until exact ItemWithQuality debit/placement is implemented. No false 'Quality fixed' claim.
+- `tests/unit/combat_roster_quality_transfer.lua` passes locally with the actual helper: matching Normal/Legendary, mismatch both directions, bounded log frequency, storage IDs, invalid entities. Added to existing manual Lua smoke list. No workflow triggers/scheduler changes.

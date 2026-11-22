@@ -16,6 +16,7 @@ from time import perf_counter
 
 ROOT = Path(__file__).resolve().parent.parent
 SMOKE = (
+    "combat_roster_quality_transfer.lua",
     "machine_spirit_quality_baseline.lua",
     "machine_spirit_doctrine_modules.lua",
     "machine_spirit_doctrine_waste.lua",
