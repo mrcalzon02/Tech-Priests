@@ -34,6 +34,13 @@ CASES = {
         "pass": "PASS active machine consecration and repair from real stocked items ranks=4",
         "ticks": 27000,
     },
+    "machine-spirit-doctrine": {
+        "fixture": "tests/scenarios/machine-spirit-doctrine/fixture.lua",
+        "module": "ci_machine_spirit_doctrine",
+        "prefix": "[TP-MACHINE-SPIRIT-DOCTRINE]",
+        "pass": "PASS native doctrine modules and detritus production cases=4",
+        "ticks": 4200,
+    },
     "remote-robot-acquisition": {
         "fixture": "tests/scenarios/remote-robot-acquisition/fixture.lua",
         "module": "ci_remote_robot_acquisition",

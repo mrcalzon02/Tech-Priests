@@ -146,3 +146,26 @@ the final `MIDGAME_OBJECTIVE` marker and summary.json truthfully report
 those independent measured manufacturing goals. Continued development
 must address unbuilt machines, missing fuel/power, ingredient feeds,
 research selection, layout and fluid-routing failures.
+
+### Machine Spirit Law/Chaos native acceptance (Factorio 2.1)
+
+Run against an **already installed local Factorio binary and cached dependency
+mods**, not a hosted runner that repeatedly downloads the same packages:
+
+```sh
+python3 tools/run_factorio_isolated_service_scenario.py \
+  --scenario machine-spirit-doctrine \
+  --factorio /path/to/local/factorio \
+  --dependency-mods /path/to/cached/mods
+```
+
+This isolated fixture verifies the native prototypes and researched unlocks,
+module inventories on four genuine assembling-machine-3 entities (baseline,
+Law, Chaos and mixed), actual iron-gear crafting, and real Mechanical Detritus
+entering each output inventory. It verifies the Chaos quantity multiplier
+survives the 100% chance ceiling. Initial sanctity 5/100 is explicitly seeded
+to reproduce low-sanctity behavior; the fixture **does not** manufacture
+operations or output items. Captured output is removed only after engine
+production and counted as physical custody; absent or duplicated material fails.
+The disposable test-only fixture is never packaged. This test has not yet been
+run against a native binary after being added.
