@@ -121,9 +121,21 @@ function M.install()
   end
   assert(registry.on_init(setup,{owner=KEY,route="initialize",
     category="diagnostics",priority="last"}))
+  -- The real mod's 0595 dormant gate stops ordinary services when no
+  -- Cogitator exists. This isolated physics test deliberately contains only
+  -- turrets and targets; opt just its bounded observation service into the
+  -- existing broker until it records a terminal result. Never wake the
+  -- production services or install a second tick dispatcher.
   assert(broker.register_service{name=KEY,category="diagnostics",
     interval=30,priority=1100,budget=1,fn=sample,
-    note="isolated actual quality-range laser hit acceptance"} )
+    run_while_dormant=true,
+    dormant_active=function()
+      local tp=storage and storage.tech_priests
+      local state=tp and tp[KEY]
+      return state~=nil and state.started~=nil
+        and not state.passed and not state.failed
+    end,
+    note="isolated dormant-safe actual quality-range hit acceptance"} )
   emit("INSTALLED isolated real-firing fixture")
   return true
 end
