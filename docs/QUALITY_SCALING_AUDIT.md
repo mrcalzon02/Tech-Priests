@@ -81,3 +81,10 @@ No production/mod release has been published from this quality audit. Source rea
 - The existing `quality-entity-matrix` now checks **the actual canonical Cogitator operating-radius owner** for Normal and Legendary placements of every station rank; Legendary must add exactly five tiles to Normal at equal rank/force research, without modifying station or global runtime state.
 - For each visible Martian communications pylon, the fixture confirms its hidden radar is the same Quality and inspects native `get_max_distance_of_nearby_sector_revealed(grade)`; Legendary coverage must exceed Normal. Radar quality and range are measured, not inferred from the pylon's icon or graphics.
 - These are new **native assertions**, not successful native observations yet. They use the already registered isolated test scenario and need no additional runner, dependency download, scheduler or event authority.
+
+
+## Quality matrix coverage expansion — 2026-11-21
+- The current matrix now exercises **136 native placements** (40 bunker-turret quality specimens; 66 structures/production entities covering 33 types at Normal and Legendary; and 30 AAI combat-unit specimens covering the current 15-unit roster). Earlier sections reporting 124 placements describe the preceding iteration and are superseded by this count.
+- Added the remaining physical emergency family: emergency miner, steam engine, laboratory, power grid, atmospheric condenser, plus the Orbital Trader. Their actual prototype identities were directly checked in `prototypes/entity.lua`, not invented.
+- Because the added utility row would overlap the original combat-unit zone, actor rows were shifted to y=200/212 and 224/236, and the isolated terrain bounds extended to y=255. Pure placement-grid preflight (conservative 3×3 turrets, 8×8 utilities, 1×1 car actors) passes: 136 cases, zero model-rectangle overlap, all within test bounds.
+- The existing quality-stat gates still run on actual placed entities only. **Native Factorio execution remains outstanding**; this geometric preflight is not a substitute for native `surface.create_entity` acceptance.
