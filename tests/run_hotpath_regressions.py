@@ -16,6 +16,7 @@ from time import perf_counter
 
 ROOT = Path(__file__).resolve().parent.parent
 SMOKE = (
+    "machine_spirit_doctrine_modules.lua",
     "pair_bucket_forced_index_1472.lua",
     "catalog_dense_scan_1478.lua",
     "catalog_noise_prefilter_1482.lua",
