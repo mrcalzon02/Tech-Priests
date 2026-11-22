@@ -46,7 +46,7 @@ CASES = {
         "module": "ci_quality_entity_matrix",
         "prefix": "[TP-QUALITY-ENTITY-MATRIX]",
         "pass": "PASS native five-tier bunker turrets and normal-legendary custom entities",
-        "ticks": 300,
+        "ticks": 600,
     },
     "quality-turret-fire": {
         "fixture": "tests/scenarios/quality-turret-fire/fixture.lua",
@@ -1664,7 +1664,8 @@ def main() -> int:
                   output / "create.log", args.timeout_seconds)
     create_engine_wall_minutes = round((time.monotonic()-created_engine_started)/60, 6)
     if created:
-        if args.scenario in ("condenser-v22c-physical", "remote-robot-acquisition"):
+        if args.scenario in ("condenser-v22c-physical", "remote-robot-acquisition",
+                              "quality-entity-matrix", "quality-turret-fire"):
             # The quota-blocked artifact cannot be the sole witness to a
             # genuine Factorio --create failure. Retain bounded original
             # Factorio diagnostics in the worker log for both native gates.

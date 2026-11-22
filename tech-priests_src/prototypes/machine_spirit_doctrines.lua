@@ -48,7 +48,7 @@ for _, spec in ipairs(specs) do
   else
     prerequisites = {
       "machine-spirit-"..(spec.kind=="order" and "law-order" or "chaos-anarchy").."-1",
-      "advanced-electronics-2"
+      "processing-unit"
     }
   end
   techs[#techs+1] = {
