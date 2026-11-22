@@ -1598,6 +1598,23 @@ def main() -> int:
                 shutil.copy2(source, mods / source.name)
             elif source.is_dir() and (source / "info.json").is_file():
                 shutil.copytree(source, mods / source.name)
+    if args.scenario in ("quality-entity-matrix", "quality-turret-fire"):
+        # Quality is bundled with Factorio, not an external ZIP in the cache.
+        # A disposable mod directory needs an explicit enabled-mod list;
+        # otherwise the native quality acceptance may silently run Normal-only.
+        present = {entry.name.split("_", 1)[0] for entry in mods.iterdir()
+                   if entry.is_file() and entry.suffix == ".zip"}
+        enabled = ["base", "quality", "tech-priests",
+                   "aai-programmable-vehicles"]
+        for optional in ("aai-signals", "informatron"):
+            if optional in present:
+                enabled.append(optional)
+        (mods / "mod-list.json").write_text(
+            json.dumps({"mods": [{"name": name, "enabled": True}
+                                 for name in enabled]}, indent=2) + "\n",
+            encoding="utf-8")
+        print("NATIVE_QUALITY_EXPLICIT_MOD_LIST " +
+              ",".join(enabled), flush=True)
     if scenario.get("case"):
         # Only the disposable test installation receives this marker.
         isolated_control = mods / "tech-priests" / "control.lua"
