@@ -75,3 +75,9 @@ No production/mod release has been published from this quality audit. Source rea
 - `combat_roster_bridge.preserve_replaced_inventory` retains its original exact item-stack swap/custody behavior. The new audit does **not** change entity quality, create replacements, interrupt AAI, alter 0338 custody, or grant items.
 - Native 2.1 test must still exercise AAI's mode switch on a physically paid Legendary/Uncommon actor, then verify body and inventory Quality; **muster >Normal remains blocked** until exact ItemWithQuality debit/placement is implemented. No false 'Quality fixed' claim.
 - `tests/unit/combat_roster_quality_transfer.lua` passes locally with the actual helper: matching Normal/Legendary, mismatch both directions, bounded log frequency, storage IDs, invalid entities. Added to existing manual Lua smoke list. No workflow triggers/scheduler changes.
+
+
+## 2026-11-21 — native range/coverage acceptance expanded
+- The existing `quality-entity-matrix` now checks **the actual canonical Cogitator operating-radius owner** for Normal and Legendary placements of every station rank; Legendary must add exactly five tiles to Normal at equal rank/force research, without modifying station or global runtime state.
+- For each visible Martian communications pylon, the fixture confirms its hidden radar is the same Quality and inspects native `get_max_distance_of_nearby_sector_revealed(grade)`; Legendary coverage must exceed Normal. Radar quality and range are measured, not inferred from the pylon's icon or graphics.
+- These are new **native assertions**, not successful native observations yet. They use the already registered isolated test scenario and need no additional runner, dependency download, scheduler or event authority.
