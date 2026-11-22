@@ -225,3 +225,30 @@ weapon definitions. Only the disposable fixture's electrical supply and
 test targets are created by script. The native game, not a calculation,
 must deliver the successful shot. The scenario has passed a local Lua
 syntax check but has **not yet completed a native Factorio 2.1 run**.
+
+### Native plasma-reactor quality under physical electrical load (Factorio 2.1)
+
+Run with the already-cached Factorio 2.1 engine and mod dependencies:
+
+```sh
+python3 tools/run_factorio_isolated_service_scenario.py \
+  --scenario quality-plasma-load --ticks 900 \
+  --factorio /path/to/local/factorio \
+  --dependency-mods /path/to/cached/mods
+```
+
+The disposable fixture creates three Minoris/Majoris/Maximus **Normal–Legendary
+pairs**, each on its own native electrical grid. Each reactor receives exactly
+one **physical Contained Metallicized Hydrogen Pellet** in the actual burner
+fuel inventory, with no alternative fuel category. The grid includes a
+consumer-only electric interface demanding more power than the generator can
+supply. After 600 simulated ticks, the fixture reads the **actual native
+electric-network generated-energy statistics**, checks fuel custody, and
+requires both grades to produce electricity and Legendary to deliver at
+least 20% more energy than Normal in each reactor family. This is not inferred
+from the quality prototype's maximum wattage.
+
+All game sources are installed in the existing disposable scenario, the
+original engine logs are retained, and no new global tick loop is added.
+**Status when authored: native execution pending.** This fixture does not
+prove consumer efficiency or plasma pellet expiry on a subsequent save/load.

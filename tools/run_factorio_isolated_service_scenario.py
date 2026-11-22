@@ -1672,7 +1672,8 @@ def main() -> int:
     create_engine_wall_minutes = round((time.monotonic()-created_engine_started)/60, 6)
     if created:
         if args.scenario in ("condenser-v22c-physical", "remote-robot-acquisition",
-                              "quality-entity-matrix", "quality-turret-fire"):
+                              "quality-entity-matrix", "quality-turret-fire",
+                              "quality-plasma-load"):
             # The quota-blocked artifact cannot be the sole witness to a
             # genuine Factorio --create failure. Retain bounded original
             # Factorio diagnostics in the worker log for both native gates.
