@@ -454,7 +454,13 @@ local function tick(event)
    first_inner_wall_loss_tick=t.wall_first_inner_loss_tick,
    first_enemy_inside_tick=t.enemy_first_inside_tick,
    defense_held=defense_held,
+   -- Distinguish enemy entry from actual stone-wall losses. A defense can
+   -- kill every attacker after its perimeter has already taken losses.
    wall_held=t.enemy_first_inside_tick==nil,
+   wall_integrity_held=lost_walls==0,
+   wall_segments_lost=lost_walls,
+   wall_survival_fraction=final.walls_alive/#t.walls,
+   inner_wall_damaged=t.wall_first_inner_loss_tick~=nil,
    samples=t.samples,frames=t.clips,blockers=blockers}
   local file=TP_COMBAT_BATCH_VISUALS and
     "combat-roster/batch-native/manifest.json" or
@@ -476,7 +482,8 @@ local function tick(event)
   t.done=true
   log(MARK.."NATIVE_COMBAT_COMPLETE "..helpers.table_to_json{
    status=result.status,config=t.settings,defense_held=defense_held,
-   wall_held=result.wall_held,first_enemy_inside=t.enemy_first_inside_tick,
+   wall_held=result.wall_held,wall_integrity_held=result.wall_integrity_held,
+   wall_segments_lost=lost_walls,first_enemy_inside=t.enemy_first_inside_tick,
    survivors=final,blockers=blockers})
   if TP_COMBAT_BATCH_VISUALS then game.auto_save("fortification-native-proof") end
  end
