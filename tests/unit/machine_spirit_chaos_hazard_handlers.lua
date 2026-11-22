@@ -28,7 +28,9 @@ local function actor(modules)
   local entity={valid=true,unit_number=123,type="car",active=true,speed=1,
     get_module_inventory=function() return {get_contents=function() return modules or {} end} end,
     get_fuel_inventory=function() return fuel end}
-  local player={valid=true,connected=true,vehicle=entity,driving=true}
+  local player={object_name="LuaPlayer",valid=true,connected=true,vehicle=entity,driving=true}
+  -- Keep the test occupant identical to Factorio\'s real driver identity.
+  entity.get_driver=function() return player end
   game.connected_players={player}
   return {entity=entity,sanctification=40,max_sanctification=100},stack,player
 end
@@ -44,14 +46,14 @@ assert(baseline_fuel.count==1,"baseline fuel must debit physically")
 assert(not maybe_delete_fuel_from_low_sanctification_burner(chaos,"physical-damage",1))
 assert(chaos_fuel.count==2,"Chaos resilience did not protect paid fuel")
 -- A fresh test actor is required: player.vehicle is identity-sensitive.
-local baseline_control=actor()
-local chaos_control=actor(chaos_mod)
+local baseline_control,_,baseline_control_player=actor()
+local chaos_control,_,chaos_control_player=actor(chaos_mod)
 trial=.40
-game.connected_players={{valid=true,connected=true,vehicle=baseline_control.entity}}
+game.connected_players={baseline_control_player}
 assert(maybe_start_vehicle_control_malfunction(baseline_control,1))
 assert(baseline_control.entity.active==false and baseline_control.control_malfunction_until_tick>game.tick,
   "baseline control failure did not occur")
-game.connected_players={{valid=true,connected=true,vehicle=chaos_control.entity}}
+game.connected_players={chaos_control_player}
 assert(not maybe_start_vehicle_control_malfunction(chaos_control,1))
 assert(chaos_control.entity.active==true and chaos_control.control_malfunction_until_tick==nil,
   "Chaos resilience failed on vehicle controls")
@@ -73,6 +75,21 @@ assert(not maybe_delete_fuel_from_low_sanctification_burner(orderly,"physical-da
 assert(not maybe_start_vehicle_control_malfunction(orderly,1))
 assert(not maybe_eject_player_from_low_sanctification_vehicle(orderly,"physical-damage",1))
 assert(order_fuel.count==2 and order_player.driving==true,"Order hazard threshold failed")
+-- A co-seated passenger must never be treated as the operator. An empty
+-- driver seat or NPC-controlled driver is not a player driver, even if the
+-- participant is connected and still has vehicle==entity.
+local passenger_case,_,passenger_player=actor(chaos_mod)
+passenger_case.entity.get_driver=function() return nil end
+game.connected_players={passenger_player}
+trial=0
+assert(not maybe_start_vehicle_control_malfunction(passenger_case,1),
+  "passenger-only vehicle was treated as driver during control failure")
+assert(not maybe_eject_player_from_low_sanctification_vehicle(passenger_case,"physical-damage",1),
+  "passenger-only vehicle caused ejection")
+passenger_case.entity.get_driver=function() return {object_name="LuaEntity",valid=true} end
+assert(not maybe_start_vehicle_control_malfunction(passenger_case,1),
+  "NPC-controlled vehicle misidentified a connected passenger")
+assert(passenger_player.driving==true,"passenger incorrectly ejected")
 assert(chaos.sanctification==40,"hazard protection silently healed stored sanctity")
 math.random=saved_random
 print("[machine-spirit-chaos-hazard-handlers] PASS real effects entrypoints: fuel, control, operator, Order")
