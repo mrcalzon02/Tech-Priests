@@ -27,14 +27,14 @@ local function place(surface,opts)
   return e
 end
 local function prepare(surface)
-  surface.request_to_generate_chunks({x=170,y=90},7)
+  surface.request_to_generate_chunks({x=170,y=145},7)
   surface.force_generate_chunk_requests()
   local tiles={}
-  for x=-20,365 do for y=-12,194 do
+  for x=-20,365 do for y=-12,325 do
     tiles[#tiles+1]={name="grass-1",position={x=x,y=y}}
   end end
   surface.set_tiles(tiles,true)
-  for _,e in pairs(surface.find_entities_filtered{area={{-21,-13},{366,195}}}) do
+  for _,e in pairs(surface.find_entities_filtered{area={{-21,-13},{366,326}}}) do
     if e.valid and (e.type=="tree" or e.type=="cliff"
       or e.type=="resource" or e.type=="simple-entity"
       or e.force==game.forces.enemy) then e.destroy() end
@@ -67,7 +67,7 @@ local function setup()
     local case={name=spec.name,ammo=spec.ammo,normal=nil,legendary=nil,distance=distance}
     for _,grade in ipairs({"normal","legendary"}) do
       local x=(i-1)*65+5
-      local y=grade=="normal" and 0 or 105
+      local y=grade=="normal" and 0 or 250
       local turret=place(surface,{name=spec.name,force=force,
         quality=grade,position={x=x,y=y},raise_built=false})
       turret.destructible=false
@@ -113,17 +113,32 @@ local function sample()
       end
     end
     if game.tick-state.started<1800 then return end
+    local failures={}
     for _,spec in ipairs(state.cases) do
       local normal=spec.normal.original_hp-spec.normal.minimum_hp
       local legendary=spec.legendary.original_hp-spec.legendary.minimum_hp
-      local spent=spec.legendary.initial_ammo-
+      local normal_spent=spec.normal.initial_ammo-
+        spec.normal.inventory.get_item_count(spec.ammo)
+      local legendary_spent=spec.legendary.initial_ammo-
         spec.legendary.inventory.get_item_count(spec.ammo)
       emit(string.format(
-        "NATIVE_RESULT turret=%s target_distance=%d normal_damage=%.2f legendary_damage=%.2f legendary_ammo_spent=%d",
-        spec.name,spec.distance,normal,legendary,spent))
-      if normal>0.01 then fail("NORMAL_FIRED_OUTSIDE_RANGE "..spec.name) end
-      if legendary<=0.01 then fail("LEGENDARY_FAILED_EXTENDED_RANGE "..spec.name) end
-      if spent<1 then fail("NO_PHYSICAL_LEGENDARY_AMMO_SPENT "..spec.name) end
+        "NATIVE_RESULT turret=%s target_distance=%d normal_damage=%.2f legendary_damage=%.2f normal_ammo_spent=%d legendary_ammo_spent=%d",
+        spec.name,spec.distance,normal,legendary,normal_spent,legendary_spent))
+      if normal>0.01 then
+        failures[#failures+1]="NORMAL_TARGET_HIT "..spec.name
+      end
+      if normal_spent>0 then
+        failures[#failures+1]="NORMAL_FIRED_OUTSIDE_RANGE "..spec.name
+      end
+      if legendary<=0.01 then
+        failures[#failures+1]="LEGENDARY_FAILED_EXTENDED_RANGE "..spec.name
+      end
+      if legendary_spent<1 then
+        failures[#failures+1]="NO_PHYSICAL_LEGENDARY_AMMO_SPENT "..spec.name
+      end
+    end
+    if #failures>0 then
+      fail("BATCH_FAIL "..table.concat(failures,"; "))
     end
     state.passed=true
     emit("PASS native extended-range ammunition hits for all six bunker families")
