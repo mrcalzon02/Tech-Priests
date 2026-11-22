@@ -113,3 +113,13 @@ pellet fuel deposits, and the native generated-energy counts. The source-level
 scenario performs no simulated power injections and the mod's ordinary
 reactor code is unchanged. Native output ratios remain unverified until the
 Core30 run completes.
+
+## Native extended-range ammunition turret firing acceptance
+
+Added a separate `quality-bunker-ammo-range` isolated native case for the
+six custom ammo-turret families not covered by the already-successful
+Legendary Energy Dish shot test. Each of six pairs uses a physical
+correct-category magazine/shell, independent enemy target and quality-aware
+range bracket. The case requires Normal no-damage, Legendary genuine enemy
+HP loss, and consumption of original ammunition. No combat results or
+projectiles are scripted. Artillery is a subsequent, separate native gate.

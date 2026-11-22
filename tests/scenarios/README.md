@@ -252,3 +252,28 @@ All game sources are installed in the existing disposable scenario, the
 original engine logs are retained, and no new global tick loop is added.
 **Status when authored: native execution pending.** This fixture does not
 prove consumer efficiency or plasma pellet expiry on a subsequent save/load.
+
+### Native ammunition-turret quality-range firing matrix (Factorio 2.1)
+
+```sh
+python3 tools/run_factorio_isolated_service_scenario.py \
+  --scenario quality-bunker-ammo-range --ticks 2100 \
+  --factorio /path/to/local/factorio \
+  --dependency-mods /path/to/already/cached/mods
+```
+
+Tests six current Tech-Priests **ammo-turret** families: autocannon,
+Chicago Piano, Twin Minigun, Twin Cannon, Rocket Salvo, and Lobber.
+A Normal–Legendary pair of each is loaded with its proper physical
+ammunition, and each faces a real hostile worm at approximately 1.38× the
+Normal turret range (inside the native Legendary range). The native
+engine's actual HP changes and counted ammunition consumption determine
+acceptance: Normal **0 hits**, Legendary **positive enemy damage and
+physical ammunition spent**, in every family. The 12 turrets and 12
+targets occupy separated lanes to avoid crossfire. Artillery is
+intentionally omitted because its native automatic targeting semantics
+and special shell supply require a distinct acceptance scenario.
+
+This is a deterministic engine physics fixture, not a simulated battle or
+new scheduler. The original enemy health and inventory observations are
+logged and retained. **Status when authored: pending Core30 native run.**

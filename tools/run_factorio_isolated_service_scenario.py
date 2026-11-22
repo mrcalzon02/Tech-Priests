@@ -62,6 +62,13 @@ CASES = {
         "pass": "PASS physical plasma fuel and loaded Normal/Legendary output for all three reactor sizes",
         "ticks": 900,
     },
+    "quality-bunker-ammo-range": {
+        "fixture": "tests/scenarios/quality-bunker-ammo-range/fixture.lua",
+        "module": "ci_quality_bunker_ammo_range",
+        "prefix": "[TP-QUALITY-BUNKER-AMMO]",
+        "pass": "PASS native extended-range ammunition hits for all six bunker families",
+        "ticks": 2100,
+    },
     "remote-robot-acquisition": {
         "fixture": "tests/scenarios/remote-robot-acquisition/fixture.lua",
         "module": "ci_remote_robot_acquisition",
@@ -1673,7 +1680,7 @@ def main() -> int:
     if created:
         if args.scenario in ("condenser-v22c-physical", "remote-robot-acquisition",
                               "quality-entity-matrix", "quality-turret-fire",
-                              "quality-plasma-load"):
+                              "quality-plasma-load", "quality-bunker-ammo-range"):
             # The quota-blocked artifact cannot be the sole witness to a
             # genuine Factorio --create failure. Retain bounded original
             # Factorio diagnostics in the worker log for both native gates.
