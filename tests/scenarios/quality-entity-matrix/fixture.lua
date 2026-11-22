@@ -109,6 +109,10 @@ local function setup()
         name,grade,entity.max_health,range))
     end
   end
+  -- Validate the already-installed Cogitator range authority against native
+  -- entity quality. A Legendary station must gain five tiles without a
+  -- duplicate or override of its existing rank/research/base range.
+  local station_normal_radius={}
   -- Two grades for every other audited custom entity family.
   for i,name in ipairs(CUSTOM) do
     local x=((i-1)%8)*12
@@ -117,6 +121,24 @@ local function setup()
       local grade=GRADES[index]
       local y=70+row*24+(index==1 and 0 or 12)
       local e,proto=place(name,grade,x,y)
+      if name:match("cogitator%-station$") then
+        local owner=rawget(_G,"get_station_operating_radius")
+        if type(owner)~="function" then
+          fail("CANONICAL_STATION_RANGE_AUTHORITY_MISSING "..name)
+        end
+        local actual=owner(e)
+        if not(type(actual)=="number" and actual>=8) then
+          fail("INVALID_STATION_RADIUS "..name.." grade="..grade)
+        end
+        if grade=="normal" then
+          station_normal_radius[name]=actual
+        elseif not near(actual,station_normal_radius[name]+5) then
+          fail("STATION_QUALITY_RANGE_BAD "..name.." normal="..
+            tostring(station_normal_radius[name]).." legendary="..tostring(actual))
+        end
+        emit("NATIVE_COGITATOR_RADIUS name="..name.." grade="..grade..
+          " radius="..tostring(actual))
+      end
       if e.type=="assembling-machine" or e.type=="furnace" then
         local native_speed=proto.get_crafting_speed(grade)
         local normal_speed=proto.get_crafting_speed("normal")
@@ -154,6 +176,20 @@ local function setup()
             and radar.quality.name==grade) then
             fail("MARTIAN_HELPER_LOST_QUALITY "..name.." grade="..grade)
           end
+          local radar_proto=prototypes.entity[radar.name]
+          local normal_coverage=radar_proto and
+            radar_proto.get_max_distance_of_nearby_sector_revealed("normal")
+          local grade_coverage=radar_proto and
+            radar_proto.get_max_distance_of_nearby_sector_revealed(grade)
+          if not(type(normal_coverage)=="number"
+            and type(grade_coverage)=="number" and grade_coverage>0) then
+            fail("MARTIAN_RADAR_QUALITY_COVERAGE_UNAVAILABLE "..name)
+          end
+          if grade=="legendary" and grade_coverage<=normal_coverage then
+            fail("MARTIAN_RADAR_QUALITY_COVERAGE_NOT_SCALED "..name)
+          end
+          emit("NATIVE_COMMS_RADAR name="..name.." grade="..grade..
+            " nearby_chunks="..grade_coverage)
         end
       elseif e.type=="burner-generator" then
         local power=proto.get_max_power_output(grade)
