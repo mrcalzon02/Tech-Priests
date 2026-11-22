@@ -58,3 +58,14 @@ scheduler or dependency downloader was modified.
 **Evidence level:** fixture source authored, not yet executed in Factorio. It
 does not claim turret hit ranges, power production under load, reload/migration
 or active defended-combat acceptance. Those require additional native probes.
+
+
+## 2026-11-21 continued — implementation and expanded native gates
+- **Martian comms hidden radar quality:** repaired `scripts/martian_infrastructure.lua`. Previously an existing hidden radar was returned without comparing its quality with the visible pylon. `M.ensure` now preserves matching helpers, replaces mismatched quality, culls duplicates, and invalidates the stale helper destruction registration before replacing it. Source commit: `feee4b213ac75c06487f88290226d4f4ae74a7d7`.
+- Added `tests/unit/martian_array_quality_reconciliation.lua`: normal-to-Legendary reconciliation, idempotence, wrong-quality duplicate cleanup, cloned parent and removal without cross-parent deletion. A local Lua test of the focused source path passed; native clone/load acceptance is still required.
+- Expanded `quality-entity-matrix` to iterate all 15 current `shared.combat_roster_catalog.units` (Normal and Legendary), plus all previous turrets and structures. Current fixture plans 40 turret + 54 machinery/structure + 30 AAI combat actor placements = **124**. The unit count remains roster-driven rather than hard-coded so future units join coverage.
+- Strengthened native matrix to **reject** missing Legendary crafting-speed improvement, electric-pole supply/wire range bonuses, plasma burner-generator prototype output increase and altered four-module-slot contract on the six downstream hydrogen machines. It still does not claim real electrical power delivered under load.
+- Added separate `quality-turret-fire` native fixture (1,200 ticks), wired into the **existing** isolated test runner without changing workflow triggers or scheduling. At 35 tiles, the Normal bunker Energy Dish (28 base range) must not damage its real enemy target while a Legendary Energy Dish (42 native range) **must** physically hit; only actual enemy health loss is accepted. Local Lua syntax pass; genuine Factorio engine result pending.
+- **Remaining:** native engine load/run with cached dependencies, actual turret shots for other families, quality-preserving AAI mode replacement/mustering custody, plasma electrical load test, reactor fuel lifecycle, save/reload/multiplayer and visual proof.
+
+No production/mod release has been published from this quality audit. Source readback and local source-only checks are not native acceptance.
