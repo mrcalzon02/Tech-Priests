@@ -185,11 +185,12 @@ python3 tools/run_factorio_isolated_service_scenario.py \
 ```
 
 The native test creates **40 bunker turrets** (eight prototypes × five Quality
-grades) plus two grade specimens for 27 other custom structures (Cogitators,
+grades) plus two grade specimens for 33 other custom structures (Cogitators,
 Martian power and comms arrays, faction factories, hydrogen machines, plasma
-reactors and emergency machinery), plus two grades for every AAI combat actor
-in the canonical roster (currently 15 actors, 30 additional placements).
-The present roster therefore produces 124 placed quality-test entities. It checks actual placed quality, the native
+reactors, all eight original emergency machines, and the Orbital Trader),
+plus two grades for every AAI combat actor in the canonical roster
+(currently 15 actors, 30 additional placements).
+The present roster therefore produces 136 placed quality-test entities. It checks actual placed quality, the native
 quality-adjusted `LuaEntity.max_health` against
 `LuaEntityPrototype.get_max_health(quality)`, crafting speed on supported
 crafting machines, pole supply/wire distances, and preserved quality in the
