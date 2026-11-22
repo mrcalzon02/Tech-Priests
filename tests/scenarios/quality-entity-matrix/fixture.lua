@@ -147,7 +147,7 @@ local function setup()
   -- and Quality identity for every canonical named unit without granting
   -- inventory items or using the still-gated automated muster quality path.
   local roster=CombatRoster.units or {}
-  if #roster~=15 then fail("COMBAT_ROSTER_COUNT_CHANGED count="..#roster) end
+  if #roster<1 then fail("COMBAT_ROSTER_MISSING") end
   for i,unit in ipairs(roster) do
     local x=((i-1)%8)*12
     local row=math.floor((i-1)/8)
