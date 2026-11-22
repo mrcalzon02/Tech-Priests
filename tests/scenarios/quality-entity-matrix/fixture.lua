@@ -3,6 +3,7 @@
 -- Native gunfire and power-throughput tests are separate acceptance gates.
 local M={}
 local Martian=require("scripts.martian_infrastructure")
+local CombatRoster=require("shared.combat_roster_catalog")
 local PREFIX="[TP-QUALITY-ENTITY-MATRIX] "
 local KEY="ci_quality_entity_matrix"
 local GRADES={"normal","uncommon","rare","epic","legendary"}
@@ -44,11 +45,11 @@ local function prep(surface)
   surface.request_to_generate_chunks({x=50,y=72},6)
   surface.force_generate_chunk_requests()
   local tiles={}
-  for x=-16,111 do for y=-16,158 do
+  for x=-16,111 do for y=-16,222 do
     tiles[#tiles+1]={name="grass-1",position={x=x,y=y}}
   end end
   surface.set_tiles(tiles,true)
-  for _,e in pairs(surface.find_entities_filtered{area={{-16,-16},{112,159}}}) do
+  for _,e in pairs(surface.find_entities_filtered{area={{-16,-16},{112,223}}}) do
     if e.valid and (e.type=="tree" or e.type=="cliff"
       or e.type=="simple-entity" or e.type=="resource"
       or e.force==game.forces.enemy) then e.destroy() end
@@ -66,7 +67,7 @@ local function setup()
   if state.initialized then fail("DUPLICATE_SETUP") end
   local surface,force=game.surfaces[1],game.forces.player
   prep(surface)
-  local placed,quality_checks,turret_checks,utility_checks=0,0,0,0
+  local placed,quality_checks,turret_checks,utility_checks,actor_checks=0,0,0,0,0
   local function place(name,grade,x,y)
     local proto=prototypes.entity[name]
     if not proto then fail("MISSING_CUSTOM_ENTITY "..name) end
@@ -142,21 +143,42 @@ local function setup()
       utility_checks=utility_checks+1
     end
   end
+  -- Combat roster uses AAI car-based actors. Check the real entity health
+  -- and Quality identity for every canonical named unit without granting
+  -- inventory items or using the still-gated automated muster quality path.
+  local roster=CombatRoster.units or {}
+  if #roster~=15 then fail("COMBAT_ROSTER_COUNT_CHANGED count="..#roster) end
+  for i,unit in ipairs(roster) do
+    local x=((i-1)%8)*12
+    local row=math.floor((i-1)/8)
+    for _,index in ipairs({1,5}) do
+      local grade=GRADES[index]
+      local y=174+row*24+(index==1 and 0 or 12)
+      local actor=place(unit.name,grade,x,y)
+      if actor.type~="car" then fail("COMBAT_UNIT_TYPE_CHANGED "..unit.name) end
+      actor_checks=actor_checks+1
+      emit(string.format("NATIVE_ACTOR name=%s grade=%s hp=%.2f",
+        unit.name,grade,actor.max_health))
+    end
+  end
   state.initialized=true
   state.passed=true
   state.placed=placed
   state.quality_checks=quality_checks
   state.turret_checks=turret_checks
   state.utility_checks=utility_checks
+  state.actor_checks=actor_checks
   emit("NATIVE_CREATE_VERIFIED turrets="..turret_checks
-    .." custom_entities="..utility_checks.." placements="..placed)
+    .." custom_entities="..utility_checks
+    .." combat_actors="..actor_checks.." placements="..placed)
 end
 local function report()
   local state=root()
   if state.passed and not state.reported then
     state.reported=true
     emit("PASS native five-tier bunker turrets and normal-legendary custom entities"
-      .." turrets="..state.turret_checks.." others="..state.utility_checks)
+      .." turrets="..state.turret_checks.." others="..state.utility_checks
+      .." actors="..state.actor_checks)
   end
   return {processed=1}
 end
