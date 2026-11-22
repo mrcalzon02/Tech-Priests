@@ -169,3 +169,33 @@ operations or output items. Captured output is removed only after engine
 production and counted as physical custody; absent or duplicated material fails.
 The disposable test-only fixture is never packaged. This test has not yet been
 run against a native binary after being added.
+
+
+### Native custom-entity Quality matrix (Factorio 2.1, Quality required)
+
+Use an existing local Factorio installation and cached mod ZIPs. This case
+requires an actual enabled Quality feature with all five native grades; it
+**fails** rather than silently accepting a Normal-only run.
+
+```sh
+python3 tools/run_factorio_isolated_service_scenario.py \
+  --scenario quality-entity-matrix \
+  --factorio /path/to/installed/factorio \
+  --dependency-mods /path/to/locally/cached/mods
+```
+
+The native test creates **40 bunker turrets** (eight prototypes × five Quality
+grades) plus two grade specimens for 27 other custom structures (Cogitators,
+Martian power and comms arrays, faction factories, hydrogen machines, plasma
+reactors and emergency machinery). It checks actual placed quality, the native
+quality-adjusted `LuaEntity.max_health` against
+`LuaEntityPrototype.get_max_health(quality)`, crafting speed on supported
+crafting machines, pole supply/wire distances, and preserved quality in the
+hidden Martian communications radar. Burner generator output is logged as
+engine-observed prototype data rather than assuming automatic power scaling.
+
+The fixture runs only in the disposable isolated mod installation, reports a
+pass only from the loaded benchmark process, and does not fabricate production,
+turret kills or electrical power. **This is a native *quality-entity-stat* gate,
+not a distant-target shot test, power throughput test, or save/reload proof.**
+Those remain separate gates.
