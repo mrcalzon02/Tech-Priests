@@ -30,7 +30,12 @@ local CUSTOM={
   "mars-plasma-reactor-minoris","mars-plasma-reactor-majoris",
   "mars-plasma-reactor-maximus",
   "tech-priests-emergency-assembler","tech-priests-emergency-smelter",
-  "tech-priests-emergency-boiler"
+  "tech-priests-emergency-boiler","tech-priests-emergency-miner",
+  "tech-priests-emergency-steam-engine",
+  "tech-priests-emergency-laboratorium",
+  "tech-priests-emergency-power-grid",
+  "tech-priests-atmospheric-water-condenser",
+  "orbital-trader"
 }
 local function emit(x) log(PREFIX..x) end
 local function fail(x) error(PREFIX.."FAIL "..x,0) end
@@ -45,11 +50,11 @@ local function prep(surface)
   surface.request_to_generate_chunks({x=50,y=72},6)
   surface.force_generate_chunk_requests()
   local tiles={}
-  for x=-16,111 do for y=-16,222 do
+  for x=-16,111 do for y=-16,255 do
     tiles[#tiles+1]={name="grass-1",position={x=x,y=y}}
   end end
   surface.set_tiles(tiles,true)
-  for _,e in pairs(surface.find_entities_filtered{area={{-16,-16},{112,223}}}) do
+  for _,e in pairs(surface.find_entities_filtered{area={{-16,-16},{112,256}}}) do
     if e.valid and (e.type=="tree" or e.type=="cliff"
       or e.type=="simple-entity" or e.type=="resource"
       or e.force==game.forces.enemy) then e.destroy() end
@@ -218,7 +223,7 @@ local function setup()
     local row=math.floor((i-1)/8)
     for _,index in ipairs({1,5}) do
       local grade=GRADES[index]
-      local y=174+row*24+(index==1 and 0 or 12)
+      local y=200+row*24+(index==1 and 0 or 12)
       local actor=place(unit.name,grade,x,y)
       if actor.type~="car" then fail("COMBAT_UNIT_TYPE_CHANGED "..unit.name) end
       actor_checks=actor_checks+1
