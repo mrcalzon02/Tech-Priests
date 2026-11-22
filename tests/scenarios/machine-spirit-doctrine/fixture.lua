@@ -5,6 +5,9 @@ local M={}
 local Doctrine=require("scripts.core.consecration.doctrine_effects")
 local PREFIX="[TP-MACHINE-SPIRIT-DOCTRINE] "
 local KEY="ci_machine_spirit_doctrine"
+-- Factorio Quality is optional; exercise native legendary module quality
+-- when enabled without making non-Quality installs fail their baseline gate.
+local HAS_QUALITY = script and script.feature_flags and script.feature_flags.quality
 local CASES={
   {kind="baseline",x=-12,modules={}},
   {kind="order",x=0,modules={{name="tech-priests-order-module-2",count=1}}},
@@ -86,13 +89,23 @@ local function setup()
     local inventory=machine.get_module_inventory()
     if not inventory then fail("MODULE_SLOTS_ABSENT "..spec.kind) end
     for _,module in ipairs(spec.modules) do
-      if inventory.insert(module)~=module.count then
+      local stack={name=module.name,count=module.count}
+      if HAS_QUALITY and spec.kind=="mixed"
+        and module.name=="tech-priests-order-module-1" then
+        stack.quality="legendary"
+      end
+      if inventory.insert(stack)~=module.count then
         fail("NATIVE_MODULE_INSERT_REFUSED "..spec.kind.." "..module.name)
       end
     end
     local inserted=0
     for _,stack in ipairs(inventory.get_contents()) do
       if stack.name:find("^tech%-priests%-") then inserted=inserted+stack.count end
+      if HAS_QUALITY and spec.kind=="mixed"
+        and stack.name=="tech-priests-order-module-1"
+        and stack.quality~="legendary" then
+        fail("NATIVE_MODULE_QUALITY_READBACK")
+      end
     end
     if inserted~=#spec.modules then fail("MODULE_READBACK "..spec.kind) end
     if not(get_consecration_record and is_consecration_target
@@ -110,7 +123,8 @@ local function setup()
       .." modules="..inserted.." seeded_sanctity="..record.sanctification)
   end
   state.started=game.tick
-  emit("NATIVE_SETUP_COMPLETE research=true module_inventory=true real_input=true")
+  emit("NATIVE_SETUP_COMPLETE research=true module_inventory=true real_input=true"
+    .." legendary_module="..tostring(HAS_QUALITY==true))
 end
 local function sample()
   local state=root()
@@ -142,7 +156,7 @@ local function sample()
         baseline={order=0,chaos=0},
         order={order=20,chaos=0},
         chaos={order=0,chaos=22},
-        mixed={order=10,chaos=12}
+        mixed={order=HAS_QUALITY and 15 or 10,chaos=12}
       }
       local want=expected[entry.kind]
       if not(want and modules.order==want.order and modules.chaos==want.chaos) then
