@@ -29,22 +29,28 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 4
     steps:
-      - name: Checkout only taxonomy contracts, no large mod art or dependency downloads
-        uses: actions/checkout@v4
-        with:
-          persist-credentials: false
-          fetch-depth: 1
-          filter: blob:none
-          sparse-checkout-cone-mode: false
-          sparse-checkout: |
-            tech-priests_src/prototypes/combat_damage_types.lua
-            tech-priests_src/data.lua
-            tech-priests_src/locale/en/damage-types.cfg
-            tech-priests_src/shared/combat_roster_catalog.lua
-            tech-priests_src/prototypes/combat_roster.lua
-            docs/data/combat-damage-taxonomy.json
-            tools/check_combat_damage_taxonomy.py
-            tests/unit/test_combat_damage_taxonomy_contract.py
+      - name: Fetch exactly eight audited source files without broken nested gitlink checkout
+        shell: bash
+        run: |
+          set -euo pipefail
+          git init -q .
+          git remote add origin "https://github.com/${GITHUB_REPOSITORY}.git"
+          git config core.sparseCheckout true
+          cat > .git/info/sparse-checkout <<'PATHS'
+          /tech-priests_src/prototypes/combat_damage_types.lua
+          /tech-priests_src/data.lua
+          /tech-priests_src/locale/en/damage-types.cfg
+          /tech-priests_src/shared/combat_roster_catalog.lua
+          /tech-priests_src/prototypes/combat_roster.lua
+          /docs/data/combat-damage-taxonomy.json
+          /tools/check_combat_damage_taxonomy.py
+          /tests/unit/test_combat_damage_taxonomy_contract.py
+          PATHS
+          git -c protocol.version=2 fetch --depth=1 --filter=blob:none origin "${GITHUB_SHA}"
+          git -c submodule.recurse=false checkout --detach FETCH_HEAD
+          test "$(git rev-parse HEAD)" = "${GITHUB_SHA}"
+          echo "EXACT_SOURCE_PIN=${GITHUB_SHA}"
+          test ! -d build/package_checkout
       - name: Verify namespaced types, original ammo, localization and 15-unit source
         run: python3 -B tools/check_combat_damage_taxonomy.py
       - name: Run negative/fail-closed source contract regression
