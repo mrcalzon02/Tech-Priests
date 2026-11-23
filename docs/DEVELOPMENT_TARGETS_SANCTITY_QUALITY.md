@@ -292,3 +292,6 @@ The existing `machine_spirit_chaos_hazard_handlers.lua` formerly modeled `game.c
 - **Safety and source authority:** the generated `shared/combat_roster_catalog.lua` cites a JSON source and generator currently absent at those paths. Recover the generator before changing weapon damage types. Never globally rewrite vanilla ammo or another mod's grenade/cannon/rocket prototypes. Engine startup, final prototype type audit and physical A/B/C evidence are **outstanding**; static source registration is not live Factorio verification.
 
 Authoritative [source-backed damage audit, roster matrix and resistance doctrine](COMBAT_DAMAGE_TYPE_AUDIT_20261122.md). Machine-readable [proposed ammo and wall targets](data/combat-damage-taxonomy.json). Reproducible read-only source check: `python tools/check_combat_damage_taxonomy.py`; focused negative tests: `python -m unittest discover -s tests/unit -p test_combat_damage_taxonomy_contract.py`.
+
+
+**2026-11-22 source verification:** [CI run 45123322306](https://github.com/mrcalzon02/Tech-Priests/actions/runs/45123322306) passed a sparse checkout and ten bounded taxonomy/roster/locale tests on `c80cf44ba424ad22318362d8a86c3060cc02a018`. No live Factorio load, 3D wall prototype, real resistances, or combat outcome has yet been established by that run. The original ammunition and biter mechanics were deliberately not retyped.
