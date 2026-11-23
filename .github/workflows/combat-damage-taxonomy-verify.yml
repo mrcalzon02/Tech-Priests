@@ -1,0 +1,62 @@
+name: Tech Priests damage taxonomy source contract
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - tech-priests_src/prototypes/combat_damage_types.lua
+      - tech-priests_src/data.lua
+      - tech-priests_src/locale/en/damage-types.cfg
+      - tech-priests_src/shared/combat_roster_catalog.lua
+      - tech-priests_src/prototypes/combat_roster.lua
+      - docs/data/combat-damage-taxonomy.json
+      - tools/check_combat_damage_taxonomy.py
+      - tests/unit/test_combat_damage_taxonomy_contract.py
+      - .github/workflows/combat-damage-taxonomy-verify.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tech-priests-damage-taxonomy-source
+  cancel-in-progress: false
+
+jobs:
+  source-audit:
+    # Tiny independent source check, not an engine/camera/balance or release test.
+    if: github.event_name == 'workflow_dispatch' || startsWith(github.event.head_commit.message, '[damage-taxonomy-verify]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - name: Checkout only taxonomy contracts, no large mod art or dependency downloads
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            tech-priests_src/prototypes/combat_damage_types.lua
+            tech-priests_src/data.lua
+            tech-priests_src/locale/en/damage-types.cfg
+            tech-priests_src/shared/combat_roster_catalog.lua
+            tech-priests_src/prototypes/combat_roster.lua
+            docs/data/combat-damage-taxonomy.json
+            tools/check_combat_damage_taxonomy.py
+            tests/unit/test_combat_damage_taxonomy_contract.py
+      - name: Verify namespaced types, original ammo, localization and 15-unit source
+        run: python3 -B tools/check_combat_damage_taxonomy.py
+      - name: Run negative/fail-closed source contract regression
+        run: python3 -B -m unittest discover -v -s tests/unit -p test_combat_damage_taxonomy_contract.py
+      - name: Report exactly what passed
+        if: always()
+        run: |
+          {
+            echo '### Tech-Priests damage-type source acceptance'
+            echo
+            echo "- Source SHA: \`$GITHUB_SHA\`"
+            echo '- Coverage: four custom damage-type definitions, 10 ammo families, 15 AAI combat actors, locale and proposed wall status'
+            echo '- Excludes: native Factorio startup, real projectile hit/DoT, resistance balance, real wall prototypes and screenshots'
+            echo '- No release publication, runner service changes or game dependencies'
+          } >> "$GITHUB_STEP_SUMMARY"
