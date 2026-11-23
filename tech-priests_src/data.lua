@@ -3,6 +3,8 @@
 
 require("prototypes.categories.recipe-category")
 require("prototypes.categories.item-group")
+-- Namespaced damage labels only; retain all existing ammo and resistances until A/B/C.
+require("prototypes.combat_damage_types").register()
 require("prototypes.item")
 require("prototypes.recipe")
 require("prototypes.technology")
