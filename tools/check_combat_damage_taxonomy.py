@@ -46,7 +46,7 @@ def current_families(catalog: str) -> tuple[dict[str, str], list[str]]:
             "Generated combat catalog ammo block missing or duplicated")
     before, tail = catalog.split('["ammo"]={', 1)
     ammo, _ = tail.split('},["technologies"]', 1)
-    starts = list(re.finditer(r'\["([a-z]+)"\]=\{', ammo))
+    starts = list(re.finditer(r'\["(galvanic|las|induction|bolt|radium|gamma|magnarail|volkite|arc|graviton)"\]=\{', ammo))
     require(len(starts) == len(FAMILIES), "Current ammo family count drifted")
     found: dict[str, str] = {}
     for index, marker in enumerate(starts):
@@ -107,7 +107,7 @@ def inspect(root: Path = ROOT) -> dict:
                 "A proposed ammo conversion is not a live weapon result")
         components = item.get("proposed_damage_components")
         require(isinstance(components, list) and components and
-                all(type(x.get("portion")) in (float, int) and
+                all(type(x) is dict and type(x.get("portion")) in (float, int) and
                     x.get("type") in CUSTOM + tuple(taxonomy["builtin_damage_types"])
                     for x in components) and
                 abs(sum(x["portion"] for x in components) - 1.0) < 1e-8,
