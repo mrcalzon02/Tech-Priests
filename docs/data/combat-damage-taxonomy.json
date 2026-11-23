@@ -1,0 +1,305 @@
+{
+  "schema": "tech-priests.combat-damage-taxonomy.v1",
+  "source_repository": "mrcalzon02/Tech-Priests",
+  "baseline_source_commit": "7c1867938e045858c6c1504e929d2b32af9720ad",
+  "baseline_catalog": "tech-priests_src/shared/combat_roster_catalog.lua",
+  "registration_only": true,
+  "live_ammunition_damage_changes": false,
+  "risk": "Custom type without an explicit target resistance can bypass vanilla armor; no conversions authorized before native A/B/C",
+  "builtin_damage_types": [
+    "physical",
+    "impact",
+    "poison",
+    "explosion",
+    "fire",
+    "laser",
+    "acid",
+    "electric"
+  ],
+  "new_registered_damage_types": [
+    "tech-priests-plasma",
+    "tech-priests-corrosive",
+    "tech-priests-radiation",
+    "tech-priests-gravitic"
+  ],
+  "ammo_families": [
+    {
+      "ammo_family": "galvanic",
+      "current_type": "physical",
+      "proposed_damage_components": [
+        {
+          "type": "physical",
+          "portion": 1
+        }
+      ],
+      "rationale": "kinetic galvanized rifle slug",
+      "phase": "retain",
+      "implemented_in_ammo": false
+    },
+    {
+      "ammo_family": "las",
+      "current_type": "laser",
+      "proposed_damage_components": [
+        {
+          "type": "laser",
+          "portion": 1
+        }
+      ],
+      "rationale": "coherent laser energy",
+      "phase": "retain",
+      "implemented_in_ammo": false
+    },
+    {
+      "ammo_family": "induction",
+      "current_type": "physical",
+      "proposed_damage_components": [
+        {
+          "type": "physical",
+          "portion": 0.7
+        },
+        {
+          "type": "electric",
+          "portion": 0.3
+        }
+      ],
+      "rationale": "power axe and induction staff kinetic strike plus electric discharge",
+      "phase": "trial",
+      "implemented_in_ammo": false
+    },
+    {
+      "ammo_family": "bolt",
+      "current_type": "physical",
+      "proposed_damage_components": [
+        {
+          "type": "physical",
+          "portion": 0.8
+        },
+        {
+          "type": "explosion",
+          "portion": 0.2
+        }
+      ],
+      "rationale": "mass-reactive bolt rounds with separate explosive component, initially direct only",
+      "phase": "trial",
+      "implemented_in_ammo": false
+    },
+    {
+      "ammo_family": "radium",
+      "current_type": "poison",
+      "proposed_damage_components": [
+        {
+          "type": "physical",
+          "portion": 0.2
+        },
+        {
+          "type": "tech-priests-radiation",
+          "portion": 0.8
+        }
+      ],
+      "rationale": "radium projectile and ionizing radiation, not conventional poison",
+      "phase": "trial",
+      "implemented_in_ammo": false
+    },
+    {
+      "ammo_family": "gamma",
+      "current_type": "laser",
+      "proposed_damage_components": [
+        {
+          "type": "tech-priests-radiation",
+          "portion": 1
+        }
+      ],
+      "rationale": "high-energy gamma emission rather than focused visible laser",
+      "phase": "trial",
+      "implemented_in_ammo": false
+    },
+    {
+      "ammo_family": "magnarail",
+      "current_type": "physical",
+      "proposed_damage_components": [
+        {
+          "type": "physical",
+          "portion": 1
+        }
+      ],
+      "rationale": "electromagnetically launched solid slug; launch method not hit damage",
+      "phase": "retain",
+      "implemented_in_ammo": false
+    },
+    {
+      "ammo_family": "volkite",
+      "current_type": "laser",
+      "proposed_damage_components": [
+        {
+          "type": "laser",
+          "portion": 0.3
+        },
+        {
+          "type": "fire",
+          "portion": 0.7
+        }
+      ],
+      "rationale": "thermal ray with deflagration candidate but no automatic ignition",
+      "phase": "trial",
+      "implemented_in_ammo": false
+    },
+    {
+      "ammo_family": "arc",
+      "current_type": "electric",
+      "proposed_damage_components": [
+        {
+          "type": "electric",
+          "portion": 1
+        }
+      ],
+      "rationale": "electrical discharge",
+      "phase": "retain",
+      "implemented_in_ammo": false
+    },
+    {
+      "ammo_family": "graviton",
+      "current_type": "physical",
+      "proposed_damage_components": [
+        {
+          "type": "physical",
+          "portion": 0.3
+        },
+        {
+          "type": "tech-priests-gravitic",
+          "portion": 0.7
+        }
+      ],
+      "rationale": "gravitic compression and kinetic effects",
+      "phase": "trial",
+      "implemented_in_ammo": false
+    }
+  ],
+  "weapon_platforms": [
+    {
+      "id": "tech-priests-bunker-autocannon",
+      "current": "custom physical projectile",
+      "proposed": "physical, keep"
+    },
+    {
+      "id": "tech-priests-bunker-chicago-piano",
+      "current": "inherits vanilla bullet-ammunition effects",
+      "proposed": "physical, keep"
+    },
+    {
+      "id": "tech-priests-bunker-twin-minigun",
+      "current": "inherits vanilla bullet-ammunition effects",
+      "proposed": "physical, keep"
+    },
+    {
+      "id": "tech-priests-bunker-twin-cannon",
+      "current": "inherits cannon-shell effects; physical+explosion varies by shell",
+      "proposed": "retain vanilla ammunition types; A/B/C explosion radius and friendly damage"
+    },
+    {
+      "id": "tech-priests-bunker-rocket-salvo",
+      "current": "inherits vanilla rocket-ammunition effects (explosion/direct impacts)",
+      "proposed": "retain vanilla ammunition; trial radius and burst/reload separately"
+    },
+    {
+      "id": "tech-priests-bunker-lobber",
+      "current": "inherits grenade/capsule effects, possibly multiple types",
+      "proposed": "preserve input grenade damage; trial safe explosion radius"
+    },
+    {
+      "id": "tech-priests-bunker-energy-dish",
+      "current": "inherits electric-beam damage type, type not assigned explicitly here",
+      "proposed": "likely electric; require actual final-prototype/engine readback"
+    },
+    {
+      "id": "tech-priests-bunker-artillery",
+      "current": "inherits vanilla artillery ammunition effects; physical/explosion",
+      "proposed": "retain vanilla shell; A/B/C splash and clearance"
+    }
+  ],
+  "reserved_future_sources": [
+    {
+      "type": "tech-priests-plasma",
+      "existing_weapon": false,
+      "role": "future plasma cannon/lance and thermal plasma defense interactions"
+    },
+    {
+      "type": "tech-priests-corrosive",
+      "existing_weapon": false,
+      "role": "future armor-eating solvent/lingering corrosion; built-in acid retains its existing role"
+    },
+    {
+      "type": "tech-priests-radiation",
+      "existing_weapon": true,
+      "role": "radium/gamma proposed after native calibration, currently poison/laser"
+    },
+    {
+      "type": "tech-priests-gravitic",
+      "existing_weapon": true,
+      "role": "graviton proposed after native calibration, currently physical"
+    }
+  ],
+  "wall_profile_targets": [
+    {
+      "id": "tech-priests-wall-reinforced",
+      "status": "proposed-only",
+      "specialization": "generalist",
+      "must_resist": [
+        "physical",
+        "explosion",
+        "fire",
+        "acid",
+        "tech-priests-plasma",
+        "tech-priests-corrosive"
+      ]
+    },
+    {
+      "id": "tech-priests-wall-blast",
+      "status": "proposed-only",
+      "specialization": "explosion + kinetic splash",
+      "must_resist": [
+        "explosion",
+        "physical"
+      ]
+    },
+    {
+      "id": "tech-priests-wall-fire",
+      "status": "proposed-only",
+      "specialization": "thermal/fire plus plasma",
+      "must_resist": [
+        "fire",
+        "tech-priests-plasma"
+      ]
+    },
+    {
+      "id": "tech-priests-wall-ballistic",
+      "status": "proposed-only",
+      "specialization": "kinetic rounds and melee",
+      "must_resist": [
+        "physical",
+        "impact"
+      ]
+    },
+    {
+      "id": "tech-priests-wall-corrosion",
+      "status": "proposed-only",
+      "specialization": "vanilla acid + custom corrosive",
+      "must_resist": [
+        "acid",
+        "tech-priests-corrosive"
+      ]
+    }
+  ],
+  "native_tests_required": [
+    "pinned final-prototype damage-type readback",
+    "vanilla cost-equivalent baseline",
+    "same-seed single damage-channel A/B/C",
+    "resistance expected-versus-actual damage for each wall grade",
+    "0/.25/.5/.75/1 biter evolution",
+    "1/2/3 wall layers and 3/7/13 tile clearance",
+    "separate direct/splash/friendly wall and actor damage",
+    "weapons/ammo quality-scaling and action effects",
+    "sustained ammo spend per kill",
+    "headed in-game screenshot and original engine logs"
+  ],
+  "source_maintenance_gap": "Generated combat_roster_catalog.lua references docs/data/combat-weapons-and-ammunition.json and tools/generate_combat_roster.py; neither was present at that path on audited main. Do not hand-edit generated roster until authority is recovered."
+}
