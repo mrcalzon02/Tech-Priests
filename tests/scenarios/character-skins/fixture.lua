@@ -6,6 +6,7 @@ local Catalog=require("shared.character_skin_catalog")
 local mod_gui=require("mod-gui")
 local session_completed=false
 local graphical_run=false -- runner enables this only for screenshot capture
+local legacy_case=false -- runner initializes the previously shipped character host
 local function check(ok,message)
   if ok then return end
   storage.skin_test.failed=message
@@ -18,6 +19,7 @@ local function initialize()
   local surface=game.surfaces[1]
   surface.daytime=0;surface.freeze_daytime=true
   surface.request_to_generate_chunks({0,0},2);surface.force_generate_chunk_requests()
+  for _,entity in pairs(surface.find_entities_filtered{area={{-30,-30},{30,30}},type={"tree","simple-entity","cliff","resource"}}) do entity.destroy() end
   local tiles={}
   for x=-30,30 do for y=-30,30 do tiles[#tiles+1]={name="landfill",position={x,y}} end end
   surface.set_tiles(tiles)
@@ -55,6 +57,13 @@ local function setup_player(player)
     player.set_controller{type=defines.controllers.character,character=body}
   end
   check(player.character and player.character.valid,"real native player controls character")
+  if legacy_case then
+    local previous=player.character
+    local legacy=player.surface.create_entity{name=Visuals.host_name,position=player.position,force=player.force}
+    check(legacy and legacy.valid,"existing-save character host created")
+    player.character=legacy
+    previous.destroy() -- isolated fixture setup, never a picker action
+  end
   t.player=player.index;t.start=game.tick
   player.teleport({0,-8})
   player.clear_items_inside()
@@ -66,10 +75,10 @@ local function setup_player(player)
   Picker.restore_player(player)
   check(Picker.selected(player)==Picker.default_skin(),"first-use startup appearance applies")
   if Picker.enabled() then
-    check(player.character.name==Visuals.host_name,"startup uses custom character host")
+    check(player.character==character and character.name==(legacy_case and Visuals.host_name or "character"),"startup keeps original native character")
     check(Picker.choose(player,"vanilla"),"explicit engineer selection")
     Picker.restore_player(player)
-    check(Picker.selected(player)=="vanilla" and player.character.name=="character","explicit engineer survives lifecycle restore")
+    check(Picker.selected(player)=="vanilla" and player.character==character,"explicit engineer survives lifecycle restore")
   end
   character=player.character
   character.health=177
@@ -89,8 +98,20 @@ local function setup_player(player)
   character.get_inventory(defines.inventory.character_ammo)[1].set_stack{name="firearm-magazine",count=7}
   character.get_inventory(defines.inventory.character_ammo)[1].ammo=3
   player.cursor_stack.set_stack{name="copper-cable",count=13}
+  t.original_character=character
   t.original_unit=character.unit_number
+  t.main_inventory=main
+  t.armor_inventory=character.get_inventory(defines.inventory.character_armor)
+  t.armor_grid=armor.grid
   t.main_size=#main
+  t.logistic_sections=character.get_logistic_sections()
+  t.character_name=character.name
+  t.reference=player.surface.create_entity{name="tp-skin-reference-character",position={-20,-24},force=player.force}
+  check(t.reference and t.reference.valid,"unmodified native reference character created")
+  t.reference.character_running_speed_modifier=.17
+  t.reference.get_inventory(defines.inventory.character_armor)[1].set_stack{name="power-armor",count=1}
+  check(close(character.prototype.running_speed,t.reference.prototype.running_speed),"native prototype running speed is unchanged")
+  check(character.prototype.character_corpse==t.reference.prototype.character_corpse,"player and legacy host retain the standard visible native corpse")
   if not Picker.enabled() then
     check(not player.gui.screen[Picker.button_name],"disabled picker has no button")
     local ok,reason=Picker.choose(player,"enginseer")
@@ -112,13 +133,16 @@ local function setup_player(player)
   check(player.gui.screen[Picker.frame_name].valid,"native GUI frame exists")
   local ok,reason=Picker.choose(player,"enginseer")
   check(ok and reason=="applied","first appearance selection applies: "..tostring(reason))
-  check(player.character.name==Visuals.host_name,"native appearance host controlled")
-  check(close(player.character.health,177),"health preserved at transfer commit")
-  check(not character.valid,"old empty body retired")
+  check(player.character==character and character.valid,"appearance retains original native character")
+  check(close(player.character.health,177),"appearance leaves current health untouched")
 end
 local function inventory_checks(player)
   local c=player.character
+  local t=storage.skin_test
+  check(c==t.original_character and c.unit_number==t.original_unit and c.name==t.character_name,"original character identity and prototype retained")
   local main=c.get_main_inventory()
+  check(main==t.main_inventory and c.get_inventory(defines.inventory.character_armor)==t.armor_inventory and t.armor_inventory[1].grid==t.armor_grid,"inventory and equipment objects retained")
+  check(c.get_logistic_sections()==t.logistic_sections,"native logistic sections retained")
   check(#main==storage.skin_test.main_size,"inventory capacity preserved")
   check(main.get_item_count("iron-plate")==37,"main stack count preserved")
   check(main.get_item_count("steel-plate")==11,"last bonus slot item preserved")
@@ -170,6 +194,25 @@ local function tick(event)
   local elapsed=event.tick-t.start
   local player=game.get_player(t.player)
   if elapsed>=10 and t.stage==0 then
+    local detached=player.surface.create_entity{name="character",position={-25,-6},force=player.force,raise_built=true}
+    check(detached and detached.valid,"detached native body created")
+    local clone=detached.clone{position={-25,-3},create_build_effect_smoke=false}
+    check(clone and clone.valid,"native body cloned")
+    if Picker.enabled() then
+      for _,body in ipairs({detached,clone}) do
+        local rec=storage.tech_priests.character_visuals.actors[body.unit_number]
+        check(rec and rec.model=="vanilla" and next(rec.renders)~=nil,"raised-build and clone lifecycle preserve visible detached Engineers")
+      end
+    end
+    t.lifecycle_checked=true
+    local death_probe=player.surface.create_entity{name=Visuals.host_name,position={-25,0},force=player.force}
+    check(death_probe and death_probe.valid,"legacy death probe created")
+    death_probe.get_main_inventory()[1].set_stack{name="copper-plate",count=9}
+    check(death_probe.die(game.forces.enemy),"native legacy-host death occurred")
+    local corpse=player.surface.find_entities_filtered{name="character-corpse",position={-25,0},radius=1}[1]
+    check(corpse and corpse.valid,"legacy host leaves the unchanged visible Engineer corpse")
+    check(corpse.get_inventory(defines.inventory.character_corpse).get_item_count("copper-plate")==9,"legacy corpse preserves recoverable inventory")
+    t.legacy_corpse_checked=true
     for _,npc in ipairs(t.npcs) do
       local rec=storage.tech_priests.character_visuals.actors[npc.unit]
       check(rec and rec.model==npc.model,"rank model mapping")
@@ -183,27 +226,47 @@ local function tick(event)
     if not t.disabled then
       inventory_checks(player)
       local unit=player.character.unit_number
+      local speed=player.character_running_speed
       for _,skin in ipairs(Catalog.skins) do
         local ok,reason=Picker.choose(player,skin.id)
         if Catalog.allowed(skin.id,settings.startup) then
           check(ok and reason=="applied","available skin selects: "..skin.id)
           check(Picker.selected(player)==skin.id,"selection stored")
           check(player.character.unit_number==unit,"skin change retains physical character")
+          check(close(player.character_running_speed,speed),"effective movement speed unchanged: "..skin.id)
+          inventory_checks(player)
         else check(not ok and reason=="restricted","startup-restricted skin rejected") end
       end
       inventory_checks(player)
+      local before_health=player.character.health
+      local before_attack=player.character.tick_of_last_attack
+      player.character.tick_of_last_attack=game.tick
+      local ok,reason=Picker.choose(player,"vanilla")
+      check(ok and reason=="applied" and player.character.tick_of_last_attack==game.tick,"Engineer restores immediately in combat without changing attack state")
+      check(close(player.character.health,before_health),"Engineer selection leaves current health untouched")
+      player.character.tick_of_last_attack=before_attack
+      check(player.begin_crafting{count=1,recipe="iron-gear-wheel",silent=true}==1,"native crafting queue started")
+      player.crafting_queue_progress=.25
+      local queue=helpers.table_to_json(player.crafting_queue)
+      local progress=player.crafting_queue_progress
+      check(Picker.choose(player,"enginseer"),"appearance changes while crafting")
+      ok,reason=Picker.choose(player,"vanilla")
+      check(ok and reason=="applied","Engineer restores immediately while crafting")
+      check(helpers.table_to_json(player.crafting_queue)==queue and player.crafting_queue_progress==progress,"crafting queue and progress unchanged")
+      player.cancel_crafting{index=1,count=1}
+      inventory_checks(player)
+      check(Picker.choose(player,"enginseer"),"custom appearance before vehicle restoration")
       local car=player.surface.create_entity{name="car",position=player.position,force=player.force}
       check(car and car.valid,"native vehicle created")
       car.set_driver(player)
       check(player.driving,"native vehicle entered")
       local before=player.character.unit_number
       local ok,reason=Picker.choose(player,"vanilla")
-      check(ok and reason=="queued" and player.character.unit_number==before,"body transfer deferred while driving")
+      check(ok and reason=="applied" and player.character.unit_number==before,"Engineer restores immediately while driving without replacing character")
+      check(not storage.tech_priests.character_skin_picker.pending[player.index],"cosmetic selection has no deferred transfer")
       car.set_driver(nil)
-      local applied,blocked=Picker.try_pending(player)
-      check(applied,"queued appearance applies after leaving vehicle: "..tostring(blocked))
       car.destroy()
-      check(player.character.name=="character","native original character restored")
+      check(player.character==t.original_character and Picker.selected(player)=="vanilla","Engineer restored on original character")
       inventory_checks(player)
     end
     game.forces["skin-test-red"].custom_color={r=.2,g=.8,b=.3,a=1}
@@ -232,31 +295,66 @@ local function tick(event)
       end
       check(found,"ranked corpse presentation attached after native death")
     end
+    Picker.close(player)
+    t.walk_skins={"vanilla"}
     if not t.disabled then
-      check(Picker.choose(player,"enginseer"),"select persistent appearance")
-      if graphical_run then t.stage=4
-      else
-        player.teleport({20,-20})
-        player.walking_state={walking=true,direction=0}
-        t.pose_row=0;t.next_pose=elapsed+5;t.stage=3
-      end
-    else t.stage=4 end
+      for _,skin in ipairs(Catalog.skins) do if Picker.allowed(skin.id) then t.walk_skins[#t.walk_skins+1]=skin.id end end
+    end
+    t.walk_index=0;t.movement={};t.stage=3
   end
-  if t.stage==3 and elapsed>=t.next_pose then
-    Visuals.refresh_player(player,"enginseer")
-    local rec=storage.tech_priests.character_visuals.actors[player.character.unit_number]
-    check(rec.state=="walk" and rec.row==t.pose_row,"native walking row="..t.pose_row.." actual="..rec.row.." state="..rec.state)
-    t.pose_row=t.pose_row+1;t.next_pose=elapsed+5
-    if t.pose_row==8 then
-      player.walking_state={walking=false,direction=0};t.stage=4
-    else player.walking_state={walking=true,direction=t.pose_row*2} end
+  if t.stage==3 then
+    if t.walk_started and game.tick-t.walk_started>=60 then
+      local tested=player.position.x-t.walk_start.x
+      local reference=t.reference.position.x-t.reference_start.x
+      player.walking_state={walking=false,direction=defines.direction.east}
+      t.reference.walking_state={walking=false,direction=defines.direction.east}
+      check(reference>1,"native reference physically walked")
+      check(math.abs(tested-reference)<=1/256,"actual walking distance matches native Engineer for "..t.walk_skin..": "..tested.." vs "..reference)
+      check(close(player.character_running_speed,t.reference.character_running_speed),"effective native movement speed matches for "..t.walk_skin)
+      inventory_checks(player)
+      t.movement[#t.movement+1]={skin=t.walk_skin,ticks=60,distance=tested,reference_distance=reference,
+        effective_speed=player.character_running_speed,reference_speed=t.reference.character_running_speed}
+      log("[TP-SKINS-TEST] WALK skin="..t.walk_skin.." ticks=60 distance="..tested.." native="..reference.." unit="..player.character.unit_number)
+      t.walk_started=nil
+    end
+    if not t.walk_started then
+      t.walk_index=t.walk_index+1
+      if t.walk_index>#t.walk_skins then
+        if not t.disabled then check(Picker.choose(player,"enginseer"),"select persistent appearance") end
+        player.teleport({0,-8});t.reference.teleport({8,-8})
+        t.stage=4
+      else
+        t.walk_skin=t.walk_skins[t.walk_index]
+        local ok,reason=Picker.choose(player,t.walk_skin)
+        check(ok and reason=="applied","walking appearance applies immediately: "..t.walk_skin)
+        player.teleport({-20,-18});t.reference.teleport({-20,-24})
+        player.character.tick_of_last_attack=t.reference.tick_of_last_attack
+        player.character.tick_of_last_damage=t.reference.tick_of_last_damage
+        t.walk_start={x=player.position.x,y=player.position.y}
+        t.reference_start={x=t.reference.position.x,y=t.reference.position.y}
+        t.walk_started=game.tick
+        player.walking_state={walking=true,direction=defines.direction.east}
+        t.reference.walking_state={walking=true,direction=defines.direction.east}
+      end
+    end
+    if t.walk_started then
+      -- The native --test-save test player refreshes input each tick.
+      player.walking_state={walking=true,direction=defines.direction.east}
+      t.reference.walking_state={walking=true,direction=defines.direction.east}
+    end
+    if graphical_run and t.walk_started and game.tick-t.walk_started==30
+      and (t.walk_skin=="vanilla" or t.walk_skin=="enginseer") then
+      game.take_screenshot{player=player,surface=player.surface,
+        position={x=player.position.x,y=-21},resolution={1600,1000},zoom=3,show_gui=false,daytime=0,force_render=true,
+        path="character-skins/"..(t.walk_skin=="vanilla" and "engineer" or t.walk_skin).."-walking.png"}
+    end
   end
   if t.stage==4 then
     t.saved_unit=game.get_player(t.player).character.unit_number
     t.done=true;session_completed=true
     helpers.write_file("character-skins/result.json",helpers.table_to_json{passed=true,skins=15,ranks=5,forces=2,
-      player=t.player,disabled=t.disabled or false,case=settings.startup["tech-priests-skin-allow-canoness"].value and "default" or "restricted"},false)
-    log("[TP-SKINS-TEST] PASS player picker, inventory preservation, restrictions and ranked force colours")
+      player=t.player,original_unit=t.original_unit,saved_unit=t.saved_unit,character_name=player.character.name,movement=t.movement,lifecycle=t.lifecycle_checked,legacy_corpse_inventory=t.legacy_corpse_checked,disabled=t.disabled or false,case=legacy_case and "legacy" or t.disabled and "disabled" or settings.startup["tech-priests-skin-allow-canoness"].value and "default" or "restricted"},false)
+    log("[TP-SKINS-TEST] PASS same native character, actual movement parity, immediate Engineer restore, inventory/crafting preservation, restrictions and ranked force colours")
     local player=game.get_player(t.player)
     if not t.disabled then Picker.open(player) end
     local frame=player.gui.screen[Picker.frame_name]

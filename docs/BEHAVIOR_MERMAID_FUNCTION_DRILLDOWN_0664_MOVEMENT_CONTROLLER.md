@@ -36,13 +36,30 @@ flowchart TD
 | `movement_controller_service_0611` | 10 ticks, priority 42, budget 24 | Services active movement requests. |
 | `movement_controller_sample_0611` | 5 ticks, priority 80, budget 32 | Samples active requests. |
 | `movement_controller_enforcement_0566` | 89 ticks, priority 70, budget 24 | Integrated stale-request / envelope / overleash enforcement. |
-| `command_refresh_ticks` | 45 | Command refresh boundary. |
+| `command_refresh_ticks` | 45, retained constant | Does not impose periodic repathing on an advancing unit; active submission uses initial-command or stalled-progress checks. |
 | `retarget_hold_ticks` | 90 | Retarget suppression boundary. |
 | `default_request_ttl` | 600 | Default request lifetime. |
 | `long_action_lease_ticks` | 480 | Lease for qualifying long physical tasks. |
 | `stall_repath_ticks` | 240 | Stalled progress repath threshold. |
 
 These are nominal ticks and offered work counts, not measured execution durations. Service budgets do not reduce the simulation tick rate. An accepted request may retain an existing owner for the same destination; callers that require their own lease must verify the returned live owner.
+
+## Native ground speed and appearance
+
+The ground priest constructor now uses the native Engineer's `running_speed`
+as its unit `movement_speed`, with the existing 20% belt-immune tier bonus.
+With the default Engineer this is 0.15 and 0.18 tiles per tick, replacing the
+old deliberate 0.080/0.095 crawl. The original rail-capable Magos uses the same
+baseline. Native unit commands still execute every engine tick; this repair
+does not change movement leases, service cadence or arrival accounting. Void
+attendants retain their separate movement backend and prototype override.
+
+The presentation exporter preserves each priest's native running and attack
+animation clocks while hiding only pixels. `character_visuals` applies the
+custom animation's speed once, including correction of old saved render
+objects. Appearance changes do not write entity movement speed. The
+[player appearance route](BEHAVIOR_MERMAID_MAP_0660.md#character-appearance-and-native-player-ownership)
+is separate from these explicitly requested ground-unit speed changes.
 
 ## State and exit
 

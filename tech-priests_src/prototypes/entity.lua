@@ -400,9 +400,8 @@ local function make_priest_corpse(def)
 end
 
 local function make_priest(def, belt_immune)
-  -- Baseline adepts were too slow to reliably escape even basic transport-belt
-  -- nonsense. Give every visible Tech-Priest a small default mobility increase,
-  -- then let the post-Senior rite swap them to true belt-immune prototypes.
+  -- Ground workers use the same native walking baseline as the Engineer and
+  -- original rail-capable Magos. The post-Senior rite retains its 20% bonus.
   local run_animation_speed = belt_immune and 0.92 or 0.82
   local idle_gun_animation_speed = belt_immune and 0.36 or 0.32
   local priest_run_animation = make_animation("level1_running.png", "level1_running_shadow.png", run_animation_speed, def.tint)
@@ -423,13 +422,10 @@ local function make_priest(def, belt_immune)
   }
   priest.distraction_cooldown = 300
   priest.vision_distance = 18
-  -- 0.1.466: the temporary movement-audit crawl proved too slow for behavior-tree validation.
-  -- Keep priests visibly deliberate, but fast enough that target acquisition, combat
-  -- preemption, and return-to-station behavior can be observed in one live test pass.
-  -- 0.1.518: movement cadence testing showed priests could appear painfully slow
-  -- once every action became a real walk/ritual/repair phase.  Raise the
-  -- baseline unit speed modestly while keeping the deliberate Tech-Priest gait.
-  priest.movement_speed = belt_immune and 0.095 or 0.080
+  -- Appearance must not impose the old 0.080/0.095 deliberate crawl. Native
+  -- commands still own every travelled tile; no scripted position updates.
+  priest.movement_speed = (player_character and player_character.running_speed or 0.15)
+    * (belt_immune and 1.2 or 1)
   priest.distance_per_frame = belt_immune and 0.145 or 0.125
   priest.has_belt_immunity = belt_immune and true or false
   priest.affected_by_tiles = false
@@ -527,7 +523,7 @@ local function make_original_rail_character_magos(def,belt_immune)
   -- Preserve the character prototype's genuine native driver eligibility.
   -- Do not manufacture equipment, items, cargo, or any commandable surrogate.
   priest.minable={mining_time=0.4,result=def.station_name}
-  priest.running_speed=belt_immune and 0.18 or 0.15
+  priest.running_speed=base.running_speed*(belt_immune and 1.2 or 1)
   priest.corpse=def.corpse_name
   return priest
 end

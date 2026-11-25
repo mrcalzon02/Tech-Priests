@@ -1,5 +1,6 @@
 -- Original artwork: Proxy Studios / Slitherine Ltd.; Games Workshop as applicable.
 local Catalog=require("shared.character_skin_catalog")
+local Engineer=require("prototypes.engineer_visuals")
 local M={host_name="tech-priests-custom-character",corpse_name="tech-priests-custom-character-corpse"}
 local prefix="__tech-priests__/graphics/entity/gladius-donors/"
 
@@ -42,24 +43,20 @@ function M.register()
       end
     end
   end
-  -- One neutral physical character host. Skin changes after the first transfer
-  -- change only presentation; inventory, equipment and native player identity
-  -- are never moved again merely to select another model.
+  -- Preserve the original physical character. Both custom appearances and the
+  -- Engineer are attached graphics, so choosing an appearance never needs a
+  -- controller/inventory transfer. Keep the old host prototype for old saves.
   local base=assert(data.raw.character.character,"Vanilla character unavailable")
   local host=table.deepcopy(base)
+  local enabled=settings.startup["tech-priests-character-picker-enabled"]
+  local native_hidden=not enabled or enabled.value~=false
+  Engineer.register(base,definitions,native_hidden)
   host.name=M.host_name
   host.localised_name={"tech-priests-skins.custom-character"}
   host.hidden=true
   host.hidden_in_factoriopedia=true
-  host.character_corpse=M.corpse_name
-  for _,armor in ipairs(host.animations or {}) do
-    for _,key in ipairs({"idle","idle_with_gun","running","mining_with_tool","idle_in_air","idle_with_gun_in_air","flying","take_off","landing"}) do
-      if armor[key] or key=="idle_with_gun" or key=="mining_with_tool" then armor[key]=invisible(8) end
-    end
-    armor.running_with_gun=invisible(40)
-    if armor.flying_with_gun then armor.flying_with_gun=invisible(40) end
-    armor.flipped_shadow_running_with_gun=nil
-  end
+  Engineer.hide_character(host)
+  if native_hidden then Engineer.hide_character(base) end
   definitions[#definitions+1]=host
   local corpse=table.deepcopy(assert(data.raw["character-corpse"]["character-corpse"]))
   corpse.name=M.corpse_name
@@ -77,8 +74,8 @@ function M.register()
     for _,suffix in ipairs({"","-belt-immune"}) do
       local priest=data.raw.unit[rank.."-tech-priest"..suffix]
       if priest then
-        priest.run_animation=invisible(1)
-        priest.attack_parameters.animation=invisible(1)
+        priest.run_animation=Engineer.hide_animation(priest.run_animation)
+        priest.attack_parameters.animation=Engineer.hide_animation(priest.attack_parameters.animation)
         priest.icon="__tech-priests__/graphics/icons/character-skins/"..id..".png"
         priest.icons=nil
         priest.icon_size=128

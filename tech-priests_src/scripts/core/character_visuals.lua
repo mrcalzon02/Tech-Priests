@@ -1,5 +1,6 @@
 -- Presentation only. Never owns a priest's movement, target, inventory or damage.
 local Catalog=require("shared.character_skin_catalog")
+local Engineer=require("scripts.core.engineer_visuals")
 local Combat=require("shared.combat_roster_catalog")
 local Registry=require("scripts.core.runtime_event_registry")
 local Broker=require("scripts.core.runtime_tick_broker")
@@ -38,13 +39,13 @@ local function direction(entity,state)
   return math.floor((value%1)*8+0.5)%8
 end
 function M.track(entity,id,player_index)
-  if not (valid(entity) and Catalog.by_id[id]) then return nil end
+  if not (valid(entity) and (Catalog.by_id[id] or id=="vanilla" and Engineer.needed(entity))) then return nil end
   local r=root()
   local key=entity.unit_number
   if not key then r.next_corpse=(r.next_corpse or 0)-1;key=r.next_corpse end
   local rec=r.actors[key]
   if not rec then rec={entity=entity,model=id,renders={},player_index=player_index};r.actors[key]=rec end
-  if rec.model~=id then clear(rec);rec.model=id;rec.state=nil end
+  if rec.model~=id then clear(rec);rec.model=id;rec.state=nil;rec.engineer_key=nil end
   rec.player_index=player_index
   return rec
 end
@@ -58,10 +59,18 @@ end
 M.player_character=player_character
 function M.refresh_player(player,id)
   local entity=player_character(player)
-  if valid(entity) and entity.name==M.host_name and Catalog.by_id[id] then
+  if valid(entity) and (entity.name=="character" or entity.name==M.host_name) then
+    if id=="vanilla" and not Engineer.needed(entity) then
+      local r=root();local rec=r.actors[entity.unit_number]
+      if rec then clear(rec);r.actors[entity.unit_number]=nil end
+      return true
+    end
     local rec=M.track(entity,id,player.index)
-    if rec then M.update(rec) end
-    return true
+    if rec then
+      local updated=M.update(rec)
+      rec.player_render_tick=game.tick
+      return updated
+    end
   end
   return false
 end
@@ -69,15 +78,14 @@ local function state_for(rec)
   local entity=rec.entity
   if rec.dead then return "death" end
   if rec.player_index then
-    local player=game.get_player(rec.player_index)
-    if not (player and player.valid) then return "idle" end
-    if player.driving then return "hidden" end
-    if player.controller_type~=defines.controllers.character then return "idle" end
-    local shooting=player.shooting_state
+    -- Read this physical body, including when its owner is in remote view or
+    -- temporarily controlling another body. Appearance never owns that state.
+    if entity.driving then return "hidden" end
+    local shooting=entity.shooting_state
     if shooting and shooting.state~=defines.shooting.not_shooting then return "attack" end
-    local mining=player.mining_state
+    local mining=entity.mining_state
     if mining and mining.mining then return Catalog.by_id[rec.model].states.work and "work" or "attack" end
-    local walking=player.walking_state
+    local walking=entity.walking_state
     if walking and walking.walking then return "walk" end
     return "idle"
   end
@@ -106,6 +114,7 @@ end
 function M.update(rec)
   local entity=rec.entity
   if not valid(entity) then clear(rec);return false end
+  if rec.model=="vanilla" then return Engineer.update(rec) end
   local skin=Catalog.by_id[rec.model]
   if not skin then clear(rec);return false end
   local state=state_for(rec)
@@ -131,7 +140,9 @@ function M.update(rec)
           animation=animation_name(rec.model,state,row,part),
           target={entity=entity},surface=entity.surface,
           render_layer=part=="shadow" and "object-under" or "object",
-          animation_speed=speed,animation_offset=offset,light_mode="occluder",
+          -- Prototype speed already holds clip.speed. A second multiplier of
+          -- clip.speed slows the visible walk/idle cycle to its square.
+          animation_speed=finished and 0 or 1,animation_offset=offset,light_mode="occluder",
           tint=part=="mask" and tint or {r=1,g=1,b=1,a=1}}
         ids[part]=obj.id
       end
@@ -143,9 +154,18 @@ function M.update(rec)
     clear(rec)
     rec.renders=ids
     rec.state,rec.row,rec.finished=state,row,finished
-  elseif rec.tint_key~=tint_key then
-    local mask=get_render(rec.renders.mask)
-    if mask and mask.valid then mask.color=tint end
+  else
+    -- Existing save render objects can still carry the old squared playback
+    -- multiplier. Correct them without waiting for another pose transition.
+    for _,part in ipairs({"shadow","base","mask"}) do
+      local obj=get_render(rec.renders[part])
+      local speed=finished and 0 or 1
+      if obj.animation_speed~=speed then obj.animation_speed=speed end
+    end
+    if rec.tint_key~=tint_key then
+      local mask=get_render(rec.renders.mask)
+      if mask and mask.valid then mask.color=tint end
+    end
   end
   rec.tint_key=tint_key
   rec.color=tint
@@ -184,7 +204,7 @@ function M.tick(event,budget)
   -- Player avatars are responsive independently of priest population.
   for _,player in pairs(game.connected_players) do
     local choice=tp.character_skin_picker and tp.character_skin_picker.selected[player.index]
-    if choice then M.refresh_player(player,choice) end
+    M.refresh_player(player,choice or "vanilla")
   end
   local actors=r.actors
   local cursor=r.actor_cursor
@@ -196,7 +216,7 @@ function M.tick(event,budget)
     cursor,rec=next(actors,cursor)
     if not cursor then break end
     local current=cursor
-    if not M.update(rec) then
+    if rec.player_render_tick~=event.tick and not M.update(rec) then
       actors[current]=nil
       -- Resume after the retained predecessor. Stopping after one stale AAI
       -- body lets replacements accumulate faster than they can be collected
@@ -216,7 +236,7 @@ function M.on_death(event)
   local r=root()
   local previous=r.actors[entity.unit_number]
   local id=previous and previous.model or M.model_for_entity(entity)
-  if not id then return end
+  if not id or id=="vanilla" then return end
   r.deaths=r.deaths or {}
   local p=entity.position
   r.deaths[entity.unit_number]={tick=game.tick,model=id,row=direction(entity),surface=entity.surface.index,
@@ -231,6 +251,9 @@ function M.post_death(event)
       for _,corpse in pairs(event.corpses or {}) do
         if valid(corpse) and corpse.surface.index==death.surface
           and (corpse.position.x-death.position.x)^2+(corpse.position.y-death.position.y)^2<0.1 then
+          -- Standard character corpses retain their native graphics and real
+          -- inventory. Their armor picture is not a script skin selector.
+          if corpse.name=="character-corpse" then pending[unit]=nil;break end
           local rec=M.track(corpse,death.model)
           if rec then
             rec.dead=true;rec.row=death.row;rec.death_color=death.color
@@ -244,6 +267,23 @@ function M.post_death(event)
     end
   end
 end
+local function track_native_character(entity)
+  if not (valid(entity) and entity.name=="character" and Engineer.needed(entity)) then return end
+  local r=root()
+  if not r.actors[entity.unit_number] then
+    local rec=M.track(entity,"vanilla")
+    if rec then M.update(rec) end
+  end
+end
+local function restore_native_characters()
+  -- One lifecycle seed for detached/offline native bodies, never a tick scan.
+  -- Player-owned selections have already been restored by the picker route.
+  local source=Engineer.catalog()
+  if not (source and source.native_hidden) then return end
+  for _,surface in pairs(game.surfaces) do
+    for _,entity in pairs(surface.find_entities_filtered{name="character"}) do track_native_character(entity) end
+  end
+end
 function M.install()
   if installed then return true end
   if not Broker.installed then assert(Broker.install(),"character presentation broker unavailable") end
@@ -253,6 +293,12 @@ function M.install()
     dormant_active=M.needs_dormant_tick,
     note="bounded presentation only; player appearance runs before first station"})
   assert(Registry.on_event(defines.events.on_entity_died,M.on_death,nil,{owner="character_visuals",route="capture-death",category="visual"}))
+  Registry.on_init(restore_native_characters,{owner="character_visuals",route="native-body-presentation",category="visual",priority=600})
+  Registry.on_configuration_changed(restore_native_characters,{owner="character_visuals",route="native-body-presentation",category="visual",priority=600})
+  Registry.on_event({defines.events.on_built_entity,defines.events.on_robot_built_entity,
+    defines.events.script_raised_built,defines.events.script_raised_revive,defines.events.on_entity_cloned},function(event)
+    track_native_character(event.destination or event.entity or event.created_entity)
+  end,nil,{owner="character_visuals",route="native-body-created",category="visual"})
   if defines.events.on_post_entity_died then
     assert(Registry.on_event(defines.events.on_post_entity_died,M.post_death,nil,{owner="character_visuals",route="corpse-presentation",category="visual"}))
   end

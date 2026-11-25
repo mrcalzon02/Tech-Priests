@@ -131,6 +131,49 @@ This is the canonical transaction contract. It is not an assertion that every co
 | Hydrogen, orbital and other infrastructure | Explicit `control.lua` module installation | Respective native event/runtime modules | [Full inventory](BEHAVIOR_SOURCE_INVENTORY.md) |
 | Chatter, UI, visuals and diagnostic displays | Observed pair/canonical state | Presentation modules; no general task authority | [Classifier](BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0668_ACTION_STATE_ARBITER.md) |
 
+## Character appearance and native player ownership
+
+```mermaid
+flowchart TD
+    Picker["Picker or player lifecycle"] --> Allow["Validate appearance availability"]
+    Allow --> Body{"Existing supported character?"}
+    Body -->|"not yet"| Pending["Retain choice until body exists"]
+    Body -->|"yes"| Selection["Record appearance on the same body"]
+    Selection --> Custom["Selected custom render layers"]
+    Selection --> Engineer["Native Engineer art and armor layers"]
+    Broker["Existing five-tick presentation service"] --> Custom
+    Broker --> Engineer
+    Native["Factorio character and player"] -->|"read pose, color and armor"| Custom
+    Native -->|"read pose, color and armor"| Engineer
+```
+
+`character_skin_picker` no longer requires or calls `character_skin_transfer`.
+Selecting a skin or Engineer never creates/destroys a character, sets a controller,
+moves inventory stacks, or writes player bonuses. Crafting, combat, stickers,
+vehicles and deployed robots do not block a cosmetic selection. The old transfer
+module remains unreferenced source history, not an installed authority.
+
+At data stage, `prototypes.engineer_visuals` exports native Engineer artwork before
+hiding its pixels with static zero tint. Native frame counts, animation clocks,
+footstep/particle triggers and all gameplay properties stay intact. The old custom
+host remains registered with native timing for existing saves; selecting Engineer
+on it changes only its drawing. New character deaths use the original native loot
+corpse. Picker-disabled maps retain visible native Engineer graphics.
+
+`character_visuals_presentation` retains its existing five-tick broker route and
+bounded actor cursor. Connected player drawings refresh before the actor batch
+and are not redrawn a second time in that pulse. A lifecycle seed restores detached
+native bodies once at init/configuration; build/clone events add later raised
+creations. There is no recurring surface scan. Unraised creation of an unrelated,
+unattached native character by another mod is not discovered until lifecycle
+restoration. Native movement continues every engine tick.
+
+The focused native fixture measures positive 60-tick walking distances against an
+untouched native reference for Engineer and every allowed model, including old
+hosts, while checking exact body/inventory/equipment identities. A modifier-only
+assertion cannot establish movement parity. Graphical capture and save/reload are
+separate required evidence from the headed validation run.
+
 ## 6. Observed boundaries requiring performance work
 
 | Source path | Actual boundary | Open risk |

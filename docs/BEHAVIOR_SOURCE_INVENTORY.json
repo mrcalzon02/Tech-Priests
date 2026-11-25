@@ -3,19 +3,19 @@
     "broker_services": 55,
     "commands": 141,
     "dependencies": 698,
-    "event_routes": 303,
-    "functions": 11700,
+    "event_routes": 306,
+    "functions": 11711,
     "install_calls": 213,
     "module_string_references": 995,
     "module_tables": 56,
-    "modules": 381,
-    "named_functions": 8507,
+    "modules": 382,
+    "named_functions": 8516,
     "potential_literal_reachable_modules": 306,
-    "scans": 213,
-    "state_writers": 4525,
+    "scans": 214,
+    "state_writers": 4527,
     "storage_roots": 1874,
     "unresolved_loads": 9,
-    "wrapper_candidates": 787
+    "wrapper_candidates": 788
   },
   "evidence_class": "static lexical inventory; no runtime or performance acceptance",
   "generator_sha256": "5976acc65a27726f6c03cf28e3cfd512f3ad2fc8a730e2e1083d35405ac1a5ce",
@@ -17034,15 +17034,6 @@
           "kind": "literal-require",
           "line": 4,
           "protected_call": false,
-          "target": "scripts.core.character_skin_transfer",
-          "target_scope": "inventoried-runtime-module"
-        },
-        {
-          "callee": "require",
-          "execution": "conditional-or-unconditional; not evaluated",
-          "kind": "literal-require",
-          "line": 5,
-          "protected_call": false,
           "target": "mod-gui",
           "target_scope": "external-or-outside-inventory"
         }
@@ -17054,7 +17045,7 @@
           "event": "on_init",
           "handler": "initialize",
           "kind": "registry-or-helper",
-          "line": 184,
+          "line": 186,
           "options": {
             "category": {
               "expression": "\"gui\"",
@@ -17082,7 +17073,7 @@
           "event": "on_configuration_changed",
           "handler": "initialize",
           "kind": "registry-or-helper",
-          "line": 185,
+          "line": 187,
           "options": {
             "category": {
               "expression": "\"gui\"",
@@ -17110,7 +17101,7 @@
           "event": "on_event",
           "handler": "player_event",
           "kind": "registry-or-helper",
-          "line": 186,
+          "line": 188,
           "options": {
             "category": {
               "expression": "\"gui\"",
@@ -17141,7 +17132,7 @@
           "event": "on_event",
           "handler": "function ( event ) local player = game . get_player ( event . player_index ) if player and player . valid then M . open ( player ) end end",
           "kind": "registry-or-helper",
-          "line": 189,
+          "line": 191,
           "options": {
             "category": {
               "expression": "\"gui\"",
@@ -17160,7 +17151,7 @@
           "selector": {
             "declared_scalar_candidates": [
               {
-                "line": 6,
+                "line": 5,
                 "value": "tech-priests-open-character-picker"
               }
             ],
@@ -17174,7 +17165,7 @@
           "event": "on_event",
           "handler": "function ( event ) local player = game . get_player ( event . player_index ) if player and player . valid then M . ensure_button ( player ) end end",
           "kind": "registry-or-helper",
-          "line": 197,
+          "line": 199,
           "options": {
             "category": {
               "expression": "\"gui\"",
@@ -17201,7 +17192,7 @@
           "event": "on_event",
           "handler": "click",
           "kind": "registry-or-helper",
-          "line": 201,
+          "line": 203,
           "options": {
             "category": {
               "expression": "\"gui\"",
@@ -17236,7 +17227,7 @@
           "event": "on_event",
           "handler": "function ( event ) if event . element and event . element . valid and event . element . name == M . frame_name then M . close ( game . get_player ( event . player_index ) ) ; return true end end",
           "kind": "registry-or-helper",
-          "line": 202,
+          "line": 204,
           "options": {
             "category": {
               "expression": "\"gui\"",
@@ -17265,140 +17256,140 @@
       "functions": [
         {
           "kind": "declaration",
-          "line": 8,
+          "line": 7,
           "local": true,
           "name": "root",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 15,
+          "line": 14,
           "local": false,
           "name": "M.enabled",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 19,
+          "line": 18,
           "local": false,
           "name": "M.allowed",
           "parameters": "id"
         },
         {
           "kind": "declaration",
-          "line": 22,
+          "line": 21,
           "local": false,
           "name": "M.selected",
           "parameters": "player"
         },
         {
           "kind": "declaration",
-          "line": 23,
+          "line": 22,
           "local": false,
           "name": "M.default_skin",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 29,
+          "line": 28,
           "local": false,
           "name": "M.ensure_button",
           "parameters": "player"
         },
         {
           "kind": "declaration",
-          "line": 46,
+          "line": 45,
           "local": false,
           "name": "M.close",
           "parameters": "player"
         },
         {
           "kind": "declaration",
-          "line": 53,
+          "line": 52,
           "local": false,
           "name": "M.open",
           "parameters": "player"
         },
         {
           "kind": "declaration",
-          "line": 76,
+          "line": 75,
           "local": true,
           "name": "card",
           "parameters": "id , label , sprite , faction"
         },
         {
           "kind": "declaration",
-          "line": 99,
+          "line": 98,
           "local": false,
           "name": "M.try_pending",
           "parameters": "player"
         },
         {
           "kind": "declaration",
-          "line": 118,
+          "line": 120,
           "local": false,
           "name": "M.choose",
           "parameters": "player , id"
         },
         {
           "kind": "declaration",
-          "line": 129,
+          "line": 131,
           "local": false,
           "name": "M.pending_tick",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 141,
+          "line": 143,
           "local": true,
           "name": "player_event",
           "parameters": "event"
         },
         {
           "kind": "declaration",
-          "line": 158,
+          "line": 160,
           "local": true,
           "name": "initialize",
           "parameters": ""
         },
         {
           "kind": "assigned-function",
-          "line": 162,
+          "line": 164,
           "local": false,
           "name": "M.restore_player",
           "parameters": "player"
         },
         {
           "kind": "declaration",
-          "line": 163,
+          "line": 165,
           "local": true,
           "name": "click",
           "parameters": "event"
         },
         {
           "kind": "declaration",
-          "line": 179,
+          "line": 181,
           "local": false,
           "name": "M.install",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 189,
+          "line": 191,
           "local": false,
           "name": "<anonymous>",
           "parameters": "event"
         },
         {
           "kind": "anonymous",
-          "line": 197,
+          "line": 199,
           "local": false,
           "name": "<anonymous>",
           "parameters": "event"
         },
         {
           "kind": "anonymous",
-          "line": 202,
+          "line": 204,
           "local": false,
           "name": "<anonymous>",
           "parameters": "event"
@@ -17407,7 +17398,7 @@
       "install_calls": [
         {
           "callee": "Visuals.install",
-          "line": 182,
+          "line": 184,
           "literal_alias_candidates": [
             "scripts.core.character_visuals"
           ],
@@ -17415,7 +17406,7 @@
           "resolution": "lexical-alias-only"
         }
       ],
-      "lines": 207,
+      "lines": 209,
       "module": "scripts.core.character_skin_picker",
       "module_string_references": [
         {
@@ -17432,62 +17423,57 @@
           "line": 3,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
           "target": "scripts.core.character_visuals"
-        },
-        {
-          "line": 4,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.character_skin_transfer"
         }
       ],
       "module_tables": [],
       "path": "scripts/core/character_skin_picker.lua",
       "reachability": "potential-literal-require-path",
       "scans": [],
-      "sha256": "5c597e706fc1c946914ccf39ce5b38ab6e508c1a903ae8453878c43e9e02e7b1",
+      "sha256": "7b264539e551edbf33ec830f4cc7369ebf08e87d370c25d44aa614a14b0fcee0",
       "state_writers": [
         {
           "kind": "state-assignment",
-          "line": 9,
+          "line": 8,
           "target": "storage.tech_priests"
         },
         {
           "callee": "legacy.destroy",
           "kind": "mutation-call-candidate",
-          "line": 32,
+          "line": 31,
           "protected_call": false
         },
         {
           "callee": "button.destroy",
           "kind": "mutation-call-candidate",
-          "line": 34,
+          "line": 33,
           "protected_call": false
         },
         {
           "callee": "frame.destroy",
           "kind": "mutation-call-candidate",
-          "line": 50,
+          "line": 49,
           "protected_call": false
         }
       ],
       "storage_roots": [
         {
           "expression": "storage.tech_priests",
+          "line": 8
+        },
+        {
+          "expression": "storage.tech_priests",
           "line": 9
         },
         {
           "expression": "storage.tech_priests",
-          "line": 10
-        },
-        {
-          "expression": "storage.tech_priests",
-          "line": 130
+          "line": 132
         }
       ],
       "unresolved_loads": [],
       "wrapper_candidates": [
         {
           "kind": "function-replacement-candidate; original/wrapper semantics not inferred",
-          "line": 162,
+          "line": 164,
           "target": "M.restore_player"
         }
       ]
@@ -17568,7 +17554,7 @@
       "module_string_references": [],
       "module_tables": [],
       "path": "scripts/core/character_skin_transfer.lua",
-      "reachability": "potential-literal-require-path",
+      "reachability": "not-resolved-from-literal-requires",
       "scans": [],
       "sha256": "426619ec55cd04d4adaffe9d706f3705183bc6c845a192c30c3e9536091e0c13",
       "state_writers": [
@@ -17622,7 +17608,7 @@
             "budget": {
               "declared_scalar_candidates": [
                 {
-                  "line": 6,
+                  "line": 7,
                   "value": 128
                 }
               ],
@@ -17667,7 +17653,7 @@
             }
           },
           "installation": "source-call-site-only",
-          "line": 250,
+          "line": 290,
           "protected_call": false,
           "specification": "literal-table"
         }
@@ -17689,7 +17675,7 @@
           "kind": "literal-require",
           "line": 3,
           "protected_call": false,
-          "target": "shared.combat_roster_catalog",
+          "target": "scripts.core.engineer_visuals",
           "target_scope": "inventoried-runtime-module"
         },
         {
@@ -17698,7 +17684,7 @@
           "kind": "literal-require",
           "line": 4,
           "protected_call": false,
-          "target": "scripts.core.runtime_event_registry",
+          "target": "shared.combat_roster_catalog",
           "target_scope": "inventoried-runtime-module"
         },
         {
@@ -17706,6 +17692,15 @@
           "execution": "conditional-or-unconditional; not evaluated",
           "kind": "literal-require",
           "line": 5,
+          "protected_call": false,
+          "target": "scripts.core.runtime_event_registry",
+          "target_scope": "inventoried-runtime-module"
+        },
+        {
+          "callee": "require",
+          "execution": "conditional-or-unconditional; not evaluated",
+          "kind": "literal-require",
+          "line": 6,
           "protected_call": false,
           "target": "scripts.core.runtime_tick_broker",
           "target_scope": "inventoried-runtime-module"
@@ -17718,7 +17713,7 @@
           "event": "on_event",
           "handler": "M . on_death",
           "kind": "registry-or-helper",
-          "line": 255,
+          "line": 295,
           "options": {
             "category": {
               "expression": "\"visual\"",
@@ -17741,11 +17736,94 @@
         },
         {
           "action": "register-or-forward",
+          "callee": "Registry.on_init",
+          "event": "on_init",
+          "handler": "restore_native_characters",
+          "kind": "registry-or-helper",
+          "line": 296,
+          "options": {
+            "category": {
+              "expression": "\"visual\"",
+              "literal": "visual"
+            },
+            "owner": {
+              "expression": "\"character_visuals\"",
+              "literal": "character_visuals"
+            },
+            "priority": {
+              "expression": "600",
+              "literal": 600
+            },
+            "route": {
+              "expression": "\"native-body-presentation\"",
+              "literal": "native-body-presentation"
+            }
+          },
+          "protected_call": false,
+          "selector": {}
+        },
+        {
+          "action": "register-or-forward",
+          "callee": "Registry.on_configuration_changed",
+          "event": "on_configuration_changed",
+          "handler": "restore_native_characters",
+          "kind": "registry-or-helper",
+          "line": 297,
+          "options": {
+            "category": {
+              "expression": "\"visual\"",
+              "literal": "visual"
+            },
+            "owner": {
+              "expression": "\"character_visuals\"",
+              "literal": "character_visuals"
+            },
+            "priority": {
+              "expression": "600",
+              "literal": 600
+            },
+            "route": {
+              "expression": "\"native-body-presentation\"",
+              "literal": "native-body-presentation"
+            }
+          },
+          "protected_call": false,
+          "selector": {}
+        },
+        {
+          "action": "register-or-forward",
+          "callee": "Registry.on_event",
+          "event": "on_event",
+          "handler": "function ( event ) track_native_character ( event . destination or event . entity or event . created_entity ) end",
+          "kind": "registry-or-helper",
+          "line": 298,
+          "options": {
+            "category": {
+              "expression": "\"visual\"",
+              "literal": "visual"
+            },
+            "owner": {
+              "expression": "\"character_visuals\"",
+              "literal": "character_visuals"
+            },
+            "route": {
+              "expression": "\"native-body-created\"",
+              "literal": "native-body-created"
+            }
+          },
+          "protected_call": false,
+          "selector": {
+            "expression": "{ defines . events . on_built_entity , defines . events . on_robot_built_entity , defines . events . script_raised_built , defines . events . script_raised_revive , defines . events . on_entity_cloned }",
+            "runtime_value": "not evaluated"
+          }
+        },
+        {
+          "action": "register-or-forward",
           "callee": "Registry.on_event",
           "event": "on_event",
           "handler": "M . post_death",
           "kind": "registry-or-helper",
-          "line": 257,
+          "line": 303,
           "options": {
             "category": {
               "expression": "\"visual\"",
@@ -17770,163 +17848,184 @@
       "functions": [
         {
           "kind": "declaration",
-          "line": 9,
+          "line": 10,
           "local": false,
           "name": "M.set_pending_processor",
           "parameters": "callback"
         },
         {
           "kind": "declaration",
-          "line": 10,
+          "line": 11,
           "local": true,
           "name": "root",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 16,
+          "line": 17,
           "local": true,
           "name": "valid",
           "parameters": "entity"
         },
         {
           "kind": "declaration",
-          "line": 17,
+          "line": 18,
           "local": true,
           "name": "color",
           "parameters": "c"
         },
         {
           "kind": "declaration",
-          "line": 21,
+          "line": 22,
           "local": true,
           "name": "color_key",
           "parameters": "c"
         },
         {
           "kind": "declaration",
-          "line": 22,
+          "line": 23,
           "local": true,
           "name": "get_render",
           "parameters": "id"
         },
         {
           "kind": "declaration",
-          "line": 23,
+          "line": 24,
           "local": true,
           "name": "clear",
           "parameters": "rec"
         },
         {
           "kind": "declaration",
-          "line": 27,
+          "line": 28,
           "local": false,
           "name": "M.model_for_entity",
           "parameters": "entity"
         },
         {
           "kind": "declaration",
-          "line": 34,
+          "line": 35,
           "local": true,
           "name": "direction",
           "parameters": "entity , state"
         },
         {
           "kind": "anonymous",
-          "line": 35,
+          "line": 36,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 40,
+          "line": 41,
           "local": false,
           "name": "M.track",
           "parameters": "entity , id , player_index"
         },
         {
           "kind": "declaration",
-          "line": 51,
+          "line": 52,
           "local": true,
           "name": "player_character",
           "parameters": "player"
         },
         {
           "kind": "declaration",
-          "line": 59,
+          "line": 60,
           "local": false,
           "name": "M.refresh_player",
           "parameters": "player , id"
         },
         {
           "kind": "declaration",
-          "line": 68,
+          "line": 77,
           "local": true,
           "name": "state_for",
           "parameters": "rec"
         },
         {
           "kind": "declaration",
-          "line": 103,
+          "line": 111,
           "local": true,
           "name": "animation_name",
           "parameters": "id , state , row , part"
         },
         {
           "kind": "declaration",
-          "line": 106,
+          "line": 114,
           "local": false,
           "name": "M.update",
           "parameters": "rec"
         },
         {
           "kind": "anonymous",
-          "line": 125,
+          "line": 134,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 155,
+          "line": 175,
           "local": false,
           "name": "M.needs_dormant_tick",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 163,
+          "line": 183,
           "local": false,
           "name": "M.tick",
           "parameters": "event , budget"
         },
         {
           "kind": "declaration",
-          "line": 213,
+          "line": 233,
           "local": false,
           "name": "M.on_death",
           "parameters": "event"
         },
         {
           "kind": "declaration",
-          "line": 225,
+          "line": 245,
           "local": false,
           "name": "M.post_death",
           "parameters": "event"
         },
         {
           "kind": "declaration",
-          "line": 247,
+          "line": 270,
+          "local": true,
+          "name": "track_native_character",
+          "parameters": "entity"
+        },
+        {
+          "kind": "declaration",
+          "line": 278,
+          "local": true,
+          "name": "restore_native_characters",
+          "parameters": ""
+        },
+        {
+          "kind": "declaration",
+          "line": 287,
           "local": false,
           "name": "M.install",
           "parameters": ""
+        },
+        {
+          "kind": "anonymous",
+          "line": 299,
+          "local": false,
+          "name": "<anonymous>",
+          "parameters": "event"
         }
       ],
       "install_calls": [
         {
           "callee": "Broker.install",
-          "line": 249,
+          "line": 289,
           "literal_alias_candidates": [
             "scripts.core.runtime_tick_broker"
           ],
@@ -17934,7 +18033,7 @@
           "resolution": "lexical-alias-only"
         }
       ],
-      "lines": 262,
+      "lines": 308,
       "module": "scripts.core.character_visuals",
       "module_string_references": [
         {
@@ -17945,15 +18044,20 @@
         {
           "line": 3,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "shared.combat_roster_catalog"
+          "target": "scripts.core.engineer_visuals"
         },
         {
           "line": 4,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.runtime_event_registry"
+          "target": "shared.combat_roster_catalog"
         },
         {
           "line": 5,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.runtime_event_registry"
+        },
+        {
+          "line": 6,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
           "target": "scripts.core.runtime_tick_broker"
         }
@@ -17961,78 +18065,89 @@
       "module_tables": [],
       "path": "scripts/core/character_visuals.lua",
       "reachability": "potential-literal-require-path",
-      "scans": [],
-      "sha256": "fe6d4083569b3007564b862cda16a3b3dba8aa34a5ed053438e80d827d438a82",
+      "scans": [
+        {
+          "arguments": [
+            "{ name = \"character\" }"
+          ],
+          "callee": "surface.find_entities_filtered",
+          "line": 284,
+          "protected_call": false,
+          "runtime_cost": "unmeasured",
+          "static_risk_hint": "global-filtered"
+        }
+      ],
+      "sha256": "d22818dfca29cdba49f898ddf390b791a694958c72d955574e16c5bcbf603f1e",
       "state_writers": [
         {
           "kind": "state-assignment",
-          "line": 11,
+          "line": 12,
           "target": "storage.tech_priests"
         },
         {
           "callee": "obj.destroy",
           "kind": "mutation-call-candidate",
-          "line": 24,
+          "line": 25,
           "protected_call": false
         },
         {
           "kind": "state-assignment",
-          "line": 94,
+          "line": 102,
           "target": "pair"
         },
         {
           "callee": "obj.destroy",
           "kind": "mutation-call-candidate",
-          "line": 140,
+          "line": 151,
           "protected_call": false
         },
         {
           "kind": "state-assignment",
-          "line": 176,
+          "line": 196,
           "target": "pair"
         }
       ],
       "storage_roots": [
         {
           "expression": "storage.tech_priests",
-          "line": 11
-        },
-        {
-          "expression": "storage.tech_priests",
           "line": 12
         },
         {
           "expression": "storage.tech_priests",
-          "line": 53
+          "line": 13
+        },
+        {
+          "expression": "storage.tech_priests",
+          "line": 54
         },
         {
           "expression": "storage.tech_priests.pairs_by_priest",
-          "line": 94
+          "line": 102
         },
         {
           "expression": "storage.tech_priests.pairs_by_priest[entity . unit_number]",
-          "line": 94
+          "line": 102
         },
         {
           "expression": "storage.tech_priests",
-          "line": 156
+          "line": 176
         },
         {
           "expression": "storage.tech_priests",
-          "line": 166
+          "line": 186
         }
       ],
       "unresolved_loads": [],
       "wrapper_candidates": [
         {
           "kind": "saved-function-or-value-candidate",
-          "line": 195,
+          "line": 215,
           "target": "previous_cursor",
           "value": "cursor cursor , rec"
         },
         {
           "kind": "saved-function-or-value-candidate",
-          "line": 217,
+          "line": 237,
           "target": "previous",
           "value": "r . actors ["
         }
@@ -53730,6 +53845,103 @@
       "storage_roots": [],
       "unresolved_loads": [],
       "wrapper_candidates": []
+    },
+    {
+      "broker_services": [],
+      "commands": [],
+      "dependencies": [],
+      "event_routes": [],
+      "functions": [
+        {
+          "kind": "declaration",
+          "line": 5,
+          "local": true,
+          "name": "data",
+          "parameters": ""
+        },
+        {
+          "kind": "declaration",
+          "line": 13,
+          "local": false,
+          "name": "M.needed",
+          "parameters": "entity"
+        },
+        {
+          "kind": "declaration",
+          "line": 17,
+          "local": true,
+          "name": "object",
+          "parameters": "id"
+        },
+        {
+          "kind": "declaration",
+          "line": 18,
+          "local": true,
+          "name": "clear",
+          "parameters": "rec"
+        },
+        {
+          "kind": "declaration",
+          "line": 25,
+          "local": true,
+          "name": "orientation",
+          "parameters": "position , target , fallback"
+        },
+        {
+          "kind": "declaration",
+          "line": 31,
+          "local": true,
+          "name": "pose",
+          "parameters": "rec , source , variant"
+        },
+        {
+          "kind": "declaration",
+          "line": 76,
+          "local": false,
+          "name": "M.update",
+          "parameters": "rec"
+        },
+        {
+          "kind": "anonymous",
+          "line": 99,
+          "local": false,
+          "name": "<anonymous>",
+          "parameters": ""
+        }
+      ],
+      "install_calls": [],
+      "lines": 129,
+      "module": "scripts.core.engineer_visuals",
+      "module_string_references": [],
+      "module_tables": [],
+      "path": "scripts/core/engineer_visuals.lua",
+      "reachability": "potential-literal-require-path",
+      "scans": [],
+      "sha256": "9b3fccd3e23133e1abdf68567279113e06c5c94f11b631e13c079d1321906ace",
+      "state_writers": [
+        {
+          "callee": "render.destroy",
+          "kind": "mutation-call-candidate",
+          "line": 21,
+          "protected_call": false
+        },
+        {
+          "callee": "render.destroy",
+          "kind": "mutation-call-candidate",
+          "line": 112,
+          "protected_call": false
+        }
+      ],
+      "storage_roots": [],
+      "unresolved_loads": [],
+      "wrapper_candidates": [
+        {
+          "kind": "saved-function-or-value-candidate",
+          "line": 96,
+          "target": "previous",
+          "value": "object ( rec ."
+        }
+      ]
     },
     {
       "broker_services": [],
@@ -153800,7 +154012,7 @@
     }
   ],
   "schema": "tech-priests-behavior-source-inventory-v1",
-  "source_digest": "3d9093254c041525c37a9be16c30752f058e9dc49edef100d7c4717338e20db5",
+  "source_digest": "06124824caff73612b75c39ba2092dd3dc48542d0c79ed53533eaeea6601fdf5",
   "source_scope": [
     "control.lua",
     "scripts/**/*.lua",

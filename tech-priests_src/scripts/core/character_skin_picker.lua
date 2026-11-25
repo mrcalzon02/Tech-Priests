@@ -1,7 +1,6 @@
 local Catalog=require("shared.character_skin_catalog")
 local Registry=require("scripts.core.runtime_event_registry")
 local Visuals=require("scripts.core.character_visuals")
-local Transfer=require("scripts.core.character_skin_transfer")
 local mod_gui=require("mod-gui")
 local M={frame_name="tech-priests-character-picker",button_name="tech-priests-character-picker-button",input_name="tech-priests-open-character-picker"}
 local installed=false
@@ -103,16 +102,19 @@ function M.try_pending(player)
   if not M.allowed(id) then r.pending[player.index]=nil;return false,"restricted" end
   local character=Visuals.player_character(player)
   if not (character and character.valid) then return false,"no-character" end
-  local target=id=="vanilla" and "character" or Transfer.host_name
-  local ok,reason
-  if character.name==target then ok=true
-  else ok,reason=Transfer.switch(player,target) end
-  if not ok then r.reasons[player.index]=reason;return false,reason end
+  -- Appearance selection only replaces attached render objects. Never create,
+  -- swap or retire the physical character, even when returning to Engineer.
+  -- Crafting, vehicles, stickers and deployed robots remain native player state.
+  if character.name~="character" and character.name~=Visuals.host_name then
+    r.reasons[player.index]="other-character"
+    return false,"other-character"
+  end
+  local ok=Visuals.refresh_player(player,id)
+  if not ok then r.reasons[player.index]="appearance";return false,"appearance" end
   r.selected[player.index]=id
   r.characters[player.index]=player.character or character
   r.pending[player.index]=nil
   r.reasons[player.index]=nil
-  if id~="vanilla" then Visuals.refresh_player(player,id) end
   return true
 end
 function M.choose(player,id)
@@ -120,7 +122,7 @@ function M.choose(player,id)
   local r=root()
   r.pending[player.index]=id
   local ok,reason=M.try_pending(player)
-  if not ok and (reason=="other-character" or reason=="transfer" or reason=="placement") then
+  if not ok and (reason=="other-character" or reason=="appearance") then
     r.pending[player.index]=nil
     return false,reason
   end
@@ -141,7 +143,6 @@ end
 local function player_event(event)
   local player=game.get_player(event.player_index)
   if not (player and player.valid) then return end
-  if Transfer.in_progress(player.index) then return end
   M.ensure_button(player)
   local r=root()
   local selected=r.selected[player.index]
@@ -154,6 +155,7 @@ local function player_event(event)
     r.pending[player.index]=M.allowed(selected) and selected or "vanilla"
   end
   M.try_pending(player)
+  if not r.pending[player.index] then Visuals.refresh_player(player,M.selected(player)) end
 end
 local function initialize()
   root()
