@@ -288,7 +288,13 @@ local function built(event)
   if p and e.type~="entity-ghost" and e.type~="tile-ghost" then
     p.built=p.built+1
     local dx=e.position.x-p.origin.x;local dy=e.position.y-p.origin.y
-    p.max_build_distance=math.max(p.max_build_distance,math.sqrt(dx*dx+dy*dy))
+    local distance=math.sqrt(dx*dx+dy*dy)
+    p.max_build_distance=math.max(p.max_build_distance,distance)
+    p.built_by_type=p.built_by_type or {}
+    p.built_by_type[e.type]=(p.built_by_type[e.type] or 0)+1
+    if e.type=="mining-drill" then
+      p.max_miner_build_distance=math.max(p.max_miner_build_distance or 0,distance)
+    end
   end
 end
 local function census(s,surface)
@@ -307,11 +313,18 @@ local function census(s,surface)
         and e.position.y>=y and e.position.y<y+32 then
       local p=owner(e.force)
       if p then
-        local c=s.census[p.force] or {live=0,ghosts=0,stations=0}
+        local c=s.census[p.force] or {live=0,ghosts=0,stations=0,by_type={},working_by_type={}}
         s.census[p.force]=c
         if e.type=="entity-ghost" or e.type=="tile-ghost" then c.ghosts=c.ghosts+1
         else
           c.live=c.live+1
+          c.by_type=c.by_type or {};c.working_by_type=c.working_by_type or {}
+          c.by_type[e.type]=(c.by_type[e.type] or 0)+1
+          if e.type=="mining-drill" or e.type=="furnace" or e.type=="assembling-machine" or e.type=="lab" then
+            if e.status==defines.entity_status.working then
+              c.working_by_type[e.type]=(c.working_by_type[e.type] or 0)+1
+            end
+          end
           if e.name:find("cogitator%-station") then c.stations=c.stations+1 end
         end
       end
@@ -331,6 +344,16 @@ local function sample(s,p)
   for _,name in ipairs({"iron-ore","copper-ore","coal","stone"}) do
     mined[name]=stats.get_input_count(name)
   end
+  local manufactured,consumed={},{}
+  for _,name in ipairs({"iron-plate","copper-plate","iron-gear-wheel","copper-cable",
+      "electronic-circuit","automation-science-pack","logistic-science-pack",
+      "military-science-pack","chemical-science-pack","production-science-pack",
+      "utility-science-pack","space-science-pack"}) do
+    if prototypes.item[name] then
+      manufactured[name]=stats.get_input_count(name)
+      consumed[name]=stats.get_output_count(name)
+    end
+  end
   local pair=p.station and p.station.valid and storage.tech_priests.pairs_by_station[p.station.unit_number]
   local gate=pair and pair.local_infrastructure_gate_0640
   local request=pair and pair.infrastructure_recipe_request_0647
@@ -346,7 +369,11 @@ local function sample(s,p)
     damage_received=p.damage_received,max_build_distance=p.max_build_distance,
     census=(s.last_census or {})[p.force],census_tick=s.last_census_tick,
     census_saturated=s.last_census_saturated,
-    ore_production=mined,station_alive=p.station and p.station.valid or false,
+    ore_production=mined,manufactured=manufactured,consumed=consumed,
+    built_by_type=p.built_by_type or {},max_miner_build_distance=p.max_miner_build_distance or 0,
+    research_name=force.current_research and force.current_research.name or nil,
+    research_progress=force.research_progress,
+    station_alive=p.station and p.station.valid or false,
     priest_alive=p.priest and p.priest.valid or false,
     current_task=pair and tostring(pair.current_task or pair.task or "unknown") or "none",
     infrastructure_gate=gate and {item=gate.item,state=gate.state,why=gate.why,
