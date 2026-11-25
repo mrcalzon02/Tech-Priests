@@ -180,6 +180,8 @@ def parse_observations(log: str, preset: str, seed: int, ticks: int) -> dict:
             continue
         for field in ("manufactured", "consumed", "built_by_type"):
             counters = sample.get(field)
+            if counters == []:
+                sample[field] = counters = {}
             if counters is not None and (not isinstance(counters, dict)
                     or any(not nonnegative(v) for v in counters.values())):
                 raise ValueError("Invalid native factory counter: " + field)
@@ -188,7 +190,7 @@ def parse_observations(log: str, preset: str, seed: int, ticks: int) -> dict:
                 "built_by_type", "max_miner_build_distance", "ore_production",
                 "research_finished", "research_name", "research_progress",
                 "infrastructure_gate", "recipe_request", "dispatcher", "logistics_fetch",
-                "census", "census_tick")
+                "census", "census_tick", "campaign", "contested_frontier", "science_motivation")
         }
     factory = {}
     for name in sorted(priests):
@@ -213,7 +215,45 @@ def parse_observations(log: str, preset: str, seed: int, ticks: int) -> dict:
                 "farthest_miner_build_tiles": sample.get("max_miner_build_distance", 0),
                 "native_research_finished": sample["research_finished"],
             }
+    campaign_metrics = {}
+    if config.get("stock_profile") == "paid-contested-frontier":
+        setups = events.get("STRATEGY_SETUP", [])
+        if (len(setups) != len(priests)
+                or {x.get("force") for x in setups} != priests
+                or any(x.get("friendly_combat_actors") != 0 or x.get("science_seeded") != 0
+                       or x.get("distance", 0) <= x.get("local_radius", math.inf)
+                       or x.get("ore_tiles", 0) < 50 for x in setups)):
+            raise ValueError("Contested resource starting fixture missing or invalid")
+        for name in sorted(priests):
+            rows = list(timelines.get(name, {}).values())
+            last = latest[name]
+            campaign = last.get("campaign") or {}
+            frontier = last.get("contested_frontier")
+            if not isinstance(frontier, dict):
+                raise ValueError("Missing physical contested frontier observation: " + name)
+            estimates = [x["campaign"]["assessment"] for x in rows
+                         if x.get("campaign") and x["campaign"].get("assessment")]
+            armed = any((a.get("friendly_lower", 0) >= a.get("enemy_upper", math.inf)
+                         and a.get("enemy_count", 0) > 0 and a.get("ready_units", 0) >= 2)
+                        for a in estimates)
+            captured = (frontier.get("nest_alive") is False
+                        and frontier.get("remaining_hostiles") == 0
+                        and frontier.get("working_iron_drills", 0) > 0)
+            campaign_metrics[name] = {
+                "scout_observed": any(bool((x.get("campaign") or {}).get("scout_target")) for x in rows),
+                "threat_estimates": len(estimates),
+                "sufficient_force_observed": armed,
+                "paid_offensive_units_recruited": campaign.get("recruited", 0),
+                "assaults": campaign.get("assaults", 0),
+                "losses": campaign.get("lost", 0),
+                "physical_resource_seized": captured,
+                "frontier": frontier,
+                "last_assessment": campaign.get("assessment"),
+                "phase": campaign.get("phase"),
+                "behavior_objective_met": bool(armed and captured and campaign.get("assaults", 0)>0),
+            }
     return {"observation_complete": True, "preset": preset, "seed": seed,
+            "campaign_metrics": campaign_metrics,
             "factory_metrics": factory, "factory_timelines": {
                 k: [v[t] for t in sorted(v)] for k, v in timelines.items()},
             "active_ticks": ticks, "setup_ticks": ready["tick"],
@@ -235,9 +275,13 @@ def main() -> int:
     ap.add_argument("--active-ticks", type=int, default=216000)
     ap.add_argument("--timeout-seconds", type=int, default=7200)
     ap.add_argument("--dependency-mods", type=pathlib.Path)
+    ap.add_argument("--campaign-supplies", action="store_true",
+                    help="Explicit paid offensive kits and contested distant iron fixture; no friendly combat actors or science spawned")
     ap.add_argument("--output-dir", type=pathlib.Path,
                     default=ROOT / "test-artifacts" / "force-projection")
     args = ap.parse_args()
+    if args.campaign_supplies and args.preset != "2p2b":
+        ap.error("Contested resource profile uses the existing two-priest/two-biter arena")
     seed = args.seed if args.seed is not None else secrets.randbelow(2**31)
     if not 0 <= seed < 2**31 or not 3600 <= args.active_ticks <= 864000:
         ap.error("Seed must fit uint31; duration must be 1 minute to 4 hours")
@@ -275,7 +319,8 @@ def main() -> int:
         shutil.copy2(fixture, mods / "tech-priests/scripts/core/ci_force_projection.lua")
         control = mods / "tech-priests/control.lua"
         config = json.dumps({"seed": seed, "preset": args.preset,
-                             "active_ticks": args.active_ticks})
+                             "active_ticks": args.active_ticks,
+                             "campaign_supplies": args.campaign_supplies})
         # table_from_json is called while control.lua loads, where helpers is
         # available; no game/storage mutation is performed outside on_init.
         control.write_text("_G.TP_FORCE_PROJECTION_CONFIG=helpers.json_to_table(" +
@@ -334,7 +379,7 @@ def main() -> int:
                             complete_seen = True
                         if any(TAG + kind + " " in line for kind in
                                ("READY", "SAMPLE", "CONTACT", "PAIR_FAILURE",
-                                "FAIL", "COMPLETE")):
+                                "STRATEGY_SETUP", "FAIL", "COMPLETE")):
                             print(line, flush=True)
                     if failure_seen:
                         reason = "fixture_failure"; break
