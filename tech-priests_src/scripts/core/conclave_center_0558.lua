@@ -584,6 +584,15 @@ local function transfer_pair_force_verified_1184(pair, from_force, to_force)
   end
   local entries={station,priest}
   if proxy and proxy.valid then entries[#entries+1]=proxy end
+  local seen={[station]=true,[priest]=true}
+  if proxy and proxy.valid then seen[proxy]=true end
+  for _,key in ipairs({"proxy","logistic_requester","logistic_return_cache"}) do
+    local support=pair[key]
+    if support and support.valid and not seen[support] then
+      if support.force~=from_force then return false,"foreign-support" end
+      seen[support]=true;entries[#entries+1]=support
+    end
+  end
   local moved={}
   for _,ent in ipairs(entries) do
     local ok=pcall(function() ent.force=to_force end)
@@ -599,14 +608,16 @@ local function transfer_pair_force_verified_1184(pair, from_force, to_force)
           pcall(function() previous.force=from_force end)
         end
       end
-      local intact=station.valid and priest.valid
-          and station.force==from_force and priest.force==from_force
-      if proxy and proxy.valid and proxy.force~=from_force then intact=false end
+      local intact=true
+      for _,entry in ipairs(entries) do
+        if not (entry.valid and entry.force==from_force) then intact=false end
+      end
       return false,intact and "force-setter-refused"
         or "force-setter-refused-rollback-incomplete"
     end
     moved[#moved+1]=ent
   end
+  pair.force=to_force.name
   return true
 end
 
@@ -1289,15 +1300,28 @@ local DATA_SPIKE_RECLAIMABLE_TYPES_0590 = {
   ["programmable-speaker"] = true, ["constant-combinator"] = true, ["arithmetic-combinator"] = true, ["decider-combinator"] = true,
 }
 
+local function data_spike_hostile_force_0591(source_force, target_force)
+  if not (source_force and source_force.valid and target_force and target_force.valid and source_force ~= target_force) then return false end
+  if source_force.is_enemy then return source_force.is_enemy(target_force) end
+  return true -- compatibility with existing source-level force test doubles
+end
+
 local function nearest_reclaimable_target_0590(surface, pos, source_force)
   if not (surface and pos and source_force and source_force.valid) then return nil end
   local ents = surface.find_entities_filtered({ position = pos, radius = 2.5 }) or {}
+  local nearest, nearest_distance, nearest_unit
   for _, ent in pairs(ents) do
-    if ent and ent.valid and ent.force ~= source_force then
-      if pair_for_entity_0590(ent) or DATA_SPIKE_RECLAIMABLE_TYPES_0590[ent.type] then return ent end
+    if ent and ent.valid and (pair_for_entity_0590(ent) or DATA_SPIKE_RECLAIMABLE_TYPES_0590[ent.type]) then
+      local dx, dy = ent.position.x - pos.x, ent.position.y - pos.y
+      local distance, unit = dx * dx + dy * dy, ent.unit_number or 0
+      if not nearest or distance < nearest_distance or (distance == nearest_distance and unit < nearest_unit) then
+        nearest, nearest_distance, nearest_unit = ent, distance, unit
+      end
     end
   end
-  return nil
+  -- Resolve the intended target before checking allegiance. A throw aimed
+  -- at a friendly structure must not spill over onto a nearby enemy.
+  return nearest
 end
 
 local function data_spike_source_force_0590(event)
@@ -1325,8 +1349,10 @@ local function data_spike_defense_level_0591(force)
   if not (force and force.valid and force.technologies) then return 0 end
   local tech = force.technologies["tech-priests-data-spike-defense"]
   if not tech then return 0 end
-  if tech.researched and tonumber(tech.level) then return math.max(1, tonumber(tech.level) or 1) end
-  return 0
+  -- Infinite research advances to the next (unresearched) level on
+  -- completion. Count completed levels even while the next one is pending.
+  local level = tonumber(tech.level) or 1
+  return math.max(0, tech.researched and level or level - 1)
 end
 
 local function data_spike_capture_seconds_0591(attacker, defender)
@@ -1383,7 +1409,7 @@ local function data_spike_draw_countdown_0591(target, seconds, force_name)
 end
 
 local function start_data_spike_claim_0591(source_force, target, source_player_index)
-  if not (source_force and source_force.valid and target and target.valid and target.force and target.force.valid and target.force ~= source_force) then return false end
+  if not (target and target.valid and data_spike_hostile_force_0591(source_force, target.force)) then return false end
   if not (pair_for_entity_0590(target) or DATA_SPIKE_RECLAIMABLE_TYPES_0590[target.type]) then return false end
   if data_spike_reclamation_level_0591(source_force) < 1 then return false end
   local key = data_spike_key_0591(target)
@@ -1406,7 +1432,7 @@ local function start_data_spike_claim_0591(source_force, target, source_player_i
     render_id = data_spike_draw_countdown_0591(target, seconds, source_force.name)
   }
   local state = get_force_state(source_force)
-  remember_doctrine_event_0588(state, "Data Spike latched onto " .. tostring(target.localised_name or target.name or "entity") .. "; noospheric claim matures in " .. tostring(seconds) .. " seconds unless counter-spiked or removed.")
+  remember_doctrine_event_0588(state, "Data Spike latched onto " .. tostring(target.name or "entity") .. "; noospheric claim matures in " .. tostring(seconds) .. " seconds unless replaced or the target is removed or ceases to be hostile.")
   return true
 end
 
@@ -1414,7 +1440,7 @@ local function complete_data_spike_capture_0591(entry)
   if not entry then return false end
   local source_force = game and game.forces and game.forces[entry.source_force_name]
   local target = entry.target
-  if not (source_force and source_force.valid and target and target.valid and target.force and target.force.valid and target.force ~= source_force) then return false end
+  if not (target and target.valid and data_spike_hostile_force_0591(source_force, target.force)) then return false end
   local pair = pair_for_entity_0590(target)
   local captured = 0
   if pair then
@@ -1436,16 +1462,16 @@ end
 local function tick_data_spike_claims_0591()
   local pending = data_spike_pending_root_0591()
   local now = game and game.tick or 0
-  local processed = 0
   for key, entry in pairs(pending) do
-    processed = processed + 1
-    if processed > 24 then break end
+    -- Every active claim needs its deadline serviced. Restarting pairs() at
+    -- the same 24 entries starved later, shorter claims behind long ones.
     local target = entry.target
+    local source_force = game and game.forces and game.forces[entry.source_force_name]
     if not (target and target.valid) then
       destroy_render_object_0591(entry.render_id)
       pending[key] = nil
-    elseif target.force and target.force.valid and target.force.name ~= entry.target_force_name and target.force.name ~= entry.source_force_name then
-      -- Ownership changed by a third party; the old spike no longer has a coherent target.
+    elseif not data_spike_hostile_force_0591(source_force, target.force) or target.force.name ~= entry.target_force_name then
+      -- Ownership or diplomacy changed; the old hostile claim is no longer valid.
       destroy_render_object_0591(entry.render_id)
       pending[key] = nil
     elseif now >= (entry.ends_tick or now) then
@@ -1465,9 +1491,21 @@ end
 
 local function apply_data_spike_impact_0590(event)
   if not (event and event.effect_id == "tech-priests-data-spike-impact") then return end
-  -- Data Spikes are explicitly player-only. Script/AI projectile impacts are ignored.
-  if not event.source_player_index then return end
-  local player = game and game.get_player(event.source_player_index)
+  -- Native on_script_trigger_effect has source/cause entities, not a
+  -- source_player_index. Attribute only a player-controlled character;
+  -- an AI entity's force or last_user must never authorize reclamation.
+  local player
+  for i = 1, 2 do
+    local entity = i == 1 and event.cause_entity or event.source_entity
+    if entity and entity.valid and entity.type == "character" then
+      local owner = entity.player
+      if owner and owner.valid then player = owner; break end
+    end
+  end
+  -- Retain explicit attribution for existing internal callers/test harnesses.
+  if not player and event.source_player_index and game then
+    player = game.get_player(event.source_player_index)
+  end
   if not (player and player.valid and player.force and player.force.valid) then return end
   local source_force = player.force
   local target = event.target_entity
@@ -1475,8 +1513,8 @@ local function apply_data_spike_impact_0590(event)
     local surface = (event.surface_index and game and game.surfaces[event.surface_index]) or (event.source_entity and event.source_entity.valid and event.source_entity.surface)
     target = nearest_reclaimable_target_0590(surface, event.target_position or event.source_position, source_force)
   end
-  if not (target and target.valid and target.force and target.force.valid and target.force ~= source_force) then return end
-  start_data_spike_claim_0591(source_force, target, event.source_player_index)
+  if not (target and target.valid and data_spike_hostile_force_0591(source_force, target.force)) then return end
+  start_data_spike_claim_0591(source_force, target, player.index or event.source_player_index)
 end
 
 -- 1192: Factorio's script_raised_built informs OTHER mods of a script

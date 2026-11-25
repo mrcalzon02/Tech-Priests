@@ -130,6 +130,8 @@ table.insert(items, {
 table.insert(items, {
   type = "capsule",
   name = "tech-priests-data-spike",
+  localised_name = { "item-name.tech-priests-data-spike" },
+  localised_description = { "item-description.tech-priests-data-spike" },
   icon = "__tech-priests__/graphics/icons/data-spike.png",
   icon_size = 64,
   subgroup = "tech-priest-cogitators",

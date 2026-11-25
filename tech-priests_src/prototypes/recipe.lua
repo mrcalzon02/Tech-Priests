@@ -912,6 +912,8 @@ end
 table.insert(recipes, {
   type = "recipe",
   name = "tech-priests-data-spike",
+  localised_name = { "recipe-name.tech-priests-data-spike" },
+  localised_description = { "recipe-description.tech-priests-data-spike" },
   icon = "__tech-priests__/graphics/icons/data-spike.png",
   icon_size = 64,
   category = "crafting",

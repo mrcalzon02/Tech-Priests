@@ -618,6 +618,9 @@ require("prototypes.generated_graphics.emergency-boiler-v08")
 -- Hydrogen V01: authored fixed-direction body; retain native conditional pipe caps.
 require("prototypes.generated_graphics.hydrogen-thruster-v01")
 
+-- Hydrogen V03 supplies the moving bell, heat cone and half-width native trail.
+require("prototypes.generated_graphics.hydrogen-thruster-v03")
+
 -- Thetazine V11: final machinery, full heat cone and downstream native exhaust.
 require("prototypes.generated_graphics.thetazine-thruster-v11")
 
