@@ -11,7 +11,7 @@ TECH_PRIESTS_MAGOS_RATIO_PLANNER_VERSION_0257 = "0.1.257"
 -- 1133: The old constant yielded 0.5 packs/minute and silently kept every
 -- factory at a token-size pilot rate. This is the conservative *starting*
 -- science throughput objective, not proof of production or research.
-TECH_PRIESTS_MAGOS_RATIO_DEFAULT_SPM_1133 = 5
+TECH_PRIESTS_MAGOS_RATIO_DEFAULT_SPM_1133 = 15
 TECH_PRIESTS_MAGOS_RATIO_MAX_SPM_1133 = 60
 TECH_PRIESTS_MAGOS_RATIO_TARGET_ITEMS_PER_SECOND_0257 =
   TECH_PRIESTS_MAGOS_RATIO_DEFAULT_SPM_1133 / 60
@@ -568,6 +568,7 @@ function tech_priests_0257_build_ratio_plan(pair, op)
       and objective:find("science",1,true) then
     local requested=tonumber(pair.science_spm_target_1133
       or op.science_spm_target_1133
+      or (pair.science_motivation and pair.science_motivation.target_spm)
       or TECH_PRIESTS_MAGOS_RATIO_DEFAULT_SPM_1133)
     if not requested or requested~=requested then
       requested=TECH_PRIESTS_MAGOS_RATIO_DEFAULT_SPM_1133
@@ -1251,6 +1252,49 @@ local function tech_priests_1206_has_physical_starter_spine(pair)
   return true
 end
 
+-- Measure the actual research basket, independently of the currently
+-- selected survival shortage. The goal persists even if a leaf worker is
+-- busy, a research recipe is locked, or production is still zero.
+local function update_science_motivation(pair,op)
+  local s=pair.science_motivation or {target_spm=TECH_PRIESTS_MAGOS_RATIO_DEFAULT_SPM_1133}
+  pair.science_motivation=s
+  local tick=game and game.tick or 0
+  local explicit=tonumber(pair.science_spm_target_1133 or op.science_spm_target_1133)
+  if explicit and explicit==explicit then
+    s.target_spm=math.max(1,math.min(TECH_PRIESTS_MAGOS_RATIO_MAX_SPM_1133,explicit))
+  end
+  if s.tick and tick-s.tick<3600 then return s end
+  local pack=op.science_item
+  if type(pack)~="string" or not pack:find("science",1,true) then pack="automation-science-pack" end
+  local basket,technology=tech_priests_1136_required_science_basket(pair,pack)
+  local observed,deficit={},{}
+  local minimum=nil;local complete=true
+  for name,amount in pairs(basket)do
+    local n=tech_priests_1133_observe_science_spm(pair,name)
+    if n==nil then complete=false else
+      observed[name]=n
+      deficit[name]=math.max(0,s.target_spm*amount-n)
+      local rate=n/amount
+      minimum=minimum and math.min(minimum,rate) or rate
+    end
+  end
+  local at_target=complete and minimum~=nil and minimum>=s.target_spm
+  if technology~=s.technology then s.consecutive=0 end
+  s.consecutive=at_target and ((s.consecutive or 0)+1) or 0
+  if not explicit and s.consecutive>=5 and s.target_spm<TECH_PRIESTS_MAGOS_RATIO_MAX_SPM_1133 then
+    s.target_spm=math.min(TECH_PRIESTS_MAGOS_RATIO_MAX_SPM_1133,s.target_spm+15)
+    s.consecutive=0
+    for name,amount in pairs(basket)do
+      if observed[name]~=nil then deficit[name]=math.max(0,s.target_spm*amount-observed[name])end
+    end
+  end
+  s.tick=tick;s.technology=technology;s.pack=pack;s.observed=observed;s.deficit=deficit
+  s.observed_research_units_per_minute=minimum
+  s.phase=not complete and "measurement-unavailable"
+    or (minimum or 0)<s.target_spm and "factory-expansion-required" or "sustained-target-observed"
+  return s
+end
+
 function tech_priests_1172_service_autonomous_science_component(pair)
   if not(pair and pair.station and pair.station.valid
       and pair.priest and pair.priest.valid
@@ -1262,6 +1306,7 @@ function tech_priests_1172_service_autonomous_science_component(pair)
   if not(op and op.enabled==true) then
     return false,"emergency-operation-not-enabled"
   end
+  local motivation=update_science_motivation(pair,op)
   if op.construction or pair.emergency_craft or pair.scavenge
       or pair.direct_acquisition_custody_0513
       or pair.construction_task_0338 or pair.construction_custody_0338 then
@@ -1305,7 +1350,7 @@ function tech_priests_1172_service_autonomous_science_component(pair)
     pack="automation-science-pack"
   end
   local science={
-    science_item=pack,science_spm_target_1133=op.science_spm_target_1133,
+    science_item=pack,science_spm_target_1133=motivation.target_spm,
   }
   local item,reason,plan=tech_priests_0257_pick_ratio_need(pair,science)
   -- 1178/1206: A physical starter factory can be below its target ratio
@@ -1350,8 +1395,17 @@ function tech_priests_1172_service_autonomous_science_component(pair)
   op.magos_ratio_component_machine_1150=
     science.magos_ratio_component_machine_1150
   if not(item and plan and science.magos_ratio_component_job_1150) then
-    return false,reason or "no-actionable-science-component"
+    motivation.blocker=reason or science.magos_ratio_phase_0257 or "no-actionable-science-component"
+    if plan then
+      motivation.next_infrastructure_item=item
+      motivation.component_blocker=plan.factory_component_blocker_1150
+      -- Give existing infrastructure/logistics owners the actual next
+      -- ingredient/asset objective instead of producing a parallel queue.
+      -- The normal 0255 route still handles power, ore, belts and connectors.
+    end
+    return false,motivation.blocker
   end
+  motivation.blocker=nil
   local placed,why=tech_priests_1150_issue_component_construction(
     pair,science,plan)
   op.magos_ratio_component_dispatch_1150=why
