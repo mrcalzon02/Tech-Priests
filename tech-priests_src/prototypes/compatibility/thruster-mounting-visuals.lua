@@ -194,6 +194,23 @@ local function align_liquid_thrusters()
     local oxidizer_position = {2.00, -1.00}
     ensure_flag(thetazine, "not-rotatable")
     fit_platform_edge_rules(thetazine, vanilla, 3)
+    -- V10's fixed cradle feet project to |X|=2.698..3.332 and
+    -- Y=-1.503..0.842. Keep the five-column exhaust corridor unchanged;
+    -- each outer foundation ledge spans local X=+/-3, Y=-2..+1.
+    local rules = thetazine.tile_buildability_rules
+    local support
+    for _, rule in pairs(rules or {}) do
+      if rule.required_tiles and rule.required_tiles.layers
+          and rule.required_tiles.layers.ground_tile then support = rule; break end
+    end
+    if support then
+      for _, sign in ipairs({-1, 1}) do
+        local ledge = table.deepcopy(support)
+        local left, right = sign < 0 and -3.3 or 2.7, sign < 0 and -2.7 or 3.3
+        ledge.area = {{left, -2.3}, {right, 1.3}}
+        rules[#rules + 1] = ledge
+      end
+    end
     thetazine.collision_box = {{-2.15, -2.35}, {2.15, 2.35}}
     thetazine.selection_box = {{-2.25, -2.50}, {2.25, 2.50}}
     thetazine.drawing_box = {{-3.35, -3.30}, {3.35, 5.70}}
