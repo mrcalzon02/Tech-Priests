@@ -116,6 +116,12 @@ local function initialize()
  for _,count in ipairs({18,40}) do
   local center=count==18 and 0 or 100
   surface.request_to_generate_chunks({center,0},2);surface.force_generate_chunk_requests()
+  -- Native world objects can cover diagnostic pixels even after replacing
+  -- their terrain. Clear only the bounded, isolated measurement area.
+  local area={{center-24,-24},{center+24,24}}
+  for _,entity in ipairs(surface.find_entities_filtered{area=area}) do entity.destroy() end
+  surface.destroy_decoratives{area=area}
+  surface.clear_pollution()
   local tiles={}
   for x=math.floor(center-23),math.ceil(center+23) do
    for y=-23,23 do tiles[#tiles+1]={name="lab-dark-1",position={x,y}} end
@@ -172,7 +178,7 @@ local function snapshot(label)
 end
 script.on_event(defines.events.on_tick,function(event)
  local state=storage.pose_probe
- if not state or state.done then return end
+ if not state then return end
  for _,record in ipairs(state.actors) do
   local actor=record.entity
   assert(actor.valid and record.target.valid,"Native diagnostic actor/target disappeared")
@@ -182,6 +188,7 @@ script.on_event(defines.events.on_tick,function(event)
   actor.selected=record.target
   actor.shooting_state={state=defines.shooting.shooting_selected,position=record.target_position}
  end
+ if state.done then return end
  if event.tick==90 then snapshot("a") end
  if event.tick==102 then
   snapshot("b")

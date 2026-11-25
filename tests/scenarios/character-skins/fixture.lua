@@ -3,6 +3,7 @@ local Broker=require("scripts.core.runtime_tick_broker")
 local Picker=require("scripts.core.character_skin_picker")
 local Visuals=require("scripts.core.character_visuals")
 local Catalog=require("shared.character_skin_catalog")
+local PriestMovement=require("priest-movement")
 local mod_gui=require("mod-gui")
 local session_completed=false
 local graphical_run=false -- runner enables this only for screenshot capture
@@ -34,6 +35,7 @@ local function initialize()
   local n=0
   for _,rank in ipairs({"junior","intermediate","senior","planetary-magos","void"}) do
     local model=Catalog.ranks[rank]
+    if prototypes.entity[rank.."-tech-priest"] then
     for _,force in ipairs({red,blue}) do
       n=n+1
       local position={x=-12+math.ceil(n/2)*4,y=6+((n-1)%2)*6}
@@ -45,8 +47,9 @@ local function initialize()
       tp.pairs_by_station[station.unit_number]=pair;tp.pairs_by_priest[priest.unit_number]=pair
       storage.skin_test.npcs[#storage.skin_test.npcs+1]={entity=priest,model=model,unit=priest.unit_number,health=priest.health}
     end
+    end
   end
-  log("[TP-SKINS-TEST] INITIALIZED ranks=5 native_units=10")
+  log("[TP-SKINS-TEST] INITIALIZED native_units="..#storage.skin_test.npcs)
 end
 local function setup_player(player)
   local t=storage.skin_test
@@ -65,6 +68,7 @@ local function setup_player(player)
     previous.destroy() -- isolated fixture setup, never a picker action
   end
   t.player=player.index;t.start=game.tick
+  PriestMovement.start()
   player.teleport({0,-8})
   player.clear_items_inside()
   local character=player.character
@@ -193,6 +197,7 @@ local function tick(event)
   end
   local elapsed=event.tick-t.start
   local player=game.get_player(t.player)
+  PriestMovement.tick(event,player,graphical_run)
   if elapsed>=10 and t.stage==0 then
     local detached=player.surface.create_entity{name="character",position={-25,-6},force=player.force,raise_built=true}
     check(detached and detached.valid,"detached native body created")
@@ -349,11 +354,11 @@ local function tick(event)
         path="character-skins/"..(t.walk_skin=="vanilla" and "engineer" or t.walk_skin).."-walking.png"}
     end
   end
-  if t.stage==4 then
+  if t.stage==4 and PriestMovement.done() then
     t.saved_unit=game.get_player(t.player).character.unit_number
     t.done=true;session_completed=true
-    helpers.write_file("character-skins/result.json",helpers.table_to_json{passed=true,skins=15,ranks=5,forces=2,
-      player=t.player,original_unit=t.original_unit,saved_unit=t.saved_unit,character_name=player.character.name,movement=t.movement,lifecycle=t.lifecycle_checked,legacy_corpse_inventory=t.legacy_corpse_checked,disabled=t.disabled or false,case=legacy_case and "legacy" or t.disabled and "disabled" or settings.startup["tech-priests-skin-allow-canoness"].value and "default" or "restricted"},false)
+    helpers.write_file("character-skins/result.json",helpers.table_to_json{passed=true,skins=15,ranks=#t.npcs/2,forces=2,
+      player=t.player,original_unit=t.original_unit,saved_unit=t.saved_unit,character_name=player.character.name,movement=t.movement,priest_movement=PriestMovement.results(),lifecycle=t.lifecycle_checked,legacy_corpse_inventory=t.legacy_corpse_checked,disabled=t.disabled or false,case=legacy_case and "legacy" or t.disabled and "disabled" or settings.startup["tech-priests-skin-allow-canoness"].value and "default" or "restricted"},false)
     log("[TP-SKINS-TEST] PASS same native character, actual movement parity, immediate Engineer restore, inventory/crafting preservation, restrictions and ranked force colours")
     local player=game.get_player(t.player)
     if not t.disabled then Picker.open(player) end

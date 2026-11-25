@@ -30,6 +30,25 @@ end
 skin_module.register=function(...)
   local before=table.deepcopy(assert(data.raw.character.character))
   local corpse_before=table.deepcopy(assert(data.raw["character-corpse"]["character-corpse"]))
+  local priest_before={}
+  local legacy_priests={}
+  for _,rank in ipairs({"junior","intermediate","senior","planetary-magos"}) do
+    for _,suffix in ipairs({"","-belt-immune"}) do
+      local name=rank.."-tech-priest"..suffix
+      local priest=assert(data.raw.unit[name],"Missing shipped priest "..name)
+      priest_before[name]=table.deepcopy(priest)
+      local expected=before.running_speed*(suffix=="" and 1 or 1.2)
+      assert(math.abs(priest.movement_speed-expected)<.000001,"Ground priest does not use native Engineer movement baseline")
+      local legacy=table.deepcopy(priest)
+      legacy.name="tp-skin-priest-legacy-"..name
+      legacy.movement_speed=suffix=="" and .08 or .095
+      local empty={filename="__core__/graphics/empty.png",width=1,height=1,frame_count=1,direction_count=1}
+      legacy.run_animation=table.deepcopy(empty)
+      legacy.attack_parameters.animation=table.deepcopy(empty)
+      legacy_priests[#legacy_priests+1]=legacy
+    end
+  end
+  data:extend(legacy_priests)
   local reference=table.deepcopy(before)
   reference.name="tp-skin-reference-character"
   reference.hidden=true
@@ -38,6 +57,16 @@ skin_module.register=function(...)
   local result=register(...)
   assert(unchanged(before,data.raw.character.character,false),"Appearance changed native character gameplay or animation timing")
   assert(unchanged(corpse_before,data.raw["character-corpse"]["character-corpse"],false),"Appearance changed the native visible Engineer corpse")
+  for name,priest in pairs(priest_before) do
+    local changed=data.raw.unit[name]
+    assert(unchanged(priest.run_animation,changed.run_animation,true),"Appearance changed native priest running timing")
+    assert(unchanged(priest.attack_parameters.animation,changed.attack_parameters.animation,true),"Appearance changed native priest attack timing")
+    assert(changed.movement_speed==priest.movement_speed,"Appearance changed priest movement speed")
+  end
+  for _,suffix in ipairs({"","-belt-immune"}) do
+    local void=data.raw.unit["void-tech-priest"..suffix]
+    assert(not void or void.movement_speed==.001,"Ground repair changed the void movement backend")
+  end
   log("[TP-SKINS-DATA] PASS exact native gameplay and animation timing, unchanged visible native corpse; only pixel tint may change")
   return result
 end
@@ -99,7 +128,7 @@ def main():
         'locale/en/character-skins.cfg','THIRD-PARTY-NOTICES-GLADIUS.txt']
  for relative in files:
   dest=mod/relative;dest.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(source/relative,dest)
- for relative in ('graphics/entity/gladius-donors','graphics/icons/character-skins'):
+ for relative in ('graphics/entity/gladius-donors','graphics/icons/character-skins','graphics/entity/tech-priest'):
   for path in (source/relative).rglob('*'):
    if path.is_file():
     if not a.full:copy_file(path,mod/path.relative_to(source))
@@ -111,25 +140,25 @@ def main():
  if a.case=='restricted':overrides='data.raw["bool-setting"]["tech-priests-skin-allow-canoness"].default_value=false\n'
  if a.case=='disabled':overrides='data.raw["bool-setting"]["tech-priests-character-picker-enabled"].default_value=false\n'
  (mod/'settings-final-fixes.lua').write_text(overrides)
- (mod/'data.lua').write_text('''local catalog=require("shared.character_skin_catalog")
+ # Execute the actual shipped priest constructors, stopping before unrelated
+ # machine prototypes. Only minable item names are stubbed in this isolated pack.
+ entity_source=(source/'prototypes/entity.lua').read_text(encoding='utf-8')
+ marker='-- Hidden small-arms proxy.'
+ if entity_source.count(marker)!=1:raise ValueError('Cannot locate exact priest constructor boundary')
+ constructor_source=entity_source.split(marker,1)[0]
+ (mod/'data.lua').write_text(constructor_source+'''
 local definitions={}
-local health={junior=150,intermediate=300,senior=600,["planetary-magos"]=850,void=850}
-for rank in pairs(catalog.ranks) do
- for _,suffix in ipairs({"","-belt-immune"}) do
-  local unit=table.deepcopy(data.raw.unit["small-biter"])
-  unit.name=rank.."-tech-priest"..suffix
-  unit.max_health=health[rank]
-  unit.corpse=rank.."-tech-priest-corpse"
-  definitions[#definitions+1]=unit
- end
- local corpse=table.deepcopy(data.raw.corpse["small-biter-corpse"])
- corpse.name=rank.."-tech-priest-corpse"
- definitions[#definitions+1]=corpse
+for _,def in ipairs(TIER_DEFS) do
+ definitions[#definitions+1]={type="item",name=def.station_name,icon="__base__/graphics/icons/repair-pack.png",icon_size=64,stack_size=50}
+ definitions[#definitions+1]=make_priest_corpse(def)
+ definitions[#definitions+1]=make_priest(def,false)
+ definitions[#definitions+1]=make_priest(def,true)
 end
 data:extend(definitions)
-''')
+''',encoding='utf-8')
  (mod/'data-final-fixes.lua').write_text('require("prototypes.character_skins").register()\n')
  shutil.copy2(ROOT/'tests/scenarios/character-skins/fixture.lua',mod/'fixture.lua')
+ shutil.copy2(ROOT/'tests/scenarios/character-skins/priest-movement.lua',mod/'priest-movement.lua')
  if a.case=='legacy':
   fixture=mod/'fixture.lua';fixture.write_text(fixture.read_text().replace('local legacy_case=false','local legacy_case=true'))
  (mod/'control.lua').write_text('assert(require("scripts.core.character_skin_picker").install())\nrequire("fixture")\n')
@@ -155,7 +184,7 @@ data:extend(definitions)
  config.write_text('[path]\nread-data='+str(a.factorio.parents[2]/'data').replace('\\','/')+'\nwrite-data='+str(user.resolve()).replace('\\','/')+'\n[other]\ncheck-updates=false\n')
  save=out/'test.zip'
  common=[str(a.factorio),'--config',str(config.resolve()),'--mod-directory',str(mods.resolve())]
- for label,arguments in [('create',['--create',str(save.resolve())]),('native-player',['--test-save',str(save.resolve()),'--test-ticks','1200'])]:
+ for label,arguments in [('create',['--create',str(save.resolve())]),('native-player',['--test-save',str(save.resolve()),'--test-ticks','1800'])]:
   log=out/(label+'.log')
   with log.open('w') as handle:
    result=subprocess.run(common+arguments,stdout=handle,stderr=subprocess.STDOUT,timeout=180)
@@ -182,7 +211,8 @@ data:extend(definitions)
  startup=None
  if os.name=='nt':
   startup=subprocess.STARTUPINFO();startup.dwFlags|=subprocess.STARTF_USESHOWWINDOW;startup.wShowWindow=1
- required_screenshots=[screenshot,user/'script-output/character-skins/engineer-walking.png']
+ required_screenshots=[screenshot,user/'script-output/character-skins/engineer-walking.png',
+   user/'script-output/character-skins/priest-ground-walking.png',user/'script-output/character-skins/priest-immune-walking.png']
  if a.case!='disabled':required_screenshots.append(user/'script-output/character-skins/enginseer-walking.png')
  for path in required_screenshots:path.unlink(missing_ok=True)
  with (out/'graphical.log').open('w') as handle:
