@@ -595,6 +595,7 @@ end
 
 -- Resolve the cannon against final donor rates, ammunition and recipe amounts.
 require("prototypes.bunker_autocannon").finalize()
+require("prototypes.wall_branches").inherit_final_resistances()
 require("prototypes.bunker_family").finalize_grenades()
 require("prototypes.bunker_bullet_weapons").finalize()
 require("prototypes.bunker_twin_cannon").finalize()
@@ -649,6 +650,9 @@ require("prototypes.character_skins").register()
 require("prototypes.combat_roster").finalize()
 require("prototypes.generated_graphics.unit-arsenal-icons-v02")
 require("prototypes.generated_graphics.material-icons-v01")
+
+-- Each branch uses its authored wall kit at all three tiers.
+require("prototypes.generated_graphics.walls_tier_one")
 
 -- Machine Spirit doctrine effects are local machine rites, not beacon transmissions.
 -- Preserve a beacon's explicit category permissions; restrict only previously

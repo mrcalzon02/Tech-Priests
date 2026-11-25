@@ -66,7 +66,7 @@ function M.register()
    add(projectile)
    delivery={type="projectile",projectile=projectile.name,starting_speed=1}
   end
-  add{type="ammo",name=a.name,icon="__base__/graphics/icons/"..(a.damage_type=="physical" and "piercing-rounds-magazine" or "battery")..".png",icon_size=64,
+  add{type="ammo",name=a.name,icon="__base__/graphics/icons/"..(delivery.type=="projectile" and "piercing-rounds-magazine" or "battery")..".png",icon_size=64,
    subgroup="tech-priests-combat-supplies",stack_size=100,magazine_size=a.shots,ammo_category=category,
    ammo_type={category=category,target_type="entity",action={type="direct",action_delivery=delivery}}}
   add(recipe(a.name,a.ingredients,a.count,nil,a.technology==nil,5))

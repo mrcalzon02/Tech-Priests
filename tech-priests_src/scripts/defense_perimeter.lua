@@ -318,7 +318,7 @@ end
 -- use their existing distinct power/pipe checks.
 local function tech_priests_0259_perimeter_band_allowed(pair,entity_name,pos)
   local entity_type=tech_priests_0259_entity_type(entity_name)
-  local is_wall=entity_name==TECH_PRIESTS_DEFENSE_WALL_ENTITY_0259
+  local is_wall=entity_type=="wall" or entity_name==TECH_PRIESTS_DEFENSE_WALL_ENTITY_0259
       or entity_name==TECH_PRIESTS_DEFENSE_GATE_ENTITY_0646
   local is_turret=entity_type=="ammo-turret"
       or entity_type=="electric-turret"
@@ -391,9 +391,31 @@ local function tech_priests_0259_validate_tracked_walls(pair, state, desired, ra
   local obsolete = nil
   for key, rec in pairs(state.walls or {}) do
     local entity = rec.entity
+    if not (entity and entity.valid) and rec.position then
+      -- Player and robot fast replacement invalidate the saved entity handle.
+      local replacements = pair.station.surface.find_entities_filtered{
+        position = rec.position, type = "wall", force = pair.station.force
+      }
+      for _, wall in ipairs(replacements) do
+        local branch = wall.name:match("^tech%-priests%-wall%-(%a+)%-[123]$")
+        if (wall.name == TECH_PRIESTS_DEFENSE_WALL_ENTITY_0259 or branch == "bastion" or branch == "ablative" or branch == "warded")
+            and tech_priests_0259_distance_sq(wall.position, rec.position) == 0 then
+          entity, rec.entity, rec.item = wall, wall, wall.name
+          rec.needs_rebuild = nil
+          break
+        end
+      end
+    end
     if not (entity and entity.valid) then
-      tech_priests_0259_queue_breach(state, rec.position, "tracked-wall-destroyed")
-      state.walls[key] = nil
+      if not rec.needs_rebuild then
+        tech_priests_0259_queue_breach(state, rec.position, "tracked-wall-destroyed")
+      end
+      if desired[key] and rec.item and rec.item ~= TECH_PRIESTS_DEFENSE_WALL_ITEM_0259 then
+        rec.entity = nil
+        rec.needs_rebuild = true
+      else
+        state.walls[key] = nil
+      end
     else
       local dist = math.sqrt(tech_priests_0259_distance_sq(entity.position, pair.station.position))
       local desired_here = desired[key] ~= nil
@@ -411,8 +433,9 @@ local function tech_priests_0259_first_missing_wall(pair, state, desired)
   for key, pos in pairs(desired or {}) do
     local rec = state.walls and state.walls[key] or nil
     if not (rec and rec.entity and rec.entity.valid) then
-      local near = tech_priests_0259_find_near_position(pair, TECH_PRIESTS_DEFENSE_WALL_ENTITY_0259, pos, 1)
-      if near then return key, near end
+      local name = rec and rec.item or TECH_PRIESTS_DEFENSE_WALL_ENTITY_0259
+      local near = tech_priests_0259_find_near_position(pair, name, rec and rec.position or pos, 1)
+      if near then return key, near, name end
     end
   end
   return nil, nil
@@ -442,7 +465,6 @@ local function tech_priests_0259_start_recover_wall(pair, rec)
   return tech_priests_0259_start_task(pair, {
     type = "recover-wall",
     entity = rec.entity,
-    item = rec.item or TECH_PRIESTS_DEFENSE_WALL_ITEM_0259,
     key = rec.key,
     position = { x = rec.entity.position.x, y = rec.entity.position.y },
     next_repath_tick = 0,
@@ -613,12 +635,14 @@ local function tech_priests_0259_handle_task(pair)
       pair.mode = "relocating-defense-wall"
       return true
     end
+    pair.defense_task_0259 = nil
+    local inventory = tech_priests_0259_station_inventory(pair)
+    if not (inventory and inventory.valid and task.entity.mine{inventory = inventory, raise_destroyed = false}) then
+      return false
+    end
     local state = tech_priests_0259_defense_state(pair)
-    pcall(function() task.entity.destroy({ raise_destroy = false }) end)
-    tech_priests_0259_return_item(pair, task.item, 1)
     if task.key then state.walls[task.key] = nil end
     state.recovered = (state.recovered or 0) + 1
-    pair.defense_task_0259 = nil
     return true
   end
 
@@ -1084,15 +1108,15 @@ local function tech_priests_0259_service_perimeter(pair)
   -- 1127: empty spare wall stock must not block turret layering after a
   -- physically accounted wall ring is already complete. Only request walls
   -- when a real missing segment has an eligible placement.
-  local key, pos = tech_priests_0259_first_missing_wall(pair, state, desired)
+  local key, pos, wall_name = tech_priests_0259_first_missing_wall(pair, state, desired)
   if key and pos then
-    if not tech_priests_0259_force_has_item(pair, TECH_PRIESTS_DEFENSE_WALL_ITEM_0259) then
-      tech_priests_0259_request_item(pair, TECH_PRIESTS_DEFENSE_WALL_ITEM_0259, 10, "defense-wall")
+    if not tech_priests_0259_force_has_item(pair, wall_name) then
+      tech_priests_0259_request_item(pair, wall_name, 10, "defense-wall")
       state.last_reason = "awaiting-walls"
       return false
     end
     state.last_reason = "placing-wall-ring"
-    return tech_priests_0259_start_build(pair, "build-wall", TECH_PRIESTS_DEFENSE_WALL_ITEM_0259, TECH_PRIESTS_DEFENSE_WALL_ENTITY_0259, pos, key)
+    return tech_priests_0259_start_build(pair, "build-wall", wall_name, wall_name, pos, key)
   end
 
 

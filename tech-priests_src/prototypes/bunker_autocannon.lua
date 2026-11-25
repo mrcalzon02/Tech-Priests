@@ -142,7 +142,7 @@ function M.register(mod_name)
   projectile.name=PROJECTILE;projectile.piercing_damage=nil;projectile.final_action=nil
   projectile.collision_box={{-0.05,-0.15},{0.05,0.15}}
   projectile.action={type='direct',action_delivery={type='instant',target_effects={
-    {type='damage',damage={amount=73.4375,type='physical'}},
+    {type='damage',damage={amount=73.4375,type='tech-priests-penetration'}},
     {type='create-entity',entity_name='explosion-hit'}}}}
   if projectile.animation then projectile.animation.scale=0.25 end
   local ammo_recipe=table.deepcopy(data.raw.recipe['firearm-magazine'])
