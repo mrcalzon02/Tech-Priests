@@ -59,6 +59,14 @@ local function service_scan()
   if not (ensure_storage and storage and game) then return end
   ensure_storage()
   local consecration = storage.tech_priests.consecration
+  -- The durable machines table is already maintained by exact entity events.
+  -- Keep one initial/recovery seed; time passing and visual refreshes do not
+  -- invalidate membership or justify another full-world query.
+  if consecration.discovery_seeded_0446 == true then return end
+  if consecration.discovery_seeded_0446 == nil and consecration.last_scan_0446 then
+    consecration.discovery_seeded_0446 = true
+    return
+  end
   if game.tick < (consecration.next_bridge_scan_0446 or 0) then return end
   consecration.next_bridge_scan_0446 = game.tick + 600
   if scan_existing_consecration_targets then
@@ -68,6 +76,13 @@ local function service_scan()
       consecration.debug_log_next_0452 = game.tick + 3600
       log("[Tech-Priests 0.1.452 consecration] bridge scan registered=" .. tostring(registered) .. " scanned=" .. tostring(scanned))
     end
+  end
+end
+
+local function register_generated_chunk(event)
+  if event and event.surface and event.area and scan_existing_consecration_targets then
+    -- Only new territory is queried; all existing machine records are reused.
+    scan_existing_consecration_targets(event.surface, event.area)
   end
 end
 
@@ -89,6 +104,10 @@ function M.install()
   -- are dormant and the legacy configuration refresh does not run.
   local migrated = registry.on_configuration_changed(function()
     prune_ineligible_consecration_targets()
+    ensure_storage()
+    local consecration = storage.tech_priests.consecration
+    consecration.discovery_seeded_0446 = false
+    consecration.next_bridge_scan_0446 = 0
   end, {
     owner = "consecration-runtime-bridge",
     route = "prune-ineligible-records-on-configuration",
@@ -96,12 +115,16 @@ function M.install()
     priority = "front"
   })
 
-  local built = registry.on_event({
+  local build_events = {
     defines.events.on_built_entity,
     defines.events.on_robot_built_entity,
     defines.events.script_raised_built,
     defines.events.script_raised_revive
-  }, register_entity, nil, {
+  }
+  if defines.events.on_space_platform_built_entity then
+    build_events[#build_events+1] = defines.events.on_space_platform_built_entity
+  end
+  local built = registry.on_event(build_events, register_entity, nil, {
     owner = "consecration-runtime-bridge",
     route = "register-built-entity",
     category = "consecration",
@@ -119,12 +142,16 @@ function M.install()
     priority = "front"
   })
 
-  local removed = registry.on_event({
+  local remove_events = {
     defines.events.on_entity_died,
     defines.events.on_pre_player_mined_item,
     defines.events.on_robot_pre_mined,
     defines.events.script_raised_destroy
-  }, remove_entity, nil, {
+  }
+  if defines.events.on_space_platform_mined_entity then
+    remove_events[#remove_events+1] = defines.events.on_space_platform_mined_entity
+  end
+  local removed = registry.on_event(remove_events, remove_entity, nil, {
     owner = "consecration-runtime-bridge",
     route = "remove-destroyed-entity",
     category = "consecration",
@@ -146,7 +173,16 @@ function M.install()
     route = "periodic-target-scan",
     category = "consecration"
   })
-  if not (migrated and built and cloned and removed and module_changes and scan) then
+  local generated = true
+  if defines.events.on_chunk_generated then
+    generated = registry.on_event(defines.events.on_chunk_generated, register_generated_chunk, nil, {
+      owner = "consecration-runtime-bridge",
+      route = "register-generated-chunk",
+      category = "consecration",
+      priority = "last"
+    })
+  end
+  if not (migrated and built and cloned and removed and module_changes and scan and generated) then
     if log then log("[Tech-Priests 0.1.452 consecration] runtime bridge not installed: canonical route registration failed") end
     return false
   end

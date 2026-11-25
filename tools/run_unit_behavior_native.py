@@ -69,6 +69,7 @@ def execute(command, logfile):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--factorio", type=Path, required=True)
+    parser.add_argument("--engine-version", default="2.1.24")
     parser.add_argument("--package", type=Path, required=True)
     parser.add_argument("--base-package", type=Path, default=Path("base-package/tech-priests_1.0.0.zip"))
     parser.add_argument("--dependency-mods", type=Path, required=True)
@@ -81,8 +82,8 @@ def main():
                "package_sha256": digest(args.package), "source_commit": os.environ.get("GITHUB_SHA", ""),
                "actual_engine": subprocess.check_output([str(engine), "--version"], text=True).splitlines()[0]}
     try:
-        if "2.1.24" not in receipt["actual_engine"]:
-            raise ValueError("Expected pinned Factorio 2.1.24")
+        if receipt["actual_engine"].split()[1] != args.engine_version:
+            raise ValueError("Expected pinned Factorio " + args.engine_version)
         old_mods, new_mods = output / "baseline/mods", output / "candidate/mods"
         install(args.base_package, old_mods, args.dependency_mods)
         install(args.package, new_mods, args.dependency_mods)

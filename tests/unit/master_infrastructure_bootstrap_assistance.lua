@@ -9,7 +9,7 @@ _G.TechPriestsPlanningConstraints0646={
 local Plan=require("scripts.core.master_infrastructure_plan_0644")
 local stock={}
 local inventory={valid=true,get_item_count=function(name)return stock[name] or 0 end}
-local force={index=1,name="player",recipes={
+local force={valid=true,index=1,name="player",recipes={
   ["burner-mining-drill"]={enabled=true,
     products={{name="burner-mining-drill"}},
     ingredients={{name="iron-gear-wheel",amount=2},{name="iron-plate",amount=3}}},
@@ -170,8 +170,9 @@ do
   end
   machines={smelter,chest,emergency,assembler,lab}
   local scan=surface.find_entities_filtered
+  local lab_area_queries=0
   surface.find_entities_filtered=function(options)
-    if options.type=="lab" then return {lab} end
+    if options.type=="lab" then lab_area_queries=lab_area_queries+1;return {lab} end
     return scan(options)
   end
   stock[item]=1
@@ -221,9 +222,23 @@ do
       prerequisites={},research_unit_ingredients={{name=item,amount=1}},
       research_unit_count=100+i}
   end
+  local irrelevant_reads=0
+  local function unavailable_technology(fields)
+    return setmetatable(fields,{__index=function(_,key)
+      if key=='prerequisites' or key=='research_unit_ingredients'
+          or key=='research_unit_count' then irrelevant_reads=irrelevant_reads+1 end
+      return nil
+    end})
+  end
+  force.technologies.disabled=unavailable_technology{enabled=false,researched=false}
+  force.technologies.finished=unavailable_technology{enabled=true,researched=true}
+  force.technologies.blocked=unavailable_technology{enabled=true,researched=false,
+    prerequisites={{researched=false}}}
   local large=Plan.build_plan(pair,'many-technologies-one-science-pack')
   check(large.research_candidate==tech.name and stock_reads==1 and lab_reads==1,
     'read-only survey repeatedly enumerated the same physical science stock')
+  check(irrelevant_reads==0 and lab_area_queries==0,
+    'research selection copied ineligible technology data or rediscovered known labs')
   lab_items[item]=0
   local empty_science=Plan.build_plan(pair,'science-consumed-after-survey')
   check(empty_science.research_candidate==nil and stock_reads==2 and lab_reads==2,

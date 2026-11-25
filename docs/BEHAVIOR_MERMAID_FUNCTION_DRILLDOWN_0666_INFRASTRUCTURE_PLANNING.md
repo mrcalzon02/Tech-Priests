@@ -14,13 +14,15 @@ The actual source names are `infrastructure_first_governor_0640`, `master_infras
 
 ```mermaid
 flowchart TD
-    Survey["0644 periodic industry/resource survey"] --> Plan["Current infrastructure plan"]
+    Survey["0644 periodic survey; one station per callback"] --> Plan["Retained station-domain infrastructure plan"]
     Need["Station shortage or higher-tier dependency"] --> Gate["Self-construction frustration admission"]
     Gate -->|"not ready"| Maintain["Existing repair and maintenance continue"]
     Gate -->|"ready"| Governor["0640 prerequisite and recipe selection"]
     Plan --> Governor
     Governor --> Existing["Use real existing facilities and stock"]
-    Governor --> Build["0645 one original planning ghost/request"]
+    Governor --> Build["0645 matching plan and original ghost/request"]
+    Plan --> Build
+    Build -->|"cold/domain change or observed target completion"| Survey
     Build --> Constructor["0338 physical construction"]
     Governor --> Acquire["0513 literal material acquisition"]
     Governor --> Craft["0514 counted recipe work"]
@@ -37,10 +39,12 @@ This is the dependency relationship, not an assertion that each selected factory
 | Owner | Registered cadence / offered budget | Boundary |
 | --- | --- | --- |
 | `infrastructure_first_governor_0640` | 23 ticks / 10 | Callback passes the offered budget. `service_all` counts every inspected slot and resumes saved `service_cursor`; fallback defaults to the existing cap of 32. |
-| `master_infrastructure_plan_0644` | 97 ticks / 8, category `diagnostics` | Despite the category, source includes research/science servicing. Do not infer presentation-only behavior from the label. |
+| `master_infrastructure_plan_0644` | 97 ticks / 1, category `diagnostics` | Existing fair cursor admits one station per callback. Despite the category, source includes research/science servicing. Do not infer presentation-only behavior from the label. |
 | `construction_bootstrap_ghost_planner_0645` | 83 ticks / 6 | Existing rotating discovery work; planning-ghost/request generation is distinct from paid construction. |
 
 Each installer prefers the broker and retains a registry fallback when broker registration fails. An inventory entry for both paths does not mean both were installed. The 0644 survey itself is not behind the frustration gate. 0640 gates new autonomous industry; 0645 reconciles already owned sites first and applies the gate before creating a new autonomous ghost.
+
+0645 reads the existing `pair.master_infrastructure_plan_0644` when station identity, surface, force, position, canonical clamped radius, stage and target match. It does not introduce an age-based survey timer. Cold stations, old snapshot schemas and changed domains can initialize through 0644 once. Observing physical completion of the retained proposal's target permits one owner refresh to prevent recreating the completed ghost; an already advanced plan remains reusable. Live storage and custody checks still govern replacement of an active ghost. Explicit requested-entity reservations do not invoke the autonomous master survey. A failed domain/completion refresh cannot authorize the obsolete proposal.
 
 ## Expanded infrastructure families
 
@@ -59,7 +63,9 @@ Each installer prefers the broker and retains a registry fallback when broker re
 
 The previous 0640 callback advertised budget 10 but discarded it, stopped after 32 **acted** pairs, and restarted `pairs(pair_map())` at the beginning. That allowed full-population visits when work returned false and risked prefix starvation. The repaired existing owner now accepts `offered_budget`, counts every inspected slot including invalid/no-op pairs, and resumes a scalar saved `service_cursor` with `next`. A removed cursor safely restarts traversal. It preserves the historical acted-count first return and adds a structured result for the broker. The 23-tick cadence is unchanged. This is a work-count correction; native timing and workload-progress acceptance remain separate.
 
-The current 0644 source also avoids repeating a full `force.recipes` search after a fresh 0646 scan has already selected a usable recipe. `planning_constraints_0646.item_unlocked` returns that recipe as an optional third result only when this call performs the scan; its existing one-tick Boolean cache remains unchanged and returns no recipe. 0644 rechecks live enabled/product state and performs the live fallback search when no usable recipe result is supplied. That preserves same-tick recipe-choice changes on cached Boolean paths. Each synchronous `build_plan` shares a call-local item-count snapshot across feasibility and science checks. The snapshot is discarded after that call, so another plan in the same tick reads current stock again. These are source cost reductions, not a measured UPS result.
+The current 0646 owner retains product-to-recipe-name membership in original force recipe traversal order, including disabled recipes. `recipe_names_for_item(force,item,true)` provides products-only candidates for 0644; the default lookup preserves the older main-product fallback where the provider supports it. Enabled flags and ingredient quantities remain live, and `item_unlocked` returns its freshly selected recipe as an optional third result. The previous one-tick Boolean unlock-answer cache is removed. 0644 checks these ordered candidates and preserves the first enabled matching recipe's feasibility result rather than selecting a later alternate merely because its ingredients are available. The initial metadata traversal remains real work and must be included in native measurements.
+
+Each synchronous 0644 `build_plan` shares a call-local item-count snapshot across feasibility and science checks, and science uses laboratories already returned by the role survey. The snapshot is discarded after that call, so another plan in the same tick reads current stock again. 0645 consumes the retained owner plan instead of repeating those surveys on ordinary ghost-planning passes. These are source cost reductions, not a measured UPS result.
 
 Separate remaining risks include station catalog synchronous queries and the 0689/0716 prefix-only discovery loops. A callback limit does not bound its nested native scans or guarantee fairness. Keep those open until their own source and native evidence are recorded.
 

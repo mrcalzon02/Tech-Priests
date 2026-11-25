@@ -163,14 +163,19 @@ function prune_ineligible_consecration_targets()
   end
 end
 
-function scan_existing_consecration_targets()
+function scan_existing_consecration_targets(only_surface, area)
   if _G and _G.tech_priests_compatibility_scan_0626 then
-    pcall(_G.tech_priests_compatibility_scan_0626, "consecration-targets", rawget(_G, "tech_priests_compatibility_scan_context_0626") or "runtime-watchdog", 1)
+    pcall(_G.tech_priests_compatibility_scan_0626, "consecration-targets",
+      only_surface and "event-generated-chunk"
+        or rawget(_G, "tech_priests_compatibility_scan_context_0626") or "initial-registry-seed", 1)
   end
   ensure_storage()
-  prune_ineligible_consecration_targets()
+  -- Full registration is an initial/configuration/manual recovery operation.
+  -- New chunks use the same authority over only their newly generated area.
+  if not only_surface then prune_ineligible_consecration_targets() end
   local scanned = 0
   local registered = 0
+  local complete = true
   local seen = {}
 
   local function scan_list(entities)
@@ -188,27 +193,37 @@ function scan_existing_consecration_targets()
     end
   end
 
-  for _, surface in pairs(game.surfaces or {}) do
-    local ok_names, by_name = pcall(function()
-      return surface.find_entities_filtered({ name = CONSECRATION_TARGET_NAME_LIST })
-    end)
-    if ok_names then scan_list(by_name) end
+  for _, surface in pairs(only_surface and {only_surface} or game.surfaces or {}) do
+    if CONSECRATION_TARGET_NAME_LIST and #CONSECRATION_TARGET_NAME_LIST > 0 then
+      local ok_names, by_name = pcall(function()
+        return surface.find_entities_filtered({ name = CONSECRATION_TARGET_NAME_LIST, area = area })
+      end)
+      if ok_names then scan_list(by_name) else complete = false end
+    end
 
     for _, target_type in pairs(CONSECRATION_TARGET_TYPE_LIST or {}) do
       local ok_types, by_type = pcall(function()
-        return surface.find_entities_filtered({ type = target_type })
+        return surface.find_entities_filtered({ type = target_type, area = area })
       end)
-      if ok_types then scan_list(by_type) end
+      if ok_types then scan_list(by_type) else complete = false end
     end
   end
 
-  storage.tech_priests.consecration.last_scan_0446 = {
+  local consecration = storage.tech_priests.consecration
+  local receipt = {
     tick = game and game.tick or 0,
     scanned = scanned,
     registered = registered,
-    tracked = table_size and table_size(storage.tech_priests.consecration.machines or {}) or nil
+    tracked = not only_surface and table_size and table_size(consecration.machines or {}) or nil,
+    complete = complete
   }
-  return registered, scanned
+  if only_surface then
+    consecration.last_area_scan_0446 = receipt
+  else
+    consecration.last_scan_0446 = receipt
+    consecration.discovery_seeded_0446 = complete
+  end
+  return registered, scanned, complete
 end
 
 clear_machine_custom_status = function(entity)

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Package, verify and publish the focused 1.0.1 unit-behavior correction.
+"""Package, verify and publish focused source hotfixes over the verified LO build.
 
 Reuse the verified standard-resolution distribution. Source overlays are read
 from the exact triggering commit; HD images and the existing listing stay intact.
@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import math
 import os
 from pathlib import Path, PurePosixPath
 import re
@@ -22,7 +23,6 @@ import zipfile
 
 REPOSITORY = "mrcalzon02/Tech-Priests"
 MOD = "tech-priests"
-VERSION = "1.0.1"
 BASE_VERSION = "1.0.0"
 BASE_COMMIT = "f810fafccef156b4ca863b8bdf98460acf98ebb5"
 BASE_TAG = "v1.0.0-graphics-" + BASE_COMMIT
@@ -31,8 +31,86 @@ BASE_BYTES = 251074985
 BASE_SHA256 = "6870e0b0ad71501d501eb9fc66853d81b12d617e4876b8c9ebd1138a6d464ab6"
 LIMIT = 262100000
 DISTRIBUTION_MARKER = "-- Distributions physically reduce the base images"
-REQUEST_SCHEMA = "tech-priests.unit-behavior-hotfix.v1"
-MANIFEST_SCHEMA = "tech-priests.unit-behavior-package.v1"
+RELEASES = {
+    "unit": {
+        "version": "1.0.1", "slug": "unit-behavior", "engine": "2.1.24",
+        "title": "unit consecration and pickup fix",
+        "changes": [
+            "Excluded mobile units from machine consecration and sanctity effects.",
+            "Restored mining and pickup of deployable units.",
+            "Corrected existing units when loading an updated save.",
+        ],
+    },
+    "performance": {
+        "version": "1.0.2", "slug": "performance", "engine": "2.1.25",
+        "title": "retained source discovery and scheduled background work",
+        "changes": [
+            "Retained station source lists and updated membership when nearby entities changed.",
+            "Removed repeated full station scans from missing-item requests and display refreshes.",
+            "Spread eligible background services across scheduled ticks while preserving pending work.",
+            "Preserved the unit pickup and consecration corrections from version 1.0.1.",
+        ],
+    },
+}
+
+
+def release_configuration(args):
+    return RELEASES[args.variant]
+
+
+def validate_performance_evidence(evidence, overlays):
+    """Accept only sanitized, completed paired evidence for the exact runtime bytes.
+
+    The owner-save replay remains in the private runner. This receipt records its
+    reviewed result and byte identities without copying world or player data.
+    Instrumented diagnostic runs cannot satisfy the publication gate.
+    """
+    if not isinstance(evidence, dict) or evidence.get("schema") != "tech-priests.performance-replay-acceptance.v1":
+        raise ValueError("Performance publication requires a completed paired native replay receipt")
+    allowed = {
+        "schema", "engine_version", "runtime_mode", "baseline_version", "tested_source_commit",
+        "baseline_result_sha256", "candidate_result_sha256", "harness_sha256", "staging_helper_sha256",
+        "ticks", "warmup_ticks",
+        "same_runner_job", "same_original_save", "instrumentation", "unit_count",
+        "units_reconstructed", "runtime_error_count", "unit_activity_verified",
+        "accepted", "overlay_sha256", "baseline", "candidate", "assessment",
+    }
+    if set(evidence) - allowed:
+        raise ValueError("Performance receipt contains fields outside the public evidence allowlist")
+    if (evidence.get("engine_version") != "2.1.25" or evidence.get("runtime_mode") != "native-headless-benchmark"
+            or evidence.get("baseline_version") != "1.0.0"
+            or evidence.get("instrumentation") is not False
+            or evidence.get("same_runner_job") is not True or evidence.get("same_original_save") is not True
+            or evidence.get("unit_count") != 4 or evidence.get("runtime_error_count") != 0
+            or evidence.get("unit_activity_verified") is not True or evidence.get("accepted") is not True
+            or not isinstance(evidence.get("units_reconstructed"), bool)
+            or not 12000 <= evidence.get("ticks", 0) <= 18000 or evidence.get("warmup_ticks") != 600):
+        raise ValueError("Paired native performance acceptance conditions have not been met")
+    for field, size in (("tested_source_commit", 40), ("baseline_result_sha256", 64), ("candidate_result_sha256", 64),
+                        ("harness_sha256", 64), ("staging_helper_sha256", 64)):
+        if not re.fullmatch(r"[0-9a-f]{" + str(size) + "}", evidence.get(field, "")):
+            raise ValueError("Performance evidence requires immutable source and result identities")
+    expected = {"tech-priests_src/" + path: hashlib.sha256(content).hexdigest()
+                for path, content in overlays.items() if path not in {"info.json", "changelog.txt"}}
+    if evidence.get("overlay_sha256") != expected:
+        raise ValueError("Performance replay did not cover every exact packaged source overlay")
+    metrics = {"whole_update_ms", "script_update_ms", "early_whole_update_ms", "late_whole_update_ms",
+               "early_script_update_ms", "late_script_update_ms"}
+    for case in ("baseline", "candidate"):
+        results = evidence.get(case)
+        if not isinstance(results, dict) or set(results) != metrics:
+            raise ValueError("Performance receipt must include complete early and sustained late-window timings")
+        for values in results.values():
+            if not isinstance(values, dict) or set(values) != {"mean", "p50", "p95", "p99", "max"}:
+                raise ValueError("Incomplete native timing distribution")
+            if any(isinstance(value, bool) or not isinstance(value, (int, float))
+                   or not math.isfinite(value) or value < 0 for value in values.values()):
+                raise ValueError("Invalid native timing value")
+            if not values["p50"] <= values["p95"] <= values["p99"] <= values["max"]:
+                raise ValueError("Inconsistent native timing percentiles")
+    if not isinstance(evidence.get("assessment"), str) or not evidence["assessment"].strip():
+        raise ValueError("A concrete reviewed performance assessment is required before publication")
+    return evidence
 
 
 def emit(marker, **fields):
@@ -89,23 +167,28 @@ def relative_overlay(path):
     relative = path[len(prefix):]
     if relative in {"info.json", "changelog.txt"}:
         raise ValueError("Metadata and changelog are merged separately")
-    if parsed.suffix not in {".lua", ".json", ".cfg"}:
-        raise ValueError("This behavior hotfix may only overlay Lua/config source")
+    if (parsed.suffix not in {".lua", ".json", ".cfg"}
+            and not (relative.startswith("docs/") and parsed.suffix == ".md")):
+        raise ValueError("This hotfix may only overlay Lua/config source and shipped Markdown documentation")
     if relative.startswith(("graphics/", "sound/", "icons/")) or "graphics_pack_" in relative:
         raise ValueError("The behavior hotfix must preserve packaged graphics and audio")
     return relative
 
 
 def prepare(args):
+    config = release_configuration(args)
+    version, slug = config["version"], config["slug"]
     commit = source_commit()
     request = json.loads(args.request.read_text(encoding="utf-8"))
-    if (request.get("schema") != REQUEST_SCHEMA or request.get("mod") != MOD
-            or request.get("version") != VERSION):
-        raise ValueError("Unexpected unit-hotfix publication request")
+    if (request.get("schema") != f"tech-priests.{slug}-hotfix.v1" or request.get("mod") != MOD
+            or request.get("version") != version):
+        raise ValueError("Unexpected hotfix publication request")
     paths = request.get("overlay_paths")
     if not isinstance(paths, list) or not paths or len(paths) != len(set(paths)):
         raise ValueError("Expected a nonempty, unique list of exact runtime source overlays")
     overlays = {relative_overlay(path): source_bytes(commit, path) for path in paths}
+    performance = (validate_performance_evidence(request.get("performance_evidence"), overlays)
+                   if args.variant == "performance" else None)
     source_info = json.loads(source_bytes(commit, "tech-priests_src/info.json"))
     if source_info.get("name") != MOD or source_info.get("factorio_version") != "2.1":
         raise ValueError("Unexpected source mod identity or engine series")
@@ -144,10 +227,10 @@ def prepare(args):
     if base.stat().st_size != BASE_BYTES or digest(base) != BASE_SHA256:
         raise ValueError("Standard-distribution bytes do not match GitHub asset readback")
 
-    archive_path = args.output / f"{MOD}_{VERSION}.zip"
+    archive_path = args.output / f"{MOD}_{version}.zip"
     if archive_path.exists():
         raise ValueError("Refuse to overwrite an existing prepared hotfix package")
-    old_root, new_root = f"{MOD}_{BASE_VERSION}/", f"{MOD}_{VERSION}/"
+    old_root, new_root = f"{MOD}_{BASE_VERSION}/", f"{MOD}_{version}/"
     preserved = 0
     applied = set()
     with zipfile.ZipFile(base) as original:
@@ -159,18 +242,18 @@ def prepare(args):
         # Retain the nine optional HD companions introduced only during packaging.
         packaged_hd = [d for d in info.get("dependencies", []) if "tech-priests-hd-" in d]
         info.update(source_info)
-        info["version"] = VERSION
+        info["version"] = version
         info["dependencies"] = list(dict.fromkeys(source_info.get("dependencies", []) + packaged_hd))
         if len(packaged_hd) != 9:
             raise ValueError("The standard distribution must retain all nine optional HD companions")
         overlays["info.json"] = (json.dumps(info, indent=2, ensure_ascii=False) + "\n").encode()
         old_changelog = original.read(old_root + "changelog.txt")
-        overlays["changelog.txt"] = (
+        entries = [config] if args.variant == "unit" else [config, RELEASES["unit"]]
+        overlays["changelog.txt"] = "".join(
             "---------------------------------------------------------------------------------------------------\n"
-            "Version: 1.0.1\nDate: 2026-11-25\n  Bugfixes:\n"
-            "    - Excluded mobile units from machine consecration and sanctity effects.\n"
-            "    - Restored mining and pickup of deployable units.\n"
-            "    - Corrected existing units when loading an updated save.\n\n"
+            + f"Version: {entry['version']}\nDate: 2026-11-25\n  Bugfixes:\n"
+            + "".join("    - " + change + "\n" for change in entry["changes"]) + "\n"
+            for entry in entries
         ).encode() + old_changelog
         if "data-final-fixes.lua" in overlays:
             packaged = original.read(old_root + "data-final-fixes.lua").decode()
@@ -223,7 +306,7 @@ def prepare(args):
             if result.read(new_root + relative) != content:
                 raise ValueError("Source overlay missing or altered: " + relative)
     manifest = {
-        "schema": MANIFEST_SCHEMA, "name": MOD, "version": VERSION,
+        "schema": f"tech-priests.{slug}-package.v1", "name": MOD, "version": version,
         "source_commit": commit, "base_source_commit": BASE_COMMIT,
         "base_asset_id": BASE_ASSET_ID, "base_sha256": BASE_SHA256,
         "file_name": archive_path.name, "bytes": archive_path.stat().st_size,
@@ -233,7 +316,10 @@ def prepare(args):
         "standard_graphics_preserved": True, "optional_hd_dependencies": packaged_hd,
         "archive_crc_pass": True, "native_runtime_pass": False,
     }
-    save_json(args.output / "unit-behavior-package.json", manifest)
+    if performance is not None:
+        manifest["performance_evidence"] = performance
+        save_json(args.output / "performance-native-replay.json", performance)
+    save_json(args.output / f"{slug}-package.json", manifest)
     (args.output / "SHA256SUMS").write_text(manifest["sha256"] + "  " + archive_path.name + "\n")
     emit("PACKAGE_VERIFIED", source_commit=commit, bytes=manifest["bytes"], sha256=manifest["sha256"],
          preserved_files=preserved, overlays=len(paths))
@@ -265,42 +351,55 @@ def dependency_diagnostics(args):
                 emit("AAI_SOURCE_MATCH", pattern=pattern, matches=0)
 
 
-def validate_native(package_dir, native_dir):
+def validate_native(package_dir, native_dir, config):
+    version, slug = config["version"], config["slug"]
     commit = source_commit()
-    manifest_path = package_dir / "unit-behavior-package.json"
+    manifest_path = package_dir / f"{slug}-package.json"
     manifest = json.loads(manifest_path.read_text())
     archive = package_dir / manifest["file_name"]
     receipt_path = native_dir / "unit-behavior-receipt.json"
     native = json.loads(receipt_path.read_text())
-    if (manifest.get("schema") != MANIFEST_SCHEMA or manifest.get("version") != VERSION
+    if (manifest.get("schema") != f"tech-priests.{slug}-package.v1" or manifest.get("version") != version
             or manifest.get("source_commit") != commit or manifest.get("name") != MOD
-            or archive.name != f"{MOD}_{VERSION}.zip" or digest(archive) != manifest.get("sha256")
+            or archive.name != f"{MOD}_{version}.zip" or digest(archive) != manifest.get("sha256")
             or digest(archive, "sha1") != manifest.get("sha1")
             or archive.stat().st_size != manifest.get("bytes") or archive.stat().st_size > LIMIT):
         raise ValueError("Prepared package identity changed after native testing")
     if (native.get("passed") is not True or native.get("package_sha256") != manifest["sha256"]
             or native.get("source_commit") != commit):
         raise ValueError("Native acceptance does not pass for this exact source and archive")
+    if not re.search(r"\b" + re.escape(config["engine"]) + r"\b", native.get("actual_engine", "")):
+        raise ValueError("Native acceptance used a different engine than the release requires")
+    if slug == "performance":
+        with zipfile.ZipFile(archive) as packed:
+            overlays = {relative_overlay(path): packed.read(f"{MOD}_{version}/" + relative_overlay(path))
+                        for path in manifest["overlay_paths"]}
+        evidence = validate_performance_evidence(manifest.get("performance_evidence"), overlays)
+        retained = json.loads((package_dir / "performance-native-replay.json").read_text())
+        if retained != evidence:
+            raise ValueError("Public performance evidence changed after package preparation")
     return manifest, archive, receipt_path
 
 
 def publish(args):
     # Existing official publisher handles authentication without logging secrets.
     import publish_hd_mods as portal
-    manifest, archive, native_receipt = validate_native(args.package_dir, args.native_dir)
+    config = release_configuration(args)
+    version, slug = config["version"], config["slug"]
+    manifest, archive, native_receipt = validate_native(args.package_dir, args.native_dir, config)
     commit = source_commit()
-    tag = "v" + VERSION
+    tag = "v" + version
     notes = args.package_dir / "RELEASE-NOTES.md"
     notes.write_text(
-        "# Tech Priests 1.0.1\n\n"
-        "- Mobile units are excluded from machine consecration and sanctity effects.\n"
-        "- Deployable units can be mined and picked back up.\n"
-        "- Existing units are corrected when an updated save loads.\n\n"
+        f"# Tech Priests {version}\n\n"
+        + "".join("- " + change + "\n" for change in config["changes"]) + "\n"
+        + (manifest["performance_evidence"]["assessment"] + "\n\n" if slug == "performance" else "")
+        +
         "The standard graphics package retains its reduced images and supports the existing nine optional HD packs.\n\n"
         "Native Factorio acceptance passed for the exact downloadable archive.\n\n"
         f"Source commit: `{commit}`.\n\nPackage SHA-256: `{manifest['sha256']}`.\n",
         encoding="utf-8")
-    evidence = args.package_dir / "unit-behavior-native-evidence.zip"
+    evidence = args.package_dir / f"{slug}-native-evidence.zip"
     with zipfile.ZipFile(evidence, "w", zipfile.ZIP_DEFLATED) as output:
         for path in sorted(args.native_dir.rglob("*")):
             relative = path.relative_to(args.native_dir)
@@ -308,13 +407,15 @@ def publish(args):
                     and not any(part in {"mods", "user-data", "dependencies"} for part in relative.parts)
                     and path.stat().st_size <= 50 * 1024 * 1024):
                 output.write(path, relative)
-    assets = [archive, args.package_dir / "unit-behavior-package.json", args.package_dir / "SHA256SUMS",
+    assets = [archive, args.package_dir / f"{slug}-package.json", args.package_dir / "SHA256SUMS",
               native_receipt, evidence]
+    if slug == "performance":
+        assets.append(args.package_dir / "performance-native-replay.json")
     exists = subprocess.run(["gh", "release", "view", tag, "--repo", REPOSITORY],
                             capture_output=True).returncode == 0
     if not exists:
         subprocess.run(["gh", "release", "create", tag, *map(str, assets), "--repo", REPOSITORY,
-                        "--target", commit, "--title", "Tech Priests 1.0.1 — unit consecration and pickup fix",
+                        "--target", commit, "--title", f"Tech Priests {version} — {config['title']}",
                         "--notes-file", str(notes), "--latest"], check=True)
     reference = gh_json(f"repos/{REPOSITORY}/git/ref/tags/{tag}")
     target = reference["object"]
@@ -332,7 +433,10 @@ def publish(args):
     release = gh_json(f"repos/{REPOSITORY}/releases/tags/{tag}")
     remote_assets = {a["name"]: a for a in release["assets"]}
     # On a retry retain prior native evidence; package and manifest remain immutable.
-    for path in assets[:3]:
+    immutable_assets = assets[:3]
+    if slug == "performance":
+        immutable_assets.append(args.package_dir / "performance-native-replay.json")
+    for path in immutable_assets:
         asset = remote_assets[path.name]
         if asset.get("size") != path.stat().st_size or asset.get("digest") != "sha256:" + digest(path):
             raise ValueError("GitHub release bytes differ; refusing to replace existing asset: " + path.name)
@@ -341,31 +445,35 @@ def publish(args):
     live = portal.listing(MOD)
     if live is None:
         raise ValueError("The existing Tech Priests listing disappeared; this job only uploads an update")
-    current = next((r for r in live.get("releases", []) if r.get("version") == VERSION), None)
+    current = next((r for r in live.get("releases", []) if r.get("version") == version), None)
     if current is not None:
         if current.get("sha1") != manifest["sha1"] or current.get("file_name") != archive.name:
-            raise ValueError("Portal already contains different bytes at version 1.0.1; refusing replacement")
+            raise ValueError(f"Portal already contains different bytes at version {version}; refusing replacement")
     else:
         initiated = portal.authenticated("/api/v2/mods/releases/init_upload", {"mod": MOD}, "upload")
         result = portal.multipart(portal.upload_url(initiated), archive, "file", "application/zip")
         if result.get("success") is not True:
-            raise RuntimeError("Mod Portal did not accept the version 1.0.1 upload")
-        emit("PORTAL_UPLOAD_ACCEPTED", name=MOD, version=VERSION)
-    for attempt in range(6):
+            raise RuntimeError(f"Mod Portal did not accept the version {version} upload")
+        emit("PORTAL_UPLOAD_ACCEPTED", name=MOD, version=version)
+    for attempt in range(12):
         observed = portal.listing(MOD)
-        current = next((r for r in observed.get("releases", []) if r.get("version") == VERSION), None)
+        current = next((r for r in (observed or {}).get("releases", []) if r.get("version") == version), None)
         if current is not None:
             if current.get("sha1") != manifest["sha1"] or current.get("file_name") != archive.name:
                 raise ValueError("Portal version readback has different archive bytes")
             break
-        if attempt == 5:
+        if attempt == 11:
             raise RuntimeError("Portal upload accepted but the exact version is not publicly verifiable yet")
         time.sleep(min(2 ** attempt, 16))
-    receipt = {"schema": "tech-priests.unit-behavior-publication.v1", "passed": True,
-               "source_commit": commit, "version": VERSION, "package_sha256": manifest["sha256"],
+    receipt = {"schema": f"tech-priests.{slug}-publication.v1", "passed": True,
+               "source_commit": commit, "version": version, "package_sha256": manifest["sha256"],
                "package_sha1": manifest["sha1"], "package_bytes": manifest["bytes"],
                "native_pass": True, "github_release": release["html_url"],
                "portal_url": "https://mods.factorio.com/mod/tech-priests", "portal_readback_pass": True}
+    if slug == "performance":
+        receipt["performance_replay_pass"] = True
+        receipt["performance_tested_source_commit"] = manifest["performance_evidence"]["tested_source_commit"]
+        receipt["performance_harness_sha256"] = manifest["performance_evidence"]["harness_sha256"]
     path = args.package_dir / "portal-publication-receipt.json"
     save_json(path, receipt)
     if path.name not in remote_assets:
@@ -377,7 +485,7 @@ def publish(args):
     emit("PUBLICATION_VERIFIED", **receipt)
     if os.environ.get("GITHUB_STEP_SUMMARY"):
         with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as output:
-            output.write(f"## Tech Priests 1.0.1 published\n\n[Download and native evidence]({release['html_url']})"
+            output.write(f"## Tech Priests {version} published\n\n[Download and native evidence]({release['html_url']})"
                          "\n\n[Factorio Mod Portal](https://mods.factorio.com/mod/tech-priests)\n\n"
                          f"Source: `{commit}`. Package SHA-256: `{manifest['sha256']}`.\n")
 
@@ -386,6 +494,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     commands = parser.add_subparsers(dest="command", required=True)
     command = commands.add_parser("prepare")
+    command.add_argument("--variant", choices=RELEASES, default="unit")
     command.add_argument("--request", type=Path, required=True)
     command.add_argument("--output", type=Path, required=True)
     command.add_argument("--base-archive", type=Path)
@@ -394,6 +503,7 @@ def main():
     command.add_argument("--dependency-mods", type=Path, required=True)
     command.set_defaults(handler=dependency_diagnostics)
     command = commands.add_parser("publish")
+    command.add_argument("--variant", choices=RELEASES, default="unit")
     command.add_argument("--package-dir", type=Path, required=True)
     command.add_argument("--native-dir", type=Path, required=True)
     command.set_defaults(handler=publish)

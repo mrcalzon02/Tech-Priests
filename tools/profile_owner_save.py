@@ -28,6 +28,7 @@ OBSERVER = r'''
 do
   local registry = require("scripts.core.runtime_event_registry")
   local broker = require("scripts.core.runtime_tick_broker")
+  local installed_local_hooks
   local elapsed_start, original_ids, original_count, reconstructed
   -- Read existing owners only. These are receipts from the physical mutation
   -- paths, not manufactured test work or an extra entity-discovery pass.
@@ -117,6 +118,11 @@ do
       behavior_counters=counters,behavior_owners=owners,
       connected_players=#game.connected_players,repair_queue_by_force=repair_by_force,
       enemy_force_index=game.forces.enemy.index,
+      station_catalog_stats=tp.station_catalog_0327 and tp.station_catalog_0327.stats,
+      logistics_fetch_stats=tp.logistics_fetch_executor_0527 and tp.logistics_fetch_executor_0527.stats,
+      broker_stats=tp.runtime_tick_broker_0600 and tp.runtime_tick_broker_0600.stats,
+      broker_service_stats=(elapsed==0 or elapsed==6000 or elapsed==__TICKS__-1)
+        and tp.runtime_tick_broker_0600 and tp.runtime_tick_broker_0600.service_stats or nil,
       event_feeder_stats=tp.event_driven_work_feeder_0608 and tp.event_driven_work_feeder_0608.stats}
   end
   local function deploy()
@@ -141,6 +147,12 @@ do
   registry.on_event(defines.events.on_tick,function(event)
     if not elapsed_start then
       elapsed_start=event.tick
+      if __INSTRUMENT__ then
+        assert(installed_local_hooks and #installed_local_hooks==8,
+          "Owner-save diagnostic local instrumentation was not installed")
+        emit{phase="instrumentation-ready",tick=game.tick,
+          local_hook_names=installed_local_hooks}
+      end
       emit{phase="loaded",tick=game.tick,saved_pairs=#live_pairs(),mods=script.active_mods,
         deploy_four_requested=__DEPLOY_FOUR__,callback_instrumentation=__INSTRUMENT__}
       if __DEPLOY_FOUR__ and #live_pairs()==0 then deploy() end
@@ -243,6 +255,13 @@ do
         end
       end
     end
+    local infrastructure=rawget(_G,"TechPriestsMasterInfrastructurePlan0644")
+      or package.loaded["scripts.core.master_infrastructure_plan_0644"]
+    assert(infrastructure and type(infrastructure.__tp_owner_profile_locals)=="function",
+      "Owner-save diagnostic infrastructure local hooks are unavailable")
+    installed_local_hooks=infrastructure.__tp_owner_profile_locals(wrap)
+    log("[TP-OWNER-PROFILE-LOCALS] owner=master_infrastructure_plan_0644 active="
+      ..table.concat(installed_local_hooks,","))
     for _,name in ipairs{
       "tech_priests_0259_resource_expansion_service",
       "tech_priests_0507_action_claim",
@@ -265,6 +284,30 @@ end
 '''
 
 
+LOCAL_PROFILE_FUNCTIONS_0644 = (
+    "scan_resources", "scan_roles", "choose", "cheapest_available_science",
+    "craft_feasibility", "unlocked_recipe", "station_count", "uncovered_drill_output")
+
+
+def instrument_infrastructure_locals(mod: pathlib.Path) -> None:
+    """Expose existing local closures only inside the disposable test copy."""
+    path=mod/"scripts/core/master_infrastructure_plan_0644.lua"
+    source=path.read_text(encoding="utf-8")
+    for name in LOCAL_PROFILE_FUNCTIONS_0644:
+        if not re.search(r"local function "+re.escape(name)+r"\(",source):
+            raise ValueError("Infrastructure local missing from test target: "+name)
+    end=re.search(r"\nreturn M\s*$",source)
+    if not end:
+        raise ValueError("Infrastructure module return not found in test target")
+    hook="\n-- Test-only hooks, injected into the private disposable benchmark copy.\n"
+    hook+="M.__tp_owner_profile_locals=function(wrap)\n"
+    for name in LOCAL_PROFILE_FUNCTIONS_0644:
+        hook+=f'  {name}=wrap({name},"infrastructure-local","0644.{name}",true)\n'
+    hook+="  return {"+",".join(json.dumps(name) for name in LOCAL_PROFILE_FUNCTIONS_0644)+"}\n"
+    hook+="end\n"
+    path.write_text(source[:end.start()]+hook+source[end.start():],encoding="utf-8")
+
+
 def digest(path: pathlib.Path) -> str:
     with path.open("rb") as handle:
         return hashlib.file_digest(handle, "sha256").hexdigest()
@@ -285,7 +328,8 @@ def distribution(values: list[float]) -> dict:
 def parse_log(text: str, expected_ticks: int, warmup: int) -> dict:
     result = {"engine_updates": None, "engine_mean_ms": None,
               "engine_benchmark_ups": None, "per_tick_complete": False,
-              "timings": {}, "timing_windows": [], "observations": [], "callback_samples": []}
+              "timings": {}, "timing_windows": [], "observations": [], "callback_samples": [],
+              "callback_sample_rows": [], "callback_samples_after_warmup": []}
     summary = re.search(r"Performed\s+(\d+)\s+updates in\s+([\d.]+)\s+ms", text)
     if summary:
         updates, elapsed = int(summary[1]), float(summary[2])
@@ -330,15 +374,25 @@ def parse_log(text: str, expected_ticks: int, warmup: int) -> dict:
                 "timings": {name: distribution([r[1][index] for r in rows[start:end]])
                             for index, name in enumerate(headers[1:])
                             if name in ("wholeUpdate", "scriptUpdate")}})
-    callbacks = {}
+    callbacks, warm_callbacks = {}, {}
+    start_tick=next((row["tick"] for row in result["observations"]
+                     if row.get("phase")=="start"),None)
     expression = (r"\[TP-OWNER-CALLBACK\] tick=(\d+) scope=(\S+) name=(.*?) call=(\d+) "
                   r"duration=(?:Elapsed|Duration):\s*([\d.]+)\s*ms")
     for tick, scope, name, call, ms in re.findall(expression, text):
         key=(scope,name)
         callbacks.setdefault(key,[]).append(float(ms))
+        elapsed=int(tick)-start_tick if start_tick is not None else None
+        result["callback_sample_rows"].append({"tick":int(tick),"elapsed_tick":elapsed,
+            "scope":scope,"name":name,"call":int(call),"duration_ms":float(ms)})
+        if elapsed is not None and elapsed>=warmup:
+            warm_callbacks.setdefault(key,[]).append(float(ms))
     for (scope,name),values in callbacks.items():
         result["callback_samples"].append({"scope":scope,"name":name,**distribution(values)})
     result["callback_samples"].sort(key=lambda v:v["mean_ms"]*v["samples"],reverse=True)
+    for (scope,name),values in warm_callbacks.items():
+        result["callback_samples_after_warmup"].append({"scope":scope,"name":name,**distribution(values)})
+    result["callback_samples_after_warmup"].sort(key=lambda v:v["mean_ms"]*v["samples"],reverse=True)
     return result
 
 
@@ -608,6 +662,8 @@ def main() -> int:
         for path in sorted(p for p in mod.rglob("*") if p.is_file() and p.suffix in (".lua",".json",".cfg")):
             source_digest.update(path.relative_to(mod).as_posix().encode()+b"\0"+digest(path).encode()+b"\n")
         report["tech_priests_source_digest"]=source_digest.hexdigest()
+        if args.instrument_callbacks:
+            instrument_infrastructure_locals(mod)
         observer=(OBSERVER.replace("__DEPLOY_FOUR__",str(args.deploy_four).lower())
                   .replace("__INSTRUMENT__",str(args.instrument_callbacks).lower())
                   .replace("__GRAPHICS__",str(args.graphics).lower())
@@ -651,6 +707,8 @@ def main() -> int:
             content=plain.read_text(encoding="utf-8",errors="replace")
             report["observed"]=parse_log(content,args.ticks,args.warmup)
             exit_code=report["plain_process"]["exit_code"]
+        report["active_local_hooks"]=next((v["local_hook_names"]
+            for v in report["observed"]["observations"] if v.get("phase")=="instrumentation-ready"),[])
         report["observation_complete"],snapshots=validate_observations(report["observed"],args.ticks,args.warmup)
         report["four_pairs_verified"]=bool(report["observation_complete"]
             and all(v.get("live_pairs")==4 and len(v.get("pairs",[]))==4 and v.get("identities_stable") is True for v in snapshots))
@@ -663,7 +721,9 @@ def main() -> int:
         report["original_save_unchanged"]=digest(args.save)==report["save_sha256"]
         report["passed"]=bool(exit_code==0 and report["observed"]["engine_updates"]==args.ticks
             and report["original_save_unchanged"] and report["active_mods"]
-            and report["four_pairs_verified"] and report["timing_evidence_complete"])
+            and report["four_pairs_verified"] and report["timing_evidence_complete"]
+            and (not args.instrument_callbacks
+                 or report["active_local_hooks"]==list(LOCAL_PROFILE_FUNCTIONS_0644)))
         report["isolated_handler_errors"]=len(re.findall(r"isolated handler failure",content))
         report["isolated_service_errors"]=len(re.findall(r"isolated service failure",content))
         report["native_checksums"]=[line.strip() for line in content.splitlines()
@@ -728,7 +788,8 @@ def main() -> int:
         "behavior":report.get("behavior"),
         "timings":{k:v for k,v in observed.get("timings",{}).items()
                    if k in ("wholeUpdate","scriptUpdate","entityUpdate","pathFinder","turretTargetAcquisition","luaGarbageIncremental")},
-        "top_callbacks":observed.get("callback_samples",[])[:20]}),flush=True)
+        "top_callbacks":observed.get("callback_samples",[])[:20],
+        "top_callbacks_after_warmup":observed.get("callback_samples_after_warmup",[])[:20]}),flush=True)
     return 0 if report["passed"] else 1
 
 

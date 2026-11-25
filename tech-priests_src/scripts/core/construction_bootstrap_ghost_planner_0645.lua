@@ -50,11 +50,47 @@ local function category_for(entity_name, class)
   return base
 end
 
-local function build_plan(pair, reason)
+local function plan_matches_domain(pair, plan, owner)
+  if not (valid_pair(pair) and type(plan)=="table"
+      and type(plan.target)=="table" and type(plan.stage)=="string") then
+    return false
+  end
+  local station=pair.station
+  local position=station.position
+  local prior=plan.station_position
+  if not (position and type(prior)=="table"
+      and plan.station==station_unit(pair)
+      and plan.surface_index~=nil and station.surface
+      and plan.surface_index==station.surface.index
+      and plan.force_index~=nil and station.force
+      and plan.force_index==station.force.index
+      and prior.x==position.x and prior.y==position.y) then
+    return false
+  end
+  -- Match 0644's survey domain, including its canonical operating-radius
+  -- override and clamp. The owner refreshes content on its existing cadence;
+  -- the ghost consumer must not introduce a second age-based survey timer.
+  local radius=tonumber(pair.radius)
+    or tonumber(owner and owner.default_radius) or 36
+  if type(_G.get_station_operating_radius)=="function" then
+    local ok,value=pcall(_G.get_station_operating_radius,station)
+    if ok and tonumber(value) then radius=tonumber(value) end
+  end
+  return plan.radius==math.max(8,math.min(96,radius))
+end
+local function build_plan(pair, reason, force_refresh)
   local Plan = rawget(_G, "TechPriestsMasterInfrastructurePlan0644")
   if not Plan then local ok, mod = pcall(require, "scripts.core.master_infrastructure_plan_0644"); if ok then Plan = mod end end
+  local existing=pair and pair.master_infrastructure_plan_0644
+  if not force_refresh and plan_matches_domain(pair,existing,Plan) then return existing end
+  -- Cold stations, old persisted schemas and changed station domains may
+  -- initialize through the canonical owner once. Never execute a proposal
+  -- from the former domain if its required refresh fails.
   if Plan and type(Plan.build_plan) == "function" then local ok, plan = pcall(Plan.build_plan, pair, reason or "ghost-planner-0645"); if ok and plan then return plan end end
-  return pair and pair.master_infrastructure_plan_0644
+  if force_refresh and pair.master_infrastructure_plan_0644==existing then
+    pair.master_infrastructure_plan_0644=nil
+  end
+  return nil
 end
 -- Only physically retrievable station stock can justify replacing a
 -- non-obstructed bootstrap ghost. A manufacturing output slot, recipe request
@@ -223,7 +259,14 @@ function M.service_pair(pair, reason, requested_entity)
   if not valid_pair(pair) then return false, "invalid-pair" end
   local ghost, rec = active_ghost(pair)
   local nearby=rec and rec.position and nearby_physical_entities(pair,rec.position) or nil
+  local completed_plan_target=false
   if rec and target_complete(pair, rec, nearby) then
+    local current=pair.master_infrastructure_plan_0644
+    completed_plan_target=type(current)=="table" and type(current.target)=="table"
+      and entity_name_for_item(current.target.preferred_item)==rec.entity_name
+    -- A completed target is an observed content change, not a timer expiry.
+    -- Refresh that proposal once so this call cannot recreate its old ghost.
+    -- An already advanced owner plan remains reusable.
     -- Physical completion takes precedence over an obsolete planning ghost.
     if ghost and ghost.valid and ghost.ghost_name == rec.entity_name then ghost.destroy({raise_destroy=true}) end
     rec.status = "built"; rec.completed_tick = now(); record("bootstrap-ghost-built-0645", pair, "entity=" .. safe(rec.entity_name)); pair.construction_bootstrap_ghost_0645 = nil
@@ -340,7 +383,7 @@ function M.service_pair(pair, reason, requested_entity)
       reason=reason or "network-reservation"
     } }
   else
-    plan = build_plan(pair, reason or "service")
+    plan = build_plan(pair, reason or "service", completed_plan_target)
   end
   if not should_bootstrap(pair, plan) then return false, "not-bootstrap" end
   local target = plan.target or {}; local item = target.preferred_item; local entity_name = entity_name_for_item(item)

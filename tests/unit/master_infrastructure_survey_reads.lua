@@ -105,8 +105,8 @@ for _,count in pairs(calls.stock) do stock_reads=stock_reads+count end
 for _,count in pairs(calls.lab) do lab_reads=lab_reads+count end
 print(string.format("[master-survey-reads] four-station calls recipe_walks=%d recipe_visits=%d stock_reads=%d lab_reads=%d",
   calls.recipe_walks,calls.recipe_visits,stock_reads,lab_reads))
-check(calls.recipe_walks==4,
-  "the first unlock lookup's recipe was rediscovered in a second force walk")
+check(calls.recipe_walks==1,
+  "four stations repeatedly rediscovered immutable recipe membership")
 check(stock_reads==12 and lab_reads==4,
   "physical stock/lab science was recounted for every technology or repeated target")
 for _,pair in ipairs(pairs_list) do
@@ -130,8 +130,8 @@ technologies["technology-001"].researched=true
 check(Plan.build_plan(pair,"research-finished").research_candidate=="technology-002",
   "completed research remained eligible")
 
--- The existing one-tick Boolean cache must not freeze a selected recipe:
--- another callback can enable an earlier alternative before the next plan.
+-- Another callback can enable an earlier alternative before the next plan.
+-- Neither a cached Boolean nor retained membership may freeze enablement.
 pair.stock.stone=5
 recipes["alternate-furnace"].enabled=true
 local alternate=Plan.build_plan(pair,"same-tick-new-earlier-recipe")
@@ -141,16 +141,20 @@ check(alternate.target.preferred_item=="tech-priests-emergency-smelter"
 recipes["alternate-furnace"].enabled=false
 recipes["stone-furnace"].enabled=false
 local disabled=Plan.build_plan(pair,"same-tick-recipe-disabled")
-check(disabled.target.feasibility:find("standard:recipe-unavailable",1,true),
+check(disabled.target.feasibility:find("standard:technology-locked-or-no-recipe",1,true),
   "a cached unlock bypassed a live disabled recipe")
 
 -- Policy permits main_product as an unlock hint; this planner historically
 -- requires a matching products entry, so preserve its fallback selection.
+-- Native recipe products are read-only during a runtime. A prototype change
+-- arrives through a new load/configuration and rebuilds derived membership.
 game.tick=game.tick+1
 recipes["stone-furnace"].enabled=true
 recipes["alternate-furnace"].enabled=true
 recipes["alternate-furnace"].main_product="stone-furnace"
 recipes["alternate-furnace"].products={{name="different-product"}}
+package.loaded["scripts.core.planning_constraints_0646"]=nil
+_G.TechPriestsPlanningConstraints0646=require("scripts.core.planning_constraints_0646")
 check(Plan.build_plan(pair,"main-product-compatibility").target.preferred_item=="stone-furnace",
   "reuse changed the planner's product matching semantics")
 print("[master-survey-reads] PASS bounded survey reads, live stock/research/recipe changes and legacy product selection")

@@ -58,7 +58,7 @@ Source order is catalog, typed nearby storage, loose ground. The wrapper can ret
 | Movement | Calls `tech_priests_request_movement_0418`; it does not prewrite movement request storage or issue fallback commands. |
 | Transfer | Immediate contact transfer with deposit/refund helpers. Do not call it an accepted persistent-custody transaction without separate verification. |
 | Timing | No independent fetch timer; work happens through its dispatcher wrapper and direct calls. |
-| Discovery | Nearby storage uses `0587.source_candidates` with domain `inventory-fetch-0527` and same-or-neutral force policy. Membership is independent of requested item/order. The initial or expired typed native query has no result limit. |
+| Discovery | Nearby storage uses `0587.source_candidates` with domain `inventory-fetch-0527` and same-or-neutral force policy. Membership is independent of requested item/order and has no timed expiry. Initial/domain-change or explicit-refresh typed native queries have no result limit. |
 | Loose items | The separate routed pickup query still has a 240-tick cache request and native result limit 128. It does not use the retained inventory-source domain. |
 | Catalog access | 0527 reads existing `station_catalog_0327.stations` directly, checks the source's live position against the current station radius, ranks live distances and rechecks current stock. A missing item no longer invokes `find_known_source`, `get_for_pair` or a forced catalog scan. The source-preserved 0526 compatibility helper uses the retained-only catalog approach; this does not establish a new installation path for 0526. |
 
@@ -68,27 +68,29 @@ Source order is catalog, typed nearby storage, loose ground. The wrapper can ret
 flowchart TD
     Fetch["0527 item request"] --> Membership["0587 retained source membership"]
     Storage["0686 generic storage request"] --> Membership
-    Membership --> Valid{"Matching domain and unexpired record?"}
+    Membership --> Valid{"Complete membership in matching station domain?"}
     Valid -->|"yes"| View["Keep physical identities and filter live eligibility"]
     Valid -->|"no"| Query["Complete typed native area query"]
-    Query --> Record["Store membership with 1800-tick expiry"]
+    Query --> Record["Retain physical membership without time expiry"]
     Record --> View
     Events["Build, remove, movement and corpse events"] --> Record
     View --> Live["Current inventory, role, wire and stock checks"]
     Changes["0634 nearby world change"] --> Dirty["Retain catalog snapshot and mark dirty"]
     Dirty --> Scan["Catalog registry: rotating two due stations"]
-    Scan --> Snapshot["Replace complete catalog snapshot"]
+    Scan --> Snapshot["Replace catalog snapshot; retain completeness flags"]
 ```
 
 `efficiency_economy_0587.source_candidates` and `.container_candidates` reuse the existing source-cache owner. Their keys include source domain, force policy, surface, force and home station. Validity also checks station identity/position, radius and type list. Physical membership is retained independently of current item quantity and force eligibility. Reads keep valid typed known identities when temporarily ineligible and filter the returned view against live force, surface and range; membership events can add or remove identities as they move. Consumers also recheck inventory, roles, wire permissions and available count before transfer. 0686's initial typed query includes other forces so a known source can become eligible after a force change without needing rediscovery.
 
 Build/removal events, including space-platform variants, clones, script teleports and surface changes update or discard membership. Player driving/position/surface changes update moving vehicles; spider-command completion and train changes update their affected inventory sources. Corpse creation and expiry are also observed. Programmatic stash creation in 0686 calls the same invalidator. Force eligibility is evaluated on every read and does not depend on an entity-force-change notification.
 
-`candidate_ttl = 1800` ticks provides a fallback for unobserved movement or missed/script-unannounced events: the next demand after expiry rediscovers, including an earlier empty result. This is demand-driven expiry, not a full scan every tick or an assertion that all other discovery routes use 30 seconds. Records use the existing persisted `source_cache`; short-lived legacy answer cleanup is separate from retained membership. Without successful event registration or enabled caching, the owner falls back to discovery. Failed/non-table query results are not installed as complete negative records.
+Retained inventory membership has no timer expiry, including an initially empty result. Records stay in the existing persisted `source_cache` through module reload; short-lived legacy answer cleanup is separate and does not expire these lists. Station/domain changes or explicit refresh can repopulate membership. An entity created or moved without any supported event may remain unknown until such a refresh; elapsed time does not silently start a replacement area search. Without successful event registration or enabled caching, the owner falls back to discovery. Failed/non-table query results are not installed as complete negative records.
 
-The 0686 generic-storage view returns at most 256 candidates while retaining overflow membership. Removal of a visible entry can promote a known overflow entity without another spatial query. The initial/expired native query itself is complete and has no entity limit; its cost still grows with local density. 0527's retained typed view is not capped at 256. Cached membership also does not eliminate repeated live inventory probes.
+The 0686 generic-storage view returns at most 256 candidates while retaining overflow membership. Removal of a visible entry can promote a known overflow entity without another spatial query. Initial population or an explicit/domain-change native query is complete and has no entity limit; its cost still grows with local density. 0527's retained typed view is not capped at 256. Cached membership also does not eliminate repeated live inventory probes.
 
 `station_area_change_invalidator_0634.clear_pair_state` marks the catalog dirty and due while retaining the last snapshot. It no longer forces a scan for every nearby entity event. `station_catalog.scan_due(2)` runs through a separate registry route every 60 ticks, sorts due station units, and resumes after saved `scan_cursor_0634`. Collecting/sorting due stations still visits the roster. `get_for_pair` can synchronously scan a station with no existing snapshot; explicit refresh can also force a scan. Ordinary known-resource GUI rendering now calls `catalog_for_pair(pair, false)`, so it reuses an existing snapshot but can still initialize a missing one. These paths remain outside the broker's internal callback cap.
+
+0327's broad world survey still includes inventory-bearing entities and reads their current contents. It is distinct from the retained 0527/0686 source-selection paths; the dedicated inventory repair does not establish that every surrounding-world query is event-only. Loose-ground-item pickup retains its separate 240-tick routed cache request.
 
 ## Broker admission and related read reductions
 
@@ -106,7 +108,7 @@ These names are taken from the current source; local helpers and call sites are 
 
 | Module | Exported functions |
 | --- | --- |
-| [planning_constraints_0646](../tech-priests_src/scripts/core/planning_constraints_0646.lua) | `M.item_for_entity`, `M.item_unlocked`, `M.entity_unlocked`, `M.interior_position_allowed`, `M.defense_position_allowed`, `M.finalize_installation`, `M.installation_summary`, `M.feature_available`, `M.install` |
+| [planning_constraints_0646](../tech-priests_src/scripts/core/planning_constraints_0646.lua) | `M.recipe_names_for_item`, `M.item_for_entity`, `M.item_unlocked`, `M.entity_unlocked`, `M.interior_position_allowed`, `M.defense_position_allowed`, `M.finalize_installation`, `M.installation_summary`, `M.feature_available`, `M.install` |
 | [logistics_fetch_executor_0527](../tech-priests_src/scripts/core/logistics_fetch_executor_0527.lua) | `M.spendable_source_count`, `M.root`, `M.service_pair`, `M.describe_pair`, `M.install` |
 | [scan_routing_0610](../tech-priests_src/scripts/core/scan_routing_0610.lua) | `M.root`, `M.should_skip_negative`, `M.record_negative`, `M.clear_negative`, `M.find_entities`, `M.report_lines`, `M.install` |
 | [efficiency_economy_0587](../tech-priests_src/scripts/core/efficiency_economy_0587.lua) | `M.source_candidates`, `M.container_candidates`, `M.invalidate_entity_sources`, `M.cleanup`, `M.install` |

@@ -9,7 +9,12 @@ local M={
  install_results={},install_failures={},prearm_results={},prearm_failures={},
  install_complete=false,install_phase="unarmed",degraded_families={},broker_prearm={}
 }
-local item_by_entity,unlock_cache_tick,unlock_cache={},-1,{}
+local item_by_entity={}
+-- Recipe products are immutable for a runtime; enabled state and inventory
+-- quantities are not. Keep names in the force's original iteration order,
+-- never LuaRecipe objects or answers about current availability.
+local recipe_names_by_force={}
+local empty_recipe_names={}
 local function valid(e)return e and e.valid end
 local function safe(v)local ok,s=pcall(tostring,v);return ok and s or"?"end
 local function dist_sq(a,b)local x=(a.x or 0)-(b.x or 0);local y=(a.y or 0)-(b.y or 0);return x*x+y*y end
@@ -20,10 +25,67 @@ local function radius_for(pair)
  if type(_G.get_station_operating_radius)=="function"then local ok,r=pcall(_G.get_station_operating_radius,pair.station);if ok and tonumber(r)then return math.max(8,tonumber(r))end end
  return math.max(8,tonumber(pair.radius or pair.base_radius)or 20)
 end
-local function recipe_produces(recipe,item)
- local products;pcall(function()products=recipe.products end)
- for _,p in pairs(products or{})do local n;pcall(function()n=p.name or p[1]end);if n==item then return true end end
- local main;pcall(function()main=recipe.main_product end);return main and(main.name or main)==item or false
+local function append_recipe(index,item,name)
+ if type(item)~="string" or item=="" then return end
+ local names=index[item]
+ if not names then names={};index[item]=names end
+ names[#names+1]=name
+end
+local function recipe_name_index(force)
+ -- Native LuaForce lookups return different raw Lua wrappers for the same
+ -- force. Use its stable index, guarded by the retained handle's validity
+ -- and native identity equality so a reused index cannot inherit names.
+ local key=force.index or force
+ local cached=recipe_names_by_force[key]
+ if cached and valid(cached.force) and cached.force==force then return cached end
+ recipe_names_by_force[key]=nil
+ for old,record in pairs(recipe_names_by_force)do
+  if not valid(record.force)then recipe_names_by_force[old]=nil end
+ end
+ local result={force=force,products={},with_main_product={}}
+ local complete=true
+ for name,recipe in pairs(force.recipes)do
+  local seen={}
+  local ok,products=pcall(function()return recipe.products end)
+  if not ok then complete=false end
+  for _,product in pairs(ok and products or {})do
+   local read,item=pcall(function()return product.name or product[1]end)
+   if not read then complete=false end
+   if read and type(item)=="string" and not seen[item]then
+    seen[item]=true
+    append_recipe(result.products,item,name)
+    append_recipe(result.with_main_product,item,name)
+   end
+  end
+  -- Native 2.1 LuaRecipe has products but no main_product property. Retain
+  -- the historical fallback for compatible non-native recipe providers,
+  -- without producing an exception per native recipe while building names.
+  local native=false
+  pcall(function()native=recipe.object_name=="LuaRecipe"end)
+  if not native then
+   local main
+   pcall(function()main=recipe.main_product end)
+   local item=type(main)=="string" and main or nil
+   if main and not item then pcall(function()item=main.name end)end
+   if type(item)=="string" and not seen[item]then
+    append_recipe(result.with_main_product,item,name)
+   end
+  end
+ end
+ -- A transient failed product read must not permanently certify a partial
+ -- membership list. The next requested lookup may retry that initial seed.
+ if complete then recipe_names_by_force[key]=result end
+ return result
+end
+function M.recipe_names_for_item(force,item_name,products_only)
+ if not(valid(force)and item_name and force.recipes)then
+  return empty_recipe_names
+ end
+ local index=recipe_name_index(force)
+ local names=products_only and index.products or index.with_main_product
+ -- Returned arrays are retained read-only candidates, including disabled
+ -- recipes. Consumers read force.recipes[name].enabled/ingredients live.
+ return names[item_name] or empty_recipe_names
 end
 function M.item_for_entity(entity_name)
  if not(entity_name and prototypes and prototypes.item)then return nil end
@@ -33,14 +95,13 @@ function M.item_for_entity(entity_name)
 end
 function M.item_unlocked(force,item_name)
  if not(force and force.valid and item_name and force.recipes)then return false,"invalid-force-or-item"end
- local tick=game and game.tick or 0;if unlock_cache_tick~=tick then unlock_cache_tick=tick;unlock_cache={}end
- local key=tostring(force.index or force.name or"?")..":"..item_name
- if unlock_cache[key]~=nil then return unlock_cache[key],unlock_cache[key]and"enabled-recipe"or"technology-locked-or-no-enabled-recipe"end
- -- Expose the recipe only when this call actually found it. A cached
- -- Boolean must not pin a recipe choice after another callback changes
- -- enabled recipes in the same tick. The first two returns are unchanged.
- for _,recipe in pairs(force.recipes)do local enabled=false;pcall(function()enabled=recipe.enabled==true end);if enabled and recipe_produces(recipe,item_name)then unlock_cache[key]=true;return true,"enabled-recipe",recipe end end
- unlock_cache[key]=false;return false,"technology-locked-or-no-enabled-recipe"
+ for _,name in ipairs(M.recipe_names_for_item(force,item_name))do
+  local recipe=force.recipes[name]
+  local enabled=false
+  if recipe then pcall(function()enabled=recipe.enabled==true end)end
+  if enabled then return true,"enabled-recipe",recipe end
+ end
+ return false,"technology-locked-or-no-enabled-recipe"
 end
 function M.entity_unlocked(pair,entity_name)
  if not(pair and valid(pair.station)and entity_name)then return false,"invalid-pair-or-entity"end

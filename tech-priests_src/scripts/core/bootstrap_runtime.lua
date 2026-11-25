@@ -777,13 +777,9 @@ if TECH_PRIESTS_0810_ROUTE then
         tech_priests_0409_refresh_selected_consecration_for_player(player)
       end
     end
-    if storage and storage.tech_priests then
-      local next_scan = storage.tech_priests.next_consecration_watchdog_scan_0409 or 0
-      if game and game.tick >= next_scan then
-        storage.tech_priests.next_consecration_watchdog_scan_0409 = game.tick + 1800
-        if scan_existing_consecration_targets then pcall(scan_existing_consecration_targets) end
-      end
-    end
+    -- Membership belongs to the consecration registry and its build/remove
+    -- bridge. This visibility watchdog only refreshes the selected machine;
+    -- it must not rediscover every surface alongside the bridge's seed pass.
   end, "consecration-watchdog", "consecration", "last")
   if TECH_PRIESTS_0810_ROUTE then table.insert(TECH_PRIESTS_0810_CONSECRATION_ROUTES, TECH_PRIESTS_0810_ROUTE) end
 end

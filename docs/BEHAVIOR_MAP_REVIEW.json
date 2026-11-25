@@ -3,8 +3,8 @@
     {
       "covered_source_files": 381,
       "path": "docs/BEHAVIOR_FUNCTION_MAP_0659.md",
-      "reviewed_source_digest": "c0b350f5ae8d8fab548effded6be7e416fb676df9164ffb9ebc13840f39491ea",
-      "sha256": "43920bcc919d00641c605a51f185a84a3f41044fcaa6396d64231c30ea8b4ce9",
+      "reviewed_source_digest": "f910a267499bb0ab41ac2a0527bf3694ecbbbf13d8e4823ecb8a52d22423f6c1",
+      "sha256": "2e8a58c2febf82f6bdaffcc460f931b8e085510fd734d3a5710043265b8c9ced",
       "source_patterns": [
         "control.lua",
         "scripts/**/*.lua",
@@ -14,8 +14,8 @@
     {
       "covered_source_files": 12,
       "path": "docs/BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0661.md",
-      "reviewed_source_digest": "05a22b5c2bbc4463ab7e813891e500d970f4f71d3c95511975d7a3dff85b65da",
-      "sha256": "e40e21ab6b169faf98a9c1ac10d52c90ba1af34ff1eb1dcac84ba98392e2339b",
+      "reviewed_source_digest": "eef9564f61e88c7a46205005175fb29c758155604ce4b8343fb52d5ce99eb44d",
+      "sha256": "ec03910e702c495697bf7352e33c83b800e11e82b8ca63414c1107bb2b2ba147",
       "source_patterns": [
         "scripts/core/planning_constraints_0646.lua",
         "scripts/core/logistics_fetch_executor_0527.lua",
@@ -34,7 +34,7 @@
     {
       "covered_source_files": 6,
       "path": "docs/BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0662_DIRECT_MOVEMENT.md",
-      "reviewed_source_digest": "8a14ec962693506e31f4aa25ad61b67c1b930dbbbac7aea3673bc4d627bf40cf",
+      "reviewed_source_digest": "4f3cbc5005c751a87e240b917c853ac5ea67609d96a32994f1af0c7cdf403cd8",
       "sha256": "a0e5e16f723f6bf493b74e4422a9812583ed2f715e6fce7a6cb88d7af3f1856a",
       "source_patterns": [
         "scripts/core/direct_acquisition_physical_guard_0649.lua",
@@ -72,7 +72,7 @@
     {
       "covered_source_files": 6,
       "path": "docs/BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0665_CONSTRUCTION.md",
-      "reviewed_source_digest": "e982d76366413d01ff1294c15b04feb8008027e78b3d55005c8354316e955688",
+      "reviewed_source_digest": "1a8aee642477da2c1f7b56ed70d703550bb8b32f4e8d8add14347bb2ff40ce7e",
       "sha256": "a756cf7a7c6c509245c9afc7d5360c5d271267c0bb3399b8b18c18a055180b8d",
       "source_patterns": [
         "scripts/core/construction_planner.lua",
@@ -86,8 +86,8 @@
     {
       "covered_source_files": 7,
       "path": "docs/BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0666_INFRASTRUCTURE_PLANNING.md",
-      "reviewed_source_digest": "499e7afd41cc4290aa9005bfb51a395843477822757ed895bb260182eeb50f1d",
-      "sha256": "2f539b10a9f6a69727f3389623f483da017ef92382bc9c13a8b86ecef49ebb6e",
+      "reviewed_source_digest": "92876c07d07ea640b044ac2b72062ac0767d5b120d39d43e75e26b17c6dd65d4",
+      "sha256": "39acf6a64014afbd18587bbf2e634bc40a352c11bc898d664c802a654b486ffd",
       "source_patterns": [
         "scripts/core/infrastructure_first_governor_0640.lua",
         "scripts/core/master_infrastructure_plan_0644.lua",
@@ -149,8 +149,8 @@
     {
       "covered_source_files": 23,
       "path": "docs/BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0671_CONSECRATION.md",
-      "reviewed_source_digest": "03a3e420b6302c873814867ca47dde6aba23a0078d7238a50776a2562fc1a537",
-      "sha256": "0aa20f27027fe46213c9d679381642539593b6268c378784e10b9aa9ff83e370",
+      "reviewed_source_digest": "a102351df25227461551f3dbd3edddab467ef98eb881c6512e381485ab907278",
+      "sha256": "5c88a8bbdb0a8ccf4d4147d5fdf718e71ca7183f0a47cce4c86748e71663ea57",
       "source_patterns": [
         "scripts/core/consecration_executor_0515.lua",
         "scripts/core/work_reservations.lua",
@@ -187,8 +187,8 @@
     {
       "covered_source_files": 381,
       "path": "docs/BEHAVIOR_MERMAID_MAP_0660.md",
-      "reviewed_source_digest": "c0b350f5ae8d8fab548effded6be7e416fb676df9164ffb9ebc13840f39491ea",
-      "sha256": "916a3043eeb6436e491dd4f55d8c36b3b6780a841d9c37497e48a5096a3db279",
+      "reviewed_source_digest": "f910a267499bb0ab41ac2a0527bf3694ecbbbf13d8e4823ecb8a52d22423f6c1",
+      "sha256": "dde4fd437159a502fc971946b884c30d7ae71839e51490b280fbc00b5758620c",
       "source_patterns": [
         "control.lua",
         "scripts/**/*.lua",
@@ -198,8 +198,8 @@
     {
       "covered_source_files": 381,
       "path": "docs/RECOVERY_AUTHORITY_MAP_CURRENT.md",
-      "reviewed_source_digest": "c0b350f5ae8d8fab548effded6be7e416fb676df9164ffb9ebc13840f39491ea",
-      "sha256": "cff57c3dcf294dd72bb562a1d7047f2814c40271ee43924a67b8183f7451ecc0",
+      "reviewed_source_digest": "f910a267499bb0ab41ac2a0527bf3694ecbbbf13d8e4823ecb8a52d22423f6c1",
+      "sha256": "0604e69e0fa6eb8091d681a651903653b7cea184535bed4fba8773ed1c5a22bd",
       "source_patterns": [
         "control.lua",
         "scripts/**/*.lua",
@@ -209,7 +209,7 @@
   ],
   "review_meaning": "Explicit source/diagram review acknowledgment; no semantic or runtime proof.",
   "schema": "tech-priests-behavior-map-review-v1",
-  "source_digest": "c0b350f5ae8d8fab548effded6be7e416fb676df9164ffb9ebc13840f39491ea",
+  "source_digest": "f910a267499bb0ab41ac2a0527bf3694ecbbbf13d8e4823ecb8a52d22423f6c1",
   "source_scope": [
     "control.lua",
     "scripts/**/*.lua",

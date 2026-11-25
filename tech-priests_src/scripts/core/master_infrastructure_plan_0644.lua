@@ -92,44 +92,45 @@ local function unlocked_recipe(pair, item)
   local ok, allowed, _, recipe = pcall(policy.item_unlocked, pair.station.force, item)
   return ok and allowed == true, ok and recipe or nil
 end
-local function enabled_product_recipe(recipe,item)
-  local enabled,produces=false,false
-  pcall(function()
-    enabled=recipe.enabled==true
-    for _,product in pairs(recipe.products or {}) do
-      if product.name==item then produces=true;break end
-    end
-  end)
-  return enabled and produces
-end
 local function craft_feasibility(pair, item, counts)
   if not item then return false, "no-item" end
   if station_count(pair, item, counts) > 0 then return true, "stocked" end
-  local unlocked,recipe=unlocked_recipe(pair,item)
-  if not unlocked then return false, "technology-locked-or-no-recipe" end
-  -- Reuse 0646's selected recipe, while rechecking its live enabled state
-  -- and the same product semantics used by this planner. Legacy/custom
-  -- unlock providers may return only a Boolean and still need the scan.
-  if not (recipe and enabled_product_recipe(recipe,item)) then
-    recipe=nil
-    for _,candidate in pairs(pair.station.force.recipes or {}) do
-      if enabled_product_recipe(candidate,item) then recipe=candidate;break end
+  if not unlocked_recipe(pair, item) then return false, "technology-locked-or-no-recipe" end
+  local recipes = pair.station.force.recipes
+  -- The planning authority retains immutable product membership. Rewalking
+  -- every recipe's product array for each proposed machine dominated native
+  -- planner time. Recipe enablement and physical ingredient stock stay live.
+  local policy = rawget(_G, "TechPriestsPlanningConstraints0646")
+  if not (policy and type(policy.recipe_names_for_item) == "function") then
+    local ok, mod = pcall(require, "scripts.core.planning_constraints_0646")
+    if ok then policy = mod end
+  end
+  if not (policy and type(policy.recipe_names_for_item) == "function") then
+    return false, "recipe-unavailable"
+  end
+  local ok, names = pcall(policy.recipe_names_for_item, pair.station.force, item, true)
+  if not (ok and type(names) == "table") then return false, "recipe-unavailable" end
+  for _, name in ipairs(names) do
+    local recipe = recipes and recipes[name]
+    local enabled = false
+    pcall(function() enabled = recipe and recipe.enabled == true end)
+    if enabled then
+      local missing = {}
+      local craftable = true
+      pcall(function()
+        for _, ingredient in pairs(recipe.ingredients or {}) do
+          if ingredient.type == "fluid" then
+            craftable = false; missing[#missing+1] = "fluid:" .. ingredient.name
+          elseif station_count(pair, ingredient.name, counts) < (ingredient.amount or 1) then
+            craftable = false; missing[#missing+1] = ingredient.name
+          end
+        end
+      end)
+      if craftable then return true, "ingredients-stocked" end
+      return false, "missing-ingredients:" .. table.concat(missing, ",")
     end
   end
-  if not recipe then return false, "recipe-unavailable" end
-  local missing = {}
-  local craftable = true
-  pcall(function()
-    for _, ingredient in pairs(recipe.ingredients or {}) do
-      if ingredient.type == "fluid" then
-        craftable = false; missing[#missing+1] = "fluid:" .. ingredient.name
-      elseif station_count(pair, ingredient.name, counts) < (ingredient.amount or 1) then
-        craftable = false; missing[#missing+1] = ingredient.name
-      end
-    end
-  end)
-  if craftable then return true, "ingredients-stocked" end
-  return false, "missing-ingredients:" .. table.concat(missing, ",")
+  return false, "recipe-unavailable"
 end
 local function item_available(pair, emergency, standard, counts)
   local standard_ok, standard_why = craft_feasibility(pair, standard, counts)
@@ -355,12 +356,14 @@ local function choose(pair, resources, roles, entities, counts)
   return { status = "planned", class = t.class, stage = t.stage, preferred_item = item, fallback_item = fallback, resource = first_resource(resources), blocker = item and station_count(pair, item, counts) > 0 and nil or feasibility, delivery = t.delivery, feasibility = feasibility, reason = t.stage,
     deferred_output = deferred_output }
 end
-local function cheapest_available_science(pair,counts)
+local function cheapest_available_science(pair, known_entities, counts)
   local force = pair.station.force
-  local labs = pair.station.surface.find_entities_filtered({
-    position = pair.station.position, radius = radius_for(pair),
-    force = force, type = "lab"
-  })
+  -- The role survey already returned these same local, same-force labs.
+  -- Selecting research must not issue a second area query for that subset.
+  local labs = {}
+  for _, entity in ipairs(known_entities or {}) do
+    if valid(entity) and entity.type == "lab" then labs[#labs + 1] = entity end
+  end
   if not labs or #labs == 0 then return nil, "no-laboratory" end
   -- This survey is read-only. Hundreds of technologies may ask about the
   -- same science pack, so read each live stock once for this invocation,
@@ -382,16 +385,24 @@ local function cheapest_available_science(pair,counts)
   end
   local best
   for name, tech in pairs(force.technologies or {}) do
-    local enabled, researched, prerequisites, ingredients, count = false, true, {}, {}, 0
+    local enabled, researched = false, true
     pcall(function()
       enabled = tech.enabled == true; researched = tech.researched == true
-      prerequisites = tech.prerequisites or {}
-      ingredients = tech.research_unit_ingredients or {}
-      count = tech.research_unit_count or 0
     end)
     if enabled and not researched then
+      local prerequisites = {}
+      pcall(function() prerequisites = tech.prerequisites or {} end)
       local ready = true
       for _, prerequisite in pairs(prerequisites) do if not prerequisite.researched then ready = false; break end end
+      -- Runtime prototype arrays are materialized on access. Locked and
+      -- completed technologies cannot be selected and need no copied recipe
+      -- ingredients, count evaluation, or inventory questions.
+      if ready then
+      local ingredients, count = {}, 0
+      pcall(function()
+        ingredients = tech.research_unit_ingredients or {}
+        count = tech.research_unit_count or 0
+      end)
       local packs, affordable = {}, true
       for _, ingredient in pairs(ingredients) do
         local item = ingredient.name or ingredient[1]
@@ -403,7 +414,7 @@ local function cheapest_available_science(pair,counts)
         local available=available_science(item)
         if available < amount then affordable = false end
       end
-      if ready and affordable and #packs > 0 then
+      if affordable and #packs > 0 then
         local supported = false
         for _, lab in pairs(labs) do
           local accepts = true
@@ -432,6 +443,7 @@ local function cheapest_available_science(pair,counts)
           end
         end
       end
+      end
     end
   end
   return best, best and "affordable-research" or "no-affordable-research"
@@ -444,13 +456,15 @@ function M.build_plan(pair, reason)
   -- research changes, including another plan in the same engine tick.
   local counts={}
   local resources = scan_resources(pair); local roles,entities = scan_roles(pair); local target = choose(pair, resources, roles, entities, counts)
-  local plan = { version = M.version, tick = now(), station = station_unit(pair), priest = priest_unit(pair), radius = radius_for(pair), reason = reason or "survey", resources = resources, roles = roles, resource_summary = summarize(resources), role_summary = summarize(roles), target = target, stage = target.stage, status = target.status, blocker = target.blocker }
+  local plan = { version = M.version, tick = now(), station = station_unit(pair), priest = priest_unit(pair), radius = radius_for(pair), reason = reason or "survey", resources = resources, roles = roles, resource_summary = summarize(resources), role_summary = summarize(roles), target = target, stage = target.stage, status = target.status, blocker = target.blocker,
+    surface_index = pair.station.surface.index, force_index = pair.station.force.index,
+    station_position = {x=pair.station.position.x,y=pair.station.position.y} }
   -- A physically built lab with actual science is eligible for its
   -- cheapest compatible, prerequisite-complete research now. Do not postpone
   -- research behind unrelated drill, inserter or belt construction. Keep
   -- those target/stage obligations intact so the master planner still
   -- proceeds with the rest of the industrial infrastructure.
-  plan.science, plan.science_reason = cheapest_available_science(pair,counts)
+  plan.science, plan.science_reason = cheapest_available_science(pair, entities, counts)
   if plan.science then
     plan.research_candidate=plan.science.name
     if plan.stage=="ready" then plan.stage="science-ready" end
@@ -518,7 +532,7 @@ function M.install()
       category = "diagnostics",
       interval = M.tick_interval,
       priority = 980,
-      budget = 8,
+      budget = 1,
       fn = function(event, budget)
         local acted,processed,exhausted,failed=M.service_all("broker",budget)
         return { processed=processed, acted=acted, exhausted=exhausted,

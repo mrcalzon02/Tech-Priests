@@ -2,18 +2,18 @@
   "counts": {
     "broker_services": 55,
     "commands": 141,
-    "dependencies": 689,
-    "event_routes": 303,
-    "functions": 11639,
+    "dependencies": 690,
+    "event_routes": 304,
+    "functions": 11646,
     "install_calls": 213,
-    "module_string_references": 978,
+    "module_string_references": 979,
     "module_tables": 56,
     "modules": 381,
-    "named_functions": 8454,
+    "named_functions": 8457,
     "potential_literal_reachable_modules": 306,
-    "scans": 213,
-    "state_writers": 4517,
-    "storage_roots": 1876,
+    "scans": 212,
+    "state_writers": 4516,
+    "storage_roots": 1873,
     "unresolved_loads": 9,
     "wrapper_candidates": 783
   },
@@ -14489,7 +14489,7 @@
             "function ( command ) local player = command and command . player_index and game . get_player ( command . player_index ) or nil if not ( player and player . valid ) then return end local entity = player . selected if not ( entity and entity  …"
           ],
           "callee": "commands.add_command",
-          "line": 813,
+          "line": 809,
           "protected_call": false
         },
         {
@@ -14499,7 +14499,7 @@
             "function ( event ) local player = event and event . player_index and game . get_player ( event . player_index ) or nil if not ( player and player . valid ) then return end local pair = nil if tech_priests_get_selected_pair_0247 then pcall ( …"
           ],
           "callee": "commands.add_command",
-          "line": 841,
+          "line": 837,
           "protected_call": false
         },
         {
@@ -14509,7 +14509,7 @@
             "function ( event ) local player = event and event . player_index and game . get_player ( event . player_index ) or nil if not ( player and player . valid ) then return end local entity = player . selected if not ( entity and entity . valid  …"
           ],
           "callee": "commands.add_command",
-          "line": 872,
+          "line": 868,
           "protected_call": false
         }
       ],
@@ -14995,7 +14995,7 @@
           "callee": "require",
           "execution": "conditional-or-unconditional; not evaluated",
           "kind": "literal-require",
-          "line": 914,
+          "line": 910,
           "protected_call": false,
           "target": "scripts.core.movement_controller",
           "target_scope": "inventoried-runtime-module"
@@ -15004,7 +15004,7 @@
           "callee": "require",
           "execution": "conditional-or-unconditional; not evaluated",
           "kind": "literal-require",
-          "line": 927,
+          "line": 923,
           "protected_call": false,
           "target": "scripts.core.movement_authority_audit",
           "target_scope": "inventoried-runtime-module"
@@ -15013,7 +15013,7 @@
           "callee": "require",
           "execution": "conditional-or-unconditional; not evaluated",
           "kind": "literal-require",
-          "line": 939,
+          "line": 935,
           "protected_call": false,
           "target": "scripts.core.combat_movement_leftovers",
           "target_scope": "inventoried-runtime-module"
@@ -15022,7 +15022,7 @@
           "callee": "require",
           "execution": "conditional-or-unconditional; not evaluated",
           "kind": "literal-require",
-          "line": 952,
+          "line": 948,
           "protected_call": false,
           "target": "scripts.core.hover_movement_stability",
           "target_scope": "inventoried-runtime-module"
@@ -15031,7 +15031,7 @@
           "callee": "require",
           "execution": "conditional-or-unconditional; not evaluated",
           "kind": "literal-require",
-          "line": 964,
+          "line": 960,
           "protected_call": false,
           "target": "scripts.core.task_transition_governor",
           "target_scope": "inventoried-runtime-module"
@@ -15040,7 +15040,7 @@
           "callee": "require",
           "execution": "conditional-or-unconditional; not evaluated",
           "kind": "literal-require",
-          "line": 976,
+          "line": 972,
           "protected_call": false,
           "target": "scripts.core.status_state_sanity",
           "target_scope": "inventoried-runtime-module"
@@ -15049,7 +15049,7 @@
           "callee": "require",
           "execution": "conditional-or-unconditional; not evaluated",
           "kind": "literal-require",
-          "line": 988,
+          "line": 984,
           "protected_call": false,
           "target": "scripts.core.consecration.history_gui",
           "target_scope": "inventoried-runtime-module"
@@ -15058,7 +15058,7 @@
           "callee": "require",
           "execution": "conditional-or-unconditional; not evaluated",
           "kind": "literal-require",
-          "line": 1000,
+          "line": 996,
           "protected_call": false,
           "target": "scripts.core.pair_lifecycle",
           "target_scope": "inventoried-runtime-module"
@@ -15067,7 +15067,7 @@
           "callee": "require",
           "execution": "conditional-or-unconditional; not evaluated",
           "kind": "literal-require",
-          "line": 1015,
+          "line": 1011,
           "protected_call": false,
           "target": "scripts.core.duplicate_behavior_family_guard",
           "target_scope": "inventoried-runtime-module"
@@ -15470,140 +15470,140 @@
         },
         {
           "kind": "anonymous",
-          "line": 812,
+          "line": 808,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 813,
+          "line": 809,
           "local": false,
           "name": "<anonymous>",
           "parameters": "command"
         },
         {
           "kind": "anonymous",
-          "line": 839,
+          "line": 835,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 840,
+          "line": 836,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
+        },
+        {
+          "kind": "anonymous",
+          "line": 837,
+          "local": false,
+          "name": "<anonymous>",
+          "parameters": "event"
         },
         {
           "kind": "anonymous",
           "line": 841,
           "local": false,
           "name": "<anonymous>",
-          "parameters": "event"
+          "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 845,
+          "line": 842,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 846,
+          "line": 866,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 870,
+          "line": 867,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 871,
-          "local": false,
-          "name": "<anonymous>",
-          "parameters": ""
-        },
-        {
-          "kind": "anonymous",
-          "line": 872,
+          "line": 868,
           "local": false,
           "name": "<anonymous>",
           "parameters": "event"
         },
         {
           "kind": "declaration",
-          "line": 903,
+          "line": 899,
           "local": false,
           "name": "TECH_PRIESTS_0417_INSTALL_MOVEMENT_HAMMER",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 913,
+          "line": 909,
           "local": false,
           "name": "TECH_PRIESTS_0418_INSTALL_MOVEMENT_CONTROLLER",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 926,
+          "line": 922,
           "local": false,
           "name": "TECH_PRIESTS_0419_INSTALL_MOVEMENT_AUTHORITY_AUDIT",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 938,
+          "line": 934,
           "local": false,
           "name": "TECH_PRIESTS_0429_INSTALL_COMBAT_MOVEMENT_LEFTOVERS",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 951,
+          "line": 947,
           "local": false,
           "name": "TECH_PRIESTS_0444_INSTALL_HOVER_MOVEMENT_STABILITY",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 963,
+          "line": 959,
           "local": false,
           "name": "TECH_PRIESTS_0445_INSTALL_TASK_TRANSITION_GOVERNOR",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 975,
+          "line": 971,
           "local": false,
           "name": "TECH_PRIESTS_0448_INSTALL_STATUS_STATE_SANITY",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 987,
+          "line": 983,
           "local": false,
           "name": "TECH_PRIESTS_0422_INSTALL_CONSECRATION_HISTORY_GUI",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 999,
+          "line": 995,
           "local": false,
           "name": "TECH_PRIESTS_0426_INSTALL_PAIR_LIFECYCLE",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 1014,
+          "line": 1010,
           "local": false,
           "name": "TECH_PRIESTS_0428_INSTALL_DUPLICATE_BEHAVIOR_GUARD",
           "parameters": ""
@@ -16026,7 +16026,7 @@
         },
         {
           "callee": "movement_controller.install",
-          "line": 915,
+          "line": 911,
           "literal_alias_candidates": [
             "scripts.core.movement_controller"
           ],
@@ -16035,7 +16035,7 @@
         },
         {
           "callee": "audit.install",
-          "line": 928,
+          "line": 924,
           "literal_alias_candidates": [
             "scripts.core.movement_authority_audit"
           ],
@@ -16044,7 +16044,7 @@
         },
         {
           "callee": "leftovers.install",
-          "line": 940,
+          "line": 936,
           "literal_alias_candidates": [
             "scripts.core.combat_movement_leftovers"
           ],
@@ -16053,7 +16053,7 @@
         },
         {
           "callee": "hover_stability.install",
-          "line": 953,
+          "line": 949,
           "literal_alias_candidates": [
             "scripts.core.hover_movement_stability"
           ],
@@ -16062,7 +16062,7 @@
         },
         {
           "callee": "governor.install",
-          "line": 965,
+          "line": 961,
           "literal_alias_candidates": [
             "scripts.core.task_transition_governor"
           ],
@@ -16071,7 +16071,7 @@
         },
         {
           "callee": "sanity.install",
-          "line": 977,
+          "line": 973,
           "literal_alias_candidates": [
             "scripts.core.status_state_sanity"
           ],
@@ -16080,7 +16080,7 @@
         },
         {
           "callee": "history_gui.install",
-          "line": 989,
+          "line": 985,
           "literal_alias_candidates": [
             "scripts.core.consecration.history_gui"
           ],
@@ -16089,7 +16089,7 @@
         },
         {
           "callee": "lifecycle.install",
-          "line": 1002,
+          "line": 998,
           "literal_alias_candidates": [
             "scripts.core.pair_lifecycle"
           ],
@@ -16098,7 +16098,7 @@
         },
         {
           "callee": "guard.install",
-          "line": 1016,
+          "line": 1012,
           "literal_alias_candidates": [
             "scripts.core.duplicate_behavior_family_guard"
           ],
@@ -16106,7 +16106,7 @@
           "resolution": "lexical-alias-only"
         }
       ],
-      "lines": 1025,
+      "lines": 1021,
       "module": "scripts.core.bootstrap_runtime",
       "module_string_references": [
         {
@@ -16375,47 +16375,47 @@
           "target": "scripts.core.doctrine_argument"
         },
         {
-          "line": 914,
+          "line": 910,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
           "target": "scripts.core.movement_controller"
         },
         {
-          "line": 927,
+          "line": 923,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
           "target": "scripts.core.movement_authority_audit"
         },
         {
-          "line": 939,
+          "line": 935,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
           "target": "scripts.core.combat_movement_leftovers"
         },
         {
-          "line": 952,
+          "line": 948,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
           "target": "scripts.core.hover_movement_stability"
         },
         {
-          "line": 964,
+          "line": 960,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
           "target": "scripts.core.task_transition_governor"
         },
         {
-          "line": 976,
+          "line": 972,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
           "target": "scripts.core.status_state_sanity"
         },
         {
-          "line": 988,
+          "line": 984,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
           "target": "scripts.core.consecration.history_gui"
         },
         {
-          "line": 1000,
+          "line": 996,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
           "target": "scripts.core.pair_lifecycle"
         },
         {
-          "line": 1015,
+          "line": 1011,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
           "target": "scripts.core.duplicate_behavior_family_guard"
         }
@@ -16435,7 +16435,7 @@
           "static_risk_hint": "wide-force-area"
         }
       ],
-      "sha256": "ab66d50d05d60ef7ca89cd4f563c03fd715ab274a4c9f21053f8215fb6181599",
+      "sha256": "1eed40f77408a4a603efaf5102d83add53e56d7ef72ef0c38443627ae81596ff",
       "state_writers": [
         {
           "kind": "state-assignment",
@@ -16466,51 +16466,33 @@
           "protected_call": false
         },
         {
-          "kind": "state-assignment",
-          "line": 783,
-          "target": "storage.tech_priests.next_consecration_watchdog_scan_0409"
-        },
-        {
           "callee": "table.insert",
           "kind": "mutation-call-candidate",
-          "line": 788,
+          "line": 784,
           "protected_call": false
         },
         {
           "kind": "state-assignment",
-          "line": 797,
+          "line": 793,
           "target": "_G.TECH_PRIESTS_BOOTSTRAP_ROUTE_OWNER_0810"
         },
         {
           "kind": "state-assignment",
-          "line": 844,
+          "line": 840,
           "target": "pair"
         },
         {
           "kind": "state-assignment",
-          "line": 845,
+          "line": 841,
           "target": "pair"
         },
         {
           "kind": "state-assignment",
-          "line": 846,
+          "line": 842,
           "target": "pair"
         }
       ],
-      "storage_roots": [
-        {
-          "expression": "storage.tech_priests",
-          "line": 780
-        },
-        {
-          "expression": "storage.tech_priests.next_consecration_watchdog_scan_0409",
-          "line": 781
-        },
-        {
-          "expression": "storage.tech_priests.next_consecration_watchdog_scan_0409",
-          "line": 783
-        }
-      ],
+      "storage_roots": [],
       "unresolved_loads": [],
       "wrapper_candidates": [
         {
@@ -28456,21 +28438,14 @@
           "line": 166,
           "local": false,
           "name": "scan_existing_consecration_targets",
-          "parameters": ""
+          "parameters": "only_surface , area"
         },
         {
           "kind": "declaration",
-          "line": 176,
+          "line": 181,
           "local": true,
           "name": "scan_list",
           "parameters": "entities"
-        },
-        {
-          "kind": "anonymous",
-          "line": 192,
-          "local": false,
-          "name": "<anonymous>",
-          "parameters": ""
         },
         {
           "kind": "anonymous",
@@ -28480,43 +28455,50 @@
           "parameters": ""
         },
         {
+          "kind": "anonymous",
+          "line": 205,
+          "local": false,
+          "name": "<anonymous>",
+          "parameters": ""
+        },
+        {
           "kind": "assigned-function",
-          "line": 214,
+          "line": 229,
           "local": false,
           "name": "clear_machine_custom_status",
           "parameters": "entity"
         },
         {
           "kind": "anonymous",
-          "line": 216,
+          "line": 231,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 219,
+          "line": 234,
           "local": false,
           "name": "set_machine_ritual_status",
           "parameters": "entity , labels , diode"
         },
         {
           "kind": "anonymous",
-          "line": 225,
+          "line": 240,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 233,
+          "line": 248,
           "local": false,
           "name": "get_nonoperating_status_diode",
           "parameters": ""
         }
       ],
       "install_calls": [],
-      "lines": 241,
+      "lines": 256,
       "module": "scripts.core.consecration.registry",
       "module_string_references": [
         {
@@ -28530,7 +28512,7 @@
           "target": "shared.combat_roster_catalog"
         },
         {
-          "line": 241,
+          "line": 256,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
           "target": "scripts.core.consecration.registry"
         }
@@ -28541,36 +28523,31 @@
       "scans": [
         {
           "arguments": [
-            "{ name = CONSECRATION_TARGET_NAME_LIST }"
-          ],
-          "callee": "surface.find_entities_filtered",
-          "line": 193,
-          "protected_call": false,
-          "runtime_cost": "unmeasured",
-          "static_risk_hint": "global-filtered"
-        },
-        {
-          "arguments": [
-            "{ type = target_type }"
+            "{ name = CONSECRATION_TARGET_NAME_LIST , area = area }"
           ],
           "callee": "surface.find_entities_filtered",
           "line": 199,
           "protected_call": false,
           "runtime_cost": "unmeasured",
-          "static_risk_hint": "global-filtered"
+          "static_risk_hint": "unbounded-filtered"
+        },
+        {
+          "arguments": [
+            "{ type = target_type , area = area }"
+          ],
+          "callee": "surface.find_entities_filtered",
+          "line": 206,
+          "protected_call": false,
+          "runtime_cost": "unmeasured",
+          "static_risk_hint": "unbounded-filtered"
         }
       ],
-      "sha256": "9cc440a132cc1f58ee4b74e09c8b3a001b57f51d71ac156c5e8d4741d00f1c64",
+      "sha256": "7adb4590f180128ecda801b15323c237e37a29463a311f5165a4c4399b5ac4bf",
       "state_writers": [
         {
           "kind": "state-assignment",
           "line": 106,
           "target": "storage.tech_priests.consecration.machines[unit]"
-        },
-        {
-          "kind": "state-assignment",
-          "line": 205,
-          "target": "storage.tech_priests.consecration.last_scan_0446"
         }
       ],
       "storage_roots": [
@@ -28595,12 +28572,8 @@
           "line": 158
         },
         {
-          "expression": "storage.tech_priests.consecration.last_scan_0446",
-          "line": 205
-        },
-        {
-          "expression": "storage.tech_priests.consecration.machines",
-          "line": 209
+          "expression": "storage.tech_priests.consecration",
+          "line": 212
         }
       ],
       "unresolved_loads": [],
@@ -28623,7 +28596,7 @@
           "callee": "require",
           "execution": "conditional-or-unconditional; not evaluated",
           "kind": "literal-require",
-          "line": 77,
+          "line": 92,
           "protected_call": true,
           "target": "scripts.core.runtime_event_registry",
           "target_scope": "inventoried-runtime-module"
@@ -28634,9 +28607,9 @@
           "action": "register-or-forward",
           "callee": "registry.on_configuration_changed",
           "event": "on_configuration_changed",
-          "handler": "function ( ) prune_ineligible_consecration_targets ( ) end",
+          "handler": "function ( ) prune_ineligible_consecration_targets ( ) ensure_storage ( ) local consecration = storage . tech_priests . consecration consecration . discovery_seeded_0446 = false consecration . next_bridge_scan_0446 = 0 end",
           "kind": "registry-or-helper",
-          "line": 90,
+          "line": 105,
           "options": {
             "category": {
               "expression": "\"consecration\"",
@@ -28664,7 +28637,7 @@
           "event": "on_event",
           "handler": "register_entity",
           "kind": "registry-or-helper",
-          "line": 99,
+          "line": 127,
           "options": {
             "category": {
               "expression": "\"consecration\"",
@@ -28685,7 +28658,7 @@
           },
           "protected_call": false,
           "selector": {
-            "expression": "{ defines . events . on_built_entity , defines . events . on_robot_built_entity , defines . events . script_raised_built , defines . events . script_raised_revive }",
+            "expression": "build_events",
             "runtime_value": "not evaluated"
           }
         },
@@ -28695,7 +28668,7 @@
           "event": "on_event",
           "handler": "register_entity",
           "kind": "registry-or-helper",
-          "line": 113,
+          "line": 136,
           "options": {
             "category": {
               "expression": "\"consecration\"",
@@ -28726,7 +28699,7 @@
           "event": "on_event",
           "handler": "remove_entity",
           "kind": "registry-or-helper",
-          "line": 122,
+          "line": 154,
           "options": {
             "category": {
               "expression": "\"consecration\"",
@@ -28747,7 +28720,7 @@
           },
           "protected_call": false,
           "selector": {
-            "expression": "{ defines . events . on_entity_died , defines . events . on_pre_player_mined_item , defines . events . on_robot_pre_mined , defines . events . script_raised_destroy }",
+            "expression": "remove_events",
             "runtime_value": "not evaluated"
           }
         },
@@ -28757,7 +28730,7 @@
           "event": "on_event",
           "handler": "refresh_changed_modules",
           "kind": "registry-or-helper",
-          "line": 134,
+          "line": 161,
           "options": {
             "category": {
               "expression": "\"consecration\"",
@@ -28788,7 +28761,7 @@
           "event": "on_nth_tick",
           "handler": "service_scan",
           "kind": "registry-or-helper",
-          "line": 144,
+          "line": 171,
           "options": {
             "category": {
               "expression": "\"consecration\"",
@@ -28807,6 +28780,37 @@
           "selector": {
             "expression": "89",
             "literal": 89
+          }
+        },
+        {
+          "action": "register-or-forward",
+          "callee": "registry.on_event",
+          "event": "on_event",
+          "handler": "register_generated_chunk",
+          "kind": "registry-or-helper",
+          "line": 178,
+          "options": {
+            "category": {
+              "expression": "\"consecration\"",
+              "literal": "consecration"
+            },
+            "owner": {
+              "expression": "\"consecration-runtime-bridge\"",
+              "literal": "consecration-runtime-bridge"
+            },
+            "priority": {
+              "expression": "\"last\"",
+              "literal": "last"
+            },
+            "route": {
+              "expression": "\"register-generated-chunk\"",
+              "literal": "register-generated-chunk"
+            }
+          },
+          "protected_call": false,
+          "selector": {
+            "expression": "defines . events . on_chunk_generated",
+            "runtime_value": "not evaluated"
           }
         }
       ],
@@ -28848,21 +28852,28 @@
         },
         {
           "kind": "declaration",
-          "line": 74,
+          "line": 82,
+          "local": true,
+          "name": "register_generated_chunk",
+          "parameters": "event"
+        },
+        {
+          "kind": "declaration",
+          "line": 89,
           "local": false,
           "name": "M.install",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 90,
+          "line": 105,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         }
       ],
       "install_calls": [],
-      "lines": 156,
+      "lines": 192,
       "module": "scripts.core.consecration.runtime_bridge",
       "module_string_references": [
         {
@@ -28876,7 +28887,7 @@
           "target": "scripts.core.consecration.doctrine_effects"
         },
         {
-          "line": 77,
+          "line": 92,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
           "target": "scripts.core.runtime_event_registry"
         }
@@ -28897,7 +28908,7 @@
       "path": "scripts/core/consecration/runtime_bridge.lua",
       "reachability": "potential-literal-require-path",
       "scans": [],
-      "sha256": "d52e198e99bedd9640ed747c66f812da489c467c09fd3f1204524cd4ab8af674",
+      "sha256": "3b4538cf861d0bc90bdab83b573061f5021b28afb35414beeea3d321fcaa09c3",
       "state_writers": [],
       "storage_roots": [
         {
@@ -28907,6 +28918,10 @@
         {
           "expression": "storage.tech_priests.consecration",
           "line": 61
+        },
+        {
+          "expression": "storage.tech_priests.consecration",
+          "line": 108
         }
       ],
       "unresolved_loads": [],
@@ -29560,7 +29575,7 @@
             }
           },
           "installation": "source-call-site-only",
-          "line": 425,
+          "line": 468,
           "protected_call": true,
           "specification": "literal-table"
         }
@@ -29589,7 +29604,7 @@
           "callee": "require",
           "execution": "conditional-or-unconditional; not evaluated",
           "kind": "literal-require",
-          "line": 55,
+          "line": 83,
           "protected_call": true,
           "target": "scripts.core.master_infrastructure_plan_0644",
           "target_scope": "inventoried-runtime-module"
@@ -29598,7 +29613,7 @@
           "callee": "require",
           "execution": "conditional-or-unconditional; not evaluated",
           "kind": "literal-require",
-          "line": 80,
+          "line": 116,
           "protected_call": true,
           "target": "scripts.core.construction_site_planner",
           "target_scope": "inventoried-runtime-module"
@@ -29607,7 +29622,7 @@
           "callee": "require",
           "execution": "conditional-or-unconditional; not evaluated",
           "kind": "literal-require",
-          "line": 421,
+          "line": 464,
           "protected_call": true,
           "target": "scripts.core.runtime_tick_broker",
           "target_scope": "inventoried-runtime-module"
@@ -29616,7 +29631,7 @@
           "callee": "require",
           "execution": "conditional-or-unconditional; not evaluated",
           "kind": "literal-require",
-          "line": 443,
+          "line": 486,
           "protected_call": true,
           "target": "scripts.core.runtime_event_registry",
           "target_scope": "inventoried-runtime-module"
@@ -29629,7 +29644,7 @@
           "event": "on_nth_tick",
           "handler": "function ( ) M . service_all ( \"nth-tick\" ) end",
           "kind": "registry-or-helper",
-          "line": 447,
+          "line": 490,
           "options": {
             "category": {
               "expression": "\"construction\"",
@@ -29792,64 +29807,36 @@
           "kind": "declaration",
           "line": 53,
           "local": true,
-          "name": "build_plan",
-          "parameters": "pair , reason"
+          "name": "plan_matches_domain",
+          "parameters": "pair , plan , owner"
         },
         {
           "kind": "declaration",
-          "line": 62,
+          "line": 81,
+          "local": true,
+          "name": "build_plan",
+          "parameters": "pair , reason , force_refresh"
+        },
+        {
+          "kind": "declaration",
+          "line": 98,
           "local": true,
           "name": "general_item_count",
           "parameters": "pair , item"
         },
         {
           "kind": "declaration",
-          "line": 78,
+          "line": 114,
           "local": true,
           "name": "plan_site",
           "parameters": "pair , entity_name , category"
         },
         {
           "kind": "declaration",
-          "line": 84,
+          "line": 120,
           "local": true,
           "name": "active_ghost",
           "parameters": "pair"
-        },
-        {
-          "kind": "anonymous",
-          "line": 88,
-          "local": false,
-          "name": "<anonymous>",
-          "parameters": ""
-        },
-        {
-          "kind": "declaration",
-          "line": 104,
-          "local": true,
-          "name": "box_bounds",
-          "parameters": "box"
-        },
-        {
-          "kind": "declaration",
-          "line": 111,
-          "local": true,
-          "name": "nearby_physical_entities",
-          "parameters": "pair , position"
-        },
-        {
-          "kind": "anonymous",
-          "line": 115,
-          "local": false,
-          "name": "<anonymous>",
-          "parameters": ""
-        },
-        {
-          "kind": "declaration",
-          "line": 122,
-          "local": false,
-          "name": "M.physical_site_obstruction",
-          "parameters": "pair , ghost , nearby"
         },
         {
           "kind": "anonymous",
@@ -29859,197 +29846,232 @@
           "parameters": ""
         },
         {
+          "kind": "declaration",
+          "line": 140,
+          "local": true,
+          "name": "box_bounds",
+          "parameters": "box"
+        },
+        {
+          "kind": "declaration",
+          "line": 147,
+          "local": true,
+          "name": "nearby_physical_entities",
+          "parameters": "pair , position"
+        },
+        {
           "kind": "anonymous",
-          "line": 131,
+          "line": 151,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 147,
+          "line": 158,
+          "local": false,
+          "name": "M.physical_site_obstruction",
+          "parameters": "pair , ghost , nearby"
+        },
+        {
+          "kind": "anonymous",
+          "line": 160,
+          "local": false,
+          "name": "<anonymous>",
+          "parameters": ""
+        },
+        {
+          "kind": "anonymous",
+          "line": 167,
+          "local": false,
+          "name": "<anonymous>",
+          "parameters": ""
+        },
+        {
+          "kind": "declaration",
+          "line": 183,
           "local": true,
           "name": "existing_local_bootstrap_smelter_1203",
           "parameters": "pair"
         },
         {
           "kind": "anonymous",
-          "line": 150,
+          "line": 186,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 169,
+          "line": 205,
           "local": true,
           "name": "target_complete",
           "parameters": "pair , rec , nearby"
         },
         {
           "kind": "declaration",
-          "line": 184,
+          "line": 220,
           "local": true,
           "name": "science_pack_name",
           "parameters": "ingredient"
         },
         {
           "kind": "declaration",
-          "line": 185,
+          "line": 221,
           "local": true,
           "name": "technology_unlocked",
           "parameters": "tech"
         },
         {
           "kind": "anonymous",
-          "line": 185,
+          "line": 221,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 186,
+          "line": 222,
           "local": true,
           "name": "prerequisites_met",
           "parameters": "tech"
         },
         {
           "kind": "anonymous",
-          "line": 186,
+          "line": 222,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 187,
+          "line": 223,
           "local": true,
           "name": "next_small_science_objective",
           "parameters": "pair"
         },
         {
           "kind": "anonymous",
-          "line": 194,
+          "line": 230,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 197,
+          "line": 233,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 198,
+          "line": 234,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 206,
+          "line": 242,
           "local": true,
           "name": "should_bootstrap",
           "parameters": "pair , plan"
         },
         {
           "kind": "declaration",
-          "line": 208,
+          "line": 244,
           "local": true,
           "name": "create_planning_ghost",
           "parameters": "pair , entity_name , pos"
         },
         {
           "kind": "anonymous",
-          "line": 210,
+          "line": 246,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 214,
+          "line": 250,
           "local": true,
           "name": "make_record",
           "parameters": "pair , plan , entity_name , pos , why , ghost"
         },
         {
           "kind": "declaration",
-          "line": 221,
+          "line": 257,
           "local": false,
           "name": "M.service_pair",
           "parameters": "pair , reason , requested_entity"
         },
         {
           "kind": "anonymous",
-          "line": 240,
+          "line": 283,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 266,
+          "line": 309,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 304,
+          "line": 347,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 361,
+          "line": 404,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 385,
+          "line": 428,
           "local": false,
           "name": "M.service_all",
           "parameters": "reason , budget"
         },
         {
           "kind": "anonymous",
-          "line": 396,
+          "line": 439,
           "local": false,
           "name": "<anonymous>",
           "parameters": "a , b"
         },
         {
           "kind": "declaration",
-          "line": 416,
+          "line": 459,
           "local": false,
           "name": "M.install",
           "parameters": ""
         },
         {
           "kind": "assigned-function",
-          "line": 431,
+          "line": 474,
           "local": false,
           "name": "fn",
           "parameters": "event , budget"
         },
         {
           "kind": "anonymous",
-          "line": 447,
+          "line": 490,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         }
       ],
       "install_calls": [],
-      "lines": 467,
+      "lines": 510,
       "module": "scripts.core.construction_bootstrap_ghost_planner_0645",
       "module_string_references": [
         {
@@ -30063,27 +30085,27 @@
           "target": "scripts.core.planning_constraints_0646"
         },
         {
-          "line": 55,
+          "line": 83,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
           "target": "scripts.core.master_infrastructure_plan_0644"
         },
         {
-          "line": 65,
+          "line": 101,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
           "target": "scripts.core.storage_role_authority_0686"
         },
         {
-          "line": 80,
+          "line": 116,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
           "target": "scripts.core.construction_site_planner"
         },
         {
-          "line": 421,
+          "line": 464,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
           "target": "scripts.core.runtime_tick_broker"
         },
         {
-          "line": 443,
+          "line": 486,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
           "target": "scripts.core.runtime_event_registry"
         }
@@ -30097,7 +30119,7 @@
             "{ position = position , radius = 2.25 , force = pair . station . force , limit = 48 }"
           ],
           "callee": "pair.station.surface.find_entities_filtered",
-          "line": 116,
+          "line": 152,
           "protected_call": false,
           "runtime_cost": "unmeasured",
           "static_risk_hint": "bounded-or-filtered"
@@ -30107,13 +30129,13 @@
             "{ name = \"tech-priests-emergency-smelter\" , position = station . position , radius = 22 , force = station . force , limit = 16 }"
           ],
           "callee": "station.surface.find_entities_filtered",
-          "line": 151,
+          "line": 187,
           "protected_call": false,
           "runtime_cost": "unmeasured",
           "static_risk_hint": "bounded-or-filtered"
         }
       ],
-      "sha256": "dd7b4b52b6629000a2bd279c5a91ee8943ed2d1d649f9d2bf1aa4367f9a5c5a2",
+      "sha256": "ccea577c8779bb8c33cc5810a43c717a845575c62cf83160003c185499310302",
       "state_writers": [
         {
           "kind": "state-assignment",
@@ -30137,37 +30159,15 @@
           "protected_call": false
         },
         {
+          "kind": "state-assignment",
+          "line": 91,
+          "target": "pair.master_infrastructure_plan_0644"
+        },
+        {
           "callee": "pair.station.surface.create_entity",
           "kind": "mutation-call-candidate",
-          "line": 210,
+          "line": 246,
           "protected_call": false
-        },
-        {
-          "kind": "state-assignment",
-          "line": 217,
-          "target": "pair.construction_bootstrap_ghost_0645"
-        },
-        {
-          "callee": "ghost.destroy",
-          "kind": "mutation-call-candidate",
-          "line": 228,
-          "protected_call": false
-        },
-        {
-          "kind": "state-assignment",
-          "line": 229,
-          "target": "pair.construction_bootstrap_ghost_0645"
-        },
-        {
-          "callee": "ghost.destroy",
-          "kind": "mutation-call-candidate",
-          "line": 241,
-          "protected_call": false
-        },
-        {
-          "kind": "state-assignment",
-          "line": 250,
-          "target": "pair.construction_candidate_0338"
         },
         {
           "kind": "state-assignment",
@@ -30177,53 +30177,80 @@
         {
           "callee": "ghost.destroy",
           "kind": "mutation-call-candidate",
-          "line": 266,
+          "line": 271,
           "protected_call": false
         },
         {
           "kind": "state-assignment",
-          "line": 282,
-          "target": "pair.construction_candidate_0338"
-        },
-        {
-          "kind": "state-assignment",
-          "line": 285,
+          "line": 272,
           "target": "pair.construction_bootstrap_ghost_0645"
         },
         {
           "callee": "ghost.destroy",
           "kind": "mutation-call-candidate",
-          "line": 305,
+          "line": 284,
           "protected_call": false
         },
         {
           "kind": "state-assignment",
-          "line": 317,
+          "line": 293,
           "target": "pair.construction_candidate_0338"
         },
         {
           "kind": "state-assignment",
-          "line": 322,
+          "line": 296,
+          "target": "pair.construction_bootstrap_ghost_0645"
+        },
+        {
+          "callee": "ghost.destroy",
+          "kind": "mutation-call-candidate",
+          "line": 309,
+          "protected_call": false
+        },
+        {
+          "kind": "state-assignment",
+          "line": 325,
+          "target": "pair.construction_candidate_0338"
+        },
+        {
+          "kind": "state-assignment",
+          "line": 328,
+          "target": "pair.construction_bootstrap_ghost_0645"
+        },
+        {
+          "callee": "ghost.destroy",
+          "kind": "mutation-call-candidate",
+          "line": 348,
+          "protected_call": false
+        },
+        {
+          "kind": "state-assignment",
+          "line": 360,
+          "target": "pair.construction_candidate_0338"
+        },
+        {
+          "kind": "state-assignment",
+          "line": 365,
           "target": "pair.construction_bootstrap_ghost_0645"
         },
         {
           "kind": "state-assignment",
-          "line": 329,
+          "line": 372,
           "target": "pair.construction_bootstrap_ghost_0645"
         },
         {
           "kind": "state-assignment",
-          "line": 375,
+          "line": 418,
           "target": "pair.construction_bootstrap_ghost_0645"
         },
         {
           "kind": "state-assignment",
-          "line": 394,
+          "line": 437,
           "target": "pair"
         },
         {
           "kind": "state-assignment",
-          "line": 460,
+          "line": 503,
           "target": "_G.TechPriestsConstructionBootstrapGhostPlanner0645"
         }
       ],
@@ -45727,7 +45754,7 @@
             "function ( event ) local player = event and event . player_index and game and game . get_player ( event . player_index ) or nil local p = lower ( event and event . parameter or \"status\" ) local r = M . root ( ) if p == \"on\" then r . enabled …"
           ],
           "callee": "commands.add_command",
-          "line": 545,
+          "line": 540,
           "protected_call": false
         }
       ],
@@ -45736,7 +45763,7 @@
           "callee": "require",
           "execution": "conditional-or-unconditional; not evaluated",
           "kind": "literal-require",
-          "line": 57,
+          "line": 54,
           "protected_call": true,
           "target": "scripts.core.command_hierarchy_0480",
           "target_scope": "inventoried-runtime-module"
@@ -45745,7 +45772,7 @@
           "callee": "require",
           "execution": "conditional-or-unconditional; not evaluated",
           "kind": "literal-require",
-          "line": 489,
+          "line": 484,
           "protected_call": true,
           "target": "scripts.core.runtime_event_registry",
           "target_scope": "inventoried-runtime-module"
@@ -45754,7 +45781,7 @@
           "callee": "require",
           "execution": "conditional-or-unconditional; not evaluated",
           "kind": "literal-require",
-          "line": 572,
+          "line": 567,
           "protected_call": true,
           "target": "scripts.core.runtime_event_registry",
           "target_scope": "inventoried-runtime-module"
@@ -45767,7 +45794,7 @@
           "event": "on_event",
           "handler": "function ( payload ) return source_event ( payload , change ) end",
           "kind": "registry-or-helper",
-          "line": 515,
+          "line": 510,
           "options": {
             "category": {
               "expression": "\"economy\"",
@@ -45798,7 +45825,7 @@
           "event": "on_nth_tick",
           "handler": "function ( ) M . cleanup ( ) end",
           "kind": "registry-or-helper",
-          "line": 573,
+          "line": 568,
           "options": {
             "category": {
               "expression": "\"economy\"",
@@ -45821,7 +45848,7 @@
           "selector": {
             "declared_scalar_candidates": [
               {
-                "line": 21,
+                "line": 18,
                 "value": 1140
               }
             ],
@@ -45833,411 +45860,411 @@
       "functions": [
         {
           "kind": "declaration",
-          "line": 27,
+          "line": 24,
           "local": true,
           "name": "now",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 28,
+          "line": 25,
           "local": true,
           "name": "valid",
           "parameters": "e"
         },
         {
           "kind": "declaration",
-          "line": 29,
+          "line": 26,
           "local": true,
           "name": "safe",
           "parameters": "v"
         },
         {
           "kind": "anonymous",
-          "line": 29,
+          "line": 26,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 30,
+          "line": 27,
           "local": true,
           "name": "lower",
           "parameters": "v"
         },
         {
           "kind": "declaration",
-          "line": 31,
+          "line": 28,
           "local": true,
           "name": "station_unit",
           "parameters": "pair"
         },
         {
           "kind": "declaration",
-          "line": 32,
+          "line": 29,
           "local": true,
           "name": "surface_key",
           "parameters": "pair"
         },
         {
           "kind": "declaration",
-          "line": 33,
+          "line": 30,
           "local": true,
           "name": "force_key",
           "parameters": "pair"
         },
         {
           "kind": "declaration",
-          "line": 34,
+          "line": 31,
           "local": true,
           "name": "valid_pair",
           "parameters": "pair"
         },
         {
           "kind": "declaration",
-          "line": 36,
+          "line": 33,
           "local": true,
           "name": "order_signature",
           "parameters": "pair"
         },
         {
           "kind": "declaration",
-          "line": 45,
+          "line": 42,
           "local": true,
           "name": "hierarchy_network_signature",
           "parameters": "pair"
         },
         {
           "kind": "declaration",
-          "line": 52,
+          "line": 49,
           "local": true,
           "name": "add",
           "parameters": "p"
         },
         {
           "kind": "declaration",
-          "line": 73,
+          "line": 70,
           "local": true,
           "name": "pair_key",
           "parameters": "pair"
         },
         {
           "kind": "declaration",
-          "line": 79,
+          "line": 76,
           "local": false,
           "name": "M.root",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 110,
+          "line": 107,
           "local": true,
           "name": "stat",
           "parameters": "k , n"
         },
         {
           "kind": "declaration",
-          "line": 111,
+          "line": 108,
           "local": true,
           "name": "remember",
           "parameters": "action , detail"
         },
         {
           "kind": "declaration",
-          "line": 116,
+          "line": 113,
           "local": true,
           "name": "valid_source_list",
           "parameters": "list"
         },
         {
           "kind": "declaration",
-          "line": 129,
+          "line": 126,
           "local": true,
           "name": "source_cache_key",
           "parameters": "pair , label"
         },
         {
           "kind": "declaration",
-          "line": 135,
+          "line": 132,
           "local": true,
           "name": "get_source_cache",
           "parameters": "pair , label"
         },
         {
           "kind": "declaration",
-          "line": 149,
+          "line": 146,
           "local": true,
           "name": "put_source_cache",
           "parameters": "pair , label , list"
         },
         {
           "kind": "declaration",
-          "line": 157,
+          "line": 154,
           "local": true,
           "name": "candidate_cache_key",
           "parameters": "pair , domain , force_policy"
         },
         {
           "kind": "declaration",
-          "line": 167,
+          "line": 164,
           "local": true,
           "name": "inside_candidate_area",
           "parameters": "record , position"
         },
         {
           "kind": "declaration",
-          "line": 174,
+          "line": 171,
           "local": true,
           "name": "member_matches",
           "parameters": "record , entity"
         },
         {
           "kind": "declaration",
-          "line": 181,
+          "line": 178,
           "local": true,
           "name": "source_matches",
           "parameters": "record , entity"
         },
         {
           "kind": "declaration",
-          "line": 188,
+          "line": 185,
           "local": true,
           "name": "source_types_match",
           "parameters": "record , types"
         },
         {
           "kind": "declaration",
-          "line": 196,
+          "line": 193,
           "local": true,
           "name": "candidate_view",
           "parameters": "record , limit"
         },
         {
           "kind": "declaration",
-          "line": 223,
+          "line": 220,
           "local": true,
           "name": "retained_candidates",
           "parameters": "pair , radius , domain , types , force_policy , discover , limit"
         },
         {
           "kind": "declaration",
-          "line": 264,
+          "line": 259,
           "local": false,
           "name": "M.source_candidates",
           "parameters": "pair , radius , domain , types , force_policy , discover"
         },
         {
           "kind": "declaration",
-          "line": 269,
+          "line": 264,
           "local": false,
           "name": "M.container_candidates",
           "parameters": "pair , radius , discover"
         },
         {
           "kind": "declaration",
-          "line": 274,
+          "line": 269,
           "local": true,
           "name": "count_cache_key",
           "parameters": "pair , item , label"
         },
         {
           "kind": "declaration",
-          "line": 280,
+          "line": 275,
           "local": true,
           "name": "get_count_cache",
           "parameters": "pair , item , label"
         },
         {
           "kind": "declaration",
-          "line": 294,
+          "line": 289,
           "local": true,
           "name": "put_count_cache",
           "parameters": "pair , item , label , value"
         },
         {
           "kind": "declaration",
-          "line": 303,
+          "line": 298,
           "local": true,
           "name": "invalidate_pair",
           "parameters": "pair , reason"
         },
         {
           "kind": "declaration",
-          "line": 313,
+          "line": 308,
           "local": false,
           "name": "M.invalidate_all",
           "parameters": "reason"
         },
         {
           "kind": "declaration",
-          "line": 320,
+          "line": 315,
           "local": true,
           "name": "update_source_membership",
           "parameters": "record , event , change"
         },
         {
           "kind": "declaration",
-          "line": 364,
+          "line": 359,
           "local": false,
           "name": "M.invalidate_entity_sources",
           "parameters": "event , change"
         },
         {
           "kind": "declaration",
-          "line": 387,
+          "line": 382,
           "local": true,
           "name": "wrap_source_func",
           "parameters": "name , label"
         },
         {
           "kind": "assigned-function",
-          "line": 391,
+          "line": 386,
           "local": false,
           "name": "]",
           "parameters": "pair , ..."
         },
         {
           "kind": "declaration",
-          "line": 403,
+          "line": 398,
           "local": true,
           "name": "wrap_count_func",
           "parameters": "name , label"
         },
         {
           "kind": "assigned-function",
-          "line": 407,
+          "line": 402,
           "local": false,
           "name": "]",
           "parameters": "pair , item , ..."
         },
         {
           "kind": "declaration",
-          "line": 418,
+          "line": 413,
           "local": true,
           "name": "wrap_remove_func",
           "parameters": "name , label"
         },
         {
           "kind": "assigned-function",
-          "line": 422,
+          "line": 417,
           "local": false,
           "name": "]",
           "parameters": "pair , item , count , ..."
         },
         {
           "kind": "declaration",
-          "line": 431,
+          "line": 426,
           "local": true,
           "name": "wrap_authority_pairs",
           "parameters": ""
         },
         {
           "kind": "assigned-function",
-          "line": 436,
+          "line": 431,
           "local": false,
           "name": "]",
           "parameters": "pair , ..."
         },
         {
           "kind": "declaration",
-          "line": 457,
+          "line": 452,
           "local": true,
           "name": "source_event",
           "parameters": "event , change"
         },
         {
           "kind": "declaration",
-          "line": 486,
+          "line": 481,
           "local": true,
           "name": "install_event_invalidation",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 516,
+          "line": 511,
           "local": false,
           "name": "<anonymous>",
           "parameters": "payload"
         },
         {
           "kind": "declaration",
-          "line": 524,
+          "line": 519,
           "local": false,
           "name": "M.cleanup",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 526,
+          "line": 521,
           "local": true,
           "name": "prune",
           "parameters": "tab"
         },
         {
           "kind": "declaration",
-          "line": 540,
+          "line": 535,
           "local": true,
           "name": "cache_size",
           "parameters": "tab"
         },
         {
           "kind": "declaration",
-          "line": 542,
+          "line": 537,
           "local": true,
           "name": "install_command",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 544,
+          "line": 539,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 545,
+          "line": 540,
           "local": false,
           "name": "<anonymous>",
           "parameters": "event"
         },
         {
           "kind": "declaration",
-          "line": 562,
+          "line": 557,
           "local": false,
           "name": "M.install",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 573,
+          "line": 568,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         }
       ],
       "install_calls": [],
-      "lines": 582,
+      "lines": 577,
       "module": "scripts.core.efficiency_economy_0587",
       "module_string_references": [
         {
-          "line": 57,
+          "line": 54,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
           "target": "scripts.core.command_hierarchy_0480"
         },
         {
-          "line": 488,
+          "line": 483,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
           "target": "scripts.core.runtime_event_registry"
         },
         {
-          "line": 489,
+          "line": 484,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
           "target": "scripts.core.runtime_event_registry"
         },
         {
-          "line": 572,
+          "line": 567,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
           "target": "scripts.core.runtime_event_registry"
         }
@@ -46246,107 +46273,107 @@
       "path": "scripts/core/efficiency_economy_0587.lua",
       "reachability": "potential-literal-require-path",
       "scans": [],
-      "sha256": "c2e90c759029b36cf0cf706adc53d4d998dec2792ff86e2b4c9adf2cee88317c",
+      "sha256": "035fe9546e4e83d53f2e48a7b7808bbc8810920ae854738547690d6b83e218c8",
       "state_writers": [
         {
           "kind": "state-assignment",
-          "line": 80,
+          "line": 77,
           "target": "storage.tech_priests"
         },
         {
           "kind": "state-assignment",
-          "line": 95,
+          "line": 92,
           "target": "storage.tech_priests[M . storage_key]"
         },
         {
           "callee": "table.remove",
           "kind": "mutation-call-candidate",
-          "line": 113,
+          "line": 110,
           "protected_call": false
         },
         {
           "kind": "state-assignment",
-          "line": 574,
+          "line": 569,
           "target": "_G.TechPriestsEfficiencyEconomy0587"
         },
         {
           "kind": "state-assignment",
-          "line": 575,
+          "line": 570,
           "target": "_G.tech_priests_0587_invalidate_logistics_cache"
         }
       ],
       "storage_roots": [
         {
           "expression": "storage.tech_priests",
-          "line": 64
+          "line": 61
         },
         {
           "expression": "storage.tech_priests.pairs_by_station",
-          "line": 64
+          "line": 61
         },
         {
           "expression": "storage.tech_priests",
-          "line": 80
+          "line": 77
         },
         {
           "expression": "storage.tech_priests[M . storage_key]",
-          "line": 81
+          "line": 78
         },
         {
           "expression": "storage.tech_priests[M . storage_key]",
-          "line": 95
+          "line": 92
         }
       ],
       "unresolved_loads": [],
       "wrapper_candidates": [
         {
           "kind": "saved-function-or-value-candidate",
-          "line": 24,
+          "line": 21,
           "target": "originals",
           "value": "{ } local container_events_installed"
         },
         {
           "kind": "saved-function-or-value-candidate",
-          "line": 390,
+          "line": 385,
           "target": "originals[name]",
           "value": "fn _G [ name"
         },
         {
           "kind": "function-replacement-candidate; original/wrapper semantics not inferred",
-          "line": 391,
+          "line": 386,
           "target": "_G[name]"
         },
         {
           "kind": "saved-function-or-value-candidate",
-          "line": 406,
+          "line": 401,
           "target": "originals[name]",
           "value": "fn _G [ name"
         },
         {
           "kind": "function-replacement-candidate; original/wrapper semantics not inferred",
-          "line": 407,
+          "line": 402,
           "target": "_G[name]"
         },
         {
           "kind": "saved-function-or-value-candidate",
-          "line": 421,
+          "line": 416,
           "target": "originals[name]",
           "value": "fn _G [ name"
         },
         {
           "kind": "function-replacement-candidate; original/wrapper semantics not inferred",
-          "line": 422,
+          "line": 417,
           "target": "_G[name]"
         },
         {
           "kind": "saved-function-or-value-candidate",
-          "line": 435,
+          "line": 430,
           "target": "originals[name]",
           "value": "fn _G [ name"
         },
         {
           "kind": "function-replacement-candidate; original/wrapper semantics not inferred",
-          "line": 436,
+          "line": 431,
           "target": "_G[name]"
         }
       ]
@@ -67499,8 +67526,8 @@
           "callee": "broker.register_service",
           "fields": {
             "budget": {
-              "expression": "8",
-              "literal": 8
+              "expression": "1",
+              "literal": 1
             },
             "category": {
               "expression": "\"diagnostics\"",
@@ -67534,7 +67561,7 @@
             }
           },
           "installation": "source-call-site-only",
-          "line": 516,
+          "line": 530,
           "protected_call": true,
           "specification": "literal-table"
         }
@@ -67554,7 +67581,16 @@
           "callee": "require",
           "execution": "conditional-or-unconditional; not evaluated",
           "kind": "literal-require",
-          "line": 506,
+          "line": 105,
+          "protected_call": true,
+          "target": "scripts.core.planning_constraints_0646",
+          "target_scope": "inventoried-runtime-module"
+        },
+        {
+          "callee": "require",
+          "execution": "conditional-or-unconditional; not evaluated",
+          "kind": "literal-require",
+          "line": 520,
           "protected_call": true,
           "target": "scripts.core.construction_bootstrap_ghost_planner_0645",
           "target_scope": "inventoried-runtime-module"
@@ -67563,7 +67599,7 @@
           "callee": "require",
           "execution": "conditional-or-unconditional; not evaluated",
           "kind": "literal-require",
-          "line": 512,
+          "line": 526,
           "protected_call": true,
           "target": "scripts.core.runtime_tick_broker",
           "target_scope": "inventoried-runtime-module"
@@ -67572,7 +67608,7 @@
           "callee": "require",
           "execution": "conditional-or-unconditional; not evaluated",
           "kind": "literal-require",
-          "line": 534,
+          "line": 548,
           "protected_call": true,
           "target": "scripts.core.runtime_event_registry",
           "target_scope": "inventoried-runtime-module"
@@ -67585,7 +67621,7 @@
           "event": "on_nth_tick",
           "handler": "function ( ) M . service_all ( \"nth-tick\" ) end",
           "kind": "registry-or-helper",
-          "line": 538,
+          "line": 552,
           "options": {
             "category": {
               "expression": "\"diagnostics\"",
@@ -67762,229 +67798,236 @@
           "kind": "declaration",
           "line": 95,
           "local": true,
-          "name": "enabled_product_recipe",
-          "parameters": "recipe , item"
-        },
-        {
-          "kind": "anonymous",
-          "line": 97,
-          "local": false,
-          "name": "<anonymous>",
-          "parameters": ""
-        },
-        {
-          "kind": "declaration",
-          "line": 105,
-          "local": true,
           "name": "craft_feasibility",
           "parameters": "pair , item , counts"
         },
         {
           "kind": "anonymous",
-          "line": 122,
+          "line": 116,
+          "local": false,
+          "name": "<anonymous>",
+          "parameters": ""
+        },
+        {
+          "kind": "anonymous",
+          "line": 120,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 134,
+          "line": 135,
           "local": true,
           "name": "item_available",
           "parameters": "pair , emergency , standard , counts"
         },
         {
           "kind": "declaration",
-          "line": 154,
+          "line": 155,
           "local": true,
           "name": "scan_resources",
           "parameters": "pair"
         },
         {
           "kind": "anonymous",
-          "line": 156,
+          "line": 157,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 160,
+          "line": 161,
           "local": true,
           "name": "entity_role",
           "parameters": "e"
         },
         {
           "kind": "declaration",
-          "line": 171,
+          "line": 172,
           "local": true,
           "name": "scan_roles",
           "parameters": "pair"
         },
         {
           "kind": "anonymous",
-          "line": 173,
+          "line": 174,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 177,
+          "line": 178,
           "local": true,
           "name": "has_role",
           "parameters": "roles , a , b"
         },
         {
           "kind": "declaration",
-          "line": 178,
+          "line": 179,
           "local": true,
           "name": "first_resource",
           "parameters": "resources"
         },
         {
           "kind": "anonymous",
-          "line": 178,
+          "line": 179,
           "local": false,
           "name": "<anonymous>",
           "parameters": "a , b"
         },
         {
           "kind": "declaration",
-          "line": 179,
+          "line": 180,
           "local": true,
           "name": "uncovered_drill_output",
           "parameters": "pair , entities , counts"
         },
         {
           "kind": "anonymous",
-          "line": 187,
+          "line": 188,
           "local": false,
           "name": "<anonymous>",
           "parameters": "a , b"
         },
         {
           "kind": "anonymous",
-          "line": 193,
+          "line": 194,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 220,
+          "line": 221,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 245,
+          "line": 246,
           "local": true,
           "name": "choose",
           "parameters": "pair , resources , roles , entities , counts"
         },
         {
           "kind": "anonymous",
-          "line": 316,
+          "line": 317,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 358,
+          "line": 359,
           "local": true,
           "name": "cheapest_available_science",
-          "parameters": "pair , counts"
+          "parameters": "pair , known_entities , counts"
         },
         {
           "kind": "declaration",
-          "line": 370,
+          "line": 373,
           "local": true,
           "name": "available_science",
           "parameters": "item"
         },
         {
           "kind": "anonymous",
-          "line": 386,
+          "line": 389,
+          "local": false,
+          "name": "<anonymous>",
+          "parameters": ""
+        },
+        {
+          "kind": "anonymous",
+          "line": 394,
+          "local": false,
+          "name": "<anonymous>",
+          "parameters": ""
+        },
+        {
+          "kind": "anonymous",
+          "line": 402,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 439,
+          "line": 451,
           "local": true,
           "name": "summarize",
           "parameters": "t"
         },
         {
           "kind": "declaration",
-          "line": 440,
+          "line": 452,
           "local": false,
           "name": "M.build_plan",
           "parameters": "pair , reason"
         },
         {
           "kind": "declaration",
-          "line": 461,
+          "line": 475,
           "local": true,
           "name": "service_science",
           "parameters": "pair , plan"
         },
         {
           "kind": "anonymous",
-          "line": 468,
+          "line": 482,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 473,
+          "line": 487,
           "local": false,
           "name": "M.service_pair",
           "parameters": "pair , reason"
         },
         {
           "kind": "declaration",
-          "line": 477,
+          "line": 491,
           "local": false,
           "name": "M.service_all",
           "parameters": "reason , budget"
         },
         {
           "kind": "anonymous",
-          "line": 488,
+          "line": 502,
           "local": false,
           "name": "<anonymous>",
           "parameters": "a , b"
         },
         {
           "kind": "declaration",
-          "line": 506,
+          "line": 520,
           "local": true,
           "name": "install_bootstrap",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 507,
+          "line": 521,
           "local": false,
           "name": "M.install",
           "parameters": ""
         },
         {
           "kind": "assigned-function",
-          "line": 522,
+          "line": 536,
           "local": false,
           "name": "fn",
           "parameters": "event , budget"
         },
         {
           "kind": "anonymous",
-          "line": 538,
+          "line": 552,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
@@ -67993,7 +68036,7 @@
       "install_calls": [
         {
           "callee": "mod.install",
-          "line": 506,
+          "line": 520,
           "literal_alias_candidates": [
             "scripts.core.construction_bootstrap_ghost_planner_0645",
             "scripts.core.planning_constraints_0646"
@@ -68002,7 +68045,7 @@
           "resolution": "lexical-alias-only"
         }
       ],
-      "lines": 561,
+      "lines": 575,
       "module": "scripts.core.master_infrastructure_plan_0644",
       "module_string_references": [
         {
@@ -68016,17 +68059,22 @@
           "target": "scripts.core.planning_constraints_0646"
         },
         {
-          "line": 506,
+          "line": 105,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.planning_constraints_0646"
+        },
+        {
+          "line": 520,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
           "target": "scripts.core.construction_bootstrap_ghost_planner_0645"
         },
         {
-          "line": 512,
+          "line": 526,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
           "target": "scripts.core.runtime_tick_broker"
         },
         {
-          "line": 534,
+          "line": 548,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
           "target": "scripts.core.runtime_event_registry"
         }
@@ -68040,7 +68088,7 @@
             "{ position = pair . station . position , radius = r , type = \"resource\" }"
           ],
           "callee": "pair.station.surface.find_entities_filtered",
-          "line": 156,
+          "line": 157,
           "protected_call": false,
           "runtime_cost": "unmeasured",
           "static_risk_hint": "unbounded-filtered"
@@ -68050,23 +68098,13 @@
             "{ position = pair . station . position , radius = r , force = pair . station . force , type = { \"mining-drill\" , \"furnace\" , \"assembling-machine\" , \"container\" , \"logistic-container\" , \"lab\" , \"inserter\" , \"transport-belt\" } }"
           ],
           "callee": "pair.station.surface.find_entities_filtered",
-          "line": 173,
-          "protected_call": false,
-          "runtime_cost": "unmeasured",
-          "static_risk_hint": "unbounded-filtered"
-        },
-        {
-          "arguments": [
-            "{ position = pair . station . position , radius = radius_for ( pair ) , force = force , type = \"lab\" }"
-          ],
-          "callee": "pair.station.surface.find_entities_filtered",
-          "line": 360,
+          "line": 174,
           "protected_call": false,
           "runtime_cost": "unmeasured",
           "static_risk_hint": "unbounded-filtered"
         }
       ],
-      "sha256": "1323be5568c5a122db2810b4c648c67c43c95621b344ebaa1888ca55edf43102",
+      "sha256": "ecac5696b9948306f62368b55312136c46073b72dd7a31c507198a188ca5b12c",
       "state_writers": [
         {
           "kind": "state-assignment",
@@ -68091,17 +68129,17 @@
         },
         {
           "kind": "state-assignment",
-          "line": 458,
+          "line": 472,
           "target": "pair.master_infrastructure_plan_0644"
         },
         {
           "kind": "state-assignment",
-          "line": 486,
+          "line": 500,
           "target": "pair"
         },
         {
           "kind": "state-assignment",
-          "line": 554,
+          "line": 568,
           "target": "_G.TechPriestsMasterInfrastructurePlan0644"
         }
       ],
@@ -75923,7 +75961,7 @@
           "callee": "require",
           "execution": "conditional-or-unconditional; not evaluated",
           "kind": "literal-require",
-          "line": 190,
+          "line": 251,
           "protected_call": true,
           "target": "scripts.core.runtime_tick_broker",
           "target_scope": "inventoried-runtime-module"
@@ -75933,189 +75971,217 @@
       "functions": [
         {
           "kind": "declaration",
-          "line": 13,
+          "line": 18,
           "local": true,
           "name": "valid",
           "parameters": "e"
         },
         {
           "kind": "declaration",
-          "line": 14,
+          "line": 19,
           "local": true,
           "name": "safe",
           "parameters": "v"
         },
         {
           "kind": "declaration",
-          "line": 15,
+          "line": 20,
           "local": true,
           "name": "dist_sq",
           "parameters": "a , b"
         },
         {
           "kind": "declaration",
-          "line": 16,
+          "line": 21,
           "local": true,
           "name": "pair_map",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 17,
+          "line": 22,
           "local": true,
           "name": "radius_for",
           "parameters": "pair"
         },
         {
           "kind": "declaration",
-          "line": 23,
+          "line": 28,
           "local": true,
-          "name": "recipe_produces",
-          "parameters": "recipe , item"
+          "name": "append_recipe",
+          "parameters": "index , item , name"
+        },
+        {
+          "kind": "declaration",
+          "line": 34,
+          "local": true,
+          "name": "recipe_name_index",
+          "parameters": "force"
         },
         {
           "kind": "anonymous",
-          "line": 24,
+          "line": 49,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 25,
+          "line": 52,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 26,
+          "line": 64,
+          "local": false,
+          "name": "<anonymous>",
+          "parameters": ""
+        },
+        {
+          "kind": "anonymous",
+          "line": 67,
+          "local": false,
+          "name": "<anonymous>",
+          "parameters": ""
+        },
+        {
+          "kind": "anonymous",
+          "line": 69,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 28,
+          "line": 80,
+          "local": false,
+          "name": "M.recipe_names_for_item",
+          "parameters": "force , item_name , products_only"
+        },
+        {
+          "kind": "declaration",
+          "line": 90,
           "local": false,
           "name": "M.item_for_entity",
           "parameters": "entity_name"
         },
         {
           "kind": "anonymous",
-          "line": 31,
+          "line": 93,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 34,
+          "line": 96,
           "local": false,
           "name": "M.item_unlocked",
           "parameters": "force , item_name"
         },
         {
           "kind": "anonymous",
-          "line": 42,
+          "line": 101,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 45,
+          "line": 106,
           "local": false,
           "name": "M.entity_unlocked",
           "parameters": "pair , entity_name"
         },
         {
           "kind": "declaration",
-          "line": 50,
+          "line": 111,
           "local": false,
           "name": "M.interior_position_allowed",
           "parameters": "pair , position , margin"
         },
         {
           "kind": "declaration",
-          "line": 56,
+          "line": 117,
           "local": false,
           "name": "M.defense_position_allowed",
           "parameters": "pair , position , tolerance"
         },
         {
           "kind": "declaration",
-          "line": 158,
+          "line": 219,
           "local": true,
           "name": "family_for",
           "parameters": "label"
         },
         {
           "kind": "declaration",
-          "line": 175,
+          "line": 236,
           "local": true,
           "name": "disable_target",
           "parameters": "module_name , family , reason"
         },
         {
           "kind": "declaration",
-          "line": 182,
+          "line": 243,
           "local": true,
           "name": "degrade_failure",
           "parameters": "failure"
         },
         {
           "kind": "declaration",
-          "line": 188,
+          "line": 249,
           "local": true,
           "name": "ensure_broker",
           "parameters": "phase"
         },
         {
           "kind": "declaration",
-          "line": 197,
+          "line": 258,
           "local": true,
           "name": "install_hardener",
           "parameters": "module_name"
         },
         {
           "kind": "declaration",
-          "line": 203,
+          "line": 264,
           "local": true,
           "name": "attempt_all",
           "parameters": "phase"
         },
         {
           "kind": "declaration",
-          "line": 208,
+          "line": 269,
           "local": true,
           "name": "broker_failure_snapshot",
           "parameters": "phase , reason"
         },
         {
           "kind": "declaration",
-          "line": 209,
+          "line": 270,
           "local": false,
           "name": "M.finalize_installation",
           "parameters": "reason"
         },
         {
           "kind": "declaration",
-          "line": 217,
+          "line": 278,
           "local": false,
           "name": "M.installation_summary",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 218,
+          "line": 279,
           "local": false,
           "name": "M.feature_available",
           "parameters": "family"
         },
         {
           "kind": "declaration",
-          "line": 219,
+          "line": 280,
           "local": false,
           "name": "M.install",
           "parameters": ""
@@ -76124,1235 +76190,1235 @@
       "install_calls": [
         {
           "callee": "broker.install",
-          "line": 192,
+          "line": 253,
           "literal_alias_candidates": [],
           "protected_call": true,
           "resolution": "dynamic-or-global-unresolved"
         },
         {
           "callee": "mod.install",
-          "line": 199,
+          "line": 260,
           "literal_alias_candidates": [],
           "protected_call": true,
           "resolution": "dynamic-or-global-unresolved"
         }
       ],
-      "lines": 224,
+      "lines": 285,
       "module": "scripts.core.planning_constraints_0646",
       "module_string_references": [
         {
-          "line": 69,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.direct_acquisition_executor_0513"
-        },
-        {
-          "line": 70,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.direct_acquisition_executor_0513"
-        },
-        {
-          "line": 70,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.consecration_executor_0515"
-        },
-        {
-          "line": 70,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.repair_executor_0516"
-        },
-        {
-          "line": 70,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.construction_planner"
-        },
-        {
-          "line": 70,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.logistics_machine_fulfillment_0528"
-        },
-        {
-          "line": 70,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.item_family_logistics_0702"
-        },
-        {
-          "line": 70,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.energy_family_logistics_0707"
-        },
-        {
-          "line": 70,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.rocket_silo_logistics_0710"
-        },
-        {
-          "line": 70,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.artillery_logistics_0713"
-        },
-        {
-          "line": 70,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.roboport_repair_pack_logistics_0715"
-        },
-        {
-          "line": 71,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.repair_executor_0516"
-        },
-        {
-          "line": 71,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.combat_repair_doctrine_0517"
-        },
-        {
-          "line": 72,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.construction_planner"
-        },
-        {
-          "line": 73,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.logistics_machine_fulfillment_0528"
-        },
-        {
-          "line": 74,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.logistics_machine_fulfillment_0528"
-        },
-        {
-          "line": 74,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.item_family_logistics_0702"
-        },
-        {
-          "line": 74,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.energy_family_logistics_0707"
-        },
-        {
-          "line": 74,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.rocket_silo_logistics_0710"
-        },
-        {
-          "line": 74,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.artillery_logistics_0713"
-        },
-        {
-          "line": 74,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.roboport_repair_pack_logistics_0715"
-        },
-        {
-          "line": 75,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.fluid_network_doctrine_0689"
-        },
-        {
-          "line": 75,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.fluid_connection_planner_0691"
-        },
-        {
-          "line": 76,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.item_family_logistics_0702"
-        },
-        {
-          "line": 76,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.energy_family_logistics_0707"
-        },
-        {
-          "line": 76,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.rocket_silo_logistics_0710"
-        },
-        {
-          "line": 76,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.artillery_logistics_0713"
-        },
-        {
-          "line": 76,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.roboport_repair_pack_logistics_0715"
-        },
-        {
-          "line": 77,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.fluid_turret_readiness_0716"
-        },
-        {
-          "line": 77,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.fluid_turret_connection_proposals_0717"
-        },
-        {
-          "line": 77,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.fluid_turret_connection_planner_0719"
-        },
-        {
-          "line": 77,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.single_dispatcher_0510"
-        },
-        {
-          "line": 80,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.direct_acquisition_physical_guard_0649"
-        },
-        {
-          "line": 81,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.proxy_ammo_hardener_0649"
-        },
-        {
-          "line": 82,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.visual_intent_line_authority_0657"
-        },
-        {
-          "line": 83,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.storage_role_authority_0686"
-        },
-        {
-          "line": 84,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.inventory_steward"
-        },
-        {
-          "line": 85,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.fluid_network_doctrine_0689"
-        },
-        {
-          "line": 86,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.fluid_connection_planner_0691"
-        },
-        {
-          "line": 87,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.item_family_logistics_0702"
-        },
-        {
-          "line": 88,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.energy_family_readiness_0705"
-        },
-        {
-          "line": 89,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.energy_family_logistics_0707"
-        },
-        {
-          "line": 90,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.rocket_silo_readiness_0709"
-        },
-        {
-          "line": 91,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.rocket_silo_logistics_0710"
-        },
-        {
-          "line": 92,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.artillery_readiness_0712"
-        },
-        {
-          "line": 93,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.artillery_logistics_0713"
-        },
-        {
-          "line": 94,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.roboport_readiness_0714"
-        },
-        {
-          "line": 95,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.roboport_repair_pack_logistics_0715"
-        },
-        {
-          "line": 96,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.fluid_turret_readiness_0716"
-        },
-        {
-          "line": 97,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.fluid_turret_connection_proposals_0717"
-        },
-        {
-          "line": 98,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.fluid_turret_connection_planner_0719"
-        },
-        {
-          "line": 99,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.development_integration_audit_0721"
-        },
-        {
-          "line": 100,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.runtime_command_cleanup_0720"
-        },
-        {
-          "line": 101,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.migration_pair_integrity_0734"
-        },
-        {
-          "line": 102,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.development_lifecycle_checkpoint_0733"
-        },
-        {
-          "line": 103,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.broker_registry_integrity_0725"
-        },
-        {
-          "line": 104,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.migration_lifecycle_assertion_0735"
-        },
-        {
-          "line": 105,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.hardener_installation_audit_0723"
-        },
-        {
-          "line": 108,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.direct_acquisition_movement_lock_0650"
-        },
-        {
-          "line": 109,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.movement_vector_enforcer_0651"
-        },
-        {
-          "line": 110,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.movement_target_reconciler_0652"
-        },
-        {
-          "line": 111,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.movement_intent_authority_0654"
-        },
-        {
-          "line": 112,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.active_leaf_task_truth_0655"
-        },
-        {
-          "line": 113,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.construction_placement_authority_0656"
-        },
-        {
-          "line": 114,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.logistics_mineable_source_bridge_0657"
-        },
-        {
-          "line": 115,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.repair_executor_integrity_0673"
-        },
-        {
-          "line": 116,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.combat_repair_integrity_0676"
-        },
-        {
-          "line": 117,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.combat_repair_terminal_cleanup_0677"
-        },
-        {
-          "line": 118,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.machine_logistics_integrity_0682"
-        },
-        {
-          "line": 119,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.machine_logistics_candidate_recovery_0683"
-        },
-        {
-          "line": 120,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.machine_logistics_final_authority_0684"
-        },
-        {
-          "line": 121,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.movement_cadence_contract_0518"
-        },
-        {
-          "line": 122,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.combat_magos_movement_authority_0472"
-        },
-        {
-          "line": 123,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.movement_bounds_contract_0511"
-        },
-        {
-          "line": 124,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.movement_enforcement_0566"
-        },
-        {
-          "line": 125,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.efficiency_economy_0572"
-        },
-        {
-          "line": 126,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.efficiency_economy_0577"
-        },
-        {
-          "line": 127,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.direct_acquisition_recall_guard_0632"
-        },
-        {
-          "line": 128,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.ground_route_authority_0633"
-        },
-        {
-          "line": 129,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.priest_vanish_guard_0502"
-        },
-        {
           "line": 130,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.pair_link_hardening_0495"
+          "target": "scripts.core.direct_acquisition_executor_0513"
         },
         {
           "line": 131,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.priest_lifecycle_seal_0500"
+          "target": "scripts.core.direct_acquisition_executor_0513"
+        },
+        {
+          "line": 131,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.consecration_executor_0515"
+        },
+        {
+          "line": 131,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.repair_executor_0516"
+        },
+        {
+          "line": 131,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.construction_planner"
+        },
+        {
+          "line": 131,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.logistics_machine_fulfillment_0528"
+        },
+        {
+          "line": 131,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.item_family_logistics_0702"
+        },
+        {
+          "line": 131,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.energy_family_logistics_0707"
+        },
+        {
+          "line": 131,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.rocket_silo_logistics_0710"
+        },
+        {
+          "line": 131,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.artillery_logistics_0713"
+        },
+        {
+          "line": 131,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.roboport_repair_pack_logistics_0715"
         },
         {
           "line": 132,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.priest_vanish_guard_0501"
+          "target": "scripts.core.repair_executor_0516"
+        },
+        {
+          "line": 132,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.combat_repair_doctrine_0517"
         },
         {
           "line": 133,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.mobility_recovery_contract_0506"
+          "target": "scripts.core.construction_planner"
         },
         {
           "line": 134,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.movement_recovery_authority_0508"
+          "target": "scripts.core.logistics_machine_fulfillment_0528"
         },
         {
           "line": 135,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.task_pair_audit_0498"
+          "target": "scripts.core.logistics_machine_fulfillment_0528"
+        },
+        {
+          "line": 135,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.item_family_logistics_0702"
+        },
+        {
+          "line": 135,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.energy_family_logistics_0707"
+        },
+        {
+          "line": 135,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.rocket_silo_logistics_0710"
+        },
+        {
+          "line": 135,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.artillery_logistics_0713"
+        },
+        {
+          "line": 135,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.roboport_repair_pack_logistics_0715"
         },
         {
           "line": 136,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.behavior_execution_doctrine_0505"
+          "target": "scripts.core.fluid_network_doctrine_0689"
+        },
+        {
+          "line": 136,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.fluid_connection_planner_0691"
         },
         {
           "line": 137,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.pair_death_and_respawn"
+          "target": "scripts.core.item_family_logistics_0702"
+        },
+        {
+          "line": 137,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.energy_family_logistics_0707"
+        },
+        {
+          "line": 137,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.rocket_silo_logistics_0710"
+        },
+        {
+          "line": 137,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.artillery_logistics_0713"
+        },
+        {
+          "line": 137,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.roboport_repair_pack_logistics_0715"
         },
         {
           "line": 138,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.station_pair_recovery"
+          "target": "scripts.core.fluid_turret_readiness_0716"
         },
         {
-          "line": 139,
+          "line": 138,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.inventory_transfer_integrity_0687"
+          "target": "scripts.core.fluid_turret_connection_proposals_0717"
         },
         {
-          "line": 140,
+          "line": 138,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.fluid_output_sink_doctrine_0694"
+          "target": "scripts.core.fluid_turret_connection_planner_0719"
+        },
+        {
+          "line": 138,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.single_dispatcher_0510"
         },
         {
           "line": 141,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.reservation_position_scope_0697"
+          "target": "scripts.core.direct_acquisition_physical_guard_0649"
         },
         {
           "line": 142,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.fluid_connection_execution_guard_0692"
+          "target": "scripts.core.proxy_ammo_hardener_0649"
         },
         {
           "line": 143,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.fluid_output_connection_planner_0696"
+          "target": "scripts.core.visual_intent_line_authority_0657"
         },
         {
           "line": 144,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.fluid_port_collision_validator_0699"
+          "target": "scripts.core.storage_role_authority_0686"
         },
         {
           "line": 145,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.fluid_port_context_guard_0700"
+          "target": "scripts.core.inventory_steward"
         },
         {
           "line": 146,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.item_family_integrity_0703"
+          "target": "scripts.core.fluid_network_doctrine_0689"
         },
         {
           "line": 147,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.fusion_reactor_readiness_guard_0727"
+          "target": "scripts.core.fluid_connection_planner_0691"
         },
         {
           "line": 148,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.energy_readiness_diagnostics_0711"
+          "target": "scripts.core.item_family_logistics_0702"
         },
         {
           "line": 149,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.energy_item_automation_guard_0722"
+          "target": "scripts.core.energy_family_readiness_0705"
         },
         {
           "line": 150,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.energy_automation_guard_install_assertion_0726"
+          "target": "scripts.core.energy_family_logistics_0707"
         },
         {
           "line": 151,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.rocket_silo_live_ownership_guard_0728"
+          "target": "scripts.core.rocket_silo_readiness_0709"
         },
         {
           "line": 152,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.artillery_train_validity_guard_0724"
+          "target": "scripts.core.rocket_silo_logistics_0710"
         },
         {
           "line": 153,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.fluid_turret_internal_buffer_guard_0731"
+          "target": "scripts.core.artillery_readiness_0712"
         },
         {
           "line": 154,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.fluid_turret_proposal_integrity_0718"
+          "target": "scripts.core.artillery_logistics_0713"
         },
         {
           "line": 155,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.fluid_turret_planner_integrity_0730"
+          "target": "scripts.core.roboport_readiness_0714"
+        },
+        {
+          "line": 156,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.roboport_repair_pack_logistics_0715"
+        },
+        {
+          "line": 157,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.fluid_turret_readiness_0716"
+        },
+        {
+          "line": 158,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.fluid_turret_connection_proposals_0717"
+        },
+        {
+          "line": 159,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.fluid_turret_connection_planner_0719"
+        },
+        {
+          "line": 160,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.development_integration_audit_0721"
+        },
+        {
+          "line": 161,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.runtime_command_cleanup_0720"
+        },
+        {
+          "line": 162,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.migration_pair_integrity_0734"
+        },
+        {
+          "line": 163,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.development_lifecycle_checkpoint_0733"
+        },
+        {
+          "line": 164,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.broker_registry_integrity_0725"
+        },
+        {
+          "line": 165,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.migration_lifecycle_assertion_0735"
+        },
+        {
+          "line": 166,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.hardener_installation_audit_0723"
+        },
+        {
+          "line": 169,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.direct_acquisition_movement_lock_0650"
+        },
+        {
+          "line": 170,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.movement_vector_enforcer_0651"
+        },
+        {
+          "line": 171,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.movement_target_reconciler_0652"
+        },
+        {
+          "line": 172,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.movement_intent_authority_0654"
+        },
+        {
+          "line": 173,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.active_leaf_task_truth_0655"
+        },
+        {
+          "line": 174,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.construction_placement_authority_0656"
+        },
+        {
+          "line": 175,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.logistics_mineable_source_bridge_0657"
+        },
+        {
+          "line": 176,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.repair_executor_integrity_0673"
+        },
+        {
+          "line": 177,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.combat_repair_integrity_0676"
+        },
+        {
+          "line": 178,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.combat_repair_terminal_cleanup_0677"
+        },
+        {
+          "line": 179,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.machine_logistics_integrity_0682"
+        },
+        {
+          "line": 180,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.machine_logistics_candidate_recovery_0683"
+        },
+        {
+          "line": 181,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.machine_logistics_final_authority_0684"
+        },
+        {
+          "line": 182,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.movement_cadence_contract_0518"
+        },
+        {
+          "line": 183,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.combat_magos_movement_authority_0472"
+        },
+        {
+          "line": 184,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.movement_bounds_contract_0511"
+        },
+        {
+          "line": 185,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.movement_enforcement_0566"
+        },
+        {
+          "line": 186,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.efficiency_economy_0572"
+        },
+        {
+          "line": 187,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.efficiency_economy_0577"
+        },
+        {
+          "line": 188,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.direct_acquisition_recall_guard_0632"
+        },
+        {
+          "line": 189,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.ground_route_authority_0633"
         },
         {
           "line": 190,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.runtime_tick_broker"
+          "target": "scripts.core.priest_vanish_guard_0502"
+        },
+        {
+          "line": 191,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.pair_link_hardening_0495"
+        },
+        {
+          "line": 192,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.priest_lifecycle_seal_0500"
+        },
+        {
+          "line": 193,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.priest_vanish_guard_0501"
+        },
+        {
+          "line": 194,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.mobility_recovery_contract_0506"
+        },
+        {
+          "line": 195,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.movement_recovery_authority_0508"
+        },
+        {
+          "line": 196,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.task_pair_audit_0498"
+        },
+        {
+          "line": 197,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.behavior_execution_doctrine_0505"
+        },
+        {
+          "line": 198,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.pair_death_and_respawn"
+        },
+        {
+          "line": 199,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.station_pair_recovery"
+        },
+        {
+          "line": 200,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.inventory_transfer_integrity_0687"
+        },
+        {
+          "line": 201,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.fluid_output_sink_doctrine_0694"
+        },
+        {
+          "line": 202,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.reservation_position_scope_0697"
+        },
+        {
+          "line": 203,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.fluid_connection_execution_guard_0692"
+        },
+        {
+          "line": 204,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.fluid_output_connection_planner_0696"
+        },
+        {
+          "line": 205,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.fluid_port_collision_validator_0699"
+        },
+        {
+          "line": 206,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.fluid_port_context_guard_0700"
+        },
+        {
+          "line": 207,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.item_family_integrity_0703"
         },
         {
           "line": 208,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.fusion_reactor_readiness_guard_0727"
+        },
+        {
+          "line": 209,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.energy_readiness_diagnostics_0711"
+        },
+        {
+          "line": 210,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.energy_item_automation_guard_0722"
+        },
+        {
+          "line": 211,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.energy_automation_guard_install_assertion_0726"
+        },
+        {
+          "line": 212,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.rocket_silo_live_ownership_guard_0728"
+        },
+        {
+          "line": 213,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.artillery_train_validity_guard_0724"
+        },
+        {
+          "line": 214,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.fluid_turret_internal_buffer_guard_0731"
+        },
+        {
+          "line": 215,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.fluid_turret_proposal_integrity_0718"
+        },
+        {
+          "line": 216,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.fluid_turret_planner_integrity_0730"
+        },
+        {
+          "line": 251,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
           "target": "scripts.core.runtime_tick_broker"
         },
         {
-          "line": 221,
+          "line": 269,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.runtime_tick_broker"
+        },
+        {
+          "line": 282,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
           "target": "scripts.core.runtime_tick_broker"
         }
       ],
       "module_tables": [
         {
-          "line": 68,
+          "line": 129,
           "name": "FAMILY_TARGETS",
           "references_in_source_order": [
             {
-              "line": 69,
+              "line": 130,
               "target": "scripts.core.direct_acquisition_executor_0513"
             },
             {
-              "line": 70,
+              "line": 131,
               "target": "scripts.core.direct_acquisition_executor_0513"
             },
             {
-              "line": 70,
+              "line": 131,
               "target": "scripts.core.consecration_executor_0515"
             },
             {
-              "line": 70,
+              "line": 131,
               "target": "scripts.core.repair_executor_0516"
             },
             {
-              "line": 70,
+              "line": 131,
               "target": "scripts.core.construction_planner"
             },
             {
-              "line": 70,
+              "line": 131,
               "target": "scripts.core.logistics_machine_fulfillment_0528"
             },
             {
-              "line": 70,
+              "line": 131,
               "target": "scripts.core.item_family_logistics_0702"
             },
             {
-              "line": 70,
+              "line": 131,
               "target": "scripts.core.energy_family_logistics_0707"
             },
             {
-              "line": 70,
+              "line": 131,
               "target": "scripts.core.rocket_silo_logistics_0710"
             },
             {
-              "line": 70,
+              "line": 131,
               "target": "scripts.core.artillery_logistics_0713"
             },
             {
-              "line": 70,
+              "line": 131,
               "target": "scripts.core.roboport_repair_pack_logistics_0715"
             },
             {
-              "line": 71,
+              "line": 132,
               "target": "scripts.core.repair_executor_0516"
             },
             {
-              "line": 71,
+              "line": 132,
               "target": "scripts.core.combat_repair_doctrine_0517"
             },
             {
-              "line": 72,
+              "line": 133,
               "target": "scripts.core.construction_planner"
             },
             {
-              "line": 73,
+              "line": 134,
               "target": "scripts.core.logistics_machine_fulfillment_0528"
             },
             {
-              "line": 74,
+              "line": 135,
               "target": "scripts.core.logistics_machine_fulfillment_0528"
             },
             {
-              "line": 74,
+              "line": 135,
               "target": "scripts.core.item_family_logistics_0702"
             },
             {
-              "line": 74,
+              "line": 135,
               "target": "scripts.core.energy_family_logistics_0707"
             },
             {
-              "line": 74,
+              "line": 135,
               "target": "scripts.core.rocket_silo_logistics_0710"
             },
             {
-              "line": 74,
+              "line": 135,
               "target": "scripts.core.artillery_logistics_0713"
             },
             {
-              "line": 74,
+              "line": 135,
               "target": "scripts.core.roboport_repair_pack_logistics_0715"
             },
             {
-              "line": 75,
+              "line": 136,
               "target": "scripts.core.fluid_network_doctrine_0689"
             },
             {
-              "line": 75,
+              "line": 136,
               "target": "scripts.core.fluid_connection_planner_0691"
             },
             {
-              "line": 76,
+              "line": 137,
               "target": "scripts.core.item_family_logistics_0702"
             },
             {
-              "line": 76,
+              "line": 137,
               "target": "scripts.core.energy_family_logistics_0707"
             },
             {
-              "line": 76,
+              "line": 137,
               "target": "scripts.core.rocket_silo_logistics_0710"
             },
             {
-              "line": 76,
+              "line": 137,
               "target": "scripts.core.artillery_logistics_0713"
             },
             {
-              "line": 76,
+              "line": 137,
               "target": "scripts.core.roboport_repair_pack_logistics_0715"
             },
             {
-              "line": 77,
+              "line": 138,
               "target": "scripts.core.fluid_turret_readiness_0716"
             },
             {
-              "line": 77,
+              "line": 138,
               "target": "scripts.core.fluid_turret_connection_proposals_0717"
             },
             {
-              "line": 77,
+              "line": 138,
               "target": "scripts.core.fluid_turret_connection_planner_0719"
             },
             {
-              "line": 77,
+              "line": 138,
               "target": "scripts.core.single_dispatcher_0510"
             }
           ],
           "role": "module-reference-table; dispatch not evaluated"
         },
         {
-          "line": 69,
+          "line": 130,
           "name": "direct",
           "references_in_source_order": [
             {
-              "line": 69,
+              "line": 130,
               "target": "scripts.core.direct_acquisition_executor_0513"
             }
           ],
           "role": "module-reference-table; dispatch not evaluated"
         },
         {
-          "line": 70,
+          "line": 131,
           "name": "movement",
           "references_in_source_order": [
             {
-              "line": 70,
+              "line": 131,
               "target": "scripts.core.direct_acquisition_executor_0513"
             },
             {
-              "line": 70,
+              "line": 131,
               "target": "scripts.core.consecration_executor_0515"
             },
             {
-              "line": 70,
+              "line": 131,
               "target": "scripts.core.repair_executor_0516"
             },
             {
-              "line": 70,
+              "line": 131,
               "target": "scripts.core.construction_planner"
             },
             {
-              "line": 70,
+              "line": 131,
               "target": "scripts.core.logistics_machine_fulfillment_0528"
             },
             {
-              "line": 70,
+              "line": 131,
               "target": "scripts.core.item_family_logistics_0702"
             },
             {
-              "line": 70,
+              "line": 131,
               "target": "scripts.core.energy_family_logistics_0707"
             },
             {
-              "line": 70,
+              "line": 131,
               "target": "scripts.core.rocket_silo_logistics_0710"
             },
             {
-              "line": 70,
+              "line": 131,
               "target": "scripts.core.artillery_logistics_0713"
             },
             {
-              "line": 70,
+              "line": 131,
               "target": "scripts.core.roboport_repair_pack_logistics_0715"
             }
           ],
           "role": "module-reference-table; dispatch not evaluated"
         },
         {
-          "line": 71,
+          "line": 132,
           "name": "repair",
           "references_in_source_order": [
             {
-              "line": 71,
+              "line": 132,
               "target": "scripts.core.repair_executor_0516"
             },
             {
-              "line": 71,
+              "line": 132,
               "target": "scripts.core.combat_repair_doctrine_0517"
             }
           ],
           "role": "module-reference-table; dispatch not evaluated"
         },
         {
-          "line": 72,
+          "line": 133,
           "name": "construction",
           "references_in_source_order": [
             {
-              "line": 72,
+              "line": 133,
               "target": "scripts.core.construction_planner"
             }
           ],
           "role": "module-reference-table; dispatch not evaluated"
         },
         {
-          "line": 73,
+          "line": 134,
           "name": "machine",
           "references_in_source_order": [
             {
-              "line": 73,
+              "line": 134,
               "target": "scripts.core.logistics_machine_fulfillment_0528"
             }
           ],
           "role": "module-reference-table; dispatch not evaluated"
         },
         {
-          "line": 74,
+          "line": 135,
           "name": "storage",
           "references_in_source_order": [
             {
-              "line": 74,
+              "line": 135,
               "target": "scripts.core.logistics_machine_fulfillment_0528"
             },
             {
-              "line": 74,
+              "line": 135,
               "target": "scripts.core.item_family_logistics_0702"
             },
             {
-              "line": 74,
+              "line": 135,
               "target": "scripts.core.energy_family_logistics_0707"
             },
             {
-              "line": 74,
+              "line": 135,
               "target": "scripts.core.rocket_silo_logistics_0710"
             },
             {
-              "line": 74,
+              "line": 135,
               "target": "scripts.core.artillery_logistics_0713"
             },
             {
-              "line": 74,
+              "line": 135,
               "target": "scripts.core.roboport_repair_pack_logistics_0715"
             }
           ],
           "role": "module-reference-table; dispatch not evaluated"
         },
         {
-          "line": 75,
+          "line": 136,
           "name": "fluid",
           "references_in_source_order": [
             {
-              "line": 75,
+              "line": 136,
               "target": "scripts.core.fluid_network_doctrine_0689"
             },
             {
-              "line": 75,
+              "line": 136,
               "target": "scripts.core.fluid_connection_planner_0691"
             }
           ],
           "role": "module-reference-table; dispatch not evaluated"
         },
         {
-          "line": 76,
+          "line": 137,
           "name": "item",
           "references_in_source_order": [
             {
-              "line": 76,
+              "line": 137,
               "target": "scripts.core.item_family_logistics_0702"
             }
           ],
           "role": "module-reference-table; dispatch not evaluated"
         },
         {
-          "line": 76,
+          "line": 137,
           "name": "energy",
           "references_in_source_order": [
             {
-              "line": 76,
+              "line": 137,
               "target": "scripts.core.energy_family_logistics_0707"
             }
           ],
           "role": "module-reference-table; dispatch not evaluated"
         },
         {
-          "line": 76,
+          "line": 137,
           "name": "silo",
           "references_in_source_order": [
             {
-              "line": 76,
+              "line": 137,
               "target": "scripts.core.rocket_silo_logistics_0710"
             }
           ],
           "role": "module-reference-table; dispatch not evaluated"
         },
         {
-          "line": 76,
+          "line": 137,
           "name": "artillery",
           "references_in_source_order": [
             {
-              "line": 76,
+              "line": 137,
               "target": "scripts.core.artillery_logistics_0713"
             }
           ],
           "role": "module-reference-table; dispatch not evaluated"
         },
         {
-          "line": 76,
+          "line": 137,
           "name": "roboport",
           "references_in_source_order": [
             {
-              "line": 76,
+              "line": 137,
               "target": "scripts.core.roboport_repair_pack_logistics_0715"
             }
           ],
           "role": "module-reference-table; dispatch not evaluated"
         },
         {
-          "line": 77,
+          "line": 138,
           "name": "turret",
           "references_in_source_order": [
             {
-              "line": 77,
+              "line": 138,
               "target": "scripts.core.fluid_turret_readiness_0716"
             },
             {
-              "line": 77,
+              "line": 138,
               "target": "scripts.core.fluid_turret_connection_proposals_0717"
             },
             {
-              "line": 77,
+              "line": 138,
               "target": "scripts.core.fluid_turret_connection_planner_0719"
             }
           ],
           "role": "module-reference-table; dispatch not evaluated"
         },
         {
-          "line": 77,
+          "line": 138,
           "name": "runtime",
           "references_in_source_order": [
             {
-              "line": 77,
+              "line": 138,
               "target": "scripts.core.single_dispatcher_0510"
             }
           ],
           "role": "module-reference-table; dispatch not evaluated"
         },
         {
-          "line": 79,
+          "line": 140,
           "name": "HARDENERS",
           "references_in_source_order": [
             {
-              "line": 80,
+              "line": 141,
               "target": "scripts.core.direct_acquisition_physical_guard_0649"
             },
             {
-              "line": 81,
+              "line": 142,
               "target": "scripts.core.proxy_ammo_hardener_0649"
             },
             {
-              "line": 82,
+              "line": 143,
               "target": "scripts.core.visual_intent_line_authority_0657"
             },
             {
-              "line": 83,
+              "line": 144,
               "target": "scripts.core.storage_role_authority_0686"
             },
             {
-              "line": 84,
+              "line": 145,
               "target": "scripts.core.inventory_steward"
             },
             {
-              "line": 85,
+              "line": 146,
               "target": "scripts.core.fluid_network_doctrine_0689"
             },
             {
-              "line": 86,
+              "line": 147,
               "target": "scripts.core.fluid_connection_planner_0691"
             },
             {
-              "line": 87,
+              "line": 148,
               "target": "scripts.core.item_family_logistics_0702"
             },
             {
-              "line": 88,
+              "line": 149,
               "target": "scripts.core.energy_family_readiness_0705"
             },
             {
-              "line": 89,
+              "line": 150,
               "target": "scripts.core.energy_family_logistics_0707"
             },
             {
-              "line": 90,
+              "line": 151,
               "target": "scripts.core.rocket_silo_readiness_0709"
             },
             {
-              "line": 91,
+              "line": 152,
               "target": "scripts.core.rocket_silo_logistics_0710"
             },
             {
-              "line": 92,
+              "line": 153,
               "target": "scripts.core.artillery_readiness_0712"
             },
             {
-              "line": 93,
+              "line": 154,
               "target": "scripts.core.artillery_logistics_0713"
             },
             {
-              "line": 94,
+              "line": 155,
               "target": "scripts.core.roboport_readiness_0714"
             },
             {
-              "line": 95,
+              "line": 156,
               "target": "scripts.core.roboport_repair_pack_logistics_0715"
             },
             {
-              "line": 96,
+              "line": 157,
               "target": "scripts.core.fluid_turret_readiness_0716"
             },
             {
-              "line": 97,
+              "line": 158,
               "target": "scripts.core.fluid_turret_connection_proposals_0717"
             },
             {
-              "line": 98,
+              "line": 159,
               "target": "scripts.core.fluid_turret_connection_planner_0719"
             },
             {
-              "line": 99,
+              "line": 160,
               "target": "scripts.core.development_integration_audit_0721"
             },
             {
-              "line": 100,
+              "line": 161,
               "target": "scripts.core.runtime_command_cleanup_0720"
             },
             {
-              "line": 101,
+              "line": 162,
               "target": "scripts.core.migration_pair_integrity_0734"
             },
             {
-              "line": 102,
+              "line": 163,
               "target": "scripts.core.development_lifecycle_checkpoint_0733"
             },
             {
-              "line": 103,
+              "line": 164,
               "target": "scripts.core.broker_registry_integrity_0725"
             },
             {
-              "line": 104,
+              "line": 165,
               "target": "scripts.core.migration_lifecycle_assertion_0735"
             },
             {
-              "line": 105,
+              "line": 166,
               "target": "scripts.core.hardener_installation_audit_0723"
             }
           ],
           "role": "ordered-installer-specification"
         },
         {
-          "line": 107,
+          "line": 168,
           "name": "RETIRED",
           "references_in_source_order": [
             {
-              "line": 108,
+              "line": 169,
               "target": "scripts.core.direct_acquisition_movement_lock_0650"
             },
             {
-              "line": 109,
+              "line": 170,
               "target": "scripts.core.movement_vector_enforcer_0651"
             },
             {
-              "line": 110,
+              "line": 171,
               "target": "scripts.core.movement_target_reconciler_0652"
             },
             {
-              "line": 111,
+              "line": 172,
               "target": "scripts.core.movement_intent_authority_0654"
             },
             {
-              "line": 112,
+              "line": 173,
               "target": "scripts.core.active_leaf_task_truth_0655"
             },
             {
-              "line": 113,
+              "line": 174,
               "target": "scripts.core.construction_placement_authority_0656"
             },
             {
-              "line": 114,
+              "line": 175,
               "target": "scripts.core.logistics_mineable_source_bridge_0657"
             },
             {
-              "line": 115,
+              "line": 176,
               "target": "scripts.core.repair_executor_integrity_0673"
             },
             {
-              "line": 116,
+              "line": 177,
               "target": "scripts.core.combat_repair_integrity_0676"
             },
             {
-              "line": 117,
+              "line": 178,
               "target": "scripts.core.combat_repair_terminal_cleanup_0677"
             },
             {
-              "line": 118,
+              "line": 179,
               "target": "scripts.core.machine_logistics_integrity_0682"
             },
             {
-              "line": 119,
+              "line": 180,
               "target": "scripts.core.machine_logistics_candidate_recovery_0683"
             },
             {
-              "line": 120,
+              "line": 181,
               "target": "scripts.core.machine_logistics_final_authority_0684"
             },
             {
-              "line": 121,
+              "line": 182,
               "target": "scripts.core.movement_cadence_contract_0518"
             },
             {
-              "line": 122,
+              "line": 183,
               "target": "scripts.core.combat_magos_movement_authority_0472"
             },
             {
-              "line": 123,
+              "line": 184,
               "target": "scripts.core.movement_bounds_contract_0511"
             },
             {
-              "line": 124,
+              "line": 185,
               "target": "scripts.core.movement_enforcement_0566"
             },
             {
-              "line": 125,
+              "line": 186,
               "target": "scripts.core.efficiency_economy_0572"
             },
             {
-              "line": 126,
+              "line": 187,
               "target": "scripts.core.efficiency_economy_0577"
             },
             {
-              "line": 127,
+              "line": 188,
               "target": "scripts.core.direct_acquisition_recall_guard_0632"
             },
             {
-              "line": 128,
+              "line": 189,
               "target": "scripts.core.ground_route_authority_0633"
             },
             {
-              "line": 129,
+              "line": 190,
               "target": "scripts.core.priest_vanish_guard_0502"
             },
             {
-              "line": 130,
+              "line": 191,
               "target": "scripts.core.pair_link_hardening_0495"
             },
             {
-              "line": 131,
+              "line": 192,
               "target": "scripts.core.priest_lifecycle_seal_0500"
             },
             {
-              "line": 132,
+              "line": 193,
               "target": "scripts.core.priest_vanish_guard_0501"
             },
             {
-              "line": 133,
+              "line": 194,
               "target": "scripts.core.mobility_recovery_contract_0506"
             },
             {
-              "line": 134,
+              "line": 195,
               "target": "scripts.core.movement_recovery_authority_0508"
             },
             {
-              "line": 135,
+              "line": 196,
               "target": "scripts.core.task_pair_audit_0498"
             },
             {
-              "line": 136,
+              "line": 197,
               "target": "scripts.core.behavior_execution_doctrine_0505"
             },
             {
-              "line": 137,
+              "line": 198,
               "target": "scripts.core.pair_death_and_respawn"
             },
             {
-              "line": 138,
+              "line": 199,
               "target": "scripts.core.station_pair_recovery"
             },
             {
-              "line": 139,
+              "line": 200,
               "target": "scripts.core.inventory_transfer_integrity_0687"
             },
             {
-              "line": 140,
+              "line": 201,
               "target": "scripts.core.fluid_output_sink_doctrine_0694"
             },
             {
-              "line": 141,
+              "line": 202,
               "target": "scripts.core.reservation_position_scope_0697"
             },
             {
-              "line": 142,
+              "line": 203,
               "target": "scripts.core.fluid_connection_execution_guard_0692"
             },
             {
-              "line": 143,
+              "line": 204,
               "target": "scripts.core.fluid_output_connection_planner_0696"
             },
             {
-              "line": 144,
+              "line": 205,
               "target": "scripts.core.fluid_port_collision_validator_0699"
             },
             {
-              "line": 145,
+              "line": 206,
               "target": "scripts.core.fluid_port_context_guard_0700"
             },
             {
-              "line": 146,
+              "line": 207,
               "target": "scripts.core.item_family_integrity_0703"
             },
             {
-              "line": 147,
+              "line": 208,
               "target": "scripts.core.fusion_reactor_readiness_guard_0727"
             },
             {
-              "line": 148,
+              "line": 209,
               "target": "scripts.core.energy_readiness_diagnostics_0711"
             },
             {
-              "line": 149,
+              "line": 210,
               "target": "scripts.core.energy_item_automation_guard_0722"
             },
             {
-              "line": 150,
+              "line": 211,
               "target": "scripts.core.energy_automation_guard_install_assertion_0726"
             },
             {
-              "line": 151,
+              "line": 212,
               "target": "scripts.core.rocket_silo_live_ownership_guard_0728"
             },
             {
-              "line": 152,
+              "line": 213,
               "target": "scripts.core.artillery_train_validity_guard_0724"
             },
             {
-              "line": 153,
+              "line": 214,
               "target": "scripts.core.fluid_turret_internal_buffer_guard_0731"
             },
             {
-              "line": 154,
+              "line": 215,
               "target": "scripts.core.fluid_turret_proposal_integrity_0718"
             },
             {
-              "line": 155,
+              "line": 216,
               "target": "scripts.core.fluid_turret_planner_integrity_0730"
             }
           ],
@@ -77409,22 +77475,22 @@
           "role": "explicit-retirement-table"
         },
         {
-          "line": 208,
+          "line": 269,
           "name": "failures",
           "references_in_source_order": [
             {
-              "line": 208,
+              "line": 269,
               "target": "scripts.core.runtime_tick_broker"
             }
           ],
           "role": "module-reference-table; dispatch not evaluated"
         },
         {
-          "line": 221,
+          "line": 282,
           "name": "M.prearm_failures",
           "references_in_source_order": [
             {
-              "line": 221,
+              "line": 282,
               "target": "scripts.core.runtime_tick_broker"
             }
           ],
@@ -77434,58 +77500,58 @@
       "path": "scripts/core/planning_constraints_0646.lua",
       "reachability": "potential-literal-require-path",
       "scans": [],
-      "sha256": "b756030dc0f2b07344c678cef4b414b81a906137a9af8aeecd737646e8d26111",
+      "sha256": "6179cb30171933f79385ed6a9c04ae31152429d7fb67804c6400bdfb0a3166b3",
       "state_writers": [
         {
           "kind": "state-assignment",
-          "line": 74,
+          "line": 135,
           "target": "storage"
         },
         {
           "kind": "state-assignment",
-          "line": 213,
+          "line": 274,
           "target": "storage.tech_priests"
         },
         {
           "kind": "state-assignment",
-          "line": 213,
+          "line": 274,
           "target": "storage.tech_priests.recovery_installation_0744"
         },
         {
           "kind": "state-assignment",
-          "line": 220,
+          "line": 281,
           "target": "_G.TechPriestsPlanningConstraints0646"
         }
       ],
       "storage_roots": [
         {
           "expression": "storage.tech_priests",
-          "line": 16
+          "line": 21
         },
         {
           "expression": "storage.tech_priests.pairs_by_station",
-          "line": 16
+          "line": 21
         },
         {
           "expression": "storage.tech_priests",
-          "line": 213
+          "line": 274
         },
         {
           "expression": "storage.tech_priests.recovery_installation_0744",
-          "line": 213
+          "line": 274
         }
       ],
       "unresolved_loads": [
         {
           "argument": "module_name",
           "callee": "require",
-          "line": 176,
+          "line": 237,
           "protected_call": true
         },
         {
           "argument": "module_name",
           "callee": "require",
-          "line": 198,
+          "line": 259,
           "protected_call": true
         }
       ],
@@ -153118,7 +153184,7 @@
     }
   ],
   "schema": "tech-priests-behavior-source-inventory-v1",
-  "source_digest": "c0b350f5ae8d8fab548effded6be7e416fb676df9164ffb9ebc13840f39491ea",
+  "source_digest": "f910a267499bb0ab41ac2a0527bf3694ecbbbf13d8e4823ecb8a52d22423f6c1",
   "source_scope": [
     "control.lua",
     "scripts/**/*.lua",

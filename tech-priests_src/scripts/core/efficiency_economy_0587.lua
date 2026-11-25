@@ -12,9 +12,6 @@ M.version = "0.1.587"
 M.storage_key = "efficiency_economy_0587"
 M.source_ttl = 45
 M.container_source_limit = 256
--- Events maintain known membership immediately. A request-driven refresh
--- also discovers sources created or moved without a supported entity event.
-M.candidate_ttl = 60 * 30
 M.count_ttl_positive = 45
 M.count_ttl_zero = 20
 M.authority_ttl = 90
@@ -231,7 +228,6 @@ local function retained_candidates(pair, radius, domain, types, force_policy, di
   local position = station.position
   local cached = key and r.source_cache[key]
   if cached and cached.retained_candidates == 1 and cached.complete == true
-      and now() < (tonumber(cached.expires_tick) or 0)
       and cached.station == station and cached.surface == station.surface
       and cached.force == station.force and cached.radius == radius
       and cached.x == position.x and cached.y == position.y
@@ -247,8 +243,7 @@ local function retained_candidates(pair, radius, domain, types, force_policy, di
       domain = domain, force_policy = force_policy, types = {}, type_names = {},
       station = station, surface = station.surface, force = station.force,
       surface_index = station.surface.index, radius = radius,
-      x = position.x, y = position.y, tick = now(),
-      expires_tick = now() + M.candidate_ttl }
+      x = position.x, y = position.y, tick = now() }
     for index, name in ipairs(types) do
       record.types[name], record.type_names[index] = true, name
     end

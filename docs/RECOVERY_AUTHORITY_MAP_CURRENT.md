@@ -73,7 +73,7 @@ flowchart TD
     Defense["Hostile defensive need"] --> Dispatch["Existing 0510 / perimeter authority"]
     Factory["Independent factory shortage"] --> Gate["Frustration admission"]
     Gate --> Planner["0640 execution and 0645 new ghost admission"]
-    Survey["Independent 0644 infrastructure survey"] --> Plan["Current plan context"]
+    Survey["0644 survey; one station per broker callback"] --> Plan["Retained station-domain plan"]
     Plan --> Planner
     Rail["0835 survey and 0836 original frontier"] --> Request["Identified construction request"]
     Planner --> Request
@@ -85,6 +85,8 @@ flowchart TD
 ```
 
 Defensive construction stays separate from the frustration timer. The timer admits independent emergency factory expansion; it does not suspend urgent repair or defense. The periodic 0644 survey may still run before frustration; 0640 gates autonomous prerequisite execution, while 0645 gates new ghosts after reconciling existing owned sites. Plans and ghosts are not completion. Native robot jobs require actual material/network prerequisites and a real build receipt.
+
+0645 consumes `pair.master_infrastructure_plan_0644` while station identity, surface, force, position and canonical clamped radius match. Elapsed time does not initiate another master survey. Cold stations, old snapshot schemas and changed domains initialize through 0644; observing physical completion of its current target permits one immediate owner refresh so the same call cannot recreate that completed ghost. Live stock and construction custody still govern active-ghost replacement, and explicit requested-entity reservations bypass the autonomous proposal. Failed domain/completion refreshes cannot authorize an obsolete proposal.
 
 Remote-resource strategies remain source-distinct: 0820 station chain; 0835 railway observation; 0836 next surveyed rail/build request; 0837 counted ore courier; existing native train, builder and worker execution. The source map does not establish sustained production or a successful rail save/reload.
 
@@ -144,6 +146,8 @@ flowchart TD
 | Generic storage / transfer | 0686 and `inventory_steward` | Generic stores only; no treating machine work slots as generic depots. |
 | Legacy known-source fetch | 0527 | Immediate transfer compatibility route; inspect its actual partial-deposit/refund contract separately. |
 
+Consecration membership stays in `storage.tech_priests.consecration.machines`. The existing runtime bridge's 89-tick route performs an initial registration seed only when missing, or retries an incomplete seed; elapsed time no longer starts a full-surface rescan. Configuration changes request one fresh seed and explicit diagnostic scans remain available. Build, clone, removal, platform and generated-chunk routes maintain records through the existing registration authority. Record identity, wear, quality and operation history are retained. The existing 149-tick visibility watchdog refreshes selected-machine presentation without starting another global registration scan; decay, research and modules retain their current owners.
+
 ## Native combat and additional runtime families
 
 The [full source inventory](BEHAVIOR_SOURCE_INVENTORY.md) also includes enemy colony seeding/research announcements, combat roster/muster/native AAI integration, bunker weapons, hydrogen runtime, orbital-trader visuals, Martian infrastructure and conditional Voidship armory. These explicit `control.lua` installs cannot be omitted merely because they were added after the older behavior-map series.
@@ -171,9 +175,11 @@ Retired source may be inspected as history. Re-enabling an installer, timer, sta
 
 The 0640 discarded-budget/acted-only loop is repaired in its existing owner: the broker passes its budget; traversal counts every inspected slot and resumes saved `service_cursor`, preserving the acted-count compatibility result. Source tests can prove visit counts and rotation; only native evidence can establish its cost in the owner's save.
 
-The shared discovery changes are mapped in [0661](BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0661.md). 0527 and 0686 reuse item-independent typed source membership in the existing 0587 cache owner. Physical identities are retained independently of live force eligibility; topology, player/vehicle/train/spider movement and corpse events update membership. The 1800-tick demand expiry remains a fallback for unobserved movement or missed events. Consumers read current quantities/eligibility, and 0527's catalog path checks live radius and distance before choosing a retained source. Initial or expired discovery is a complete native query; a 256-entry generic-storage view is not an engine query cap. 0527 and the source-preserved 0526 helper read existing catalog state without forcing a scan on item misses. 0634 retains dirty catalog snapshots rather than synchronously rescanning per world event; ordinary known-resource rendering reuses an existing snapshot but cold `get_for_pair` can still scan.
+The shared discovery changes are mapped in [0661](BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0661.md). 0527 and 0686 reuse item-independent typed source membership in the existing 0587 cache owner. Physical identities are retained independently of live force eligibility; topology, player/vehicle/train/spider movement and corpse events update membership. These source lists have no timed expiry, including for an initially empty area. Initial population, changed station domain/type policy or an explicit clear can rebuild the list; a missing event owner falls back to fresh discovery. Consumers read current quantities/eligibility, and 0527's catalog path checks live radius and distance before choosing a retained source. Initial discovery is a complete native query; a 256-entry generic-storage view is not an engine query cap. Creation or movement by another script without a supported event is not guaranteed to enter an existing list. 0527 and the source-preserved 0526 helper read existing catalog state without forcing a scan on item misses.
 
-0644 shares item counts only inside one synchronous `build_plan` call. A fresh 0646 unlock scan can return the selected recipe for immediate checked reuse; cached Boolean unlock results do not pin a recipe. The current map records these actual source boundaries without claiming a measured native improvement.
+0634 retains dirty catalog snapshots rather than synchronously rescanning per world event; ordinary known-resource rendering reuses an existing snapshot but cold `get_for_pair` can still scan. The separate periodic 0327 broad world survey still includes inventory-bearing entities and reads their contents for its catalog; this is not a claim that every surrounding-world query is event-only. 0527's loose-ground-item scan is also a separate path from retained inventory membership.
+
+0644 shares item counts only inside one synchronous `build_plan` call and reuses laboratories from its role survey. 0646 retains immutable product-to-recipe-name membership in original force recipe order, including disabled recipes; enabled flags and ingredients are read live. Its optional third unlock result is the currently selected live recipe, not a cached availability answer. 0644 requests products-only candidates and preserves the first matching enabled recipe's feasibility result. 0644's existing fair cursor admits one station per broker callback. The current map records these actual source boundaries without claiming a measured native improvement.
 
 ## Stage 5 — Evidence and Release Boundary
 

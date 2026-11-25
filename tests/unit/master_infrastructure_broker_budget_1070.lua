@@ -66,7 +66,7 @@ _G.TechPriestsRuntimeTickBroker0600={register_service=function(spec)
   end
   return spec
 end}
-assert(Plan.install()==true and captured and captured.budget==8,
+assert(Plan.install()==true and captured and captured.budget==1,
   "master survey did not install under the canonical runtime broker")
 local before=#visited
 local result=captured.fn({tick=10700},1)

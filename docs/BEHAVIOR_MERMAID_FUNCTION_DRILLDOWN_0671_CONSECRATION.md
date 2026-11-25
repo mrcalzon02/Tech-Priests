@@ -23,6 +23,10 @@ flowchart TD
     Refund -->|"no"| Order["Require same active consecration order"]
     Order --> Target["Ordered target or shared discovered candidate"]
     Target --> Eligible["Machine predicate, force, range, stock and cooldown"]
+    Seed["Initial or configuration registration seed"] --> Records["Retained consecration machine records"]
+    Events["Exact build, clone and removal events"] --> Records
+    Chunk["New chunk area discovery"] --> Records
+    Records --> Eligible
     Eligible --> Claim["Shared sanctify reservation"]
     Claim --> Travel["0418 movement and physical reach"]
     Travel --> Rite["90-tick rite preparation"]
@@ -53,6 +57,14 @@ flowchart TD
 
 No separate periodic executor is installed by 0515. Legacy scheduler/rite adapters call the queue/executor through existing entry points. Native target exclusion, old-save cleanup and refund/terminal scenarios require their own evidence; a map change proves none of those at runtime.
 
+### Retained world registration
+
+The world registry is separate from that 0515 candidate search. Existing records live in `storage.tech_priests.consecration.machines`. `scan_existing_consecration_targets()` populates preexisting machines across surfaces for initial, configuration or explicit diagnostic recovery. It records whether the full seed completed in `discovery_seeded_0446`; failed queries leave it incomplete. The runtime bridge's existing 89-tick route checks that state, reuses an already seeded registry, and retries an incomplete seed with its existing 600-tick retry deadline. A successful seed does not expire with time, and module reload retains saved membership. Older saves with a previous full-scan receipt initialize the seed marker from that receipt.
+
+Build/revive, clone, death/removal and space-platform events update exact entities through the same registration/removal authority. `on_chunk_generated` invokes the existing scan helper with only `event.surface` and `event.area`, so new terrain is discovered without rescanning existing surfaces. Configuration changes prune ineligible records and request one new seed. Existing machine IDs, wear, quality baseline and operation history are preserved when registration revisits the same machine; a clone receives its own new record. Script-created machines that emit none of the supported events require explicit/configuration recovery rather than a periodic full-world rediscovery.
+
+The 149-tick bootstrap visibility watchdog still refreshes selected-machine presentation, but no longer invokes the full-world registration scanner. Module changes, research effects and decay retain their own routes and live state handling. This removes duplicate periodic registration sweeps; it does **not** remove 0515's target lookup, initial/configuration recovery, generated-chunk queries, or selected-machine observation.
+
 ## Audited exported entry points
 
 These names are taken from the current source; local helpers and call sites are in the full inventory. A callable helper is not an independently scheduled service.
@@ -60,7 +72,8 @@ These names are taken from the current source; local helpers and call sites are 
 | Module | Exported functions |
 | --- | --- |
 | [consecration_executor_0515](../tech-priests_src/scripts/core/consecration_executor_0515.lua) | `M.root`, `M.on_order_released`, `M.active`, `M.service_pair`, `M.submit_or_assign_consecration_task`, `M.install` |
-| [consecration/registry](../tech-priests_src/scripts/core/consecration/registry.lua) |  |
+| [consecration/registry](../tech-priests_src/scripts/core/consecration/registry.lua) | Global API: `is_consecration_target`, `get_consecration_record`, `register_consecration_target`, `remove_consecration_target`, `prune_ineligible_consecration_targets`, `scan_existing_consecration_targets`; support globals `tech_priests_0448_is_consecration_excluded`, `tech_priests_0446_next_machine_id`, `tech_priests_0446_format_machine_id`, `clear_machine_custom_status`, `set_machine_ritual_status`, `get_nonoperating_status_diode`. The returned module table is metadata. |
+| [consecration/runtime_bridge](../tech-priests_src/scripts/core/consecration/runtime_bridge.lua) | `M.install`; owns canonical seed/retry, configuration, exact-entity, generated-chunk and module-interaction routes. |
 | [work_reservations](../tech-priests_src/scripts/core/work_reservations.lua) | `M.target_key`, `M.pair_id`, `M.root`, `M.get`, `M.is_claimed`, `M.is_claimed_key`, `M.claim`, `M.release_key`, `M.release`, `M.cleanup_expired`, `M.count`, `M.report_lines`, `M.install` |
 
 ## Update and evidence rule

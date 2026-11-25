@@ -187,7 +187,7 @@ check(scans, before_tick + (baseline and 2 or 0), "discovery repeated without a 
 local before_expiry = scans
 game.tick = discovery_tick + 1800
 check(Authority.generic_item_count(pair, "coal"), 13, "refresh changed stock")
-check(scans, before_expiry + 1, "30-second boundary did not refresh membership once")
+check(scans, before_expiry + (baseline and 1 or 0), "30-second boundary rediscovered membership")
 
 local before_periods = scans
 for period = 2, 20 do
@@ -195,8 +195,8 @@ for period = 2, 20 do
   Economy.cleanup()
   check(Authority.generic_item_count(pair, "coal"), 13, "retained stock changed at a time boundary")
 end
-check(scans, before_periods + 19,
-  "each elapsed 1800-tick period must refresh once on demand")
+check(scans, before_periods + (baseline and 19 or 0),
+  "cleanup or elapsed time forced spatial rediscovery")
 
 -- Reload reconstructs module functions/event routes, not physical membership.
 local before_reload = scans
@@ -263,8 +263,8 @@ check(Authority.generic_item_count(pair, "coal"), 9, "new arrival did not update
 check(scans, before_clear + (baseline and 2 or 0), "surface clear/build caused rediscovery")
 
 if not baseline then
-  -- An empty area is a temporary negative result. Cars drive into range
-  -- without a build/teleport event; the next 1800-tick refresh must find them.
+  -- Empty membership persists through time boundaries. A driver's actual
+  -- movement event admits a newly arriving car without rediscovering the area.
   for _, entity in ipairs(entities) do
     changed("script_raised_destroy", entity)
     entity.valid = false
@@ -280,19 +280,23 @@ if not baseline then
     return id == defines.inventory.car_trunk and vehicle.inv or nil
   end
   entities[1] = vehicle
-  vehicle.position.x = 4 -- ordinary movement: no raised event
+  vehicle.position.x = 4
   game.tick = empty_tick + 1799
   for _ = 1, 100 do
-    check(Authority.generic_item_count(pair, "coal"), 0, "unexpired empty membership")
+    check(Authority.generic_item_count(pair, "coal"), 0, "empty membership before movement event")
   end
-  check(scans, empty_scans, "empty membership repeatedly searched before its deadline")
+  check(scans, empty_scans, "empty membership repeatedly searched")
   game.tick = empty_tick + 1800
-  check(Authority.generic_item_count(pair, "coal"), 17, "entering vehicle stayed hidden after 30 seconds")
-  check(scans, empty_scans + 1, "expired empty membership was not rediscovered once")
+  check(Authority.generic_item_count(pair, "coal"), 0, "elapsed time replaced empty membership")
+  check(scans, empty_scans, "time boundary rediscovered an empty area")
+  game.get_player = function() return {valid=true,vehicle=vehicle} end
+  handlers[defines.events.on_player_changed_position]({player_index=1})
+  check(Authority.generic_item_count(pair, "coal"), 17, "movement event did not admit arriving vehicle")
+  check(scans, empty_scans, "movement event rediscovered the area")
   vehicle.inv.items.coal = 21
   check(Authority.generic_item_count(pair, "coal"), 21, "vehicle stock was cached")
   -- Known moving sources remain members even while ineligible. Returning
-  -- inside the same TTL becomes visible immediately without rediscovery.
+  -- inside the same station domain becomes visible without rediscovery.
   vehicle.position.x = 96
   check(Authority.generic_item_count(pair, "coal"), 0, "out-of-range vehicle remained spendable")
   vehicle.position.x = 4
@@ -300,8 +304,8 @@ if not baseline then
   check(Authority.generic_item_count(pair, "coal"), 21, "returning known vehicle stayed excluded")
   check(scans, before_return, "known vehicle return rediscovered the world")
   game.tick = empty_tick + 3600
-  check(Authority.generic_item_count(pair, "coal"), 21, "returning vehicle lost stock at refresh")
-  check(scans, before_return + 1, "next 1800-tick boundary did not refresh once")
+  check(Authority.generic_item_count(pair, "coal"), 21, "returning vehicle lost stock at time boundary")
+  check(scans, before_return, "next 1800-tick boundary rediscovered membership")
   Economy.invalidate_all("failed-discovery-fixture")
   fail_next_scan = true
   check(Authority.generic_item_count(pair, "coal"), 0, "failed discovery invented inventory")
@@ -324,4 +328,4 @@ check(uncached.generic_item_count(pair, "coal"), 1, "uncached first read")
 entities[#entities + 1] = chest(5001, 6, { coal = 2 })
 check(uncached.generic_item_count(pair, "coal"), 3, "missing events hid a new chest")
 check(scans, before_fallback + 2, "missing events incorrectly enabled reuse")
-print("[storage-discovery-cache-0587] PASS live-counts qualities roles domain movement events complete-cap-overflow 1800-tick-refresh reload live-force surface-clear empty-area moving-vehicle failure-retry canonical-cache fallback")
+print("[storage-discovery-cache-0587] PASS live-counts qualities roles domain movement events complete-cap-overflow retained-periods reload live-force surface-clear empty-area moving-vehicle failure-retry canonical-cache fallback")

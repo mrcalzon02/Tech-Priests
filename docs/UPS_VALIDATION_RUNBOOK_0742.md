@@ -59,11 +59,13 @@ stops doing its job cannot be reported as a performance improvement.
 6. Capture callback invocations/deferrals, scanned candidates and native query
    calls, cache hits/misses/invalidations, queue depth, oldest pending age and
    actual completed actions. A deferred callback must retain its obligation.
-7. Exercise the concrete change: repeated chest lookup during the 1,800-tick
-   discovery window; build/mine/destroy invalidation; live stock changes;
-   immediate movement/combat/lifecycle work; and save/reload with pending work.
-   A 30-second *location discovery* cache must not freeze inventory quantities
-   or suppress an event indicating that a candidate changed.
+7. Exercise the concrete change: repeated chest lookup across many 1,800-tick
+   boundaries without timed rediscovery; build/mine/destroy and vehicle/corpse
+   membership events; live stock changes; immediate movement/combat/lifecycle
+   work; and save/reload with pending work. Retaining source identities must
+   not freeze inventory quantities or suppress membership events. Verify that
+   an explicit refresh recovers an entity created without a supported event;
+   elapsed time alone must not substitute for that refresh.
 8. Once the four-priest failure is resolved, repeat the established higher-count
    cases and representative idle/logistics/combat/construction workloads before
    extending the performance claim to those populations. Report any unrun case
@@ -160,7 +162,7 @@ the exact validation state; regeneration alone does not resolve the listed risks
 The following paths are the first UPS suspects to watch during the next clean-world pass.
 
 1. Station catalog fallback: `station_catalog.scan_pair` still falls back to a bounded area scan when the 0579 cell index is dirty or unknown. This is correct for universal discovery but is the main scan cliff if repeated often.
-2. Logistics source fallback: `logistics_fetch_executor_0527` now uses typed inventory-source scans before probing broad inventory ids. If this still appears hot, the next step is per-item negative source cooldown by station and source prototype.
+2. Logistics source fallback: `logistics_fetch_executor_0527` uses 0587's retained, item-independent typed source membership without timed rediscovery. Measure live inventory probes separately from initial/domain-change discovery, membership events and the independent loose-item scan; an item miss no longer forces a catalog scan.
 3. Repair discovery: `work_queue_authority.discover_repair_near` now filters by force before damaged-entity checks. If repair direct scans remain high, repair discovery should be converted to event-fed damage submissions first and scan fallback second.
 4. Direct acquisition physical guard: `direct_acquisition_physical_guard_0649` now scans only resource/tree/mineable-debris types. If it still appears in profiler output, the next step is to stop scanning when the task already has a valid entity and only retry after a terminal target failure.
 5. Movement ownership: `active_leaf_task_truth_0655`, `movement_intent_authority_0654`, and `direct_acquisition_movement_lock_0650` should reduce repeated engine commands. If `engine_commands` keeps climbing without completions, movement ownership is still fighting.
