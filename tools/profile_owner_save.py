@@ -145,7 +145,8 @@ OBSERVER = r'''
 do
   local registry = require("scripts.core.runtime_event_registry")
   local broker = require("scripts.core.runtime_tick_broker")
-  local installed_local_hooks
+  local installed_local_hooks,installed_resource_expansion_hooks
+  local installed_global_hooks
   local elapsed_start, original_ids, original_count, reconstructed
   local observed_tick_count,last_observed_tick,observed_tick_sequence_valid=0,nil,true
   -- Read existing owners only. These are receipts from the physical mutation
@@ -312,8 +313,13 @@ do
       if __INSTRUMENT__ then
         assert(installed_local_hooks and #installed_local_hooks==8,
           "Owner-save diagnostic local instrumentation was not installed")
+        assert(installed_resource_expansion_hooks
+          and #installed_resource_expansion_hooks==__RESOURCE_EXPANSION_HOOK_COUNT__,
+          "Owner-save diagnostic resource expansion instrumentation was not installed")
         emit{phase="instrumentation-ready",tick=game.tick,
-          local_hook_names=installed_local_hooks}
+          local_hook_names=installed_local_hooks,
+          resource_expansion_hook_names=installed_resource_expansion_hooks,
+          global_hook_names=installed_global_hooks}
       end
       emit{phase="loaded",tick=game.tick,saved_pairs=#live_pairs(),mods=script.active_mods,
         deploy_four_requested=__DEPLOY_FOUR__,callback_instrumentation=__INSTRUMENT__}
@@ -343,6 +349,8 @@ do
     end
   end,nil,{owner="ci-owner-save-profile",route="observe-original-identities",priority=1000000})
   if __INSTRUMENT__ then
+    installed_global_hooks={}
+    local every_call_branches=__EVERY_CALL_BRANCHES__
     local function wrap(fn,scope,name,per_pair)
       local call_counts={}
       -- Rare scheduled owners need every invocation to avoid sampling away a
@@ -350,8 +358,10 @@ do
       local interval=scope=="registry-nth" and tonumber(name:match("^(%d+):"))
       local every_call=(interval and interval>=60)
         or (scope=="registry-nth" and name=="5:runtime_tick_broker_0600:central-pulse")
-        or scope=="dispatcher-branch"
+        or (scope=="dispatcher-branch" and every_call_branches[name])
+        or scope=="dispatcher-global"
         or scope=="broker-service"
+        or scope=="resource-expansion-local"
         or (scope=="infrastructure-local" and name:sub(1,5)=="0644.")
       return function(...)
         local label=name
@@ -421,6 +431,8 @@ do
       {"TechPriestsProxyAmmoHardener0649","scripts.core.proxy_ammo_hardener_0649",{"station_ammo","station_has_ammo","proxy_has_ammo","load_proxy_from_station","service_pair"}},
       {"TechPriestsMasterInfrastructurePlan0644","scripts.core.master_infrastructure_plan_0644",{"build_plan","service_pair"}},
       {"TechPriestsStationCatalog","scripts.core.station_catalog",{"scan_pair","step_pair","publish_pending","inventory_candidates","get_for_pair","find_known_source"}},
+      {"TechPriestsDevelopmentIntegrationAudit0721","scripts.core.development_integration_audit_0721",{"audit_all","step_storage_audit"}},
+      {"TechPriestsDevelopmentLifecycleCheckpoint0733","scripts.core.development_lifecycle_checkpoint_0733",{"checkpoint"}},
     }
     for _,spec in ipairs(owners) do
       local owner=rawget(_G,spec[1]) or package.loaded[spec[2]]
@@ -439,8 +451,17 @@ do
     installed_local_hooks=infrastructure.__tp_owner_profile_locals(wrap)
     log("[TP-OWNER-PROFILE-LOCALS] owner=master_infrastructure_plan_0644 active="
       ..table.concat(installed_local_hooks,","))
+    local resource_hooks=rawget(_G,"__tp_owner_profile_resource_expansion_locals")
+    assert(type(resource_hooks)=="function",
+      "Owner-save diagnostic resource expansion local hooks are unavailable")
+    installed_resource_expansion_hooks=resource_hooks(wrap)
+    log("[TP-OWNER-PROFILE-LOCALS] owner=resource_expansion_0259 active="
+      ..table.concat(installed_resource_expansion_hooks,","))
     for _,name in ipairs{
       "tech_priests_0259_resource_expansion_service",
+      "tech_priests_0257_build_ratio_plan",
+      "tech_priests_0358_station_sources_for_pair",
+      "tech_priests_request_movement_0418",
       "tech_priests_0507_action_claim",
       "tech_priests_inventory_steward_sources_for_pair",
       "tech_priests_0293_proxy_has_ammo",
@@ -454,8 +475,12 @@ do
       "tech_priests_0327_find_known_source",
     } do
       local fn=rawget(_G,name)
-      if type(fn)=="function" then _G[name]=wrap(fn,"dispatcher-global",name,true) end
+      if type(fn)=="function" then
+        _G[name]=wrap(fn,"dispatcher-global",name,true)
+        installed_global_hooks[#installed_global_hooks+1]=name
+      end
     end
+    log("[TP-OWNER-PROFILE-GLOBALS] active="..table.concat(installed_global_hooks,","))
   end
 end
 '''
@@ -465,6 +490,22 @@ LOCAL_PROFILE_FUNCTIONS_0644 = (
     "scan_resources", "scan_roles", "choose", "cheapest_available_science",
     "craft_feasibility", "unlocked_recipe", "station_count", "uncovered_drill_output")
 
+LOCAL_PROFILE_FUNCTIONS_0259 = (
+    "resource_prototypes_for_product", "resource_names_for_need", "nearest_known_resource",
+    "build_need_list", "covered_robot_ore_goal_0259")
+CAMPAIGN_PROFILE_METHODS_0259 = ("local_supply", "offer_local_drill", "explore", "admit")
+RESOURCE_EXPANSION_PROFILE_HOOKS_0259 = (
+    *LOCAL_PROFILE_FUNCTIONS_0259, *("Campaign."+name for name in CAMPAIGN_PROFILE_METHODS_0259))
+EVERY_CALL_BRANCHES = (
+    *("scripts.core.station_catalog."+name for name in (
+        "scan_pair", "step_pair", "publish_pending", "inventory_candidates", "get_for_pair", "find_known_source")),
+    "scripts.core.master_infrastructure_plan_0644.service_pair",
+    "scripts.core.development_integration_audit_0721.audit_all",
+    "scripts.core.development_integration_audit_0721.step_storage_audit",
+    "scripts.core.development_lifecycle_checkpoint_0733.checkpoint")
+OBSERVER = (OBSERVER.replace("__RESOURCE_EXPANSION_HOOK_COUNT__", str(len(RESOURCE_EXPANSION_PROFILE_HOOKS_0259)))
+    .replace("__EVERY_CALL_BRANCHES__", "{"+",".join("["+json.dumps(name)+"]=true" for name in EVERY_CALL_BRANCHES)+"}"))
+
 
 def callback_sampling_policy(enabled: bool) -> dict | None:
     if not enabled:
@@ -473,8 +514,10 @@ def callback_sampling_policy(enabled: bool) -> dict | None:
         "every_call":[
             {"scope":"registry-nth","minimum_interval_ticks":60},
             {"scope":"registry-nth","name":"5:runtime_tick_broker_0600:central-pulse"},
-            {"scope":"dispatcher-branch"},
+            *({"scope":"dispatcher-branch","name":name} for name in EVERY_CALL_BRANCHES),
+            {"scope":"dispatcher-global"},
             {"scope":"broker-service"},
+            *({"scope":"resource-expansion-local","name":"0259."+name} for name in RESOURCE_EXPANSION_PROFILE_HOOKS_0259),
             *({"scope":"infrastructure-local","name":"0644."+name} for name in LOCAL_PROFILE_FUNCTIONS_0644)],
         "warmup_included":True,
         "overlap":"nested service/local scopes overlap; final step_pair includes publish_pending; do not sum these durations"}
@@ -497,6 +540,34 @@ def instrument_infrastructure_locals(mod: pathlib.Path) -> None:
     hook+="  return {"+",".join(json.dumps(name) for name in LOCAL_PROFILE_FUNCTIONS_0644)+"}\n"
     hook+="end\n"
     path.write_text(source[:end.start()]+hook+source[end.start():],encoding="utf-8")
+
+
+def instrument_resource_expansion_locals(mod: pathlib.Path) -> None:
+    """Wrap the actual 0259 lexical bindings only in the disposable test copy."""
+    path=mod/"scripts/resource_expansion.lua"
+    source=path.read_text(encoding="utf-8")
+    for name in LOCAL_PROFILE_FUNCTIONS_0259:
+        if not re.search(r"local function "+re.escape(name)+r"\s*\(",source):
+            raise ValueError("Resource expansion local missing from test target: "+name)
+    if not re.search(r'local\s+Campaign\s*=\s*require\s*\(\s*[\"\']scripts\.core\.strategic_resource_campaign[\"\']\s*\)',source):
+        raise ValueError("Resource expansion Campaign binding missing from test target")
+    campaign=(mod/"scripts/core/strategic_resource_campaign.lua").read_text(encoding="utf-8")
+    for name in CAMPAIGN_PROFILE_METHODS_0259:
+        if not re.search(r"function\s+M\."+re.escape(name)+r"\s*\(",campaign):
+            raise ValueError("Resource expansion Campaign method missing from test target: "+name)
+    if "__tp_owner_profile_resource_expansion_locals" in source:
+        raise ValueError("Resource expansion test target is already instrumented")
+    hook="\n-- Test-only hooks, injected into the private disposable benchmark copy.\n"
+    hook+="_G.__tp_owner_profile_resource_expansion_locals=function(wrap)\n"
+    for name in LOCAL_PROFILE_FUNCTIONS_0259:
+        per_pair="false" if name in ("resource_prototypes_for_product", "resource_names_for_need") else "true"
+        hook+=f'  assert(type({name})=="function","Missing diagnostic local: {name}")\n'
+        hook+=f'  {name}=wrap({name},"resource-expansion-local","0259.{name}",{per_pair})\n'
+    for name in CAMPAIGN_PROFILE_METHODS_0259:
+        hook+=f'  assert(type(Campaign.{name})=="function","Missing diagnostic Campaign method: {name}")\n'
+        hook+=f'  Campaign.{name}=wrap(Campaign.{name},"resource-expansion-local","0259.Campaign.{name}",true)\n'
+    hook+="  return {"+",".join(json.dumps(name) for name in RESOURCE_EXPANSION_PROFILE_HOOKS_0259)+"}\nend\n"
+    path.write_text(source+hook,encoding="utf-8")
 
 
 def digest(path: pathlib.Path) -> str:
@@ -959,6 +1030,7 @@ def main() -> int:
         report["tech_priests_source_digest"]=source_digest.hexdigest()
         if args.instrument_callbacks:
             instrument_infrastructure_locals(mod)
+            instrument_resource_expansion_locals(mod)
         observer=(OBSERVER.replace("__DEPLOY_FOUR__",str(args.deploy_four).lower())
                   .replace("__INSTRUMENT__",str(args.instrument_callbacks).lower())
                   .replace("__GRAPHICS__",str(args.graphics).lower())
@@ -1022,6 +1094,10 @@ def main() -> int:
                 report["frame_csv_log_capture"]=emit_frame_csv(raw_frames)
         report["active_local_hooks"]=next((v["local_hook_names"]
             for v in report["observed"]["observations"] if v.get("phase")=="instrumentation-ready"),[])
+        report["active_resource_expansion_hooks"]=next((v.get("resource_expansion_hook_names",[])
+            for v in report["observed"]["observations"] if v.get("phase")=="instrumentation-ready"),[])
+        report["active_global_hooks"]=next((v.get("global_hook_names",[])
+            for v in report["observed"]["observations"] if v.get("phase")=="instrumentation-ready"),[])
         report["observation_complete"],snapshots=validate_observations(report["observed"],args.ticks,args.warmup,graphics=args.graphics)
         if args.graphics:
             report["observed_simulation_tick_count"]=snapshots[-1].get("observed_tick_count") if snapshots else None
@@ -1043,7 +1119,8 @@ def main() -> int:
             and report["original_save_unchanged"] and report["active_mods"]
             and report["four_pairs_verified"] and report["timing_evidence_complete"]
             and (not args.instrument_callbacks
-                 or report["active_local_hooks"]==list(LOCAL_PROFILE_FUNCTIONS_0644)))
+                 or (report["active_local_hooks"]==list(LOCAL_PROFILE_FUNCTIONS_0644)
+                     and report["active_resource_expansion_hooks"]==list(RESOURCE_EXPANSION_PROFILE_HOOKS_0259))))
         report["isolated_handler_errors"]=len(re.findall(r"isolated handler failure",content))
         report["isolated_service_errors"]=len(re.findall(r"isolated service failure",content))
         report["native_checksums"]=[line.strip() for line in content.splitlines()
