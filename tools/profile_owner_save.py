@@ -332,8 +332,7 @@ do
         or name=="scripts.core.station_catalog.publish_pending"
         or name=="scripts.core.station_catalog.inventory_candidates"
         or name=="scripts.core.master_infrastructure_plan_0644.service_pair"))
-        or (scope=="broker-service" and (name=="master_infrastructure_plan_0644"
-          or name=="emergency_facility_placement_bridge_0643"))
+        or scope=="broker-service"
         or (scope=="infrastructure-local" and name:sub(1,5)=="0644.")
       return function(...)
         local label=name
@@ -452,8 +451,7 @@ def callback_sampling_policy(enabled: bool) -> dict | None:
             {"scope":"registry-nth","name":"5:runtime_tick_broker_0600:central-pulse"},
             *({"scope":"dispatcher-branch","name":"scripts.core.station_catalog."+name}
               for name in ("scan_pair","step_pair","publish_pending","inventory_candidates")),
-            {"scope":"broker-service","name":"master_infrastructure_plan_0644"},
-            {"scope":"broker-service","name":"emergency_facility_placement_bridge_0643"},
+            {"scope":"broker-service"},
             {"scope":"dispatcher-branch","name":"scripts.core.master_infrastructure_plan_0644.service_pair"},
             *({"scope":"infrastructure-local","name":"0644."+name} for name in LOCAL_PROFILE_FUNCTIONS_0644)],
         "warmup_included":True,
@@ -893,7 +891,7 @@ def main() -> int:
             "graphical_benchmark":args.graphics,
             "script_scope":"unavailable in graphical frame CSV" if args.graphics else "whole-engine-all-installed-mods",
             "timing_evidence_scope":"native graphical frame CSV; no game-tick correlation" if args.graphics else "native per-game-tick update benchmark",
-            "callback_scope":("all catalog scan/step/publish/inventory candidates, outer broker pulse, 0644 broker/pair/local, 0643 broker, and registry nth-tick callbacks with interval at least 60 ticks; other owners one-in-32 including warmup; nested scopes overlap; diagnostic overhead present"
+            "callback_scope":("all broker services and outer broker pulse, catalog scan/step/publish/inventory candidates, 0644 pair/local, and registry nth-tick callbacks with interval at least 60 ticks; other owners one-in-32 including warmup; nested scopes overlap; diagnostic overhead present"
                               if args.instrument_callbacks else "disabled"),
             "callback_sampling_policy":callback_sampling_policy(args.instrument_callbacks),
             "graphics_backend":None,"graphics_renderer":None,
