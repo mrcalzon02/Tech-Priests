@@ -13,6 +13,7 @@
 local RemoteChain0820=require("scripts.core.resource_station_chain_0820")
 local ReturnCourier0837=require("scripts.core.resource_return_courier_0837")
 local RemoteDrill1011=require("scripts.core.remote_machine_drill_1011")
+local Campaign=require("scripts.core.strategic_resource_campaign")
 TECH_PRIESTS_RESOURCE_EXPANSION_VERSION_0259 = "0.1.259+0.1.674-0820"
 TECH_PRIESTS_RESOURCE_EXPANSION_INTERVAL_0259 = 60 * 20
 TECH_PRIESTS_RESOURCE_EXPANSION_SEARCH_START_0259 = 64
@@ -101,7 +102,7 @@ local function current_radius_has_resource(pair, resource_names)
       radius = r,
       limit = 1
     })
-    if found and found[1] then return true end
+    if found and found[1] and found[1].valid and (found[1].amount or 0)>0 then return true end
   end
   return false
 end
@@ -352,26 +353,38 @@ local function op_for_pair(pair)
 end
 
 local function build_need_list(pair, op)
-  local result = {}
+  -- Survival's last_item is often ammunition. Mineral strategy must also
+  -- know the independent science factory's material rates and fuel reserve.
+  local result, rates = {"iron-ore","copper-ore","coal","stone"}, {}
   if tech_priests_0257_build_ratio_plan then
-    local ok, plan = pcall(function() return tech_priests_0257_build_ratio_plan(pair, op or {}) end)
+    local science={science_item=op and op.science_item or "automation-science-pack",
+      science_spm_target_1133=op and op.science_spm_target_1133}
+    local ok,plan=pcall(tech_priests_0257_build_ratio_plan,pair,science)
     if ok and plan then
-      for item_name, _ in pairs(plan.raw_items or {}) do result[#result + 1] = item_name end
-      for fluid_name, _ in pairs(plan.fluids or {}) do
-        if fluid_name == "crude-oil" or string.find(fluid_name, "oil", 1, true) then result[#result + 1] = "crude-oil" end
+      for name,rate in pairs(plan.raw_items or {})do
+        result[#result+1]=name;rates[name]=tonumber(rate) or 0
       end
-      if (plan.groups and (plan.groups.oil or 0) > 0) then result[#result + 1] = "crude-oil" end
+      for name,rate in pairs(plan.raw_fluids_1191 or {})do
+        if plan.fluid_sources_1191 and plan.fluid_sources_1191[name]=="resource-extraction-required" then
+          result[#result+1]=name;rates[name]=tonumber(rate) or 0
+        end
+      end
     end
   end
-  if #result == 0 then
-    -- Conservative default field-industry dependencies.
-    result = { "iron-ore", "copper-ore", "coal", "stone" }
+  local pending=pair.infrastructure_recipe_request_0647
+  if pending and pending.missing then result[#result+1]=pending.missing end
+  local seen,unique={},{}
+  for _,name in ipairs(result)do
+    if not seen[name] then seen[name]=true;unique[#unique+1]=name end
   end
-  local seen, unique = {}, {}
-  for _, name in pairs(result) do
-    if name and not seen[name] then seen[name] = true; unique[#unique + 1] = name end
-  end
-  return unique
+  table.sort(unique,function(a,b)
+    if pending and pending.missing==a then return b~=a end
+    if pending and pending.missing==b then return false end
+    local ar,br=rates[a] or 0,rates[b] or 0
+    if ar~=br then return ar>br end
+    return a<b
+  end)
+  return unique,rates
 end
 
 function tech_priests_0259_resource_expansion_service(pair)
@@ -437,7 +450,8 @@ function tech_priests_0259_resource_expansion_service(pair)
     return false
   end
   if game and game.tick and game.tick < (state.next_tick or 0) then return false end
-  state.next_tick = (game and game.tick or 0) + TECH_PRIESTS_RESOURCE_EXPANSION_INTERVAL_0259
+  state.next_tick = (game and game.tick or 0) +
+    (pair.strategic_resource_campaign and Campaign.interval or TECH_PRIESTS_RESOURCE_EXPANSION_INTERVAL_0259)
 
   local StationExpansion = _G.TECH_PRIESTS_STATION_EXPANSION_0256 or package.loaded["scripts.magos_station_expansion"]
   if not (StationExpansion and StationExpansion.request_station_expansion) then
@@ -445,53 +459,61 @@ function tech_priests_0259_resource_expansion_service(pair)
     return false
   end
 
-  local issued = 0
-  local needs = build_need_list(pair, op)
-  for idx, need in pairs(needs) do
-    local resources = resource_names_for_need(need)
-    if #resources > 0 and not current_radius_has_resource(pair, resources) then
-      local nearest = nearest_known_resource(pair, resources)
-      local angle = nil
-      if nearest and nearest.valid then
-        angle = math.atan2(nearest.position.y - pair.station.position.y, nearest.position.x - pair.station.position.x)
-        state.last_reason = "toward known " .. tostring(need) .. " resource " .. tostring(nearest.name)
-      else
-        angle = exploration_angle(pair, idx)
-        state.last_reason = "exploratory expansion for missing " .. tostring(need)
-      end
-      local ok=false
-      if nearest and nearest.valid then
-        -- Known resource: reserve one persistent multi-tier mission. A real
-        -- child station must be built/paired before the next ghost is issued.
-        local robot_goal=covered_robot_ore_goal_0259(pair,need,nearest)
-        if robot_goal then
-          -- Either the live native green-area admission or the 1076
-          -- original-grid, counted-stock first-waypoint preflight succeeded.
-          -- Only 1076/0338/0820/0837 can actually build or move items.
-          pair.roboport_expansion_goal_1076=robot_goal
+  local needs,rates=build_need_list(pair,op)
+  local remote_need,remote_target=nil,nil
+  local unknown_need=nil
+  for _,need in ipairs(needs)do
+    local resources=resource_names_for_need(need)
+    if #resources>0 then
+      local supply=Campaign.local_supply(pair,resources,need,rates[need],radius(pair))
+      if supply.phase=="unexploited-local-resource" then
+        if Campaign.offer_local_drill(pair,supply,need,radius(pair)) then
+          state.last_reason="funded-local-resource-exploitation:"..need
           state.last_need=need
-          state.last_reason=robot_goal.autonomous_coverage_extension_0259
-            and "autonomous-extending-powered-robot-resource-frontier"
-            or "autonomous-covered-powered-robot-resource-frontier"
-          return false
+          return true
         end
-        ok=RemoteChain0820.start(pair,need,nearest.position,nearest.name)
-      else
-        -- Unknown patch: the historical bounded outward scout ghost remains,
-        -- but it is NOT misrepresented as a known-resource chain.
-        ok=StationExpansion.request_station_expansion(
-          pair,"resource:"..tostring(need),op,state.last_reason,angle)
-      end
-      if ok then
-        issued=issued+1
-        state.last_need=need
-        state.last_direction=angle
-        op.resource_expansion_need_0259=need
-        op.resource_expansion_reason_0259=state.last_reason
-        if nearest then break end
-        if issued>=TECH_PRIESTS_RESOURCE_EXPANSION_MAX_RESOURCES_PER_PASS_0259 then break end
+      elseif supply.phase=="no-local-resource" or supply.phase=="local-reserve-low"
+          or supply.phase=="local-output-below-demand" then
+        local nearest=nearest_known_resource(pair,resources)
+        if nearest and nearest.valid then
+          remote_need=need;remote_target=nearest;break
+        elseif not unknown_need then unknown_need=need end
       end
     end
+  end
+  if not remote_target then
+    if unknown_need then
+      state.last_need=unknown_need
+      state.last_reason="paid-reconnaissance-for-missing:"..unknown_need
+      Campaign.explore(pair,unknown_need)
+    else state.last_reason="local-resource-survey-no-remote-shortage" end
+    return false
+  end
+  local need,nearest=remote_need,remote_target
+  state.last_need=need
+  -- Reconnaissance is a real admission gate for NEW construction. Existing
+  -- explicit native rail/robot/relay duties are serviced unchanged above.
+  if not Campaign.admit(pair,need,nearest.position) then
+    state.last_reason="strategic-resource-campaign:"..
+      tostring(pair.strategic_resource_campaign.phase)
+    return false
+  end
+  local robot_goal=covered_robot_ore_goal_0259(pair,need,nearest)
+  if robot_goal then
+    pair.roboport_expansion_goal_1076=robot_goal
+    state.last_reason=robot_goal.autonomous_coverage_extension_0259
+      and "autonomous-extending-powered-robot-resource-frontier"
+      or "autonomous-covered-powered-robot-resource-frontier"
+    return false
+  end
+  local ok=RemoteChain0820.start(pair,need,nearest.position,nearest.name)
+  if ok then
+    state.last_direction=math.atan2(nearest.position.y-pair.station.position.y,
+      nearest.position.x-pair.station.position.x)
+    state.last_reason="surveyed-resource-corridor:"..need
+    op.resource_expansion_need_0259=need
+    op.resource_expansion_reason_0259=state.last_reason
+    return true
   end
   return false
 end
