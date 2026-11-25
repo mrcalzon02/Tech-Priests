@@ -136,6 +136,76 @@ jobs:
           print('TP_FACTORIO_PORTAL_UPLOAD_ACCEPTED',json.dumps({k:v for k,v in d.items() if k in ('success','url')}))
           PY
 
+      - name: Add original native screenshots to Mod Portal gallery when Edit Mods key is available
+        shell: bash
+        run: |
+          set -euo pipefail
+          key="${EDIT_API_KEY:-$PRIMARY_API_KEY}"
+          if [ -z "$key" ]; then
+            echo 'TP_PORTAL_GALLERY_PENDING: ModPortal Edit Mods API key not configured; public description retains genuine screenshot links.'
+            exit 0
+          fi
+          mkdir -p portal-gallery
+          python3 - <<'PY'
+          import pathlib,urllib.request,struct
+          base='https://raw.githubusercontent.com/mrcalzon02/Tech-Priests/e694f0d97b174f66e49fc2b4c4d1eb8b914a5b13/'
+          names={
+            'ranks.png':'docs/art/local-content-20261118/native-combined/skins-native-ranks.png',
+            'factories.png':'docs/art/local-content-20261118/native-combined/factories-native-overview.png',
+            'void-narrow.png':'docs/art/thruster-resumption-20261117/animation-capture/native-narrow-v11e/void-fusion-thruster-working.png',
+            'void-large.png':'docs/art/thruster-resumption-20261117/animation-capture/native-wide-v18g/large-void-fusion-thruster-working.png',
+            'boiler.png':'docs/art/boiler-v08-state-layers/native-cold-working-stopped.png'
+          }
+          for name,path in names.items():
+            request=urllib.request.Request(base+path,headers={'User-Agent':'Tech-Priests-original-native-media'})
+            with urllib.request.urlopen(request,timeout=70) as response:
+              data=response.read(9000000)
+            assert data[:8]==bytes.fromhex('89504e470d0a1a0a')
+            width,height=struct.unpack('>II',data[16:24])
+            assert 100<=width<=10000 and 100<=height<=10000
+            (pathlib.Path('portal-gallery')/name).write_bytes(data)
+            print('TP_FACTORIO_GENUINE_GALLERY_SOURCE',name,width,height,len(data))
+          PY
+          : > portal-gallery-ids.txt
+          for frame in ranks.png factories.png void-narrow.png void-large.png boiler.png; do
+            curl --fail-with-body --silent --show-error --max-time 40 \
+              -H "Authorization: Bearer $key" \
+              --form 'mod=tech-priests' \
+              'https://mods.factorio.com/api/v2/mods/images/add' -o gallery-init.json
+            url="$(python3 - <<'PY'
+          import json,urllib.parse
+          d=json.load(open('gallery-init.json'))
+          assert not d.get('error'),str(d.get('error'))
+          url=d['upload_url']
+          parsed=urllib.parse.urlsplit(url)
+          assert parsed.scheme=='https' and parsed.netloc and parsed.username is None
+          print(url)
+          PY
+            )"
+            curl --fail-with-body --silent --show-error --max-time 180 \
+              --form "image=@portal-gallery/$frame;type=image/png" \
+              "$url" -o gallery-result.json
+            python3 - <<'PY'
+          import json
+          d=json.load(open('gallery-result.json'))
+          assert len(d.get('id',''))==40 and not d.get('error'),str(d)
+          with open('portal-gallery-ids.txt','a') as out:out.write(d['id']+'\n')
+          print('TP_FACTORIO_PORTAL_NATIVE_IMAGE_UPLOADED',d['id'])
+          PY
+          done
+          ids="$(paste -sd, portal-gallery-ids.txt)"
+          curl --fail-with-body --silent --show-error --max-time 45 \
+            -H "Authorization: Bearer $key" \
+            --form 'mod=tech-priests' \
+            --form "images=$ids" \
+            'https://mods.factorio.com/api/v2/mods/images/edit' -o gallery-commit.json
+          python3 - <<'PY'
+          import json
+          d=json.load(open('gallery-commit.json'))
+          assert d.get('success') is True, str(d.get('error'))
+          print('TP_FACTORIO_PORTAL_GALLERY_PUBLISHED',len(d.get('images',[])))
+          PY
+
       - name: Verify publicly indexed new mod and exact version 1.0.0
         shell: bash
         run: |
