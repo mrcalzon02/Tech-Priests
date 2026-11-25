@@ -10,6 +10,8 @@
 -- inventories are nudged only when the target entity exposes safe Factorio API
 -- calls.
 
+local SelfConstructionGate=require("scripts.core.self_construction_frustration_gate")
+
 local M = {}
 local native_crafter_inventory_1277 = require("scripts.core.native_crafter_inventory_1277")
 local function crafter_index_1277(role,family)
@@ -1511,6 +1513,10 @@ local function service_pair(pair, reason)
     return true, "used-owned-facilities"
   end
 
+  -- Continue servicing already installed machines without automatically
+  -- requesting a new factory before the logistics frustration threshold.
+  local admitted,frustration_reason=SelfConstructionGate.ready(pair,now())
+  if not admitted then return false,frustration_reason end
   local missing = missing_core_items(facilities)
   if #missing > 0 then
     for _, item in ipairs(missing) do

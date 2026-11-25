@@ -15,6 +15,7 @@
 -- starting with burner mining drills, then higher mining drill items when burner
 -- drills do not exist in the current mod set.
 
+local SelfConstructionGate=require("scripts.core.self_construction_frustration_gate")
 local CooperativeLabor=require("scripts.core.cooperative_labor_allocator_0690")
 -- Preloaded during mod initialization; Factorio 2.0 forbids runtime require.
 local PowerSetup1252=require("scripts.core.power_setup_1252")
@@ -1890,6 +1891,10 @@ function M.service_pair(pair, reason)
   local r = root()
   if r.enabled == false then return false, "disabled" end
   if not valid_pair(pair) then return false, "invalid-pair" end
+  -- Autonomous industry is an escalation from ordinary priest maintenance,
+  -- never an immediate spawn-time factory construction order.
+  local admitted,frustration_reason=SelfConstructionGate.ready(pair,now())
+  if not admitted then return false,frustration_reason end
   -- A real ore courier has priority over NEW 0640 infrastructure planning.
   -- Its engine-owned hold and observed movement are not inventory credit.
   local courier = rawget(_G, "TechPriestsResourceReturnCourier0837")

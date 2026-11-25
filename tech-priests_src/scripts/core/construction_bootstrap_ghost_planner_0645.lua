@@ -2,6 +2,8 @@
 -- Tech Priests 0.1.653
 -- Commandless one-ghost construction bootstrap planner.
 
+local SelfConstructionGate=require("scripts.core.self_construction_frustration_gate")
+
 local M = {}
 M.version = "0.1.653"
 M.storage_key = "construction_bootstrap_ghost_planner_0645"
@@ -325,6 +327,10 @@ function M.service_pair(pair, reason, requested_entity)
       end
     end
   elseif rec and not ghost then local last = tonumber(rec.tick or 0) or 0; if now() - last < M.retry_ticks then return false, "ghost-missing-cooldown" end; record("bootstrap-ghost-lost-0645", pair, "entity=" .. safe(rec.entity_name)); pair.construction_bootstrap_ghost_0645 = nil end
+  -- Reconcile old/owned sites above, but do not propose any NEW autonomous
+  -- factory ghost while the canonical logistics frustration timer is running.
+  local admitted,frustration_reason=SelfConstructionGate.ready(pair,now())
+  if not admitted then return false,frustration_reason end
   local plan
   if requested_entity then
     if not entity_exists(requested_entity) then return false, "requested-entity-missing" end

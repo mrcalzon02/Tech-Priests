@@ -1005,26 +1005,17 @@ function tech_priests_service_independent_emergency_operation_0184(pair)
   return true
 end
 
+local SelfConstructionGate=require("scripts.core.self_construction_frustration_gate")
 function tech_priests_maybe_auto_enter_emergency_operation_0184(pair)
   if not (pair and pair.station and pair.station.valid and pair.priest and pair.priest.valid) then return false end
   if tech_priests_get_emergency_operation_0184(pair) then return false end
   if not tech_priests_pair_rank_allows_emergency_operation_0184(pair) then return false end
   if pair.mode == "idle" or pair.mode == "returning" then return false end
 
-  local started = pair.logistic_frustration_start_tick
-    or pair.logistic_frustration_started_tick
-    or pair.scavenge_started_tick
-    or (pair.scavenge and (pair.scavenge.started_tick or pair.scavenge.start_tick))
-    or (pair.inventory_scan and (pair.inventory_scan.started_tick or pair.inventory_scan.start_tick))
-    or (pair.emergency_craft and (pair.emergency_craft.started_tick or pair.emergency_craft.start_tick))
-    or nil
-
-  local frustration_due = false
-  if started and game.tick - started >= TECH_PRIESTS_EMERGENCY_OPERATION_IDLE_FRUSTRATION_TICKS_0184 then
-    frustration_due = true
-  elseif pair.logistic_frustration_due_tick and game.tick >= pair.logistic_frustration_due_tick then
-    frustration_due = true
-  end
+  -- Factory-scale independent operation has one authoritative threshold:
+  -- the actual logistics frustration countdown, not unrelated idle/scavenge
+  -- ages or the older 90-second fallback timer.
+  local frustration_due=SelfConstructionGate.ready(pair,game.tick)
 
   if frustration_due then
     pair.emergency_operation_auto_allowed_0190 = true

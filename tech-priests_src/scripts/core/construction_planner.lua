@@ -7,6 +7,7 @@
 -- leaf may not receive a NEW 0338 construction duty during evacuation.
 -- Already-active physical cargo/tasks continue under their original owner.
 local Recycling0822=require("scripts.core.station_recycling_0822")
+local SelfConstructionGate=require("scripts.core.self_construction_frustration_gate")
 local M={version="0.1.674-dev",storage_key="construction_planner",discovery_interval=233,max_pairs_per_discovery=6,move_priority=968,move_ttl=60*12,reservation_ttl=60*20,request_timeout=60*20,travel_ticks_per_tile=20,max_travel_extra_ticks=60*120,max_ground_detour_extra_ticks=60*60,pickup_reach_sq=2.56,build_reach_sq=4,return_reach_sq=2.56,dispatcher_owned=true,discovery_only_broker=true,positional_reservation=true,exact_item_custody=true}
 -- Original 0836 rail requests must not hold 0338 indefinitely without
 -- a real source item. The 0338 physical builder, not the observer, owns
@@ -262,6 +263,8 @@ local function normalize_placeable(v)
 end
 local request_fields={"structure_construction_requested_item","construction_requested_item","construction_request","combat_construction_request","pending_construction","build_request"}
 local function bootstrap_request(pair)
+ -- An unstarted autonomous ghost is not a player-ordered build.
+ if not SelfConstructionGate.ready(pair,now()) then return nil end
  local rec=pair and pair.construction_bootstrap_ghost_0645;if type(rec)~="table"then return nil end;local ghost=valid(rec.ghost)and rec.ghost or nil;if not ghost and rec.position and valid_pair(pair)then local ok,e=pcall(pair.station.surface.find_entity,pair.station.surface,"entity-ghost",rec.position);if ok and valid(e)then ghost=e end end
  local placeable=normalize_placeable({item_name=rec.item,entity_name=rec.entity_name,category=rec.category or rec.class,source="construction-bootstrap-ghost-0645",direction=rec.direction});if not placeable or not rec.position then return nil end;return{field="construction_bootstrap_ghost_0645",value=rec,placeable=placeable,position={x=rec.position.x,y=rec.position.y},ghost=ghost,site_reason="bootstrap-ghost",effectiveness=rec.effectiveness}
 end
@@ -2496,6 +2499,13 @@ function M.service_pair(pair,reason)
   -- A cached unfunded bootstrap may not hide a genuinely stocked earlier writ.
   refresh_funded_prior_over_unfunded_bootstrap_0338(pair)
   local c=pair.construction_candidate_0338
+  -- Revalidate uncommitted cached ghost candidates across a save reload.
+  -- Never cancel an already owned 0338 task or item custody.
+  if c and c.request_field=="construction_bootstrap_ghost_0645"
+      and not SelfConstructionGate.ready(pair,now()) then
+   pair.construction_candidate_0338=nil
+   c=nil
+  end
   if priority and (not c or c.request_value~=priority) then c=nil end
   c=c or M.discover_pair(pair,true)
   if not c then return{processed=1,waiting=1,detail="no-candidate"}end

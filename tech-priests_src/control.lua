@@ -1266,3 +1266,27 @@ assert(require("scripts.core.combat_muster_gui").install() == true,
 if script.active_mods["space-age"] then
   assert(require("scripts.voidship_armory").install_main(require("scripts.core.runtime_event_registry")))
 end
+
+-- Release admission policy: independent emergency factory expansion waits for
+-- canonical logistics frustration.  Retain all already committed physical
+-- emergency work and allow ordinary tick_pair repairs/maintenance below it.
+-- Installed after the legacy wrappers so no second scheduler is introduced.
+do
+  local Gate=require("scripts.core.self_construction_frustration_gate")
+  local original=tech_priests_service_independent_emergency_operation_0184
+  if type(original)=="function" then
+    function tech_priests_service_independent_emergency_operation_0184(pair)
+      local op=pair and pair.independent_emergency_operation_0184
+      if op and op.enabled and not (
+        op.construction or (pair and pair.construction_task_0338)
+        or (pair and pair.construction_custody_0338)
+        or (pair and pair.emergency_craft)
+        or (pair and pair.scavenge)
+      ) then
+        local admitted=Gate.ready(pair,game and game.tick)
+        if not admitted then return false end
+      end
+      return original(pair)
+    end
+  end
+end
