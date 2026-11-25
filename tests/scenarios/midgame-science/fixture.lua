@@ -234,8 +234,15 @@ local function setup()
  s.checkpoints={}
  s.research_finishes={}
  s.initial_product_counts={}
+ s.science_windows={}
+ s.last_science_window_tick=game.tick
+ s.last_science_production={}
+ s.last_science_consumption={}
+ local statistics=force.get_item_production_statistics(surface)
  for _,name in ipairs(PRODUCTS)do
-  s.initial_product_counts[name]=0
+  s.initial_product_counts[name]=statistics.get_input_count(name)
+  s.last_science_production[name]=statistics.get_input_count(name)
+  s.last_science_consumption[name]=statistics.get_output_count(name)
  end
  -- DO NOT force current_research: research choice is under autonomous AI.
  s.initial_selected_research=
@@ -375,6 +382,37 @@ local function diagnostic_pair(label,unit)
   construction_last_detail=tostring(event.detail or "none"),
   construction_last_tick=event.tick or 0,
  }
+end
+-- Consecutive native minute windows: cumulative production/consumption
+-- deltas, not a single rolling statistic, chest stock or fixture grants.
+local function sample_science_window(s)
+ if game.tick-(s.last_science_window_tick or game.tick)<3600 then return end
+ local stats=game.forces.player.get_item_production_statistics(game.surfaces[1])
+ local dt=game.tick-s.last_science_window_tick
+ local row={tick=game.tick,duration_ticks=dt,produced={},consumed={}}
+ for _,name in ipairs(PRODUCTS)do
+  local production=stats.get_input_count(name)
+  local consumption=stats.get_output_count(name)
+  row.produced[name]=(production-s.last_science_production[name])*3600/dt
+  row.consumed[name]=(consumption-s.last_science_consumption[name])*3600/dt
+  s.last_science_production[name]=production
+  s.last_science_consumption[name]=consumption
+ end
+ s.last_science_window_tick=game.tick
+ s.science_windows[#s.science_windows+1]=row
+ while #s.science_windows>5 do table.remove(s.science_windows,1) end
+ emit("SCIENCE_MINUTE "..helpers.table_to_json(row))
+end
+local function sustained_science(s,target)
+ if #(s.science_windows or {})<5 then return false,0 end
+ local consumed=0
+ for _,row in ipairs(s.science_windows)do
+  for _,name in ipairs({"automation-science-pack","logistic-science-pack","military-science-pack"})do
+   if (row.produced[name] or 0)<target then return false,0 end
+   consumed=consumed+math.max(0,row.consumed[name] or 0)
+  end
+ end
+ return consumed>0,consumed
 end
 local function snapshot(elapsed)
  local s=state()
@@ -734,13 +772,14 @@ local function snapshot(elapsed)
   -- callback; simply selecting a technology is not consumption proof.
   -- This remains a diagnostic, never a synthetic item grant or a release
   -- blocker for an unfinished autonomous production objective.
-  local target_spm=5
+  local target_spm=15
+  local sustained,consumed=sustained_science(s,target_spm)
   local three_at_target=
     (packs["automation-science-pack"] or 0)>=target_spm
     and (packs["logistic-science-pack"] or 0)>=target_spm
     and (packs["military-science-pack"] or 0)>=target_spm
   local actual_research_finishes=#(s.research_finishes or {})
-  local objective_met=started and basic and three_at_target
+  local objective_met=started and basic and three_at_target and sustained
     and actual_research_finishes>0
   s.midgame_objective_met=objective_met==true
   s.midgame_objective_target_spm=target_spm
@@ -748,6 +787,8 @@ local function snapshot(elapsed)
     (objective_met and "factory-objective-met" or "factory-objective-unmet")..
     " target_spm="..target_spm..
     " three_sciences_at_target="..tostring(three_at_target)..
+    " sustained_five_minutes="..tostring(sustained)..
+    " last_five_window_consumed="..tostring(consumed)..
     " all_three_sciences_produced="..tostring(basic)..
     " chemical_science_produced="..tostring(advanced)..
     " real_research_finishes="..actual_research_finishes..
@@ -767,6 +808,7 @@ local function pulse()
  if not s.started or s.failed then return {processed=1,acted=0}end
  local elapsed=game.tick-s.started
  local ok,err=pcall(function()
+  sample_science_window(s)
   for _,mark in ipairs(MARKS)do
    if elapsed>=mark and not s.checkpoints[mark] then
     snapshot(mark)
