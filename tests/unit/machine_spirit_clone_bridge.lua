@@ -19,6 +19,11 @@ TechPriestsRuntimeEventRegistry={
     assert(interval==89 and options.route=="periodic-target-scan")
     scheduled=scheduled+1
     return true
+  end,
+  on_configuration_changed=function(callback,options)
+    assert(options.owner=="consecration-runtime-bridge")
+    routes[options.route]={callback=callback}
+    return true
   end
 }
 defines={events={on_entity_cloned=9,on_built_entity=1,on_robot_built_entity=2,

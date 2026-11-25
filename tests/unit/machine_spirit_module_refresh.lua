@@ -84,6 +84,10 @@ TechPriestsRuntimeEventRegistry={
   on_nth_tick=function(tick,callback,options)
     scans=scans+1
     return true
+  end,
+  on_configuration_changed=function(callback,opts)
+    routes[opts.route]={callback=callback,options=opts}
+    return true
   end
 }
 defines={events={

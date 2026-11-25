@@ -119,4 +119,26 @@ legacy_record.control_malfunction_original_disabled_by_script=nil
 legacy_record.control_malfunction_original_active=true
 prune_ineligible_consecration_targets()
 assert(actor.disabled_by_script,"legacy cleanup guessed and changed an unknown script flag")
+-- Exercise real lifecycle dispatch. Two anonymous legacy callbacks collide in
+-- the registry; our explicit migration route must survive them and run even
+-- if the general config-refresh function and periodic services never execute.
+local configuration_handler
+script={on_event=function()end,on_nth_tick=function()end,
+  on_configuration_changed=function(handler)configuration_handler=handler end}
+defines={events={on_built_entity=1,on_robot_built_entity=2,script_raised_built=3,
+  script_raised_revive=4,on_entity_cloned=5,on_entity_died=6,
+  on_pre_player_mined_item=7,on_robot_pre_mined=8,script_raised_destroy=9,
+  on_player_fast_transferred=10,on_gui_closed=11}}
+local Registry=require("scripts.core.runtime_event_registry")
+TechPriestsRuntimeEventRegistry=Registry
+Registry.on_configuration_changed(function()end)
+assert(require("scripts.core.consecration.runtime_bridge").install())
+Registry.on_configuration_changed(function()end)
+stale_record(actor)
+assert(type(configuration_handler)=="function","native configuration callback missing")
+configuration_handler({mod_changes={["tech-priests"]={old_version="1.0.0",new_version="1.0.1"}}})
+assert(not state.machines[actor.unit_number] and not state.renders[actor.unit_number]
+  and not state.overlays[actor.unit_number],"named upgrade route did not prune stale infantry")
+assert(state.machines[machine.unit_number]==machine_record and machine_record.sanctification==23,
+  "named upgrade route changed real machinery")
 print("[combat-unit-consecration-exclusion] PASS "..#Catalog.units.." actors, AAI forms, oil/orders, old-save cleanup, machinery preservation")

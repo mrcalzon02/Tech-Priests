@@ -9,8 +9,9 @@
     "tech-priests_src/scripts/core/consecration/decay.lua",
     "tech-priests_src/scripts/core/consecration/overlays.lua",
     "tech-priests_src/scripts/core/consecration/registry.lua",
+    "tech-priests_src/scripts/core/consecration/runtime_bridge.lua",
     "tech-priests_src/scripts/generated/control_legacy_part_001.lua",
     "tech-priests_src/scripts/generated/control_legacy_part_020.lua"
   ],
-  "verification_attempt": 2
+  "verification_attempt": 3
 }

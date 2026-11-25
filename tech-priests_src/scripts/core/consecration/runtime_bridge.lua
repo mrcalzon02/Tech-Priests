@@ -77,10 +77,24 @@ function M.install()
     local ok, found = pcall(require, "scripts.core.runtime_event_registry")
     if ok then registry = found end
   end
-  if not (registry and registry.on_event and registry.on_nth_tick and defines and defines.events) then
+  if not (registry and registry.on_event and registry.on_nth_tick
+    and registry.on_configuration_changed and defines and defines.events) then
     if log then log("[Tech-Priests 0.1.452 consecration] runtime bridge not installed: runtime event registry unavailable") end
     return false
   end
+
+  -- Own this migration explicitly: anonymous legacy configuration handlers
+  -- can be replaced by a later registration with the same inferred owner.
+  -- A mod upgrade must remove old infantry records even while tick services
+  -- are dormant and the legacy configuration refresh does not run.
+  local migrated = registry.on_configuration_changed(function()
+    prune_ineligible_consecration_targets()
+  end, {
+    owner = "consecration-runtime-bridge",
+    route = "prune-ineligible-records-on-configuration",
+    category = "consecration",
+    priority = "front"
+  })
 
   local built = registry.on_event({
     defines.events.on_built_entity,
@@ -132,7 +146,7 @@ function M.install()
     route = "periodic-target-scan",
     category = "consecration"
   })
-  if not (built and cloned and removed and module_changes and scan) then
+  if not (migrated and built and cloned and removed and module_changes and scan) then
     if log then log("[Tech-Priests 0.1.452 consecration] runtime bridge not installed: canonical route registration failed") end
     return false
   end
