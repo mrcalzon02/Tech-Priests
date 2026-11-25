@@ -45,7 +45,9 @@ function M.track(entity,id,player_index)
   if not key then r.next_corpse=(r.next_corpse or 0)-1;key=r.next_corpse end
   local rec=r.actors[key]
   if not rec then rec={entity=entity,model=id,renders={},player_index=player_index};r.actors[key]=rec end
-  if rec.model~=id then clear(rec);rec.model=id;rec.state=nil;rec.engineer_key=nil end
+  if rec.model~=id then
+    clear(rec);rec.model=id;rec.state=nil;rec.engineer_key=nil;rec.engineer_cycle=nil
+  end
   rec.player_index=player_index
   return rec
 end
@@ -114,6 +116,7 @@ end
 function M.update(rec)
   local entity=rec.entity
   if not valid(entity) then clear(rec);return false end
+  Engineer.observe(rec)
   if rec.model=="vanilla" then return Engineer.update(rec) end
   local skin=Catalog.by_id[rec.model]
   if not skin then clear(rec);return false end

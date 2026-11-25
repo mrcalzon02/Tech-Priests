@@ -227,6 +227,18 @@ def decode_marker(image, cx, cy):
             else: continue
             # Only centers with both full-width white border strips qualify.
             if min(pixel(image, left + 32, top + 1)) < 180 or min(pixel(image, left + 32, top + 62)) < 180: continue
+            # JSON positions precede the native movement update; its render
+            # can be several pixels farther along. Broad corner interiors
+            # alone admit shifted crops that silently shift barcode bits.
+            # Fit their complete edges instead of preferring the JSON center.
+            score = 0
+            for y in (1, 2, 61, 62):
+                for x in range(1, 63):
+                    score += min(pixel(image, left + x, top + y)) > 180
+            for y in range(5, 13):
+                for x in range(4, 12):
+                    score += (blue if mirrored else red)(pixel(image, left + x, top + y))
+                    score += (red if mirrored else blue)(pixel(image, left + x + 48, top + y))
             def value(y):
                 result = 0
                 for bit in range(6):
@@ -234,9 +246,9 @@ def decode_marker(image, cx, cy):
                     if mirrored: x = 63 - x
                     if min(pixel(image, left + x, top + y)) > 180: result |= 1 << bit
                 return result
-            candidates.append((dx * dx + dy * dy, {"row": value(24), "frame": value(40), "mirrored": mirrored, "left": left, "top": top}))
+            candidates.append((-score, dx * dx + dy * dy, {"row": value(24), "frame": value(40), "mirrored": mirrored, "left": left, "top": top}))
     if not candidates: raise ValueError(f"Encoded native animation absent near ({cx:.2f},{cy:.2f})")
-    return min(candidates, key=lambda item: item[0])[1]
+    return min(candidates, key=lambda item: item[:2])[2]
 
 
 def decode(out, native):

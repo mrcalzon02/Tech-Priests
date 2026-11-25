@@ -1,9 +1,9 @@
 {
   "maps": [
     {
-      "covered_source_files": 382,
+      "covered_source_files": 383,
       "path": "docs/BEHAVIOR_FUNCTION_MAP_0659.md",
-      "reviewed_source_digest": "06124824caff73612b75c39ba2092dd3dc48542d0c79ed53533eaeea6601fdf5",
+      "reviewed_source_digest": "bc832af156911531c9c6014133b2762b4af4680b071c9d3b44160cf5c821a330",
       "sha256": "e8a7e6a5b642c14a4a7113db04c05c1c50d1774c9444f7093d0d29345af4da59",
       "source_patterns": [
         "control.lua",
@@ -216,10 +216,10 @@
       ]
     },
     {
-      "covered_source_files": 382,
+      "covered_source_files": 383,
       "path": "docs/BEHAVIOR_MERMAID_MAP_0660.md",
-      "reviewed_source_digest": "06124824caff73612b75c39ba2092dd3dc48542d0c79ed53533eaeea6601fdf5",
-      "sha256": "7dd4c02c236808aabf070e3f581d4460ac7a588e47cf9efaeddcf4fd94ac23cc",
+      "reviewed_source_digest": "bc832af156911531c9c6014133b2762b4af4680b071c9d3b44160cf5c821a330",
+      "sha256": "4772907ec50d6d54b5b9e120c358a18211e8706e82fda25e74b80a286d688a99",
       "source_patterns": [
         "control.lua",
         "scripts/**/*.lua",
@@ -227,9 +227,9 @@
       ]
     },
     {
-      "covered_source_files": 382,
+      "covered_source_files": 383,
       "path": "docs/RECOVERY_AUTHORITY_MAP_CURRENT.md",
-      "reviewed_source_digest": "06124824caff73612b75c39ba2092dd3dc48542d0c79ed53533eaeea6601fdf5",
+      "reviewed_source_digest": "bc832af156911531c9c6014133b2762b4af4680b071c9d3b44160cf5c821a330",
       "sha256": "6437f0f50227b103d26ed66ea72fa07158fbd3ac83ae30161b47c2853c6e54fc",
       "source_patterns": [
         "control.lua",
@@ -240,7 +240,7 @@
   ],
   "review_meaning": "Explicit source/diagram review acknowledgment; no semantic or runtime proof.",
   "schema": "tech-priests-behavior-map-review-v1",
-  "source_digest": "06124824caff73612b75c39ba2092dd3dc48542d0c79ed53533eaeea6601fdf5",
+  "source_digest": "bc832af156911531c9c6014133b2762b4af4680b071c9d3b44160cf5c821a330",
   "source_scope": [
     "control.lua",
     "scripts/**/*.lua",

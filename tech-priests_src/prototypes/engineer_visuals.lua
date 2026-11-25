@@ -76,11 +76,14 @@ local function direction_stripes(source,row)
   end
   local columns=source.line_length or 0
   if columns==0 then columns=frames end
-  local lines_per_direction=math.ceil(frames/columns)
   local source_x,source_y=source_position(source)
   local remaining=frames
-  for line=0,lines_per_direction-1 do
-    local atlas_row=row*lines_per_direction+line
+  local frame_index=row*frames
+  while remaining>0 do
+    -- sprite_load packs frames continuously: e.g. Mech take-off has 16
+    -- frames per direction in 10-column rows, so directions can share rows.
+    local atlas_row=math.floor(frame_index/columns)
+    local column=frame_index%columns
     local filename=source.filename
     local file_row=atlas_row
     if source.filenames then
@@ -89,10 +92,11 @@ local function direction_stripes(source,row)
       file_row=atlas_row%lines
     end
     assert(filename,"Engineer animation source file unavailable")
-    local count=math.min(remaining,columns)
+    local count=math.min(remaining,columns-column)
     result[#result+1]={filename=filename,width_in_frames=count,height_in_frames=1,
-      x=source_x,y=source_y+file_row*height}
+      x=source_x+column*width,y=source_y+file_row*height}
     remaining=remaining-count
+    frame_index=frame_index+count
   end
   return result
 end
@@ -102,6 +106,9 @@ local function animation_for_direction(source,row,name)
   animation.type="animation"
   animation.name=name
   animation.stripes=direction_stripes(source,row)
+  -- Put the native origin shift in metadata so mirroring cannot reflect it
+  -- twice (or leave it unreflected) through renderer-specific scale rules.
+  animation.shift={0,0}
   for _,key in ipairs({"filename","filenames","lines_per_file","slice","direction_count",
       "still_frame","counterclockwise","middle_orientation","orientation_range","apply_projection",
       "x","y","position","line_length"}) do animation[key]=nil end
@@ -161,6 +168,8 @@ function M.register(character,definitions,native_hidden)
           layer.shadow=source.draw_as_shadow==true
           layer.light=source.draw_as_light==true
           layer.glow=source.draw_as_glow==true
+          local shift=source.shift or {0,0}
+          layer.shift={shift.x or shift[1] or 0,shift.y or shift[2] or 0}
           layer.animations={}
           metadata.layers[layer_index]=layer
           for row=0,layer.directions-1 do

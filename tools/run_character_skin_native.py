@@ -122,7 +122,7 @@ def main():
   for path in source.rglob('*'):
    if path.is_file():
     copy_file(path,mod/path.relative_to(source))
- files=['shared/character_skin_catalog.lua','shared/combat_roster_catalog.lua','prototypes/character_skins.lua','prototypes/character_skin_settings.lua','prototypes/engineer_visuals.lua',
+ files=['shared/character_skin_catalog.lua','shared/combat_roster_catalog.lua','shared/engineer_pose_map.lua','prototypes/character_skins.lua','prototypes/character_skin_settings.lua','prototypes/engineer_visuals.lua',
         'scripts/core/runtime_tick_broker.lua','scripts/core/broker_pressure_cache_1502.lua','scripts/core/character_visuals.lua','scripts/core/character_skin_picker.lua',
         'scripts/core/character_skin_transfer.lua','scripts/core/runtime_event_registry.lua','scripts/core/engineer_visuals.lua',
         'locale/en/character-skins.cfg','THIRD-PARTY-NOTICES-GLADIUS.txt']
@@ -214,6 +214,7 @@ data:extend(definitions)
  required_screenshots=[screenshot,user/'script-output/character-skins/engineer-walking.png',
    user/'script-output/character-skins/priest-ground-walking.png',user/'script-output/character-skins/priest-immune-walking.png']
  if a.case!='disabled':required_screenshots.append(user/'script-output/character-skins/enginseer-walking.png')
+ if a.full:required_screenshots.extend(user/'script-output/character-skins'/name for name in ('mech-walking.png','mech-flying.png'))
  for path in required_screenshots:path.unlink(missing_ok=True)
  with (out/'graphical.log').open('w') as handle:
   environment=os.environ.copy();environment['SteamAppId']='427520';environment['SteamGameId']='427520'

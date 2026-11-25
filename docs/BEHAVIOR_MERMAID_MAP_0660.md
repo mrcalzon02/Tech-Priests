@@ -141,6 +141,7 @@ flowchart TD
     Body -->|"yes"| Selection["Record appearance on the same body"]
     Selection --> Custom["Selected custom render layers"]
     Selection --> Engineer["Native Engineer art and armor layers"]
+    Atlas["Measured native aim and walk atlas"] --> Engineer
     Broker["Existing five-tick presentation service"] --> Custom
     Broker --> Engineer
     Native["Factorio character and player"] -->|"read pose, color and armor"| Custom
@@ -160,6 +161,15 @@ host remains registered with native timing for existing saves; selecting Enginee
 on it changes only its drawing. New character deaths use the original native loot
 corpse. Picker-disabled maps retain visible native Engineer graphics.
 
+`shared.engineer_pose_map` supplies the native 18-row and 40-row armed-walking
+selection tables, measured from all 128 aim/walk combinations in real engine
+screenshots. The renderer reads that map, the current armor and native movement;
+it applies the measured row, reflection and playback direction only to drawings.
+The exporter preserves continuous frame packing across atlas rows and files.
+Mech armor uses its available armed-walk and airborne idle graphics even without
+a drawn weapon, and native hover bobbing remains distinct from takeoff/landing.
+These render APIs require Factorio 2.1.25; the mod dependency declares that floor.
+
 `character_visuals_presentation` retains its existing five-tick broker route and
 bounded actor cursor. Connected player drawings refresh before the actor batch
 and are not redrawn a second time in that pulse. A lifecycle seed restores detached
@@ -173,6 +183,14 @@ untouched native reference for Engineer and every allowed model, including old
 hosts, while checking exact body/inventory/equipment identities. A modifier-only
 assertion cannot establish movement parity. Graphical capture and save/reload are
 separate required evidence from the headed validation run.
+
+The same fixture executes one real go-to command per previous/current ground
+priest traversal, covers all four ground ranks and both belt-immunity variants,
+and rejects stopped movement or less than a 1.7x travel improvement. A separate
+detached Mech-armored Engineer crosses actual water beside an untouched native
+reference; its movement, takeoff, sustained rising/falling hover and landing are
+checked without assigning a flight height. Headed validation must produce the
+player, ground-priest and Mech walking/flying PNGs from those native runs.
 
 ## 6. Observed boundaries requiring performance work
 

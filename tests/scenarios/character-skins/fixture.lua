@@ -2,6 +2,7 @@ local Registry=require("scripts.core.runtime_event_registry")
 local Broker=require("scripts.core.runtime_tick_broker")
 local Picker=require("scripts.core.character_skin_picker")
 local Visuals=require("scripts.core.character_visuals")
+local Engineer=require("scripts.core.engineer_visuals")
 local Catalog=require("shared.character_skin_catalog")
 local PriestMovement=require("priest-movement")
 local mod_gui=require("mod-gui")
@@ -15,6 +16,96 @@ local function check(ok,message)
   error("[TP-SKINS-TEST] FAIL "..message)
 end
 local function close(a,b) return math.abs(a-b)<0.0001 end
+local function start_mech_test(player)
+  local t=storage.skin_test
+  if not prototypes.item["mech-armor"] then
+    t.mech={done=true,result={skipped="Space Age Mech armor unavailable"}}
+    return
+  end
+  local surface=player.surface
+  local tiles={}
+  for x=-8,4 do for y=22,30 do tiles[#tiles+1]={name="water",position={x,y}} end end
+  surface.set_tiles(tiles)
+  local actor=surface.create_entity{name="character",position={-20,24},force=player.force,raise_built=true}
+  local reference=surface.create_entity{name="tp-skin-reference-character",position={-20,28},force=player.force}
+  check(actor and reference,"native Mech appearance and reference actors created")
+  for _,entity in ipairs({actor,reference}) do
+    entity.get_inventory(defines.inventory.character_armor)[1].set_stack{name="mech-armor",count=1}
+    entity.destructible=false
+    check(entity.get_inventory(defines.inventory.character_guns).is_empty(),"Mech pose test is genuinely unarmed")
+  end
+  local source=Engineer.catalog()
+  local variant=source.armor_to_variant["mech-armor"]
+  check(variant and source.variants[variant].states.running_with_gun.directions==40,"native Mech ground bank has forty directions")
+  check(source.variants[variant].states.idle_with_gun_in_air.directions==8,"native Mech air bank has eight directions")
+  t.mech={entity=actor,reference=reference,unit=actor.unit_number,variant=variant,start=game.tick,
+    result={armor="mech-armor",overlay=Engineer.needed(actor),ground=nil,flight_samples={}}}
+end
+local function mech_pose(mech,state,directions)
+  local entity=mech.entity
+  local rec=storage.tech_priests.character_visuals.actors[entity.unit_number]
+  if mech.result.overlay then
+    check(rec and rec.model=="vanilla" and rec.engineer_variant==mech.variant,"Mech uses its own Engineer armor variant")
+    check(rec.state==state,"native Mech pose selects "..state..", received "..tostring(rec.state))
+    if state=="running_with_gun" then
+      -- The independent native 40-row oracle resolves east aim + east walk
+      -- to zero-based row 10, with neither reflection nor reverse playback.
+      check(rec.row==10 and rec.mirrored==false and rec.reversed==false,"unarmed Mech uses the native aim-equals-walk row")
+    end
+    local clip=Engineer.catalog().variants[mech.variant].states[state]
+    check(clip.directions==directions,"Mech selected native direction bank")
+    local render=rendering.get_object_by_id(rec.renders[1])
+    check(render and render.valid and render.animation==clip.layers[1].animations[rec.row%clip.layers[1].directions+1],"Mech native animation renders selected pose row")
+  end
+  return {tick=game.tick-mech.start,x=entity.position.x,height=entity.flight_height,
+    reference_height=mech.reference.flight_height,is_flying=entity.is_flying,
+    variant=mech.variant,state=mech.result.overlay and rec.state or "native-visible",row=rec and rec.row,
+    mirrored=rec and rec.mirrored,reversed=rec and rec.reversed,directions=directions}
+end
+local function tick_mech_test(player)
+  local mech=storage.skin_test.mech
+  if not mech or mech.done then return end
+  local actor,reference=mech.entity,mech.reference
+  check(actor.valid and reference.valid and actor.unit_number==mech.unit,"Mech keeps its real native body")
+  check(close(actor.position.x,reference.position.x) and close(actor.flight_height,reference.flight_height)
+    and actor.is_flying==reference.is_flying,"Mech overlay follows native movement and flight without changing either")
+  local elapsed=game.tick-mech.start
+  local function screenshot(name)
+    if graphical_run then
+      game.take_screenshot{player=player,surface=actor.surface,
+        position={x=actor.position.x,y=(actor.position.y+reference.position.y)/2},resolution={1200,1000},zoom=4,
+        path="character-skins/mech-"..name..".png",show_gui=false,daytime=0,force_render=true}
+    end
+  end
+  if elapsed>=30 and not mech.result.ground then
+    check(not actor.is_flying and actor.position.x>-18,"unarmed Mech physically walks on land before native takeoff")
+    mech.result.ground=mech_pose(mech,"running_with_gun",40)
+    screenshot("walking")
+  end
+  -- Both rising and falling hover bob occur over this water span after the
+  -- real takeoff animation finishes. Height delta alone is not a flight phase.
+  if actor.position.x>=-2.5 and actor.position.x<=4 and game.tick%5==0 then
+    check(actor.is_flying and actor.flight_height>=1,"native armor actually flies over impassable water")
+    local samples=mech.result.flight_samples
+    if #samples>0 then
+      if actor.flight_height>samples[#samples].height then mech.result.hover_rose=true end
+      if actor.flight_height<samples[#samples].height then mech.result.hover_fell=true end
+    end
+    samples[#samples+1]=mech_pose(mech,"idle_with_gun_in_air",8)
+    if actor.position.x>=0 and not mech.captured_flight then screenshot("flying");mech.captured_flight=true end
+  end
+  local moving=actor.position.x<18
+  for _,entity in ipairs({actor,reference}) do entity.walking_state={walking=moving,direction=defines.direction.east} end
+  if not moving then
+    check(not actor.is_flying and actor.flight_height==0,"Mech lands through native armor behavior")
+    check(mech.result.ground and #mech.result.flight_samples>=6 and mech.captured_flight,"Mech ground and sustained flight poses observed")
+    check(mech.result.hover_rose and mech.result.hover_fell,"native hover bob rose and fell without selecting takeoff or landing")
+    mech.result.passed=true;mech.result.distance=actor.position.x+20;mech.result.ticks=elapsed
+    mech.done=true
+    log("[TP-SKINS-TEST] MECH_PASS native ground walk, water-triggered flight, hover pose and landing; samples="..#mech.result.flight_samples)
+  end
+  check(elapsed<320 or mech.done,"native Mech water crossing completed within its observed travel time")
+end
 local function initialize()
   storage.skin_test={start=nil,stage=0,npcs={},broker_service_count=Broker.service_count()}
   local surface=game.surfaces[1]
@@ -54,6 +145,11 @@ end
 local function setup_player(player)
   local t=storage.skin_test
   if t.start then return end
+  -- Freeplay creates its crash site after on_init. Remove just those fixtures
+  -- so unrelated wreck smoke cannot contaminate the player appearance proof.
+  for _,entity in pairs(player.surface.find_entities_filtered{area={{-30,-30},{30,30}}}) do
+    if entity.valid and entity.name:find("^crash%-site%-") then entity.destroy() end
+  end
   if not (player.character and player.character.valid) then
     local body=player.surface.create_entity{name="character",position={0,-8},force=player.force}
     check(body and body.valid,"native test character created")
@@ -116,6 +212,7 @@ local function setup_player(player)
   t.reference.get_inventory(defines.inventory.character_armor)[1].set_stack{name="power-armor",count=1}
   check(close(character.prototype.running_speed,t.reference.prototype.running_speed),"native prototype running speed is unchanged")
   check(character.prototype.character_corpse==t.reference.prototype.character_corpse,"player and legacy host retain the standard visible native corpse")
+  start_mech_test(player)
   if not Picker.enabled() then
     check(not player.gui.screen[Picker.button_name],"disabled picker has no button")
     local ok,reason=Picker.choose(player,"enginseer")
@@ -198,6 +295,7 @@ local function tick(event)
   local elapsed=event.tick-t.start
   local player=game.get_player(t.player)
   PriestMovement.tick(event,player,graphical_run)
+  tick_mech_test(player)
   if elapsed>=10 and t.stage==0 then
     local detached=player.surface.create_entity{name="character",position={-25,-6},force=player.force,raise_built=true}
     check(detached and detached.valid,"detached native body created")
@@ -354,11 +452,11 @@ local function tick(event)
         path="character-skins/"..(t.walk_skin=="vanilla" and "engineer" or t.walk_skin).."-walking.png"}
     end
   end
-  if t.stage==4 and PriestMovement.done() then
+  if t.stage==4 and PriestMovement.done() and t.mech.done then
     t.saved_unit=game.get_player(t.player).character.unit_number
     t.done=true;session_completed=true
     helpers.write_file("character-skins/result.json",helpers.table_to_json{passed=true,skins=15,ranks=#t.npcs/2,forces=2,
-      player=t.player,original_unit=t.original_unit,saved_unit=t.saved_unit,character_name=player.character.name,movement=t.movement,priest_movement=PriestMovement.results(),lifecycle=t.lifecycle_checked,legacy_corpse_inventory=t.legacy_corpse_checked,disabled=t.disabled or false,case=legacy_case and "legacy" or t.disabled and "disabled" or settings.startup["tech-priests-skin-allow-canoness"].value and "default" or "restricted"},false)
+      player=t.player,original_unit=t.original_unit,saved_unit=t.saved_unit,character_name=player.character.name,movement=t.movement,priest_movement=PriestMovement.results(),mech=t.mech.result,lifecycle=t.lifecycle_checked,legacy_corpse_inventory=t.legacy_corpse_checked,disabled=t.disabled or false,case=legacy_case and "legacy" or t.disabled and "disabled" or settings.startup["tech-priests-skin-allow-canoness"].value and "default" or "restricted"},false)
     log("[TP-SKINS-TEST] PASS same native character, actual movement parity, immediate Engineer restore, inventory/crafting preservation, restrictions and ranked force colours")
     local player=game.get_player(t.player)
     if not t.disabled then Picker.open(player) end
