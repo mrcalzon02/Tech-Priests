@@ -199,7 +199,14 @@ local function muster(pair,s)
     s.phase="awaiting-offensive-fuel";return ask(pair,s,"tech-priests-field-supply-pack")
   end
   if not available then s.phase="awaiting-offensive-unit";return ask(pair,s,chosen.name)end
-  if busy(pair) or not orders() then s.phase="waiting-free-construction-owner";return false end
+  -- Requesting an already paid kit is only strategic intent; 0338 and
+  -- 0510 still decide when an incumbent physical duty permits execution.
+  -- A targetless routine logistics order must not permanently veto a muster.
+  if not orders() or pair.construction_task_0338 or pair.construction_custody_0338
+      or pair.direct_acquisition_custody_0513 or pair.machine_logistics_custody_0528
+      or pair.item_family_custody_0702 or pair.defense_task_0259 or valid(pair.combat_target) then
+    s.phase="waiting-free-construction-owner";return false
+  end
   local station=pair.station
   local pos=station.surface.find_non_colliding_position(chosen.name,station.position,16,0.5)
   if not pos then s.phase="no-safe-muster-site";return false end
