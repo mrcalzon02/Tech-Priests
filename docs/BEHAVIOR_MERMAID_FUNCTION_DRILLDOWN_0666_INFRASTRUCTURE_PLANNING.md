@@ -87,6 +87,53 @@ Public `service_all(reason, budget)` remains synchronous and keeps its acted/pro
 
 ## Performance findings and evidence
 
+### Magos ratio and resource planning
+
+`resource_expansion.tech_priests_0259_resource_expansion_service` first services
+an incumbent 0820 chain, the 1011 drill builder and the 0837 counted courier.
+Only new discovery passes through the existing 1200-tick gate (300 ticks once
+a strategic campaign exists). An explicit 1076 robot frontier also keeps its
+existing admission priority. The change does not move these duties behind a
+new discovery delay.
+
+```mermaid
+flowchart TD
+    Service["0259 resource service"] --> Existing["Existing chain or counted courier"]
+    Service --> Gate["New discovery admission"]
+    Gate --> Graph["0257 current objective and typed recipe graph"]
+    Index["0646 retained recipe and resource names"] --> Graph
+    Graph --> Need["Current raw item and fluid demand"]
+    Index --> Need
+    Need --> Local["Campaign local supply assessment"]
+    Local -->|"shortage"| Known["Charted world resource search"]
+    Local -->|"funded local resource"| Drill["Existing physical drill request"]
+    Known --> Admission["Campaign admission and existing expansion owners"]
+```
+
+| Caller | Retained membership | Values still read when deciding |
+| --- | --- | --- |
+| `0257_pick_recipe_for_item` | Existing `0646.recipe_names_for_item(..., true)`; includes disabled recipes and coproducts. Native force queries no longer enumerate every recipe for each graph node. | Force recipe enablement, typed positive yield, hidden status, ingredients, category score and deterministic name tie. Compatibility providers without a valid native force retain their prototype-only fallback. |
+| `0257_is_raw_item` and `1191_is_raw_fluid` | `0646.resource_names_for_product`; one immutable resource-product index shared with 0259. The prior untyped raw-item and typed-fluid policies are preserved. | Current requested name and kind; water retains its offshore-pump requirement. |
+| `0259.resource_prototypes_for_product` | The same read-only resource names in native prototype order. The crude-oil compatibility alias uses its own result instead of mutating the shared empty array. | World resource existence, amount, chart coverage, local supply and mission admission remain separate. |
+| `0259.nearest_known_resource` | No retained world-search answer is introduced. | Operating radius is read once per call; its square is reused for each candidate. Existing expanding areas, result limits, chart checks and selection order remain. |
+
+The indexes contain definition membership, not stock or a cached production
+answer. A failed resource metadata read does not certify a permanent negative
+entry. Reload rebuilds local metadata without writing cache-warmth counters to
+simulation storage. No inventory discovery, TTL or additional scheduler is
+introduced here.
+
+`magos_retained_planning_membership.lua` exercises the actual ratio graph and
+resource-expansion service with 1,000 unrelated recipes and entity definitions.
+One hundred repeated graph requests and twenty discovery passes retain one
+force recipe walk and one resource definition walk, with live disable/enable,
+ingredient, typed yield, hidden/locked selection, active-chain and courier
+checks. The previous ratio implementation fails the repeated-walk assertion.
+`tests/scenarios/magos-retained-planning/control.lua` also passes on native
+Factorio 2.1.25 at create and save reload, checking the actual science material
+graph, 100 repeated requests and same-tick recipe changes. Those fixtures verify
+behavior and metadata reuse; the owner-save timing gate remains separate.
+
 The previous 0640 callback advertised budget 10 but discarded it, stopped after 32 **acted** pairs, and restarted `pairs(pair_map())` at the beginning. That allowed full-population visits when work returned false and risked prefix starvation. The repaired existing owner now accepts `offered_budget`, counts every inspected slot including invalid/no-op pairs, and resumes a scalar saved `service_cursor` with `next`. A removed cursor safely restarts traversal. It preserves the historical acted-count first return and adds a structured result for the broker. The 23-tick cadence is unchanged. This is a work-count correction; native timing and workload-progress acceptance remain separate.
 
 The current 0646 owner retains product-to-recipe-name membership in original force recipe traversal order, including disabled recipes. `recipe_names_for_item(force,item,true)` provides products-only candidates for 0644; the default lookup preserves the older main-product fallback where the provider supports it. Enabled flags and ingredient quantities remain live, and `item_unlocked` returns its freshly selected recipe as an optional third result. The previous one-tick Boolean unlock-answer cache is removed. 0644 checks these ordered candidates and preserves the first enabled matching recipe's feasibility result rather than selecting a later alternate merely because its ingredients are available. The initial metadata traversal remains real work and must be included in native measurements.

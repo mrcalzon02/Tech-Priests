@@ -1,3 +1,99 @@
+## Bound the existing integration audit and reconcile live expectations - 2026-11-25
+
+Candidate4 diagnostic 45628586690 still reported four missing broker services,
+one surviving command and repeated incomplete lifecycle checkpoints. Its
+0721 audit reached 63.744 ms with a 50,001-node truncated storage result. The
+existing 0725 expectations now use the actual energy, rocket-silo, artillery
+and roboport discovery-service registrations. 0721 shares existing 0720's
+managed diagnostic-command predicate instead of rejecting every description
+that mentions Tech Priests. The real High Fabricator designation remains
+functional; owned diagnostic commands still fail and are cleaned, and a
+reused name belonging to another mod remains untouched. Intentional
+retirements remain explicit, while missing live replacements, custody and
+migration failures retain their existing failure/retry behavior.
+
+Storage verification now continues inside existing 0721 state and its broker
+registration. `audit_all` admits or reports a walk without draining it. Saved
+iterative frames, visited tables and per-frame processed keys advance through
+`step_storage_audit`, with at most 256 counted work shared by all callers in one
+game tick. Skips, deleted-cursor resets, bounded paths, key/value inspection and
+frame completion all consume work. Table keys are inspected; unsupported keys
+are never retained as bookmarks. The walk excludes only its own growing job,
+publishes scalar summaries, and explicitly fails on unsupported values, depth
+limits or root replacement. It is a rolling observation of mutable storage,
+not an atomic certificate.
+
+Ordinary behavioral audits retain their saved 307-tick deadline. Pending walks
+request five-tick continuations through the same service; idle callbacks sleep
+until their saved ordinary or serialization deadline through existing 0598.
+An active walk is not restarted by a 3,600-tick boundary. Completion is retained
+separately, and a subsequent walk is due no sooner than completion plus 3,600
+ticks. Pending, truncated or failed results cannot satisfy 0733. Source revision,
+configuration checks, incomplete retries and installed migration assertions
+remain active; no new auditor, scheduler or runtime cache was introduced.
+
+The integrated real-owner regression covers the actual discovery registrations,
+generated gameplay command, owned-command cleanup, missing live owners,
+custody/migration failures and cheap completed-state checkpoints. The bounded
+walk regression passes beyond 60,000 nodes and tests shared allowances,
+unsupported/table keys, cycles, deletion, depth limits, root changes and actual
+0598 deadline parity. Its corrected portable reload checkpoint stays inside a
+dense numeric array, avoiding stock-Lua hash reordering as a false model of
+Factorio serialization; six fresh processes and independent review pass.
+
+The exact Factorio 2.1.25 native scenario resumes 48 saved work at cursor 5,
+phase `next`, next key 6. Its first loaded step and broker deadlines match the
+same-tick warm expectation, and native table/LuaObject keys plus cycle aliases
+survive reload. It completes 62,090 nodes / 373,424 work at tick 7,320 and retains
+the completed summary. Across 1,465 instrumented slices, maximum counted work
+is 256; mean time is 0.274 ms, p95 is 0.469 ms and maximum is 12.952 ms. The
+fixture's earlier fresh-LuaForce-wrapper map-lookup assertion was corrected to
+native identity comparison; owner source bytes did not change. Source/log
+hashes and the explicit correction are retained in
+`performance/development-storage-native/receipt.json`. This isolated evidence
+does not establish owner-save performance acceptance. The paired replay is
+18,000 ticks to observe first completion and sustained late work.
+
+The same candidate also closes two independent retained-data boundaries.
+0257's actual material graph uses existing 0646 recipe-name membership, and
+0257 raw/fluid planning plus 0259 resource expansion share immutable resource
+prototype names for a product in that owner. Recipe enablement, ingredients,
+typed yield and world state remain live; no TTL or cached live-world answer is
+added. The native planning fixture passes 100 actual graph questions in both
+create and reload phases with live force toggles. Catalog/1496 progress and
+diagnostics now depend on saved cursors/seen state rather than a local
+first-resume rewind or transient cache-miss counters. Its native 400-key test
+matches 24 warm/fresh pulses and all claims, while the dense four-station
+continuation contract remains 492-504 ticks at one query / 256 counted work.
+The existing 0661 and 0666 maps describe those owner-specific paths.
+
+## Reuse retained inventory membership in emergency fallback - 2026-11-25
+
+Source review of the generated nth-29 acquisition route found a conditional
+bypass: 0184 fallback initialization still reached generated 005's untyped
+surrounding-entity inventory scan through the 0214/0325 candidate wrappers.
+The original builder now obtains complete identities from installed
+`tech_priests_0327_inventory_candidates`, sharing the existing 0587 membership
+owner. Current same-force/surface/circular range checks, the installed 0324
+target filter, slot enumeration and material scoring remain live. Separate
+loose-item, asteroid, resource and mineable-enrichment queries remain. No new
+cache, expiry timer or watchdog cadence was introduced; a compatibility runtime
+without the installed catalog API retains the previous direct query.
+
+The real-owner Lua regression fails against the original builder and passes
+one inventory seed across sixty rebuilds at 1,800-tick boundaries, live refill,
+force/range and eligibility changes, native-shaped build/removal, autonomous
+vehicle arrivals and counted physical withdrawal. The reusable native scenario
+passed Factorio 2.1.25 creation and reload with one seed, 100 warm fallback
+rebuilds, rare-quality stock unchanged, current force/range checks, a real
+single-item trunk withdrawal and raised build/removal events. Existing custody
+and withdrawal ownership are unchanged. See the existing 0670 function map and
+`tests/scenarios/emergency-craft-retained-inventory/control.lua`.
+
+This closes the identified inventory-discovery bypass. It does not assign the
+large instrumented nth-29 inclusive gap to the builder or establish owner-save
+UPS acceptance; the matching uninstrumented sample was substantially cheaper.
+
 ## Align lifecycle audits with canonical retirements - 2026-11-25
 
 Incoming all-broker trace 45619891933 measured a 119.017 ms 0733 checkpoint at

@@ -20,8 +20,8 @@ for i=101,110 do
 end
 local Catalog=require('scripts.core.station_catalog')
 Catalog.prune_invalid()
-assert(root.stats.owner_index_rebuilds_1496==1,
-  'previous-save ownership was not indexed once')
+assert(root.stats.owner_index_rebuilds_1496==nil,
+  'transient owner-cache rebuild changed persisted diagnostics')
 assert(root.stats.owner_index_owner_checks_1496<=3,
   'prune performed work per resource instead of per owner')
 assert(root.stats.owner_index_cleanup_keys_1496==10 and destroyed==10,
@@ -36,8 +36,8 @@ setmetatable(root.owned_resources,{__pairs=function()
   error('unexpected full ownership scan after lazy rebuild')
 end})
 Catalog.prune_invalid()
-assert(root.stats.owner_index_rebuilds_1496==1,
-  'catalog rebuilt owner index every sweep')
+assert(root.stats.owner_index_rebuilds_1496==nil,
+  'catalog persisted a local owner-cache rebuild count')
 local entity={valid=true,unit_number=111,name='rock-huge',type='simple-entity'}
 assert(not Catalog.claim_built_entity(storage.tech_priests.pairs_by_station[1],entity,'mineable'),
   'valid station ownership was stolen')

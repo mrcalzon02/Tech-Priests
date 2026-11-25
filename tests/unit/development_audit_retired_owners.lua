@@ -5,7 +5,7 @@ if arg and arg[1] then package.path = arg[1] .. "/?.lua;" .. package.path end
 
 storage = {tech_priests = {pairs_by_station = {}}}
 game = {tick = 0}
-defines = {events = {on_tick = 1}}
+defines = {events = {on_tick = 1, on_selected_entity_changed = 2}}
 local native = {events = {}, nth = {}}
 script = {
   on_event = function(id, fn) native.events[id] = fn end,
@@ -14,7 +14,16 @@ script = {
   on_init = function(fn) native.init = fn end,
   on_configuration_changed = function(fn) native.configuration = fn end,
 }
-commands = {commands = {}, remove_command = function() return false end}
+local command_handlers = {}
+commands = {commands = {}}
+commands.add_command = function(name, help, handler)
+  commands.commands[name], command_handlers[name] = help, handler
+end
+commands.remove_command = function(name)
+  local existed = commands.commands[name] ~= nil
+  commands.commands[name], command_handlers[name] = nil, nil
+  return existed
+end
 log = function() end
 local diagnostics = {pair_dump_lines = function() return {} end}
 _G.TECH_PRIESTS_DIAGNOSTICS_BEHAVIOR_AUTHORITY_0468 = diagnostics
@@ -33,12 +42,10 @@ constraints.install_attempted, constraints.install_passed = #constraints.HARDENE
 
 for _, name in ipairs({
   "TechPriestsFluidNetworkDoctrine0689", "TechPriestsFluidConnectionPlanner0691",
-  "TechPriestsItemFamilyLogistics0702", "TechPriestsEnergyFamilyReadiness0705",
-  "TechPriestsEnergyFamilyLogistics0707", "TechPriestsRocketSiloReadiness0709",
-  "TechPriestsRocketSiloLogistics0710", "TechPriestsArtilleryReadiness0712",
-  "TechPriestsArtilleryLogistics0713", "TechPriestsRoboportReadiness0714",
-  "TechPriestsRoboportRepairPackLogistics0715", "TechPriestsFluidTurretReadiness0716",
+  "TechPriestsItemFamilyLogistics0702",
 }) do _G[name] = {} end
+-- Use actual installers: historical names copied into a fixture can make the
+-- audit pass while the real loader registers different discovery services.
 for _, name in ipairs({
   "energy_family_readiness_0705", "energy_family_logistics_0707",
   "rocket_silo_readiness_0709", "rocket_silo_logistics_0710",
@@ -46,8 +53,7 @@ for _, name in ipairs({
   "roboport_readiness_0714", "roboport_repair_pack_logistics_0715",
   "fluid_turret_readiness_0716",
 }) do
-  assert(broker.register_service({name = name, interval = 200, budget = 1,
-    fn = function() error("checkpoint executed a physical service") end}))
+  assert(require("scripts.core." .. name).install())
 end
 
 local reservations = require("scripts.core.work_reservations")
@@ -108,6 +114,19 @@ local function configure()
     old_version = "1.0.0", new_version = "1.0.1",
   }}})
 end
+local function finish_storage()
+  local state = storage.tech_priests[integration.storage_key]
+  local turns = 0
+  while state.serialization_job_0721 do
+    turns = turns + 1; assert(turns < 2000, "bounded storage walk never completed")
+    game.tick = game.tick + 5
+    local callback = service("development_integration_audit_0721")
+    callback.fn({tick = game.tick}, 1, callback)
+    assert(state.last_serialization.last_step_work <= integration.serialization_work_budget)
+  end
+  assert(state.last_serialization.complete and not state.last_serialization.failed,
+    "healthy audit fixture failed serialization")
+end
 local function retry_then_recover(restore)
   assert(not state().last.complete, "missing live owner was silently accepted")
   local before = audit_calls()
@@ -115,7 +134,9 @@ local function retry_then_recover(restore)
   assert(audit_calls() > before and not state().last.complete,
     "incomplete live owner did not retry")
   restore()
+  finish_storage()
   pulse()
+  if state().last.audits.integration.pending then finish_storage(); pulse() end
   assert(state().last.complete, "restored live owner failed to recover")
   before = audit_calls()
   pulse()
@@ -123,9 +144,14 @@ local function retry_then_recover(restore)
 end
 
 native.init({})
+assert(state().last.reason == "on-init")
+assert(state().last.audits.integration.pending and not state().last.complete,
+  "pending zero-issue storage walk was accepted as complete")
+finish_storage()
+pulse()
 assert((registry.stats.handler_errors or 0) == 0)
 assert(state().last.complete, "intentional retirements kept the checkpoint incomplete")
-assert(state().last.reason == "on-init")
+assert(state().last.reason == "runtime-recheck")
 local retired_planner = state().last.audits.planner
 assert(retired_planner.retired and retired_planner.passed == false
   and retired_planner.replacement_ready,
@@ -139,6 +165,35 @@ assert(_G.TechPriestsFluidTurretPlannerIntegrity0730 == nil
 local before = audit_calls()
 for _ = 1, 12 do pulse() end
 assert(audit_calls() == before, "complete state did not reach the cheap broker branch")
+
+-- The actual non-tp gameplay designation is not an obsolete diagnostic toggle.
+for _, fragment in ipairs({"001", "007", "008"}) do
+  assert(loadfile("tech-priests_src/scripts/generated/control_legacy_part_" .. fragment .. ".lua"))()
+end
+local designation = assert(command_handlers["tech-priests-high-fabricator"])
+local player = {valid = true, index = 8, name = "Fixture player", print = function() end}
+game.players = {[8] = player}
+game.get_player = function(id) return id == 8 and player or nil end
+designation({player_index = 8})
+assert(storage.tech_priests.high_fabricator_player_index == 8,
+  "actual High Fabricator designation stopped working")
+assert(integration.audit_all() == 0 and cleanup.remove_all("fixture") == 0,
+  "gameplay command was treated as a managed diagnostic")
+assert(command_handlers["tech-priests-high-fabricator"] == designation)
+commands.add_command("tp-retained-audit-fixture", {"", "Tech Priests diagnostic fixture"}, function() end)
+assert(integration.audit_all() > 0, "owned localized diagnostic command escaped the audit")
+assert(cleanup.remove_all("fixture") == 1 and not command_handlers["tp-retained-audit-fixture"],
+  "owned diagnostic command was not cleaned by its existing authority")
+commands.add_command("tp-dispatcher-0510", "Another mod owns this reused command", function() end)
+commands.add_command("other-mod-reference", "Other mod integration with Tech Priests", function() end)
+assert(integration.audit_all() == 0 and cleanup.remove_all("fixture") == 0,
+  "post-cleanup ownership widened to another mod's command")
+assert(command_handlers["tp-dispatcher-0510"] and command_handlers["other-mod-reference"])
+
+local actual_service = remove_service("energy_family_discovery_0707")
+configure()
+assert(not state().last.audits.broker.passed, "actual discovery owner was not required")
+retry_then_recover(function() broker.services[#broker.services + 1] = actual_service end)
 
 local removed = remove_service("fluid_turret_route_discovery_0719")
 configure()

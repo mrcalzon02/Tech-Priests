@@ -499,8 +499,6 @@ local function inventory_ids_for_entity_0578(entity, context)
     if ok and inv and inv.valid then out[#out + 1] = inv_id end
   end
   prototype_inventory_cache_0578[key] = out
-  local root = ensure_root()
-  root.stats.inventory_prototype_cache_misses_0578 = (root.stats.inventory_prototype_cache_misses_0578 or 0) + 1
   return out
 end
 
@@ -532,8 +530,6 @@ local function inventory_types_1497()
   for kind in pairs(selected) do names[#names + 1] = kind end
   table.sort(names)
   inventory_type_names_1497, inventory_type_set_1497 = names, selected
-  local root = ensure_root()
-  root.stats.inventory_type_builds_1497 = (root.stats.inventory_type_builds_1497 or 0) + 1
   return names, selected
 end
 
@@ -762,8 +758,6 @@ local function mineable_products(entity)
   end
   if #out == 0 and entity.type == "resource" and entity.name then out[#out + 1] = { name = entity.name, amount = 1 } end
   prototype_mineable_cache_0578[key] = out
-  local root = ensure_root()
-  root.stats.mineable_prototype_cache_misses_0578 = (root.stats.mineable_prototype_cache_misses_0578 or 0) + 1
   return out
 end
 
@@ -919,7 +913,6 @@ end
 
 -- Scheduled surveys keep their partial work in this existing catalog owner.
 -- Published catalogs are replaced only after all bounded phases complete.
-local resumed_jobs_1498 = setmetatable({}, {__mode = "k"})
 
 local function job_dirty(root, job)
   if job.inventory_changed or root.next_scan[job.unit] ~= job.next_due then return true end
@@ -961,7 +954,6 @@ local function begin_job(root, pair, roster)
   root.scan_jobs_1498[unit] = job
   root.next_scan[unit] = job.next_due
   root.stats.continuation_started_1498 = (root.stats.continuation_started_1498 or 0) + 1
-  resumed_jobs_1498[job] = true
   return job
 end
 
@@ -970,6 +962,9 @@ local function reset_map_phase(job, phase)
 end
 
 local function next_map_key(job, map)
+  -- Factorio next()/pairs() preserves insertion order across native saves.
+  -- Progress must depend only on the saved cursor: a joining multiplayer
+  -- client reloads module locals while the running host keeps them warm.
   local key = next(map, job.map_cursor)
   job.map_cursor = key
   if key == nil then return nil end
@@ -1131,12 +1126,6 @@ end
 
 local function resume_job(root, job, work_budget, query_budget)
   local used, queries = 0, 0
-  if not resumed_jobs_1498[job] then
-    -- Lua tables can be rehashed when loaded. Restart map traversal, skipping
-    -- saved processed keys, instead of trusting the previous hash-order cursor.
-    job.map_cursor = nil
-    resumed_jobs_1498[job] = true
-  end
   local current = pairs_table()[job.unit]
   if not job.cancelled and (current ~= job.pair or not valid(job.station)
       or current.station ~= job.station
@@ -1848,7 +1837,6 @@ local function run_catalog_command(event, compact)
       .. " native-filtered=" .. tostring(cat and cat.scan_filtered_queries_1482 or 0)
       .. " prefilter-retries=" .. tostring(cat and cat.scan_prefilter_fallbacks_1482 or 0)
       .. " wired-inventories-omitted=" .. tostring(cat and cat.wired_sources_skipped_1495 or 0)
-      .. " owner-index-rebuilds=" .. tostring(root.stats.owner_index_rebuilds_1496 or 0)
       .. " owner-groups-checked=" .. tostring(root.stats.owner_index_owner_checks_1496 or 0)
       .. " owner-claims-cleaned=" .. tostring(root.stats.owner_index_cleanup_keys_1496 or 0)
       .. " reason=" .. tostring(cat and cat.scan_reason_1478 or "-"))

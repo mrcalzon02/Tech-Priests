@@ -127,8 +127,59 @@ explicitly retired owners, preventing a completed checkpoint from settling into
 its cheap branch. Their expectations now validate the actual live replacements
 and report intentional retirements separately. The integrated regression passes
 against the repaired owners and fails against the original three files. This
-does not prove which nested operation caused 119 ms or establish a measured
-speedup: 0721 retains its own periodic audit and synchronous storage walk.
+does not prove which nested operation caused that 119 ms or establish a measured
+speedup. The later candidate4 diagnostic separates an actual 63.744 ms 0721
+`audit_all` call, with a 50,001-node truncated serialization result. Its cached
+state also has four missing broker registrations and one surviving command.
+Source review resolves the four names to existing discovery services and the
+command mismatch to the legitimate High Fabricator designation, which remains
+functional. Those expectations and the storage traversal are repaired below;
+the original measurements still describe their own earlier source.
+
+### Bounded integration-storage audit
+
+The existing 0721 service keeps ordinary behavioral audits on a saved 307-tick
+deadline. `audit_all` admits or reports a storage walk without draining it;
+`step_storage_audit` uses iterative saved frames and a shared maximum of 256
+counted operations per game tick, including cursor resets, skipped keys, child
+classification, bounded paths and frame completion. Pending work requests a
+five-tick continuation through the same broker registration. Idle work sleeps
+until its saved ordinary or serialization deadline. A periodic deadline does
+not restart an active walk, and the next complete walk is due no sooner than
+3,600 ticks after completion. The old 50,000-node truncation is not accepted as
+coverage. Unsupported keys are not saved as bookmarks, table keys are visited,
+and only the traversal object's own metadata is excluded from its input.
+
+Run `development_audit_retired_owners.lua` and
+`development_storage_audit_continuation.lua`. The former installs the real
+service owners and generated High Fabricator command, preserving genuine
+missing-owner, custody, migration and owned-diagnostic-command failures. The
+latter covers more than 60,000 nodes, shared-tick budgets, table keys, deletion,
+depth limits, root replacement and warm/fresh progress plus actual 0598 deadline
+parity. Its portable parity checkpoint stays inside an ordered numeric array;
+cloning stock-Lua hash maps is not a model of Factorio's saved table order.
+
+The [native audit scenario](../tests/scenarios/development-storage-audit/control.lua)
+checks the saved cursor, phase, current key and next key before the first loaded
+step, then compares that step and broker deadlines against a same-tick warm
+execution. It also verifies native table/LuaObject keys, cycles, full traversal
+past the former cutoff, explicit pending/completed results, retained completion
+and no immediate restart. The final exact 2.1.25 run resumes 48 saved work at
+cursor 5 / phase `next` / next key 6, then completes 62,090 nodes and 373,424
+counted work at tick 7,320. Across 1,465 measured slices the maximum counted work
+is 256, mean time is 0.274 ms, p95 is 0.469 ms and maximum is 12.952 ms. The
+receipt retains source and log hashes. This isolated fixture establishes
+traversal and counted-work behavior; its instrumented slice timings do not
+establish gameplay UPS acceptance. The final paired owner replay uses 18,000 ticks so completion
+and sustained later work can both be observed.
+
+The observer reads cached active/latest serialization status, active-job state,
+completion/work counters and the separate last-completed summary. Pending means
+incomplete, not zero issues or success. A scan with unsupported values can have
+finished traversal while still failing the checkpoint. Capture the bounded
+missing-service/module and surviving-command names as well as their counts.
+The rolling live-storage observation does not freeze gameplay state and is not
+an atomic serialization certificate.
 
 ### Isolated continuation and armor contracts
 
@@ -342,7 +393,7 @@ The following paths are the first UPS suspects to watch during the next clean-wo
 4. Direct acquisition physical guard: `direct_acquisition_physical_guard_0649` now scans only resource/tree/mineable-debris types. If it still appears in profiler output, the next step is to stop scanning when the task already has a valid entity and only retry after a terminal target failure.
 5. Movement ownership: `active_leaf_task_truth_0655`, `movement_intent_authority_0654`, and `direct_acquisition_movement_lock_0650` should reduce repeated engine commands. If `engine_commands` keeps climbing without completions, movement ownership is still fighting.
 
-6. Lifecycle audits: distinguish 0733 full checkpoints from its completed-state broker checks, and time 0723 inspection, 0725 registry audit, 0721 integration audit and 0720 command cleanup separately. Keep 0735 migration checks visible. Correlate 0721 serialization timestamps/node counts with any expensive `audit_all` call; its own 307-tick service can still trigger the whole-storage walk after the 3,600-tick minimum interval. The retirement correction must not hide real live-owner, custody or migration failures.
+6. Lifecycle audits: distinguish 0733 full checkpoints from its completed-state broker checks, and time 0723 inspection, 0725 registry audit, 0721 integration audit and 0720 command cleanup separately. Keep 0735 migration checks visible. Time 0721 `audit_all` and `step_storage_audit` separately: ordinary checks remain on a saved 307-tick deadline, while pending storage work uses five-tick continuations with a shared 256-work cap. Correlate active status, completed-walk counters, separate last-completed summary and saved deadlines; require observed completion in the longer replay. Pending or aborted scans must not pass 0733, and the expectation repairs must not hide real live-owner, custody, migration or owned-command failures.
 
 ## Signals to Investigate
 

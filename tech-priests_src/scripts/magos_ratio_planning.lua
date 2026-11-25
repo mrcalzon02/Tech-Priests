@@ -7,6 +7,8 @@
 -- intentionally conservative: it produces low target rates, caps demand, and
 -- uses the existing acquisition/construction ladder instead of bypassing it.
 
+local PlanningConstraints0646=require("scripts.core.planning_constraints_0646")
+
 TECH_PRIESTS_MAGOS_RATIO_PLANNER_VERSION_0257 = "0.1.257"
 -- 1133: The old constant yielded 0.5 packs/minute and silently kept every
 -- factory at a token-size pilot rate. This is the conservative *starting*
@@ -173,7 +175,7 @@ local function tech_priests_0257_pick_recipe_for_item(item_name,force,kind)
   local all=(tech_priests_prototype_table_0440
     and tech_priests_prototype_table_0440("recipe")) or {}
   local candidates,locked={},false
-  for name,recipe in pairs(all) do
+  local function consider(name,recipe)
     if recipe and tech_priests_0257_recipe_produces(recipe,item_name,kind)
         and not tech_priests_0257_recipe_hidden(recipe) then
       local recipe_name=recipe.name or name
@@ -198,6 +200,19 @@ local function tech_priests_0257_pick_recipe_for_item(item_name,force,kind)
       end
     end
   end
+  if force and force.valid and force.recipes then
+    -- Share the existing immutable product-to-recipe membership. Selection
+    -- still reads live enablement and checks this planner's typed positive
+    -- yield, hidden status, scoring and deterministic name tie-break.
+    for _,name in ipairs(PlanningConstraints0646.recipe_names_for_item(
+        force,item_name,true))do
+      consider(name,all[name])
+    end
+  else
+    -- Compatibility providers without a native LuaForce retain their
+    -- prototype-only contract; live Factorio never takes this full walk.
+    for name,recipe in pairs(all)do consider(name,recipe)end
+  end
   table.sort(candidates,function(a,b)
     if a.score~=b.score then return a.score>b.score end
     return tostring(a.name)<tostring(b.name)
@@ -210,21 +225,9 @@ end
 local function tech_priests_0257_is_raw_item(item_name)
   if not item_name then return false end
   if item_name == "wood" or item_name == "coal" or item_name == "stone" or item_name == "iron-ore" or item_name == "copper-ore" or item_name == "uranium-ore" then return true end
-  -- Treat items emitted by map resources as raw for ratio purposes.
-  do
-    for _, proto in pairs((tech_priests_prototype_table_0440 and tech_priests_prototype_table_0440("entity")) or {}) do
-      local ok_type, typ = pcall(function() return proto.type end)
-      if ok_type and typ == "resource" then
-        local ok_mine, mineable = pcall(function() return proto.mineable_properties end)
-        if ok_mine and mineable and mineable.products then
-          for _, product in pairs(mineable.products) do
-            if product and product.name == item_name then return true end
-          end
-        end
-      end
-    end
-  end
-  return false
+  -- Preserve the existing untyped raw-name classification while sharing
+  -- immutable membership with resource expansion instead of rewalking it.
+  return #PlanningConstraints0646.resource_names_for_product(item_name)>0
 end
 
 local function tech_priests_0257_add_need(plan, key, count)
@@ -309,19 +312,8 @@ end
 -- Input consumption is propagated only for the incremental craft rate.
 local function tech_priests_1191_is_raw_fluid(name)
   if name=="water" then return true,"offshore-pump-required" end
-  for _,proto in pairs((tech_priests_prototype_table_0440
-      and tech_priests_prototype_table_0440("entity")) or {})do
-    local ok,typ=pcall(function()return proto.type end)
-    if ok and typ=="resource" then
-      local read,props=pcall(function()return proto.mineable_properties end)
-      if read and props and props.products then
-        for _,product in pairs(props.products)do
-          if product.name==name and product.type=="fluid" then
-            return true,"resource-extraction-required"
-          end
-        end
-      end
-    end
+  if #PlanningConstraints0646.resource_names_for_product(name,"fluid")>0 then
+    return true,"resource-extraction-required"
   end
   return false,nil
 end

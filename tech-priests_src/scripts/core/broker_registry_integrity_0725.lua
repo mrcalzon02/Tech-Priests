@@ -13,13 +13,13 @@ local M = {
 -- checks, and 0730's replacement registers fluid_turret_route_discovery_0719.
 local CRITICAL_SERVICES = {
   "energy_family_readiness_0705",
-  "energy_family_logistics_0707",
+  "energy_family_discovery_0707",
   "rocket_silo_readiness_0709",
-  "rocket_silo_logistics_0710",
+  "rocket_silo_discovery_0710",
   "artillery_readiness_0712",
-  "artillery_logistics_0713",
+  "artillery_discovery_0713",
   "roboport_readiness_0714",
-  "roboport_repair_pack_logistics_0715",
+  "roboport_repair_pack_discovery_0715",
   "fluid_turret_readiness_0716",
   "fluid_turret_connection_proposals_0717",
   "fluid_turret_route_discovery_0719",

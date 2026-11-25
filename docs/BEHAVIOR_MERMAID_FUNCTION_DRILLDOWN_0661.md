@@ -113,6 +113,19 @@ Pending state remains in `station_catalog_0327.scan_jobs_1498`. `catalog_dense_s
 
 Inventory classification borrows `0587.borrow_source_candidates` without copying/filtering the full source list each pulse. The source owner increments an identity revision for membership changes and compaction. A changed record/list/revision marks the completed resource snapshot dirty for a follow-up; it does not silently certify a skipped mutable array. Ordinary item/UI APIs still refresh engine mobile observations and read current eligibility. Scheduled slices do not introduce another engine-list sweep or timed inventory rediscovery.
 
+Continuation map traversal now depends solely on its saved cursor. A fresh
+module load must not rewind it while an uninterrupted host retains its local
+cache: Factorio preserves table insertion order across saves, and a joining
+client reloads locals independently. The four inventory/prototype/ownership
+cache-miss counters also no longer mutate persisted diagnostics according to
+local cache warmth; historical saved values are left alone. The focused
+warm-versus-fresh unit comparison fails on the previous rewind. The native
+`catalog-continuation-map-reload` fixture preserves all 400 ownership keys in
+order and matches the uninterrupted next-pulse/publication trace for all 24
+remaining pulses after reload, at one query and 16 counted work units per
+pulse. This is a native save/reload equivalence test, not a live network-join
+test.
+
 Post-admission topology events, including events in the same tick, keep the current job moving and request a later refresh through the existing due marker. Domain changes cancel with bounded rollback of staged-only claims. Existing ownership, external radar/build claims and live ownership transfers are protected; replacing a pair record transfers surviving retirement knowledge to the current pair. Incomplete or dirtied work cannot retire unseen old claims. Explicit `scan_pair` supersedes pending work synchronously. Cold `get_for_pair` creates an incomplete pending snapshot and marks it due. A changed station domain replaces only the obsolete public view with a current-domain pending snapshot; an already matching replacement job retains its deadline. Ordinary readers do not run a synchronous survey. `find_known_source` rechecks current surface, native collision-box area overlap and canonical ownership, tries retained alternate instances when its primary is no longer eligible, and reports live station distance. Known-resource GUI rendering reuses the resource snapshot, then explicitly reads contents through `snapshot_inventory`; a redraw does not expire inventory membership. Publication preserves the latest explicitly rendered inventory table and its timestamp by reference.
 
 The continuation preserves progress within one non-inventory survey; it does not expand its total coverage limits. Each new survey starts the existing deterministic subdivision order and permits at most 13 native queries and 3,072 unique returned entities. An incomplete published snapshot carries its completeness flag and preserves old ownership keys. A stable area above those bounds may still omit the same tail across completed surveys. Native area-query collision-box overlap remains the world-selection rule; retained inventory views keep their separate live position policies. The inventory seed is complete and uncapped.
@@ -139,7 +152,7 @@ These names are taken from the current source; local helpers and call sites are 
 
 | Module | Exported functions |
 | --- | --- |
-| [planning_constraints_0646](../tech-priests_src/scripts/core/planning_constraints_0646.lua) | `M.recipe_names_for_item`, `M.item_for_entity`, `M.item_unlocked`, `M.entity_unlocked`, `M.interior_position_allowed`, `M.defense_position_allowed`, `M.finalize_installation`, `M.installation_summary`, `M.feature_available`, `M.install` |
+| [planning_constraints_0646](../tech-priests_src/scripts/core/planning_constraints_0646.lua) | `M.recipe_names_for_item`, `M.resource_names_for_product`, `M.item_for_entity`, `M.item_unlocked`, `M.entity_unlocked`, `M.interior_position_allowed`, `M.defense_position_allowed`, `M.finalize_installation`, `M.installation_summary`, `M.feature_available`, `M.install` |
 | [logistics_fetch_executor_0527](../tech-priests_src/scripts/core/logistics_fetch_executor_0527.lua) | `M.spendable_source_count`, `M.root`, `M.service_pair`, `M.describe_pair`, `M.install` |
 | [scan_routing_0610](../tech-priests_src/scripts/core/scan_routing_0610.lua) | `M.root`, `M.should_skip_negative`, `M.record_negative`, `M.clear_negative`, `M.find_entities`, `M.report_lines`, `M.install` |
 | [efficiency_economy_0587](../tech-priests_src/scripts/core/efficiency_economy_0587.lua) | `M.source_candidates`, `M.container_candidates`, `M.borrow_source_candidates`, `M.observe_source_candidates`, `M.invalidate_entity_sources`, `M.cleanup`, `M.install` |

@@ -16,10 +16,8 @@ function M.for_root(root)
       end
     end
     indexed_source, by_owner = source, built
-    if root.stats then
-      root.stats.owner_index_rebuilds_1496 =
-        (root.stats.owner_index_rebuilds_1496 or 0) + 1
-    end
+    -- This derived cache may be cold only on a joining multiplayer client.
+    -- Rebuilding it must never mutate saved gameplay or diagnostic state.
   end
   return by_owner
 end

@@ -194,12 +194,21 @@ do
   local function cached_audit_status(value)
     if type(value)~="table" then return nil end
     return {available=value.available,ok=value.ok,passed=value.passed,error=value.error,
+      pending=value.pending,complete=value.complete,
       detail=value.detail,second=value.second,retired=value.retired,
       retirement_reason=value.retirement_reason,replacement_available=value.replacement_available,
       replacement_ready=value.replacement_ready}
   end
   local function cached_array_count(value)
     if type(value)=="table" then return #value end
+  end
+  local function cached_audit_names(value)
+    if type(value)~="table" then return nil,nil end
+    local names={}
+    for index=1,math.min(#value,32) do
+      names[index]=type(value[index])=="string" and value[index] or "<non-string>"
+    end
+    return names,#value>32
   end
   local function live_pairs()
     local found={}
@@ -292,7 +301,8 @@ do
     end
     if original_count and #values~=original_count then stable=false end
     local tp=storage.tech_priests or {}
-    -- Passive audit receipts: never execute an audit or traverse saved state.
+    -- Passive audit receipts: no audit calls or broad saved-state traversal.
+    -- Existing audit-name arrays are copied with a strict 32-entry bound.
     local lifecycle=tp.development_lifecycle_checkpoint_0733
     local lifecycle_last=lifecycle and lifecycle.last
     local lifecycle_audits=lifecycle_last and lifecycle_last.audits
@@ -300,8 +310,12 @@ do
     local integration_last=integration and integration.last
     local serialization=integration_last and integration_last.serialization
       or integration and integration.last_serialization
+    local completed_serialization=integration and integration.last_completed_serialization_0721
     local integrity=tp.broker_registry_integrity_0725
     local integrity_last=integrity and integrity.last
+    local missing_service_names,missing_service_names_truncated=cached_audit_names(integrity_last and integrity_last.missing)
+    local missing_module_names,missing_module_names_truncated=cached_audit_names(integration_last and integration_last.missing_modules)
+    local surviving_command_names,surviving_command_names_truncated=cached_audit_names(integration_last and integration_last.surviving_commands)
     local repair_by_force={}
     for _,by_force in pairs(tp.work_queue_authority_0601 and tp.work_queue_authority_0601.queues or {}) do
       for force_id,categories in pairs(by_force) do
@@ -338,11 +352,31 @@ do
             migration_pair_integrity_0734=cached_audit_status(lifecycle_audits.migration_pair_integrity_0734)}},
         integration={available=integration~=nil,enabled=integration and integration.enabled,
           last_tick=integration_last and integration_last.tick,
+          complete=integration_last and integration_last.complete,pending=integration_last and integration_last.pending,
+          serialization_job_active=integration and integration.serialization_job_0721~=nil,
+          serialization_jobs=integration and integration.stats and {
+            started=integration.stats["serialization-audits"],
+            completed=integration.stats["serialization-completed"],
+            incomplete=integration.stats["serialization-incomplete"],
+            truncated=integration.stats["serialization-truncated"],
+            work=integration.stats["serialization-work"]},
+          last_completed_serialization=completed_serialization and {
+            tick=completed_serialization.tick,finished_tick=completed_serialization.finished_tick,
+            nodes=completed_serialization.nodes,work=completed_serialization.work,
+            complete=completed_serialization.complete,failed=completed_serialization.failed,
+            unsupported=completed_serialization.unsupported},
           issues_added=integration_last and integration_last.issues_added,
           missing_modules=cached_array_count(integration_last and integration_last.missing_modules),
+          missing_module_names=missing_module_names,missing_module_names_truncated=missing_module_names_truncated,
           surviving_commands=cached_array_count(integration_last and integration_last.surviving_commands),
+          surviving_command_names=surviving_command_names,surviving_command_names_truncated=surviving_command_names_truncated,
           retirement_registry_available=integration_last and integration_last.retirement_registry_available,
           serialization=serialization and {tick=serialization.tick,nodes=serialization.nodes,
+            schema=serialization.schema,observation=serialization.observation,
+            pending=serialization.pending,complete=serialization.complete,failed=serialization.failed,
+            status=serialization.status,finished_tick=serialization.finished_tick,
+            last_step_tick=serialization.last_step_tick,last_step_work=serialization.last_step_work,work=serialization.work,
+            cursor_resets=serialization.cursor_resets,abort_reason=serialization.abort_reason,
             tables=serialization.tables,lua_objects=serialization.lua_objects,
             circular_references=serialization.circular_references,unsupported=serialization.unsupported,
             truncated=serialization.truncated,issues=cached_array_count(serialization.issues)}},
@@ -350,6 +384,7 @@ do
           last_tick=integrity_last and integrity_last.tick,complete=integrity_last and integrity_last.complete,
           central_route_complete=integrity_last and integrity_last.central_route_complete,
           missing=cached_array_count(integrity_last and integrity_last.missing),
+          missing_names=missing_service_names,missing_names_truncated=missing_service_names_truncated,
           malformed=cached_array_count(integrity_last and integrity_last.malformed),
           duplicates=cached_array_count(integrity_last and integrity_last.duplicates),
           central_route_malformed=cached_array_count(integrity_last and integrity_last.central_route_malformed),

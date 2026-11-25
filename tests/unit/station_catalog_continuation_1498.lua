@@ -114,19 +114,18 @@ local function fixture()
     for _=1,5000 do if predicate()then return end;ctx.pulse()end
     error('no bounded progress: '..label)
   end
-  function ctx.reload()
-    -- Change hash-table layouts while preserving aliases and engine identities.
+  function ctx.reload(keep_storage)
+    -- Reconstruct saved structure while preserving aliases and engine identities.
+    -- Native table order is checked by the engine fixture, not stock Lua.
     local copied={}
     local function clone(v)
       if type(v)~='table' or v.object_name then return v end
       if copied[v]then return copied[v]end
       local out={};copied[v]=out
-      local keys={};for k in pairs(v)do keys[#keys+1]=k end
-      table.sort(keys,function(a,b)return tostring(a)>tostring(b)end)
-      for _,k in ipairs(keys)do out[clone(k)]=clone(v[k])end
+      for key,value in pairs(v)do out[clone(key)]=clone(value) end
       return out
     end
-    storage=clone(storage)
+    if not keep_storage then storage=clone(storage) end
     for _,name in ipairs({'station_catalog','catalog_dense_scan_1478',
         'catalog_owner_index_1496'})do package.loaded['scripts.core.'..name]=nil end
     _G.TechPriestsStationCatalog=nil
@@ -137,6 +136,89 @@ local function fixture()
     ctx.C,ctx.pair,ctx.root=C,p,root
   end
   return ctx
+end
+
+-- A multiplayer join reloads module locals on the joining client only. The
+-- same saved mid-map state must spend exactly the same bounded work as the
+-- running host; a local cache cannot choose whether to rewind its cursor.
+do
+  local x=fixture();x.start()
+  local function size(map)local n=0;for _ in pairs(map)do n=n+1 end;return n end
+  x.until_(function()
+    local job=x.job()
+    return job and job.phase=='retire' and job.map_cursor~=nil
+      and size(job.map_seen)>=16 and size(job.map_seen)<160
+  end,'saved retirement cursor')
+  local job=x.job()
+  local fields,seen,stats={},{},{}
+  for key,value in pairs(job)do fields[key]=value end
+  for key,value in pairs(job.map_seen)do seen[key]=value end
+  for key,value in pairs(x.root.stats)do stats[key]=value end
+  local tick,admission,cursor=game.tick,x.root.last_admission_tick_1498,
+    x.root.scan_work_cursor_1498
+  local processed=size(seen)
+  x.pulse()
+  local host={cursor=job.map_cursor,seen=size(job.map_seen),work=job.work,
+    phase=job.phase,pulses=job.pulses}
+  assert(host.seen==processed+16,'warm host did not process its next bounded keys')
+  -- Restore the exact serializable checkpoint, preserving the traversed map
+  -- itself. Native serialization/order is checked in the engine fixture.
+  for key in pairs(job)do job[key]=nil end
+  for key,value in pairs(fields)do job[key]=value end
+  job.map_seen=seen
+  x.root.stats=stats
+  x.root.last_admission_tick_1498=admission
+  x.root.scan_work_cursor_1498=cursor
+  game.tick=tick
+  x.reload(true)
+  x.pulse()
+  job=x.job()
+  assert(job.map_cursor==host.cursor and size(job.map_seen)==host.seen
+      and job.work==host.work and job.phase==host.phase and job.pulses==host.pulses,
+    'joining client diverged from host at the same saved map cursor: host processed '
+      ..host.seen..', client processed '..size(job.map_seen))
+  print('[continuation-independent] PASS host/joining-client mid-map work parity')
+end
+
+-- Prototype and reverse-owner caches are transient optimizations. Repeating
+-- the same inventory/survey operations with cold client locals must not add
+-- diagnostic writes that a warm host does not perform.
+do
+  local x=fixture()
+  local inventory={valid=true,get_contents=function()return {['iron-plate']=17}end}
+  local chest={object_name='LuaEntity',valid=true,unit_number=90000,
+    type='container',name='wooden-chest',position={x=8,y=8},
+    surface=x.pair.station.surface,force=x.pair.station.force,
+    prototype=x.pair.station.prototype,
+    get_inventory=function(id)if id==defines.inventory.chest then return inventory end end}
+  x.world.entries[#x.world.entries+1]=chest
+  x.emit('on_built_entity',{entity=chest})
+  x.C.snapshot_inventory(x.pair)
+  local function operations()
+    assert(x.C.inventory_types())
+    assert(x.C.snapshot_inventory(x.pair).storage_items['iron-plate'].count==17)
+    x.C.prune_invalid()
+    x.root.stations[60000].dirty_0634=true
+    assert(x.C.scan_pair(x.pair).resources['iron-ore'].sources==196)
+  end
+  -- Old saves may contain historical miss counts. Loading a cold local cache
+  -- must not increment them or otherwise mutate them independently.
+  for _,key in ipairs({'inventory_prototype_cache_misses_0578',
+      'mineable_prototype_cache_misses_0578','inventory_type_builds_1497',
+      'owner_index_rebuilds_1496'})do x.root.stats[key]=17 end
+  local before={};for key,value in pairs(x.root.stats)do before[key]=value end
+  operations()
+  local host={};for key,value in pairs(x.root.stats)do host[key]=value end
+  x.root.stats=before
+  x.reload(true)
+  operations()
+  for key,value in pairs(host)do
+    assert(x.root.stats[key]==value,'cold client changed saved cache diagnostics: '..key)
+  end
+  for key,value in pairs(x.root.stats)do
+    assert(host[key]==value,'cold client added saved cache diagnostics: '..key)
+  end
+  print('[continuation-independent] PASS warm/fresh prototype and owner-cache state parity')
 end
 
 -- External radar/build claims must survive cancellation, while speculative
@@ -227,13 +309,13 @@ do
   local previous_tick=x.root.stations[60000].tick
   x.reload()
   x.until_(function()return x.root.stations[60000].tick~=previous_tick end,
-    'rehash/reload continuation')
+    'saved-structure reload continuation')
   local final=x.root.stations[60000]
   assert(not final.scan_incomplete_1478 and final.resources['iron-ore'].sources==196,
     'reload skipped, duplicated or falsely truncated physical resources')
   for i=1,196 do assert(x.root.owned_resources['u:'..i]==60000,
     'reload lost physical ownership for '..i)end
-  print('[continuation-independent] PASS rehash/reload ownership and totals')
+  print('[continuation-independent] PASS saved-structure reload ownership and totals')
 end
 
 -- One shared slice budget must rotate actual progress, not merely advance

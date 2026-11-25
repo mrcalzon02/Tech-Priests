@@ -9,7 +9,7 @@
 
 local M = {
   version = "0.1.674-dev",
-  source_revision = "0.1.674-dev-lifecycle-0733-c",
+  source_revision = "0.1.674-dev-lifecycle-0733-d",
   storage_key = "development_lifecycle_checkpoint_0733",
   audit_interval = 601,
   owner = "development_lifecycle_checkpoint_0733",
@@ -114,9 +114,10 @@ local function mod_change_snapshot(event)
   }
 end
 
-local function audit_passed(method, first)
+local function audit_passed(method, first, status)
   if method == "audit_all" then
-    return (tonumber(first) or 0) == 0
+    return (tonumber(first) or 0) == 0 and type(status) == "table"
+      and status.complete == true and status.pending ~= true
   end
   if type(first) == "table" and first.complete ~= nil then
     return first.complete == true
@@ -138,15 +139,21 @@ local function call_audit(module_global, module_path, method)
       detail = "method-unavailable",
     }
   end
-  local ok, first, second = pcall(module[method])
-  local passed = ok and audit_passed(method, first)
+  local ok, first, second, status = pcall(module[method])
+  local passed = ok and audit_passed(method, first, status)
+  local failure
+  if not ok then failure = safe(first) end
+  local complete_status
+  if type(status) == "table" then complete_status = status.complete == true end
   return {
     available = true,
     ok = ok,
     passed = passed,
     first = type(first) == "table" and first or safe(first),
     second = safe(second),
-    error = ok and nil or safe(first),
+    error = failure,
+    pending = type(status) == "table" and status.pending == true or false,
+    complete = complete_status,
   }
 end
 

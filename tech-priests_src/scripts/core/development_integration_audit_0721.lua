@@ -13,9 +13,13 @@ local M = {
   interval = 307,
   recent_limit = 180,
   serialization_interval = 3600,
-  serialization_node_limit = 50000,
+  serialization_work_budget = 256,
+  serialization_continuation_interval = 5,
+  serialization_frame_limit = 2048,
+  serialization_schema = 2,
   serialization_issue_limit = 40,
 }
+local registered_service
 
 -- Require the current owners after 0646's declared consolidation. Intentional
 -- retirements are reported from that same declaration, not as missing globals.
@@ -276,19 +280,21 @@ end
 
 local function tech_priests_commands()
   local out = {}
+  local cleanup = rawget(_G, "TechPriestsRuntimeCommandCleanup0720")
+    or package.loaded["scripts.core.runtime_command_cleanup_0720"]
+  if not (cleanup and type(cleanup.is_managed_command) == "function") then
+    return out, false
+  end
   local registered
   if commands then pcall(function() registered = commands.commands end) end
-  if type(registered) ~= "table" then return out end
+  if type(registered) ~= "table" then return out, true end
   for name, description in pairs(registered) do
-    local text = string.lower(tostring(description or ""))
-    if string.find(text, "tech priests", 1, true)
-      or string.find(text, "tech-priests", 1, true)
-    then
+    if cleanup.is_managed_command(name, description) then
       out[#out + 1] = name
     end
   end
   table.sort(out)
-  return out
+  return out, true
 end
 
 local function check_modules()
@@ -301,7 +307,9 @@ end
 
 local function lua_object_name(value)
   local kind = type(value)
-  if kind ~= "table" and kind ~= "userdata" then return nil end
+  -- Native LuaObjects are userdata. A plain saved table can contain an
+  -- object_name field without becoming an opaque, serializable engine object.
+  if kind ~= "userdata" then return nil end
   local ok, name = pcall(function() return value.object_name end)
   if ok and type(name) == "string" and string.sub(name, 1, 3) == "Lua" then
     return name
@@ -317,31 +325,89 @@ end
 
 local function add_serialization_issue(scan, code, path, detail)
   scan.unsupported = scan.unsupported + 1
+  scan.failed = true
   if #scan.issues >= M.serialization_issue_limit then return end
   scan.issues[#scan.issues + 1] = {
     code = tostring(code),
     path = short_path(path),
     detail = tostring(detail or ""),
   }
+  issue(nil, code, short_path(path) .. " " .. tostring(detail or ""))
 end
 
-local function scan_serializable(value, path, seen, scan)
-  if scan.truncated then return end
+local function schedule_audit(state)
+  local tick = now()
+  local due = tonumber(state.next_audit_tick_0721) or tick
+  if state.enabled == false then
+    due = tick + M.interval
+  elseif state.serialization_job_0721 then
+    due = math.min(due, tick + M.serialization_continuation_interval)
+  else
+    local serial_due = (tonumber(state.last_serialization_tick) or -M.serialization_interval)
+      + M.serialization_interval
+    if state.last_serialization.schema ~= M.serialization_schema then serial_due = tick end
+    due = math.min(due, serial_due)
+  end
+  due = math.max(tick + M.serialization_continuation_interval, due)
+  state.next_service_tick_0721 = due
+  if registered_service then
+    registered_service.next_due_tick = due
+    local ran = rawget(_G, "tech_priests_broker_ran_0598")
+    if type(ran) == "function" then ran(registered_service) end
+  end
+end
+
+local function update_serialization_status(state, scan)
+  local last = state.last
+  last.serialization = scan
+  last.pending = scan.pending == true
+  last.issues_current = (tonumber(last.behavior_issues) or 0) + (tonumber(scan.unsupported) or 0)
+  last.complete = scan.complete == true and scan.failed ~= true
+    and last.issues_current == 0
+end
+
+local function maybe_audit_storage(state)
+  local job = state.serialization_job_0721
+  if job then return job.scan end
+  local tick, previous = now(), state.last_serialization
+  local last_tick = tonumber(state.last_serialization_tick) or -M.serialization_interval
+  if previous.schema == M.serialization_schema and tick - last_tick < M.serialization_interval then
+    return previous
+  end
+  local scan = {schema = M.serialization_schema, tick = tick, finished_tick = 0,
+    nodes = 0, tables = 0, lua_objects = 0, circular_references = 0,
+    unsupported = 0, truncated = false, issues = {}, pending = true,
+    complete = false, failed = false, status = "pending", work = 0,
+    last_step_tick = 0, last_step_work = 0, cursor_resets = 0,
+    observation = "rolling-live-storage"}
+  -- Only the job holds traversal references. Public receipts hold the scalar
+  -- summary and bounded issue records, never frames, seen maps or raw values.
+  state.serialization_job_0721 = {root = storage.tech_priests, phase = "root",
+    frames = {}, seen = {}, scan = scan}
+  state.last_serialization = scan
+  state.stats["serialization-audits"] = (state.stats["serialization-audits"] or 0) + 1
+  return scan
+end
+
+local function key_path(frame, key, key_table)
+  local kind = type(key)
+  local segment
+  if key_table then segment = "key#" .. frame.ordinal
+  elseif kind == "string" then segment = string.sub(key, 1, 100)
+  elseif kind == "number" or kind == "boolean" then segment = tostring(key)
+  else segment = "<" .. kind .. "-key#" .. frame.ordinal .. ">" end
+  return short_path(frame.path .. "[" .. segment .. "]")
+end
+
+local function inspect_value(job, value, path)
+  -- The cursor's growing implementation state is not part of its own input.
+  if value == job then return end
+  local scan, kind = job.scan, type(value)
   scan.nodes = scan.nodes + 1
-  if scan.nodes > M.serialization_node_limit then
-    scan.truncated = true
-    return
-  end
-
-  local kind = type(value)
-  if kind == "nil" or kind == "string" or kind == "number" or kind == "boolean" then
-    return
-  end
+  if kind == "nil" or kind == "string" or kind == "number" or kind == "boolean" then return end
   if kind == "function" or kind == "thread" then
-    add_serialization_issue(scan, "storage-nonserializable-" .. kind, path, kind)
-    return
+    add_serialization_issue(scan, "storage-nonserializable-" .. kind, path, kind); return
   end
-
   local object = lua_object_name(value)
   if object then
     scan.lua_objects = scan.lua_objects + 1
@@ -350,76 +416,118 @@ local function scan_serializable(value, path, seen, scan)
     end
     return
   end
-
-  if kind == "userdata" then
-    add_serialization_issue(scan, "storage-nonserializable-userdata", path, kind)
-    return
-  end
   if kind ~= "table" then
-    add_serialization_issue(scan, "storage-unsupported-type", path, kind)
-    return
+    add_serialization_issue(scan, "storage-nonserializable-" .. kind, path, kind); return
   end
-
-  if seen[value] then
-    scan.circular_references = scan.circular_references + 1
-    return
+  if job.seen[value] then scan.circular_references = scan.circular_references + 1; return end
+  if #job.frames >= M.serialization_frame_limit then
+    add_serialization_issue(scan, "storage-depth-limit", path, "frame-limit")
+    scan.truncated = true; job.abort_reason = "frame-limit"; return
   end
-  seen[value] = true
+  job.seen[value] = true
   scan.tables = scan.tables + 1
+  job.frames[#job.frames + 1] = {value = value, path = path, phase = "next",
+    processed = {}, ordinal = 0}
+end
 
-  local ok, err = pcall(function()
-    for key, child in pairs(value) do
-      local key_kind = type(key)
-      local key_object = lua_object_name(key)
-      if key_kind == "function" or key_kind == "thread"
-        or (key_kind == "userdata" and not key_object)
-      then
-        add_serialization_issue(scan, "storage-nonserializable-key", path, key_kind)
-      elseif key_object == "LuaCustomTable" then
-        add_serialization_issue(scan, "storage-nonserializable-key", path, key_object)
-      end
-      scan_serializable(child, path .. "[" .. safe(key) .. "]", seen, scan)
-      if scan.truncated then break end
+local function finish_serialization(state, job)
+  local scan = job.scan
+  scan.pending = false
+  scan.complete = job.abort_reason == nil
+  scan.failed = scan.failed or job.abort_reason ~= nil
+  scan.status = scan.failed and "failed" or "complete"
+  scan.finished_tick = now()
+  scan.abort_reason = job.abort_reason
+  state.serialization_job_0721 = nil
+  if scan.complete then state.last_completed_serialization_0721 = scan end
+  -- Allow a completed result to be observed even if the walk itself exceeded
+  -- 3600 ticks. A periodic deadline never restarts an in-flight traversal.
+  state.last_serialization_tick = job.abort_reason == "root-changed"
+    and (now() - M.serialization_interval) or now()
+  local name = scan.complete and "serialization-completed" or "serialization-incomplete"
+  state.stats[name] = (state.stats[name] or 0) + 1
+  if scan.truncated then
+    state.stats["serialization-truncated"] = (state.stats["serialization-truncated"] or 0) + 1
+  end
+end
+
+function M.step_storage_audit(requested_budget)
+  local state, tick = root(), now()
+  local job = state.serialization_job_0721
+  if not job or state.enabled == false then return state.last_serialization, 0 end
+  if state.serialization_step_tick_0721 ~= tick then
+    state.serialization_step_tick_0721, state.serialization_step_work_0721 = tick, 0
+  end
+  local cap = math.max(1, math.floor(tonumber(M.serialization_work_budget) or 256))
+  local left = math.max(0, cap - (state.serialization_step_work_0721 or 0))
+  local budget = math.min(left, math.max(0, math.floor(tonumber(requested_budget) or cap)))
+  local scan, used = job.scan, 0
+  local old_nodes, old_unsupported = scan.nodes, scan.unsupported
+  if job.root ~= storage.tech_priests then job.abort_reason = "root-changed" end
+  while used < budget do
+    if job.abort_reason or (job.phase ~= "root" and #job.frames == 0) then
+      used = used + 1; finish_serialization(state, job); break
     end
-  end)
-  if not ok then
-    add_serialization_issue(scan, "storage-iteration-failed", path, safe(err))
+    if job.phase == "root" then
+      if budget - used < 2 then break end
+      used = used + 2; job.phase = "tables"
+      inspect_value(job, job.root, "storage.tech_priests")
+    else
+      local frame = job.frames[#job.frames]
+      if frame.phase == "pop" then
+        used = used + 1; job.frames[#job.frames] = nil
+      elseif frame.phase == "key" then
+        if budget - used < 3 then break end
+        used = used + 3; frame.phase = "value"
+        inspect_value(job, frame.current_key, key_path(frame, frame.current_key, true))
+      elseif frame.phase == "value" then
+        if budget - used < 3 then break end
+        used = used + 3
+        local key = frame.current_key
+        frame.current_key, frame.phase = nil, "next"
+        inspect_value(job, rawget(frame.value, key), key_path(frame, key, false))
+      elseif frame.cursor ~= nil and rawget(frame.value, frame.cursor) == nil then
+        -- Deletion can invalidate next(table, cursor). Restart this frame only;
+        -- persisted processed keys prevent duplicate inspection, and skips cost work.
+        used = used + 1; frame.cursor = nil; scan.cursor_resets = scan.cursor_resets + 1
+      else
+        if budget - used < 3 then break end
+        used = used + 3
+        local ok, key = pcall(next, frame.value, frame.cursor)
+        if not ok then
+          add_serialization_issue(scan, "storage-iteration-failed", frame.path, "next-failed")
+          job.abort_reason = "iteration-failed"
+        elseif key == nil then
+          frame.phase = "pop"
+        else
+          local kind, object = type(key), lua_object_name(key)
+          if kind == "function" or kind == "thread" or object == "LuaCustomTable"
+              or (kind == "userdata" and not object) then
+            add_serialization_issue(scan, "storage-nonserializable-key", frame.path, object or kind)
+            -- Never save an unsupported value as a bookmark or visited-map key.
+            job.abort_reason = "unsupported-key"
+          else
+            frame.cursor = key
+            if not frame.processed[key] then
+              frame.processed[key] = true; frame.current_key = key
+              frame.ordinal = frame.ordinal + 1
+              frame.phase = kind == "table" and "key" or "value"
+            end
+          end
+        end
+      end
+    end
   end
-end
-
-local function inspect_storage_serialization()
-  local scan = {
-    tick = now(),
-    nodes = 0,
-    tables = 0,
-    lua_objects = 0,
-    circular_references = 0,
-    unsupported = 0,
-    truncated = false,
-    issues = {},
-  }
-  scan_serializable(storage and storage.tech_priests or {}, "storage.tech_priests", {}, scan)
-  return scan
-end
-
-local function maybe_audit_storage(state)
-  local tick = now()
-  local last_tick = tonumber(state.last_serialization_tick) or -M.serialization_interval
-  if tick - last_tick < M.serialization_interval and next(state.last_serialization or {}) ~= nil then
-    return state.last_serialization
-  end
-
-  local scan = inspect_storage_serialization()
-  state.last_serialization_tick = tick
-  state.last_serialization = scan
-  stat("serialization-audits")
-  stat("serialization-nodes", scan.nodes)
-  stat("serialization-unsupported", scan.unsupported)
-  if scan.truncated then stat("serialization-truncated") end
-  for _, entry in ipairs(scan.issues) do
-    issue(nil, entry.code, entry.path .. " " .. entry.detail)
-  end
-  return scan
+  state.serialization_step_work_0721 = (state.serialization_step_work_0721 or 0) + used
+  scan.work = scan.work + used
+  scan.last_step_tick, scan.last_step_work = tick, state.serialization_step_work_0721
+  state.stats["serialization-work"] = (state.stats["serialization-work"] or 0) + used
+  state.stats["serialization-nodes"] = (state.stats["serialization-nodes"] or 0) + scan.nodes - old_nodes
+  state.stats["serialization-unsupported"] = (state.stats["serialization-unsupported"] or 0)
+    + scan.unsupported - old_unsupported
+  update_serialization_status(state, scan)
+  schedule_audit(state)
+  return scan, used
 end
 
 function M.audit_pair(pair)
@@ -440,7 +548,7 @@ end
 
 function M.audit_all()
   local state = root()
-  if state.enabled == false then return 0, "disabled" end
+  if state.enabled == false then return 0, "disabled", {complete = false, pending = false} end
   local before = state.stats.issues or 0
   local audited_pairs = 0
   for _, pair in pairs(pair_map()) do
@@ -452,7 +560,8 @@ function M.audit_all()
 
   local missing = check_modules()
   for _, name in ipairs(missing) do issue(nil, "missing-module-global", name) end
-  local remaining_commands = tech_priests_commands()
+  local remaining_commands, command_policy_available = tech_priests_commands()
+  if not command_policy_available then issue(nil, "command-policy-unavailable", "runtime_command_cleanup_0720") end
   for _, name in ipairs(remaining_commands) do issue(nil, "surviving-command", name) end
   local serialization = maybe_audit_storage(state)
   local constraints = rawget(_G, "TechPriestsPlanningConstraints0646")
@@ -470,9 +579,15 @@ function M.audit_all()
     retired_modules = type(retired) == "table" and retired or {},
     retirement_registry_available = type(retired) == "table",
     surviving_commands = remaining_commands,
+    command_policy_available = command_policy_available,
     serialization = serialization,
   }
-  return state.last.issues_added, "pairs=" .. safe(audited_pairs)
+  state.last.behavior_issues = state.last.issues_added
+  state.next_audit_tick_0721 = now() + M.interval
+  update_serialization_status(state, serialization)
+  schedule_audit(state)
+  return state.last.issues_current, "pairs=" .. safe(audited_pairs)
+    .. " serialization=" .. tostring(serialization.status), state.last
 end
 
 local function patch_diagnostics()
@@ -504,6 +619,10 @@ local function patch_diagnostics()
       .. " storage_unsupported=" .. safe(serialization.unsupported or 0)
       .. " storage_cycles=" .. safe(serialization.circular_references or 0)
       .. " storage_scan_truncated=" .. safe(serialization.truncated == true)
+      .. " storage_pending=" .. safe(serialization.pending == true)
+      .. " storage_complete=" .. safe(serialization.complete == true)
+      .. " storage_failed=" .. safe(serialization.failed == true)
+      .. " storage_step_work=" .. safe(serialization.last_step_work or 0)
     for index = math.max(1, #state.recent - 14), #state.recent do
       local event = state.recent[index]
       if event then
@@ -524,16 +643,38 @@ M.patch_diagnostics = patch_diagnostics
 local function register_service()
   local broker = rawget(_G, "TechPriestsRuntimeTickBroker0600")
   if broker and type(broker.register_service) == "function" then
-    broker.register_service({
+    registered_service = broker.register_service({
       name = "development_integration_audit_0721",
       category = "diagnostics",
       interval = M.interval,
       priority = 998,
       budget = 1,
+      next_due_tick = root().next_service_tick_0721,
       note = "read-only cross-authority task custody plan request module command and storage serialization audit",
-      fn = function()
-        local issues, why = M.audit_all()
-        return issues > 0, why .. " issues=" .. safe(issues)
+      fn = function(_, _, service)
+        if service then registered_service = service end
+        local state = root()
+        if state.enabled == false then
+          schedule_audit(state)
+          return {processed = 0, acted = 0, detail = "disabled"}
+        end
+        local audited = 0
+        if now() >= (tonumber(state.next_audit_tick_0721) or 0) then
+          M.audit_all(); audited = 1
+        else
+          maybe_audit_storage(state)
+        end
+        local scan, work = M.step_storage_audit(M.serialization_work_budget)
+        update_serialization_status(state, scan)
+        schedule_audit(state)
+        local issues = tonumber(state.last.issues_current) or 0
+        return {processed = audited + work, acted = 0,
+          waiting = scan.pending and 1 or 0,
+          failed = (issues > 0 or scan.failed) and 1 or 0,
+          exhausted = scan.pending == true,
+          detail = "pairs=" .. safe(state.last.pairs or 0)
+            .. " issues=" .. safe(issues) .. " serialization=" .. safe(scan.status)
+            .. " work=" .. safe(work)}
       end,
     })
   end

@@ -449,9 +449,20 @@ function build_emergency_craft_candidates(pair, recipe)
   local ids = get_scavenge_inventory_ids()
   local candidates = {}
 
-  local entities = station.surface.find_entities_filtered({ area = area, force = station.force })
+  -- Membership belongs to the existing catalog/0587 authority, including empty
+  -- inventories and later engine/event arrivals. Keep this fallback's live slot
+  -- and material policy below; a retained identity is not permission to take it.
+  local inventory_candidates = rawget(_G, "tech_priests_0327_inventory_candidates")
+  local entities
+  if type(inventory_candidates) == "function" then
+    entities = inventory_candidates(pair, radius)
+  else
+    -- Compatibility bootstrap without the installed catalog API.
+    entities = station.surface.find_entities_filtered({ area = area, force = station.force })
+  end
   for _, entity in pairs(entities or {}) do
-    if is_logistic_scan_candidate_entity(pair, entity) then
+    if entity and entity.valid and entity.surface == station.surface
+        and entity.force == station.force and is_logistic_scan_candidate_entity(pair, entity) then
       local dx = entity.position.x - pos.x
       local dy = entity.position.y - pos.y
       local dist = dx * dx + dy * dy

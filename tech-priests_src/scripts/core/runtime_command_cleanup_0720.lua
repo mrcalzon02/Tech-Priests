@@ -190,6 +190,16 @@ local function belongs_to_tech_priests(name, description, initial_cleanup)
   return localised_contains_owner(description)
 end
 
+-- Auditors share the remover's actual diagnostic-command ownership boundary.
+-- A gameplay command or another mod's reused name is not managed merely
+-- because its help mentions Tech Priests.
+function M.is_managed_command(name, description, initial_cleanup)
+  if initial_cleanup == nil then
+    initial_cleanup = root().initial_cleanup_complete ~= true
+  end
+  return belongs_to_tech_priests(name, description, initial_cleanup == true)
+end
+
 local function command_names(initial_cleanup)
   local names = {}
   local registered

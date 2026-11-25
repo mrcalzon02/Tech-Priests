@@ -106,28 +106,69 @@ checking enablement live and returning independent profiles. Run
 `tests/unit/armor_profile_metadata_0297.lua` against explicit helper refreshes;
 do not restore timer 811 to satisfy that compatibility fixture.
 
-### Lifecycle audit expectations and remaining cost
+### Lifecycle audit expectations and bounded storage work
 
-Run `tests/unit/development_audit_retired_owners.lua` with the existing auditors,
-registry/broker and canonical 0646 declarations. The original three auditors
-fail because intentional retirements leave the checkpoint incomplete. The
-repaired owners pass: twelve healthy 0733 broker calls invoke no full audits;
-missing live services/capabilities, a missing work-reservation owner, real
-orphaned custody and missing 0734 migration service/audit still fail, retry and
-recover. Configuration metadata and source-revision checks remain. Retired
-0730 is explicitly reported as retired with `passed=false`, while its live 0719
-replacement is required. The established runner now contains 79 Lua fixtures.
+Run `tests/unit/development_audit_retired_owners.lua` with the actual auditors,
+registry/broker, current discovery-service installers, canonical 0646
+retirements and generated High Fabricator registration. Complete state reaches
+the cheap 0733 branch; real missing services/capabilities, work reservations,
+orphaned custody and migration failures still fail, retry and recover. 0725
+must use the actual energy, rocket-silo, artillery and roboport discovery-service
+names. 0721 must share 0720's diagnostic-command ownership predicate: gameplay
+High Fabricator remains usable, owned diagnostics still fail/clean, and an
+unrelated mod's reused name remains untouched.
 
-The unchanged 0721 task/custody/request checks and periodic serialization walk
-remain active. Its separate 307-tick service can trigger the synchronous walk
-after a 3,600-tick minimum interval. Incoming trace 45619891933 measured one
-119.017 ms 0733 call among nine warm calls; nested audit timings must locate that
-cost before another runtime change or a claim that this stall is resolved.
+Run `tests/unit/development_storage_audit_continuation.lua` and the native
+`tests/scenarios/development-storage-audit/control.lua` create/reload fixture.
+The existing 0721 owner keeps ordinary 307-tick audits and uses saved five-tick
+continuations only while its storage walk is pending. All callers share at most
+256 counted work per tick, including skipped keys, resets, path/classification
+and frame completion. The old 50,001-node truncated result is not completion.
+The walker visits table keys, rejects unsupported values, handles deletion and
+cycles, stops explicitly on depth/root failure, and publishes no frame/seen
+references. More than 60,000 nodes must finish; an in-flight walk must survive
+3,600-tick boundaries without restarting. Completed summaries remain separately
+observable, with the next walk due no sooner than completion plus 3,600 ticks.
+Fresh and warm module state must preserve cursor/phase/next-key progress and
+actual saved 0598/service deadlines. Native LuaObject and table-key aliases
+must survive reload; local cache warmth cannot affect saved progress.
+
+Candidate4 diagnostic 45628586690 measured a 63.744 ms synchronous 0721 audit
+before this continuation. It also reported four missing registrations and the
+command-policy mismatch above. The isolated native run resumes cursor 5 / phase `next` / next key 6,
+matches its first loaded slice and saved deadlines to warm execution, and
+completes 62,090 nodes / 373,424 work at tick 7,320. Its 1,465 instrumented
+slices reach at most 256 work and 12.952 ms (mean 0.274 ms, p95 0.469 ms).
+This proves the bounded rolling walk, not owner-save UPS acceptance. Retain
+exact source/log hashes, completion ticks and totals; keep the 256 budget. The
+18,000-tick paired replay must observe first completion and sustained late work,
+with genuine behavioral failures still blocking 0733. No pending or truncated
+result may be presented as a successful zero-issue audit.
+
+### Retained planning membership and reload consistency
+
+0257's actual material graph now uses existing 0646 recipe-name membership;
+0257 raw/fluid planning and 0259 resource expansion share immutable resource
+prototype names for each product in that same owner. Enabled recipes,
+ingredients, typed yields and world availability remain live. No TTL or cached
+live-world answer is added. Run the focused planning regressions and
+`tests/scenarios/magos-retained-planning/control.lua`; the exact 2.1.25 native
+create/reload fixture checks 100 actual graph questions per phase and live force
+toggles (`performance/magos-retained-native/receipt.json`).
+
+Catalog continuation progress uses saved cursors/seen state, without a local
+first-resume rewind. Transient prototype and reverse-owner cache misses do not
+increment saved diagnostics according to one client's cache warmth; historical
+counter fields may remain unchanged. The native 400-key reload fixture compares
+24 warm/fresh pulses and all claims, while the dense four-station fixture still
+completes in 492-504 ticks at one query/256 counted work. These correctness
+receipts complement the owner-save replay; they do not replace it.
 
 ### Retained inventory membership and facility accounting
 
 The current inventory repair keeps the existing 0587 source-cache authority.
-0327, 0527, 0686, doctrine and 0643 share its complete typed physical identities;
+0327, 0527, 0686, doctrine, 0643 and the generated 005 emergency candidate
+builder share its complete typed physical identities;
 0686 keeps its four-type, 256-entry eligible view and complete overflow. No elapsed-time
 expiry starts another inventory-area query. Wider known coverage serves
 narrower live views, while a changed station domain, coverage expansion or
@@ -162,6 +203,19 @@ contract, real wire policy, vehicle/robot arrivals, build/removal and reload.
 It also proves 0686 rejects fuel-only car coal, uses the actual trunk slot and
 leaves fuel unchanged during a physical trunk withdrawal. This isolated
 semantic evidence does not establish owner-save UPS acceptance.
+
+The emergency fallback regression loads the actual generated 001/002/005/009/012
+fragments, 0214/0325 wrappers, 0324 target safety and catalog/0587 owners.
+`tests/unit/emergency_craft_retained_inventory.lua` must preserve one inventory
+seed across repeated fallback rebuilds, live slots/material policy, force and
+circular range checks, build/removal, vehicle arrivals and real withdrawal.
+Its exact 2.1.25 native create/reload scenario passed one seed and 100 warm
+rebuilds, rare-quality stock readback and raised build/removal. Separate loose
+items, asteroids, ore/trees and mineable-enrichment queries remain. The nth-29
+watchdog and its possible repeated 0514 calls are unchanged; inclusive
+instrumented duration must be compared with uninstrumented evidence before
+assigning elapsed cost to those branches. No UPS acceptance follows from the
+isolated discovery-count proof.
 
 The 0643 facility assessment now uses the bound native `get_inventory(id)` call
 and retained machine/provider identities. The former extra entity argument

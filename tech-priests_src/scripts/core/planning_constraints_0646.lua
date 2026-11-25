@@ -15,6 +15,8 @@ local item_by_entity={}
 -- never LuaRecipe objects or answers about current availability.
 local recipe_names_by_force={}
 local empty_recipe_names={}
+local resource_names_by_product
+local empty_resource_names={}
 local function valid(e)return e and e.valid end
 local function safe(v)local ok,s=pcall(tostring,v);return ok and s or"?"end
 local function dist_sq(a,b)local x=(a.x or 0)-(b.x or 0);local y=(a.y or 0)-(b.y or 0);return x*x+y*y end
@@ -86,6 +88,55 @@ function M.recipe_names_for_item(force,item_name,products_only)
  -- Returned arrays are retained read-only candidates, including disabled
  -- recipes. Consumers read force.recipes[name].enabled/ingredients live.
  return names[item_name] or empty_recipe_names
+end
+-- The same immutable resource definitions serve both the ratio graph and
+-- resource expansion. These are prototype names, never discovered world
+-- entities, resource amounts, chart coverage or inventory contents.
+local function resource_product_index()
+ if resource_names_by_product then return resource_names_by_product end
+ local all=tech_priests_prototype_table_0440
+  and tech_priests_prototype_table_0440("entity")
+  or (prototypes and prototypes.entity)
+ if not all then return nil end
+ local result={any={},item={},fluid={}}
+ local complete=true
+ for name,proto in pairs(all)do
+  local ok,kind=pcall(function()return proto.type end)
+  if not ok then complete=false end
+  if ok and kind=="resource"then
+   local read,mineable=pcall(function()return proto.mineable_properties end)
+   if not read then complete=false end
+   local seen,typed_seen={},{}
+   for _,product in pairs(read and mineable and mineable.products or {})do
+    local got,product_name,product_kind=pcall(function()
+     return product.name,product.type or "item"
+    end)
+    if not got then complete=false end
+    if got and type(product_name)=="string"then
+     if not seen[product_name]then
+      seen[product_name]=true
+      append_recipe(result.any,product_name,name)
+     end
+     local typed=result[product_kind]
+     local key=product_kind.."|"..product_name
+     if typed and not typed_seen[key]then
+      typed_seen[key]=true
+      append_recipe(typed,product_name,name)
+     end
+    end
+   end
+  end
+ end
+ -- Do not turn a failed metadata read into a permanent negative answer.
+ if complete then resource_names_by_product=result end
+ return result
+end
+function M.resource_names_for_product(product_name,kind)
+ if type(product_name)~="string"then return empty_resource_names end
+ local index=resource_product_index()
+ local names=index and index[kind or "any"]
+ -- Retained, read-only membership in native prototype iteration order.
+ return names and names[product_name] or empty_resource_names
 end
 function M.item_for_entity(entity_name)
  if not(entity_name and prototypes and prototypes.item)then return nil end

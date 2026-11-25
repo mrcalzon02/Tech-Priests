@@ -10,10 +10,19 @@ Source presence does not prove that a callback installed or ran in Factorio.
 
 ## Current owner
 
-The dispatcher invokes 0514 for station craft, with a guarded `crafting_executor` fallback when appropriate. Historical 0505 behavior wrappers are retired. 0514 retains compatibility entry wrappers and owns facility-first selection, physical recipe transaction, output/rollback custody and queue completion.
+The dispatcher invokes 0514 for station craft, with a guarded `crafting_executor` fallback when appropriate. Historical 0505 behavior wrappers are retired. 0514 retains compatibility entry wrappers and owns facility-first selection, physical recipe transaction, output/rollback custody and queue completion. The generated 0287 watchdog remains a separate compatibility caller; its conditional 0184 initialization reaches the original 005 candidate builder through the 0214/0325 wrappers.
 
 ```mermaid
 flowchart TD
+    Fallback["0184 emergency fallback initialization"] --> Candidates["005 candidate builder with 0214/0325 enrichment"]
+    Candidates --> Membership["0327 / 0587 retained inventory identities"]
+    Membership --> Live["Live force, circle, eligibility and inventory slots"]
+    Candidates --> OtherSources["Separate loose-item and mineable queries"]
+    Live --> Prepared["Existing material candidates and ordering"]
+    OtherSources --> Prepared
+    Prepared --> Legacy["Existing task and legacy craft call"]
+    Legacy --> Entry
+    Dispatcher["0510 station-craft selection"] --> Entry
     Entry["0514 service_pair"] --> Held{"Existing output or rollback custody?"}
     Held -->|"yes"| Reconcile["Deposit held output or restore ingredients"]
     Held -->|"no"| Task["Resolve real recipe task"]
@@ -45,8 +54,34 @@ flowchart TD
 | Station fallback | `timed_fallback` requires physical station route/contact and real recipe ingredients. |
 | Terminal handoff | `finalize`, `finish_order`, exact task cleanup. |
 | Legacy entry | Existing wrappers direct qualifying old calls into the canonical owner and suppress duplicate facility pulses. |
+| Legacy fallback discovery | Generated 005 obtains inventory identities from installed `tech_priests_0327_inventory_candidates`; 0184 and 0214/0325 continue through that same builder. |
+| Legacy source permission | Existing `is_logistic_scan_candidate_entity`, current same-force/surface and circular range checks, current inventory IDs/stacks and material values. Installed 0324 still excludes player/character targets. |
 
 The diagram is a transaction contract; a particular save/reload or partial-insert scenario still needs native evidence.
+
+## Legacy acquisition and retained inventory membership
+
+The generated nth-29 callback invokes the final 0287 acquisition wrapper for
+active motion tasks. The 0291 loose-stockpile search and 0290 station-craft
+attempt precede 0287's own cooldown. 0510's legacy gate wraps `tick_pair`, not
+this watchdog. Qualifying legacy craft calls reach 0514, and the existing kick
+can call that owner twice in the same tick. This inventory repair does not
+change those call or retry semantics.
+
+The conditional 0184 fallback now shares the complete 0327/0587 inventory
+identity list instead of issuing an untyped surrounding-entity inventory
+search. Empty inventories remain known; build/removal events, engine vehicle
+lists and the existing membership owner supply arrivals. No new timer, TTL,
+cache or registry is introduced. The existing complete seed/domain-change
+rules apply. A compatibility runtime without the installed catalog API retains
+the previous direct query.
+
+The builder still reads real slots on each request, applies its own live target
+policy and returns the same material-candidate records. It does not adopt the
+catalog's item-selection, wire, quality or slot policy. Its separate loose-item,
+asteroid, ore/tree and 0214/0325 mineable searches and candidate ordering remain.
+Discovery does not debit stock or replace output/rollback custody; subsequent
+physical withdrawal remains with the existing acquisition owner and stock guard.
 
 ## Separate facility feed
 
@@ -55,6 +90,17 @@ The diagram is a transaction contract; a particular save/reload or partial-inser
 ## Performance boundary
 
 Recipe/prototype inspection and source discovery are distinct from a timed craft advancing. `service_all` exists but is not independently registered by 0514; map actual caller edges rather than counting the function as another installed timer. A timed wait should not repeat expensive discovery unless an invalidation/retry condition requires it.
+
+`tests/unit/emergency_craft_retained_inventory.lua` loads the actual generated
+fragments, 0214/0325 wrappers, 0324 safety and catalog/0587 owners. It fails with
+the original builder and passes with one inventory seed across sixty rebuilds
+at 1,800-tick boundaries, live stock/permission changes, build/removal and
+vehicle arrival. The reusable native scenario at
+`tests/scenarios/emergency-craft-retained-inventory/control.lua` passed creation
+and reload in Factorio 2.1.25: one seed, 100 warm fallback rebuilds, unchanged
+rare-quality stock, live force/range checks, real single-item trunk withdrawal
+and raised build/removal events. These are semantic/discovery-count results,
+not acceptance of owner-save UPS or attribution of an inclusive profiler gap.
 
 ## Audited exported entry points
 

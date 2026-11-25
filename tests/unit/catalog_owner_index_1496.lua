@@ -7,10 +7,10 @@ for i=1,10000 do
 end
 -- Simulate loading a pre-index save: rebuild lazily from canonical claims.
 local groups=Index.for_root(root)
-assert(root.stats.owner_index_rebuilds_1496==1)
+assert(next(root.stats)==nil,'local owner-cache rebuild mutated saved diagnostics')
 local function count(group) local n=0;for _ in pairs(group or {})do n=n+1 end;return n end
 assert(count(groups[1])==100 and count(groups[2])==10 and count(groups[3])==9890)
-assert(Index.for_root(root)==groups and root.stats.owner_index_rebuilds_1496==1,
+assert(Index.for_root(root)==groups,
   'unchanged ownership rebuilt its reverse index')
 local tags={}
 for i=101,110 do tags['u:'..i]=true end
@@ -35,7 +35,16 @@ local new_root={owned_resources={['old:1']=4,['old:2']=4},stats={}}
 local changed=Index.for_root(new_root)
 assert(changed~=groups and count(changed[4])==2,
   'replacing ownership storage did not reseed the derived index')
-assert(new_root.stats.owner_index_rebuilds_1496==1)
+assert(next(new_root.stats)==nil,'changed source cache mutated saved diagnostics')
+-- A joining client reloads this module, while the host keeps its index warm.
+-- The canonical save and diagnostic fields must remain identical either way.
+local saved_counter=17
+new_root.stats.owner_index_rebuilds_1496=saved_counter
+package.loaded['scripts.core.catalog_owner_index_1496']=nil
+Index=require('scripts.core.catalog_owner_index_1496')
+local reloaded=Index.for_root(new_root)
+assert(count(reloaded[4])==2 and new_root.stats.owner_index_rebuilds_1496==saved_counter,
+  'fresh client owner cache changed persisted state relative to warm host')
 assert(Index.release_station(new_root,4)==2 and next(new_root.owned_resources)==nil,
   'orphan cleanup failed after a save reload')
 -- A later cleanup must not iterate the complete ownership table again.

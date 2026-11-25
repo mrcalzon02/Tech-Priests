@@ -14,6 +14,7 @@ local RemoteChain0820=require("scripts.core.resource_station_chain_0820")
 local ReturnCourier0837=require("scripts.core.resource_return_courier_0837")
 local RemoteDrill1011=require("scripts.core.remote_machine_drill_1011")
 local Campaign=require("scripts.core.strategic_resource_campaign")
+local PlanningConstraints0646=require("scripts.core.planning_constraints_0646")
 TECH_PRIESTS_RESOURCE_EXPANSION_VERSION_0259 = "0.1.259+0.1.674-0820"
 TECH_PRIESTS_RESOURCE_EXPANSION_INTERVAL_0259 = 60 * 20
 TECH_PRIESTS_RESOURCE_EXPANSION_SEARCH_START_0259 = 64
@@ -56,28 +57,8 @@ local function is_magos(pair)
   return false
 end
 
-local function product_name_matches(product, target)
-  return product and product.name == target
-end
-
 local function resource_prototypes_for_product(product_name)
-  local result = {}
-  if not product_name then return result end
-  for resource_name, proto in pairs((tech_priests_prototype_table_0440 and tech_priests_prototype_table_0440("entity")) or {}) do
-    local ok_type, typ = pcall(function() return proto.type end)
-    if ok_type and typ == "resource" then
-      local ok_mine, mineable = pcall(function() return proto.mineable_properties end)
-      if ok_mine and mineable and mineable.products then
-        for _, product in pairs(mineable.products) do
-          if product_name_matches(product, product_name) then
-            result[#result + 1] = resource_name
-            break
-          end
-        end
-      end
-    end
-  end
-  return result
+  return PlanningConstraints0646.resource_names_for_product(product_name)
 end
 
 local function resource_names_for_need(item_or_fluid)
@@ -85,7 +66,8 @@ local function resource_names_for_need(item_or_fluid)
   -- Common aliases.  Crude oil is a fluid product, not an item, but it is a
   -- resource dependency for refinery planning.
   if #names == 0 and item_or_fluid == "crude-oil" and tech_priests_get_entity_prototype_0440 and tech_priests_get_entity_prototype_0440("crude-oil") then
-    names[#names + 1] = "crude-oil"
+    -- The shared membership array is read-only, including its empty result.
+    return {"crude-oil"}
   end
   return names
 end
@@ -113,6 +95,8 @@ local function nearest_known_resource(pair, resource_names)
   local center = station.position
   local force = station.force
   if not (force and force.is_chunk_charted) then return nil end
+  local operating_radius=radius(pair)
+  local operating_radius_sq=operating_radius*operating_radius
   -- A generated but UNCHARTED patch is not known to the Magos. In native
   -- 1380, reserving a ranked 0820 chain for such an unseen patch permanently
   -- prevented a later radar-charted, physically supplied Method II route.
@@ -141,7 +125,7 @@ local function nearest_known_resource(pair, resource_names)
       for _, entity in pairs(found or {}) do
         if entity and entity.valid and charted(entity) then
           local score = distance_sq(center, entity.position)
-          if score > (radius(pair) * radius(pair)) and (not best_score or score < best_score) then
+          if score > operating_radius_sq and (not best_score or score < best_score) then
             best, best_score = entity, score
           end
         end
@@ -460,14 +444,15 @@ function tech_priests_0259_resource_expansion_service(pair)
   end
 
   local needs,rates=build_need_list(pair,op)
+  local operating_radius=radius(pair)
   local remote_need,remote_target=nil,nil
   local unknown_need=nil
   for _,need in ipairs(needs)do
     local resources=resource_names_for_need(need)
     if #resources>0 then
-      local supply=Campaign.local_supply(pair,resources,need,rates[need],radius(pair))
+      local supply=Campaign.local_supply(pair,resources,need,rates[need],operating_radius)
       if supply.phase=="unexploited-local-resource" then
-        if Campaign.offer_local_drill(pair,supply,need,radius(pair)) then
+        if Campaign.offer_local_drill(pair,supply,need,operating_radius) then
           state.last_reason="funded-local-resource-exploitation:"..need
           state.last_need=need
           return true
