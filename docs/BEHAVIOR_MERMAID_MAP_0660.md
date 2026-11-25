@@ -6,6 +6,8 @@ Purpose: provide a visual, iterative, code-shaped behavior map of how the Tech-P
 
 This document is intended to grow over multiple commits. It should be updated whenever a behavior authority, dispatcher wrapper, movement owner, overhead/visual owner, construction owner, logistics owner, or direct-acquisition owner changes.
 
+The current consolidated owners and performance admission paths are shown in `docs/RECOVERY_AUTHORITY_MAP_CURRENT.md`, especially **Canonical Loader and Runtime Spine**, **Canonical Movement Cadence**, and **Storage and Transfer Boundaries**. The diagrams below preserve the earlier design and wrapper analysis; they do not authorize reinstalling retired leaf/movement wrappers or fetching generic storage from machine work inventories. The still-installed 0527 fetch wrapper and 0686 generic storage now use the existing 0587 source cache for their separate retained entity domains; missing inventory items do not trigger rediscovery of those entities.
+
 ## Reading Rules
 
 The diagrams use these conventions:

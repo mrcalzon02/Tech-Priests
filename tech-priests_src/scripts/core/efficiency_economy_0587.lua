@@ -4,14 +4,14 @@
 -- Logistics/supply economy pass.  This is a cache governor around the existing
 -- inventory steward / station work inventory / authority corridor logistics
 -- surfaces.  It does not choose work, move priests, craft, mine, or deposit
--- outputs.  It only reuses very short-lived answers for repeated same-priest /
--- same-item supply questions so large priest populations do not all rediscover
--- the same station-source lists and counts in the same few ticks.
+-- outputs. Legacy supply answers keep their short TTLs; physical source
+-- membership is retained and maintained by events, independently of item stock.
 
 local M = {}
 M.version = "0.1.587"
 M.storage_key = "efficiency_economy_0587"
 M.source_ttl = 45
+M.container_source_limit = 256
 M.count_ttl_positive = 45
 M.count_ttl_zero = 20
 M.authority_ttl = 90
@@ -19,6 +19,7 @@ M.cleanup_interval = 60 * 19
 M.max_cache_entries = 2048
 
 local originals = {}
+local container_events_installed = false
 
 local function now() return game and game.tick or 0 end
 local function valid(e) return e and e.valid end
@@ -150,6 +151,121 @@ local function put_source_cache(pair, label, list)
   return list
 end
 
+local function candidate_cache_key(pair, domain, force_policy)
+  local unit = station_unit(pair)
+  if not unit then return nil end
+  -- These candidates are local physical containers, not a superior-chain
+  -- stock entitlement. Order changes do not change the spatial search.
+  return "source-candidates:" .. tostring(domain) .. ":" .. force_policy
+    .. ":" .. surface_key(pair) .. ":" .. force_key(pair)
+    .. ":home=" .. tostring(unit)
+end
+
+local function inside_candidate_area(record, position)
+  return position.x >= record.x - record.radius
+    and position.x <= record.x + record.radius
+    and position.y >= record.y - record.radius
+    and position.y <= record.y + record.radius
+end
+
+local function member_matches(record, entity)
+  if not valid(entity) or not record.types[entity.type]
+      or entity.surface ~= record.surface
+      or not inside_candidate_area(record, entity.position) then return false end
+  return true
+end
+
+local function source_matches(record, entity)
+  if not member_matches(record, entity) then return false end
+  local force = entity.force
+  return force == record.force or (record.force_policy == "same-or-neutral"
+    and (not force or force.name == "neutral"))
+end
+
+local function source_types_match(record, types)
+  if #record.type_names ~= #types then return false end
+  for index, name in ipairs(types) do
+    if record.type_names[index] ~= name then return false end
+  end
+  return true
+end
+
+local function candidate_view(record, limit)
+  local list = record.list
+  local size, read, write, accepted = #list, 1, 1, 0
+  local view = {}
+  while read <= size and (not limit or accepted < limit) do
+    local entity = list[read]
+    -- Eligibility remains live, but a known moving or force-changed entity
+    -- must not be forgotten merely because it is temporarily out of range.
+    if valid(entity) and record.types[entity.type] then
+      list[write] = entity
+      write = write + 1
+      if source_matches(record, entity) then
+        accepted = accepted + 1
+        view[accepted] = entity
+      end
+    end
+    read = read + 1
+  end
+  if write < read then
+    -- Keep the unvisited overflow so a removed visible source promotes the
+    -- next already-known entity without another spatial search.
+    for index = read, size do list[write] = list[index]; write = write + 1 end
+    for index = write, size do list[index] = nil end
+  end
+  return view
+end
+
+local function retained_candidates(pair, radius, domain, types, force_policy, discover, limit)
+  if type(discover) ~= "function" then return nil end
+  local r = M.root()
+  if not valid_pair(pair) then return discover() end
+  local cacheable = r.enabled ~= false and r.cache_sources ~= false
+    and container_events_installed
+  local key = cacheable and candidate_cache_key(pair, domain, force_policy) or nil
+  local station = pair.station
+  local position = station.position
+  local cached = key and r.source_cache[key]
+  if cached and cached.retained_candidates == 1 and cached.complete == true
+      and cached.station == station and cached.surface == station.surface
+      and cached.force == station.force and cached.radius == radius
+      and cached.x == position.x and cached.y == position.y
+      and source_types_match(cached, types) then
+    stat("retained_source_cache_hits")
+    return candidate_view(cached, limit)
+  end
+  if key then r.source_cache[key] = nil end
+  stat("retained_source_initial_discoveries")
+  local list = discover()
+  if type(list) == "table" then
+    local record = { retained_candidates = 1, complete = true, list = list,
+      domain = domain, force_policy = force_policy, types = {}, type_names = {},
+      station = station, surface = station.surface, force = station.force,
+      surface_index = station.surface.index, radius = radius,
+      x = position.x, y = position.y, tick = now() }
+    for index, name in ipairs(types) do
+      record.types[name], record.type_names[index] = true, name
+    end
+    if key then r.source_cache[key] = record end
+    return candidate_view(record, limit)
+  end
+  return list
+end
+
+-- discover() must return a COMPLETE typed area result, independent of the
+-- requested item. The existing source_cache owns this retained membership;
+-- callers still recheck inventories, wire permissions, roles and live stock.
+function M.source_candidates(pair, radius, domain, types, force_policy, discover)
+  return retained_candidates(pair, radius, domain, types, force_policy, discover)
+end
+
+local container_types = { "container", "logistic-container", "car", "spider-vehicle" }
+function M.container_candidates(pair, radius, discover)
+  return retained_candidates(pair, radius, "generic-storage-0686", container_types,
+    "same-force", discover, M.container_source_limit)
+end
+
 local function count_cache_key(pair, item, label)
   local pk = pair_key(pair)
   if not (pk and item) then return nil end
@@ -194,6 +310,73 @@ function M.invalidate_all(reason)
   r.source_cache = {}; r.count_cache = {}; r.authority_cache = {}
   stat("invalidate_all")
   if reason then remember("invalidate-all", reason) end
+end
+
+local function update_source_membership(record, event, change)
+  local entity = event and (event.destination or event.created_entity or event.entity
+    or event.vehicle or event.corpse)
+  if not entity then
+    if event and event.surface_index == record.surface_index then
+      if change == "surface-deleted" then return "discard" end
+      if change == "surface-cleared" then record.list = {}; return "updated" end
+    end
+    return nil
+  end
+  if entity == record.station then
+    -- A changed station domain needs one initial population at its new area.
+    if change == "removed" or not valid(entity)
+        or entity.surface ~= record.surface or entity.force ~= record.force
+        or entity.position.x ~= record.x or entity.position.y ~= record.y then
+      return "discard"
+    end
+  end
+  -- Belt/machine construction and combat deaths are irrelevant to these
+  -- typed inventory lists. Reject before walking any retained candidates.
+  if valid(entity) and not record.types[entity.type] then return nil end
+  -- Keep physical membership independent of force policy. Factorio has no
+  -- per-entity force-change event; eligibility is checked against the live
+  -- force on every read, including an enemy/neutral source becoming friendly.
+  local belongs = change ~= "removed" and member_matches(record, entity)
+  local list, found, changed = record.list, false, false
+  local write, size = 1, #record.list
+  for index = 1, size do
+    local candidate = list[index]
+    if candidate == entity then
+      found = true
+      if belongs then list[write] = candidate; write = write + 1
+      else changed = true end
+    else
+      list[write] = candidate
+      write = write + 1
+    end
+  end
+  for index = write, size do list[index] = nil end
+  if belongs and not found then list[#list + 1] = entity; changed = true end
+  if changed then return "updated" end
+  return nil
+end
+
+function M.invalidate_entity_sources(event, change)
+  local r = M.root()
+  local invalidated, updated = 0, 0
+  for key, record in pairs(r.source_cache) do
+    -- Legacy count/source answers retain their invalidation semantics. The
+    -- existing physical source lists change membership directly, without a
+    -- full search at the next item question or visual radar refresh.
+    if type(record) == "table" and record.retained_candidates == 1 then
+      local result = update_source_membership(record, event, change or "built")
+      if result == "discard" then r.source_cache[key] = nil; invalidated = invalidated + 1
+      elseif result == "updated" then updated = updated + 1 end
+    else
+      r.source_cache[key] = nil
+      invalidated = invalidated + 1
+    end
+  end
+  r.count_cache, r.authority_cache = {}, {}
+  if invalidated > 0 then stat("source_cache_invalidated", invalidated) end
+  if updated > 0 then stat("source_membership_updates", updated) end
+  stat("entity_source_invalidation_events")
+  return invalidated + updated
 end
 
 local function wrap_source_func(name, label)
@@ -266,21 +449,69 @@ local function wrap_authority_pairs()
   return true
 end
 
+local function source_event(event, change)
+  if change == "player-moved" then
+    local player = event and event.player_index and game and game.get_player
+      and game.get_player(event.player_index) or nil
+    local vehicle = player and player.valid and player.vehicle or nil
+    if valid(vehicle) then return M.invalidate_entity_sources({ entity = vehicle }, "moved") end
+    return 0
+  elseif change == "train-moved" then
+    local train = event and event.train
+    if not (train and train.valid) then return 0 end
+    local changed = 0
+    for _, entity in pairs(train.carriages or {}) do
+      if valid(entity) and entity.type == "cargo-wagon" then
+        changed = changed + M.invalidate_entity_sources({ entity = entity }, "moved")
+      end
+    end
+    return changed
+  elseif change == "corpses-created" then
+    local changed = 0
+    for _, entity in pairs(event and event.corpses or {}) do
+      if valid(entity) and entity.type == "character-corpse" then
+        changed = changed + M.invalidate_entity_sources({ entity = entity }, "built")
+      end
+    end
+    return changed
+  end
+  return M.invalidate_entity_sources(event, change)
+end
+
 local function install_event_invalidation()
-  local ok, R = pcall(require, "scripts.core.runtime_event_registry")
-  if not (ok and R and R.on_event) then return false end
+  local R = rawget(_G, "TechPriestsRuntimeEventRegistry")
+    or package.loaded["scripts.core.runtime_event_registry"]
+  if not R then local ok, found = pcall(require, "scripts.core.runtime_event_registry"); if ok then R = found end end
+  if not (R and R.on_event) then return false end
   local events = {}
   local d = defines and defines.events or {}
-  for _, ev in ipairs({ d.on_built_entity, d.on_robot_built_entity, d.script_raised_built, d.script_raised_revive, d.on_player_mined_entity, d.on_robot_mined_entity, d.on_entity_died, d.script_raised_destroy }) do
-    if ev then events[#events+1] = ev end
+  for _, spec in ipairs({
+      { "on_built_entity", "built" }, { "on_robot_built_entity", "built" },
+      { "script_raised_built", "built" }, { "script_raised_revive", "built" },
+      { "on_space_platform_built_entity", "built" },
+      { "on_player_mined_entity", "removed" }, { "on_robot_mined_entity", "removed" },
+      { "on_space_platform_mined_entity", "removed" },
+      { "on_entity_died", "removed" }, { "script_raised_destroy", "removed" },
+      { "on_entity_cloned", "built" }, { "script_raised_teleported", "moved" },
+      { "on_player_driving_changed_state", "moved" },
+      { "on_player_changed_position", "player-moved" },
+      { "on_player_changed_surface", "player-moved" },
+      { "on_spider_command_completed", "moved" },
+      { "on_train_changed_state", "train-moved" }, { "on_train_created", "train-moved" },
+      { "on_post_entity_died", "corpses-created" },
+      { "on_character_corpse_expired", "removed" },
+      { "on_surface_cleared", "surface-cleared" },
+      { "on_surface_deleted", "surface-deleted" } }) do
+    if d[spec[1]] then events[#events + 1] = { id = d[spec[1]], change = spec[2] } end
   end
-  if #events > 0 then
-    R.on_event(events, function(event)
-      -- Inventory topology and local source availability may change; clear the
-      -- short caches.  This is deliberately broad and cheap because the caches
-      -- are tiny and short-lived.
-      M.invalidate_all("entity-event")
-    end, nil, { owner="efficiency_economy_0587", category="economy", note="invalidate logistics source caches after entity topology changes" })
+  if #events == 0 then return false end
+  for _, event in ipairs(events) do
+    local change = event.change
+    local route = R.on_event(event.id,
+      function(payload) return source_event(payload, change) end, nil,
+      { owner="efficiency_economy_0587", category="economy", priority=-100001,
+        note="maintain logistics source membership before topology consumers" })
+    if not route then return false end
   end
   return true
 end
@@ -289,7 +520,12 @@ function M.cleanup()
   local r=M.root(); local t=now(); local removed=0
   local function prune(tab)
     for k,rec in pairs(tab or {}) do
-      if type(rec) ~= "table" or t > (tonumber(rec.expires_tick or 0) or 0) then tab[k]=nil; removed=removed+1 end
+      local retained = type(rec) == "table" and rec.retained_candidates == 1
+      local expired = retained and (not valid(rec.station)
+          or rec.station.surface ~= rec.surface or rec.station.force ~= rec.force
+          or rec.station.position.x ~= rec.x or rec.station.position.y ~= rec.y)
+        or not retained and (type(rec) ~= "table" or t > (tonumber(rec.expires_tick or 0) or 0))
+      if expired then tab[k]=nil; removed=removed+1 end
     end
   end
   prune(r.source_cache); prune(r.count_cache); prune(r.authority_cache)
@@ -327,7 +563,7 @@ function M.install()
   wrap_count_func("tech_priests_0573_authorized_item_count", "authority-count")
   wrap_remove_func("tech_priests_0358_try_remove_from_station", "station-remove")
   wrap_remove_func("tech_priests_0573_authorized_remove", "authority-remove")
-  install_event_invalidation()
+  container_events_installed = install_event_invalidation()
   local ok,R=pcall(require,"scripts.core.runtime_event_registry")
   if ok and R and R.on_nth_tick then R.on_nth_tick(M.cleanup_interval, function() M.cleanup() end, { owner="efficiency_economy_0587", category="economy", priority="last", note="prune logistics cache entries" }) end
   _G.TechPriestsEfficiencyEconomy0587 = M

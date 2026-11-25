@@ -157,15 +157,10 @@ end
 
 local function known_storage_source(pair, item)
   if not (valid_pair(pair) and item) then return nil end
-  local okCat, Catalog = pcall(require, "scripts.core.station_catalog")
-  if okCat and Catalog and type(Catalog.find_known_source) == "function" then
-    local ok, src = pcall(Catalog.find_known_source, pair, item)
-    if ok and src and src.kind == "known-storage-0327" and valid(src.source) and src.source ~= pair.station then return src end
-  end
-  -- Direct catalog fallback to prefer the closest storage instance.
-  local cat = nil
-  if _G.tech_priests_0327_scan_station_catalog then local ok, c = pcall(_G.tech_priests_0327_scan_station_catalog, pair); if ok then cat = c end end
-  if (not cat) and _G.tech_priests_0327_get_station_catalog then local ok, c = pcall(_G.tech_priests_0327_get_station_catalog, pair); if ok then cat = c end end
+  -- Dormant compatibility path: a stock miss never requests a world scan.
+  local root = storage and storage.tech_priests and storage.tech_priests.station_catalog_0327
+  local unit = station_unit(pair)
+  local cat = root and root.stations and (root.stations[unit] or root.stations[tostring(unit)])
   local rec = cat and cat.storage_items and cat.storage_items[item]
   if rec then
     local best = nil

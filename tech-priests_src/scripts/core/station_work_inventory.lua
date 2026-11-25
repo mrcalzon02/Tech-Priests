@@ -1488,7 +1488,10 @@ local function add_catalog_section(parent, title, tbl, limit, empty_text)
 end
 
 local function add_known_resources_display(parent, pair)
-  local cat = catalog_for_pair(pair, true)
+  -- Rendering the ledger reads the existing snapshot. A visual redraw must
+  -- not force logistics/world discovery; the explicit refresh button remains
+  -- the user's request to refresh the catalog.
+  local cat = catalog_for_pair(pair, false)
   if not cat then
     add_label(parent, "Auspex ledger awaits first sweep; no local resource catechism has been sealed yet.")
     return

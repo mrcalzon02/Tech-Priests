@@ -5,6 +5,11 @@
 -- priests do not wake every background helper at once.
 
 local M = { version = "0.1.598", storage_key = "efficiency_economy_0598" }
+-- The registry already consults this governor, but callbacks INSIDE the
+-- central broker previously bypassed it. Bound background polling at every
+-- population, including the first four priests, without throttling movement.
+M.broker_callback_budget = 4
+M.broker_phase_ticks = 120
 
 local function root()
   storage.tech_priests = storage.tech_priests or {}
@@ -87,6 +92,84 @@ local function stable_hash(text)
   return h
 end
 
+local broker_background_categories = {
+  construction=true, diagnostics=true, discovery=true, inventory=true,
+  logistics=true, ["machine-logistics"]=true, maintenance=true,
+  planning=true, readiness=true, ["runtime-cleanup"]=true,
+  scheduler=true, visual=true, visuals=true, gui=true, audio=true,
+  chatter=true, conversation=true, background=true, doctrine=true,
+}
+
+local function broker_background(service)
+  -- These services advance active work despite their broad historical labels:
+  -- queue progression, original-priest expansion, and inventory custody.
+  return service.name ~= "order_queue_0469"
+    and service.name ~= "station-starvation-first-junior-0922"
+    and service.name ~= "inventory_steward_0357"
+    and broker_background_categories[service.category] == true
+end
+
+function M.broker_plan(services, event, cadence)
+  local r = root()
+  if r.enabled == false then return nil end
+  local tick = event and event.tick or (game and game.tick) or 0
+  local step = math.max(1, tonumber(cadence) or 5)
+  r.broker_deadlines = r.broker_deadlines or {}
+  local admitted, due = {}, 0
+  for _, service in ipairs(services) do
+    if service.enabled ~= false and broker_background(service) then
+      admitted[service.name] = false
+      if not service.tech_priests_0598_broker_initialized then
+        local saved = r.broker_deadlines[service.name]
+        if saved and saved.interval == service.interval
+            and tonumber(saved.next_due_tick) then
+          service.next_due_tick = saved.next_due_tick
+        elseif (tonumber(service.next_due_tick) or 0) == 0 then
+          -- Reuse the governor's deterministic phasing. The existing first
+          -- station spread may already have supplied a deadline; retain it.
+          local slots = math.max(1, math.ceil(
+            math.min(service.interval, M.broker_phase_ticks) / step))
+          service.next_due_tick = tick + (stable_hash(service.name) % slots) * step
+        end
+        service.tech_priests_0598_broker_initialized = true
+        r.broker_deadlines[service.name] = {
+          interval=service.interval, next_due_tick=service.next_due_tick,
+        }
+      end
+      if tick >= (tonumber(service.next_due_tick) or 0) then due = due + 1 end
+    end
+  end
+  -- Round-robin admission prevents a frequently due high-priority poll from
+  -- starving another poll. The broker still executes admitted callbacks in
+  -- its canonical priority order, and deferred callbacks keep their deadline.
+  local count, used = #services, 0
+  local cursor = math.max(0, math.floor(tonumber(r.broker_cursor) or 0))
+  for offset = 1, count do
+    local index = ((cursor + offset - 1) % count) + 1
+    local service = services[index]
+    if admitted[service.name] == false
+        and tick >= (tonumber(service.next_due_tick) or 0)
+        and used < M.broker_callback_budget then
+      admitted[service.name] = true
+      used = used + 1
+      r.broker_cursor = index
+    end
+  end
+  r.stats.broker_background_admitted = (r.stats.broker_background_admitted or 0) + used
+  r.stats.broker_background_deferred = (r.stats.broker_background_deferred or 0) + due - used
+  r.stats.broker_background_peak = math.max(r.stats.broker_background_peak or 0, used)
+  return admitted
+end
+
+function M.broker_ran(service)
+  if not broker_background(service) then return end
+  local r = root()
+  r.broker_deadlines = r.broker_deadlines or {}
+  r.broker_deadlines[service.name] = {
+    interval=service.interval, next_due_tick=service.next_due_tick,
+  }
+end
+
 local function window_for_load(n)
   if n <= 0 then return 1 end
   if n < 10 then return 2 end
@@ -143,6 +226,8 @@ function M.install()
   _G.tech_priests_route_budget_0598 = function(entry, event, cadence)
     return M.route_budget(entry, event, cadence)
   end
+  _G.tech_priests_broker_plan_0598 = M.broker_plan
+  _G.tech_priests_broker_ran_0598 = M.broker_ran
   if commands and commands.add_command then
     pcall(function() if commands.remove_command then commands.remove_command("tp-efficiency-economy-0598") end end)
     commands.add_command("tp-efficiency-economy-0598", "Report/toggle Tech Priests cooperative parallelization route economy. Params: on/off/status", function(cmd)

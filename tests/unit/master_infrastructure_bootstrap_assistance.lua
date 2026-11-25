@@ -200,6 +200,35 @@ do
   check(force.current_research==nil,
     "research planner assigned an already completed technology")
   tech.researched=false
+  -- A large modded technology graph must not reread the same physical
+  -- science inventory once per candidate. Each new survey still sees stock.
+  local stock_reads,lab_reads=0,0
+  local old_count=inventory.get_item_count
+  inventory.get_item_count=function(name)
+    if name==item then stock_reads=stock_reads+1 end
+    return old_count(name)
+  end
+  lab.get_inventory=function(id)
+    if id~=defines.inventory.lab_input then return nil end
+    return {valid=true,get_item_count=function(name)
+      if name==item then lab_reads=lab_reads+1 end
+      return lab_items[name] or 0
+    end}
+  end
+  for i=1,500 do
+    force.technologies['later-research-'..i]={valid=true,
+      name='later-research-'..i,enabled=true,researched=false,
+      prerequisites={},research_unit_ingredients={{name=item,amount=1}},
+      research_unit_count=100+i}
+  end
+  local large=Plan.build_plan(pair,'many-technologies-one-science-pack')
+  check(large.research_candidate==tech.name and stock_reads==1 and lab_reads==1,
+    'read-only survey repeatedly enumerated the same physical science stock')
+  lab_items[item]=0
+  local empty_science=Plan.build_plan(pair,'science-consumed-after-survey')
+  check(empty_science.research_candidate==nil and stock_reads==2 and lab_reads==2,
+    'per-survey reuse concealed consumption before the next survey')
+  inventory.get_item_count=old_count
   force.technologies=nil
   stock[item]=nil
 end

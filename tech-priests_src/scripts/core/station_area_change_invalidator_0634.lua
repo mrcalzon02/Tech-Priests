@@ -52,14 +52,17 @@ local function clear_pair_state(pair, reason)
   local r=M.root()
   r.cooldowns[safe(su)] = now() + M.inventory_refresh_cooldown
 
-  -- Force station catalog to rescan instead of reusing the clean 0570 snapshot.
+  -- Let the existing bounded catalog scanner consume this invalidation.
+  -- Discarding the snapshot made every subsequent reader rescan immediately;
+  -- calling the scanner here also repeated a full area walk for every entity
+  -- in a construction/removal burst. Retain the last complete snapshot until
+  -- Catalog.scan_due refreshes it, but forbid clean reuse of a dirty snapshot.
   if storage and storage.tech_priests and storage.tech_priests.station_catalog_0327 then
     local catroot=storage.tech_priests.station_catalog_0327
     if catroot.next_scan then catroot.next_scan[su] = 0 end
-    if catroot.stations then catroot.stations[su] = nil end
+    local catalog=catroot.stations and catroot.stations[su]
+    if catalog then catalog.dirty_0634 = true end
   end
-  pair.known_resources_0326 = nil
-  pair.known_resources_0327 = nil
 
   -- Clear common stale emergency/supply conclusions. These are conclusions, not
   -- durable orders; clearing them lets the dispatcher recalculate from inventory.
@@ -77,7 +80,6 @@ local function clear_pair_state(pair, reason)
   pair.station_area_dirty_0634 = { tick=now(), reason=tostring(reason or "area-change") }
 
   if type(_G.tech_priests_0575_invalidate_corridor_cache_for_pair)=="function" then pcall(_G.tech_priests_0575_invalidate_corridor_cache_for_pair,pair,"station-area-change-0634") end
-  if type(_G.tech_priests_0327_scan_station_catalog)=="function" then pcall(_G.tech_priests_0327_scan_station_catalog,pair) end
   return true
 end
 

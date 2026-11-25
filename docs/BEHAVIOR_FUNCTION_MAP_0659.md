@@ -5,6 +5,8 @@ Purpose: establish the current intended behavior authority map so repair work st
 
 Companion visual map: `docs/BEHAVIOR_MERMAID_MAP_0660.md`
 
+Current source ownership is recorded in `docs/RECOVERY_AUTHORITY_MAP_CURRENT.md`. This versioned map preserves the earlier behavior analysis; its independent movement/leaf wrappers and broad machine-inventory fetch path are historical. For the performance repair, use the current map's **Canonical Loader and Runtime Spine**, **Canonical Movement Cadence**, and **Storage and Transfer Boundaries** sections: the existing 0598 governor admits broker background work, and the existing 0587 source cache retains physical candidates for 0686 generic storage and the still-installed 0527 fetch wrapper. Neither is an additional behavior executor.
+
 This is a function map, not a lore document. Every behavior should eventually have a clear entry condition, active owner, movement target, overhead status, and exit condition. If a future patch adds a behavior without placing it in this map, it is probably adding another hidden competing authority.
 
 ## Pair Lifecycle Installation Contract — 2026-10-18

@@ -365,18 +365,33 @@ local function nearby_containers(pair)
     else bucket[key] = nil end
   end
   local position = pair.station.position
-  local ok, entities = pcall(function()
-    return pair.station.surface.find_entities_filtered({
-      area = {
-        { position.x - radius, position.y - radius },
-        { position.x + radius, position.y + radius },
-      },
-      force = pair.station.force,
-      type = { "container", "logistic-container", "car", "spider-vehicle" },
-      limit = 256,
-    })
-  end)
-  if ok and entities then
+  local function discover()
+    local ok, entities = pcall(function()
+      return pair.station.surface.find_entities_filtered({
+        area = {
+          { position.x - radius, position.y - radius },
+          { position.x + radius, position.y + radius },
+        },
+        type = { "container", "logistic-container", "car", "spider-vehicle" },
+        -- Populate complete membership once. The existing 0587 cache keeps
+        -- overflow candidates while returning the historical 256-entry view.
+      })
+    end)
+    return ok and entities or nil
+  end
+  -- The current storage authority used to bypass the installed 0587 source
+  -- cache by calling the native search for every fuel/ingredient count.
+  -- Reuse that existing owner for event-maintained topology; add() and consumers
+  -- continue to read current inventory handles, roles, position and counts.
+  local economy = rawget(_G, "TechPriestsEfficiencyEconomy0587")
+    or package.loaded["scripts.core.efficiency_economy_0587"]
+  local entities
+  if economy and type(economy.container_candidates) == "function" then
+    entities = economy.container_candidates(pair, radius, discover)
+  else
+    entities = discover()
+  end
+  if entities then
     for _, entity in pairs(entities) do add(entity, "nearby") end
   end
   return out
@@ -520,6 +535,11 @@ local function safe_create_stash(pair, role)
       record(pair, "stash-refund-custody-required", safe(failures), true)
     end
     return nil, "create-failed"
+  end
+  local economy = rawget(_G, "TechPriestsEfficiencyEconomy0587")
+    or package.loaded["scripts.core.efficiency_economy_0587"]
+  if economy and type(economy.invalidate_entity_sources) == "function" then
+    economy.invalidate_entity_sources({ entity = entity })
   end
   remember_general_stash(pair, entity)
   M.remember_role(pair, entity, role or "general", "created-for-storage-role")

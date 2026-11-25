@@ -6,6 +6,8 @@ Companion prose map: `docs/BEHAVIOR_FUNCTION_MAP_0659.md`
 
 Purpose: begin mapping the actual functions inside the active behavior authorities, not just the broad behavior boxes. This is an iterative drill-down document. It should grow until every behavior module has a function map, side-effect map, entry condition, movement target writer, overhead writer, and exit condition.
 
+This pass documents the older wrapper stack. `docs/RECOVERY_AUTHORITY_MAP_CURRENT.md` supersedes its active-owner claims after consolidation: 0510 owns the canonical action dispatcher, the movement controller owns ground command cadence, and 0686 owns container-only generic storage. The still-installed 0527 fetch wrapper is a separate pre-dispatch path. The current map's **Storage and Transfer Boundaries** graph records both `0686.nearby_containers` and 0527 typed inventory discovery using the existing 0587 source cache with separate policies. The old broad machine-inventory source list below is not the current typed domain. **Canonical Loader and Runtime Spine** records broker admission through the existing 0598 governor without changing active executor or movement cadence.
+
 This pass maps the currently most dangerous behavior stack:
 
 1. `planning_constraints_0646.lua`

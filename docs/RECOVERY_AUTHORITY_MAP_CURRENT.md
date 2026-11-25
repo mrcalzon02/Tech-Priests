@@ -14,6 +14,9 @@ The diagrams below describe source ownership. They do not claim successful GitHu
 flowchart TD
     Control[control.lua] --> Registry[runtime_event_registry]
     Registry --> Broker[runtime_tick_broker central-pulse]
+    Registry -. background route admission .-> Economy[efficiency_economy_0598]
+    Broker -->|background callback admission| Economy
+    Economy -->|at most four due callbacks per pulse| Background[discovery readiness and housekeeping]
     Broker --> Planning[planning_constraints_0646]
     Planning --> Prearm[26 active hardeners]
     Planning --> Retired[48 retired authorities]
@@ -26,6 +29,10 @@ flowchart TD
 Nonterminal 0528 physical custody retains 0488 classification ahead of strict crafting; candidate-only work does not. Combat remains higher priority, and 0528 alone moves and deposits the cargo.
 
 The registry is the sole event-composition authority. The broker owns the single central cadence. Hardener installation requires literal `true`; failed families are degraded rather than silently treated as installed.
+
+The existing 0598 economy governor now also receives the services inside the broker's five-tick pulse. Previously its registry route hook could see the central callback but not the individual services it invoked. Background callbacks receive deterministic initial phases and fair rotating admission; deferred services retain their due tick, and admitted deadlines persist across reload. The four-callback bound limits simultaneous background calls, not the duration of a callback.
+
+Dispatcher, movement, combat, repair, consecration, lifecycle, safety, recovery, acquisition, crafting and authority categories retain their existing eligibility. The historical category labels also require explicit active-work exceptions: `order_queue_0469`, `station-starvation-first-junior-0922` and `inventory_steward_0357` continue their existing cadence because they advance orders, original-priest physical expansion and persistent inventory custody. No new tick service or movement owner is introduced.
 
 ## Canonical Movement Cadence
 
@@ -236,12 +243,25 @@ The retired fluid-turret wrappers are `fluid_turret_internal_buffer_guard_0731`,
 ```mermaid
 flowchart LR
     Containers[station chest and generic containers] --> Storage[storage_role_authority_0686]
+    Storage -->|generic container domain| Sources[efficiency_economy_0587 source_cache]
+    Fetch[logistics_fetch_executor_0527] -->|typed inventory domain| Sources
+    Sources -->|initial population or station domain change| Discovery[typed area discovery]
+    Discovery -->|complete physical membership| Sources
+    Sources -->|live inventory and role checks| Storage
+    Sources -->|live inventory wire force and range checks| Fetch
+    Events[runtime_event_registry entity and movement events] -->|membership updates| Sources
     PriestCargo[inventory_steward_0357] --> TransferCustody[inventory_transfer_custody_0687]
     TransferCustody --> Storage
     MachineSlots[assembler furnace lab and fuel slots] -. excluded from generic storage .-> Storage
 ```
 
 Generic storage cannot use machine work inventories. Machine-specific executors may access only the exact target inventory required by their family.
+
+`storage_role_authority_0686.nearby_containers` calls `efficiency_economy_0587.container_candidates`; 0527 calls the shared `source_candidates` implementation with its separate inventory types and same-or-neutral force policy. Both reuse the existing `source_cache`. A missing item changes the live stock answer, not entity membership, and 0527 no longer forces a catalog scan after an item miss. The fetch wrapper remains installed before 0510; its inventory candidate path is distinct from its loose-ground-item fallback.
+
+Initial population retains the complete typed entity list in the bounded station area, independently of current quantities and force eligibility. The generic-storage caller receives at most 256 eligible candidates while the retained overflow remains available for promotion after removal. Candidate identities survive elapsed time, the existing cleanup cadence and save/reload; there is no periodic full-area expiry. Station position, force, surface, radius or source policy changes permit an initial population for that new domain. Every read still checks live inventory handles, quantities, quality, roles, force, surface, range and the caller's wire restrictions.
+
+The existing 0587 registry routes add or remove individual members for builds, removals, clones, raised teleports, surface changes and the module's own stash creation. Player vehicle movement/entry/exit, spider command completion and affected train-carriage events update moving inventory sources without a world scan. Character-corpse creation and expiry are also observed. Force eligibility is checked live because Factorio does not provide an individual entity-force-change event. Unannounced scripted creation or movement into an unobserved domain must raise the corresponding event or explicitly refresh that domain; no periodic scan is used to guess that a mutation occurred. With no accepted event routing, discovery remains uncached.
 
 ## Retired Authority Boundary
 
@@ -393,11 +413,16 @@ flowchart LR
     Registry -->|build-created| Area[station_area_change_invalidator_0634]
     Registry -->|removed-destroyed| Area
     Registry -->|player-inventory-change| Area
-    Area --> Catalog[station catalog invalidation]
+    Area --> Dirty[retain snapshot and mark catalog dirty]
+    Dirty --> Catalog[station_catalog.scan_due]
+    Registry -->|existing 60-tick scan route| Catalog
+    Catalog -->|two stations with a rotating cursor| Snapshot[refreshed station catalogs]
     Area --> Supply[stale supply conclusion invalidation]
 ```
 
 `runtime_config_0626` and `station_area_change_invalidator_0634` are event consumers only; they do not own scheduling, movement, acquisition, or inventory transfer. Their storage, commands, and global APIs publish after route acceptance. Partial station-area registration is rolled back by owner/route identity, and no raw event fallback remains.
+
+Area changes set the existing catalog's `dirty_0634` flag and `next_scan` deadline instead of deleting the snapshot or calling a full scan inside each entity event. Readers retain the last complete snapshot until the existing `Catalog.scan_due(2)` route refreshes it; dirty snapshots cannot take the clean-reuse shortcut, and destroyed source entities still fail live validity checks. A saved station cursor gives continuously dirtied stations fair turns within the same two-station budget. There is no additional scan queue or tick service.
 
 ## Milestone 0810 — Bootstrap and Chatter Route Ownership
 

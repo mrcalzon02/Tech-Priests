@@ -346,6 +346,24 @@ local function cheapest_available_science(pair)
     force = force, type = "lab"
   })
   if not labs or #labs == 0 then return nil, "no-laboratory" end
+  -- This survey is read-only. Hundreds of technologies may ask about the
+  -- same science pack, so read each live stock once for this invocation,
+  -- rather than walking the same known inventories for every technology.
+  -- Nothing is retained across surveys; deliveries are visible next call.
+  local available_by_item = {}
+  local function available_science(item)
+    if available_by_item[item] == nil then
+      local available = station_count(pair, item)
+      if defines and defines.inventory and defines.inventory.lab_input then
+        for _, lab in pairs(labs) do
+          available = available + inv_count(
+            safe_inventory(lab, defines.inventory.lab_input), item)
+        end
+      end
+      available_by_item[item] = available
+    end
+    return available_by_item[item]
+  end
   local best
   for name, tech in pairs(force.technologies or {}) do
     local enabled, researched, prerequisites, ingredients, count = false, true, {}, {}, 0
@@ -366,13 +384,7 @@ local function cheapest_available_science(pair)
         -- Lab inputs are real, engine-owned inventory. Once a pack has
         -- physically moved out of general storage it remains a legitimate
         -- research prerequisite, not a missing or synthetically granted item.
-        local available=station_count(pair,item)
-        if defines and defines.inventory and defines.inventory.lab_input then
-          for _,lab in pairs(labs) do
-            available=available+inv_count(
-              safe_inventory(lab,defines.inventory.lab_input),item)
-          end
-        end
+        local available=available_science(item)
         if available < amount then affordable = false end
       end
       if ready and affordable and #packs > 0 then

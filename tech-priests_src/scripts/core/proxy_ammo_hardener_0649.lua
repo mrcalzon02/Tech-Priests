@@ -5,6 +5,21 @@
 
 local M={version="0.1.674-dev",storage_key="proxy_ammo_hardener_0649",tick_interval=41,max_pairs_per_pulse=24,load_batch=10,log_interval=600}
 local AMMO_ORDER={"uranium-rounds-magazine","piercing-rounds-magazine","firearm-magazine"}
+-- Prototype definitions are immutable during a runtime. Rebuild this derived
+-- list after load/configuration, but keep actual inventory counts live.
+local ammo_names=nil
+local function fallback_ammo_names()
+ if not ammo_names then
+  local items=prototypes and prototypes.item
+  if not items then return {} end
+  ammo_names={}
+  for name,proto in pairs(items)do
+   local kind;pcall(function()kind=proto.type end)
+   if kind=="ammo"then ammo_names[#ammo_names+1]=name end
+  end
+ end
+ return ammo_names
+end
 local function now()return game and game.tick or 0 end
 local function valid(e)return e and e.valid end
 local function safe(v)if v==nil then return"nil"end;local ok,out=pcall(tostring,v);return ok and out or"?"end
@@ -47,8 +62,9 @@ local function service_refund(pair)
  pair.proxy_ammo_refund_custody_0649=nil;record("proxy-ammo-refund-complete-0649",pair,c.item.." x"..c.count,true);return true,"refund-complete"
 end
 function M.station_ammo(pair)
- for _,item in ipairs(AMMO_ORDER)do if item_exists(item)then for _,src in ipairs(station_sources(pair))do local n=count(src.inv,item);if n>0 then return item,n,src end end end end
- if prototypes and prototypes.item then for item_name,proto in pairs(prototypes.item)do local typ;pcall(function()typ=proto.type end);if typ=="ammo"then for _,src in ipairs(station_sources(pair))do local n=count(src.inv,item_name);if n>0 then return item_name,n,src end end end end end
+ local sources=station_sources(pair)
+ for _,item in ipairs(AMMO_ORDER)do if item_exists(item)then for _,src in ipairs(sources)do local n=count(src.inv,item);if n>0 then return item,n,src end end end end
+ for _,item in ipairs(fallback_ammo_names())do for _,src in ipairs(sources)do local n=count(src.inv,item);if n>0 then return item,n,src end end end
  return nil,0,nil
 end
 function M.station_has_ammo(pair)local item,n=M.station_ammo(pair);return item~=nil and n>0 end
@@ -60,7 +76,15 @@ function M.proxy_ammo_inventory(pair)
  local proxy=M.ensure_proxy(pair);if not valid(proxy)or not defines or not defines.inventory then return nil,proxy end;return safe_inventory(proxy,defines.inventory.turret_ammo),proxy
 end
 function M.proxy_has_ammo(pair)
- local inv=M.proxy_ammo_inventory(pair);if inv and inv.valid then for _,item in ipairs(AMMO_ORDER)do if item_exists(item)and count(inv,item)>0 then return true end end;if prototypes and prototypes.item then for item_name,proto in pairs(prototypes.item)do local typ;pcall(function()typ=proto.type end);if typ=="ammo"and count(inv,item_name)>0 then return true end end end end;return false
+ local inv=M.proxy_ammo_inventory(pair)
+ if not(inv and inv.valid)then return false end
+ if inv.is_empty then
+  local ok,empty=pcall(function()return inv.is_empty()end)
+  if ok and empty then return false end
+ end
+ for _,item in ipairs(AMMO_ORDER)do if item_exists(item)and count(inv,item)>0 then return true end end
+ for _,item in ipairs(fallback_ammo_names())do if count(inv,item)>0 then return true end end
+ return false
 end
 function M.load_proxy_from_station(pair,reason)
  if root().enabled==false or not valid_pair(pair)then return false,"disabled-or-invalid"end

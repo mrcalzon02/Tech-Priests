@@ -186,10 +186,6 @@ local function read_bool_setting(name,fallback)
   return fallback==true
 end
 
-local function universal_inventory_scavenging_enabled()
-  return read_bool_setting("tech-priests-universal-inventory-scavenging",true)
-end
-
 local function skip_wired_inventory_sources_enabled()
   return read_bool_setting("tech-priests-skip-wired-inventory-sources",true)
 end
@@ -307,33 +303,44 @@ end
 
 local function catalog_storage_source(pair,item)
   if not (valid_pair(pair) and item) then return nil end
-  local okCat,Catalog=pcall(require,"scripts.core.station_catalog")
-  if okCat and Catalog and type(Catalog.find_known_source)=="function" then
-    local ok,src=pcall(Catalog.find_known_source,pair,item)
-    if ok and src and src.kind=="known-storage-0327" and eligible_source(pair,src.source) then
-      local inv=source_inventory(src.source,src.inventory_id)
-      local n=inventory_count(inv,item)
-      if n>0 then src.count=n; return src end
-    end
-  end
-  local cat=nil
-  if type(_G.tech_priests_0327_scan_station_catalog)=="function" then local ok,c=pcall(_G.tech_priests_0327_scan_station_catalog,pair); if ok then cat=c end end
-  if (not cat) and type(_G.tech_priests_0327_get_station_catalog)=="function" then local ok,c=pcall(_G.tech_priests_0327_get_station_catalog,pair); if ok then cat=c end end
+  -- A missing requested item does not invalidate spatial knowledge. Read
+  -- the existing catalog only: its find/get helpers can initiate a complete
+  -- station scan, which previously ran again on nearly every dispatch pulse.
+  local root=storage and storage.tech_priests and storage.tech_priests.station_catalog_0327
+  local unit=station_unit(pair)
+  local cat=root and root.stations and (root.stations[unit] or root.stations[tostring(unit)])
   local rec=cat and cat.storage_items and cat.storage_items[item]
   if rec then
+    -- A retained snapshot may still mention a moved source. Match the live
+    -- station radius used by the catalog, and rank current positions rather
+    -- than distances recorded when the snapshot was made.
+    local radius=tonumber(pair.radius) or 24
+    if type(_G.get_station_operating_radius)=="function" then
+      local ok,r=pcall(_G.get_station_operating_radius,pair.station)
+      if ok and tonumber(r) then radius=tonumber(r) end
+    end
+    radius=math.max(8,radius)
     local best=nil
     for _,inst in ipairs(rec.instances or {}) do
       if inst and eligible_source(pair,inst.entity) then
-        local inv=source_inventory(inst.entity,inst.inventory_id)
-        local n=inventory_count(inv,item)
-        if n>0 and ((not best) or ((inst.distance_sq or 999999999)<(best.distance_sq or 999999999))) then best={entity=inst.entity,inventory_id=inst.inventory_id,count=n,distance_sq=inst.distance_sq or 0} end
+        local d=dist_sq(inst.entity.position,pair.station.position)
+        if d<=radius*radius then
+          local inv=source_inventory(inst.entity,inst.inventory_id)
+          local n=inventory_count(inv,item)
+          if n>0 and (not best or d<best.distance_sq) then
+            best={entity=inst.entity,inventory_id=inst.inventory_id,count=n,distance_sq=d}
+          end
+        end
       end
     end
     if best then return {kind="known-storage-0327",source=best.entity,inventory_id=best.inventory_id,item_name=item,count=best.count or 1,station_distance_sq=best.distance_sq or 0} end
     if eligible_source(pair,rec.entity) then
-      local inv=source_inventory(rec.entity,rec.inventory_id)
-      local n=inventory_count(inv,item)
-      if n>0 then return {kind="known-storage-0327",source=rec.entity,inventory_id=rec.inventory_id,item_name=item,count=n,station_distance_sq=rec.distance_sq or 0} end
+      local d=dist_sq(rec.entity.position,pair.station.position)
+      if d<=radius*radius then
+        local inv=source_inventory(rec.entity,rec.inventory_id)
+        local n=inventory_count(inv,item)
+        if n>0 then return {kind="known-storage-0327",source=rec.entity,inventory_id=rec.inventory_id,item_name=item,count=n,station_distance_sq=d} end
+      end
     end
   end
   return nil
@@ -356,9 +363,35 @@ local function nearby_storage_source(pair,item)
   if type(_G.get_station_operating_radius)=="function" then local ok,rr=pcall(_G.get_station_operating_radius,pair.station); if ok and tonumber(rr) then r=tonumber(rr) end end
   r=math.max(8,math.min(M.search_radius_max,tonumber(r) or M.search_radius_default))
   local p=pair.station.position
-  local filters={area={{p.x-r,p.y-r},{p.x+r,p.y+r}},limit=universal_inventory_scavenging_enabled() and 768 or 512,type=inventory_source_entity_types()}
-  local ents=routed_find(pair.station.surface,filters,"logistics-fetch-storage","logistics-fetch-storage:"..tostring(pair.station.surface.index)..":"..tostring(pair.station.force.index)..":"..tostring(station_unit(pair) or "?")..":"..tostring(item),60*2)
-  stat("typed-inventory-source-scan-0527")
+  local types=inventory_source_entity_types()
+  local function discover()
+    -- Complete typed membership is seeded once by 0587, independently of
+    -- requested item and live stock. A truncated or budget-skipped query
+    -- must never become the permanent known-source list.
+    local ok,entities=pcall(function()
+      return pair.station.surface.find_entities_filtered{
+        area={{p.x-r,p.y-r},{p.x+r,p.y+r}},type=types}
+    end)
+    if ok and type(entities)=="table" then
+      stat("typed-inventory-source-scan-0527")
+      return entities
+    end
+    return nil
+  end
+  local economy=rawget(_G,"TechPriestsEfficiencyEconomy0587")
+  if not economy then
+    local ok,mod=pcall(require,"scripts.core.efficiency_economy_0587")
+    if ok then economy=mod end
+  end
+  local ents
+  if economy and type(economy.source_candidates)=="function" then
+    ents=economy.source_candidates(pair,r,"inventory-fetch-0527",types,
+      "same-or-neutral",discover)
+  else
+    -- Isolated callers without the event/cache owner retain their original
+    -- discovery behavior; the installed runtime uses the shared authority.
+    ents=discover()
+  end
   local best,best_inv,best_inv_id,best_count,best_score,best_d=nil,nil,nil,nil,nil,nil
   local ids=inventory_probe_ids()
   for _,e in pairs(ents or {}) do

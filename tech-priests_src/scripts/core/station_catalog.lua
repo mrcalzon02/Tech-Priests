@@ -570,6 +570,7 @@ end
 
 local function clean_reuse_allowed_0570(pair, catalog, radius)
   if not (pair and pair.station and pair.station.valid and catalog) then return false end
+  if catalog.dirty_0634 then return false end
   -- No old or relocated snapshot may hide a different physical station area.
   if not CatalogReuseGuard1484.matches(pair, catalog, radius) then return false end
   -- A truncated snapshot must never receive the clean-reuse extension.
@@ -796,20 +797,35 @@ end
 function Catalog.scan_due(max_count)
   local root = ensure_root()
   Catalog.prune_invalid()
-  local count = 0
+  local limit = math.max(0, math.floor(tonumber(max_count) or 4))
+  if limit == 0 then return end
   local tick = now()
+  local due_pairs = {}
   for _, pair in pairs(pairs_table()) do
     if pair and pair.station and pair.station.valid then
       local unit = station_unit(pair)
       local due = unit and root.next_scan[unit] or nil
-      if not due then
+      if unit and not due then
         root.next_scan[unit] = tick + ((unit or 1) % 90) + 30
-      elseif tick >= due then
-        Catalog.scan_pair(pair)
-        count = count + 1
-        if count >= (max_count or 4) then break end
+      elseif unit and tick >= due then
+        due_pairs[#due_pairs + 1] = { unit = unit, pair = pair }
       end
     end
+  end
+  if #due_pairs == 0 then return end
+  -- Nearby construction can dirty the first stations again before every
+  -- pulse. Keep the existing scanner and budget, but resume after its last
+  -- station so continuous events cannot starve retained dirty snapshots.
+  table.sort(due_pairs, function(a, b) return a.unit < b.unit end)
+  local cursor = tonumber(root.scan_cursor_0634) or 0
+  local first = 1
+  for index, entry in ipairs(due_pairs) do
+    if entry.unit > cursor then first = index; break end
+  end
+  for offset = 0, math.min(limit, #due_pairs) - 1 do
+    local entry = due_pairs[((first + offset - 1) % #due_pairs) + 1]
+    Catalog.scan_pair(entry.pair)
+    root.scan_cursor_0634 = entry.unit
   end
 end
 

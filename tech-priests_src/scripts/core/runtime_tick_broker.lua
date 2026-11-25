@@ -529,13 +529,23 @@ function M.pulse(event)
   -- 32nd-call sampling would otherwise miss.
   local cold=rawget(_G,"TechPriestsFirstStationColdProfile1406")
   stat("pulses")
-  for _, service in ipairs(services_for_pulse(event)) do
+  local services = services_for_pulse(event)
+  -- Registry-level admission cannot see work hidden inside this callback.
+  -- Use the EXISTING 0598 economy governor for the broker's background polls.
+  local planner = rawget(_G, "tech_priests_broker_plan_0598")
+  local ran = rawget(_G, "tech_priests_broker_ran_0598")
+  local admitted = planner and planner(services, event, M.base_interval) or nil
+  for _, service in ipairs(services) do
     if service.enabled == false then
       stat("skipped_disabled")
     elseif tick < (tonumber(service.next_due_tick) or 0) then
       stat("skipped_not_due")
+    elseif admitted and admitted[service.name] == false then
+      stat("background_deferred")
+      service_stat(service.name, "background_deferred")
     else
       service.next_due_tick = tick + service.interval
+      if ran then ran(service) end
       service_stat(service.name, "due")
       local offered = effective_budget(service)
       service_stat(service.name, "budget_offered", offered)
@@ -635,6 +645,7 @@ function M.report_lines()
     .. " blocked=" .. safe(root.stats.skipped_blocked or 0)
     .. " sleeping=" .. safe(root.stats.skipped_sleeping or 0)
     .. " exhausted=" .. safe(root.stats.budget_exhausted or 0)
+    .. " background_deferred=" .. safe(root.stats.background_deferred or 0)
     .. " errors=" .. safe(root.stats.errors or 0)
   for _, service in ipairs(M.services) do
     local stats = root.service_stats[service.name] or {}

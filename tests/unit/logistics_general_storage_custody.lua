@@ -31,6 +31,7 @@ local function scenario()
   _G.tech_priests_0358_try_deposit_to_station=nil
   _G.tech_priests_0327_scan_station_catalog=nil
   _G.tech_priests_0327_get_station_catalog=nil
+  _G.TechPriestsEfficiencyEconomy0587=nil
   local force={index=1,name="allied"}
   local enemy={index=2,name="enemy"}
   local surface={index=1}
@@ -71,6 +72,9 @@ local function scenario()
     end
     return matches
   end}
+  surface.find_entities_filtered=function(filters)
+    return _G.TechPriestsScanRouting0610.find_entities(surface,filters)
+  end
   local mod=dofile("tech-priests_src/scripts/core/logistics_fetch_executor_0527.lua")
   return {mod=mod,pair=pair,cargo=cargo,source=source,force=force,
     enemy=enemy,surface=surface,read_calls=function()return read_calls end}
@@ -125,13 +129,12 @@ do
   local t=scenario()
   local machine,buffer=t.source("catalog-machine","assembling-machine",2,
     defines.inventory.assembling_machine_output,{["electronic-circuit"]=4})
-  _G.tech_priests_0327_scan_station_catalog=function()
-    return {storage_items={["electronic-circuit"]={
+  storage.tech_priests.station_catalog_0327={stations={[1]={
+    storage_items={["electronic-circuit"]={
       entity=machine,inventory_id=defines.inventory.assembling_machine_output,
       instances={{entity=machine,inventory_id=defines.inventory.assembling_machine_output,
         distance_sq=4}}
-    }}}
-  end
+    }}}}}
   t.pair.priest.position={x=2,y=0}
   local acted,why=t.mod.service_pair(t.pair,"catalog-machine-claim-boundary")
   assert(not acted and why=="no-known-fetch-source"
