@@ -126,6 +126,10 @@ end
 
 update_sanctification_overlay = function(record, force)
   if not (record and record.entity and record.entity.valid) then return end
+  if is_consecration_target and not is_consecration_target(record.entity) then
+    remove_consecration_target(record.entity)
+    return
+  end
   ensure_storage()
 
   local unit = record.entity.unit_number
@@ -245,6 +249,10 @@ end
 
 draw_sanctification_label = function(record)
   if not (record and record.entity and record.entity.valid) then return end
+  if is_consecration_target and not is_consecration_target(record.entity) then
+    remove_consecration_target(record.entity)
+    return
+  end
   ensure_storage()
   local unit = record.entity.unit_number
   local previous = storage.tech_priests.consecration.renders[unit]

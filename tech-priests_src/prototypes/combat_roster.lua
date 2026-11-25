@@ -43,6 +43,10 @@ function M.register()
   flags={"not-stackable","only-in-cursor","spawnable"},subgroup="spawnables",stack_size=1,
   select={border_color={r=.9,g=.3,b=.15},mode={"any-tile"},cursor_box_type="copy"},
   alt_select={border_color={r=.5,g=.5,b=.5},mode={"any-tile"},cursor_box_type="not-allowed"}}
+ -- AAI's invisible driver counts as a passenger to native mining. The normal
+ -- mine control lets our bridge release only that AI driver for player pickup.
+ add{type="custom-input",name="tech-priests-pick-up-combat-unit",
+  key_sequence="",linked_game_control="mine",consuming="none",action="lua"}
  add{type="item",name="tech-priests-field-supply-pack",icon="__base__/graphics/icons/solid-fuel.png",icon_size=64,
   subgroup="tech-priests-combat-supplies",stack_size=100,fuel_categories={"tech-priests-field-supply"},fuel_value="2MJ"}
  add(recipe("tech-priests-field-supply-pack",{{"iron-plate",1},{"copper-plate",1},{"wood",2}},5,nil,true,3))
@@ -156,7 +160,10 @@ function M.finalize()
    p.name=u.name..suffix
    if p.factoriopedia_alternative then p.factoriopedia_alternative=u.name end
    if p.placeable_by then p.placeable_by={item=u.name,count=1} end
-   if p.minable then p.minable={mining_time=.5,result=u.name} end
+   -- AAI's solid/ghost movement bodies can deliberately omit mining products.
+   -- Every visible actor body returns the same paid deployable unit item.
+   if kind=="car" then p.minable={mining_time=.5,result=u.name}
+   elseif p.minable then p.minable={mining_time=.5,result=u.name} end
    if kind=="unit" then
     -- The invisible navigator must never supply a free secondary attack.
     p.attack_parameters.ammo_type.action.action_delivery.target_effects.damage.amount=0

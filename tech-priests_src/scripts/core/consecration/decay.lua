@@ -122,6 +122,7 @@ end
 
 function apply_completed_sanctification_operation(record, recipe)
   if not (record and record.entity and record.entity.valid) then return false end
+  if is_consecration_target and not is_consecration_target(record.entity) then return false end
 
   -- 0.1.417 pointer audit repair:
   -- Earlier ordering ran waste and maximum-capacity backlash before the current
@@ -207,6 +208,10 @@ end
 
 function update_machine_sanctification(record)
   if not (record and record.entity and record.entity.valid) then return false end
+  if is_consecration_target and not is_consecration_target(record.entity) then
+    remove_consecration_target(record.entity)
+    return false
+  end
   clamp_machine_sanctification(record)
   record.last_sensor_service_tick_0446 = game and game.tick or 0
 
@@ -340,6 +345,9 @@ end
 
 function apply_consecration_config_change_to_existing_machines()
   ensure_storage()
+  -- Remove obsolete infantry records before configuration refresh can redraw
+  -- their machine IDs/bars or reapply any machine-spirit effects on an old save.
+  prune_ineligible_consecration_targets()
   local consecration = storage.tech_priests.consecration
   local old_config = consecration.last_config or get_current_consecration_config_snapshot()
   local new_config = get_current_consecration_config_snapshot()

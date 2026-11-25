@@ -1,0 +1,131 @@
+name: Verify and publish the unit behavior hotfix
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [docs/releases/unit-behavior-hotfix-request.json]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tech-priests-unit-behavior-hotfix
+  cancel-in-progress: false
+
+jobs:
+  verify-and-publish:
+    if: github.repository == 'mrcalzon02/Tech-Priests' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Fetch exact focused scripts and authorized request
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p tools docs/releases tests/scenarios/unit-behavior
+          for file in tools/release_unit_hotfix.py tools/run_unit_behavior_native.py tools/ci_factorio_combined_modpack.py tools/publish_hd_mods.py tests/scenarios/unit-behavior/fixture.lua docs/releases/unit-behavior-hotfix-request.json; do
+            curl --fail --silent --show-error --location --retry 2 --max-time 60 \
+              "https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/${GITHUB_SHA}/${file}" -o "$file"
+          done
+          python3 -m py_compile tools/release_unit_hotfix.py tools/run_unit_behavior_native.py tools/ci_factorio_combined_modpack.py tools/publish_hd_mods.py
+
+      - name: Reuse the verified standard graphics archive
+        uses: actions/cache@v4
+        with:
+          path: base-package/tech-priests_1.0.0.zip
+          key: tech-priests-standard-6870e0b0ad71501d501eb9fc66853d81b12d617e4876b8c9ebd1138a6d464ab6
+
+      - name: Prepare exact 1.0.1 archive and preserve standard and optional HD graphics
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p base-package
+          python3 -u tools/release_unit_hotfix.py prepare \
+            --request docs/releases/unit-behavior-hotfix-request.json \
+            --base-archive base-package/tech-priests_1.0.0.zip \
+            --output prepared
+
+      - name: Reuse native Factorio 2.1.24
+        id: engine-cache
+        uses: actions/cache@v4
+        with:
+          path: engine
+          key: tech-priests-factorio-headless-linux-2.1.24
+
+      - name: Prepare the pinned native engine
+        if: steps.engine-cache.outputs.cache-hit != 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p engine
+          curl --fail --silent --show-error --location --retry 2 --connect-timeout 20 --max-time 300 \
+            https://www.factorio.com/get-download/2.1.24/headless/linux64 -o engine/factorio.tar.xz
+          tar -xJf engine/factorio.tar.xz -C engine
+          engine/factorio/bin/x64/factorio --version
+
+      - name: Acquire verified official AAI dependencies with existing credentials
+        env:
+          FACTORIO_USERNAME: ${{ secrets.FACTORIO_USERNAME }}
+          FACTORIO_TOKEN: ${{ secrets.FACTORIO_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -u tools/ci_factorio_combined_modpack.py --download-exact-combat \
+            --mods-dir "${RUNNER_TEMP}/unit-hotfix-aai" \
+            --artifact-dir "${RUNNER_TEMP}/unit-hotfix-aai-receipt"
+
+      - name: Inspect the exact AAI mining and command integration
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -u tools/release_unit_hotfix.py dependency-diagnostics \
+            --dependency-mods "${RUNNER_TEMP}/unit-hotfix-aai"
+
+      - name: Verify unit exclusion, native pickup and save migration on the exact package
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -u tools/run_unit_behavior_native.py \
+            --factorio engine/factorio/bin/x64/factorio \
+            --package prepared/tech-priests_1.0.1.zip \
+            --dependency-mods "${RUNNER_TEMP}/unit-hotfix-aai" \
+            --output native
+
+      - name: Publish passing archive and verify GitHub and Mod Portal readback
+        env:
+          FACTORIO_MOD_UPLOAD_KEY: ${{ secrets.FACTORIO_MOD_UPLOAD_KEY }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -u tools/release_unit_hotfix.py publish --package-dir prepared --native-dir native
+
+      - name: Preserve focused native logs and publication receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: tech-priests-unit-behavior-hotfix-receipts
+          path: |
+            prepared/unit-behavior-package.json
+            prepared/portal-publication-receipt.json
+            prepared/SHA256SUMS
+            native/*.json
+            native/*.log
+            native/*/*.json
+            native/*/*.log
+          if-no-files-found: warn
+          retention-days: 30
+
+      - name: Remove isolated authenticated dependency copies
+        if: always()
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import os, pathlib, shutil
+          shutil.rmtree(pathlib.Path(os.environ['RUNNER_TEMP'])/'unit-hotfix-aai', ignore_errors=True)
+          for path in pathlib.Path('native').glob('**/mods'):
+              if path.is_dir():
+                  shutil.rmtree(path)
+          PY

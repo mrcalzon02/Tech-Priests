@@ -450,7 +450,8 @@ local function make_priest(def, belt_immune)
   priest.absorptions_to_join_attack = { pollution = 0 }
   priest.corpse = def.corpse_name
   priest.dying_explosion = nil
-  priest.minable = nil
+  -- Picking up either half returns the same preserved Cogitator cell.
+  priest.minable = { mining_time = 0.4, result = def.station_name }
   priest.flags = { "placeable-player", "placeable-off-grid", "not-repairable" }
   priest.run_animation = priest_run_animation
 
@@ -525,7 +526,7 @@ local function make_original_rail_character_magos(def,belt_immune)
     {type="fire",percent=20}}
   -- Preserve the character prototype's genuine native driver eligibility.
   -- Do not manufacture equipment, items, cargo, or any commandable surrogate.
-  priest.minable=nil
+  priest.minable={mining_time=0.4,result=def.station_name}
   priest.running_speed=belt_immune and 0.18 or 0.15
   priest.corpse=def.corpse_name
   return priest

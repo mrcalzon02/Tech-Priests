@@ -1,0 +1,15 @@
+{
+  "schema": "tech-priests.unit-behavior-hotfix.v1",
+  "mod": "tech-priests",
+  "version": "1.0.1",
+  "overlay_paths": [
+    "tech-priests_src/prototypes/combat_roster.lua",
+    "tech-priests_src/prototypes/entity.lua",
+    "tech-priests_src/scripts/core/combat_roster_bridge.lua",
+    "tech-priests_src/scripts/core/consecration/decay.lua",
+    "tech-priests_src/scripts/core/consecration/overlays.lua",
+    "tech-priests_src/scripts/core/consecration/registry.lua",
+    "tech-priests_src/scripts/generated/control_legacy_part_001.lua",
+    "tech-priests_src/scripts/generated/control_legacy_part_020.lua"
+  ]
+}

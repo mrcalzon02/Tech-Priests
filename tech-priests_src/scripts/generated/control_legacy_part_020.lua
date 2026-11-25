@@ -387,9 +387,12 @@ end
 
 function tech_priests_0301_capture_pre_mine(event)
   local entity = event and event.entity
-  if not (entity and entity.valid and is_station and is_station(entity) and entity.unit_number) then return end
+  if not (entity and entity.valid and entity.unit_number) then return end
   local pair = find_pair_for_entity and find_pair_for_entity(entity) or nil
-  local record = tech_priests_0301_make_preservation_record(pair, entity, "pre-mine")
+  local station = is_station and is_station(entity) and entity
+    or (pair and pair.priest == entity and pair.station)
+  if not (station and station.valid) then return end
+  local record = tech_priests_0301_make_preservation_record(pair, station, "pre-mine")
   if not record then return end
   local bucket = tech_priests_0301_pending_bucket()
   bucket[entity.unit_number] = record
@@ -424,32 +427,116 @@ function tech_priests_0301_apply_record_to_stack(stack, record)
   return ok
 end
 
+-- These are real inventory stacks, separate from the station stock packed in
+-- the cell tag. Move them into Factorio's dynamically-sized mining buffer
+-- before the linked helpers are retired; never turn receipts into new items.
+function tech_priests_0301_collect_pickup_cargo(pair, buffer)
+  local seen = {}
+  local function transfer(inventory)
+    if not (inventory and inventory.valid) or seen[inventory] then return true end
+    seen[inventory] = true
+    for i = 1, #inventory do
+      local stack = inventory[i]
+      if stack and stack.valid_for_read then
+        local count = stack.count
+        local ok, inserted = pcall(function() return buffer.insert(stack) end)
+        if not ok or type(inserted) ~= "number" then return false end
+        if inserted > 0 then
+          if inserted == count then stack.clear()
+          else stack.count = count - inserted end
+        end
+        if inserted ~= count then return false end
+      end
+    end
+    return true
+  end
+  local ids = defines.inventory
+  for _, key in ipairs({"proxy", "logistic_requester", "logistic_return_cache", "priest"}) do
+    local entity = pair[key]
+    if entity and entity.valid then
+      for _, name in ipairs({"turret_ammo", "chest", "character_main", "character_guns",
+          "character_ammo", "character_armor", "character_trash"}) do
+        if ids[name] then
+          local ok, inventory = pcall(function() return entity.get_inventory(ids[name]) end)
+          if ok and not transfer(inventory) then return false end
+        end
+      end
+    end
+  end
+  local cargo_records = storage.tech_priests.station_cargo_0824 or {}
+  for id, cargo in pairs(cargo_records) do
+    if cargo.station_unit == pair.station_unit and cargo.priest_unit == pair.priest_unit then
+      local inventory = cargo.inventory
+      if not transfer(inventory) then return false end
+      if inventory and inventory.valid then inventory.destroy() end
+      cargo_records[id] = nil
+    end
+  end
+  return true
+end
+
 function tech_priests_0301_tag_mined_buffer(event)
-  local unit = event and event.entity and event.entity.unit_number
+  local entity = event and event.entity
+  local unit = entity and entity.valid and entity.unit_number
   local bucket = tech_priests_0301_pending_bucket()
   local record = unit and bucket[unit] or nil
+  local pair = entity and entity.valid and find_pair_for_entity(entity) or nil
+  local priest_pickup = pair and pair.priest == entity and pair.station and pair.station.valid
+  if priest_pickup then
+    -- Read the actual station at successful pickup, including any stock change
+    -- since a previous pre-mine callback which did not remove the priest.
+    record = tech_priests_0301_make_preservation_record(pair, pair.station, "priest-pickup")
+    record.priest_health_ratio = get_health_ratio(entity)
+    record.station_health_ratio = get_health_ratio(pair.station)
+  end
   if not record then return end
   bucket[unit] = nil
   local buffer = event.buffer
   if not (buffer and buffer.valid) then return end
   local applied = false
+  local cell_stack
   for i = 1, #buffer do
     local stack = buffer[i]
-    if stack and stack.valid_for_read and tech_priests_0301_is_station_item_name(stack.name) then
+    if stack and stack.valid_for_read and stack.name == record.station_name then
+      cell_stack = stack
       applied = tech_priests_0301_apply_record_to_stack(stack, record) or applied
       if applied then break end
+    end
+  end
+  if priest_pickup then
+    if applied and tech_priests_0301_collect_pickup_cargo(pair, buffer) then
+      remove_pair_for_entity(entity, event)
+    else
+      -- Preserve the live station if its state could not be packed. The normal
+      -- missing-priest recovery can restore its worker; do not award a second
+      -- station item while the original remains in the world.
+      if cell_stack and cell_stack.valid_for_read then cell_stack.clear() end
+      if log then log("[Tech-Priests] priest pickup could not pack the cell; original station retained") end
     end
   end
 end
 
 function tech_priests_0301_record_from_event_stack(event)
-  local stack = event and event.stack
-  if not (stack and stack.valid_for_read) then return nil end
-  local ok, tags = pcall(function() return stack.tags end)
-  if not (ok and type(tags) == "table") then return nil end
-  local record = tags[TECH_PRIESTS_PRESERVATION_TAG_0301]
-  if type(record) == "table" then return record end
-  return nil
+  local entity = event and (event.entity or event.created_entity or event.destination)
+  if not (entity and entity.valid and is_station(entity)) then return nil end
+  local function from_stack(stack)
+    if not (stack and stack.valid_for_read and stack.name == entity.name) then return nil end
+    local ok, tags = pcall(function() return stack.tags end)
+    if not (ok and type(tags) == "table") then return nil end
+    local record = tags[TECH_PRIESTS_PRESERVATION_TAG_0301]
+    if type(record) == "table" and record.station_name == entity.name then return record end
+    return nil
+  end
+  -- Factorio 2.1 supplies the actual spent items in a temporary inventory.
+  -- Blueprint entity tags are not proof that a packed cell was consumed.
+  local consumed = event and event.consumed_items
+  if consumed and consumed.valid then
+    for i = 1, #consumed do
+      local record = from_stack(consumed[i])
+      if record then return record end
+    end
+  end
+  return from_stack(event and event.stack)
 end
 
 function tech_priests_0301_apply_record_to_pair(pair, record, reason)
@@ -478,6 +565,8 @@ function tech_priests_0301_apply_record_to_pair(pair, record, reason)
   if pair.priest and pair.priest.valid then
     pcall(function() pair.priest.backer_name = pair.priest_display_name end)
   end
+  if record.station_health_ratio then set_health_ratio(pair.station, record.station_health_ratio) end
+  if record.priest_health_ratio then set_health_ratio(pair.priest, record.priest_health_ratio) end
   return true
 end
 

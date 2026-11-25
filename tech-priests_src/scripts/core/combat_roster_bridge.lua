@@ -22,12 +22,31 @@ function M.track(entity)
  if valid(entity) and entity.type=="car" then
   local u=C.for_entity_name(entity.name)
   if u then
+   entity.minable_flag=true
    local rec=Visuals.track(entity,u.id)
    if rec then Visuals.update(rec) end
    return true
   end
  end
  return false
+end
+function M.pick_up(player,entity)
+ if not(player and player.valid and valid(entity) and entity.type=="car"
+   and C.for_entity_name(entity.name) and entity.force==player.force
+   and player.can_reach_entity(entity)) then return false,"not-reachable-owned-unit" end
+ local driver,passenger=entity.get_driver(),entity.get_passenger()
+ if passenger then return false,"occupied-unit" end
+ -- Never eject a human or an unrelated passenger. Only the exact roster's
+ -- invisible AAI driver may be released, and only for this mining transaction.
+ if driver and not(driver.object_name=="LuaEntity" and driver.type=="character"
+   and not driver.player and driver.name==C.for_entity_name(entity.name).name.."-_-driver") then
+  return false,"occupied-unit"
+ end
+ if driver then entity.set_driver(nil) end
+ local ok,mined=pcall(function() return player.mine_entity(entity) end)
+ if valid(entity) and driver and driver.valid then entity.set_driver(driver) end
+ if not ok then error(mined) end
+ return mined==true,mined and "picked-up" or "inventory-full"
 end
 function M.preserve_replaced_inventory(data)
  local source,dest=data.old_entity,data.new_entity
@@ -93,6 +112,19 @@ local function built(event)
  end
 end
 function M.install()
+ assert(Registry.on_event("tech-priests-pick-up-combat-unit",function(event)
+  local player=game.get_player(event.player_index)
+  if player and player.valid then return M.pick_up(player,player.selected) end
+ end,nil,{owner="combat_roster_bridge",route="native-mine-control-pickup"}))
+ Registry.on_configuration_changed(function()
+  local names={}
+  for _,u in ipairs(C.units) do
+   for _,suffix in ipairs({"","-_-solid","-_-ghost"}) do names[#names+1]=u.name..suffix end
+  end
+  for _,surface in pairs(game.surfaces) do
+   for _,entity in pairs(surface.find_entities_filtered{name=names}) do M.track(entity) end
+  end
+ end,{owner="combat_roster_bridge",route="restore-existing-unit-pickup"})
  assert(Registry.on_event({defines.events.on_built_entity,defines.events.on_robot_built_entity,
    defines.events.script_raised_built,defines.events.script_raised_revive},built,nil,
   {owner="combat_roster_bridge",route="physical-deployment",priority=600}))

@@ -1366,6 +1366,9 @@ function cleanup_pair(pair)
   end
   if pair.priest_unit then
     storage.tech_priests.station_by_priest[pair.priest_unit] = nil
+    if storage.tech_priests.pairs_by_priest then
+      storage.tech_priests.pairs_by_priest[pair.priest_unit] = nil
+    end
   end
 end
 
@@ -1426,6 +1429,13 @@ function remove_pair_for_entity(entity, source_event)
   if storage.tech_priests.busy then return end
   local pair = find_pair_for_entity(entity)
   if not pair then return end
+
+  -- A pre-mine callback can also occur when the engine refuses the pickup.
+  -- Keep the linked station intact until the actual priest mining buffer
+  -- contains its preserved cell item (0301 owns that completion callback).
+  if entity == pair.priest and source_event and
+      (source_event.name == defines.events.on_pre_player_mined_item
+        or source_event.name == defines.events.on_robot_pre_mined) then return end
 
   storage.tech_priests.busy = true
 

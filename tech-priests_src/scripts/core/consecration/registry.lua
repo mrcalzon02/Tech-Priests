@@ -2,6 +2,7 @@
 -- Extracted from control.lua to isolate machine-spirit state logic.
 
 local QualityBaseline = require("scripts.core.consecration.quality_baseline")
+local CombatRoster = require("shared.combat_roster_catalog")
 
 CONSECRATION_TARGET_TYPE_SET = CONSECRATION_TARGET_TYPE_SET or {
   ["assembling-machine"] = true,
@@ -34,7 +35,13 @@ CONSECRATION_EXCLUDED_NAME_SET_0448 = CONSECRATION_EXCLUDED_NAME_SET_0448 or {
 }
 
 function tech_priests_0448_is_consecration_excluded(entity)
-  return entity and entity.valid and CONSECRATION_EXCLUDED_NAME_SET_0448 and CONSECRATION_EXCLUDED_NAME_SET_0448[entity.name] == true
+  if not (entity and entity.valid) then return false end
+  -- Combat infantry use native car bodies for AAI movement. Their engine type
+  -- does not make them machines; exclude the complete roster and every AAI
+  -- composite form before the generic vehicle/type and name allowlists.
+  if entity.type == "unit" or entity.type == "character" then return true end
+  if CombatRoster.for_entity_name(entity.name) then return true end
+  return CONSECRATION_EXCLUDED_NAME_SET_0448 and CONSECRATION_EXCLUDED_NAME_SET_0448[entity.name] == true
 end
 
 local function safe_entity_type_0446(entity)
@@ -117,17 +124,43 @@ function register_consecration_target(entity)
   end
 end
 
-function remove_consecration_target(entity)
-  if not (entity and entity.unit_number) then return end
-  clear_machine_custom_status(entity)
+local function remove_consecration_record(unit, entity)
   ensure_storage()
-  storage.tech_priests.consecration.machines[entity.unit_number] = nil
-  local render = storage.tech_priests.consecration.renders[entity.unit_number]
+  local consecration = storage.tech_priests.consecration
+  local record = consecration.machines[unit]
+  if record and entity and entity.valid then
+    -- active is read-only in 2.1 and also reflects freezing/circuit state.
+    -- Restore only the actual script flag captured by our malfunction setter.
+    -- Older records only attempted a failing active write, so an unknown
+    -- script-disable state belongs to AAI/another owner and must be preserved.
+    if record.control_malfunction_until_tick
+      and type(record.control_malfunction_original_disabled_by_script) == "boolean" then
+      entity.disabled_by_script = record.control_malfunction_original_disabled_by_script
+    end
+    clear_machine_custom_status(entity)
+  end
+  consecration.machines[unit] = nil
+  local render = consecration.renders[unit]
   if render then
     destroy_render_objects(render)
-    storage.tech_priests.consecration.renders[entity.unit_number] = nil
+    consecration.renders[unit] = nil
   end
-  clear_sanctification_overlay(entity.unit_number)
+  clear_sanctification_overlay(unit)
+end
+
+function remove_consecration_target(entity)
+  if not (entity and entity.unit_number) then return end
+  remove_consecration_record(entity.unit_number, entity)
+end
+
+function prune_ineligible_consecration_targets()
+  ensure_storage()
+  for unit, record in pairs(storage.tech_priests.consecration.machines) do
+    local entity = record and record.entity
+    if not is_consecration_target(entity) then
+      remove_consecration_record(unit, entity)
+    end
+  end
 end
 
 function scan_existing_consecration_targets()
@@ -135,6 +168,7 @@ function scan_existing_consecration_targets()
     pcall(_G.tech_priests_compatibility_scan_0626, "consecration-targets", rawget(_G, "tech_priests_compatibility_scan_context_0626") or "runtime-watchdog", 1)
   end
   ensure_storage()
+  prune_ineligible_consecration_targets()
   local scanned = 0
   local registered = 0
   local seen = {}
@@ -145,10 +179,7 @@ function scan_existing_consecration_targets()
         seen[entity.unit_number] = true
         scanned = scanned + 1
         if tech_priests_0448_is_consecration_excluded and tech_priests_0448_is_consecration_excluded(entity) then
-          if storage.tech_priests and storage.tech_priests.consecration and storage.tech_priests.consecration.machines then
-            storage.tech_priests.consecration.machines[entity.unit_number] = nil
-          end
-          if clear_sanctification_overlay then pcall(clear_sanctification_overlay, entity.unit_number) end
+          remove_consecration_target(entity)
         elseif is_consecration_target(entity) then
           register_consecration_target(entity)
           registered = registered + 1
