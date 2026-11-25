@@ -1,0 +1,8 @@
+{
+  "name": "tp-factory-logistics-fixture",
+  "version": "0.1.0",
+  "title": "Tech Priests Factory Logistics Fixture",
+  "author": "Tech Priests",
+  "factorio_version": "2.1",
+  "dependencies": ["base >= 2.1.25", "quality"]
+}

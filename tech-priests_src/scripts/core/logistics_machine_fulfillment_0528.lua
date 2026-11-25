@@ -4,6 +4,8 @@
 -- dispatcher-owned execution, literal movement acceptance, container-only station
 -- stock, dedicated target-machine inventories, persistent custody, and atomic return.
 
+local crafter_inventory = require("scripts.core.native_crafter_inventory_1277")
+
 local M = {
   version = "0.1.674-dev",
   storage_key = "logistics_machine_fulfillment_0528",
@@ -39,7 +41,7 @@ local WASTE_ITEMS = {
   ["mechanical-detritus"] = true,
   scrap = true,
 }
-local FUEL_CANDIDATES = {
+local FUEL_PREFERENCE = {
   "coal", "wood", "solid-fuel", "rocket-fuel", "nuclear-fuel",
 }
 local TERMINAL_PHASES = {
@@ -131,9 +133,10 @@ local function inventory(entity, inventory_id)
   local ok, inv = pcall(function() return entity.get_inventory(inventory_id) end)
   return ok and inv and inv.valid and inv or nil
 end
-local function count_inventory(inv, item)
+local function count_inventory(inv, item, quality)
   if not (inv and inv.valid and item) then return 0 end
-  local ok, count = pcall(function() return inv.get_item_count(item) end)
+  local identity = quality and {name = item, quality = quality} or item
+  local ok, count = pcall(function() return inv.get_item_count(identity) end)
   return ok and (tonumber(count) or 0) or 0
 end
 local function each_inventory_item(inv, callback)
@@ -141,7 +144,7 @@ local function each_inventory_item(inv, callback)
   local ok, contents = pcall(function() return inv.get_contents() end)
   if not (ok and type(contents) == "table") then return end
   for key, value in pairs(contents) do
-    local name, count
+    local name, count, quality
     if type(key) == "string" then
       name = key
       count = type(value) == "table"
@@ -150,37 +153,41 @@ local function each_inventory_item(inv, callback)
       name = value.name or value.item or value[1]
       count = tonumber(value.count or value.amount or value[2])
     end
+    if type(value) == "table" and value.quality ~= "normal" then
+      quality = value.quality
+    end
     if type(name) == "string" and name ~= "" and (tonumber(count) or 0) > 0 then
-      callback(name, tonumber(count) or 1)
+      callback(name, count, quality)
     end
   end
 end
-local function remove_inventory(inv, item, count)
+local function remove_inventory(inv, item, count, quality)
   if not (inv and inv.valid and item and (tonumber(count) or 0) > 0) then return 0 end
   local ok, removed = pcall(function()
-    return inv.remove({ name = item, count = count })
+    return inv.remove({ name = item, count = count, quality = quality })
   end)
   return ok and (tonumber(removed) or 0) or 0
 end
-local function insert_inventory(inv, item, count)
+local function insert_inventory(inv, item, count, quality)
   if not (inv and inv.valid and item and (tonumber(count) or 0) > 0) then return 0 end
   local ok, inserted = pcall(function()
-    return inv.insert({ name = item, count = count })
+    return inv.insert({ name = item, count = count, quality = quality })
   end)
   return ok and (tonumber(inserted) or 0) or 0
 end
 local function machine_input(machine)
-  local ids = defines and defines.inventory
-  return ids and (inventory(machine, ids.assembling_machine_input)
-    or inventory(machine, ids.furnace_source)) or nil
+  local family = machine.type == "assembling-machine" and "assembler" or machine.type
+  if family ~= "assembler" and family ~= "furnace" then return nil end
+  return inventory(machine, crafter_inventory.index(defines and defines.inventory, "input", family))
 end
 local function machine_output(machine)
   local ids = defines and defines.inventory
   if ids and (machine.type=="container" or machine.type=="logistic-container") then
     return inventory(machine,ids.chest)
   end
-  return ids and (inventory(machine, ids.assembling_machine_output)
-    or inventory(machine, ids.furnace_result)) or nil
+  local family = machine.type == "assembling-machine" and "assembler" or machine.type
+  if family ~= "assembler" and family ~= "furnace" then return nil end
+  return inventory(machine, crafter_inventory.index(ids, "output", family))
 end
 local function machine_fuel(machine)
   local ids = defines and defines.inventory
@@ -190,12 +197,13 @@ local function storage_authority()
   return rawget(_G, "TechPriestsStorageRoleAuthority0686")
     or package.loaded["scripts.core.storage_role_authority_0686"]
 end
-local function generic_count(pair, item)
+local function generic_count(pair, item, quality)
   local storage = storage_authority()
   if storage and type(storage.generic_item_count) == "function" then
-    local ok, count = pcall(storage.generic_item_count, pair, item)
+    local ok, count = pcall(storage.generic_item_count, pair, item, quality)
     if ok then return tonumber(count) or 0 end
   end
+  if quality then return 0 end
   local helper = rawget(_G, "tech_priests_generic_station_item_count_0686")
   if type(helper) == "function" then
     local ok, count = pcall(helper, pair, item)
@@ -203,12 +211,13 @@ local function generic_count(pair, item)
   end
   return 0
 end
-local function remove_generic(pair, item, count)
+local function remove_generic(pair, item, count, quality)
   local storage = storage_authority()
   if storage and type(storage.remove_generic_item) == "function" then
-    local ok, removed = pcall(storage.remove_generic_item, pair, item, count)
+    local ok, removed = pcall(storage.remove_generic_item, pair, item, count, quality)
     if ok then return tonumber(removed) or 0 end
   end
+  if quality then return 0 end
   local helper = rawget(_G, "tech_priests_generic_station_remove_0686")
   if type(helper) == "function" then
     local ok, removed = pcall(helper, pair, item, count)
@@ -268,7 +277,7 @@ local function atomic_deposit(pair, item, count, reason, role, options)
   if not (storage and type(storage.deposit_exact) == "function") then
     return false, "storage-authority-unavailable"
   end
-  local deposit_options={role=role}
+  local deposit_options={role=role, quality=options and options.quality}
   if options and options.station_only==true then
     deposit_options.station_only=true
     deposit_options.allow_create=false
@@ -491,8 +500,10 @@ local function item_exists(name)
 end
 local function get_recipe(machine)
   if not (valid(machine) and machine.get_recipe) then return nil end
-  local ok, recipe = pcall(function() return machine.get_recipe() end)
-  return ok and recipe or nil
+  local ok, recipe, quality = pcall(function() return machine.get_recipe() end)
+  if not ok then return nil end
+  local name = quality and quality.name
+  return recipe, name ~= "normal" and name or nil
 end
 local function recipe_ingredients(recipe)
   local out = {}
@@ -587,10 +598,15 @@ local function output_candidate(machine)
   local output = machine_output(machine)
   local best
   if output then
-    each_inventory_item(output, function(item, count)
+    each_inventory_item(output, function(item, count, quality)
+      -- Ranked drill receipts are still denominated in normal-quality ore.
+      if quality and (machine.type == "container" or machine.type == "logistic-container") then
+        return
+      end
       local candidate = {
         action = "clear-output",
         item = item,
+        quality = quality,
         count = math.min(M.max_transfer, count),
         machine = machine,
         source_inventory = output,
@@ -617,7 +633,43 @@ local function output_candidate(machine)
   end
   return best
 end
-local function fuel_candidate(pair, machine, requested_floor)
+local function can_insert_item(inv, item, quality)
+  if not (inv and inv.valid and inv.can_insert) then return false end
+  local ok, accepted = pcall(function()
+    return inv.can_insert({name = item, count = 1, quality = quality})
+  end)
+  return ok and accepted == true
+end
+local function fuel_prototype(item)
+  local prototype = prototypes and prototypes.item and prototypes.item[item]
+  return prototype and (tonumber(prototype.fuel_value) or 0) > 0 and prototype or nil
+end
+local function accepts_fuel(machine, inv, item)
+  local prototype = fuel_prototype(item)
+  if not prototype or not can_insert_item(inv, item) then return false end
+  local burnt_result = prototype.burnt_result
+  if not burnt_result then return true end
+  local ok, burnt = pcall(function() return machine.get_burnt_result_inventory() end)
+  return ok and can_insert_item(burnt, burnt_result.name)
+end
+local function stocked_fuel_names(pair)
+  local authority = storage_authority()
+  if not (authority and type(authority.generic_storage_sources) == "function") then return {} end
+  local ok, sources = pcall(authority.generic_storage_sources, pair)
+  if not ok or type(sources) ~= "table" then return {} end
+  local names, seen = {}, {}
+  for _, source in ipairs(sources) do
+    each_inventory_item(source.inv, function(item)
+      if not seen[item] and fuel_prototype(item) then
+        seen[item] = true
+        names[#names + 1] = item
+      end
+    end)
+  end
+  table.sort(names)
+  return names
+end
+local function fuel_candidate(pair, machine, requested_floor, required_fuel, stocked_fuels)
   -- Only the original counted 0836 railway explicitly requests a larger
   -- initial load. All normal drills/furnaces retain the three-item policy.
   local floor = M.min_fuel_count
@@ -629,9 +681,10 @@ local function fuel_candidate(pair, machine, requested_floor)
   local total = 0
   each_inventory_item(fuel, function(_, count) total = total + count end)
   if total >= floor then return nil end
-  for _, item in ipairs(FUEL_CANDIDATES) do
+  local function candidate_for(item)
+    if not accepts_fuel(machine, fuel, item) then return nil end
     local available = generic_count(pair, item)
-    if item_exists(item) and available > 0 then
+    if available > 0 then
       return {
         action = "supply-fuel",
         item = item,
@@ -640,19 +693,30 @@ local function fuel_candidate(pair, machine, requested_floor)
       }
     end
   end
+  if required_fuel then return candidate_for(required_fuel) end
+  for _, item in ipairs(FUEL_PREFERENCE) do
+    local candidate = candidate_for(item)
+    if candidate then return candidate end
+  end
+  for _, item in ipairs(stocked_fuels and stocked_fuels() or {}) do
+    local candidate = candidate_for(item)
+    if candidate then return candidate end
+  end
   return nil
 end
 local function ingredient_candidate(pair, machine)
   local input = machine_input(machine)
-  local recipe = get_recipe(machine)
+  local recipe, quality = get_recipe(machine)
   if not (input and recipe) then return nil end
   for _, ingredient in ipairs(recipe_ingredients(recipe)) do
-    local missing = ingredient.amount - count_inventory(input, ingredient.name)
-    local available = generic_count(pair, ingredient.name)
-    if missing > 0 and available > 0 then
+    local missing = ingredient.amount - count_inventory(input, ingredient.name, quality)
+    local available = generic_count(pair, ingredient.name, quality)
+    if missing > 0 and available > 0
+        and (not quality or can_insert_item(input, ingredient.name, quality)) then
       return {
         action = "supply-ingredient",
         item = ingredient.name,
+        quality = quality,
         count = math.min(M.max_transfer, missing, available),
         machine = machine,
       }
@@ -751,6 +815,11 @@ local function discover_candidate(pair)
   end)
   if not (ok and machines) then return nil end
   local best, best_score
+  local fuel_names
+  local function stocked_fuels()
+    if not fuel_names then fuel_names = stocked_fuel_names(pair) end
+    return fuel_names
+  end
   for _, machine in pairs(machines) do
     local is_receiver=machine.type=="container"
       or machine.type=="logistic-container"
@@ -771,7 +840,7 @@ local function discover_candidate(pair)
     end
     if eligible and not automated then
       local task = output_candidate(machine)
-        or fuel_candidate(pair, machine)
+        or fuel_candidate(pair, machine, nil, nil, stocked_fuels)
         or ingredient_candidate(pair, machine)
       if task then
         if drill_source then task.drill_source_0983=drill_source end
@@ -857,6 +926,9 @@ function M.offer_remote_drill_fuel_1016(pair, drill)
     end
     local fuel=machine_fuel(drill)
     if not fuel then return false,"physical-drill-fuel-inventory-invalid" end
+    if not accepts_fuel(drill, fuel, "coal") then
+      return false,"physical-coal-fuel-not-accepted"
+    end
     local total=0
     each_inventory_item(fuel,function(_,n) total=total+n end)
     if total>=M.min_fuel_count then
@@ -871,7 +943,7 @@ function M.offer_remote_drill_fuel_1016(pair, drill)
     if count_inventory(stock,"coal")<1 then
       return false,"physical-terminal-coal-unavailable"
     end
-    candidate=fuel_candidate(pair,drill)
+    candidate=fuel_candidate(pair,drill,nil,"coal")
     if not(candidate and candidate.action=="supply-fuel"
         and candidate.item=="coal" and candidate.count>=1) then
       return false,"physical-coal-fuel-not-needed-or-spendable"
@@ -1046,7 +1118,7 @@ function M.offer_original_locomotive_fuel_0836(pair,locomotive)
     return false,"other-machine-candidate-owned"
   end
   local candidate=fuel_candidate(pair,locomotive,
-    M.original_train_min_fuel_count_0836)
+    M.original_train_min_fuel_count_0836,"coal")
   if not(candidate and candidate.action=="supply-fuel"
       and candidate.item=="coal" and candidate.count>=1)then
     return false,"no-counted-original-coal-or-fuel-not-needed"
@@ -1256,14 +1328,14 @@ local function discover_pairs(budget)
           and (tonumber(retained.expires_tick) or 0)>=now()
           and count_inventory(inventory(pair.station,defines and
             defines.inventory and defines.inventory.chest),"coal")>0
-          and fuel_candidate(pair,retained.machine)~=nil
+          and fuel_candidate(pair,retained.machine,nil,"coal")~=nil
         if not keep and retained
             and retained.source=="original-locomotive-fuel-0836"
             and valid(retained.machine)
             and (tonumber(retained.expires_tick)or 0)>=now()then
           local authorized=exact_original_train_0836(pair,retained.machine)
           local needed=fuel_candidate(pair,retained.machine,
-            M.original_train_min_fuel_count_0836)
+            M.original_train_min_fuel_count_0836,"coal")
           keep=authorized==true and needed and needed.item=="coal"
         end
         -- Preserve an authentic newly built component's feed candidate
@@ -1284,6 +1356,7 @@ local function discover_pairs(budget)
             and not machine_automated(retained.machine)
             and candidate and candidate.action=="supply-ingredient"
             and candidate.item==retained.item
+            and candidate.quality==retained.quality
         end
         if keep then
           acted=acted+1
@@ -1314,6 +1387,7 @@ local function begin_state(pair, candidate)
       or "move-to-station",
     action = candidate.action,
     item = candidate.item,
+    quality = candidate.quality,
     count = math.max(1, math.min(M.max_transfer, tonumber(candidate.count) or 1)),
     kind = candidate.kind,
     machine = candidate.machine,
@@ -1374,7 +1448,8 @@ local function refund_custody(pair, reason)
   end
   local role = custody.kind == "waste" and "waste" or "general"
   local ok, why = atomic_deposit(
-    pair, custody.item, custody.count, reason or "machine-custody-return-0528", role)
+    pair, custody.item, custody.count, reason or "machine-custody-return-0528", role,
+    {quality = custody.quality})
   if not ok then
     state.phase = "return-custody-to-station"
     state.last_blocker = safe(why)
@@ -1388,6 +1463,14 @@ local function refund_custody(pair, reason)
   return true, "custody-returned"
 end
 local function acquire_station_custody(pair, state)
+  if state.action == "supply-fuel"
+      and not accepts_fuel(state.machine, machine_fuel(state.machine), state.item) then
+    return false, "machine-fuel-no-longer-accepted"
+  end
+  if state.quality and state.action == "supply-ingredient"
+      and not can_insert_item(machine_input(state.machine), state.item, state.quality) then
+    return false, "machine-ingredient-no-longer-accepted"
+  end
   -- 1013: record the real canonical station debit before a fuel delivery.
   -- A missing/inconsistent generic storage read may still transport fuel,
   -- but it can never generate a ranked remote-drill custody receipt.
@@ -1431,7 +1514,7 @@ local function acquire_station_custody(pair, state)
     removed=before-after
   else
     before=state.action=="supply-fuel" and generic_count(pair,state.item) or nil
-    removed=remove_generic(pair,state.item,state.count)
+    removed=remove_generic(pair,state.item,state.count,state.quality)
     after=state.action=="supply-fuel" and generic_count(pair,state.item) or nil
   end
   if removed <= 0 then return false, "station-stock-unavailable" end
@@ -1448,6 +1531,7 @@ local function acquire_station_custody(pair, state)
   state.custody = {
     version = M.version,
     item = state.item,
+    quality = state.quality,
     count = removed,
     kind = "supply",
     source = state.remote_fuel_1016 and
@@ -1473,7 +1557,7 @@ local function acquire_output_custody(pair, state)
       pair,state.machine,state.drill_source_0983)
     if not drill then return false,reason end
   end
-  local available = count_inventory(inv, state.item)
+  local available = count_inventory(inv, state.item, state.quality)
   local wanted = math.min(state.count, available)
   if wanted <= 0 then return false, "machine-output-empty" end
   -- 0984: real drill output travels in a persistent engine-owned inventory,
@@ -1499,8 +1583,8 @@ local function acquire_output_custody(pair, state)
       return false, "drill-engine-cargo-capacity"
     end
   end
-  local removed = remove_inventory(inv, state.item, wanted)
-  local after=count_inventory(inv,state.item)
+  local removed = remove_inventory(inv, state.item, wanted, state.quality)
+  local after=count_inventory(inv,state.item,state.quality)
   if drill and after~=available-wanted then
     -- A post-mutation exception or competing debit is ambiguous. Never
     -- credit a guessed amount or repeat the withdrawal after reload.
@@ -1523,7 +1607,7 @@ local function acquire_output_custody(pair, state)
   end
   if removed ~= wanted then
     if removed > 0 then
-      local restored = insert_inventory(inv, state.item, removed)
+      local restored = insert_inventory(inv, state.item, removed, state.quality)
       if drill and (restored~=removed or count_inventory(inv,state.item)~=available) then
         state.phase="custody-uncertain-0983"
         state.last_blocker="drill-source-rollback-ambiguous"
@@ -1549,6 +1633,7 @@ local function acquire_output_custody(pair, state)
   state.custody = {
     version = M.version,
     item = state.item,
+    quality = state.quality,
     count = removed,
     kind = state.kind == "waste" and "waste" or "retention",
     source = "machine-output",
@@ -1577,10 +1662,15 @@ local function deliver_supply(pair, state)
   if not (destination and destination.valid) then
     return false, "machine-destination-invalid"
   end
-  local destination_before = count_inventory(destination, custody.item)
+  if state.action == "supply-fuel" and not accepts_fuel(state.machine, destination, custody.item) then
+    state.phase = "return-custody-to-station"
+    state.last_blocker = "machine-fuel-no-longer-accepted"
+    return false, state.last_blocker
+  end
+  local destination_before = count_inventory(destination, custody.item, custody.quality)
   local custody_before = custody.count
-  local inserted = insert_inventory(destination, custody.item, custody.count)
-  local destination_after = count_inventory(destination, custody.item)
+  local inserted = insert_inventory(destination, custody.item, custody.count, custody.quality)
+  local destination_after = count_inventory(destination, custody.item, custody.quality)
   if inserted > 0 then
     -- A receipt is evidence of an exact physical 0528 station debit and
     -- machine fuel-inventory credit, never permission to mint fuel.
@@ -1741,7 +1831,8 @@ local function deposit_output(pair, state)
     -- Legacy in-flight numeric cargo remains readable across old saves;
     -- new connected drill pickups always take the real-inventory path.
     local ok,why=atomic_deposit(
-      pair,custody.item,custody.count,"machine-output-deposit-0528",role)
+      pair,custody.item,custody.count,"machine-output-deposit-0528",role,
+      {quality = custody.quality})
     if not ok then
       state.phase="return-custody-to-station"
       state.last_blocker=safe(why)
