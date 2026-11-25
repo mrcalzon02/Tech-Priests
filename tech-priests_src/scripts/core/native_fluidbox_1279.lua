@@ -46,6 +46,15 @@ function M.observe(entity)
   end
   function view.get_fluid_segment_contents(index)
     local fluid=native(entity,"get_fluid_segment_fluid",index)
+    if not fluid then
+      -- A disconnected 2.1 output can hold fluid in its machine buffer
+      -- before the engine assigns a pipe segment to the port.
+      local prototype=native(entity,"get_fluid_box_prototype",index)
+      local direction=prototype and prototype.production_type
+      if direction=="output" or direction=="input-output" then
+        fluid=native(entity,"get_fluid",index)
+      end
+    end
     if not fluid then return {} end
     local valid_fluid,name,amount=pcall(function()
       return fluid.name,tonumber(fluid.amount)

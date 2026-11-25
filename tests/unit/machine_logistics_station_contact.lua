@@ -3,7 +3,8 @@
 package.path = "tech-priests_src/?.lua;tech-priests_src/?/init.lua;" .. package.path
 game = { tick = 1200 }
 storage = { tech_priests = { pairs_by_station = {} } }
-defines = { distraction = { none = 0 } }
+defines = { distraction = { none = 0 }, inventory = { fuel = 1 } }
+prototypes = { item = { coal = { fuel_value = 4000000 } } }
 local function check(ok, why)
   if not ok then error("machine-station-contact: " .. why, 2) end
 end
@@ -42,6 +43,11 @@ local priest = { valid = true, name = "tech-priests-junior-priest",
 local machine = { valid = true, name = "tech-priests-emergency-miner",
   unit_number = 12, position = { x = 8, y = 0 },
   force = force, surface = surface, type = "assembling-machine" }
+machine.get_inventory = function(id)
+  if id == defines.inventory.fuel then
+    return { valid = true, can_insert = function(stack) return stack.name == "coal" end }
+  end
+end
 local pair = { station = station, priest = priest, station_unit = 10 }
 storage.tech_priests.pairs_by_station[10] = pair
 local carried = { item = "iron-ore", count = 5, kind = "retention" }

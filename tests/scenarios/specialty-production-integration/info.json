@@ -1,0 +1,8 @@
+{
+  "name": "tp-specialty-production-fixture",
+  "version": "0.1.0",
+  "title": "Tech Priests Specialty Production Fixture",
+  "author": "Tech Priests",
+  "factorio_version": "2.1",
+  "dependencies": ["base >= 2.1.25", "quality", "tanks_for_bob_fork >= 1.8.103"]
+}

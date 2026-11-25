@@ -133,24 +133,60 @@ local function readiness()return rawget(_G,"TechPriestsEnergyFamilyReadiness0705
 local function storage_authority()return rawget(_G,"TechPriestsStorageRoleAuthority0686")or package.loaded["scripts.core.storage_role_authority_0686"]end
 local function service_radius(pair)local radius=tonumber(pair and pair.radius)or 28;if valid_pair(pair)and type(_G.get_station_operating_radius)=="function"then local ok,value=pcall(_G.get_station_operating_radius,pair.station);if ok and tonumber(value)then radius=tonumber(value)end end;return math.max(8,math.min(radius,96))end
 local function home_sources(pair)
-  local out,seen={},{};if not valid_pair(pair)then return out end;local radius=service_radius(pair);local home=station_unit(pair)
-  local function add(source)local inv=source and source.inv;local entity=source and source.entity;if not(inv and inv.valid and valid(entity))then return end;if entity.surface~=pair.station.surface or entity.force~=pair.station.force then return end;if source.authority_source_station_0573 and tostring(source.authority_source_station_0573)~=tostring(home)then return end;if dist_sq(entity.position,pair.station.position)>radius*radius then return end;local key=safe(inv);if seen[key]then return end;seen[key]=true;out[#out+1]={inv=inv,entity=entity,label=source.source or source.inventory_id or"home-source"}end
-  local source_fn=rawget(_G,"tech_priests_inventory_steward_sources_for_pair");if type(source_fn)=="function"then local ok,sources=pcall(source_fn,pair);if ok and type(sources)=="table"then for _,source in ipairs(sources)do add(source)end end end
+  local out,seen={},{}
+  if not valid_pair(pair) then return out end
+  local radius,home=service_radius(pair),station_unit(pair)
+  local function add(source)
+    local inv,entity=source and source.inv,source and source.entity
+    if not (inv and inv.valid and valid(entity)) then return end
+    if entity.surface~=pair.station.surface or entity.force~=pair.station.force then return end
+    if source.authority_source_station_0573
+      and tostring(source.authority_source_station_0573)~=tostring(home) then return end
+    if dist_sq(entity.position,pair.station.position)>radius*radius then return end
+    -- Distinct inventories can have the same printable LuaInventory name.
+    local key=entity.unit_number or inv
+    if seen[key] then return end
+    seen[key]=true
+    out[#out+1]={inv=inv,entity=entity,label=source.source or source.inventory_id or "home-source"}
+  end
+  local authority=storage_authority()
+  local source_fn=authority and authority.generic_storage_sources
+    or rawget(_G,"tech_priests_inventory_steward_sources_for_pair")
+  if type(source_fn)=="function" then
+    local ok,sources=pcall(source_fn,pair)
+    if ok and type(sources)=="table" then
+      for _,source in ipairs(sources) do add(source) end
+    end
+  end
   if defines and defines.inventory and pair.station.get_inventory then local ok,inv=pcall(function()return pair.station.get_inventory(defines.inventory.chest)end);if ok and inv and inv.valid then add({inv=inv,entity=pair.station,source="station-chest"})end end
   return out
 end
 local function item_prototype(item)return prototypes and prototypes.item and prototypes.item[item]or nil end
 local function fuel_value(item)local prototype=item_prototype(item);if not prototype then return 0 end;local value=0;pcall(function()value=tonumber(prototype.fuel_value)or 0 end);return value end
-local function burnt_result(item)local prototype=item_prototype(item);if not prototype then return nil end;local result;pcall(function()result=prototype.burnt_result end);if type(result)=="table"then return result.name end;return type(result)=="string"and result or nil end
+local function item_name(value)
+  -- A burning item may be a prototype or a name/quality pair containing one.
+  for _=1,2 do
+    if type(value)=="string" then return value end
+    local ok,name=pcall(function() return value and value.name end)
+    if not ok or not name then return nil end
+    value=name
+  end
+  return type(value)=="string" and value or nil
+end
+local function burnt_result(item)
+  local prototype=item_prototype(item)
+  local ok,result=pcall(function() return prototype and prototype.burnt_result end)
+  return ok and item_name(result) or nil
+end
 local function fuel_compatible(report,item)
   if not(report and report.fuel_inventory and report.fuel_inventory.valid)then return false,"missing-fuel-inventory"end
   if fuel_value(item)<=0 or not inv_can_insert(report.fuel_inventory,item,1)then return false,"fuel-incompatible"end
   local result=burnt_result(item);if result then if not(report.burnt_inventory and report.burnt_inventory.valid)then return false,"missing-burnt-result-inventory"end;if not inv_can_insert(report.burnt_inventory,result,1)then return false,"burnt-result-incompatible:"..result end end
   return true,"compatible"
 end
-local function source_for_item(pair,report,item)
+local function source_for_item(pair,report,item,sources)
   if not fuel_compatible(report,item)then return nil end;local best
-  for _,source in ipairs(home_sources(pair))do local count=item_count(source.inv,item);if count>0 then local score=dist_sq(pair.priest.position,source.entity.position)-math.min(count,100);if not best or score<best.score then best={item=item,count=count,inv=source.inv,entity=source.entity,label=source.label,score=score}end end end
+  for _,source in ipairs(sources or home_sources(pair))do local count=item_count(source.inv,item);if count>0 then local score=dist_sq(pair.priest.position,source.entity.position)-math.min(count,100);if not best or score<best.score then best={item=item,count=count,inv=source.inv,entity=source.entity,label=source.label,score=score}end end end
   return best
 end
 local function compatible_request_item(report)
@@ -158,9 +194,35 @@ local function compatible_request_item(report)
   local names={};for name in pairs(prototypes and prototypes.item or{})do if fuel_value(name)>0 and fuel_compatible(report,name)then names[#names+1]=name end end;table.sort(names);return names[1]
 end
 local function select_fuel(pair,report)
-  local current=report and report.burner and report.burner.currently_burning;if current then local source=source_for_item(pair,report,current);if source then return source,current end end
-  for _,item in ipairs(FUEL_PREFERENCE)do local source=source_for_item(pair,report,item);if source then return source,item end end
-  local requested=compatible_request_item(report);return requested and source_for_item(pair,report,requested)or nil,requested
+  local sources=home_sources(pair)
+  local current=item_name(report and report.burner and report.burner.currently_burning)
+  if current then
+    local source=source_for_item(pair,report,current,sources)
+    if source then return source,current end
+  end
+  for _,item in ipairs(FUEL_PREFERENCE) do
+    local source=source_for_item(pair,report,item,sources)
+    if source then return source,item end
+  end
+  local known,names={},{}
+  for _,source in ipairs(sources) do
+    for _,entry in ipairs(contents(source.inv)) do
+      local name=entry.name
+      if not known[name] and fuel_value(name)>0 then
+        known[name]=true
+        names[#names+1]=name
+      end
+    end
+  end
+  table.sort(names)
+  local best
+  for _,name in ipairs(names) do
+    local source=source_for_item(pair,report,name,sources)
+    if source and (not best or source.score<best.score) then best=source end
+  end
+  if best then return best,best.item end
+  local requested=compatible_request_item(report)
+  return requested and source_for_item(pair,report,requested,sources) or nil,requested
 end
 local function reservations_module()
   local reservations=rawget(_G,"TechPriestsWorkReservations0601")or package.loaded["scripts.core.work_reservations"];if not reservations then local ok,module=pcall(require,"scripts.core.work_reservations");if ok then reservations=module end end;return reservations

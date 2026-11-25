@@ -160,33 +160,43 @@ function M.generic_station_inventories(pair)
   return out
 end
 
-local function inv_count(inv, item)
+local function item_identity(item, quality)
+  return quality and {name = item, quality = quality} or item
+end
+
+local function inv_count(inv, item, quality)
   if not (inv and inv.valid and item) then return 0 end
-  local ok, count = pcall(function() return inv.get_item_count(item) end)
+  local ok, count = pcall(function() return inv.get_item_count(item_identity(item, quality)) end)
   return ok and (tonumber(count) or 0) or 0
 end
-local function inv_insert(inv, item, count)
+local function inv_insert(inv, item, count, quality)
   if not (inv and inv.valid and item and (tonumber(count) or 0) > 0) then return 0 end
   local ok, inserted = pcall(function()
-    return inv.insert({ name = item, count = count })
+    return inv.insert({ name = item, count = count, quality = quality })
   end)
   return ok and (tonumber(inserted) or 0) or 0
 end
-local function inv_remove(inv, item, count)
+local function inv_remove(inv, item, count, quality)
   if not (inv and inv.valid and item and (tonumber(count) or 0) > 0) then return 0 end
   local ok, removed = pcall(function()
-    return inv.remove({ name = item, count = count })
+    return inv.remove({ name = item, count = count, quality = quality })
   end)
   return ok and (tonumber(removed) or 0) or 0
 end
-local function insertable_count(inv, item, maximum, single_stack)
+local function insertable_count(inv, item, maximum, single_stack, quality)
   if not (inv and inv.valid and item and (tonumber(maximum) or 0) > 0) then return 0 end
   if single_stack then return inv.can_insert(single_stack) and 1 or 0 end
+  if inv.get_insertable_count then
+    local ok, capacity = pcall(function()
+      return inv.get_insertable_count(item_identity(item, quality))
+    end)
+    if ok and type(capacity) == "number" then return math.min(maximum, capacity) end
+  end
   local low, high = 0, math.max(0, math.floor(tonumber(maximum) or 0))
   while low < high do
     local middle = math.floor((low + high + 1) / 2)
     local ok, accepted = pcall(function()
-      return inv.can_insert({ name = item, count = middle })
+      return inv.can_insert({ name = item, count = middle, quality = quality })
     end)
     if ok and accepted == true then low = middle else high = middle - 1 end
   end
@@ -385,14 +395,14 @@ function M.station_item_count(pair, item)
   return found and total or nil
 end
 
-function M.generic_item_count(pair, item)
+function M.generic_item_count(pair, item, quality)
   local total = 0
   for _, source in ipairs(M.generic_station_inventories(pair)) do
-    total = total + inv_count(source.inv, item)
+    total = total + inv_count(source.inv, item, quality)
   end
   for _, source in ipairs(nearby_containers(pair)) do
     if M.role_for(source.entity) ~= "waste" then
-      total = total + inv_count(source.inv, item)
+      total = total + inv_count(source.inv, item, quality)
     end
   end
   return total
@@ -406,7 +416,7 @@ local function spendable_station_stock(pair,item,observed)
   local ok,n=pcall(courier.spendable_station_item,pair,item,observed)
   return ok and tonumber(n) and math.max(0,math.min(observed,n)) or 0
 end
-function M.remove_generic_item(pair, item, count)
+function M.remove_generic_item(pair, item, count, quality)
   local remaining = math.max(0, math.floor(tonumber(count) or 0))
   local removed = 0
   local sources = {}
@@ -418,11 +428,11 @@ function M.remove_generic_item(pair, item, count)
   end
   for _, source in ipairs(sources) do
     if remaining <= 0 then break end
-    local available=inv_count(source.inv,item)
-    if source.entity==pair.station then
+    local available=inv_count(source.inv,item,quality)
+    if source.entity==pair.station and (not quality or quality == "normal") then
       available=spendable_station_stock(pair,item,available)
     end
-    local amount = inv_remove(source.inv, item, math.min(remaining,available))
+    local amount = inv_remove(source.inv, item, math.min(remaining,available), quality)
     removed = removed + amount
     remaining = remaining - amount
   end
@@ -586,11 +596,11 @@ local function destinations(pair, item, requested_role, excluded)
   end)
   return out
 end
-local function deposit_plan(pair, item, count, role, excluded, single_stack)
+local function deposit_plan(pair, item, count, role, excluded, single_stack, quality)
   local plan, remaining = {}, count
   for _, destination in ipairs(destinations(pair, item, role, excluded)) do
     if remaining <= 0 then break end
-    local capacity = insertable_count(destination.inv, item, remaining, single_stack)
+    local capacity = insertable_count(destination.inv, item, remaining, single_stack, quality)
     if capacity > 0 then
       plan[#plan + 1] = {
         entity = destination.entity,
@@ -603,31 +613,32 @@ local function deposit_plan(pair, item, count, role, excluded, single_stack)
   end
   return plan, remaining
 end
-local function rollback(item, completed)
+local function rollback(item, completed, quality)
   local restored = 0
   for index = #completed, 1, -1 do
     local entry = completed[index]
-    restored = restored + inv_remove(entry.inv, item, entry.inserted)
+    restored = restored + inv_remove(entry.inv, item, entry.inserted, quality)
   end
   return restored
 end
-local function execute_plan(pair, item, count, role, plan, reason, single_stack)
+local function execute_plan(pair, item, count, role, plan, reason, single_stack, quality)
   local completed, inserted_total = {}, 0
   for _, entry in ipairs(plan) do
     if entry.claim_role and entry.entity ~= pair.station then
       local claimed, why = M.remember_role(
         pair, entry.entity, entry.claim_role, "deposit:" .. safe(reason))
       if not claimed then
-        rollback(item, completed)
+        rollback(item, completed, quality)
         return false, "role-claim-failed:" .. safe(why), 0
       end
     end
-    local inserted = single_stack and entry.inv.insert(single_stack) or inv_insert(entry.inv, item, entry.count)
+    local inserted = single_stack and entry.inv.insert(single_stack)
+      or inv_insert(entry.inv, item, entry.count, quality)
     if inserted ~= entry.count then
       if inserted > 0 then
         completed[#completed + 1] = { inv = entry.inv, inserted = inserted }
       end
-      local restored = rollback(item, completed)
+      local restored = rollback(item, completed, quality)
       record(pair, "atomic-deposit-rollback",
         item .. " inserted=" .. safe(inserted) .. " restored=" .. safe(restored), true)
       return false, "atomic-insert-failed", 0
@@ -636,7 +647,7 @@ local function execute_plan(pair, item, count, role, plan, reason, single_stack)
     inserted_total = inserted_total + inserted
   end
   if inserted_total ~= count then
-    rollback(item, completed)
+    rollback(item, completed, quality)
     return false, "count-mismatch", 0
   end
   stat("exact_items_deposited", inserted_total)
@@ -650,6 +661,10 @@ function M.deposit_exact(pair, item, count, reason, options)
   if not (valid_pair(pair) and item_exists(item)) then return false, "invalid", 0 end
   count = math.max(1, math.floor(tonumber(count) or 1))
   options = options or {}
+  local quality = options.quality
+  if quality and (type(quality) ~= "string" or options.stack) then
+    return false, "invalid-item-quality", 0
+  end
   -- A tagged single item can be committed atomically to exactly one destination.
   if options.stack and (count ~= 1 or options.stack.count ~= 1 or options.stack.name ~= item) then
     return false, "invalid-single-stack", 0
@@ -663,7 +678,7 @@ function M.deposit_exact(pair, item, count, reason, options)
     plan, remaining = {}, count
     for _, source in ipairs(M.generic_station_inventories(pair)) do
       if remaining <= 0 then break end
-      local capacity = insertable_count(source.inv, item, remaining, options.stack)
+      local capacity = insertable_count(source.inv, item, remaining, options.stack, quality)
       if capacity > 0 then
         plan[#plan + 1] = {
           entity = pair.station, inv = source.inv, count = capacity,
@@ -672,20 +687,20 @@ function M.deposit_exact(pair, item, count, reason, options)
       end
     end
   else
-    plan, remaining = deposit_plan(pair, item, count, role, options.exclude_entity, options.stack)
+    plan, remaining = deposit_plan(pair, item, count, role, options.exclude_entity, options.stack, quality)
   end
   if remaining > 0 and options.station_only ~= true
       and options.allow_create ~= false then
     local stash = safe_create_stash(pair, role)
     if stash then
-      plan, remaining = deposit_plan(pair, item, count, role, options.exclude_entity, options.stack)
+      plan, remaining = deposit_plan(pair, item, count, role, options.exclude_entity, options.stack, quality)
     end
   end
   if remaining > 0 then
     stat("exact_deposit_blocked")
     return false, "no-role-capacity", 0
   end
-  return execute_plan(pair, item, count, role, plan, reason, options.stack)
+  return execute_plan(pair, item, count, role, plan, reason, options.stack, quality)
 end
 
 local function pair_for_entity(entity)

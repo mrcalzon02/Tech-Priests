@@ -13,7 +13,15 @@ local function valid_pair(p)return type(p)=="table"and valid(p.station)and valid
 local function station_unit(p)return p and(p.station_unit or(valid(p.station)and p.station.unit_number))or nil end
 local function pair_map()return storage and storage.tech_priests and storage.tech_priests.pairs_by_station or{}end
 local function dist_sq(a,b)if not(a and b)then return math.huge end;local x=(a.x or 0)-(b.x or 0);local y=(a.y or 0)-(b.y or 0);return x*x+y*y end
-local function normalized_position(v)if not v then return nil end;local x=tonumber(v.x or v[1]);local y=tonumber(v.y or v[2]);if not(x and y)then return nil end;return{x=math.floor(x+.5),y=math.floor(y+.5)}end
+local function normalized_position(pos)
+ if not pos then return nil end
+ local x=tonumber(pos.x or pos[1])
+ local y=tonumber(pos.y or pos[2])
+ if not (x and y) then return nil end
+ -- Native pipe targets can sit on half-tile centers. Rounding those
+ -- centers to integers moves the route away from the intended port.
+ return {x=math.floor(x*2+.5)/2,y=math.floor(y*2+.5)/2}
+end
 local function position_key(p)return p and(tostring(p.x)..","..tostring(p.y))or"nil"end
 function M.root()
  storage.tech_priests=storage.tech_priests or{};local r=storage.tech_priests[M.storage_key]or{version=M.version,enabled=true,wrapper_free=true,input_output_integrated=true,construction_handoff=true,structured_scan_truth=true,stats={},recent={},plans={},cursor=0};storage.tech_priests[M.storage_key]=r;r.version=M.version
@@ -44,11 +52,28 @@ local function adjacent_safe(pair,p,plan)
  for _,e in pairs(entities_at(pair.station.surface,p,M.adjacency_radius,FLUID_TYPES))do if valid(e)and e.force==pair.station.force then local box=fluidbox(e);if box then for index=1,#box do local state=segment_state(e,index,plan.fluid);if state then if state.wrong then return false,"adjacent-wrong-fluid:"..state.wrong end;local endpoint=e==plan.machine or e==plan.remote.entity;local known=state.same>.001 or state.filter==plan.fluid or(state.segment_id and(state.segment_id==plan.remote_segment_id or state.segment_id==plan.machine_segment_id));if not(endpoint or known)then return false,"adjacent-ambiguous-fluidbox:"..safe(e.name)end end end end end end;return true,"safe"
 end
 local function tile_available(pair,p,plan)
- if not inside_territory(pair,p)then return false,"outside-station-interior"end;if existing_compatible_pipe(pair,p,plan)then return true,"existing"end;local ok_adj,why=adjacent_safe(pair,p,plan);if not ok_adj then return false,why end;local ok,allowed=pcall(pair.station.surface.can_place_entity,pair.station.surface,{name=M.pipe_entity,position=p,force=pair.station.force,build_check_type=defines and defines.build_check_type and defines.build_check_type.manual or nil});if not ok then ok,allowed=pcall(pair.station.surface.can_place_entity,pair.station.surface,{name=M.pipe_entity,position=p,force=pair.station.force})end;return ok and allowed==true,ok and(allowed and"placeable"or"blocked")or"can-place-error"
+ if not inside_territory(pair,p) then return false,"outside-station-interior" end
+ if existing_compatible_pipe(pair,p,plan) then return true,"existing" end
+ local adjacent,why=adjacent_safe(pair,p,plan)
+ if not adjacent then return false,why end
+ local surface=pair.station.surface
+ local parameters={
+  name=M.pipe_entity,position=p,force=pair.station.force,
+  build_check_type=defines and defines.build_check_type and defines.build_check_type.manual,
+ }
+ local ok,allowed=pcall(function() return surface.can_place_entity(parameters) end)
+ if not ok and parameters.build_check_type then
+  parameters.build_check_type=nil
+  ok,allowed=pcall(function() return surface.can_place_entity(parameters) end)
+ end
+ return ok and allowed==true,ok and (allowed and "placeable" or "blocked") or "can-place-error"
 end
 local function reconstruct(came,current,positions)local reverse={};while current do reverse[#reverse+1]=positions[current];current=came[current]end;local route={};for i=#reverse,1,-1 do route[#route+1]=reverse[i]end;return route end
 local function route_between(pair,start_position,goal_position,plan)
- local start=normalized_position(start_position);local goal=normalized_position(goal_position);if not(start and goal)then return nil,"invalid-endpoint"end;local queue={start};local head=1;local sk,gk=position_key(start),position_key(goal);local visited={[sk]=true};local came,positions={}, {[sk]=start};local nodes=0;local dirs={{1,0},{-1,0},{0,1},{0,-1}}
+ local start=normalized_position(start_position);local goal=normalized_position(goal_position);if not(start and goal)then return nil,"invalid-endpoint"end
+ local start_available,why=tile_available(pair,start,plan)
+ if not start_available then return nil,why end
+ local queue={start};local head=1;local sk,gk=position_key(start),position_key(goal);local visited={[sk]=true};local came,positions={}, {[sk]=start};local nodes=0;local dirs={{1,0},{-1,0},{0,1},{0,-1}}
  while head<=#queue and nodes<M.max_search_nodes do local current=queue[head];head=head+1;nodes=nodes+1;local ck=position_key(current);if ck==gk then local route=reconstruct(came,ck,positions);if#route>M.max_route_tiles then return nil,"route-too-long"end;return route,"found"end;for _,d in ipairs(dirs)do local np={x=current.x+d[1],y=current.y+d[2]};local key=position_key(np);if not visited[key]then local allowed=tile_available(pair,np,plan);if allowed then visited[key]=true;came[key]=ck;positions[key]=np;queue[#queue+1]=np end end end end;return nil,nodes>=M.max_search_nodes and"search-budget-exhausted"or"no-route"
 end
 local function shortest_route(pair,p,plan)
@@ -65,20 +90,78 @@ local function clear_owned_request(pair,plan)if request_owned(pair,plan)then pai
 local function complete_plan(pair,plan,reason)clear_owned_request(pair,plan);release_route(pair,plan);plan.state="complete";plan.completed_tick=now();plan.result=reason;pair.standard_fluid_route_last_0691=plan;set_plan_fields(pair,nil);M.root().plans[plan.id]=nil;record(pair,"plan-completed",reason);return true end
 local function abort_plan(pair,plan,reason)clear_owned_request(pair,plan);release_route(pair,plan);plan.state="aborted";plan.aborted_tick=now();plan.result=reason;pair.standard_fluid_route_last_0691=plan;pair.standard_fluid_route_reject_until_0691=now()+M.rejection_cooldown;set_plan_fields(pair,nil);M.root().plans[plan.id]=nil;record(pair,"plan-aborted",reason);return false end
 local function proposal_lists(pair)local all={};for _,p in ipairs(pair.fluid_connection_proposals_0689 or{})do all[#all+1]=p end;for _,p in ipairs(pair.fluid_output_sink_proposals_0694 or{})do all[#all+1]=p end;table.sort(all,function(a,b)if a.direction~=b.direction then return a.direction=="input"end;return dist_sq(a.machine.position,(a.direction=="input"and a.source or a.sink).entity.position)<dist_sq(b.machine.position,(b.direction=="input"and b.source or b.sink).entity.position)end);return all end
+local function renew_proposal(plan,tick)
+ -- Keep discovery's proposal untouched. The accepted route gets an idle
+ -- deadline of its own and still revalidates both live endpoints.
+ local proposal={}
+ for key,value in pairs(plan.proposal) do proposal[key]=value end
+ proposal.expires_tick=tick+M.proposal_max_age
+ plan.proposal=proposal
+end
 local function create_plan(pair,p)
  if pair.fluid_turret_pipe_plan_0719 then return nil,"fluid-turret-route-busy"end;local d=doctrine();if not(d and type(d.validate_proposal)=="function")then return nil,"doctrine-unavailable"end;local ok,why,report=d.validate_proposal(pair,p);if not ok then return nil,why end;local remote=p.direction=="input"and p.source or p.sink;local plan={version=M.version,id=safe(station_unit(pair))..":"..p.direction..":"..safe(p.machine_unit)..":"..now(),state="planning",direction=p.direction,fluid=p.fluid,machine=p.machine,machine_name=p.machine_name,machine_unit=p.machine_unit,machine_fluidbox_index=p.fluidbox_index,machine_segment_id=segment_id(fluidbox(p.machine),p.fluidbox_index),remote=remote,remote_segment_id=remote.segment_id,proposal=p,proposal_tick=p.tick,report_tick=report and report.tick,current_index=1,retries={},last_task_tick=-1}
- local route,rwhy=shortest_route(pair,p,plan);if not route then return nil,rwhy end;plan.route=route;plan.tiles=new_tiles(pair,route,plan);if#plan.tiles==0 then return nil,"already-connected"end;plan.state="planned";local claimed,cwhy=claim_route(pair,plan);if not claimed then return nil,cwhy end;M.root().plans[plan.id]=plan;set_plan_fields(pair,plan);record(pair,"plan-created",plan.direction..":"..plan.fluid.." tiles="..#plan.tiles);return plan,"created"
+ local route,rwhy=shortest_route(pair,p,plan);if not route then return nil,rwhy end;plan.route=route;plan.tiles=new_tiles(pair,route,plan);if#plan.tiles==0 then return nil,"already-connected"end;plan.state="planned";local claimed,cwhy=claim_route(pair,plan);if not claimed then return nil,cwhy end
+ renew_proposal(plan,now())
+ M.root().plans[plan.id]=plan;set_plan_fields(pair,plan);record(pair,"plan-created",plan.direction..":"..plan.fluid.." tiles="..#plan.tiles);return plan,"created"
 end
 local function current_tile(plan)return plan and plan.tiles and plan.tiles[tonumber(plan.current_index)or 1]or nil end
 local function connection_complete(pair,plan)
  local d=doctrine();if not(d and type(d.inspect_machine)=="function"and valid(plan.machine))then return false,"doctrine-unavailable"end;local report=d.inspect_machine(pair,plan.machine,true);if not report then return false,"report-unavailable"end;for _,rec in ipairs(report.records or{})do if rec.index==plan.machine_fluidbox_index and rec.requirement and rec.requirement.name==plan.fluid then if rec.connected then return true,"machine-port-connected"end;return false,"machine-port-unconnected"end end;return false,"machine-port-missing"
 end
 local function validate_plan(pair,plan)
- if not(valid(plan.machine)and plan.remote and valid(plan.remote.entity))then return false,"endpoint-invalid"end;local complete=connection_complete(pair,plan);if complete then return true,"connected"end;local d=doctrine();if not(d and type(d.validate_proposal)=="function")then return false,"doctrine-unavailable"end;local ok,why=d.validate_proposal(pair,plan.proposal);if not ok then return false,why end;local tile=current_tile(plan);if tile then local allowed,twhy=tile_available(pair,tile,plan);if not allowed then return false,twhy end end;return true,"valid"
+ if not (valid(plan.machine) and plan.remote and valid(plan.remote.entity)) then
+  return false,"endpoint-invalid"
+ end
+ if connection_complete(pair,plan) then return true,"connected" end
+ local d=doctrine()
+ if not (d and type(d.validate_proposal)=="function") then return false,"doctrine-unavailable" end
+ local ok,why=d.validate_proposal(pair,plan.proposal)
+ if not ok then return false,why end
+ local tile=current_tile(plan)
+ if tile then
+  if not inside_territory(pair,tile) then return false,"outside-station-interior" end
+  if not existing_compatible_pipe(pair,tile,plan) then
+   local adjacent,reason=adjacent_safe(pair,tile,plan)
+   if not adjacent then return false,reason end
+  end
+  -- 0338 owns the placement recheck after handoff. A walking builder may
+  -- briefly occupy the next tile and can step clear without losing the route.
+ end
+ return true,"valid"
 end
 local function observe_construction(pair,plan)
- local task=pair.construction_last_task_0338;if type(task)~="table"or task.request_field~="construction_request"or type(task.request_value)~="table"or task.request_value.source~="standard-fluid-route-0691"or task.request_value.route_plan_id~=plan.id then return end;local tick=tonumber(task.completed_tick)or-1;if tick<=(tonumber(plan.last_task_tick)or-1)then return end;plan.last_task_tick=tick;local index=tonumber(task.request_value.route_index)or tonumber(plan.current_index)or 1;local tile=plan.tiles[index]
- if task.built_entity or(tile and existing_compatible_pipe(pair,tile,plan))then plan.current_index=index+1;plan.retries[index]=nil;stat("tiles-completed");record(pair,"tile-complete",position_key(tile))else plan.retries[index]=(tonumber(plan.retries[index])or 0)+1;record(pair,"tile-failed",safe(task.result));if plan.retries[index]>=M.max_retries_per_tile then abort_plan(pair,plan,"tile-failed:"..safe(task.result)..":"..position_key(tile))end end
+ local task=pair.construction_last_task_0338
+ if type(task)~="table" or task.request_field~="construction_request"
+   or type(task.request_value)~="table" or task.request_value.source~="standard-fluid-route-0691"
+   or task.request_value.route_plan_id~=plan.id then return end
+ local tick=tonumber(task.completed_tick) or -1
+ if tick<=(tonumber(plan.last_task_tick) or -1) then return end
+ plan.last_task_tick=tick
+ local index=tonumber(task.request_value.route_index)
+ local tile=index and plan.tiles[index]
+ if not tile or index~=plan.current_index then return end
+ local built=task.built_entity
+ local paid_pipe=valid(built) and built.name==M.pipe_entity
+   and built.force==pair.station.force and built.surface==pair.station.surface
+   and dist_sq(built.position,tile)<.01
+ if paid_pipe or existing_compatible_pipe(pair,tile,plan) then
+  if tick>(tonumber(plan.proposal.expires_tick) or 0) then return end
+  if index<#plan.tiles then
+   local claimed,why=claim_route(pair,plan)
+   if not claimed then abort_plan(pair,plan,"route-reservation-lost:"..safe(why));return end
+  end
+  renew_proposal(plan,tick)
+  plan.current_index=index+1
+  plan.retries[index]=nil
+  stat("tiles-completed")
+  record(pair,"tile-complete",position_key(tile))
+ else
+  plan.retries[index]=(tonumber(plan.retries[index]) or 0)+1
+  record(pair,"tile-failed",safe(task.result))
+  if plan.retries[index]>=M.max_retries_per_tile then
+   abort_plan(pair,plan,"tile-failed:"..safe(task.result)..":"..position_key(tile))
+  end
+ end
 end
 local function publish_request(pair,plan)
  -- An unstarted discovery candidate is not physical custody. Publish an exact

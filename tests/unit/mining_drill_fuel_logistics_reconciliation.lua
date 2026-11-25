@@ -3,7 +3,7 @@ package.path="tech-priests_src/?.lua;tech-priests_src/?/init.lua;"..package.path
 game={tick=1000}
 defines={inventory={fuel=1,chest=2,assembling_machine_input=3,
   assembling_machine_output=4,furnace_source=5,furnace_result=6}}
-prototypes={item={coal={}}}
+prototypes={item={coal={fuel_value=4000000}}}
 storage={tech_priests={pairs_by_station={}}}
 local bound
 _G.TechPriestsRuntimeTickBroker0600={
@@ -15,6 +15,7 @@ _G.TechPriestsRuntimeTickBroker0600={
 local inventory={valid=true,items={}}
 inventory.get_item_count=function(n)return inventory.items[n] or 0 end
 inventory.get_contents=function()return inventory.items end
+inventory.can_insert=function(stack)return stack.name=="coal" end
 inventory.insert=function(stack)
   inventory.items[stack.name]=(inventory.items[stack.name] or 0)+stack.count
   return stack.count
@@ -281,6 +282,7 @@ check(pair.machine_logistics_candidate_0528==nil,
 local hot_fuel={valid=true,items={}}
 hot_fuel.get_item_count=function(name)return hot_fuel.items[name] or 0 end
 hot_fuel.get_contents=function()return hot_fuel.items end
+hot_fuel.can_insert=function(stack)return stack.name=="coal" end
 local hot_ore={valid=true,items={["iron-ore"]=4}}
 hot_ore.get_item_count=function(name)return hot_ore.items[name] or 0 end
 hot_ore.get_contents=function()return hot_ore.items end
