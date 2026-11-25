@@ -155,15 +155,19 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          gh api "repos/${GITHUB_REPOSITORY}/releases/tags/${TAG}" > candidate/release-readback.json
+          # Drafts appear in the authenticated releases collection, not GET /releases/tags/<tag>.
+          gh api "repos/${GITHUB_REPOSITORY}/releases?per_page=100" > candidate/release-list-readback.json
           python3 - <<'PY'
           import json,os,pathlib
-          d=json.loads(pathlib.Path('candidate/release-readback.json').read_text())
+          releases=json.loads(pathlib.Path('candidate/release-list-readback.json').read_text())
+          d=next((row for row in releases if row.get('tag_name')==os.environ['TAG']),None)
+          assert d is not None, 'Draft release not found in authenticated release list'
           r=json.loads(pathlib.Path('candidate/candidate-receipt.json').read_text())
           assert d['draft'] is True and d['prerelease'] is True
           assert d['tag_name']==os.environ['TAG']
           assets={a['name']:a for a in d['assets']}
           assert r['archive_name'] in assets and assets[r['archive_name']]['size']==r['archive_size_bytes']
+          assert assets[r['archive_name']]['digest']=='sha256:'+r['archive_sha256'], 'Uploaded archive SHA differs from locally verified ZIP'
           assert 'candidate-receipt.json' in assets and 'file-manifest.json' in assets
           assert 'tech-priests_1.0.0.zip.sha256' in assets
           print('TP_100_DRAFT_RELEASE_VERIFIED',json.dumps({
