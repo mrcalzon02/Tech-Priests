@@ -1,5 +1,9 @@
 # Tech Priests Placeholder Audio Batch
 
+The functional event sounds in the mod supersede this placeholder batch.
+The remainder of this document records the original implementation test.
+See [the audio manifest](AUDIO_MANIFEST.md) for the current clips.
+
 This package contains procedural placeholder OGG files for testing Tech Priests audio hooks before final sound-design work. These sounds are intentionally simple, synthetic, and conservative. Their purpose is to verify that event wiring, cooldowns, variation selection, volume, and repetition behavior are sane before final generated or hand-edited audio replaces them.
 
 ## Contents

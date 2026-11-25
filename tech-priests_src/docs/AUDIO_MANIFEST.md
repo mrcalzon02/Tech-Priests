@@ -1,5 +1,16 @@
 # Tech Priests Audio Manifest
 
+The first functional sound set is shipped in the mod. All 26 event clips
+are mono Ogg Vorbis at 44.1 kHz. Repair uses a ratchet and a final tool
+latch, oil application uses a pulsing hiss, and scans use a short
+mechanical sweep. The station handshake settles into a steady hum.
+A lost link ends in a relay dropout. Detritus clogs use gear impacts,
+while low sanctity uses a slower bearing grind.
+
+Run `python tools/build_event_audio.py` from the repository root with
+FFmpeg on the path to regenerate the original clips. The clip index also
+specifies their timing. Playback uses the existing events and cooldowns.
+
 ## Purpose
 
 This document defines the first-pass audio language for the Tech Priests Factorio mod. The goal is not to create random atmospheric noise. The goal is to make the Tech Priest system easier to understand while reinforcing the grim, sacred, industrial machine-cult identity of the mod.
