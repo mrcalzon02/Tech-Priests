@@ -1,0 +1,40 @@
+name: Optimize portal candidate
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/optimize-portal-candidate.yml']
+permissions:
+  contents: read
+jobs:
+  optimize:
+    runs-on: [self-hosted, headless]
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            tech-priests_src
+            tools/optimize_runtime_package.py
+          sparse-checkout-cone-mode: false
+          fetch-depth: 1
+      - name: Verify local Python imaging support
+        run: python3 -c "from PIL import Image; print(Image.__version__)"
+      - name: Optimize candidate without modifying original assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -u tools/optimize_runtime_package.py --source tech-priests_src --output "$RUNNER_TEMP/tp-portal-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}" --version 1.0.0 --max-bytes 262100000 --palette --workers 4
+      - name: Upload optimization receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: portal-optimization-receipt
+          path: ${{ runner.temp }}/tp-portal-${{ github.run_id }}-${{ github.run_attempt }}/optimization-receipt.json
+          if-no-files-found: warn
+      - name: Upload size-compliant candidate only
+        uses: actions/upload-artifact@v4
+        with:
+          name: tech-priests-portal-candidate
+          path: ${{ runner.temp }}/tp-portal-${{ github.run_id }}-${{ github.run_attempt }}/tech-priests_1.0.0.zip
+          if-no-files-found: error
