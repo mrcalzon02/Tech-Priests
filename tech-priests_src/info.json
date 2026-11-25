@@ -25,5 +25,5 @@
     "? quality >= 2.1.0",
     "? Transport_Drones_Meglinge_Fork"
   ],
-  "description": "Tech-Priest logistics drones and Cogitator Stations with physical item-family and real fluid-network construction, plus 0.1.672 read-only energy readiness: boiler fluid-path proof, burner-generator electrical checks, reactor heat-network and burnt-result checks, fusion prerequisites, and observation-only fluid generators. Includes the seven-machine metallicized hydrogen production line and its Minoris, Majoris and Maximus plasma reactors."
+  "description": "Bring the Adeptus Mechanicus to Factorio with Tech-Priests who repair, supply and expand your factory. Coordinate them through Cogitator Stations, tend machine spirits, and defend your industry with bunkers, heavy weapons and combat units. Build a metallic hydrogen fuel industry and plasma reactors. Space Age adds Void Priests, fusion thrusters, shields and shipboard weapons."
 }
