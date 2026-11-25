@@ -1,0 +1,63 @@
+name: Verify Tech-Priests 1.0 draft asset receipt
+
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/verify-v1-draft-assets.yml']
+
+permissions:
+  contents: read
+
+jobs:
+  readback:
+    if: >-
+      github.repository == 'mrcalzon02/Tech-Priests' &&
+      github.ref == 'refs/heads/main' &&
+      github.event_name == 'push' &&
+      github.event.head_commit.message == 'verify(rc): read back existing Tech-Priests 1.0 draft without downloads'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Verify GitHub draft and source-tagged archive integrity metadata
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh api "repos/${GITHUB_REPOSITORY}/releases?per_page=100" > release-index.json
+          python3 - <<'PY'
+          import json,os
+          rows=json.load(open('release-index.json'))
+          matches=[r for r in rows if r.get('tag_name')=='v1.0.0-rc.1']
+          assert len(matches)==1, 'Exactly one draft candidate expected'
+          r=matches[0]
+          assert r['draft'] is True and r['prerelease'] is True
+          assert r['target_commitish']=='08ac16fca6c15cefcbbff6dbf0a9d098c0b6e7a2'
+          expected={
+            'tech-priests_1.0.0.zip':(2139214029,'sha256:709c243a17466d42e8a554e99f344dfa1b05e0d68db5b29b5002dfff0db549b1'),
+            'candidate-receipt.json':(872,'sha256:865d214787c21a016ca5c7d3a9c97c1327791b92c0b369a7a71358570e604019'),
+            'file-manifest.json':(1133756,'sha256:0dd08c09a63d678654e937b734d9cd577ba5352c4d64a6997b363ed18be7e920'),
+            'tech-priests_1.0.0.zip.sha256':(89,'sha256:01dc38fc0014a7ce21013e2a6e4041a3409624c8c6d0372207e07c71fd390be6')
+          }
+          assets={a['name']:a for a in r['assets']}
+          assert set(expected)==set(assets), 'Draft asset set differs from original upload'
+          for name,(size,sha) in expected.items():
+              a=assets[name]
+              assert a['state']=='uploaded' and a['size']==size and a['digest']==sha, name
+          assert expected['tech-priests_1.0.0.zip'][0]<2*1024**3
+          print('TECH_PRIESTS_100_DRAFT_ASSET_READBACK_PASS',json.dumps({
+              'release_id':r['id'],'tag':r['tag_name'],'draft':r['draft'],
+              'zip_bytes':expected['tech-priests_1.0.0.zip'][0],
+              'sha256':expected['tech-priests_1.0.0.zip'][1],
+              'uploaded_assets':list(expected),
+              'native_factorio_run_tested':False,
+              'mod_portal_published':False
+          }),flush=True)
+          PY
+          {
+            echo "### Tech Priests 1.0 candidate - verified GitHub draft assets"
+            echo "All four uploaded assets match size and GitHub-stored SHA-256 digests."
+            echo "Archive ZIP, CRC and metadata verification were completed in original builder run 45564874217."
+            echo "Native Factorio exact-ZIP loading and save/reload still require acceptance."
+            echo "Final release and Mod Portal publication have not occurred."
+          } >> "${GITHUB_STEP_SUMMARY}"
