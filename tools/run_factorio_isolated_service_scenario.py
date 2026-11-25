@@ -8,6 +8,7 @@ and any external required dependency mods already acquired by the user.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import pathlib
@@ -1525,6 +1526,60 @@ def run_rail_blocked_reload_0836(
     return 0 if result["accepted"] else 1
 
 
+def resolve_native_dependency_mods(explicit: pathlib.Path | None) -> pathlib.Path | None:
+    """Read the existing official native-worker cache, never download locally.
+
+    Explicit --dependency-mods remains the ordinary caller's dependency path.
+    The established self-hosted rail lane supplies no argument. Reuse only its
+    exact verified cache; never scan user data, installed mods or old reports.
+    """
+    if explicit is not None:
+        if not explicit.is_dir():
+            raise ValueError("Dependency mods directory does not exist")
+        return explicit
+    info = json.loads((ROOT / "tech-priests_src" / "info.json").read_text(encoding="utf-8"))
+    required = any(d.startswith("aai-programmable-vehicles ") or d == "aai-programmable-vehicles"
+                   for d in info.get("dependencies", []))
+    if not required:
+        return None
+    report = os.environ.get("HB_REPORT_DIR")
+    if not (report and os.environ.get("HB_MODE") == "factorio-rail"
+            and os.environ.get("RUNNER_ENVIRONMENT") == "self-hosted"):
+        raise ValueError("Required AAI 2.1 mods must be provided via --dependency-mods")
+    report_path = pathlib.Path(report).resolve()
+    if report_path.parent.name != "reports":
+        raise ValueError("Expected existing authorized native worker report path")
+    cache = report_path.parent.parent / "cache" / "factorio-mods" / "aai-2.1"
+    manifest = json.loads((cache / "combat-aai-download-manifest.json").read_text(encoding="utf-8-sig"))
+    expected = {"aai-programmable-vehicles": "0.9.2", "aai-signals": "0.8.0", "informatron": "0.5.0"}
+    records = manifest.get("archives", [])
+    if (manifest.get("schema") != "tech-priests.native-aai-official-downloads.v1"
+            or manifest.get("engine_series") != "2.1"
+            or manifest.get("mod_portal_sha1_verified") is not True
+            or len(records) != 3
+            or {x.get("name"): x.get("version") for x in records} != expected):
+        raise ValueError("Required official AAI cache manifest not verified")
+    for record in records:
+        name, version = record["name"], record["version"]
+        filename = name + "_" + version + ".zip"
+        path = cache / filename
+        if (record.get("filename") != filename or record.get("factorio_version") != "2.1"
+                or not path.is_file() or path.is_symlink()
+                or not re.fullmatch("[0-9a-f]{40}", record.get("sha1", ""))):
+            raise ValueError("Required official AAI archive missing or invalid: " + filename)
+        digest = hashlib.sha1()
+        with path.open("rb") as handle:
+            for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+                digest.update(chunk)
+        if digest.hexdigest() != record["sha1"]:
+            raise ValueError("Required official AAI archive digest mismatch: " + filename)
+    if {p.name for p in cache.iterdir() if p.suffix.lower() == ".zip"} != {
+            name + "_" + version + ".zip" for name, version in expected.items()}:
+        raise ValueError("Unexpected archives in the verified AAI cache")
+    print("NATIVE_AAI_CACHE_REUSED three official archives; network_bytes=0", flush=True)
+    return cache
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--scenario", choices=tuple(CASES), required=True)
@@ -1599,6 +1654,10 @@ def main() -> int:
         ap.error("Factorio version incompatible with mod factorio_version=" +
                  str(required_series) + "; found " + engine_version)
 
+    try:
+        args.dependency_mods = resolve_native_dependency_mods(args.dependency_mods)
+    except (OSError, ValueError) as error:
+        ap.error(str(error))
     output = args.output_dir.resolve() / args.scenario
     output.mkdir(parents=True, exist_ok=True)
     rail_result_path = output / "rail-connected-smoke-result.json"
