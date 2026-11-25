@@ -22,7 +22,7 @@ function M.init()
     for _,name in ipairs({'tech-priests-bunker-autocannon','tech-priests-bunker-lobber','tech-priests-bunker-energy-dish','tech-priests-bunker-chicago-piano','tech-priests-bunker-twin-minigun'}) do
       local technology=force.technologies[name]
       if technology and technology.researched then
-        for _,effect in pairs(technology.effects) do
+        for _,effect in pairs(technology.prototype.effects) do
           if effect.type=='unlock-recipe' and force.recipes[effect.recipe] then force.recipes[effect.recipe].enabled=true end
         end
       end
