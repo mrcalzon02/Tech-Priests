@@ -110,9 +110,11 @@ CONTROL = r'''
 local graphical_run=false
 local vectors={{0,-1},{1,-1},{1,0},{1,1},{0,1},{-1,1},{-1,0},{-1,-1}}
 local function initialize()
- local surface=game.surfaces[1]
+ -- Freeplay creates its crash site after mod on_init. A separate surface
+ -- prevents that later scenario mutation from entering the measurement area.
+ local surface=game.create_surface("tp-engineer-pose",{width=320,height=128})
  surface.daytime=0;surface.freeze_daytime=true
- storage.pose_probe={actors={},targets={},snapshots={},done=false}
+ storage.pose_probe={surface=surface.index,actors={},targets={},snapshots={},done=false}
  for _,count in ipairs({18,40}) do
   local center=count==18 and 0 or 100
   surface.request_to_generate_chunks({center,0},2);surface.force_generate_chunk_requests()
@@ -160,16 +162,19 @@ local function snapshot(label)
   assert(actor.valid and actor.walking_state.walking,"Native diagnostic character is not walking")
   assert(actor.shooting_state.state~=defines.shooting.not_shooting,"Native diagnostic character is not shooting")
   assert(record.hits>0,"Native diagnostic character has not damaged its selected target")
+  assert(record.native_displacement and record.native_displacement>.01,
+    "Native diagnostic walking is blocked")
   local ammo=actor.get_inventory(defines.inventory.character_ammo)[1]
   result.actors[#result.actors+1]={count=record.count,aim=record.aim,walk=record.walk,
     position=actor.position,orientation=actor.orientation,direction=actor.direction,
     walking_direction=actor.walking_state.direction,speed=actor.character_running_speed,
-    native_hits=record.hits,magazines=ammo.count,remaining_ammo=ammo.ammo}
+    native_hits=record.hits,magazines=ammo.count,remaining_ammo=ammo.ammo,
+    native_displacement=record.native_displacement}
  end
  storage.pose_probe.snapshots[label]=result
  if graphical_run then
   for _,count in ipairs({18,40}) do
-   game.take_screenshot{surface=game.surfaces[1],position={count==18 and 0 or 100,0},
+   game.take_screenshot{surface=game.surfaces[storage.pose_probe.surface],position={count==18 and 0 or 100,0},
     resolution={1280,1280},zoom=1,path="engineer-pose/pose-"..count.."-"..label..".png",
     show_gui=false,daytime=0,force_render=true,anti_alias=false}
   end
@@ -182,6 +187,8 @@ script.on_event(defines.events.on_tick,function(event)
  for _,record in ipairs(state.actors) do
   local actor=record.entity
   assert(actor.valid and record.target.valid,"Native diagnostic actor/target disappeared")
+  local position=actor.position
+  record.native_displacement=((position.x-record.origin.x)^2+(position.y-record.origin.y)^2)^.5
   actor.teleport(record.origin)
   record.target.health=record.target.max_health
   actor.walking_state={walking=true,direction=record.walk*2}

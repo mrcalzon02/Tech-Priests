@@ -9,7 +9,7 @@
     "tp-hydrogen-production"
   ],
   "dependencies": [
-    "base >= 2.1.18",
+    "base >= 2.1.25",
     "? mechanicist-factorio",
     "? tanks_for_bob_fork",
     "? kj_40kbaneblade",
