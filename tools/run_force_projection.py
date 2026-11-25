@@ -16,7 +16,7 @@ import zipfile
 
 from run_factorio_isolated_service_scenario import (
     ROOT, factorio_runtime_compatible, free_loopback_udp_port,
-    private_robot_server_settings, run,
+    private_robot_server_settings, resolve_native_dependency_mods, run,
 )
 
 PRESETS = ("2p2b", "1v4-bugs", "2v2", "3v1", "4v4-priests")
@@ -171,7 +171,51 @@ def parse_observations(log: str, preset: str, seed: int, ticks: int) -> dict:
     hostile_contact = any(
         participants[x["attacker"]]["team"] != participants[x["defender"]]["team"]
         for x in contacts)
+    # Preserve per-force time series. Engine production counts exclude the
+    # initial chest insertions; never count spawned or delivered stock as craft.
+    timelines = {}
+    for sample in events.get("SAMPLE", []):
+        name = sample.get("force")
+        if name not in priests:
+            continue
+        for field in ("manufactured", "consumed", "built_by_type"):
+            counters = sample.get(field)
+            if counters is not None and (not isinstance(counters, dict)
+                    or any(not nonnegative(v) for v in counters.values())):
+                raise ValueError("Invalid native factory counter: " + field)
+        timelines.setdefault(name, {})[sample["elapsed"]] = {
+            k: sample.get(k) for k in ("elapsed", "manufactured", "consumed",
+                "built_by_type", "max_miner_build_distance", "ore_production",
+                "research_finished", "research_name", "research_progress",
+                "infrastructure_gate", "recipe_request", "dispatcher", "logistics_fetch",
+                "census", "census_tick")
+        }
+    factory = {}
+    for name in sorted(priests):
+        sample = latest[name]
+        manufactured = sample.get("manufactured")
+        if manufactured is not None:
+            initial = timelines[name][min(timelines[name])]
+            dt = ticks - initial["elapsed"]
+            before = initial.get("manufactured") or {}
+            science = {k: v for k, v in manufactured.items() if k.endswith("science-pack")}
+            if dt <= 0:
+                rate = None
+            else:
+                rate = {k: round(max(0, v - before.get(k, 0)) * 3600 / dt, 3)
+                        for k, v in science.items()}
+            factory[name] = {
+                "science_produced": science,
+                "science_per_sim_min_since_first_sample": rate,
+                "science_consumed": {k: v for k, v in sample.get("consumed", {}).items()
+                                     if k.endswith("science-pack")},
+                "mining_drills_built": sample.get("built_by_type", {}).get("mining-drill", 0),
+                "farthest_miner_build_tiles": sample.get("max_miner_build_distance", 0),
+                "native_research_finished": sample["research_finished"],
+            }
     return {"observation_complete": True, "preset": preset, "seed": seed,
+            "factory_metrics": factory, "factory_timelines": {
+                k: [v[t] for t in sorted(v)] for k, v in timelines.items()},
             "active_ticks": ticks, "setup_ticks": ready["tick"],
             "forces": latest, "contacts": contacts,
             "supply_manifests": supplies, "resource_deposits": len(deposits),
@@ -215,6 +259,7 @@ def main() -> int:
         source_sha = subprocess.check_output(
             ["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
         result["source_sha"] = source_sha
+        args.dependency_mods = resolve_native_dependency_mods(args.dependency_mods)
         mods = output / "mods"; mods.mkdir()
         shutil.copytree(ROOT / "tech-priests_src", mods / "tech-priests")
         if args.dependency_mods:
