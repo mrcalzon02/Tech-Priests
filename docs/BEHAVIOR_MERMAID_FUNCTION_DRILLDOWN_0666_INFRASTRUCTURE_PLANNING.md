@@ -10,7 +10,7 @@ Source presence does not prove that a callback installed or ran in Factorio.
 
 ## Current planners
 
-The actual source names are `infrastructure_first_governor_0640`, `master_infrastructure_plan_0644` and `construction_bootstrap_ghost_planner_0645`. They feed existing recipe, construction, resource and machine owners; they are not separate physical factories.
+The actual source names are `infrastructure_first_governor_0640`, `emergency_facility_placement_bridge_0643`, `master_infrastructure_plan_0644` and `construction_bootstrap_ghost_planner_0645`. They feed existing recipe, construction, resource and machine owners; they are not separate physical factories.
 
 ```mermaid
 flowchart TD
@@ -21,6 +21,7 @@ flowchart TD
     Plan --> Governor
     Governor --> Existing["Use real existing facilities and stock"]
     Governor --> Build["0645 matching plan and original ghost/request"]
+    Assessment["0643 live group shortage and facility reservation"] -->|"explicit facility request"| Build
     Plan --> Build
     Build -->|"cold/domain change or observed target completion"| Survey
     Build --> Constructor["0338 physical construction"]
@@ -39,10 +40,11 @@ This is the dependency relationship, not an assertion that each selected factory
 | Owner | Registered cadence / offered budget | Boundary |
 | --- | --- | --- |
 | `infrastructure_first_governor_0640` | 23 ticks / 10 | Callback passes the offered budget. `service_all` counts every inspected slot and resumes saved `service_cursor`; fallback defaults to the existing cap of 32. |
+| `emergency_facility_placement_bridge_0643` | 113 ticks / 4, category `diagnostics` | The offered budget is not a group limit: its callback calls `assess()` across all force/surface groups and their stations, then reconciles reservations and construction requests. |
 | `master_infrastructure_plan_0644` | 97-tick cycle / 8; continuations on admitted 5-tick broker pulses; category `diagnostics` | One station attempt per callback, preserving up to eight visits per cycle through a saved batch and cursor. 0598 admission can delay continuations. Despite the category, source includes research/science servicing. |
 | `construction_bootstrap_ghost_planner_0645` | 83 ticks / 6 | Existing rotating discovery work; planning-ghost/request generation is distinct from paid construction. |
 
-Each installer prefers the broker and retains a registry fallback when broker registration fails. An inventory entry for both paths does not mean both were installed. The 0644 survey itself is not behind the frustration gate. 0640 gates new autonomous industry; 0645 reconciles already owned sites first and applies the gate before creating a new autonomous ghost.
+The 0640/0644/0645 installers prefer the broker and retain a registry fallback when broker registration fails. The 0643 installer requires successful broker registration. An inventory entry for both possible paths does not mean both were installed. The 0644 survey itself is not behind the frustration gate. 0640 gates new autonomous industry; 0645 reconciles already owned sites first and applies the gate before creating a new autonomous ghost.
 
 ### 0644 cycle continuation
 
@@ -91,7 +93,9 @@ The current 0646 owner retains product-to-recipe-name membership in original for
 
 Each synchronous 0644 `build_plan` shares a call-local item-count snapshot across feasibility and science checks, and science uses laboratories already returned by the role survey. The snapshot is discarded after that call, so another plan in the same tick reads current stock again. 0645 consumes the retained owner plan instead of repeating those surveys on ordinary ghost-planning passes. These are source cost reductions, not a measured UPS result.
 
-Separate remaining risks include station catalog synchronous queries and the 0689/0716 prefix-only discovery loops. A callback limit does not bound its nested native scans or guarantee fairness. Keep those open until their own source and native evidence are recorded.
+The 0643 assessment obtains machine and logistic-provider identities through `0327.inventory_candidates`, backed by the existing 0587 retained membership. It still checks current force, surface, the 36-tile circle and each provider's actual logistic-network identity. One distinct provider list serves the three reserve-item counts in a snapshot; item quantities are read live, and build-material checks remain separate. Its inventory calls use the native bound `get_inventory(id)` form: supplying the entity again previously raised an argument error that was swallowed and reported stocked native inventories as empty. Placeable-item lookup reuses `0646.item_for_entity` with its existing first-match semantics. Missing shared discovery retains a typed compatibility query. Planned-ghost discovery and all-group assessment remain real work; the advertised budget of four does not bound them.
+
+Separate remaining risks include cold station catalog discovery, remaining physical infrastructure surveys and the 0689/0716 prefix-only discovery loops. A callback limit does not bound its nested native scans or guarantee fairness. Keep those open until their own source and native evidence are recorded.
 
 ## Audited exported entry points
 
@@ -100,6 +104,7 @@ These names are taken from the current source; local helpers and call sites are 
 | Module | Exported functions |
 | --- | --- |
 | [infrastructure_first_governor_0640](../tech-priests_src/scripts/core/infrastructure_first_governor_0640.lua) | `M.cooperative_labor_for_pair`, `M.cooperative_workshop_for_pair`, `M.yield_uncommitted_recipe_to_reversal_0938`, `M.request_installed_lab_power_pole_1251`, `M.service_pair`, `M.service_all`, `M.report_lines`, `M.status_for_pair`, `M.install` |
+| [emergency_facility_placement_bridge_0643](../tech-priests_src/scripts/core/emergency_facility_placement_bridge_0643.lua) | `M.assess`, `M.install` |
 | [master_infrastructure_plan_0644](../tech-priests_src/scripts/core/master_infrastructure_plan_0644.lua) | `M.build_plan`, `M.service_pair`, `M.service_all`, `M.install` |
 | [construction_bootstrap_ghost_planner_0645](../tech-priests_src/scripts/core/construction_bootstrap_ghost_planner_0645.lua) | `M.physical_site_obstruction`, `M.service_pair`, `M.service_all`, `M.install` |
 | [power_setup_1252](../tech-priests_src/scripts/core/power_setup_1252.lua) | `M.service_pair` |

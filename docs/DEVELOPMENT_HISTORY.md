@@ -1,3 +1,43 @@
+## Retain inventory identities without timed rediscovery - 2026-11-25
+
+The current candidate follows the owner's later instruction to maintain the
+known inventory list rather than periodically replace it. This supersedes the
+1,800-tick expiry described in the preceding development state below. Its
+historical native observations remain unchanged and are not measurements of
+this new combined candidate.
+
+The existing 0587 owner retains complete typed identities without timed expiry;
+wider coverage serves narrower live views. The 0327 inventory API shares that
+membership with 0527, 0686, doctrine and 0643. Scheduled native resource surveys
+exclude inventory-bearing types and read no contents; item questions read live
+counts and explicit UI snapshots read current full contents. Event updates and
+engine-maintained vehicle/robot lists feed the same owner. Cargo/silo, corpse,
+generated-chunk and last-logistic-cell removal paths preserve relevant identities
+without a new world index. Unraised script changes, never-observed outside-area
+orphans and some equipment-removal timing remain explicit-refresh limitations.
+
+0686 now shares the same retained candidate owner, including autonomous vehicle
+arrivals, while preserving its four-type, 256-entry eligible view. Its inventory
+slot selection follows the entity type: the native chest ID aliases car fuel,
+so cars must use the trunk ID. The native fixture proves fuel-only coal is not
+counted or removed and trunk withdrawals leave fuel unchanged.
+
+0643 also uses retained machine/provider identities and the correct bound native
+inventory call. Its former extra entity argument was swallowed as an error,
+reporting stocked inventories as empty. The focused native comparison now reads
+the actual 20 iron plates, 12 copper plates and 8 gears. Its all-group assessment
+and planned-ghost work remain; its advertised budget of four is not an inner
+group cap. The concurrent 0644 correction is preserved: up to eight station
+attempts per 97-tick cycle, spread one per admitted five-tick broker pulse with
+the saved batch, cursor and original deadline.
+
+Installed-owner fixtures and isolated native inventory/reload/event probes pass
+their stated contracts. Complete cold seeds, mobile-list traversal, live item
+probes and remaining resource/ghost surveys still have costs. The matched
+owner-save performance comparison remains separate; no new UPS acceptance is
+claimed here. Existing maps and current testing goals reflect this combined
+source, while the runbook retains earlier run provenance and timing limits.
+
 ## Preserve service throughput and evidence for the four-priest repair - 2026-11-25
 
 The concurrent `f2090864` changes were retained: 0646 indexes immutable recipe

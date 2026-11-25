@@ -29,7 +29,9 @@ local function count_entity(entity, name)
   for _, id in pairs(defines.inventory) do
     if type(id) == "number" and not seen[id] then
       seen[id] = true
-      local ok, inv = pcall(entity.get_inventory, entity, id)
+      -- LuaEntity methods are already bound. Supplying entity again raises a
+      -- native argument-count error and made every real inventory look empty.
+      local ok, inv = pcall(entity.get_inventory, id)
       if ok then total = total + count_inventory(inv, name) end
     end
   end
@@ -44,17 +46,49 @@ local function active_pairs()
   return result
 end
 
+local function planning_constraints()
+  local policy = rawget(_G, "TechPriestsPlanningConstraints0646")
+  if not policy then
+    local ok, found = pcall(require, "scripts.core.planning_constraints_0646")
+    if ok then policy = found end
+  end
+  return policy
+end
+
+local function nearby_known_entities(pair, types)
+  local catalog = rawget(_G, "TechPriestsStationCatalog")
+  if not catalog then
+    local ok, found = pcall(require, "scripts.core.station_catalog")
+    if ok then catalog = found end
+  end
+  if catalog and type(catalog.inventory_candidates) == "function" then
+    local ok, entities = pcall(catalog.inventory_candidates, pair, 36, types)
+    if ok and type(entities) == "table" then return entities end
+  end
+  -- Compatibility fallback if the shared discovery authority is unavailable.
+  local station = pair.station
+  return station.surface.find_entities_filtered{
+    position=station.position, radius=36, force=station.force, type=types
+  }
+end
+
+local function within_station_reach(entity, station)
+  if not (valid(entity) and entity.surface == station.surface
+      and entity.force == station.force) then return false end
+  local dx=entity.position.x-station.position.x
+  local dy=entity.position.y-station.position.y
+  return dx*dx+dy*dy <= 36*36
+end
+
 local function infrastructure(group)
   local roles = { mining=0, smelting=0, crafting=0 }
   local seen = {}
   for _, pair in ipairs(group) do
     local station = pair.station
-    local entities = station.surface.find_entities_filtered{
-      position=station.position, radius=36, force=station.force,
-      type={"mining-drill","furnace","assembling-machine"}
-    }
+    local entities = nearby_known_entities(pair,
+      {"mining-drill","furnace","assembling-machine"})
     for _, e in pairs(entities) do
-      if valid(e) and e.unit_number and not seen[e.unit_number] then
+      if within_station_reach(e, station) and e.unit_number and not seen[e.unit_number] then
         seen[e.unit_number] = true
         local role = e.type == "mining-drill" and "mining"
           or (e.type == "furnace" or e.name == "tech-priests-emergency-smelter") and "smelting"
@@ -66,22 +100,19 @@ local function infrastructure(group)
   return roles
 end
 -- The network inventory contents stay LIVE; only the distinct provider
--- entity list is shared across the three item counts in one assessment.
+-- entity list comes from the existing retained inventory authority and is
+-- shared across the three item counts in one assessment.
 -- Never cache item quantities across ticks or presume a station can reach
 -- a provider belonging to another force, surface, or logistic network.
 local function accessible_logistic_containers(group)
-  local seen, seen_networks, result = {}, {}, {}
+  local seen, result = {}, {}
   for _, pair in ipairs(group) do
     local station=pair.station
     local ok,network=pcall(function()return station.logistic_network end)
-    if ok and network and network.valid and not seen_networks[network] then
-      seen_networks[network]=true
-      local containers=station.surface.find_entities_filtered{
-        position=station.position,radius=36,force=station.force,
-        type="logistic-container"
-      }
+    if ok and network and network.valid then
+      local containers=nearby_known_entities(pair,{"logistic-container"})
       for _,e in pairs(containers) do
-        if valid(e) and e.unit_number and not seen[e.unit_number] then
+        if within_station_reach(e, station) and e.unit_number and not seen[e.unit_number] then
           local linked,owner=pcall(function()return e.logistic_network end)
           if linked and owner==network then
             seen[e.unit_number]=true
@@ -143,11 +174,7 @@ local STAGE_ENTITY = {
 
 local function machine_eligible(pair, name)
   if not (prototypes and prototypes.entity and prototypes.entity[name]) then return false, "unknown-entity" end
-  local C = rawget(_G, "TechPriestsPlanningConstraints0646")
-  if not C then
-    local ok, found = pcall(require, "scripts.core.planning_constraints_0646")
-    if ok then C = found end
-  end
+  local C = planning_constraints()
   if not (C and type(C.entity_unlocked) == "function") then return false, "technology-check-unavailable" end
   local ok, unlocked, why = pcall(C.entity_unlocked, pair, name)
   if not ok then return false, "technology-check-error" end
@@ -195,11 +222,10 @@ local function build_materials(group, entity)
   local proto = prototypes and prototypes.entity and prototypes.entity[entity]
   if not proto then return nil, "unknown-machine" end
   local item_name
-  if prototypes.item then
-    for name, item in pairs(prototypes.item) do
-      local ok, result = pcall(function() return item.place_result end)
-      if ok and result and result.name == entity then item_name = name; break end
-    end
+  local policy = planning_constraints()
+  if policy and type(policy.item_for_entity) == "function" then
+    local ok, item = pcall(policy.item_for_entity, entity)
+    if ok then item_name = item end
   end
   if not item_name then return nil, "no-placeable-item" end
   local count = 0

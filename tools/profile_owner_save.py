@@ -219,6 +219,13 @@ do
   if __INSTRUMENT__ then
     local function wrap(fn,scope,name,per_pair)
       local call_counts={}
+      -- One-in-32 sampling can miss every warm call of a rare costly route.
+      -- Observe infrequent scheduled callbacks and each catalog rebuild;
+      -- the final performance comparison disables all of these wrappers.
+      local interval=scope=="registry-nth" and tonumber(name:match("^(%d+):"))
+      local every_call=(interval and interval>=60)
+        or name=="scripts.core.station_catalog.scan_pair"
+        or name=="emergency_facility_placement_bridge_0643"
       return function(...)
         local label=name
         if per_pair then
@@ -229,8 +236,7 @@ do
         end
         local calls=(call_counts[label] or 0)+1
         call_counts[label]=calls
-        local every_scan=scope=="dispatcher-branch" and name=="scripts.core.station_catalog.scan_pair"
-        if not every_scan and calls%32~=1 then return fn(...) end
+        if not every_call and calls%32~=1 then return fn(...) end
         local profiler=helpers.create_profiler(false)
         local result=table.pack(pcall(fn,...))
         profiler.stop()
@@ -367,7 +373,8 @@ def distribution(values: list[float]) -> dict:
 def parse_log(text: str, expected_ticks: int, warmup: int) -> dict:
     result = {"engine_updates": None, "engine_mean_ms": None,
               "engine_benchmark_ups": None, "per_tick_complete": False,
-              "timings": {}, "timing_windows": [], "observations": [], "callback_samples": [],
+              "timings": {}, "timing_windows": [], "slowest_ticks": [],
+              "slowest_warm_ticks": [], "observations": [], "callback_samples": [],
               "callback_sample_rows": [], "callback_samples_after_warmup": [],
               "spike_evidence": {"available": False}}
     summary = re.search(r"Performed\s+(\d+)\s+updates in\s+([\d.]+)\s+ms", text)
@@ -401,6 +408,20 @@ def parse_log(text: str, expected_ticks: int, warmup: int) -> dict:
     if headers and len(rows) == expected_ticks and [r[0] for r in rows] == list(range(expected_ticks)):
         result["per_tick_complete"] = True
         result["excluded_warmup_ticks"] = warmup
+        positions = {name: index for index, name in enumerate(headers[1:])}
+        if "wholeUpdate" in positions:
+            retained_columns = ("wholeUpdate", "scriptUpdate", "entityUpdate",
+                                "luaGarbageIncremental", "pathFinder", "mapGenerator")
+            def slowest(source_rows):
+                selected = sorted(source_rows,
+                                  key=lambda row: row[1][positions["wholeUpdate"]],
+                                  reverse=True)[:40]
+                return [{"benchmark_tick": tick,
+                         "timings_ms": {name: values[positions[name]]
+                                        for name in retained_columns if name in positions}}
+                        for tick, values in selected]
+            result["slowest_ticks"] = slowest(rows)
+            result["slowest_warm_ticks"] = slowest(rows[warmup:])
         for index, name in enumerate(headers[1:]):
             if name=="timestamp":
                 continue
@@ -701,10 +722,12 @@ def main() -> int:
             "callback_instrumentation":args.instrument_callbacks,
             "graphical_benchmark":args.graphics,
             "script_scope":"whole-engine-all-installed-mods",
-            "callback_scope":("all station_catalog.scan_pair calls; other owners one-in-32 including warmup; nested scopes overlap; diagnostic overhead present"
+            "callback_scope":("one-in-32 frequent calls; every nth-tick callback with interval at least 60 ticks, catalog scan, and emergency placement bridge; nested scopes overlap; diagnostic overhead present"
                               if args.instrument_callbacks else "disabled"),
             "callback_sampling_policy":({"default":"calls 1, 33, 65, ... per label",
-                "every_call":[{"scope":"dispatcher-branch","name":"scripts.core.station_catalog.scan_pair"}],
+                "every_call":[{"scope":"registry-nth","minimum_interval_ticks":60},
+                    {"scope":"dispatcher-branch","name":"scripts.core.station_catalog.scan_pair"},
+                    {"scope":"broker-service","name":"emergency_facility_placement_bridge_0643"}],
                 "warmup_included":True} if args.instrument_callbacks else None),
             "graphics_backend":None,"graphics_renderer":None,
             "performance_scope":"observer-equipped replay; instrumented runs do not establish diagnostics-off production performance",

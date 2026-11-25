@@ -186,24 +186,16 @@ end
 
 function Doctrine.find_inventory_source(pair, item)
   if not valid_pair(pair) or not item then return nil end
-  local station = pair.station; local r = radius_for(pair)
-  local ents = routed_scan(station, { area=area_around(station.position,r), limit=Doctrine.scan_limit }, "resource", item, 60 * 4)
-  if not ents then return nil end
+  local catalog = rawget(_G, "TechPriestsStationCatalog")
+  if not catalog then
+    local ok, found = pcall(require, "scripts.core.station_catalog")
+    if ok then catalog = found end
+  end
+  if not (catalog and type(catalog.find_inventory_source) == "function") then return nil end
   local inv_ids = {}; local function add(id) if id ~= nil then inv_ids[#inv_ids+1] = id end end
   add(defines.inventory.chest); add(defines.inventory.furnace_result); add(defines.inventory.assembling_machine_output); add(defines.inventory.car_trunk); add(defines.inventory.spider_trunk); add(defines.inventory.cargo_wagon); add(defines.inventory.character_corpse)
-  local best = nil
-  for _, ent in pairs(ents) do
-    if ent ~= station and inventory_target_allowed(ent) then
-      for _, inv_id in ipairs(inv_ids) do
-        local ok_inv, inv = pcall(function() return ent.get_inventory(inv_id) end)
-        if ok_inv and inv and inv.valid and inv.get_item_count and inv.get_item_count(item) > 0 then
-          local d = dist_sq(ent.position, station.position)
-          if not best or d < (best.station_distance_sq or 999999) then best = { source=ent, inventory_id=inv_id, item_name=item, count=1, kind="inventory", station_distance_sq=d } end
-        end
-      end
-    end
-  end
-  return best
+  return catalog.find_inventory_source(pair, item, {radius = radius_for(pair),
+    inventory_ids = inv_ids, exclude_station = true, kind = "inventory"})
 end
 
 function Doctrine.find_mineable_source(pair, wanted, recipe, allow_primitive)

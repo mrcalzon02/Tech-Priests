@@ -1496,6 +1496,13 @@ local function add_known_resources_display(parent, pair)
     add_label(parent, "Auspex ledger awaits first sweep; no local resource catechism has been sealed yet.")
     return
   end
+  -- Opening or explicitly refreshing this panel may read current contents
+  -- from the shared retained inventory list. The visual ledger never forces
+  -- a surrounding-world survey to obtain those quantities.
+  local inventory_snapshot = rawget(_G, "tech_priests_0327_snapshot_inventory")
+  if type(inventory_snapshot) == "function" then
+    pcall(inventory_snapshot, pair, cat)
+  end
   add_summary_table_0521(parent, "Auspex Command Seal", {
     { "Station seal", tostring(cat.station_backer_name or cat.station_name or cat.station_unit or station_label(pair)) },
     { "Surface", tostring(cat.surface or (valid(pair.station) and pair.station.surface and pair.station.surface.name) or "unknown") },

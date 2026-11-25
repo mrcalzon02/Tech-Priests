@@ -1,6 +1,6 @@
 -- Exercise the real fetch executor and its shared 0587 membership authority.
--- Missing stock and different requests reuse membership. A bounded discovery
--- refresh admits silent arrivals; quantities and access policy remain live.
+-- Missing stock and different requests reuse membership. Engine vehicle lists
+-- admit silent arrivals immediately; quantities and access policy remain live.
 package.path="tech-priests_src/?.lua;tech-priests_src/?/init.lua;"..package.path
 storage={tech_priests={pairs_by_station={}}}
 game={tick=100}
@@ -105,8 +105,8 @@ assert(spatial_queries==1 and catalog_calls==0,
 assert(truncated_queries==0,"retained membership seed was truncated")
 game.tick=120000
 Economy.cleanup()
-assert(not request("later-missing") and spatial_queries==2,
-  "long idle period did not perform exactly one requested refresh")
+assert(not request("later-missing") and spatial_queries==1,
+  "long idle period rediscovered unchanged source membership")
 local retained_queries=spatial_queries
 stock.items.coal=4
 local acted,why=request("coal")
@@ -154,20 +154,46 @@ handlers[defines.events.on_player_changed_position]({player_index=1})
 assert(request("engine") and arriving_car_stock.items.engine==1 and spatial_queries==retained_queries,
   "natural vehicle arrival was lost by retaining stationary surroundings")
 -- An autonomous car can be built outside the station area, then drive into
--- range without any player movement or raised teleport event.
+-- range without any player movement or raised teleport event. Use the actual
+-- catalog candidate API for this production path, not an expiry or fake owner.
+local saved_catalog=package.loaded["scripts.core.station_catalog"]
+local saved_prototypes=prototypes
+prototypes={entity={}}
+for kind,id in pairs({container=defines.inventory.chest,
+  ["logistic-container"]=defines.inventory.chest,car=defines.inventory.car_trunk,
+  ["spider-vehicle"]=defines.inventory.spider_trunk,
+  ["cargo-wagon"]=defines.inventory.cargo_wagon,
+  ["character-corpse"]=defines.inventory.character_corpse})do
+  local inventory_id=id
+  prototypes.entity[kind]={type=kind,get_inventory_size=function(probe)
+    return probe==inventory_id and 80 or nil
+  end}
+end
+package.loaded["scripts.core.station_catalog"]=nil
+local Catalog=require("scripts.core.station_catalog")
+local vehicles={}
+game.get_vehicles=function(options)assert(options.surface==surface);return vehicles end
+assert(Catalog.inventory_candidates(pair,pair.radius))
+assert(spatial_queries==retained_queries+1,"shared catalog initial population was not one complete query")
+retained_queries=spatial_queries
 local autonomous,autonomous_stock=source("car",100,{["silent-engine"]=2})
 event("on_built_entity",autonomous)
+vehicles[1]=autonomous
 autonomous.position.x=2
-assert(not request("silent-engine") and spatial_queries==retained_queries,
-  "unknown moving source unexpectedly bypassed the retained discovery window")
-game.tick=game.tick+1799
-assert(not request("silent-engine") and spatial_queries==retained_queries,
-  "a missing item caused early spatial rediscovery")
-game.tick=game.tick+1
 assert(request("silent-engine") and autonomous_stock.items["silent-engine"]==1
-  and spatial_queries==retained_queries+1,
-  "silent autonomous vehicle entry stayed hidden after bounded discovery expiry")
-retained_queries=spatial_queries
+  and spatial_queries==retained_queries,
+  "engine vehicle arrival was not immediately physically available")
+game.tick=game.tick+1799
+assert(not request("autonomous-missing-1") and spatial_queries==retained_queries,
+  "a missing item caused spatial rediscovery")
+game.tick=game.tick+1
+assert(not request("autonomous-missing-2") and spatial_queries==retained_queries,
+  "elapsed time rediscovered retained inventory membership")
+-- Continue the fallback-specific legacy snapshot/range checks with their
+-- original absent-catalog fixture; the real shared candidate path was above.
+package.loaded["scripts.core.station_catalog"]=saved_catalog
+prototypes=saved_prototypes
+game.get_vehicles=nil
 local spider,spider_stock=source("spider-vehicle",2,{rocket=2})
 handlers[defines.events.on_spider_command_completed]({vehicle=spider})
 assert(request("rocket") and spider_stock.items.rocket==1 and spatial_queries==retained_queries,

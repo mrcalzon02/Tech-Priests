@@ -29,6 +29,8 @@ SMOKE = (
     "broker_background_admission.lua",
     "proxy_ammo_discovery_0649.lua",
     "station_catalog_event_deferral_0634.lua",
+    "station_catalog_retained_inventory_1497.lua",
+    "emergency_facility_provider_snapshot_1072.lua",
     "storage_discovery_cache_0587.lua",
     "logistics_general_storage_custody.lua",
     "logistics_retained_sources_0527.lua",

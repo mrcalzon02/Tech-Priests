@@ -303,6 +303,13 @@ local prototype_inventory_cache_0578 = prototype_inventory_cache_0578 or {}
 local prototype_mineable_cache_0578 = prototype_mineable_cache_0578 or {}
 local broad_inventory_probe_ids_cache_0742 = nil
 local conservative_inventory_probe_ids_cache_0742 = nil
+local inventory_type_names_1497, inventory_type_set_1497
+-- These inventories are supplied by a live target, deceased character or
+-- cargo unit, so LuaEntityPrototype.get_inventory_size cannot describe them.
+local runtime_inventory_types_1497 = {
+  ["character-corpse"] = true, ["cargo-pod"] = true,
+  ["proxy-container"] = true, ["rocket-silo"] = true,
+}
 
 local function prototype_cache_key(entity)
   if not valid(entity) then return "invalid" end
@@ -463,6 +470,9 @@ end
 
 local function inventory_ids_for_entity_0578(entity, context)
   if not valid(entity) then return {} end
+  if runtime_inventory_types_1497[entity.type] then
+    return context and context.inventory_ids or inventory_probe_ids_0578()
+  end
   local mode = context
     and (context.universal and "universal" or "conservative")
     or (universal_inventory_scavenging_enabled_0741()
@@ -479,6 +489,213 @@ local function inventory_ids_for_entity_0578(entity, context)
   local root = ensure_root()
   root.stats.inventory_prototype_cache_misses_0578 = (root.stats.inventory_prototype_cache_misses_0578 or 0) + 1
   return out
+end
+
+local function inventory_types_1497()
+  if inventory_type_names_1497 then
+    return inventory_type_names_1497, inventory_type_set_1497
+  end
+  local entity_prototypes = prototypes and prototypes.entity
+  if not entity_prototypes then return nil end
+  local selected, names = {}, {}
+  local ignored = {}
+  for _, kind in ipairs(Catalog.noise_prefilter_types_1482) do ignored[kind] = true end
+  local ids = broad_inventory_probe_ids_0741()
+  for _, prototype in pairs(entity_prototypes) do
+    local kind = prototype.type
+    if kind and not ignored[kind] and not selected[kind] then
+      if runtime_inventory_types_1497[kind] then
+        selected[kind] = true
+      else
+        for _, id in ipairs(ids) do
+          local ok, size = pcall(function() return prototype.get_inventory_size(id) end)
+          -- A failed metadata read cannot certify a partial set of types.
+          if not ok then return nil end
+          if size ~= nil then selected[kind] = true; break end
+        end
+      end
+    end
+  end
+  for kind in pairs(selected) do names[#names + 1] = kind end
+  table.sort(names)
+  inventory_type_names_1497, inventory_type_set_1497 = names, selected
+  local root = ensure_root()
+  root.stats.inventory_type_builds_1497 = (root.stats.inventory_type_builds_1497 or 0) + 1
+  return names, selected
+end
+
+-- Expose immutable prototype membership for diagnostics; quantities and
+-- inventory eligibility are deliberately absent from this retained metadata.
+function Catalog.inventory_types()
+  return inventory_types_1497()
+end
+
+local append_engine_candidates_1497
+function Catalog.inventory_candidates(pair, requested_radius, requested_types)
+  if not (pair and valid(pair.station)) then return nil end
+  local station = pair.station
+  local radius = tonumber(requested_radius) or radius_for(pair)
+  local names = inventory_types_1497()
+  local function discover()
+    local position = station.position
+    local query = { area = {
+      {position.x - radius, position.y - radius},
+      {position.x + radius, position.y + radius}
+    } }
+    if names then
+      if #names == 0 then return {} end
+      query.type = names
+    end
+    -- No item filter or result cap: empty sources and overflow membership
+    -- must remain known when their contents change without an entity event.
+    local ok, found = pcall(station.surface.find_entities_filtered, query)
+    if not (ok and type(found) == "table") then return nil end
+    local root = ensure_root()
+    root.stats.inventory_initial_queries_1497 =
+      (root.stats.inventory_initial_queries_1497 or 0) + 1
+    return found
+  end
+  local economy = rawget(_G, "TechPriestsEfficiencyEconomy0587")
+  if not economy then
+    local ok, found = pcall(require, "scripts.core.efficiency_economy_0587")
+    if ok then economy = found end
+  end
+  local candidates
+  if names and economy and type(economy.source_candidates) == "function" then
+    candidates = economy.source_candidates(pair, radius, "catalog-inventory-0327",
+      names, "any-force", discover)
+  else
+    -- Compatibility runtimes lacking metadata/event ownership cannot claim a
+    -- complete retained domain. They still receive a complete live result.
+    candidates = discover()
+  end
+  if type(candidates) ~= "table" then return nil end
+  local view, observed = append_engine_candidates_1497(pair, radius, candidates, requested_types)
+  if names and #observed > 0 and economy
+      and type(economy.observe_source_candidates) == "function" then
+    economy.observe_source_candidates(pair, radius, "catalog-inventory-0327",
+      names, "any-force", observed)
+  end
+  return view
+end
+
+local function inside_inventory_area_1497(entity, station, radius)
+  if not (valid(entity) and entity.surface == station.surface) then return false end
+  local position, origin = entity.position, station.position
+  return position.x >= origin.x - radius and position.x <= origin.x + radius
+    and position.y >= origin.y - radius and position.y <= origin.y + radius
+end
+
+local vehicle_types_1497 = {
+  car = true, ["spider-vehicle"] = true, locomotive = true,
+  ["cargo-wagon"] = true, ["fluid-wagon"] = true,
+  ["artillery-wagon"] = true, ["infinity-cargo-wagon"] = true,
+}
+append_engine_candidates_1497 = function(pair, radius, candidates, requested_types)
+  local _, all_types = inventory_types_1497()
+  local accepted_types = all_types
+  if requested_types then
+    accepted_types = {}
+    for _, kind in ipairs(requested_types) do accepted_types[kind] = true end
+  end
+  local station, out, units, observed = pair.station, {}, {}, {}
+  local function append(entity, from_engine)
+    if not valid(entity) or (accepted_types and not accepted_types[entity.type])
+        or not inside_inventory_area_1497(entity, station, radius) then return end
+    local unit = entity.unit_number
+    if unit then
+      if units[unit] then return end
+      units[unit] = true
+    else
+      for _, present in ipairs(out) do if present == entity then return end end
+    end
+    out[#out + 1] = entity
+    if from_engine then observed[#observed + 1] = entity end
+  end
+  for _, entity in ipairs(candidates) do append(entity) end
+  local wants_vehicles = false
+  for kind in pairs(vehicle_types_1497) do
+    if not accepted_types or accepted_types[kind] then wants_vehicles = true; break end
+  end
+  -- These are engine-maintained identity lists, not spatial rediscovery.
+  -- In particular, autonomous vehicle arrivals have no general move event.
+  if wants_vehicles and game and type(game.get_vehicles) == "function" then
+    local ok, vehicles = pcall(game.get_vehicles, {surface = station.surface})
+    if ok and type(vehicles) == "table" then
+      for _, entity in ipairs(vehicles) do append(entity, true) end
+      local stats = ensure_root().stats
+      stats.inventory_vehicle_list_reads_1497 = (stats.inventory_vehicle_list_reads_1497 or 0) + 1
+    end
+  end
+  local wants_robots = not accepted_types or accepted_types["logistic-robot"]
+    or accepted_types["construction-robot"]
+  if wants_robots then
+    -- The engine omits orphan robots from these lists. The initial local
+    -- seed and 0587's pre-cell-removal batch retain known orphans. A never
+    -- observed orphan outside that seed, or an unraised scripted creation,
+    -- has no complete arrival API; do not hide that gap with a polling scan.
+    for _, force in pairs(game and game.forces or {}) do
+      if force.valid then
+        local networks = (force.logistic_networks or {})[station.surface.name] or {}
+        for _, network in pairs(networks) do
+          if network.valid then
+            for _, robot in ipairs(network.robots) do append(robot, true) end
+          end
+        end
+      end
+    end
+  end
+  if not accepted_types or accepted_types["cargo-pod"] then
+    for _, entity in ipairs(candidates) do
+      if valid(entity) and entity.type == "rocket-silo" then
+        -- A filled awaiting-launch pod exists before the ascent events.
+        local ok, pod = pcall(function() return entity.cargo_pod end)
+        if ok then append(pod, true) end
+        local rocket_ok, rocket = pcall(function() return entity.rocket end)
+        if rocket_ok and valid(rocket) then
+          local pod_ok, attached = pcall(function() return rocket.attached_cargo_pod end)
+          if pod_ok then append(attached, true) end
+        end
+      end
+    end
+  end
+  return out, observed
+end
+
+function Catalog.find_inventory_source(pair, item_name, options)
+  if not (pair and valid(pair.station) and item_name) then return nil end
+  options = options or {}
+  local station = pair.station
+  local radius = tonumber(options.radius) or radius_for(pair)
+  local context = inventory_scan_context_1493(station)
+  if options.skip_wired ~= nil then context.skip_wired = options.skip_wired end
+  local best
+  local function consider(entity, id, inventory)
+    if not (inventory and inventory.valid) then return end
+    local ok, count = pcall(function() return inventory.get_item_count(item_name) end)
+    if not (ok and (tonumber(count) or 0) > 0) then return end
+    local distance = distance_sq(entity.position, station.position)
+    if not best or distance < best.station_distance_sq then
+      best = { kind = options.kind or "known-storage-0327", source = entity,
+        inventory_id = id, item_name = item_name, count = 1,
+        station_distance_sq = distance }
+    end
+  end
+  if not options.exclude_station then
+    local inventory = _G.get_station_inventory and _G.get_station_inventory(station)
+      or safe_inventory(station, defines and defines.inventory and defines.inventory.chest)
+    consider(station, defines and defines.inventory and defines.inventory.chest, inventory)
+  end
+  for _, entity in ipairs(Catalog.inventory_candidates(pair, radius) or {}) do
+    if entity ~= station and should_catalog_entity(entity)
+        and inside_inventory_area_1497(entity, station, radius)
+        and not (context.skip_wired and entity_has_circuit_wire_0741(entity)) then
+      for _, id in ipairs(options.inventory_ids or inventory_ids_for_entity_0578(entity, context)) do
+        consider(entity, id, safe_inventory(entity, id))
+      end
+    end
+  end
+  return best
 end
 
 local function collect_inventory(catalog, entity, station, scan_context)
@@ -598,11 +815,10 @@ local function clean_reuse_allowed_0570(pair, catalog, radius)
   return true
 end
 
-local function add_entity_to_catalog(root, pair, catalog, entity, station, scan_context)
+local function add_entity_to_catalog(root, pair, catalog, entity, station)
   if not valid(entity) then return end
   if entity == station or not should_catalog_entity(entity) then return end
   add_count(catalog.entities, entity.name or entity.type, 1)
-  collect_inventory(catalog, entity, station, scan_context)
   if entity.type == "resource" then
     local key = entity_key(entity)
     if claim_entity(root, pair, entity, "resource", key) then
@@ -687,13 +903,28 @@ function Catalog.scan_pair(pair)
   end
   local area = { { station.position.x - radius, station.position.y - radius }, { station.position.x + radius, station.position.y + radius } }
   local catalog = empty_catalog(pair, radius)
+  local inventory_types, inventory_set = inventory_types_1497()
+  local retained = inventory_types and Catalog.inventory_candidates(pair, radius) or nil
+  local split_inventory = type(retained) == "table"
+  local excluded = Catalog.noise_prefilter_types_1482
+  if split_inventory then
+    excluded = {}
+    for _, kind in ipairs(Catalog.noise_prefilter_types_1482) do excluded[#excluded + 1] = kind end
+    for _, kind in ipairs(inventory_types) do excluded[#excluded + 1] = kind end
+  end
 
   local ok_ents, entities, scan_complete = false, nil, false
   local indexed_provider = rawget(_G, "tech_priests_efficiency_0579_entities_for_area")
   if type(indexed_provider) == "function" then
     local ok_idx, idx_entities = pcall(indexed_provider, station.surface, area, Catalog.scan_limit, true)
     if ok_idx and type(idx_entities) == "table" then
-      ok_ents, entities, scan_complete = true, idx_entities, true
+      entities = {}
+      for _, entity in ipairs(idx_entities) do
+        if not (split_inventory and inventory_set[entity.type]) then
+          entities[#entities + 1] = entity
+        end
+      end
+      ok_ents, scan_complete = true, true
       catalog.scan_source_1478 = "indexed-cache"
       catalog.scan_queries_1478 = 0
       root.stats.indexed_area_reuse_0579 = (root.stats.indexed_area_reuse_0579 or 0) + 1
@@ -708,7 +939,7 @@ function Catalog.scan_pair(pair)
       max_queries = Catalog.max_dense_scan_queries_1478,
       max_entities = Catalog.max_dense_scan_entities_1478,
       key_of = entity_key,
-      exclude_types = Catalog.noise_prefilter_types_1482
+      exclude_types = excluded
     })
     ok_ents = type(entities) == "table"
     scan_complete = scan_info ~= nil and scan_info.complete == true
@@ -735,7 +966,9 @@ function Catalog.scan_pair(pair)
         (root.stats.dense_scans_completed_1478 or 0) + 1
     end
     local note_scan = rawget(_G, "tech_priests_efficiency_0579_note_area_scan")
-    if ok_ents and type(note_scan) == "function" then
+    -- The filtered visual survey says nothing about complete world cells.
+    -- Its retained inventory domain has a different membership authority.
+    if ok_ents and not split_inventory and type(note_scan) == "function" then
       local noted, accepted = pcall(note_scan, station.surface, area, entities,
         Catalog.scan_limit, scan_complete)
       if noted and accepted ~= false then
@@ -755,21 +988,26 @@ function Catalog.scan_pair(pair)
       (root.stats.dense_scans_incomplete_1478 or 0) + 1
   end
   if ok_ents and entities then
-    local scan_context = inventory_scan_context_1493(station)
     for _, e in ipairs(entities) do
-      add_entity_to_catalog(root, pair, catalog, e, station, scan_context)
+      -- A compatibility engine can reject DenseScan's inverse type filter.
+      -- Avoid double-counting retained identities if its fallback is broad.
+      if not (split_inventory and inventory_set[e.type]) then
+        add_entity_to_catalog(root, pair, catalog, e, station)
+      end
     end
   end
-
-  local station_inv = _G.get_station_inventory and _G.get_station_inventory(station) or safe_inventory(station, defines.inventory.chest)
-  if station_inv then
-    local ok, contents = pcall(function() return station_inv.get_contents() end)
-    if ok and contents then
-      for_each_inventory_item(contents, function(item, count)
-        add_source(catalog.storage_items, item, { entity = station, inventory_id = defines.inventory.chest, count = count, kind = "station-inventory", distance_sq = 0 })
-      end)
+  if split_inventory then
+    for _, entity in ipairs(retained) do
+      add_entity_to_catalog(root, pair, catalog, entity, station)
     end
+    catalog.inventory_members_1497 = #retained
+    root.stats.inventory_members_reused_1497 =
+      (root.stats.inventory_members_reused_1497 or 0) + #retained
   end
+  -- Inventory quantities are obtained only by an item question or an
+  -- explicit UI snapshot, independently of scheduled resource surveys.
+  catalog.storage_items = existing and existing.storage_items or {}
+  catalog.inventory_tick_1497 = existing and existing.inventory_tick_1497 or nil
 
   for other_unit, other in pairs(pairs_table()) do
     if other_unit ~= unit and other and other.station and other.station.valid and other.station.force == station.force and other.station.surface == station.surface then
@@ -863,14 +1101,46 @@ function Catalog.get_for_pair(pair)
   return cat
 end
 
+function Catalog.snapshot_inventory(pair, catalog)
+  if not (pair and valid(pair.station)) then return nil end
+  catalog = catalog or Catalog.get_for_pair(pair)
+  if not catalog then return nil end
+  local station = pair.station
+  local radius = radius_for(pair)
+  local context = inventory_scan_context_1493(station)
+  catalog.storage_items, catalog.stored_item_kinds = {}, 0
+  catalog.wired_sources_skipped_1495 = 0
+  for _, entity in ipairs(Catalog.inventory_candidates(pair, radius) or {}) do
+    if entity ~= station and inside_inventory_area_1497(entity, station, radius) then
+      collect_inventory(catalog, entity, station, context)
+    end
+  end
+  local inventory = _G.get_station_inventory and _G.get_station_inventory(station)
+    or safe_inventory(station, defines and defines.inventory and defines.inventory.chest)
+  if inventory then
+    local ok, contents = pcall(function() return inventory.get_contents() end)
+    if ok and contents then
+      for_each_inventory_item(contents, function(item, count)
+        add_source(catalog.storage_items, item, { entity = station,
+          inventory_id = defines and defines.inventory and defines.inventory.chest,
+          count = count, kind = "station-inventory", distance_sq = 0 })
+      end)
+    end
+  end
+  for _ in pairs(catalog.storage_items) do catalog.stored_item_kinds = catalog.stored_item_kinds + 1 end
+  catalog.inventory_tick_1497 = now()
+  local root = ensure_root()
+  root.stats.inventory_ui_snapshots_1497 = (root.stats.inventory_ui_snapshots_1497 or 0) + 1
+  return catalog
+end
+
 function Catalog.find_known_source(pair, item_name)
   if not item_name then return nil end
-  local cat = Catalog.get_for_pair(pair)
+  local stored = Catalog.find_inventory_source(pair, item_name)
+  if stored then return stored end
+  local root = ensure_root()
+  local cat = root.stations[station_unit(pair)]
   if not cat then return nil end
-  local stored = cat.storage_items and cat.storage_items[item_name]
-  if stored and stored.entity and stored.entity.valid then
-    return { kind = "known-storage-0327", source = stored.entity, inventory_id = stored.inventory_id, item_name = item_name, count = 1, station_distance_sq = stored.distance_sq or 0 }
-  end
   local res = cat.resources and cat.resources[item_name]
   if res and res.entity and res.entity.valid then
     return { kind = "known-resource-0327", entity = res.entity, item_name = item_name, output_item = item_name, count = 1, value = 1100, station_distance_sq = res.distance_sq or 0 }
@@ -932,6 +1202,7 @@ function Catalog.show_gui(player, pair)
   clear_gui(player)
   local cat = Catalog.get_for_pair(pair)
   if not cat then return end
+  Catalog.snapshot_inventory(pair, cat)
   local root = ensure_root()
   local unit = station_unit(pair)
   local layout = AuspexLayout1483.for_player(player)
@@ -1135,6 +1406,9 @@ function Catalog.install()
   _G.tech_priests_0327_get_station_catalog = Catalog.get_for_pair
   _G.tech_priests_0327_find_known_source = Catalog.find_known_source
   _G.tech_priests_0327_scan_station_catalog = Catalog.scan_pair
+  _G.tech_priests_0327_inventory_candidates = Catalog.inventory_candidates
+  _G.tech_priests_0327_find_inventory_source = Catalog.find_inventory_source
+  _G.tech_priests_0327_snapshot_inventory = Catalog.snapshot_inventory
   _G.tech_priests_0327_note_radar_detection = Catalog.note_radar_detection
   _G.tech_priests_0327_catalog_gui_opened = Catalog.handle_gui_opened
   _G.tech_priests_0327_catalog_gui_closed = Catalog.handle_gui_closed

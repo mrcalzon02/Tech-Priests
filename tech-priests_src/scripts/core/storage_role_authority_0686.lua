@@ -39,6 +39,9 @@ local GENERAL_STASH_NAMES = {
   "iron-chest",
   "steel-chest",
 }
+local GENERAL_CONTAINER_TYPES = {
+  "container", "logistic-container", "car", "spider-vehicle",
+}
 local GENERAL_STASH_COSTS = {
   ["tech-priests-martian-stone-cache"] = { stone = 12 },
   ["wooden-chest"] = { wood = 2 },
@@ -140,10 +143,15 @@ local function inventory(entity, inventory_id)
 end
 local function container_inventory(entity)
   local ids = defines and defines.inventory
-  if not ids then return nil end
-  return inventory(entity, ids.chest)
-    or inventory(entity, ids.car_trunk)
-    or inventory(entity, ids.spider_trunk)
+  if not (ids and valid(entity)) then return nil end
+  -- Inventory IDs are entity-specific aliases. In a real car, chest=1 is
+  -- its fuel inventory, so a successful chest-first probe hides the trunk.
+  local kind = entity.type
+  if kind == "container" or kind == "logistic-container" then
+    return inventory(entity, ids.chest)
+  elseif kind == "car" then return inventory(entity, ids.car_trunk)
+  elseif kind == "spider-vehicle" then return inventory(entity, ids.spider_trunk) end
+  return nil
 end
 local function add_inventory(out, seen, inv, entity, source)
   if not (inv and inv.valid) then return end
@@ -344,6 +352,7 @@ local function nearby_containers(pair)
         or dist_sq(entity.position,pair.station.position)>radius*radius then
       return
     end
+    if #out >= 256 then return end
     local key = entity_key(entity)
     local inv = container_inventory(entity)
     if not (key and inv) or seen[key] then return end
@@ -372,27 +381,35 @@ local function nearby_containers(pair)
           { position.x - radius, position.y - radius },
           { position.x + radius, position.y + radius },
         },
-        type = { "container", "logistic-container", "car", "spider-vehicle" },
+        type = GENERAL_CONTAINER_TYPES,
         -- Populate complete membership once. The existing 0587 cache keeps
         -- overflow candidates while returning the historical 256-entry view.
       })
     end)
     return ok and entities or nil
   end
-  -- The current storage authority used to bypass the installed 0587 source
-  -- cache by calling the native search for every fuel/ingredient count.
-  -- Reuse that existing owner for event-maintained topology; add() and consumers
-  -- continue to read current inventory handles, roles, position and counts.
-  local economy = rawget(_G, "TechPriestsEfficiencyEconomy0587")
-    or package.loaded["scripts.core.efficiency_economy_0587"]
+  -- Share the catalog's retained identities and engine vehicle list. An
+  -- autonomous vehicle can enter this area without a movement event; keeping
+  -- a separate generic-storage domain would miss that arrival indefinitely.
+  -- add() and consumers still apply this owner's live domain/slot/role policy.
+  local catalog = rawget(_G, "TechPriestsStationCatalog")
+    or package.loaded["scripts.core.station_catalog"]
   local entities
-  if economy and type(economy.container_candidates) == "function" then
-    entities = economy.container_candidates(pair, radius, discover)
+  if catalog and type(catalog.inventory_candidates) == "function" then
+    local ok, found = pcall(catalog.inventory_candidates, pair, radius, GENERAL_CONTAINER_TYPES)
+    if ok then entities = found end
   else
-    entities = discover()
+    local economy = rawget(_G, "TechPriestsEfficiencyEconomy0587")
+      or package.loaded["scripts.core.efficiency_economy_0587"]
+    if economy and type(economy.container_candidates) == "function" then
+      entities = economy.container_candidates(pair, radius, discover)
+    else entities = discover() end
   end
-  if entities then
-    for _, entity in pairs(entities) do add(entity, "nearby") end
+  if type(entities) == "table" then
+    for _, entity in ipairs(entities) do
+      if #out >= 256 then break end
+      add(entity, "nearby")
+    end
   end
   return out
 end

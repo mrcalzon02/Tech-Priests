@@ -2,7 +2,7 @@
 package.path='./tech-priests_src/?.lua;./tech-priests_src/?/init.lua;'..package.path
 storage={tech_priests={pairs_by_station={}}};game={tick=1}
 defines={inventory={chest=1,assembling_machine_input=2},wire_connector_id={circuit_red=3}}
-local setting_reads,rock_wires=0,0
+local setting_reads,rock_wires,contents_reads=0,0,0
 local legacy_reads,connection_array_reads,ore_key_reads=0,0,0
 local Identity=require('scripts.core.entity_identity_1481')
 local original_key=Identity.key
@@ -27,6 +27,7 @@ local function machine(i,has_wire)
   force=force,name='assembling-machine-1',type='assembling-machine',wired=has_wire}
  e.get_inventory=function(id)
   if id==2 then return {valid=true,get_contents=function()
+   contents_reads=contents_reads+1
    return {['iron-plate']=2,['copper-plate']=1}
   end} end
  end
@@ -63,13 +64,16 @@ surface.find_entities_filtered=function(opts)
  local out={}
  for _,e in ipairs(entities)do
   out[#out+1]=e
-  if #out>=opts.limit then break end
+  if opts.limit and #out>=opts.limit then break end
  end
  return out
 end
 local C=require('scripts.core.station_catalog')
 local first=C.scan_pair(pair)
 assert(first and not first.scan_incomplete_1478 and first.scan_entities_1478==24)
+assert(contents_reads==0 and setting_reads==0,
+ 'scheduled visual scan read inventory contents/settings')
+C.snapshot_inventory(pair,first)
 assert(setting_reads==2,'runtime settings reread per entity')
 assert(rock_wires==0,'non-inventory rocks received wire checks')
 assert(first.storage_items['iron-plate'].count==20,'wired inventories were included')
@@ -90,6 +94,9 @@ assert(C.claim_built_entity(pair,ore,'resource'))
 assert(destroyed==2 and root.render_tags[key]==nil,'legacy visual tags leaked')
 wired[1].wired=false;game.tick=1000
 local second=C.scan_pair(pair)
+local before_snapshot=contents_reads
+C.snapshot_inventory(pair,second)
+assert(contents_reads>before_snapshot,'explicit ledger snapshot did not refresh contents')
 assert(second.storage_items['iron-plate'].count==22,'newly disconnected inventory unavailable')
 assert(second.wired_sources_skipped_1495==2,'wire omission count did not refresh')
 assert(setting_reads==4 and rock_wires==0,'settings or non-inventory wire checks regressed')
@@ -102,12 +109,14 @@ assert(second.mineable_products.stone.count==30 and first.mineable_products.ston
 entities[1].get_wire_connector=function() return nil end
 game.tick=2000
 local absent_connector=C.scan_pair(pair)
+C.snapshot_inventory(pair,absent_connector)
 assert(absent_connector.storage_items['iron-plate'].count==22 and legacy_reads==0,
  'a missing native connector lost stock or caused obsolete fallback probing')
 entities[2].get_wire_connector=function() error('unsupported modern connector query') end
 entities[2].circuit_connected_entities={red={{valid=true}}}
 game.tick=3000
 local legacy_fallback=C.scan_pair(pair)
+C.snapshot_inventory(pair,legacy_fallback)
 assert(legacy_fallback.storage_items['iron-plate'].count==20
  and legacy_fallback.wired_sources_skipped_1495==3,
  'a failed modern query incorrectly exposed legacy wired inventory')

@@ -12,9 +12,6 @@ M.version = "0.1.587"
 M.storage_key = "efficiency_economy_0587"
 M.source_ttl = 45
 M.container_source_limit = 256
--- Events update known membership immediately. Unobserved vehicle movement
--- still needs a bounded, demand-driven discovery of newly arriving sources.
-M.candidate_ttl = 60 * 30
 M.count_ttl_positive = 45
 M.count_ttl_zero = 20
 M.authority_ttl = 90
@@ -164,22 +161,24 @@ local function candidate_cache_key(pair, domain, force_policy)
     .. ":home=" .. tostring(unit)
 end
 
-local function inside_candidate_area(record, position)
-  return position.x >= record.x - record.radius
-    and position.x <= record.x + record.radius
-    and position.y >= record.y - record.radius
-    and position.y <= record.y + record.radius
+local function inside_candidate_area(record, position, view_radius)
+  local radius = view_radius or record.radius
+  return position.x >= record.x - radius
+    and position.x <= record.x + radius
+    and position.y >= record.y - radius
+    and position.y <= record.y + radius
 end
 
-local function member_matches(record, entity)
+local function member_matches(record, entity, view_radius)
   if not valid(entity) or not record.types[entity.type]
       or entity.surface ~= record.surface
-      or not inside_candidate_area(record, entity.position) then return false end
+      or not inside_candidate_area(record, entity.position, view_radius) then return false end
   return true
 end
 
-local function source_matches(record, entity)
-  if not member_matches(record, entity) then return false end
+local function source_matches(record, entity, view_radius)
+  if not member_matches(record, entity, view_radius) then return false end
+  if record.force_policy == "any-force" then return true end
   local force = entity.force
   return force == record.force or (record.force_policy == "same-or-neutral"
     and (not force or force.name == "neutral"))
@@ -193,7 +192,7 @@ local function source_types_match(record, types)
   return true
 end
 
-local function candidate_view(record, limit)
+local function candidate_view(record, limit, view_radius)
   local list = record.list
   local size, read, write, accepted = #list, 1, 1, 0
   local view = {}
@@ -204,7 +203,7 @@ local function candidate_view(record, limit)
     if valid(entity) and record.types[entity.type] then
       list[write] = entity
       write = write + 1
-      if source_matches(record, entity) then
+      if source_matches(record, entity, view_radius) then
         accepted = accepted + 1
         view[accepted] = entity
       end
@@ -231,13 +230,12 @@ local function retained_candidates(pair, radius, domain, types, force_policy, di
   local position = station.position
   local cached = key and r.source_cache[key]
   if cached and cached.retained_candidates == 1 and cached.complete == true
-      and now() < (tonumber(cached.expires_tick) or 0)
       and cached.station == station and cached.surface == station.surface
-      and cached.force == station.force and cached.radius == radius
+      and cached.force == station.force and cached.radius >= radius
       and cached.x == position.x and cached.y == position.y
       and source_types_match(cached, types) then
     stat("retained_source_cache_hits")
-    return candidate_view(cached, limit)
+    return candidate_view(cached, limit, radius)
   end
   if key then r.source_cache[key] = nil end
   stat("retained_source_initial_discoveries")
@@ -247,13 +245,12 @@ local function retained_candidates(pair, radius, domain, types, force_policy, di
       domain = domain, force_policy = force_policy, types = {}, type_names = {},
       station = station, surface = station.surface, force = station.force,
       surface_index = station.surface.index, radius = radius,
-      x = position.x, y = position.y, tick = now(),
-      expires_tick = now() + M.candidate_ttl }
+      x = position.x, y = position.y, tick = now() }
     for index, name in ipairs(types) do
       record.types[name], record.type_names[index] = true, name
     end
     if key then r.source_cache[key] = record end
-    return candidate_view(record, limit)
+    return candidate_view(record, limit, radius)
   end
   return list
 end
@@ -263,6 +260,50 @@ end
 -- callers still recheck inventories, wire permissions, roles and live stock.
 function M.source_candidates(pair, radius, domain, types, force_policy, discover)
   return retained_candidates(pair, radius, domain, types, force_policy, discover)
+end
+
+-- A caller may encounter additional identities in an engine-owned vehicle or
+-- robot list. Merge that batch into this existing domain once; do not turn
+-- every observed robot into a walk over every station's retained sources.
+local function merge_source_identities(record, entities, retain_outside)
+  local units, unitless, added = {}, {}, 0
+  for _, entity in ipairs(record.list) do
+    if valid(entity) then
+      if entity.unit_number then units[entity.unit_number] = true
+      else unitless[#unitless + 1] = entity end
+    end
+  end
+  for _, entity in ipairs(entities) do
+    if member_matches(record, entity) or (retain_outside and valid(entity)
+        and record.types[entity.type] and entity.surface == record.surface) then
+      local unit, known = entity.unit_number, false
+      if unit then known = units[unit] == true
+      else
+        for _, present in ipairs(unitless) do if present == entity then known = true; break end end
+      end
+      if not known then
+        record.list[#record.list + 1] = entity
+        if unit then units[unit] = true else unitless[#unitless + 1] = entity end
+        added = added + 1
+      end
+    end
+  end
+  return added
+end
+
+function M.observe_source_candidates(pair, radius, domain, types, force_policy, entities)
+  if not (valid_pair(pair) and type(entities) == "table") then return 0 end
+  local root, station = M.root(), pair.station
+  local key = candidate_cache_key(pair, domain, force_policy)
+  local record = key and root.source_cache[key]
+  if not (record and record.retained_candidates == 1 and record.complete == true
+      and record.station == station and record.surface == station.surface
+      and record.force == station.force and record.radius >= radius
+      and record.x == station.position.x and record.y == station.position.y
+      and source_types_match(record, types)) then return 0 end
+  local added = merge_source_identities(record, entities)
+  if added > 0 then stat("source_membership_observations", added) end
+  return added
 end
 
 local container_types = { "container", "logistic-container", "car", "spider-vehicle" }
@@ -319,7 +360,7 @@ end
 
 local function update_source_membership(record, event, change)
   local entity = event and (event.destination or event.created_entity or event.entity
-    or event.vehicle or event.corpse)
+    or event.vehicle or event.corpse or event.cargo_pod or event.spawned_container)
   if not entity then
     if event and event.surface_index == record.surface_index then
       if change == "surface-deleted" then return "discard" end
@@ -454,7 +495,34 @@ local function wrap_authority_pairs()
   return true
 end
 
+local mobile_cell_owner_types_1497 = {
+  character = true, car = true, ["spider-vehicle"] = true,
+  locomotive = true, ["cargo-wagon"] = true, ["fluid-wagon"] = true,
+  ["artillery-wagon"] = true, ["infinity-cargo-wagon"] = true,
+}
 local function source_event(event, change)
+  local removed = event and event.entity
+  if change == "removed" and valid(removed) and (removed.type == "roboport"
+      or mobile_cell_owner_types_1497[removed.type]) then
+    local cell_ok, cell = pcall(function() return removed.logistic_cell end)
+    local ok, network = false, nil
+    if cell_ok and cell and cell.valid and cell.owner == removed then
+      ok, network = pcall(function() return cell.logistic_network end)
+    end
+    if ok and network and network.valid and #network.cells <= 1 then
+      -- Losing the last port leaves valid orphan robots outside the engine's
+      -- network lists. Keep these known identities before that list vanishes;
+      -- live area checks still decide whether their stock is reachable.
+      local robots, added = network.robots, 0
+      for _, record in pairs(M.root().source_cache) do
+        if record.retained_candidates == 1 and record.surface == removed.surface
+            and (record.types["logistic-robot"] or record.types["construction-robot"]) then
+          added = added + merge_source_identities(record, robots, true)
+        end
+      end
+      if added > 0 then stat("source_membership_observations", added) end
+    end
+  end
   if change == "player-moved" then
     local player = event and event.player_index and game and game.get_player
       and game.get_player(event.player_index) or nil
@@ -466,7 +534,7 @@ local function source_event(event, change)
     if not (train and train.valid) then return 0 end
     local changed = 0
     for _, entity in pairs(train.carriages or {}) do
-      if valid(entity) and entity.type == "cargo-wagon" then
+      if valid(entity) then
         changed = changed + M.invalidate_entity_sources({ entity = entity }, "moved")
       end
     end
@@ -479,8 +547,58 @@ local function source_event(event, change)
       end
     end
     return changed
+  elseif change == "cargo-arrived" then
+    local changed = 0
+    for _, field in ipairs({"cargo_pod", "spawned_container"}) do
+      local entity = event and event[field]
+      if valid(entity) then
+        changed = changed + M.invalidate_entity_sources({entity = entity}, "built")
+      end
+    end
+    return changed
+  elseif change == "rocket-launch" then
+    local rocket = event and event.rocket
+    if valid(rocket) then
+      local ok, pod = pcall(function() return rocket.attached_cargo_pod end)
+      if ok and valid(pod) then
+        return M.invalidate_entity_sources({entity = pod}, "built")
+      end
+    end
+    return 0
+  elseif change == "chunk-generated" then
+    local surface, area = event and event.surface, event and event.area
+    if not (surface and surface.valid and area) then return 0 end
+    local left, right = area.left_top or area[1], area.right_bottom or area[2]
+    if not (left and right) then return 0 end
+    local x1, y1 = left.x or left[1], left.y or left[2]
+    local x2, y2 = right.x or right[1], right.y or right[2]
+    local wanted, types = {}, {}
+    for _, record in pairs(M.root().source_cache) do
+      if record.retained_candidates == 1 and record.surface == surface
+          and x1 <= record.x + record.radius and x2 >= record.x - record.radius
+          and y1 <= record.y + record.radius and y2 >= record.y - record.radius then
+        for _, kind in ipairs(record.type_names) do wanted[kind] = true end
+      end
+    end
+    for kind in pairs(wanted) do types[#types + 1] = kind end
+    if #types == 0 then return 0 end
+    table.sort(types)
+    -- New generated territory has no individual built events. Inspect only
+    -- this new chunk, and only types owned by existing retained domains.
+    local ok, entities = pcall(surface.find_entities_filtered, {area = area, type = types})
+    if not (ok and type(entities) == "table") then return 0 end
+    local changed = 0
+    for _, entity in ipairs(entities) do
+      changed = changed + M.invalidate_entity_sources({entity = entity}, "built")
+    end
+    stat("generated_chunk_source_queries")
+    return changed
   end
-  return M.invalidate_entity_sources(event, change)
+  local changed = M.invalidate_entity_sources(event, change)
+  if event and valid(event.robot) then
+    changed = changed + M.invalidate_entity_sources({entity = event.robot}, "moved")
+  end
+  return changed
 end
 
 local function install_event_invalidation()
@@ -495,6 +613,7 @@ local function install_event_invalidation()
       { "script_raised_built", "built" }, { "script_raised_revive", "built" },
       { "on_space_platform_built_entity", "built" },
       { "on_player_mined_entity", "removed" }, { "on_robot_mined_entity", "removed" },
+      { "on_pre_player_mined_item", "removed" }, { "on_robot_pre_mined", "removed" },
       { "on_space_platform_mined_entity", "removed" },
       { "on_entity_died", "removed" }, { "script_raised_destroy", "removed" },
       { "on_entity_cloned", "built" }, { "script_raised_teleported", "moved" },
@@ -505,6 +624,12 @@ local function install_event_invalidation()
       { "on_train_changed_state", "train-moved" }, { "on_train_created", "train-moved" },
       { "on_post_entity_died", "corpses-created" },
       { "on_character_corpse_expired", "removed" },
+      { "on_cargo_pod_started_ascending", "cargo-arrived" },
+      { "on_cargo_pod_finished_ascending", "cargo-arrived" },
+      { "on_cargo_pod_finished_descending", "cargo-arrived" },
+      { "on_cargo_pod_delivered_cargo", "cargo-arrived" },
+      { "on_rocket_launch_ordered", "rocket-launch" },
+      { "on_chunk_generated", "chunk-generated" },
       { "on_surface_cleared", "surface-cleared" },
       { "on_surface_deleted", "surface-deleted" } }) do
     if d[spec[1]] then events[#events + 1] = { id = d[spec[1]], change = spec[2] } end

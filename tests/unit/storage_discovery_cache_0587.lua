@@ -182,12 +182,12 @@ game.tick = discovery_tick + 1
 check(Authority.generic_item_count(pair, "coal"), 13, "next tick changed live inventory")
 check(scans, before_tick + (baseline and 1 or 0), "next tick repeated spatial discovery")
 game.tick = discovery_tick + 1799
-check(Authority.generic_item_count(pair, "coal"), 13, "live stock before refresh")
+check(Authority.generic_item_count(pair, "coal"), 13, "live stock before time boundary")
 check(scans, before_tick + (baseline and 2 or 0), "discovery repeated without a domain change")
-local before_expiry = scans
+local before_boundary = scans
 game.tick = discovery_tick + 1800
-check(Authority.generic_item_count(pair, "coal"), 13, "refresh changed stock")
-check(scans, before_expiry + 1, "30-second boundary did not refresh membership once")
+check(Authority.generic_item_count(pair, "coal"), 13, "time boundary changed stock")
+check(scans, before_boundary + (baseline and 1 or 0), "30-second boundary rediscovered membership")
 
 local before_periods = scans
 for period = 2, 20 do
@@ -195,8 +195,8 @@ for period = 2, 20 do
   Economy.cleanup()
   check(Authority.generic_item_count(pair, "coal"), 13, "retained stock changed at a time boundary")
 end
-check(scans, before_periods + 19,
-  "each elapsed 1800-tick period must refresh once on demand")
+check(scans, before_periods + (baseline and 19 or 0),
+  "elapsed periods must not rediscover unchanged physical membership")
 
 -- Reload reconstructs module functions/event routes, not physical membership.
 local before_reload = scans
@@ -264,7 +264,23 @@ check(scans, before_clear + (baseline and 2 or 0), "surface clear/build caused r
 
 if not baseline then
   -- A previously unseen car can move into range without a player/build
-  -- event. Empty membership must not hide its real inventory forever.
+  -- event. The installed catalog's engine list admits it immediately, while
+  -- its retained identities remain the same shared 0587 source-cache owner.
+  local previous_catalog = package.loaded["scripts.core.station_catalog"]
+  local previous_prototypes = prototypes
+  prototypes = {entity = {
+    ["steel-chest"] = {type="container", get_inventory_size=function(id)
+      return id == defines.inventory.chest and 48 or nil end},
+    car = {type="car", get_inventory_size=function(id)
+      return id == defines.inventory.car_trunk and 80 or nil end},
+  }}
+  package.loaded["scripts.core.station_catalog"] = nil
+  local Catalog = require("scripts.core.station_catalog")
+  local vehicles = {}
+  game.get_vehicles = function(options)
+    check(options.surface, surface, "engine vehicle surface")
+    return vehicles
+  end
   for _, entity in ipairs(entities) do
     changed("script_raised_destroy", entity)
     entity.valid = false
@@ -276,23 +292,41 @@ if not baseline then
   local empty_scans = scans
   local vehicle = chest(6000, 96, { coal = 17 })
   vehicle.type = "car"
+  local fuel = inventory({coal=3})
   vehicle.get_inventory = function(id)
+    if id == defines.inventory.chest then return fuel end -- Native ID alias.
     return id == defines.inventory.car_trunk and vehicle.inv or nil
   end
   entities[1] = vehicle
+  vehicles[1] = vehicle
   vehicle.position.x = 4
-  game.tick = empty_tick + 1799
+  vehicle.inv.items.coal = 0
+  check(Authority.generic_item_count(pair, "coal"), 0,
+    "fuel-only vehicle became generic storage")
+  check(Authority.remove_generic_item(pair, "coal", 1), 0,
+    "generic removal consumed a fuel-only source")
+  check(fuel.items.coal, 3, "fuel-only contents changed")
+  vehicle.inv.items.coal = 17
+  check(Authority.generic_item_count(pair, "coal"), 17,
+    "silent vehicle entry was not immediately available from its trunk")
+  check(scans, empty_scans, "engine arrival rediscovered the world")
+  check(Authority.remove_generic_item(pair, "coal", 2), 2, "vehicle trunk withdrawal")
+  check(vehicle.inv.items.coal, 15, "vehicle trunk was not used")
+  check(fuel.items.coal, 3, "generic storage consumed vehicle fuel")
+  vehicle.inv.items.coal = 17
   for _ = 1, 100 do
-    check(Authority.generic_item_count(pair, "coal"), 0, "unexpired empty membership")
+    check(Authority.generic_item_count(pair, "coal"), 17, "engine vehicle membership changed")
   end
-  check(scans, empty_scans, "empty membership repeatedly searched")
+  check(scans, empty_scans, "vehicle stock questions repeatedly searched")
+  game.tick = empty_tick + 1799
+  check(Authority.generic_item_count(pair, "coal"), 17, "live stock before time boundary")
   game.tick = empty_tick + 1800
-  check(Authority.generic_item_count(pair, "coal"), 17, "silent vehicle entry stayed hidden after 30 seconds")
-  check(scans, empty_scans + 1, "expired empty membership was not rediscovered once")
+  check(Authority.generic_item_count(pair, "coal"), 17, "time boundary hid vehicle stock")
+  check(scans, empty_scans, "time boundary rediscovered retained membership")
   for _ = 1, 100 do
     check(Authority.generic_item_count(pair, "coal"), 17, "refreshed vehicle stock changed")
   end
-  check(scans, empty_scans + 1, "expiry caused a repeated query for every stock read")
+  check(scans, empty_scans, "elapsed time caused repeated stock discovery")
   vehicle.inv.items.coal = 21
   check(Authority.generic_item_count(pair, "coal"), 21, "vehicle stock was cached")
   -- Known moving sources remain members even while ineligible. Returning
@@ -305,11 +339,15 @@ if not baseline then
   check(scans, before_return, "known vehicle return rediscovered the world")
   game.tick = empty_tick + 3600
   check(Authority.generic_item_count(pair, "coal"), 21, "returning vehicle lost stock at time boundary")
-  check(scans, before_return + 1, "next 1800-tick boundary did not refresh once")
+  check(scans, before_return, "next time boundary rediscovered the world")
   Economy.invalidate_all("failed-discovery-fixture")
   fail_next_scan = true
   check(Authority.generic_item_count(pair, "coal"), 0, "failed discovery invented inventory")
   check(Authority.generic_item_count(pair, "coal"), 21, "failed discovery poisoned a complete negative cache")
+  assert(Catalog.inventory_candidates(pair), "actual shared catalog was not exercised")
+  package.loaded["scripts.core.station_catalog"] = previous_catalog
+  prototypes = previous_prototypes
+  game.get_vehicles = nil
 end
 
 -- Missing world-change routing must retain fresh discovery, including a
@@ -328,4 +366,4 @@ check(uncached.generic_item_count(pair, "coal"), 1, "uncached first read")
 entities[#entities + 1] = chest(5001, 6, { coal = 2 })
 check(uncached.generic_item_count(pair, "coal"), 3, "missing events hid a new chest")
 check(scans, before_fallback + 2, "missing events incorrectly enabled reuse")
-print("[storage-discovery-cache-0587] PASS live-counts qualities roles domain movement events complete-cap-overflow bounded-1800-tick-refresh reload live-force surface-clear empty-area silent-moving-vehicle failure-retry canonical-cache fallback")
+print("[storage-discovery-cache-0587] PASS live-counts qualities roles domain movement events complete-cap-overflow no-timer-rediscovery reload live-force surface-clear empty-area immediate-engine-vehicle trunk-not-fuel failure-retry canonical-cache fallback")

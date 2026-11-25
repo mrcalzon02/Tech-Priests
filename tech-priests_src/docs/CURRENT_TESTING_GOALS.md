@@ -40,6 +40,63 @@ The measurement protocol is `docs/UPS_VALIDATION_RUNBOOK_0742.md`; the current
 topology starts at `docs/BEHAVIOR_MERMAID_MAP_0660.md`. No native timing pass is
 claimed by this checklist.
 
+### Retained inventory membership and facility accounting
+
+The current inventory repair keeps the existing 0587 source-cache authority.
+0327, 0527, 0686, doctrine and 0643 share its complete typed physical identities;
+0686 keeps its four-type, 256-entry eligible view and complete overflow. No elapsed-time
+expiry starts another inventory-area query. Wider known coverage serves
+narrower live views, while a changed station domain, coverage expansion or
+explicit cache clear can require one complete seed. Current quantities,
+force, range, wire permissions and slot/role rules are checked by consumers.
+
+The scheduled 0327 resource survey excludes inventory-bearing types, merges
+their retained identities and does not read inventory contents. Item questions
+read current counts; explicitly opened/refreshed Work State and catalog panels
+call the inventory snapshot API. Player stock/cursor invalidation in 0634 clears
+shortage answers without dirtying the physical catalog. Entity topology events
+retain the last resource snapshot until the existing rotating scan route runs.
+
+Verify ordinary mobile arrivals through current engine vehicle/robot lists,
+retained-silo pods and the existing membership owner. Cargo, rocket, corpse,
+build/removal and overlapping generated-chunk events maintain that same list.
+Removal of the last roboport or equipment-grid logistic cell batch-retains its
+deployed robots before the engine list disappears. Preserve the documented
+limits: never-observed orphans outside the initial area, unsupported unraised
+script changes and some personal-equipment removal timing may require an
+explicit refresh. Do not hide those gaps behind a periodic replacement scan.
+
+Focused installed-owner regressions are
+`tests/unit/storage_discovery_cache_0587.lua`,
+`tests/unit/logistics_retained_sources_0527.lua`,
+`tests/unit/station_catalog_retained_inventory_1497.lua`,
+`tests/unit/station_catalog_scan_context_1493.lua` and
+`tests/unit/station_catalog_event_deferral_0634.lua`.
+The separate native 2.1.25 inventory fixture verifies the one-seed/warm-question
+contract, real wire policy, vehicle/robot arrivals, build/removal and reload.
+It also proves 0686 rejects fuel-only car coal, uses the actual trunk slot and
+leaves fuel unchanged during a physical trunk withdrawal. This isolated
+semantic evidence does not establish owner-save UPS acceptance.
+
+The 0643 facility assessment now uses the bound native `get_inventory(id)` call
+and retained machine/provider identities. The former extra entity argument
+was caught as an error and made real stock appear empty. Its focused native
+comparison reads the actual 20 iron plates, 12 copper plates and 8 gears after
+the fix, with no corresponding deficits. Run
+`tests/unit/emergency_facility_provider_snapshot_1072.lua` to retain live
+force/surface/36-tile/network checks, provider deduplication and disconnection
+behavior. Its three reserve-item counts share one provider list. The 113-tick
+assessment still visits all force/surface groups despite its advertised budget
+of four; planned-ghost, other physical resource/infrastructure surveys and
+loose-item pickup remain separate work to measure.
+
+The merged 0644 broker path preserves the former allowance of up to eight
+station attempts per 97-tick cycle, spreading them one per admitted five-tick
+pulse. Validate the saved batch, cursor, original deadline, failed/removed
+station accounting and reload continuation; do not describe it as one visit
+every 97 ticks. Public synchronous calls and the conditional registry fallback
+retain their separate contracts.
+
 ## 2026-11-02 — Goal #6 functional closure, measurable efficiency, and new-method execution plan
 
 **Authority:** [Issue #6](https://github.com/mrcalzon02/Tech-Priests/issues/6) remains the live goal/acceptance ledger. This section is a work plan, not a claim of release readiness. No new workflow, controller, or independent narrative ledger is authorized. Preserve the recovery authority, physical custody and original 123,000-tick science/combat gates. Keep existing checks; run focused tests before expensive full-engine repeats. Only objective functional failures may block builds; visual/style/balance and performance measurements are diagnostic.

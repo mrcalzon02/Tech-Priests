@@ -46,7 +46,7 @@ local function runtime_radius(pair)
   return math.max(8, tonumber(r) or 32)
 end
 
-local function clear_pair_state(pair, reason)
+local function clear_pair_state(pair, reason, inventory_only)
   if not valid_pair(pair) then return false end
   local su=station_unit(pair)
   local r=M.root()
@@ -57,7 +57,11 @@ local function clear_pair_state(pair, reason)
   -- calling the scanner here also repeated a full area walk for every entity
   -- in a construction/removal burst. Retain the last complete snapshot until
   -- Catalog.scan_due refreshes it, but forbid clean reuse of a dirty snapshot.
-  if storage and storage.tech_priests and storage.tech_priests.station_catalog_0327 then
+  -- Stock/cursor changes do not change the physical entity list. Inventory
+  -- consumers read live quantities from retained identities; those events
+  -- must not schedule another surrounding-world discovery pass.
+  if not inventory_only and storage and storage.tech_priests
+      and storage.tech_priests.station_catalog_0327 then
     local catroot=storage.tech_priests.station_catalog_0327
     if catroot.next_scan then catroot.next_scan[su] = 0 end
     local catalog=catroot.stations and catroot.stations[su]
@@ -83,7 +87,7 @@ local function clear_pair_state(pair, reason)
   return true
 end
 
-function M.invalidate_near(surface, position, reason)
+function M.invalidate_near(surface, position, reason, inventory_only)
   local r=M.root()
   if r.enabled == false or not (surface and position) then return false end
   local changed=0
@@ -92,7 +96,7 @@ function M.invalidate_near(surface, position, reason)
     if valid_pair(pair) and pair.station.surface == surface then
       local radius = runtime_radius(pair) + M.radius_padding
       if dist_sq(pair.station.position, position) <= radius * radius then
-        if clear_pair_state(pair, reason) then changed=changed+1 end
+        if clear_pair_state(pair, reason, inventory_only) then changed=changed+1 end
       end
     end
   end
@@ -115,7 +119,7 @@ end
 function M.handle_player_inventory_event(event, reason)
   local player = event and event.player_index and game.get_player(event.player_index) or nil
   if player and player.valid and player.character and player.character.valid then
-    return M.invalidate_near(player.character.surface, player.character.position, reason)
+    return M.invalidate_near(player.character.surface, player.character.position, reason, true)
   end
   return false
 end

@@ -108,16 +108,20 @@ stops doing its job cannot be reported as a performance improvement.
 6. Capture callback invocations/deferrals, scanned candidates and native query
    calls, cache hits/misses/invalidations, queue depth, oldest pending age and
    actual completed actions. A deferred callback must retain its obligation.
-7. Exercise the concrete change: repeated item lookups reuse one typed physical
-   membership discovery within its 1,800-tick lifetime; build/mine/destroy and
-   vehicle/corpse events update known membership immediately; stock and source
-   eligibility remain live. A previously unseen vehicle can enter an empty
-   cached area without a movement event, so prove that the next requested
-   lookup at expiry discovers it. This bounded fallback is required for
-   correctness; an event-only fixture does not cover autonomous entry. Verify
-   that smoothing planner work preserves the former per-cycle attempt quota,
-   cursor fairness, failure accounting and pending deadlines across reload.
-   Keep movement, combat, lifecycle and physical custody work responsive.
+7. Exercise the concrete change: repeated chest lookup across many 1,800-tick
+   boundaries and alternating narrower radii without timed rediscovery;
+   build/mine/destroy, cargo/corpse/chunk and autonomous vehicle/robot arrivals;
+   last-cell removal; live stock, wire and force changes; immediate
+   movement/combat/lifecycle work; and save/reload with pending work. Verify
+   that scheduled resource surveys exclude inventory-bearing types and do not
+   read contents, while item questions and explicit UI snapshots read live
+   quantities. Retaining identities must not freeze stock or suppress events.
+   Record engine mobile-list traversal separately from spatial queries. Verify
+   that explicit cache clearing recovers unsupported/unraised changes; elapsed
+   time alone must not substitute for that refresh.
+   Verify that the 0644 continuation preserves the original per-cycle attempt
+   quota, cursor fairness, failure accounting and pending deadlines across
+   reload while movement, combat, lifecycle and custody remain responsive.
 8. Once the four-priest failure is resolved, repeat the established higher-count
    cases and representative idle/logistics/combat/construction workloads before
    extending the performance claim to those populations. Report any unrun case
@@ -214,7 +218,7 @@ the exact validation state; regeneration alone does not resolve the listed risks
 The following paths are the first UPS suspects to watch during the next clean-world pass.
 
 1. Station catalog fallback: `station_catalog.scan_pair` still falls back to a bounded area scan when the 0579 cell index is dirty or unknown. This is correct for universal discovery but is the main scan cliff if repeated often.
-2. Logistics source fallback: `logistics_fetch_executor_0527` uses 0587's retained, item-independent typed source membership with a 1,800-tick demand expiry for unobserved moving sources. Measure live inventory probes separately from cold/domain-change/expiry discovery, immediate membership events and the independent loose-item scan; an item miss no longer forces a catalog scan.
+2. Inventory discovery and logistics: 0327's inventory API retains item-independent typed source identities in 0587 and updates the same owner from events and engine mobile lists. 0527, 0686, doctrine and 0643 use that API with their own live policies; 0686 keeps its four-type, 256-entry eligible generic-storage view. Verify that fuel-only car stock is neither counted nor withdrawn, while trunk stock is available and fuel remains unchanged. Measure cold/domain/coverage-expansion queries, mobile-list reads, live item probes, explicit UI contents snapshots and the separate loose-item scan independently. Scheduled resource surveys must exclude inventory types; a covered 0527 miss must not start another inventory domain or force a catalog scan. The 0643 assessment still traverses all groups despite its advertised budget of four.
 3. Repair discovery: `work_queue_authority.discover_repair_near` now filters by force before damaged-entity checks. If repair direct scans remain high, repair discovery should be converted to event-fed damage submissions first and scan fallback second.
 4. Direct acquisition physical guard: `direct_acquisition_physical_guard_0649` now scans only resource/tree/mineable-debris types. If it still appears in profiler output, the next step is to stop scanning when the task already has a valid entity and only retry after a terminal target failure.
 5. Movement ownership: `active_leaf_task_truth_0655`, `movement_intent_authority_0654`, and `direct_acquisition_movement_lock_0650` should reduce repeated engine commands. If `engine_commands` keeps climbing without completions, movement ownership is still fighting.

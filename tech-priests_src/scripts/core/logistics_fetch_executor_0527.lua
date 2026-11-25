@@ -284,11 +284,11 @@ local function source_inventory(source,inv_id)
   if not valid(source) then return nil end
   if source_blocked_by_wire(source) then stat("wired-source-skipped-0527"); return nil end
   if inv_id ~= nil then
-    return source_inventory_by_id_unchecked(source,inv_id)
+    return source_inventory_by_id_unchecked(source,inv_id),inv_id
   end
   if not (defines and defines.inventory and source.get_inventory) then return nil end
   local ids=inventory_probe_ids()
-  for _,id in ipairs(ids) do if id then local inv=source_inventory_by_id_unchecked(source,id); if inv then return inv end end end
+  for _,id in ipairs(ids) do if id then local inv=source_inventory_by_id_unchecked(source,id); if inv then return inv,id end end end
   return nil
 end
 local function inventory_count(inv,item) if not (inv and inv.valid and item) then return 0 end local ok,n=pcall(function() return inv.get_item_count(item) end); return ok and (tonumber(n) or 0) or 0 end
@@ -303,6 +303,39 @@ end
 
 local function catalog_storage_source(pair,item)
   if not (valid_pair(pair) and item) then return nil end
+  local catalog=rawget(_G,"TechPriestsStationCatalog")
+    or package.loaded["scripts.core.station_catalog"]
+  if catalog and type(catalog.inventory_candidates)=="function" then
+    local radius=tonumber(pair.radius) or 24
+    if type(_G.get_station_operating_radius)=="function" then
+      local ok,value=pcall(_G.get_station_operating_radius,pair.station)
+      if ok and tonumber(value) then radius=tonumber(value) end
+    end
+    radius=math.max(8,radius)
+    local ok,candidates=pcall(catalog.inventory_candidates,pair,radius,
+      {"container","logistic-container","car","spider-vehicle",
+        "cargo-wagon","character-corpse"})
+    if ok and type(candidates)=="table" then
+      local best
+      for _,entity in ipairs(candidates) do
+        if eligible_source(pair,entity) then
+          local distance=dist_sq(entity.position,pair.station.position)
+          if distance<=radius*radius then
+            local inventory,inventory_id=source_inventory(entity)
+            local count=inventory_count(inventory,item)
+            if count>0 and (not best or distance<best.station_distance_sq) then
+              -- source_inventory retains this executor's six general-source
+              -- types and live wire policy; machine buffers stay with their
+              -- existing physical output owners.
+              best={kind="known-storage-0327",source=entity,inventory_id=inventory_id,item_name=item,
+                count=count,station_distance_sq=distance}
+            end
+          end
+        end
+      end
+      return best,true
+    end
+  end
   -- A missing requested item does not invalidate spatial knowledge. Read
   -- the existing catalog only: its find/get helpers can initiate a complete
   -- station scan, which previously ran again on nearly every dispatch pulse.
@@ -416,7 +449,15 @@ local function nearby_storage_source(pair,item)
   if best then stat("nearby-storage-fallback-hit"); return {kind="nearby-storage-0659",source=best,inventory_id=best_inv_id,item_name=item,count=best_count or 1,station_distance_sq=best_d or 0} end
   stat("nearby-storage-fallback-miss"); return nil
 end
-local function known_fetch_source(pair,item) return catalog_storage_source(pair,item) or nearby_storage_source(pair,item) or loose_ground_source(pair,item) end
+local function known_fetch_source(pair,item)
+  local source,covered=catalog_storage_source(pair,item)
+  if source then return source end
+  if not covered then
+    source=nearby_storage_source(pair,item)
+    if source then return source end
+  end
+  return loose_ground_source(pair,item)
+end
 
 local function publish_leaf(pair,src,item,phase)
   local label

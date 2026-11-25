@@ -1,22 +1,41 @@
 -- Construction/removal bursts must use the existing bounded catalog scanner.
 package.path='./tech-priests_src/?.lua;./tech-priests_src/?/init.lua;'..package.path
-game={tick=1};settings={global={}};defines={inventory={chest=1}}
+game={tick=1};settings={global={}};defines={inventory={chest=1},events={
+  on_built_entity=1,on_entity_died=2,on_player_main_inventory_changed=3}}
 storage={tech_priests={pairs_by_station={}}}
+local handlers={}
+script={on_event=function(id,handler)handlers[id]=handler end,
+  get_event_handler=function(id)return handlers[id]end,
+  on_nth_tick=function()end}
+TechPriestsRuntimeEventRegistry=require('scripts.core.runtime_event_registry')
+local function emit(name,event)
+  event.name=defines.events[name];event.tick=game.tick
+  assert(handlers[event.name],'missing installed event route')(event)
+end
 local surface={valid=true,index=1,name='nauvis'}
 local force={valid=true,index=1,name='player'}
-local queries,entities=0,{}
-surface.find_entities_filtered=function()
-  queries=queries+1
+local chest_prototype={name='wooden-chest',type='container',
+  get_inventory_size=function(id)if id==1 then return 16 end end}
+prototypes={entity={['wooden-chest']=chest_prototype}}
+local queries,inventory_queries,entities=0,0,{}
+surface.find_entities_filtered=function(query)
+  if query.invert then queries=queries+1 else inventory_queries=inventory_queries+1 end
+  local types={}
+  if type(query.type)=='string' then types[query.type]=true
+  else for _,kind in ipairs(query.type or {})do types[kind]=true end end
   local out={}
   for _,entity in ipairs(entities)do
-    if entity.valid then out[#out+1]=entity end
+    local matches=not query.type or types[entity.type]==true
+    if query.invert then matches=not matches end
+    if entity.valid and matches then out[#out+1]=entity end
   end
   return out
 end
 local function chest(unit)
-  local inv={valid=true,get_contents=function()return {['iron-plate']=unit}end}
+  local inv={valid=true,get_contents=function()return {['iron-plate']=unit}end,
+    get_item_count=function(item)return item=='iron-plate' and unit or 0 end}
   return {valid=true,unit_number=unit,name='wooden-chest',type='container',
-    position={x=1,y=1},surface=surface,force=force,
+    position={x=1,y=1},surface=surface,force=force,prototype=chest_prototype,
     get_inventory=function(id)if id==1 then return inv end end}
 end
 entities[1]=chest(10)
@@ -31,16 +50,19 @@ for i=1,4 do
 end
 local Catalog=require('scripts.core.station_catalog')
 local Invalidation=require('scripts.core.station_area_change_invalidator_0634')
+assert(require('scripts.core.efficiency_economy_0587').install())
+assert(Invalidation.install())
 _G.tech_priests_0327_scan_station_catalog=Catalog.scan_pair
 for _,pair in ipairs(roster)do assert(Catalog.scan_pair(pair))end
-assert(queries==4)
+assert(queries==4 and inventory_queries==4,
+  'each station should seed inventories once and survey the remaining world once')
 local originals={}
 for i,pair in ipairs(roster)do originals[i]=Catalog.get_for_pair(pair)end
 
 game.tick=2
 entities[2]=chest(11)
 for i=1,200 do
-  assert(Invalidation.handle_entity_event({created_entity=entities[2]},'built/created'))
+  emit('on_built_entity',{created_entity=entities[2]})
 end
 assert(queries==4,'event burst performed synchronous area scans')
 for i,pair in ipairs(roster)do
@@ -62,9 +84,34 @@ for _,pair in ipairs(roster)do
     'dirty snapshot was clean-reused or new construction was missed')
 end
 
+-- Inventory/cursor events change stock, not the surrounding entity list.
+-- Clear shortage conclusions while retaining each physical catalog's due
+-- time and clean status; a player transfer must not request world discovery.
+local catalog_root=storage.tech_priests.station_catalog_0327
+local prior_due={}
+for _,pair in ipairs(roster)do
+  local unit=pair.station.unit_number
+  prior_due[unit]=catalog_root.next_scan[unit]
+  pair.emergency_missing_item='iron-plate'
+end
+game.get_player=function()
+  return {valid=true,character={valid=true,surface=surface,position={x=1,y=0}}}
+end
+for i=1,200 do
+  emit('on_player_main_inventory_changed',{player_index=1})
+end
+for _,pair in ipairs(roster)do
+  local unit=pair.station.unit_number
+  assert(not Catalog.get_for_pair(pair).dirty_0634
+    and catalog_root.next_scan[unit]==prior_due[unit]
+    and pair.emergency_missing_item==nil,
+    'stock changes dirtied spatial membership or retained a stale shortage')
+end
+assert(queries==8,'player stock changes rediscovered nearby inventories')
+
 game.tick=121
-Invalidation.handle_entity_event({entity=entities[1]},'removed/destroyed')
-Invalidation.handle_entity_event({entity=entities[2]},'removed/destroyed')
+emit('on_entity_died',{entity=entities[1]})
+emit('on_entity_died',{entity=entities[2]})
 entities[1].valid=false;entities[2].valid=false
 for _,pair in ipairs(roster)do
   assert(Catalog.find_known_source(pair,'iron-plate')==nil,
@@ -87,7 +134,7 @@ for pulse=1,4 do
   local added=chest(20+pulse)
   entities[#entities+1]=added
   local before=queries
-  assert(Invalidation.handle_entity_event({created_entity=added},'built/created'))
+  emit('on_built_entity',{created_entity=added})
   assert(queries==before,'continuous construction performed eager scanning')
   Catalog.scan_due(2)
   assert(queries==before+2,'continuous construction exceeded scan budget')
@@ -105,4 +152,5 @@ for _,pair in ipairs(roster)do
   assert(refreshes[pair.station.unit_number]==2,
     'continuous event stream starved a dirty station catalog')
 end
-print('[station-catalog-event-deferral-0634] PASS: 200 events, four stations, zero eager scans; bounded fair refresh under continuous events and live validity')
+assert(inventory_queries==4,'events, item questions or resource surveys rediscovered inventory membership')
+print('[station-catalog-event-deferral-0634] PASS: world events deferred fairly; 200 stock events clear shortages without dirtying physical membership; live validity')

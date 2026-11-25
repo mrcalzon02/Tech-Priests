@@ -34,9 +34,10 @@ flowchart TD
 flowchart TD
     Wrapper["0527 patch_dispatcher"] --> Need["Active request and station shortage"]
     Need --> Guard["Combat, builder and source exclusions"]
-    Guard --> Catalog["Existing catalog snapshot only"]
-    Catalog -->|"miss"| Nearby["0587 retained typed source membership"]
-    Nearby -->|"miss"| Loose["Loose ground items"]
+    Guard --> Catalog["0327 retained inventory candidates"]
+    Catalog -->|"shared API unavailable"| Nearby["Legacy catalog and 0587 nearby fallback"]
+    Catalog -->|"covered area; item absent"| Loose["Loose ground items"]
+    Nearby -->|"miss"| Loose
     Catalog --> Check["Revalidate source stock"]
     Nearby --> Check
     Loose --> Check
@@ -47,7 +48,7 @@ flowchart TD
     Guard -->|"declined"| Dispatcher["Original 0510 service_pair"]
 ```
 
-Source order is catalog, typed nearby storage, loose ground. The wrapper can return before ordinary 0510 selection. `request_move` requires literal accepted movement and checks that the resulting owner and destination are still its own before publishing a fetch task.
+The installed path asks the shared catalog inventory API, then loose ground. A complete shared view with no requested stock does not start a second inventory-discovery path. Legacy catalog/typed nearby access remains a compatibility fallback when that API is unavailable. The wrapper can return before ordinary 0510 selection. `request_move` requires literal accepted movement and checks that the resulting owner and destination are still its own before publishing a fetch task.
 
 ### State and boundaries
 
@@ -58,43 +59,54 @@ Source order is catalog, typed nearby storage, loose ground. The wrapper can ret
 | Movement | Calls `tech_priests_request_movement_0418`; it does not prewrite movement request storage or issue fallback commands. |
 | Transfer | Immediate contact transfer with deposit/refund helpers. Do not call it an accepted persistent-custody transaction without separate verification. |
 | Timing | No independent fetch timer; work happens through its dispatcher wrapper and direct calls. |
-| Discovery | Nearby storage uses `0587.source_candidates` with domain `inventory-fetch-0527` and same-or-neutral force policy. Membership is independent of requested item/order. Event updates are immediate; a 1,800-tick demand expiry also discovers unobserved arrivals, including after an empty result. Initial, expired, changed-domain and explicit-refresh typed native queries have no result limit. |
+| Discovery | `0327.inventory_candidates` uses the existing 0587 `catalog-inventory-0327` domain. 0527 requests its six general-source types, then checks same-or-neutral force, current circular reach, wires and its permitted inventory slot. It does not acquire machine buffers. The compatibility nearby path retains domain `inventory-fetch-0527`; neither domain expires on a timer. |
 | Loose items | The separate routed pickup query still has a 240-tick cache request and native result limit 128. It does not use the retained inventory-source domain. |
-| Catalog access | 0527 reads existing `station_catalog_0327.stations` directly, checks the source's live position against the current station radius, ranks live distances and rechecks current stock. A missing item no longer invokes `find_known_source`, `get_for_pair` or a forced catalog scan. The source-preserved 0526 compatibility helper uses the retained-only catalog approach; this does not establish a new installation path for 0526. |
+| Catalog access | 0527 reads retained identities through the shared API, ranks current station distances and rechecks stock. A missing item does not invoke `get_for_pair`, force a resource survey or repeat nearby inventory discovery after a covered result. The old snapshot path remains a fallback. The source-preserved 0526 helper still reads retained catalog state; this does not establish a new installation path for 0526. |
 
 ## Retained discovery, live stock and catalog refresh
 
 ```mermaid
 flowchart TD
-    Fetch["0527 item request"] --> Membership["0587 retained source membership"]
-    Storage["0686 generic storage request"] --> Membership
-    Membership --> Valid{"Complete, unexpired membership in matching domain?"}
+    Request["0527, doctrine or 0643 request"] --> Inventory["0327 inventory API"]
+    UI["Explicit inventory panel snapshot"] --> Inventory
+    Inventory --> Membership["0587 retained source membership"]
+    Storage["0686 generic storage request"] --> Inventory
+    Membership --> Valid{"Matching domain with sufficient coverage?"}
     Valid -->|"yes"| View["Keep physical identities and filter live eligibility"]
     Valid -->|"no"| Query["Complete typed native area query"]
-    Query --> Record["Retain physical membership with 1800-tick expiry"]
+    Query --> Record["Retain physical membership without time expiry"]
     Record --> View
-    Events["Build, remove, movement and corpse events"] --> Record
-    View --> Live["Current inventory, role, wire and stock checks"]
-    Changes["0634 nearby world change"] --> Dirty["Retain catalog snapshot and mark dirty"]
+    Events["Entity, cargo, corpse and chunk events"] --> Record
+    Inventory --> Engine["Engine mobile lists and retained-silo pods"]
+    Engine --> Record
+    View -->|"item question or UI"| Live["Current inventory, role, wire and stock checks"]
+    Changes["0634 nearby change"] -->|"entity topology"| Dirty["Retain resource snapshot and mark dirty"]
+    Changes -->|"player stock or cursor"| Conclusions["Clear shortage answers; keep physical snapshot"]
     Dirty --> Scan["Catalog registry: rotating two due stations"]
-    Scan --> Snapshot["Replace catalog snapshot; retain completeness flags"]
+    Scan --> Inventory
+    Scan -->|"native query excludes inventory types"| Snapshot["Refresh resource and entity snapshot"]
+    View -->|"identities only"| Snapshot
 ```
 
-`efficiency_economy_0587.source_candidates` and `.container_candidates` reuse the existing source-cache owner. Their keys include source domain, force policy, surface, force and home station. Validity also checks station identity/position, radius and type list. Physical membership is retained independently of current item quantity and force eligibility. Reads keep valid typed known identities when temporarily ineligible and filter the returned view against live force, surface and range; membership events can add or remove identities as they move. Consumers also recheck inventory, roles, wire permissions and available count before transfer. 0686's initial typed query includes other forces so a known source can become eligible after a force change without needing rediscovery.
+`efficiency_economy_0587.source_candidates` and `.container_candidates` reuse the existing source-cache owner. Keys include source domain, force policy, surface, force and home station. Validity also checks station identity/position and type list. An existing larger coverage radius serves narrower live views; alternating catalog, doctrine and facility radii does not replace the record repeatedly. Expansion beyond known coverage can seed once. Physical membership is independent of item quantity and current force eligibility. Reads keep valid typed known identities when temporarily ineligible and filter the returned view against live force, surface and range. Consumers recheck inventory, roles, wire permissions and available count before transfer. 0686's initial typed query includes other forces so an already known source can become eligible after a force change.
 
-Build/removal events, including space-platform variants, clones, script teleports and surface changes update or discard membership. Player driving/position/surface changes update moving vehicles; spider-command completion and train changes update their affected inventory sources. Corpse creation and expiry are also observed. Programmatic stash creation in 0686 calls the same invalidator. Force eligibility is evaluated on every read and does not depend on an entity-force-change notification.
+0327 derives inventory-bearing entity types once from immutable native prototype inventory support, including zero-size support, with explicit runtime-dependent corpse, cargo-pod and proxy-container types. Its shared domain retains empty sources and all forces; each consumer applies its own live eligibility. `find_inventory_source` answers an item question from current counts. `resource_doctrine.find_inventory_source` uses that API with its existing inventory-ID set and current canonical wire policy. `snapshot_inventory` obtains full current contents for an explicitly rendered ledger. These operations do not require a resource survey first.
 
-`candidate_ttl = 60 * 30` bounds reuse of retained inventory membership to 1,800 ticks, including an initially empty result. The first demand after expiry performs complete typed discovery, so a previously unseen vehicle entering without a supported event cannot remain unknown indefinitely. Expiry alone does not run a scan. Records stay in the existing persisted `source_cache` through module reload; old retained records without an expiry refresh on their next demand. Event updates, station/domain changes and explicit refresh can change membership sooner. Short-lived legacy answer cleanup remains separate. Without successful event registration or enabled caching, the owner falls back to discovery. Failed/non-table query results are not installed as complete negative records.
+Build/removal events, including space-platform variants, clones, script teleports and surface changes update or discard membership. Vehicle/player/train/spider and corpse events remain connected. Cargo ascent/descent/delivery events add pods and delivered containers; rocket launch captures the attached pod. Generated chunks receive a typed query restricted to the new chunk when it overlaps an existing retained domain. Programmatic stash creation in 0686 calls the same invalidator. Force eligibility stays live without requiring an entity-force-change event.
 
-The 0686 generic-storage view returns at most 256 candidates while retaining overflow membership. Removal of a visible entry can promote a known overflow entity without another spatial query. Initial population, expired membership or an explicit/domain-change native query is complete and has no entity limit; its cost still grows with local density. 0527's retained typed view is not capped at 256. Cached membership also does not eliminate repeated live inventory probes.
+For ordinary autonomous arrivals, 0327 reads the engine's vehicle list and deployed robots in current logistic networks, including personal networks, and observes awaiting-launch pods through already retained silos. A requested type view avoids unrelated mobile-list work. Newly observed identities are batch-merged through `0587.observe_source_candidates`, not stored in a second world index. Before the last logistic cell is removed, its roboport or equipment-grid owner can preserve deployed robot identities, including those outside the current view, in one batch per affected retained record. These engine lists still have a traversal cost; retaining membership does not make an inventory question constant-time.
 
-`station_area_change_invalidator_0634.clear_pair_state` marks the catalog dirty and due while retaining the last snapshot. It no longer forces a scan for every nearby entity event. `station_catalog.scan_due(2)` runs through a separate registry route every 60 ticks, sorts due station units, and resumes after saved `scan_cursor_0634`. Collecting/sorting due stations still visits the roster. `get_for_pair` can synchronously scan a station with no existing snapshot; explicit refresh can also force a scan. Ordinary known-resource GUI rendering now calls `catalog_for_pair(pair, false)`, so it reuses an existing snapshot but can still initialize a missing one. These paths remain outside the broker's internal callback cap.
+Retained membership has no timer expiry, including an initially empty result, and survives module reload in the existing persisted `source_cache`. Short-lived legacy answer cleanup is separate. Station/domain changes, coverage expansion or explicit cache clearing can repopulate membership. Unraised scripted creation/movement, a never-observed orphan robot outside the initial area, or equipment removal after an unseen robot's old network has vanished may remain unknown until explicit refresh. Elapsed time does not silently replace the area list. Without successful event registration, enabled caching or the required metadata API, compatibility paths fall back to discovery. Failed/non-table results are not installed as complete negative records.
 
-Station rotation does not provide fairness within a dense station area. `catalog_dense_scan_1478.scan` starts its fixed subdivision order again on each invocation, with at most 13 native queries and 3,072 unique returned entities. It does not retain a subtree/entity cursor. An incomplete scan replaces the catalog snapshot with an explicit completeness flag while preserving old ownership keys; retained ownership is not complete candidate knowledge. A stable area above those bounds may repeatedly omit its tail.
+The 0686 generic-storage view prefers the shared 0327 API with exactly container, logistic-container, car and spider-vehicle types. Its live same-force, surface, circular-range and valid-inventory checks admit at most 256 physical candidates; role, quality and quantity policy remains with its consumers. The shared 0587 record retains complete overflow, so removing a visible entry can promote a known entity without another spatial query. Only when the shared API is unavailable does 0686 use its prior generic-storage cache domain. Inventory slots are selected by entity type: chest for the two container types, car trunk for cars and spider trunk for spiders. Native inventory-ID aliases must not expose vehicle fuel as generic storage. Initial population, coverage expansion or an explicit/domain-change native query is complete and has no entity limit; its cost still grows with local density. 0527's retained typed view is not capped at 256. Cached membership also does not eliminate repeated live inventory probes.
 
-Within each scan, `station_catalog` reuses the identity key passed into a resource/mineable claim and the existing read-only prototype-product arrays. Mineable eligibility returns the same product list for catalog insertion. These remove repeated identity construction and per-entity product copies without changing selection, scan limits or cadence. A successful numeric connector count answers both connected and empty cases without materializing `connections`; fully successful modern connector queries avoid obsolete field probes, while uncertain or failed queries retain compatibility fallbacks. Positive and empty inventory-ID results already use the existing prototype cache. These are source reductions, not measured native acceptance.
+`station_area_change_invalidator_0634.clear_pair_state` marks topology changes dirty and due while retaining the last snapshot. Player stock/cursor events clear shortage answers without scheduling physical rediscovery. No nearby entity event forces a synchronous full scan. `station_catalog.scan_due(2)` has a separate 60-tick registry route, sorts due station units and resumes after saved `scan_cursor_0634`; collecting/sorting still visits the roster. Cold `get_for_pair` and explicit refresh can still invoke a survey. Known-resource GUI rendering reuses the resource snapshot when present, then explicitly reads inventory contents through `snapshot_inventory`; a redraw does not expire membership. These paths remain outside the broker's internal callback cap.
 
-0327's broad world survey still includes inventory-bearing entities and reads their current contents. It is distinct from the retained 0527/0686 source-selection paths; the dedicated inventory repair does not establish that every surrounding-world query is event-only. Loose-ground-item pickup retains its separate 240-tick routed cache request.
+Station rotation does not provide fairness within the remaining non-inventory dense survey. `catalog_dense_scan_1478.scan` starts its fixed subdivision order again on each invocation, with at most 13 native queries and 3,072 unique returned entities. It does not retain a subtree/entity cursor. An incomplete scan replaces the resource/catalog snapshot with an explicit completeness flag while preserving old ownership keys; retained ownership is not complete candidate knowledge. A stable area above those bounds may repeatedly omit its non-inventory tail. The separate retained inventory seed has no such result cap.
+
+Within each scan, `station_catalog` reuses the identity key passed into a resource/mineable claim and the existing read-only prototype-product arrays. Mineable eligibility returns the same product list for catalog insertion. These remove repeated identity construction and per-entity product copies without changing selection, scan limits or cadence. A successful numeric connector count answers both connected and empty cases without materializing `connections`; fully successful modern connector queries avoid obsolete field probes, while uncertain or failed queries retain compatibility fallbacks. Static prototype inventory-ID results use the existing cache; runtime-dependent inventory types remain live. These are source reductions, not measured native acceptance.
+
+0327's scheduled native world query excludes inventory-bearing types and merges their retained identities for entity tallies and existing resource classification. It does not call `get_contents`; stored-item presentation is updated by explicit UI snapshots. The filtered survey must not certify complete 0579 world cells. Compatibility engines that reject the type filter retain a counted broad fallback, while missing metadata/ownership may require fresh discovery. Separate physical infrastructure/resource surveys still exist outside this inventory owner. Loose-ground pickup retains its separate 240-tick routed cache request.
 
 ## Broker admission and related read reductions
 
@@ -115,10 +127,10 @@ These names are taken from the current source; local helpers and call sites are 
 | [planning_constraints_0646](../tech-priests_src/scripts/core/planning_constraints_0646.lua) | `M.recipe_names_for_item`, `M.item_for_entity`, `M.item_unlocked`, `M.entity_unlocked`, `M.interior_position_allowed`, `M.defense_position_allowed`, `M.finalize_installation`, `M.installation_summary`, `M.feature_available`, `M.install` |
 | [logistics_fetch_executor_0527](../tech-priests_src/scripts/core/logistics_fetch_executor_0527.lua) | `M.spendable_source_count`, `M.root`, `M.service_pair`, `M.describe_pair`, `M.install` |
 | [scan_routing_0610](../tech-priests_src/scripts/core/scan_routing_0610.lua) | `M.root`, `M.should_skip_negative`, `M.record_negative`, `M.clear_negative`, `M.find_entities`, `M.report_lines`, `M.install` |
-| [efficiency_economy_0587](../tech-priests_src/scripts/core/efficiency_economy_0587.lua) | `M.source_candidates`, `M.container_candidates`, `M.invalidate_entity_sources`, `M.cleanup`, `M.install` |
+| [efficiency_economy_0587](../tech-priests_src/scripts/core/efficiency_economy_0587.lua) | `M.source_candidates`, `M.container_candidates`, `M.observe_source_candidates`, `M.invalidate_entity_sources`, `M.cleanup`, `M.install` |
 | [efficiency_economy_0598](../tech-priests_src/scripts/core/efficiency_economy_0598.lua) | `M.broker_plan`, `M.broker_ran`, `M.install` |
 | [runtime_tick_broker](../tech-priests_src/scripts/core/runtime_tick_broker.lua) | `M.register_service`, `M.pulse`, `M.normalize_result`, `M.installation_summary`, `M.install` |
-| [station_catalog](../tech-priests_src/scripts/core/station_catalog.lua) | `Catalog.scan_pair`, `Catalog.scan_due`, `Catalog.get_for_pair`, `Catalog.find_known_source` |
+| [station_catalog](../tech-priests_src/scripts/core/station_catalog.lua) | `Catalog.inventory_types`, `Catalog.inventory_candidates`, `Catalog.find_inventory_source`, `Catalog.snapshot_inventory`, `Catalog.scan_pair`, `Catalog.scan_due`, `Catalog.get_for_pair`, `Catalog.find_known_source` |
 | [proxy_ammo_hardener_0649](../tech-priests_src/scripts/core/proxy_ammo_hardener_0649.lua) | `M.station_ammo`, `M.proxy_has_ammo`, `M.load_proxy_from_station`, `M.service_all`, `M.install` |
 
 ## Update and evidence rule
