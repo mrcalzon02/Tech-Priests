@@ -124,6 +124,33 @@ local function active_request(pair)
   local o=(q and q.current) or pair.active_order_0469
   local item=normalize_item(o)
   local kind=lower(type(o)=="table" and (o.kind or o.type or o.source or o.key) or "")
+  -- A real 0647 prerequisite outranks targetless automatic ammo fetching.
+  -- 0527 wraps the dispatcher, so stale ammo intent otherwise wins each pulse.
+  -- Never seize an explicit order, a real combat duty or physical custody.
+  local recipe=pair.infrastructure_recipe_request_0647
+  local gate=pair.local_infrastructure_gate_0640
+  local routine_ammo=type(o)=="table" and o.source=="emergency_acquire"
+      and type(item)=="string" and item:find("magazine",1,true)~=nil
+      and not o.target
+  if type(recipe)=="table" and type(gate)=="table"
+      and gate.state=="waiting-recipe-material" and gate.item==recipe.item
+      and type(recipe.missing)=="string" and gate.missing==recipe.missing
+      and (not o or routine_ammo or item==recipe.missing)
+      and not (valid(pair.combat_target) or pair.defense_task_0259
+        or pair.combat_muster_order or pair.direct_acquisition_custody_0513
+        or pair.machine_logistics_custody_0528 or pair.construction_custody_0338
+        or pair.construction_task_0338 or pair.inventory_transfer_custody_0687
+        or pair.emergency_facility_feed_custody_0357
+        or pair.energy_family_custody_0707 or pair.item_family_custody_0702) then
+    local count=1
+    for _,ingredient in ipairs(recipe.ingredients or {}) do
+      if ingredient.name==recipe.missing then
+        count=math.max(1,tonumber(ingredient.count) or 1)
+        break
+      end
+    end
+    return {item=recipe.missing,count=count,source="infrastructure-recipe-0647"}
+  end
   if item and (kind=="" or kind:find("logistic",1,true) or kind:find("supply",1,true) or kind:find("gather",1,true) or kind:find("acqui",1,true) or kind:find("scavenge",1,true) or kind:find("emergency",1,true) or kind:find("construction",1,true) or kind:find("craft",1,true)) then
     return {item=item,count=requested_count_from_order(o,item) or parse_blocker_need(pair,item) or 1,source="order-queue"}
   end
@@ -451,7 +478,15 @@ function M.service_pair(pair,reason)
   pair.logistics_fetch_0527={phase="deposited",item=item,count=inserted,requested=need_total,remaining_after=math.max(0,need_total-station_count(pair,item)),source_name=src.source.name,source_unit=src.source.unit_number,source_kind=src.kind,inventory_id=src.inventory_id,tick=now()}
   pair.logistics_fetch_0526=pair.logistics_fetch_0527
   if inserted>0 then
-    pair.scavenge=nil; pair.inventory_scan=nil; pair.logistic_requested_item=nil
+    if req.source=="infrastructure-recipe-0647" then
+      if normalize_item(pair.scavenge)==item then pair.scavenge=nil end
+      if normalize_item(pair.inventory_scan)==item then pair.inventory_scan=nil end
+      if normalize_item(pair.logistic_requested_item)==item then
+        pair.logistic_requested_item=nil; pair.logistic_requested_count=nil
+      end
+    else
+      pair.scavenge=nil; pair.inventory_scan=nil; pair.logistic_requested_item=nil
+    end
     publish_leaf(pair,src,item,"deposited")
     record(pair,"fetched-known-source",tostring(item).." x"..tostring(inserted).." from "..tostring(src.source.name).."#"..tostring(src.source.unit_number or "?").." need="..tostring(need_total).." source="..tostring(req.source or "?").." kind="..safe(src.kind))
     return true,"fetched-known-source"
