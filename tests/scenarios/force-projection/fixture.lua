@@ -68,7 +68,7 @@ local function init()
   emit("CONFIG",{seed=s.seed,preset=s.preset,side=side,
     active_ticks=c.active_ticks,participants=s.participants,
     novice_evolution=0,fixture_supply_only=true,
-    stock_profile="random-chest-plus-1-to-5-senior-kits"})
+    stock_profile=config().campaign_supplies and "paid-contested-frontier" or "random-chest-plus-1-to-5-senior-kits"})
 end
 local function owner(force)
   if not force then return nil end
@@ -175,6 +175,58 @@ local function chest_name()
   assert(size>=48,"no high-capacity supply chest")
   return best
 end
+-- This optional deterministic starting profile tests the actual strategic
+-- decision, not whether a random chest happened to contain combat supplies.
+-- The only deployed fighting entities belong to the hostile fixture force.
+-- Friendly kits, ammo and fuel remain ordinary physical inventory items.
+local function prepare_contested_frontier(s,p,station,pair,inv)
+  local surface=station.surface;local force=station.force
+  local radius=type(refresh_pair_radius)=="function" and refresh_pair_radius(pair) or pair.radius or 48
+  local distance=math.max(144,radius+72)
+  local target={x=p.origin.x+distance,y=p.origin.y}
+  local removed=0
+  for _,e in ipairs(surface.find_entities_filtered{position=station.position,
+      radius=distance+32,type="resource",name="iron-ore"})do
+    if e.valid then e.destroy();removed=removed+1 end
+  end
+  local tiles={}
+  for dx=-10,10 do for dy=-10,10 do
+    tiles[#tiles+1]={name="grass-1",position={x=math.floor(target.x)+dx,y=math.floor(target.y)+dy}}
+  end end
+  surface.set_tiles(tiles,true)
+  local placed=0
+  for dx=-4,4 do for dy=-4,4 do
+    local e=surface.create_entity{name="iron-ore",
+      position={x=math.floor(target.x)+dx+0.5,y=math.floor(target.y)+dy+0.5},amount=1800}
+    if e and e.valid then placed=placed+1 end
+  end end
+  assert(placed>=50,"contested frontier ore patch incomplete")
+  local hostile=nil
+  for _,q in ipairs(s.participants)do
+    if q.kind=="b" and q.team~=p.team then hostile=game.forces[q.force];break end
+  end
+  assert(hostile,"contested frontier requires an opposing biter force")
+  local site=surface.find_non_colliding_position("biter-spawner",{x=target.x+10,y=target.y},8,1)
+  assert(site,"contested frontier has no physical nest site")
+  local nest=surface.create_entity{name="biter-spawner",force=hostile,position=site}
+  assert(nest and nest.valid,"contested frontier native nest absent")
+  local supplies={{"tech-priests-combat-skitarii-ranger",12},
+    {"tech-priests-galvanic-clip",60},{"tech-priests-field-supply-pack",40},
+    {"burner-mining-drill",8},{"stone-furnace",8},{"coal",100},
+    {"iron-chest",8},{"transport-belt",200},{"inserter",20}}
+  for _,item in ipairs(supplies)do
+    assert(prototypes.item[item[1]],"missing campaign fixture stock "..item[1])
+    local before=inv.get_item_count(item[1])
+    assert(inv.insert{name=item[1],count=item[2]}==item[2]
+      and inv.get_item_count(item[1])-before==item[2],"campaign starting inventory refused "..item[1])
+  end
+  p.contested_frontier={target=target,nest=nest,hostile_force=hostile.name,
+    original_ore_tiles=placed,original_nest_unit=nest.unit_number}
+  emit("STRATEGY_SETUP",{force=p.force,target=target,local_radius=radius,
+    distance=distance,removed_iron_tiles=removed,ore_tiles=placed,
+    hostile_force=hostile.name,nest_unit=nest.unit_number,starting_items=supplies,
+    friendly_combat_actors=0,science_seeded=0})
+end
 local function seed_participant(s,surface)
   local p=s.participants[s.participant_cursor]
   if not p then
@@ -234,6 +286,7 @@ local function seed_participant(s,surface)
     assert(accepted==wanted and after-before==wanted,"Magos expansion kit capacity/debit mismatch")
     p.expansion_stock={name=kit,count=wanted,inserted=accepted,
       native_count=after,quality="normal",location="magos-station",deployed=0}
+    if config().campaign_supplies then prepare_contested_frontier(s,p,station,pair,station_inv) end
     local chest=surface.create_entity{name=chest_name(),
       position={x=p.origin.x+8,y=p.origin.y+8},force=force,raise_built=true}
     assert(chest and chest.valid,"supply chest creation refused")
@@ -355,6 +408,23 @@ local function sample(s,p)
     end
   end
   local pair=p.station and p.station.valid and storage.tech_priests.pairs_by_station[p.station.unit_number]
+  local campaign=pair and pair.strategic_resource_campaign
+  local motivation=pair and pair.science_motivation
+  local frontier=p.contested_frontier
+  local frontier_proof=nil
+  if frontier then
+    local drill_count=0
+    for _,drill in ipairs(surface.find_entities_filtered{position=frontier.target,
+        radius=12,force=force,type="mining-drill"})do
+      local target=drill.mining_target
+      if target and target.valid and target.name=="iron-ore"
+          and drill.status==defines.entity_status.working then drill_count=drill_count+1 end
+    end
+    local enemies=surface.find_entities_filtered{position=frontier.target,radius=36,
+      force=frontier.hostile_force,type={"unit","unit-spawner","turret","ammo-turret","electric-turret","car"},limit=128}
+    frontier_proof={target=frontier.target,nest_alive=frontier.nest and frontier.nest.valid or false,
+      remaining_hostiles=#enemies,working_iron_drills=drill_count}
+  end
   local gate=pair and pair.local_infrastructure_gate_0640
   local request=pair and pair.infrastructure_recipe_request_0647
   local task=pair and pair.construction_task_0338
@@ -370,6 +440,14 @@ local function sample(s,p)
     census=(s.last_census or {})[p.force],census_tick=s.last_census_tick,
     census_saturated=s.last_census_saturated,
     ore_production=mined,manufactured=manufactured,consumed=consumed,
+    contested_frontier=frontier_proof,
+    campaign=campaign and {phase=campaign.phase,assessment=campaign.assessment,
+      last_intel=campaign.last_intel,scout_target=campaign.scout_target,
+      recruited=campaign.recruited,lost=campaign.lost,assaults=campaign.assaults,
+      cleared_tick=campaign.cleared_tick,required_item=campaign.required_item,
+      local_supply=campaign.local_supply,
+      live_offensive_units=#(campaign.actors or {})} or nil,
+    science_motivation=motivation,
     built_by_type=p.built_by_type or {},max_miner_build_distance=p.max_miner_build_distance or 0,
     research_name=force.current_research and force.current_research.name or nil,
     research_progress=force.research_progress,
