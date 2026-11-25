@@ -11,5 +11,6 @@
     "tech-priests_src/scripts/core/consecration/registry.lua",
     "tech-priests_src/scripts/generated/control_legacy_part_001.lua",
     "tech-priests_src/scripts/generated/control_legacy_part_020.lua"
-  ]
+  ],
+  "verification_attempt": 2
 }

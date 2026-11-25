@@ -11,6 +11,10 @@ local function near(a,b) return math.abs(a-b)<0.001 end
 local function state() return storage.unit_behavior_test end
 local function seed()
   if script.active_mods["tech-priests"]~="1.0.0" then return end
+  if remote.interfaces.freeplay and remote.interfaces.freeplay.set_skip_intro then
+    remote.call("freeplay","set_skip_intro",true)
+    remote.call("freeplay","set_disable_crashsite",true)
+  end
   local surface=game.create_surface("unit-behavior-native",{width=256,height=256,water=0,
     default_enable_all_autoplace_controls=false})
   surface.request_to_generate_chunks({0,0},4);surface.force_generate_chunk_requests()
@@ -189,9 +193,12 @@ local function tick()
 end
 function M.install()
   Registry.on_init(seed,{owner="unit-behavior-native",route="legacy-save-seed"})
-  Registry.on_nth_tick(1,function()
+  -- This fixture starts before any Cogitator is placed. The production nth-tick
+  -- idle gate correctly sleeps then; use the established combat-test on_tick
+  -- route so the test can perform its first native player placement.
+  Registry.on_event(defines.events.on_tick,function()
     local ok,err=pcall(tick)
     if not ok then if state() then state().done=true end;log(PREFIX.."FAIL "..tostring(err)) end
-  end,{owner="unit-behavior-native",route="native-player-pickup"})
+  end,nil,{owner="unit-behavior-native",route="native-player-pickup",priority=2000})
 end
 return M
