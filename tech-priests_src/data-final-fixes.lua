@@ -617,8 +617,8 @@ require("prototypes.generated_graphics.emergency-boiler-v08")
 -- Hydrogen V01: authored fixed-direction body; retain native conditional pipe caps.
 require("prototypes.generated_graphics.hydrogen-thruster-v01")
 
--- Thetazine V04: authored machinery, separate thermal and projected-shadow layers.
-require("prototypes.generated_graphics.thetazine-thruster-v04")
+-- Thetazine V11: final machinery, full heat cone and downstream native exhaust.
+require("prototypes.generated_graphics.thetazine-thruster-v11")
 
 -- Authored sealed fusion bodies; crackle and ejecta follow each engine's actual load.
 require("prototypes.generated_graphics.void-fusion-thrusters-v01")
