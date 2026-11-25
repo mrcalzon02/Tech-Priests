@@ -1,12 +1,11 @@
 {
   "schema": "tech-priests.hosted-arena-request.v1",
-  "source_sha": "cdbd24b317fa2f7fee1f0ec0a0656ce3da22beeb",
+  "source_sha": "fac98e74ff5cea61ff276e1bdad3a25760f251b0",
   "preset": "2p2b",
   "seeds": [
-    534526259,
-    534526260,
-    534526261
+    534526259
   ],
-  "active_ticks": 36000,
-  "stock_profile": "random-chest-plus-1-to-5-senior-kits"
+  "active_ticks": 216000,
+  "mode": "strategic",
+  "stock_profile": "paid-contested-frontier"
 }
