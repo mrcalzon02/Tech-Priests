@@ -43,6 +43,9 @@ end
 -- Positive ore quantity and real drill coverage, not simply an ore tile.
 -- Bounded sample saturation never constitutes proof of depletion.
 function M.local_supply(pair,names,item,rate,radius)
+  local s=state(pair);s.local_supply=s.local_supply or {}
+  local previous=s.local_supply[item]
+  if previous and game.tick-previous.tick<1200 then return previous end
   local station=pair.station
   local surface=station.surface
   local ores=surface.find_entities_filtered{type="resource",name=names,
@@ -51,6 +54,7 @@ function M.local_supply(pair,names,item,rate,radius)
     position=station.position,radius=radius,limit=96}
   local total,uncovered,active=0,0,0
   local candidate=nil
+  local candidates={}
   local mining={}
   for _,drill in ipairs(drills)do
     if valid(drill) then
@@ -77,6 +81,7 @@ function M.local_supply(pair,names,item,rate,radius)
       if not covered then
         uncovered=uncovered+1
         if not candidate then candidate=copy(ore.position)end
+        if #candidates<16 then candidates[#candidates+1]=copy(ore.position) end
       end
     end
   end
@@ -99,8 +104,8 @@ function M.local_supply(pair,names,item,rate,radius)
   else phase="local-output-below-demand" end
   local result={tick=game.tick,phase=phase,remaining_sample=total,uncovered_sample=uncovered,
     active_drills=active,required_per_minute=target,observed_force_per_minute=flow,
-    saturated=saturated,candidate=candidate}
-  local s=state(pair);s.local_supply=s.local_supply or {};s.local_supply[item]=result
+    saturated=saturated,candidate=candidate,candidates=candidates}
+  s.local_supply[item]=result
   return result
 end
 function M.offer_local_drill(pair,assessment,item,radius)
@@ -109,10 +114,14 @@ function M.offer_local_drill(pair,assessment,item,radius)
       or pair.construction_requested_item then return false end
   local name="burner-mining-drill"
   if stock(pair,name)<1 then return false end
-  local pos={x=math.floor(assessment.candidate.x),y=math.floor(assessment.candidate.y)}
-  if d2(pos,pair.station.position)>radius^2 then return false end
-  if not pair.station.surface.can_place_entity{name=name,position=pos,
-      direction=defines.direction.north,force=pair.station.force} then return false end
+  local pos=nil
+  for _,candidate in ipairs(assessment.candidates or {assessment.candidate})do
+    local p={x=math.floor(candidate.x),y=math.floor(candidate.y)}
+    if d2(p,pair.station.position)<=radius^2
+        and pair.station.surface.can_place_entity{name=name,position=p,
+          direction=defines.direction.north,force=pair.station.force} then pos=p;break end
+  end
+  if not pos then return false end
   pair.structure_construction_requested_item={item_name=name,entity_name=name,
     category="mining",position=pos,direction=defines.direction.north,
     site_reason="strategic-local-unexploited-resource",source="strategic-resource-campaign"}
@@ -247,21 +256,52 @@ local function chart_scouts(pair,s)
   end
 end
 local function service_threat(pair,s,point,intel)
-  local power,ready_count=0,0
+  local power,ready_count,assembled=0,0,0
   for _,a in ipairs(s.actors)do
     local value=ready(a)
-    if value>0 then power=power+value;ready_count=ready_count+1 end
+    if value>0 then
+      power=power+value;ready_count=ready_count+1
+      if d2(a.actor.position,pair.station.position)<=24^2 then assembled=assembled+1 end
+    end
   end
   s.assessment={tick=game.tick,enemy_count=intel.hostiles,enemy_expected=intel.expected_power,
     enemy_upper=intel.upper_power,friendly_lower=power,ready_units=ready_count,
     reserve_margin=M.margin,target=copy(point),saturated=intel.saturated}
   if intel.saturated or power<intel.upper_power or ready_count<2 then
-    s.phase="reinforce-before-assault";rally(pair,s)
-    if not intel.saturated then muster(pair,s)end
+    s.phase="reinforce-before-assault";s.attack_in_progress=false;rally(pair,s)
+    if not intel.saturated then
+      -- Refill existing actors at the friendly rally rather than build a
+      -- growing army of empty vehicles. Never send a priest into enemy fire.
+      local logistics=package.loaded["scripts.core.item_family_logistics_0702"]
+      local supplied=false
+      if logistics and not busy(pair) and not pair.item_family_logistics_0702 then
+        for _,a in ipairs(s.actors)do
+          local u=Catalog.by_id[a.unit_id]
+          if u and d2(a.actor.position,pair.station.position)<=16^2 and ready(a)<=0 then
+            local ammo=Catalog.ammo[u.ammo_family].name
+            local item=inv_count(a.actor.get_inventory(defines.inventory.car_ammo),ammo)<1
+              and ammo or "tech-priests-field-supply-pack"
+            local family=item==ammo and "ammo" or "supply"
+            if stock(pair,item)>0 then
+              logistics.offer_combat_supply(pair,a.actor,item,family,2)
+              supplied=true
+            else supplied=ask(pair,s,item) end
+            if supplied then break end
+          end
+        end
+      end
+      if not supplied then muster(pair,s)end
+    end
     return false
   end
+  if not s.attack_in_progress and assembled<ready_count then
+    s.phase="assemble-offensive-force";rally(pair,s);return false
+  end
   -- Only the units paid for by this campaign receive native AAI attack moves.
-  s.phase="assault-authorized";s.assaults=(s.assaults or 0)+1
+  if not s.attack_in_progress then
+    s.assaults=(s.assaults or 0)+1;s.attack_in_progress=true;s.attack_started_tick=game.tick
+  end
+  s.phase="assault-authorized"
   for i,a in ipairs(s.actors)do
     if ready(a)>0 then
       local angle=i*2.399963
@@ -276,6 +316,7 @@ function M.admit(pair,need,target)
   local s=state(pair);collect(pair,s);chart_scouts(pair,s)
   if not s.route or s.route.need~=need or d2(s.route.target,target)>32^2 then
     s.route={need=need,target=copy(target),index=1,clear=0}
+    s.attack_in_progress=false
   end
   local route=s.route;local home=pair.station.position
   local distance=math.sqrt(d2(home,target));local steps=math.max(1,math.ceil(distance/32))
@@ -284,6 +325,12 @@ function M.admit(pair,need,target)
     local point={x=home.x+(target.x-home.x)*i/steps,y=home.y+(target.y-home.y)*i/steps}
     local intel=inspect(pair,s,point)
     if not intel then
+      -- A withdrawal must not erase the known garrison or send the same lone
+      -- scout repeatedly to its death. Retain the observed threat until a
+      -- native friendly observation confirms clearance.
+      if route.threat and d2(route.threat.position,point)<1 then
+        return service_threat(pair,s,point,route.threat)
+      end
       s.phase="scouting-unknown-corridor";s.scout_target=copy(point)
       local scout=nil
       for _,a in ipairs(s.actors)do if ready(a)>0 then scout=a;break end end
@@ -291,11 +338,15 @@ function M.admit(pair,need,target)
       return false
     end
     s.last_intel=intel
-    if intel.hostiles>0 or intel.saturated then route.clear=0;return service_threat(pair,s,point,intel)end
+    if intel.hostiles>0 or intel.saturated then
+      route.clear=0;route.threat=intel
+      return service_threat(pair,s,point,intel)
+    end
     -- Re-observe a previously contested waypoint on the next pulse.
     if s.assessment and d2(s.assessment.target,point)<1 and route.clear<1 then
       route.clear=route.clear+1;s.phase="confirming-clearance";return false
     end
+    route.threat=nil;s.attack_in_progress=false
     if i==steps then s.phase="corridor-observed-clear";s.cleared_tick=game.tick;return true end
     route.index=i+1;route.clear=0
   end
