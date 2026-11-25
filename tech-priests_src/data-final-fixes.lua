@@ -679,3 +679,7 @@ end
 
 -- Resolve byte-identical asset aliases after all local prototype registration.
 require('prototypes.png_asset_aliases').apply(data.raw)
+
+-- Distributions physically reduce the base images and retain original HD
+-- artwork in optional companion downloads. Preserve all animation semantics.
+require('prototypes.graphics_pack_quality').apply(data.raw)

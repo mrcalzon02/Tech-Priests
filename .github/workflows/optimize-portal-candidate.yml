@@ -1,40 +1,149 @@
-name: Optimize portal candidate
+name: Build standard graphics and optional HD downloads
 on:
   workflow_dispatch:
   push:
     branches: [main]
     paths: ['.github/workflows/optimize-portal-candidate.yml']
 permissions:
-  contents: read
+  contents: write
+concurrency:
+  group: tech-priests-graphics-packaging
+  cancel-in-progress: false
 jobs:
-  optimize:
-    runs-on: [self-hosted, headless]
+  package:
+    runs-on: ubuntu-24.04
     timeout-minutes: 120
+    env:
+      GH_TOKEN: ${{ github.token }}
     steps:
-      - uses: actions/checkout@v4
-        with:
-          sparse-checkout: |
-            tech-priests_src
-            tools/optimize_runtime_package.py
-          sparse-checkout-cone-mode: false
-          fetch-depth: 1
-      - name: Verify local Python imaging support
-        run: python3 -c "from PIL import Image; print(Image.__version__)"
-      - name: Optimize candidate without modifying original assets
+      - name: Fetch exact production source and graphics builder
         shell: bash
         run: |
           set -euo pipefail
-          python3 -u tools/optimize_runtime_package.py --source tech-priests_src --output "$RUNNER_TEMP/tp-portal-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}" --version 1.0.0 --max-bytes 262100000 --palette --workers 4
-      - name: Upload optimization receipt
-        if: always()
+          git init -q source
+          git -C source remote add origin "https://github.com/${GITHUB_REPOSITORY}.git"
+          git -C source sparse-checkout init --cone
+          git -C source sparse-checkout set tech-priests_src tools
+          git -C source -c protocol.version=2 fetch --depth=1 --filter=blob:none origin "${GITHUB_SHA}"
+          git -C source checkout -q --detach FETCH_HEAD
+          test "$(git -C source rev-parse HEAD)" = "${GITHUB_SHA}"
+      - name: Prepare Python image processing
+        run: python3 -m pip install --disable-pip-version-check Pillow
+      - name: Build reduced standard graphics and separate original HD packs
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -u source/tools/build_graphics_packs.py \
+            --source source/tech-priests_src \
+            --output "${RUNNER_TEMP}/tp-graphics-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}" \
+            --version 1.0.0 --max-bytes 262100000 --workers 4
+      - name: Verify original HD pixels and every reduced atlas
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -u source/tools/verify_graphics_packs.py \
+            --source source/tech-priests_src \
+            --output "${RUNNER_TEMP}/tp-graphics-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}" \
+            --max-bytes 262100000
+      - name: Verify every download and create source-bound checksums
+        shell: bash
+        env:
+          PACKAGES: ${{ runner.temp }}/tp-graphics-${{ github.run_id }}-${{ github.run_attempt }}
+        run: |
+          set -euo pipefail
+          python3 -u - <<'PY'
+          import hashlib,json,os,pathlib,zipfile
+          root=pathlib.Path(os.environ['PACKAGES'])
+          source=pathlib.Path('source/tech-priests_src')
+          standard=root/'tech-priests_1.0.0.zip'
+          packs=sorted(root.glob('tech-priests-hd-*_1.0.0.zip'))
+          assert standard.is_file() and packs, 'Standard mod or optional HD downloads missing'
+          assert (root/'graphics-pack-receipt.json').is_file(), 'Build receipt missing'
+          original_png_bytes=sum(p.stat().st_size for p in source.rglob('*.png'))
+          records=[]
+          for path in [standard,*packs]:
+              assert path.stat().st_size<=262100000, 'Package exceeds upload ceiling: '+path.name
+              with zipfile.ZipFile(path) as archive:
+                  assert archive.testzip() is None, 'ZIP CRC failure: '+path.name
+                  infos=[n for n in archive.namelist() if n.endswith('/info.json') and n.count('/')==1]
+                  assert len(infos)==1, 'Expected one mod root in '+path.name
+                  info=json.loads(archive.read(infos[0]))
+                  assert info['version']=='1.0.0' and info['factorio_version']=='2.1'
+                  png_bytes=sum(x.file_size for x in archive.infolist() if x.filename.lower().endswith('.png'))
+              with path.open('rb') as stream:
+                  digest=hashlib.file_digest(stream,'sha256').hexdigest()
+              records.append({'name':path.name,'bytes':path.stat().st_size,
+                              'sha256':digest,'png_bytes':png_bytes,'mod':info['name']})
+              print('TP_GRAPHICS_DOWNLOAD_VERIFIED',json.dumps(records[-1]),flush=True)
+          standard_png_bytes=records[0]['png_bytes']
+          assert standard_png_bytes*3<=original_png_bytes, 'Standard PNGs exceed one third of source bytes'
+          receipt={'schema':'tech-priests.graphics-release-assets.v1','source_sha':os.environ['GITHUB_SHA'],
+                   'version':'1.0.0','original_png_bytes':original_png_bytes,
+                   'standard_png_bytes':standard_png_bytes,
+                   'standard_png_ratio':standard_png_bytes/original_png_bytes,
+                   'assets':records,'native_loading_tested_by_this_job':False}
+          (root/'release-assets.json').write_text(json.dumps(receipt,indent=2)+'\n')
+          (root/'SHA256SUMS').write_text(''.join(r['sha256']+'  '+r['name']+'\n' for r in records))
+          (root/'RELEASE-NOTES.md').write_text(
+              '# Tech Priests 1.0.0 graphics packages\n\n'
+              'Source commit: `'+os.environ['GITHUB_SHA']+'`.\n\n'
+              'Install **tech-priests_1.0.0.zip** as the standard mod. '
+              'The standard package works without an HD download. '
+              'Optional **tech-priests-hd-NN_1.0.0.zip** downloads restore original-resolution graphics '
+              'for their contents; install any desired packs alongside the standard mod.\n\n'
+              'Standard PNG data: '+format(standard_png_bytes,',')+' bytes from '
+              +format(original_png_bytes,',')+' original bytes ('+format(100*standard_png_bytes/original_png_bytes,'.2f')+'%).\n\n'
+              'Every installable ZIP is at most 262,100,000 bytes and has passed archive CRC validation. '
+              'SHA256SUMS and release-assets.json identify the exact downloads. '
+              'Native engine results are recorded separately from this packaging job.\n')
+          PY
+      - name: Publish source-bound graphics download pack
+        shell: bash
+        env:
+          PACKAGES: ${{ runner.temp }}/tp-graphics-${{ github.run_id }}-${{ github.run_attempt }}
+        run: |
+          set -euo pipefail
+          tag="v1.0.0-graphics-${GITHUB_SHA}"
+          if gh release view "${tag}" --repo "${GITHUB_REPOSITORY}" >/dev/null 2>&1; then
+            echo 'This exact source already has a graphics release; verifying existing assets without retagging.'
+          else
+            gh release create "${tag}" \
+              "${PACKAGES}"/tech-priests*.zip \
+              "${PACKAGES}/graphics-pack-receipt.json" \
+              "${PACKAGES}/release-assets.json" \
+              "${PACKAGES}/SHA256SUMS" \
+              --repo "${GITHUB_REPOSITORY}" \
+              --target "${GITHUB_SHA}" \
+              --title 'Tech Priests 1.0.0 — standard graphics and optional HD packs' \
+              --notes-file "${PACKAGES}/RELEASE-NOTES.md" --prerelease
+          fi
+          gh api "repos/${GITHUB_REPOSITORY}/releases/tags/${tag}" > "${PACKAGES}/github-release-readback.json"
+          python3 - <<'PY'
+          import json,os,pathlib
+          root=pathlib.Path(os.environ['PACKAGES'])
+          release=json.loads((root/'github-release-readback.json').read_text())
+          expected=json.loads((root/'release-assets.json').read_text())
+          assert release['tag_name']=='v1.0.0-graphics-'+os.environ['GITHUB_SHA']
+          assert release['prerelease'] and not release['draft']
+          actual={a['name']:a for a in release['assets']}
+          for record in expected['assets']:
+              asset=actual[record['name']]
+              assert asset['size']==record['bytes'], 'Uploaded byte count differs: '+record['name']
+              assert asset.get('digest')=='sha256:'+record['sha256'], 'Uploaded digest differs: '+record['name']
+          assert {'graphics-pack-receipt.json','release-assets.json','SHA256SUMS'}<=set(actual)
+          print('TP_GRAPHICS_RELEASE_READBACK_PASS',release['html_url'],flush=True)
+          with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as summary:
+              summary.write('### Standard graphics and optional HD downloads\n\n['+release['name']+']('
+                            +release['html_url']+')\n\nSource: `'+os.environ['GITHUB_SHA']+'`\n\n')
+              for record in expected['assets']:
+                  summary.write('- '+record['name']+': '+format(record['bytes'],',')+' bytes; SHA-256 `'+record['sha256']+'`\n')
+          PY
+      - name: Preserve build receipt on failure
+        if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: portal-optimization-receipt
-          path: ${{ runner.temp }}/tp-portal-${{ github.run_id }}-${{ github.run_attempt }}/optimization-receipt.json
+          name: graphics-package-failure-receipts
+          path: |
+            ${{ runner.temp }}/tp-graphics-${{ github.run_id }}-${{ github.run_attempt }}/*.json
           if-no-files-found: warn
-      - name: Upload size-compliant candidate only
-        uses: actions/upload-artifact@v4
-        with:
-          name: tech-priests-portal-candidate
-          path: ${{ runner.temp }}/tp-portal-${{ github.run_id }}-${{ github.run_attempt }}/tech-priests_1.0.0.zip
-          if-no-files-found: error
+          retention-days: 7

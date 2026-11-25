@@ -601,3 +601,13 @@ data:extend({
 -- Synced local character appearance and existing armory restrictions.
 require("prototypes.character_skin_settings")
 require("prototypes.combat_armory_settings")
+
+-- Graphics packs select only artwork; all gameplay prototypes stay identical.
+data:extend({{
+  type = "string-setting",
+  name = "tech-priests-graphics-quality",
+  setting_type = "startup",
+  default_value = "auto",
+  allowed_values = {"auto", "standard", "high"},
+  order = "z-performance-0[graphics-packs]"
+}})
