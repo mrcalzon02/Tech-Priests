@@ -65,6 +65,19 @@ jobs:
           engine/factorio/bin/x64/factorio --version
       - name: Check telemetry parser
         run: python3 source/tests/unit/test_force_projection.py
+      - name: Stage verified official Factorio 2.1 AAI dependencies
+        env:
+          FACTORIO_USERNAME: ${{ secrets.FACTORIO_USERNAME }}
+          FACTORIO_TOKEN: ${{ secrets.FACTORIO_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Exact downloader blob verified by the existing authorized Mod
+          # Portal workflow. Arena code never receives Mod Portal credentials.
+          test "$(git -C source hash-object tools/ci_factorio_combined_modpack.py)" = 118056d4afd077a33e36b62b42e31774faa88c9e
+          python3 source/tools/ci_factorio_combined_modpack.py --download-exact-combat \
+            --mods-dir "$RUNNER_TEMP/aai-official-mods" \
+            --artifact-dir "$RUNNER_TEMP/aai-verified-receipts"
       - name: Native smoke and three sequential seeded baselines
         shell: bash
         run: |
@@ -78,12 +91,16 @@ jobs:
           output=Path('observations').resolve()
           commands=[(request['seeds'][0],3600,output/'smoke')]
           commands += [(seed,36000,output/'baseline') for seed in request['seeds']]
+          failed=False
           for seed,ticks,destination in commands:
               print('HOSTED_ARENA_ITERATION',seed,ticks,flush=True)
               code=subprocess.call(['python3','-u',runner,'--factorio',engine,
                   '--preset','2p2b','--seed',str(seed),'--active-ticks',str(ticks),
+                  '--dependency-mods',str(Path(os.environ['RUNNER_TEMP'])/'aai-official-mods'),
                   '--timeout-seconds','2400','--output-dir',str(destination)])
-              if code: raise SystemExit(code)
+              if ticks==3600 and code: raise SystemExit(code)
+              failed=failed or bool(code)
+          if failed: raise SystemExit(1)
           PY
       - name: Retain result summaries in job log and summary
         if: always()
@@ -96,7 +113,8 @@ jobs:
           for path in sorted(Path('observations').glob('**/result.json')):
               r=json.loads(path.read_text())
               row={k:r.get(k) for k in ('source_sha','preset','seed','active_ticks',
-                  'observation_complete','combat_observed','blocker','observed_ups_including_setup')}
+                  'observation_complete','combat_observed','blocker','observed_ups_including_setup',
+                  'factory_metrics')}
               print('HOSTED_ARENA_SUMMARY',json.dumps(row),flush=True)
               rows.append(row)
           with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as f:
@@ -116,3 +134,9 @@ jobs:
             observations/**/native-server.log
           if-no-files-found: warn
           retention-days: 3
+      - name: Erase temporary licensed dependency copies
+        if: always()
+        shell: bash
+        run: |
+          rm -rf "$RUNNER_TEMP/aai-official-mods"
+          find observations -type f \( -name 'aai-programmable-vehicles_*.zip' -o -name 'aai-signals_*.zip' -o -name 'informatron_*.zip' \) -delete 2>/dev/null || true
