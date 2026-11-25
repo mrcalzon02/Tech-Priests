@@ -1,0 +1,132 @@
+name: Package and publish nine Tech Priests HD mods
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [docs/releases/hd-publication-request.json]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tech-priests-hd-publication
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: github.repository == 'mrcalzon02/Tech-Priests' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    env:
+      GH_TOKEN: ${{ github.token }}
+      FACTORIO_MOD_UPLOAD_KEY: ${{ secrets.FACTORIO_MOD_UPLOAD_KEY }}
+      MOD_PORTAL_PUBLISH_API_KEY: ${{ secrets.MOD_PORTAL_PUBLISH_API_KEY }}
+      MOD_PORTAL_EDIT_API_KEY: ${{ secrets.MOD_PORTAL_EDIT_API_KEY }}
+      MOD_UPLOAD_API_KEY: ${{ secrets.MOD_UPLOAD_API_KEY }}
+      MOD_EDIT_API_KEY: ${{ secrets.MOD_EDIT_API_KEY }}
+      FACTORIO_MOD_PUBLISH_API_KEY: ${{ secrets.FACTORIO_MOD_PUBLISH_API_KEY }}
+      FACTORIO_MOD_EDIT_KEY: ${{ secrets.FACTORIO_MOD_EDIT_KEY }}
+      MOD_PUBLISH_API_KEY: ${{ secrets.MOD_PUBLISH_API_KEY }}
+      FACTORIO_MOD_PORTAL_API_KEY: ${{ secrets.FACTORIO_MOD_PORTAL_API_KEY }}
+      MOD_PORTAL_API_KEY: ${{ secrets.MOD_PORTAL_API_KEY }}
+    steps:
+      - name: Fetch the exact publication scripts and request
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p tools docs/releases
+          for file in tools/prepare_hd_publication.py tools/hd_publication_catalog.json tools/publish_hd_mods.py docs/releases/hd-publication-request.json; do
+            curl --fail --silent --show-error --location --retry 2 --max-time 60 \
+              "https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/${GITHUB_SHA}/${file}" -o "$file"
+          done
+          python3 -m py_compile tools/prepare_hd_publication.py tools/publish_hd_mods.py
+          python3 - <<'PY'
+          import json, os
+          request = json.load(open('docs/releases/hd-publication-request.json'))
+          assert request['mods'] == [f'tech-priests-hd-{i:02d}' for i in range(1, 10)]
+          assert request['version'] == '1.0.0'
+          assert request['max_bytes'] == 262100000
+          names = ('FACTORIO_MOD_UPLOAD_KEY', 'MOD_PORTAL_PUBLISH_API_KEY', 'MOD_PORTAL_EDIT_API_KEY',
+                   'MOD_UPLOAD_API_KEY', 'MOD_EDIT_API_KEY', 'FACTORIO_MOD_PUBLISH_API_KEY',
+                   'FACTORIO_MOD_EDIT_KEY', 'MOD_PUBLISH_API_KEY', 'FACTORIO_MOD_PORTAL_API_KEY', 'MOD_PORTAL_API_KEY')
+          print('TP_HD_CONFIGURED_CREDENTIAL_NAMES', json.dumps([n for n in names if os.environ.get(n)]))
+          print('TP_HD_AUTHORIZED_PACKAGES', json.dumps(request['mods']))
+          PY
+
+      - name: Prepare exact screenshot and thumbnail tooling
+        run: python3 -m pip install --disable-pip-version-check Pillow==13.0.0
+
+      - name: Package nine unique HD mods with genuine screenshots
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -u tools/prepare_hd_publication.py \
+            --cache "${RUNNER_TEMP}/tp-hd-cache" \
+            --output "${RUNNER_TEMP}/tp-hd-publication" --version 1.0.0
+
+      - name: Publish and read back all prepared GitHub packages and screenshots
+        shell: bash
+        env:
+          OUTPUT: ${{ runner.temp }}/tp-hd-publication
+        run: |
+          set -euo pipefail
+          python3 -u - <<'PY'
+          import hashlib, json, os, pathlib, subprocess
+          root = pathlib.Path(os.environ['OUTPUT'])
+          manifest = json.loads((root/'publication-manifest.json').read_text())
+          assert len(manifest['packs']) == 9
+          assets = [root/'publication-manifest.json', root/'hd-preview-index.png']
+          for record in manifest['packs']:
+              assets.extend(root/record[key] for key in ('file_name', 'image_file', 'description_file', 'artwork_file', 'thumbnail_file') if record.get(key))
+          assets = sorted(set(assets))
+          assert len({p.name for p in assets}) == len(assets), 'Duplicate release asset basename'
+          tag = 'hd-companions-1.0.0-' + os.environ['GITHUB_SHA']
+          repository = os.environ['GITHUB_REPOSITORY']
+          notes = root/'RELEASE-NOTES.md'
+          notes.write_text('# Tech Priests HD graphics companions\n\n'
+              'Nine optional HD mods, each with its own thumbnail, genuine screenshot and short description.\n\n'
+              'Install the standard Tech Priests mod, then any desired HD companions. Install all nine for the complete original-resolution artwork collection.\n\n'
+              'Every graphics file and original notice is preserved byte for byte from the verified graphics release. Each ZIP is below 262,100,000 bytes.\n\n'
+              'Publication source: `' + os.environ['GITHUB_SHA'] + '`.\n\n'
+              '| Package | Size (MB) |\n|---|---:|\n' + ''.join(
+                  '| '+r['file_name']+' | '+format(r['bytes']/1_000_000,'.2f')+' |\n' for r in manifest['packs']))
+          exists = subprocess.run(['gh','release','view',tag,'--repo',repository], capture_output=True).returncode == 0
+          if not exists:
+              subprocess.run(['gh','release','create',tag,*map(str,assets),'--repo',repository,
+                              '--target',os.environ['GITHUB_SHA'],'--title','Tech Priests HD graphics — nine companion mods',
+                              '--notes-file',str(notes),'--latest=false'], check=True)
+          result = json.loads(subprocess.check_output(['gh','api','repos/'+repository+'/releases/tags/'+tag]))
+          assert result['tag_name'] == tag and not result['draft']
+          remote = {a['name']:a for a in result['assets']}
+          for path in assets:
+              with path.open('rb') as stream:
+                  digest = hashlib.file_digest(stream,'sha256').hexdigest()
+              asset = remote[path.name]
+              assert asset['size'] == path.stat().st_size
+              assert asset.get('digest') == 'sha256:'+digest, path.name
+          print('TP_HD_GITHUB_RELEASE_VERIFIED', result['html_url'], flush=True)
+          with open(os.environ['GITHUB_ENV'],'a') as env:
+              env.write('HD_RELEASE_BASE_URL=https://github.com/'+repository+'/releases/download/'+tag+'\n')
+          with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as out:
+              out.write('## Prepared HD packages\n\n['+result['name']+']('+result['html_url']+')\n\n')
+          PY
+
+      - name: Create each separate Factorio HD mod and verify uploaded bytes
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -u tools/publish_hd_mods.py \
+            "${RUNNER_TEMP}/tp-hd-publication/publication-manifest.json" \
+            --release-base-url "$HD_RELEASE_BASE_URL"
+
+      - name: Preserve publication receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: tech-priests-hd-publication-receipts
+          path: |
+            ${{ runner.temp }}/tp-hd-publication/publication-manifest.json
+            ${{ runner.temp }}/tp-hd-publication/portal-publication-receipt.json
+          if-no-files-found: warn
+          retention-days: 30

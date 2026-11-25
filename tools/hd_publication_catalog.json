@@ -1,0 +1,374 @@
+{
+  "schema": "tech-priests.hd-publication-catalog.v1",
+  "source_commit": "f810fafccef156b4ca863b8bdf98460acf98ebb5",
+  "packs": [
+    {
+      "name": "tech-priests-hd-01",
+      "label": "Condensers and Artillery",
+      "title": "Tech Priests HD 01 — Condensers and Artillery",
+      "summary": "High-resolution condenser graphics and artillery animation frames. Requires Tech Priests. Part 1 of 9; install all nine for complete HD artwork.",
+      "coverage": "Original-resolution condenser artwork and the first set of artillery animation frames.",
+      "artwork": [
+        {
+          "pattern": "atmospheric-water-condenser-v24/idle-north-hr\\.png$",
+          "label": "Condenser — north"
+        },
+        {
+          "pattern": "atmospheric-water-condenser-v24/idle-east-hr\\.png$",
+          "label": "Condenser — east"
+        },
+        {
+          "pattern": "atmospheric-water-condenser-v22c/idle-north-hr\\.png$",
+          "label": "Condenser artwork"
+        },
+        {
+          "pattern": "bunker-artillery/d00-body\\.png$",
+          "label": "Artillery — direction 00"
+        },
+        {
+          "pattern": "bunker-artillery/d08-body\\.png$",
+          "label": "Artillery — direction 08"
+        },
+        {
+          "pattern": "bunker-artillery/d16-body\\.png$",
+          "label": "Artillery — direction 16"
+        }
+      ],
+      "screenshot": {
+        "file": "condenser-v24-alignment-before-after.png",
+        "url": "https://raw.githubusercontent.com/mrcalzon02/Tech-Priests/f810fafccef156b4ca863b8bdf98460acf98ebb5/docs/art/local-machine-alignment/condenser-v24-alignment-before-after.png",
+        "sha256": "d13466ece59011671cf23faa29fd4aa0669a06589e77506635ee76f21d0b13bc",
+        "bytes": 1316383,
+        "crop": [
+          0,
+          337,
+          1388,
+          617
+        ],
+        "caption": "Condenser orientations in Factorio. Cropped from the original in-game alignment capture."
+      }
+    },
+    {
+      "name": "tech-priests-hd-02",
+      "label": "Artillery",
+      "title": "Tech Priests HD 02 — Artillery",
+      "summary": "High-resolution artillery aiming and firing animation frames. Requires Tech Priests. Part 2 of 9; install all nine for complete HD artwork.",
+      "coverage": "Original-resolution artillery artwork covering additional viewing directions and firing frames.",
+      "artwork": [
+        {
+          "pattern": "bunker-artillery/d26-body\\.png$",
+          "label": "Artillery — direction 26"
+        },
+        {
+          "pattern": "bunker-artillery/d32-body\\.png$",
+          "label": "Artillery — direction 32"
+        },
+        {
+          "pattern": "bunker-artillery/d40-body\\.png$",
+          "label": "Artillery — direction 40"
+        },
+        {
+          "pattern": "bunker-artillery/d48-body\\.png$",
+          "label": "Artillery — direction 48"
+        },
+        {
+          "pattern": "bunker-artillery/d56-body\\.png$",
+          "label": "Artillery — direction 56"
+        },
+        {
+          "pattern": "bunker-artillery/d62-body\\.png$",
+          "label": "Artillery — direction 62"
+        }
+      ]
+    },
+    {
+      "name": "tech-priests-hd-03",
+      "label": "Heavy Bunkers",
+      "title": "Tech Priests HD 03 — Heavy Bunkers",
+      "summary": "High-resolution gun bunkers, energy defenses and lobber animation frames. Requires Tech Priests. Part 3 of 9; install all nine for complete HD artwork.",
+      "coverage": "Original-resolution autocannon, Chicago piano and energy dish artwork, with artillery and lobber animation frames.",
+      "artwork": [
+        {
+          "pattern": "bunker-chicago-piano/body-00\\.png$",
+          "label": "Chicago piano"
+        },
+        {
+          "pattern": "bunker-autocannon/idle-00\\.png$",
+          "label": "Autocannon animation"
+        },
+        {
+          "pattern": "bunker-energy-dish/idle-00\\.png$",
+          "label": "Energy dish"
+        },
+        {
+          "pattern": "bunker-lobber/beauty-cycle-00\\.png$",
+          "label": "Lobber firing frame"
+        },
+        {
+          "pattern": "bunker-artillery/d63-body\\.png$",
+          "label": "Artillery — direction 63"
+        },
+        {
+          "pattern": "bunker-autocannon/base-east\\.png$",
+          "label": "Autocannon emplacement"
+        }
+      ],
+      "screenshot": {
+        "file": "public-bunker-combat-a.png",
+        "url": "https://assets-mod.factorio.com/assets/ccfebfb3a1ab6428c87375af03500699143f966e.png",
+        "sha256": "d7fa3d24f3f9d62919c172d8994d9bba5298c3a18f7dc97eeddb6953377425de",
+        "crop": [
+          160,
+          75,
+          480,
+          285
+        ],
+        "caption": "Native Factorio bunker combat. The source-art preview below identifies the sprites included in this HD pack."
+      }
+    },
+    {
+      "name": "tech-priests-hd-04",
+      "label": "Lobbers and Rockets",
+      "title": "Tech Priests HD 04 — Lobbers and Rockets",
+      "summary": "High-resolution lobber and rocket bunker animation frames. Requires Tech Priests. Part 4 of 9; install all nine for complete HD artwork.",
+      "coverage": "Original-resolution lobber artwork and the first set of rocket bunker animation frames.",
+      "artwork": [
+        {
+          "pattern": "bunker-lobber/beauty-idle-00\\.png$",
+          "label": "Lobber — front"
+        },
+        {
+          "pattern": "bunker-lobber/beauty-idle-16\\.png$",
+          "label": "Lobber — side"
+        },
+        {
+          "pattern": "bunker-lobber/beauty-idle-32\\.png$",
+          "label": "Lobber — rear"
+        },
+        {
+          "pattern": "bunker-lobber/beauty-idle-48\\.png$",
+          "label": "Lobber — side"
+        },
+        {
+          "pattern": "bunker-rocket-salvo/reload-body-00\\.png$",
+          "label": "Rocket bunker reload"
+        },
+        {
+          "pattern": "bunker-rocket-salvo/reload-body-15\\.png$",
+          "label": "Rocket bunker animation"
+        }
+      ],
+      "screenshot": {
+        "file": "public-bunker-combat-b.png",
+        "url": "https://assets-mod.factorio.com/assets/e1dd3b0b67464e208bf7931c352445d4cdee5098.png",
+        "sha256": "7a651b32091e514ad591f1d5822d462d4750734ae1442b530b2cd55d833c2163",
+        "crop": [
+          145,
+          40,
+          530,
+          325
+        ],
+        "caption": "Native Factorio defenses under attack. The source-art preview below shows this pack's lobber and rocket artwork."
+      }
+    },
+    {
+      "name": "tech-priests-hd-05",
+      "label": "Rockets and Twin Cannons",
+      "title": "Tech Priests HD 05 — Rockets and Twin Cannons",
+      "summary": "High-resolution rocket reload and twin cannon animation frames. Requires Tech Priests. Part 5 of 9; install all nine for complete HD artwork.",
+      "coverage": "Original-resolution rocket bunker reload artwork and twin cannon animation frames.",
+      "artwork": [
+        {
+          "pattern": "bunker-twin-cannon/single0-body-00\\.png$",
+          "label": "Twin cannon firing frame"
+        },
+        {
+          "pattern": "bunker-twin-cannon/single0-body-08\\.png$",
+          "label": "Twin cannon — direction 08"
+        },
+        {
+          "pattern": "bunker-twin-cannon/single0-body-16\\.png$",
+          "label": "Twin cannon — direction 16"
+        },
+        {
+          "pattern": "bunker-twin-cannon/single0-body-24\\.png$",
+          "label": "Twin cannon — direction 24"
+        },
+        {
+          "pattern": "bunker-rocket-salvo/reload-body-16\\.png$",
+          "label": "Rocket bunker reload"
+        },
+        {
+          "pattern": "bunker-rocket-salvo/reload-body-48\\.png$",
+          "label": "Rocket bunker — rear"
+        }
+      ],
+      "screenshot": {
+        "file": "public-bunker-combat-a.png",
+        "url": "https://assets-mod.factorio.com/assets/ccfebfb3a1ab6428c87375af03500699143f966e.png",
+        "sha256": "d7fa3d24f3f9d62919c172d8994d9bba5298c3a18f7dc97eeddb6953377425de",
+        "crop": [
+          150,
+          60,
+          500,
+          310
+        ],
+        "caption": "Native Factorio bunker defenses. The source-art preview below shows this pack's cannon and rocket animation frames."
+      }
+    },
+    {
+      "name": "tech-priests-hd-06",
+      "label": "Factories and Defenses",
+      "title": "Tech Priests HD 06 — Factories and Defenses",
+      "summary": "High-resolution factories, emergency machines and bunker artwork. Requires Tech Priests. Part 6 of 9; install all nine for complete HD artwork.",
+      "coverage": "Original-resolution factories, emergency machines, twin minigun and twin cannon artwork, with additional character animation frames.",
+      "artwork": [
+        {
+          "pattern": "faction-factories/martian/east\\.png$",
+          "label": "Industrial factory"
+        },
+        {
+          "pattern": "faction-factories/guard/east\\.png$",
+          "label": "Military factory"
+        },
+        {
+          "pattern": "faction-factories/sororitas/east\\.png$",
+          "label": "Faction factory"
+        },
+        {
+          "pattern": "emergency-assembler-v07/idle-north\\.png$",
+          "label": "Emergency assembler"
+        },
+        {
+          "pattern": "emergency-miner-v25/idle-hr\\.png$",
+          "label": "Emergency miner"
+        },
+        {
+          "pattern": "bunker-twin-minigun/body-00\\.png$",
+          "label": "Twin minigun"
+        }
+      ],
+      "screenshot": {
+        "file": "factories-native-overview.png",
+        "url": "https://raw.githubusercontent.com/mrcalzon02/Tech-Priests/f810fafccef156b4ca863b8bdf98460acf98ebb5/docs/art/local-content-20261118/native-combined/factories-native-overview.png",
+        "sha256": "0b4a73471e55ce6dbfa82ad8748ea53954df5c242e8233c64fd86865a8d945e7",
+        "bytes": 2615565,
+        "caption": "Faction factories in Factorio. Original in-game screenshot."
+      }
+    },
+    {
+      "name": "tech-priests-hd-07",
+      "label": "Soldiers and Combat Units",
+      "title": "Tech Priests HD 07 — Soldiers and Combat Units",
+      "summary": "High-resolution soldiers, officers and combat unit artwork. Requires Tech Priests. Part 7 of 9; install all nine for complete HD artwork.",
+      "coverage": "Original-resolution soldiers, officers and combat unit artwork, including Datasmith, Dialogus, Guardsman and Kataphron animation frames.",
+      "artwork": [
+        {
+          "pattern": "gladius-donors/Cybernetica-Datasmith/idle\\.png$",
+          "label": "Datasmith"
+        },
+        {
+          "pattern": "gladius-donors/Guardsman/idle\\.png$",
+          "label": "Guardsman"
+        },
+        {
+          "pattern": "gladius-donors/Imperial-Officer/idle\\.png$",
+          "label": "Officer"
+        },
+        {
+          "pattern": "gladius-donors/Kataphron-Breacher/idle\\.png$",
+          "label": "Kataphron Breacher"
+        },
+        {
+          "pattern": "gladius-donors/Kataphron-Destroyer/idle\\.png$",
+          "label": "Kataphron Destroyer"
+        },
+        {
+          "pattern": "gladius-donors/Dialogus/idle\\.png$",
+          "label": "Dialogus"
+        }
+      ]
+    },
+    {
+      "name": "tech-priests-hd-08",
+      "label": "Priests and Skitarii",
+      "title": "Tech Priests HD 08 — Priests and Skitarii",
+      "summary": "High-resolution Tech-Priest ranks, Skitarii and hydrogen thruster artwork. Requires Tech Priests. Part 8 of 9; install all nine for complete HD artwork.",
+      "coverage": "Original-resolution Tech-Priest ranks and Skitarii artwork, with additional character and hydrogen thruster animation frames.",
+      "artwork": [
+        {
+          "pattern": "gladius-donors/Tech-Priest-Enginseer/idle\\.png$",
+          "label": "Tech-Priest Enginseer"
+        },
+        {
+          "pattern": "gladius-donors/Tech-Priest-Dominus/idle\\.png$",
+          "label": "Tech-Priest Dominus"
+        },
+        {
+          "pattern": "gladius-donors/Tech-Priest-Manipulus/idle\\.png$",
+          "label": "Tech-Priest Manipulus"
+        },
+        {
+          "pattern": "gladius-donors/Skitarii-Marshal/idle\\.png$",
+          "label": "Skitarii Marshal"
+        },
+        {
+          "pattern": "gladius-donors/Skitarii-Ranger/idle\\.png$",
+          "label": "Skitarii Ranger"
+        },
+        {
+          "pattern": "gladius-donors/Skitarii-Vanguard/idle\\.png$",
+          "label": "Skitarii Vanguard"
+        }
+      ],
+      "screenshot": {
+        "file": "skins-native-ranks.png",
+        "url": "https://raw.githubusercontent.com/mrcalzon02/Tech-Priests/f810fafccef156b4ca863b8bdf98460acf98ebb5/docs/art/local-content-20261118/native-combined/skins-native-ranks.png",
+        "sha256": "aa57b14814dd5dbc366d5947a8d953cb18d82961923113d495e0217d1b5dbd0c",
+        "bytes": 3752327,
+        "caption": "Tech-Priest rank lineup in Factorio. Original in-game screenshot."
+      }
+    },
+    {
+      "name": "tech-priests-hd-09",
+      "label": "Reactors and Voidships",
+      "title": "Tech Priests HD 09 — Reactors and Voidships",
+      "summary": "High-resolution reactors, thrusters and shipboard weapons. Requires Tech Priests. Part 9 of 9; install all nine for complete HD artwork.",
+      "coverage": "Original-resolution plasma reactors, thrusters, orbital machinery and shipboard weapons.",
+      "artwork": [
+        {
+          "pattern": "voidship-armory/macro-cannon/heading-00\\.png$",
+          "label": "Macro cannon"
+        },
+        {
+          "pattern": "voidship-armory/lance-battery/heading-00\\.png$",
+          "label": "Lance battery"
+        },
+        {
+          "pattern": "plasma-reactor-family/hr/majoris/north-off\\.png$",
+          "label": "Majoris plasma reactor"
+        },
+        {
+          "pattern": "plasma-reactor-family/hr/minoris/north-off\\.png$",
+          "label": "Minoris plasma reactor"
+        },
+        {
+          "pattern": "void-fusion-thrusters-v01/large-void-fusion-thruster/cold_body\\.png$",
+          "label": "Large void fusion thruster"
+        },
+        {
+          "pattern": "void-fusion-thrusters-v01/void-fusion-thruster/cold_body\\.png$",
+          "label": "Void fusion thruster"
+        }
+      ],
+      "screenshot": {
+        "file": "large-void-fusion-thruster-working.png",
+        "url": "https://raw.githubusercontent.com/mrcalzon02/Tech-Priests/f810fafccef156b4ca863b8bdf98460acf98ebb5/docs/art/thruster-resumption-20261117/animation-capture/native-wide-v18g/large-void-fusion-thruster-working.png",
+        "sha256": "09c42ac60f962bd4f92fc6d142778821fdc6f8e3a6674762d74b1335d7bf8de2",
+        "bytes": 1115753,
+        "caption": "A working large void fusion thruster in Factorio. Original in-game screenshot."
+      }
+    }
+  ]
+}
+

@@ -1,0 +1,18 @@
+{
+  "request_id": "owner-hd-companion-publication-2026-11-25",
+  "source_graphics_commit": "f810fafccef156b4ca863b8bdf98460acf98ebb5",
+  "version": "1.0.0",
+  "max_bytes": 262100000,
+  "mods": [
+    "tech-priests-hd-01",
+    "tech-priests-hd-02",
+    "tech-priests-hd-03",
+    "tech-priests-hd-04",
+    "tech-priests-hd-05",
+    "tech-priests-hd-06",
+    "tech-priests-hd-07",
+    "tech-priests-hd-08",
+    "tech-priests-hd-09"
+  ],
+  "purpose": "Publish every existing HD companion as its own Factorio mod with unique packaging, a genuine screenshot and a short description."
+}
