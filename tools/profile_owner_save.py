@@ -210,6 +210,7 @@ do
       local current=catalog_root and catalog_root.stations and catalog_root.stations[station.unit_number]
       local pending=catalog_root and catalog_root.pending_scans and catalog_root.pending_scans[station.unit_number]
       local partial=catalog_root and catalog_root.partial_stations and catalog_root.partial_stations[station.unit_number]
+      local pending_info=pending and (pending.scan_info or (pending.dense and pending.dense.info))
       if original_ids and original_ids[station.unit_number]~=priest.unit_number then stable=false end
       values[#values+1]={station=station.unit_number,station_name=station.name,
         priest=priest.unit_number,priest_name=priest.name,
@@ -225,12 +226,34 @@ do
           published_started_tick=current and current.scan_started_tick,
           published_completed_tick=current and current.scan_completed_tick,
           published_incomplete=current and current.scan_incomplete_1478,
+          published_reason=current and current.scan_reason_1478,
+          published_queries=current and current.scan_queries_1478,
+          published_entities=current and current.scan_entities_1478,
+          published_collisions=current and current.scan_identity_collisions_1481,
           partial_completed_tick=partial and partial.scan_completed_tick,
+          partial_incomplete=partial and partial.scan_incomplete_1478,
+          partial_reason=partial and partial.scan_reason_1478,
+          partial_queries=partial and partial.scan_queries_1478,
+          partial_entities=partial and partial.scan_entities_1478,
+          partial_collisions=partial and partial.scan_identity_collisions_1481,
           pending_phase=pending and pending.phase,
           pending_started_tick=pending and pending.started_tick,
           pending_age_ticks=pending and (game.tick-pending.started_tick),
           pending_processed=pending and pending.processed,
-          pending_queries=pending and pending.dense and pending.dense.info and pending.dense.info.queries},
+          pending_queries=pending_info and pending_info.queries,
+          -- The in-progress coverage flag is not a completed certificate.
+          pending_scan_done=pending and pending.dense and pending.dense.done==true,
+          pending_scan_complete=pending_info and pending_info.complete,
+          pending_scan_reason=pending_info and pending_info.reason,
+          pending_scan_entities=pending_info and pending_info.unique,
+          pending_scan_collisions=pending_info and pending_info.identity_collisions,
+          pending_scan_splits=pending_info and pending_info.splits,
+          pending_saturated_queries=pending_info and pending_info.saturated_queries,
+          pending_truncated_leaves=pending_info and pending_info.truncated_leaves,
+          pending_budget_exhausted=pending_info and pending_info.budget_exhausted==true,
+          pending_invalidated=pending and pending.invalidated==true,
+          pending_invalid_entity=pending and pending.invalid_entity==true,
+          pending_ownership_conflict=pending and pending.ownership_conflict==true},
         station_chest_items=station_stock(station),
         task=p.order_queue_0469 and p.order_queue_0469.current and p.order_queue_0469.current.kind}
     end
