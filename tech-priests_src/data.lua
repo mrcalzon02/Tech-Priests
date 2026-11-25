@@ -28,6 +28,7 @@ require("prototypes.martian_infrastructure")
 
 if mods["space-age"] then
   require("prototypes.compatibility.space-age")
+  require("prototypes.voidship_armory")
 end
 
 if mods["quality"] then

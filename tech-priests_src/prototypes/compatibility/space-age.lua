@@ -52,7 +52,6 @@ end
 
 local PLATFORM_ENTITY_NAMES = {
   ["planetary-magos-cogitator-station"] = true,
-  ["void-cogitator-station"] = true,
   ["orbital-trader"] = true,
   ["tech-priests-hidden-requester-cache"] = true,
   ["tech-priests-hidden-return-cache"] = true,
@@ -167,15 +166,26 @@ local platform_tile_source = first_existing_entity({
   {"space-platform-hub", "space-platform-hub"}
 })
 
-for _, station_name in pairs({
-  "planetary-magos-cogitator-station",
-  "void-cogitator-station"
-}) do
-  local target = data.raw.container and data.raw.container[station_name]
-  if target then
-    copy_buildability_from(target, platform_tile_source)
-    target.placeable_by = { item = station_name, count = 1 }
-  end
+local magos_station = data.raw.container["planetary-magos-cogitator-station"]
+if magos_station then
+  copy_buildability_from(magos_station, platform_tile_source)
+  magos_station.placeable_by = { item = magos_station.name, count = 1 }
+end
+
+local void_station = data.raw.container["void-cogitator-station"]
+if void_station then
+  void_station.surface_conditions = {
+    { property = "gravity", min = 0, max = 0 },
+    { property = "pressure", min = 0, max = 0 }
+  }
+  void_station.tile_buildability_rules = {{
+    area = table.deepcopy(void_station.collision_box),
+    required_tiles = { layers = { ground_tile = true } },
+    colliding_tiles = { layers = { empty_space = true } },
+    remove_on_collision = true
+  }}
+  void_station.placeable_by = { item = void_station.name, count = 1 }
+  void_station.heating_energy = "0W"
 end
 
 mark_platform_buildable_entity("assembling-machine", "orbital-trader", "assembling-machine", "crusher")

@@ -84,8 +84,11 @@ local station_recipes = {
       { type = "item", name = "processing-unit", amount = 8 },
       { type = "item", name = "roboport", amount = 1 }
     }
-  },
-  {
+  }
+}
+
+if mods["space-age"] then
+  station_recipes[#station_recipes + 1] = {
     name = "void-cogitator-station",
     energy_required = 22,
     ingredients = {
@@ -97,7 +100,7 @@ local station_recipes = {
       { type = "item", name = "void-sealed-cargo", amount = 3 }
     }
   }
-}
+end
 
 for _, spec in pairs(station_recipes) do
   table.insert(recipes, {

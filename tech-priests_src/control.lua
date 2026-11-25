@@ -680,7 +680,7 @@ end
 
 
 -- Historical 0566 movement governor is retired; enforcement is native to movement_controller.
-do
+if script.feature_flags.space_travel then
   local ok, err = pcall(function()
     local Void0630 = require("scripts.core.void_movement_authority_0630")
     if Void0630 and Void0630.install then Void0630.install() end
@@ -1263,3 +1263,6 @@ assert(require("scripts.core.combat_roster_orders").install() == true,
 assert(require("scripts.core.combat_muster_gui").install() == true,
  "[Tech-Priests] combat muster controls unavailable")
 
+if script.active_mods["space-age"] then
+  assert(require("scripts.voidship_armory").install_main(require("scripts.core.runtime_event_registry")))
+end
