@@ -27,6 +27,50 @@ Performance observations remain diagnostics under the owner's release policy;
 they do not create an additional release approval gate. This does not authorize
 claiming that an unresolved slowdown is fixed.
 
+### Accepted 1.0.2 hotfix evidence
+
+Source [`7547492215f20b8e1ca7b208b66331f061b873c2`](https://github.com/mrcalzon02/Tech-Priests/commit/7547492215f20b8e1ca7b208b66331f061b873c2)
+is accepted as a measured retained-inventory and performance hotfix for the
+four-priest reconstruction. The [sanitized release receipt](releases/performance-hotfix-request.json)
+binds all 39 source overlays, both complete result hashes, and the exact harness
+and staging helper. Publication also requires the native unit-behavior gate on
+the final 1.0.2 ZIP.
+
+The matched Factorio 2.1.25 headless runs used one runner job, the same original
+save and mod stack, four reconstructed rank units, and callback instrumentation
+OFF. Each native CSV contains exactly 18,000 sequential rows; 600 warmup ticks
+leave 17,400 measured updates. Passive observation is present in both cases.
+
+| Measured update metric (ms) | Published 1.0.0 | Accepted candidate |
+|---|---:|---:|
+| Whole update mean | 18.6433 | 2.4337 |
+| Whole update p95 | 188.8359 | 8.6968 |
+| Whole update p99 | 377.2106 | 27.6365 |
+| Whole update maximum | 744.8604 | 107.5013 |
+| All-mod script mean | 17.8661 | 2.0185 |
+| All-mod script p95 | 181.5839 | 8.1830 |
+| All-mod script p99 | 366.6017 | 22.3071 |
+| All-mod script maximum | 585.6975 | 100.6003 |
+
+In the sustained late window `[6000,18000)`, whole-update
+mean/p95/p99/max changed from 17.4640/143.3714/365.8488/491.7047 ms to
+2.4737/8.7633/28.8316/107.5013 ms. All-mod script values changed from
+16.8108/138.1730/357.2242/490.7075 ms to
+2.0588/8.2923/22.8142/100.6003 ms.
+
+Both cases retained four moving identities and completed 35 acquisitions,
+35 deposits and one emergency transaction, with zero isolated or native runtime
+errors. Inventory discovery stayed at four initial queries. The candidate
+published 62 catalog continuations; one 56-tick-old continuation remained in
+progress at the stop boundary. The bounded integration audit completed a full
+102,503-node, 674,784-work traversal at elapsed tick 17,209 without truncation or
+unsupported values; integration, registry and lifecycle completion were observed.
+
+Residual stalls remain: 37 measured candidate updates exceeded 50 ms and one
+exceeded 100 ms. This acceptance covers the measured four-priest headless
+reconstruction. It is neither a stutter-free claim nor evidence of broad scaling
+or graphical-frame performance.
+
 ### Owner-save fixture and runner identity
 
 The supplied `_autosave1.zip` has SHA-256
