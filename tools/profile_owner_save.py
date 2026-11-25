@@ -350,11 +350,7 @@ do
       local interval=scope=="registry-nth" and tonumber(name:match("^(%d+):"))
       local every_call=(interval and interval>=60)
         or (scope=="registry-nth" and name=="5:runtime_tick_broker_0600:central-pulse")
-        or (scope=="dispatcher-branch" and (
-        name=="scripts.core.station_catalog.scan_pair" or name=="scripts.core.station_catalog.step_pair"
-        or name=="scripts.core.station_catalog.publish_pending"
-        or name=="scripts.core.station_catalog.inventory_candidates"
-        or name=="scripts.core.master_infrastructure_plan_0644.service_pair"))
+        or scope=="dispatcher-branch"
         or scope=="broker-service"
         or (scope=="infrastructure-local" and name:sub(1,5)=="0644.")
       return function(...)
@@ -394,7 +390,12 @@ do
     -- superseded independent executor pulses. Sample each physical priest
     -- separately so a multiple-of-four cadence cannot alias one rank only.
     local owners={
-      {"TechPriestsSingleDispatcher0510","scripts.core.single_dispatcher_0510",{"service_pair"}},
+      {"TechPriestsSingleDispatcher0510","scripts.core.single_dispatcher_0510",{"service_pair",
+        "TECH_PRIESTS_0519_PRE_SERVICE_PAIR","TECH_PRIESTS_0527_PRE_SERVICE_PAIR","TECH_PRIESTS_0529_PRE_GROUND_HOOVER"}},
+      {"TECH_PRIESTS_LOGISTICS_FETCH_EXECUTOR_0527","scripts.core.logistics_fetch_executor_0527",{"service_pair"}},
+      {"TECH_PRIESTS_GROUND_ITEM_HOOVER_0529","scripts.core.ground_item_hoover_0529",{"service_pair"}},
+      {"TECH_PRIESTS_LOGISTICS_CONSTRUCTION_CONTRACT_0519","scripts.core.logistics_construction_contract_0519",
+        {"has_constructible_pair","item_available_or_producible","service_construction"}},
       {"TECH_PRIESTS_ORDER_QUEUE_0469","scripts.core.order_queue_0469",{"tick_pair"}},
       {"TECH_PRIESTS_ACTION_STATE_ARBITER_0488","scripts.core.action_state_arbiter_0488",{"action"}},
       {"TechPriestsDefensePerimeter0259","scripts.defense_perimeter",{"has_pending","service_pair"}},
@@ -472,10 +473,8 @@ def callback_sampling_policy(enabled: bool) -> dict | None:
         "every_call":[
             {"scope":"registry-nth","minimum_interval_ticks":60},
             {"scope":"registry-nth","name":"5:runtime_tick_broker_0600:central-pulse"},
-            *({"scope":"dispatcher-branch","name":"scripts.core.station_catalog."+name}
-              for name in ("scan_pair","step_pair","publish_pending","inventory_candidates")),
+            {"scope":"dispatcher-branch"},
             {"scope":"broker-service"},
-            {"scope":"dispatcher-branch","name":"scripts.core.master_infrastructure_plan_0644.service_pair"},
             *({"scope":"infrastructure-local","name":"0644."+name} for name in LOCAL_PROFILE_FUNCTIONS_0644)],
         "warmup_included":True,
         "overlap":"nested service/local scopes overlap; final step_pair includes publish_pending; do not sum these durations"}
@@ -914,7 +913,7 @@ def main() -> int:
             "graphical_benchmark":args.graphics,
             "script_scope":"unavailable in graphical frame CSV" if args.graphics else "whole-engine-all-installed-mods",
             "timing_evidence_scope":"native graphical frame CSV; no game-tick correlation" if args.graphics else "native per-game-tick update benchmark",
-            "callback_scope":("all broker services and outer broker pulse, catalog scan/step/publish/inventory candidates, 0644 pair/local, and registry nth-tick callbacks with interval at least 60 ticks; other owners one-in-32 including warmup; nested scopes overlap; diagnostic overhead present"
+            "callback_scope":("all broker services and outer broker pulse, every listed dispatcher branch including 0519/0527/0529 wrappers and saved dispatcher delegates, 0644 locals, and registry nth-tick callbacks with interval at least 60 ticks; other owners one-in-32 including warmup; nested scopes overlap; diagnostic overhead present"
                               if args.instrument_callbacks else "disabled"),
             "callback_sampling_policy":callback_sampling_policy(args.instrument_callbacks),
             "graphics_backend":None,"graphics_renderer":None,
