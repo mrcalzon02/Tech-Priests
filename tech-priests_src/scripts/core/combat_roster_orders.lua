@@ -88,7 +88,11 @@ function M.replaced(data)
  if not owner then return end
  local pairs=storage.tech_priests.pairs_by_station or {}
  local pair=pairs[owner]
- if pair then Logistics.on_combat_replaced(pair,data.old_entity,data.new_entity) end
+ if pair then
+  Logistics.on_combat_replaced(pair,data.old_entity,data.new_entity)
+  local campaign=package.loaded["scripts.core.strategic_resource_campaign"]
+  if campaign then campaign.replaced(pair,data.old_entity,data.new_entity) end
+ end
  -- A priest can own older units while constructing/supplying another. Only
  -- the order that actually held this body may follow its AAI replacement.
  if pair and pair.combat_muster_order and pair.combat_muster_order.actor==data.old_entity
