@@ -24,7 +24,10 @@ assert(fast_calls>=1 and slow_calls==0,
 assert(chosen.reservation_key==R.target_key(unit_target),
   'claimed reservation did not preserve authoritative key')
 local positional={position={x=9,y=7},surface_index=1,force_index=1}
-ok,why,order=Q.submit('pickup',positional,{id='pickup:pos',priority=300,expires_tick=1000})
+-- Non-entity targets provide queue scope through submit opts; the target's
+-- own scope remains available to the reservation authority's fallback key.
+ok,why,order=Q.submit('pickup',positional,{id='pickup:pos',priority=300,expires_tick=1000,
+  surface_index=surface.index,force_index=force.index})
 assert(ok and order and order.reservation_lookup_key_1500==nil,
   'positional order incorrectly retained a stale unit key')
 chosen,status=Q.claim_nearest(pair,'pickup',{search_radius=40})

@@ -1,5 +1,12 @@
 # UPS Hotspot Audit 0743
 
+> Historical static snapshot. This document's older counts and retirement notes
+> are not the current source inventory or native timings. Use the generated
+> [Behavior Source Inventory](BEHAVIOR_SOURCE_INVENTORY.md), the
+> [current behavior map](BEHAVIOR_MERMAID_MAP_0660.md), and the
+> [UPS Validation Runbook](UPS_VALIDATION_RUNBOOK_0742.md) for current scope,
+> freshness checks, and the matched owner-save measurement procedure.
+
 **Status:** static source audit; requires clean-world profiler confirmation
 
 **Recovery delta:** `behavior_execution_doctrine_0505` is source-retired, removing one behavior service, one registry/direct-timer fallback family, one command, and several global wrapper sites. The frozen table below remains the comparison baseline until the next generated audit; this note is not profiler evidence.

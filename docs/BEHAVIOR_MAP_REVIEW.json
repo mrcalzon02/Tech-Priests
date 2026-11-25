@@ -1,0 +1,218 @@
+{
+  "maps": [
+    {
+      "covered_source_files": 381,
+      "path": "docs/BEHAVIOR_FUNCTION_MAP_0659.md",
+      "reviewed_source_digest": "c0b350f5ae8d8fab548effded6be7e416fb676df9164ffb9ebc13840f39491ea",
+      "sha256": "43920bcc919d00641c605a51f185a84a3f41044fcaa6396d64231c30ea8b4ce9",
+      "source_patterns": [
+        "control.lua",
+        "scripts/**/*.lua",
+        "shared/**/*.lua"
+      ]
+    },
+    {
+      "covered_source_files": 12,
+      "path": "docs/BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0661.md",
+      "reviewed_source_digest": "05a22b5c2bbc4463ab7e813891e500d970f4f71d3c95511975d7a3dff85b65da",
+      "sha256": "e40e21ab6b169faf98a9c1ac10d52c90ba1af34ff1eb1dcac84ba98392e2339b",
+      "source_patterns": [
+        "scripts/core/planning_constraints_0646.lua",
+        "scripts/core/logistics_fetch_executor_0527.lua",
+        "scripts/core/scan_routing_0610.lua",
+        "scripts/core/station_catalog.lua",
+        "scripts/core/storage_role_authority_0686.lua",
+        "scripts/core/efficiency_economy_0587.lua",
+        "scripts/core/runtime_tick_broker.lua",
+        "scripts/core/efficiency_economy_0598.lua",
+        "scripts/core/logistics_fetch_executor_0526.lua",
+        "scripts/core/station_area_change_invalidator_0634.lua",
+        "scripts/core/station_work_inventory.lua",
+        "scripts/core/proxy_ammo_hardener_0649.lua"
+      ]
+    },
+    {
+      "covered_source_files": 6,
+      "path": "docs/BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0662_DIRECT_MOVEMENT.md",
+      "reviewed_source_digest": "8a14ec962693506e31f4aa25ad61b67c1b930dbbbac7aea3673bc4d627bf40cf",
+      "sha256": "a0e5e16f723f6bf493b74e4422a9812583ed2f715e6fce7a6cb88d7af3f1856a",
+      "source_patterns": [
+        "scripts/core/direct_acquisition_physical_guard_0649.lua",
+        "scripts/core/direct_acquisition_executor_0513.lua",
+        "scripts/core/movement_controller.lua",
+        "scripts/core/void_movement_authority_0630.lua",
+        "scripts/core/platform_movement_authority.lua",
+        "scripts/core/planning_constraints_0646.lua"
+      ]
+    },
+    {
+      "covered_source_files": 4,
+      "path": "docs/BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0663_DIRECT_EXECUTOR.md",
+      "reviewed_source_digest": "c7e05946db213e2dd19bddedc9728a43fdcb1131c8948d865b7b2083a7a2b184",
+      "sha256": "1e446fd6c64e724d63483b2eab8a11ed47aff704fbe4a51e7627815d03a9c330",
+      "source_patterns": [
+        "scripts/core/direct_acquisition_executor_0513.lua",
+        "scripts/core/order_queue_0469.lua",
+        "scripts/core/movement_controller.lua",
+        "scripts/core/single_dispatcher_0510.lua"
+      ]
+    },
+    {
+      "covered_source_files": 4,
+      "path": "docs/BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0664_MOVEMENT_CONTROLLER.md",
+      "reviewed_source_digest": "16b9b4265f27be9c98d0389b1425434b6fd708414f22fb6ab7a6c3f3fd4efd89",
+      "sha256": "32dca4765b8498b2e3c9e374497f7913c6dfa2796c4140078c54891ee73f1bf4",
+      "source_patterns": [
+        "scripts/core/movement_controller.lua",
+        "scripts/core/authority_corridor_pathing_0574.lua",
+        "scripts/core/void_movement_authority_0630.lua",
+        "scripts/core/runtime_tick_broker.lua"
+      ]
+    },
+    {
+      "covered_source_files": 6,
+      "path": "docs/BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0665_CONSTRUCTION.md",
+      "reviewed_source_digest": "e982d76366413d01ff1294c15b04feb8008027e78b3d55005c8354316e955688",
+      "sha256": "a756cf7a7c6c509245c9afc7d5360c5d271267c0bb3399b8b18c18a055180b8d",
+      "source_patterns": [
+        "scripts/core/construction_planner.lua",
+        "scripts/core/construction_site_planner.lua",
+        "scripts/core/construction_bootstrap_ghost_planner_0645.lua",
+        "scripts/core/work_reservations.lua",
+        "scripts/core/single_dispatcher_0510.lua",
+        "scripts/core/self_construction_frustration_gate.lua"
+      ]
+    },
+    {
+      "covered_source_files": 7,
+      "path": "docs/BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0666_INFRASTRUCTURE_PLANNING.md",
+      "reviewed_source_digest": "499e7afd41cc4290aa9005bfb51a395843477822757ed895bb260182eeb50f1d",
+      "sha256": "2f539b10a9f6a69727f3389623f483da017ef92382bc9c13a8b86ecef49ebb6e",
+      "source_patterns": [
+        "scripts/core/infrastructure_first_governor_0640.lua",
+        "scripts/core/master_infrastructure_plan_0644.lua",
+        "scripts/core/construction_bootstrap_ghost_planner_0645.lua",
+        "scripts/core/power_setup_1252.lua",
+        "scripts/core/self_construction_frustration_gate.lua",
+        "scripts/core/planning_constraints_0646.lua",
+        "control.lua"
+      ]
+    },
+    {
+      "covered_source_files": 5,
+      "path": "docs/BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0667_SINGLE_DISPATCHER.md",
+      "reviewed_source_digest": "ecc8a8ec86945f3639f5d693b1855bf41ae982908342173a0baff14fa4917995",
+      "sha256": "e1684cd85570db95630a3e49f065a52d31823c1a0de40f2a578f9874930b6d0d",
+      "source_patterns": [
+        "scripts/core/single_dispatcher_0510.lua",
+        "scripts/core/action_state_arbiter_0488.lua",
+        "scripts/core/logistics_fetch_executor_0527.lua",
+        "scripts/core/order_queue_0469.lua",
+        "scripts/core/combat_roster_orders.lua"
+      ]
+    },
+    {
+      "covered_source_files": 3,
+      "path": "docs/BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0668_ACTION_STATE_ARBITER.md",
+      "reviewed_source_digest": "fab97e1a2bc6766cd2d3fd6ffabad0b18d3643fbe34085dc1fae808174746e12",
+      "sha256": "d28097fbbdd9e93976b9b49c8456086eecc35fa51d6d80d1a5cd464cd19910ee",
+      "source_patterns": [
+        "scripts/core/action_state_arbiter_0488.lua",
+        "scripts/core/single_dispatcher_0510.lua",
+        "scripts/core/behavior_tree_monitor_0642.lua"
+      ]
+    },
+    {
+      "covered_source_files": 3,
+      "path": "docs/BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0669_ORDER_QUEUE.md",
+      "reviewed_source_digest": "932a4bb8652671cf96607c3b3c5ba6703339bae0e2866256ab0fcc29eb8f1ea0",
+      "sha256": "f075c16ddeebef218a02f275f6508e8ceb221438132ae58a58172887675db0ac",
+      "source_patterns": [
+        "scripts/core/order_queue_0469.lua",
+        "scripts/core/consecration_executor_0515.lua",
+        "scripts/core/priest_lifecycle_authority_0499.lua"
+      ]
+    },
+    {
+      "covered_source_files": 5,
+      "path": "docs/BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0670_EMERGENCY_PRODUCTION.md",
+      "reviewed_source_digest": "ab319389e07ec4ae166cf9651f1ec8d91beaa80387cdce5d3e11fc12b939fb15",
+      "sha256": "b230e9223a94b5def78fa23aa170dce8a3f0289d2f00643ebf4264a4f6eff3f2",
+      "source_patterns": [
+        "scripts/core/emergency_production_executor_0514.lua",
+        "scripts/core/crafting_executor.lua",
+        "scripts/core/emergency_facility_doctrine.lua",
+        "scripts/core/storage_role_authority_0686.lua",
+        "scripts/core/inventory_steward.lua"
+      ]
+    },
+    {
+      "covered_source_files": 23,
+      "path": "docs/BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0671_CONSECRATION.md",
+      "reviewed_source_digest": "03a3e420b6302c873814867ca47dde6aba23a0078d7238a50776a2562fc1a537",
+      "sha256": "0aa20f27027fe46213c9d679381642539593b6268c378784e10b9aa9ff83e370",
+      "source_patterns": [
+        "scripts/core/consecration_executor_0515.lua",
+        "scripts/core/work_reservations.lua",
+        "scripts/core/work_queue_authority.lua",
+        "scripts/core/consecration/*.lua",
+        "shared/combat_roster_catalog.lua",
+        "control.lua"
+      ]
+    },
+    {
+      "covered_source_files": 5,
+      "path": "docs/BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0672_REPAIR.md",
+      "reviewed_source_digest": "c7c4bce81abbf80e2bf49fb375b16440231850c45c99810a94e5b480268404f3",
+      "sha256": "c042da3748980b73d23ac67725bcf36c2d4c1a300ed6d795c4073437d5c44c6b",
+      "source_patterns": [
+        "scripts/core/repair_executor_0516.lua",
+        "scripts/core/event_driven_work_feeder_0608.lua",
+        "scripts/core/work_queue_authority.lua",
+        "scripts/core/work_reservations.lua",
+        "scripts/core/combat_repair_doctrine_0517.lua"
+      ]
+    },
+    {
+      "covered_source_files": 3,
+      "path": "docs/BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0675_COMBAT_REPAIR.md",
+      "reviewed_source_digest": "86596573033e7679578a4be9dcae443c954c00edc2c9b460fd44d7c5b15e48f9",
+      "sha256": "15821cefa5353fab357705dbcb939ac355db4c0058f62be5b6ca9c84e878e0b4",
+      "source_patterns": [
+        "scripts/core/combat_repair_doctrine_0517.lua",
+        "scripts/core/repair_executor_0516.lua",
+        "scripts/core/action_state_arbiter_0488.lua"
+      ]
+    },
+    {
+      "covered_source_files": 381,
+      "path": "docs/BEHAVIOR_MERMAID_MAP_0660.md",
+      "reviewed_source_digest": "c0b350f5ae8d8fab548effded6be7e416fb676df9164ffb9ebc13840f39491ea",
+      "sha256": "916a3043eeb6436e491dd4f55d8c36b3b6780a841d9c37497e48a5096a3db279",
+      "source_patterns": [
+        "control.lua",
+        "scripts/**/*.lua",
+        "shared/**/*.lua"
+      ]
+    },
+    {
+      "covered_source_files": 381,
+      "path": "docs/RECOVERY_AUTHORITY_MAP_CURRENT.md",
+      "reviewed_source_digest": "c0b350f5ae8d8fab548effded6be7e416fb676df9164ffb9ebc13840f39491ea",
+      "sha256": "cff57c3dcf294dd72bb562a1d7047f2814c40271ee43924a67b8183f7451ecc0",
+      "source_patterns": [
+        "control.lua",
+        "scripts/**/*.lua",
+        "shared/**/*.lua"
+      ]
+    }
+  ],
+  "review_meaning": "Explicit source/diagram review acknowledgment; no semantic or runtime proof.",
+  "schema": "tech-priests-behavior-map-review-v1",
+  "source_digest": "c0b350f5ae8d8fab548effded6be7e416fb676df9164ffb9ebc13840f39491ea",
+  "source_scope": [
+    "control.lua",
+    "scripts/**/*.lua",
+    "shared/**/*.lua"
+  ]
+}

@@ -13,7 +13,7 @@ local profilers,stops=0,0
 helpers={create_profiler=function()
   profilers=profilers+1
   return setmetatable({stop=function() stops=stops+1 end},
-    {__tostring=function() return "0.5" end})
+    {__tostring=function() return "Duration: 0.5ms" end})
 end}
 local R=require("scripts.core.runtime_event_registry")
 local names,types=0,0

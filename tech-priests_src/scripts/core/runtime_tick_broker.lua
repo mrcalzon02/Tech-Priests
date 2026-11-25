@@ -161,7 +161,26 @@ end
 local function profiler_ms(profiler)
   if not profiler then return nil, "" end
   local text = safe(profiler)
-  return tonumber(text:match("([%d%.]+)")), text
+  -- Native LuaProfiler tostring is an object description, not elapsed time.
+  -- Accept only an explicit millisecond duration; never parse an address,
+  -- object identifier, version number, or unitless test double as timing.
+  local value = text:match("^%s*Duration:%s*([%d%.eE%+%-]+)%s*ms%s*$")
+    or text:match("^%s*([%d%.eE%+%-]+)%s*ms%s*$")
+  local milliseconds = tonumber(value)
+  if not milliseconds or milliseconds < 0 or milliseconds == math.huge
+      or milliseconds ~= milliseconds then return nil, text end
+  return milliseconds, text
+end
+local function normalize_profile_timing(record)
+  if record.timing_schema == 2 then return record end
+  -- Older saved records parsed arbitrary digits and divided by all calls.
+  -- Keep their call/error history, but do not promote it to timing evidence.
+  record.timing_schema = 2
+  record.timed_samples, record.native_log_samples = 0, 0
+  record.unavailable_samples = tonumber(record.calls) or 0
+  record.total_ms, record.worst_ms = nil, nil
+  record.last_ms, record.avg_ms = nil, nil
+  return record
 end
 function M.record_profile(section, name, category, profiler, ok)
   -- A disabled/unavailable profiler produces no timing evidence. Avoid
@@ -170,23 +189,34 @@ function M.record_profile(section, name, category, profiler, ok)
   local root = M.root()
   local key = safe(section) .. ":" .. safe(name)
   local milliseconds, text = profiler_ms(profiler)
-  local record = root.profiler.routes[key] or {
+  local record = normalize_profile_timing(root.profiler.routes[key] or {
     section = safe(section),
     name = safe(name),
     category = safe(category),
     calls = 0,
-    total_ms = 0,
-    worst_ms = 0,
     errors = 0,
-  }
+  })
   record.calls = record.calls + 1
   if ok == false then record.errors = record.errors + 1 end
   record.last_text = text
   if milliseconds then
+    record.timed_samples = record.timed_samples + 1
     record.last_ms = milliseconds
-    record.total_ms = record.total_ms + milliseconds
-    record.worst_ms = math.max(record.worst_ms, milliseconds)
-    record.avg_ms = record.total_ms / record.calls
+    record.total_ms = (record.total_ms or 0) + milliseconds
+    record.worst_ms = math.max(record.worst_ms or 0, milliseconds)
+    record.avg_ms = record.total_ms / record.timed_samples
+  else
+    record.unavailable_samples = record.unavailable_samples + 1
+    record.last_ms = nil
+  end
+  -- Serialize the native profiler through a LocalisedString, where Factorio
+  -- supplies its real duration. Retain bounded samples in the engine log;
+  -- never persist profiler objects or present an unparsed sample as 0 ms.
+  if log and (record.calls == 1 or record.calls % 32 == 0) then
+    local logged = pcall(log, {"", "[TP-RUNTIME-PROFILE] tick=", now(),
+      " scope=broker-callback name=", key, " call=", record.calls,
+      " duration=", profiler})
+    if logged then record.native_log_samples = record.native_log_samples + 1 end
   end
   root.profiler.routes[key] = record
   return record
@@ -209,18 +239,23 @@ function M.profiler_report_lines(limit)
     "[tp-runtime-report] broker-profiler enabled=" .. safe(root.profiler.enabled)
     .. " tracked=" .. safe(count_table(root.profiler.routes))
     .. " debug_channels=" .. safe(count_table(root.profiler.debug_output))
-  for _, record in pairs(root.profiler.routes) do records[#records + 1] = record end
+  for _, record in pairs(root.profiler.routes) do
+    records[#records + 1] = normalize_profile_timing(record)
+  end
   table.sort(records, function(a, b)
-    if (a.worst_ms or 0) == (b.worst_ms or 0) then return a.name < b.name end
-    return (a.worst_ms or 0) > (b.worst_ms or 0)
+    if (a.worst_ms or -1) == (b.worst_ms or -1) then return a.name < b.name end
+    return (a.worst_ms or -1) > (b.worst_ms or -1)
   end)
   for index = 1, math.min(#records, tonumber(limit) or 8) do
     local record = records[index]
     lines[#lines + 1] =
       "  slow[" .. index .. "] " .. record.section .. ":" .. record.name
       .. " calls=" .. safe(record.calls)
-      .. " avg_ms=" .. safe(record.avg_ms or 0)
-      .. " worst_ms=" .. safe(record.worst_ms or 0)
+      .. " timed_samples=" .. safe(record.timed_samples)
+      .. " native_log_samples=" .. safe(record.native_log_samples)
+      .. " unavailable_samples=" .. safe(record.unavailable_samples)
+      .. " avg_ms=" .. safe(record.avg_ms ~= nil and record.avg_ms or "unavailable")
+      .. " worst_ms=" .. safe(record.worst_ms ~= nil and record.worst_ms or "unavailable")
       .. " errors=" .. safe(record.errors)
   end
   return lines

@@ -2057,19 +2057,47 @@ function M.service_pair(pair, reason)
   return false, result
 end
 
-function M.service_all(reason)
+function M.service_all(reason, offered_budget)
   local r = root()
-  if r.enabled == false then return 0 end
-  local serviced = 0
-  for _, pair in pairs(pair_map()) do
-    if serviced >= M.max_pairs_per_pulse then break end
+  local result = {processed=0, acted=0, waiting=0, failed=0, invalid=0}
+  if r.enabled == false then return 0, result end
+  local budget = math.max(0, math.min(M.max_pairs_per_pulse,
+    math.floor(tonumber(offered_budget) or M.max_pairs_per_pulse)))
+  local roster = pair_map()
+  local first_key
+  -- Resume the existing owner's traversal without copying/scanning the whole
+  -- roster. Count every inspected slot, including idle and invalid pairs:
+  -- counting only successful actions previously made the budget ineffective.
+  -- The scalar station key survives save/load; a removed key restarts safely.
+  while result.processed < budget do
+    local cursor = r.service_cursor
+    if cursor ~= nil and roster[cursor] == nil then cursor = nil end
+    local key, pair = next(roster, cursor)
+    if key == nil then key, pair = next(roster) end
+    if key == nil or key == first_key then break end
+    first_key = first_key or key
+    r.service_cursor = key
+    result.processed = result.processed + 1
     if valid_pair(pair) then
       local ok, acted = pcall(M.service_pair, pair, reason or "pulse")
-      if ok and acted then serviced = serviced + 1 end
+      if not ok then
+        result.failed = result.failed + 1
+      elseif acted then
+        result.acted = result.acted + 1
+      else
+        result.waiting = result.waiting + 1
+      end
+    else
+      result.invalid = result.invalid + 1
     end
   end
   r.last_service_tick = now()
-  return serviced
+  r.stats.pair_slots_inspected = (r.stats.pair_slots_inspected or 0) + result.processed
+  r.stats.pair_service_failures = (r.stats.pair_service_failures or 0) + result.failed
+  result.detail = "infrastructure-first inspected=" .. result.processed
+    .. " acted=" .. result.acted .. " invalid=" .. result.invalid
+  -- Preserve the historical acted-count return for explicit callers.
+  return result.acted, result
 end
 
 function M.report_lines()
@@ -2166,8 +2194,8 @@ function M.install()
       priority = 95,
       budget = 10,
       fn = function(event, budget)
-        local acted = M.service_all("broker")
-        return { processed = acted, acted = acted, detail = "infrastructure-first gate service" }
+        local _, result = M.service_all("broker", budget)
+        return result
       end,
       note = "gate high-tier acquisition behind the central Martian bootstrap plan and honest recipe material acquisition"
     })

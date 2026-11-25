@@ -1,527 +1,188 @@
-# Current Recovery Authority Map
+# Current Recovery and Runtime Authority Map
 
-**Source lane:** `0.1.674-dev`  
-**Protected packaged baseline:** `0.1.672`  
-**Source validation evidence:** Passed for `511254d59e76980706921c0a518c7b7f9440d214` in run `29875375384`
-**Runtime evidence:** Not yet accepted  
-**Declarative graph:** **26 declarative active hardeners** and **48 retired source-only authorities**.
+**Reviewed:** 2026-11-25. This is a source map, not native behavior or performance acceptance.
+The number in this filename is retained for existing links; it is not a claim that the old implementation is still active.
 
-The diagrams below describe source ownership. They do not claim successful GitHub Actions, Factorio loading, migration, save/reload, behavioral validation, profiling, packaging, or release.
+Use the [complete source inventory](BEHAVIOR_SOURCE_INVENTORY.md) and its
+[content hashes and source sites](BEHAVIOR_SOURCE_INVENTORY.json) for the full module/function/registration index.
+Potential reachability, conditional wrappers, and retired source are distinguished there.
+Source presence does not prove that a callback installed or ran in Factorio.
 
-## Canonical Loader and Runtime Spine
+## Source scope and evidence status
 
-```mermaid
-flowchart TD
-    Control[control.lua] --> Registry[runtime_event_registry]
-    Registry --> Broker[runtime_tick_broker central-pulse]
-    Registry -. background route admission .-> Economy[efficiency_economy_0598]
-    Broker -->|background callback admission| Economy
-    Economy -->|at most four due callbacks per pulse| Background[discovery readiness and housekeeping]
-    Broker --> Planning[planning_constraints_0646]
-    Planning --> Prearm[26 active hardeners]
-    Planning --> Retired[48 retired authorities]
-    Broker --> Dispatcher[single_dispatcher_0510]
-    Dispatcher --> Action[canonical_action_0744]
-    Arbiter[action_state_arbiter_0488 pure classifier] --> Dispatcher
-    Finalizer[hardener_installation_audit_0723] --> Planning
-```
+The current declarative planning graph has **26 declarative active hardeners** and 48 explicitly retired authorities. That count covers `planning_constraints_0646`, not the entire loader or every live behavior. The generated source inventory supplies current file hashes, function/registration sites and potential dependency edges.
 
-Nonterminal 0528 physical custody retains 0488 classification ahead of strict crafting; candidate-only work does not. Combat remains higher priority, and 0528 alone moves and deposits the cargo.
+This map replaces stale claims that source version 0.1.674-dev, old rc.3 artifacts and an old workflow result constitute current acceptance. `info.json`, actual Git commits, native logs and publication records carry those facts independently. No current runtime/performance/release success is inferred from this document.
 
-The registry is the sole event-composition authority. The broker owns the single central cadence. Hardener installation requires literal `true`; failed families are degraded rather than silently treated as installed.
-
-The existing 0598 economy governor now also receives the services inside the broker's five-tick pulse. Previously its registry route hook could see the central callback but not the individual services it invoked. Background callbacks receive deterministic initial phases and fair rotating admission; deferred services retain their due tick, and admitted deadlines persist across reload. The four-callback bound limits simultaneous background calls, not the duration of a callback.
-
-Dispatcher, movement, combat, repair, consecration, lifecycle, safety, recovery, acquisition, crafting and authority categories retain their existing eligibility. The historical category labels also require explicit active-work exceptions: `order_queue_0469`, `station-starvation-first-junior-0922` and `inventory_steward_0357` continue their existing cadence because they advance orders, original-priest physical expansion and persistent inventory custody. No new tick service or movement owner is introduced.
-
-## Canonical Movement Cadence
-
-```mermaid
-flowchart LR
-    Intent[executor movement intent] --> Controller[movement_controller_0418]
-    Controller --> Lease[owner priority TTL long-action lease]
-    Lease --> Broker[movement_controller_service_0611]
-    Broker --> Engine[ground priest command]
-    Controller --> Sample[movement_controller_sample_0611]
-```
-
-`movement_controller.lua` is the sole ground movement and cadence authority. It owns destination requests, owner/priority replacement rules, TTL, long-action leases, command refresh, active-request servicing, and displacement sampling. Both services require the canonical broker. `movement_cadence_contract_0518.lua` is retired and may not install, wrap the request API, register a cadence, mutate lease state, or add commands.
-
-## Canonical Combat Proxy and Command Territory
-
-```mermaid
-flowchart LR
-    Hierarchy[command_hierarchy_0480] --> Territory[primary and direct-subordinate territory]
-    Territory --> Radar[legacy radar membership]
-    Prime[legacy proxy-prime entry] --> Movement[movement_controller throttle and combat intent]
-    Force[legacy force-combat entry] --> Mutex[behavior_mutex_0466 throttle]
-    Broker[runtime_tick_broker] --> Proxy[proxy_turret_alignment]
-    Proxy --> Hidden[hidden proxy alignment and target sustain]
-```
-
-`0472` is retired. Command hierarchy owns subordinate topology and territory; movement owns proxy-prime cadence and visible positioning; the behavior mutex owns force-combat cadence; proxy alignment owns the hidden entity and its two broker services. None of these canonical owners uses a registry or direct-timer fallback.
-
-`combat_safety.lua` is the observer/predicate authority for hostile-target legality. It does not wrap visible commands or proxy-prime functions; `movement_controller.lua` applies those predicates inside its existing command routes.
-
-## Canonical Ground Enforcement and Void Delegation
-
-```mermaid
-flowchart LR
-    Public[request stop status and legacy command routes] --> Movement[movement_controller]
-    Movement --> Ground[ground envelope and engine commands]
-    Movement -->|Void pair only| Void[void_movement_authority_0630]
-    Void --> Broker[runtime_tick_broker]
-    Broker --> Steps[same-surface stepped relocation]
-```
-
-`movement_enforcement_0566` is retired. The Void backend does not patch ground authorities or public globals, and its former child pulse is loaded explicitly.
-
-`authority_corridor_pathing_0574` is a pure planner: it proposes authorization and optional waypoints, while `movement_controller` owns rejection, request state, return movement, and engine commands.
-
-Ground transit is never replaced with offscreen teleportation. Broker service budgets govern executors; the movement controller consumes the shared path budget only at its engine-command boundary.
-
-Visible long-route chunking is native to the movement controller. `0632` and `0633` are retired, and their formerly hidden child repair modules load explicitly.
-
-`0502` is also retired: station-side acquisition, movement quarantine, and anti-slam task mutation are obsolete under the canonical executor and movement controller. `0509` remains only as broker-owned passive reverse-map and UI/cascade maintenance.
-
-`0495` is retired as a parallel pair-link rescue authority. `0499` now owns reverse-map repair, conservative nearby orphan rebinding, and missing-priest observation through the runtime broker. Broad search and direct respawn remain forbidden.
-
-`0500` is retired as a wrapper seal. `0499` exports the fail-closed destruction and replacement policy, while the authoritative generated lifecycle functions establish pair maps on creation and consult `0499` before station cleanup, respawn, mobility, orphan purge, or platform recreation.
-
-`0501` is retired as a late vanish, direct-mining, movement, and recovery wrapper. Canonical `0513` now rejects protected targets and physical-output mismatches; `0490` retains only legacy literal-mining/no-spill safeguards; `0499` owns disappearance evidence.
-
-`0506` and `0508` are retired as overlapping mobility/recovery contracts. Their movement and direct-acquisition behavior was already native to `movement_controller` and `0513`; their pair validation is native to `0499`; their fallback timers and command surfaces are removed.
-
-`0503` remains active only as the broker-owned controlled missing-priest executor. `0499` observes the missing state, delays and rate-limits the attempt, issues a one-shot exact-owner lease, and the generated canonical respawn consumes that lease before creating a replacement. No valid priest is recalled, teleported, swapped, or destroyed by this route.
-
-`0498` is retired as a task/pair quarantine wrapper. `order_queue_0469` holds the active order in an indefinite `missing-priest` pause; `0499` resumes it after conservative rebind or controlled recovery. Its duplicate mining, respawn, event, diagnostics, command, and timer routes are removed.
-
-`0505` is retired as a behavior-execution wrapper. Facility-first emergency production, visible timed station fallback, controller-routed movement, strict recipe transactions, custody, and terminal completion are native to `emergency_production_executor_0514`. Direct-target truth remains in `0513`; lifecycle recovery remains in `0499`/`0503`; the old command, visual, and timer routes are removed.
-
-## Canonical Direct Acquisition Bounds
-
-```mermaid
-flowchart LR
-    Task[identified direct task] --> Bounds[0513 tier and corridor bounds]
-    Bounds --> Move[movement_controller request]
-    Move --> Extract[0513 physical extraction]
-    Extract --> Custody[direct_acquisition_custody_0513]
-    Custody --> Return[station return and atomic deposit]
-    Cleanup[runtime_command_cleanup_0720] --> Legacy[remove exact legacy 61-tick route and command]
-```
-
-`movement_bounds_contract_0511` is retired. Bounds, overleash recovery, movement, physical work, custody, and terminal state now remain in one executor path.
-
-The physical 0513 executor resolves sparse item declarations in explicit
-child-first then parent order, without allowing an undeclared or mismatched
-physical yield. The read-only 0488 classifier preserves its ordered target
-fallback across absent fields; an empty order target must not conceal the
-concrete direct-acquisition leaf or the pair's final target. Both contracts
-are covered by the existing focused Lua regressions.
-
-## Construction Placement and Physical Execution
-
-```mermaid
-flowchart LR
-    Placement[construction_site_planner read-only effectiveness] --> Candidate[construction_candidate_0338]
-    Requests[explicit construction requests] --> Candidate
-    Candidate --> Arbiter[action_state_arbiter_0488]
-    Arbiter --> Dispatcher[single_dispatcher_0510]
-    Dispatcher --> Executor[construction_planner sole physical owner]
-    Executor --> Move[literal-true movement]
-    Executor --> Custody[construction_custody_0338]
-    Executor --> Revalidate[exact coordinate revalidation]
-    Revalidate --> Build[entity creation or ghost revival]
-    Custody --> Return[source return then physical station return]
-```
-
-Defensive placement effectiveness belongs to `construction_site_planner.lua`. It scores perimeter position, threat alignment, spacing, support, power, coverage, and role-specific usefulness for walls, turrets, artillery, radar, mines, and roboports. `construction_planner.lua` alone moves the priest, removes the placeable item, retains custody, revalidates the chosen site and direction, and builds the entity.
-
-## Repair, Acquisition, and Production Transactions
-
-```mermaid
-flowchart LR
-    Queue[order_queue_0469] --> Dispatcher
-    Dispatcher --> Acquisition[direct_acquisition_executor_0513]
-    Acquisition --> AcquisitionCustody[direct acquisition custody]
-    AcquisitionCustody --> Production[emergency_production_executor_0514]
-    Production --> Output[output-deposited custody]
-    Output --> Queue
-    Dispatcher --> Repair[repair_executor_0516]
-    Repair --> RepairCustody[repair_pack_custody_0516]
-    Combat[combat_repair_doctrine_0517 tactical only] --> Repair
-```
-
-Terminal queue mutation remains scheduler-owned. Physical item removal is always paired with persistent custody and exact return or deposit handling.
-
-Emergency facility feeding is a separate broker-owned station-to-machine
-transfer, not an alternate production executor:
-
-```mermaid
-flowchart LR
-    Feed[emergency_facility_doctrine_0357] --> Stock[Cogitator station stock]
-    Stock -->|capacity preflight and physical removal| Machine[facility fuel or input]
-    Machine -->|partial insertion| Refund[refund unaccepted items]
-    Refund -->|station refuses| Custody[emergency_facility_feed_custody_0357]
-    Custody -->|restore before any new feed| Stock
-```
-
-The custody record contains only primitive saveable values; a failed refund
-blocks further facility feeds until stock can be restored. Factorio behavior
-and save/reload validation are still required.
-
-
-## Consolidated Specialized Logistics
+## Loader and timing ownership
 
 ```mermaid
 flowchart TD
-    Machine[machine discovery 0528] --> Arbiter
-    Item[item discovery 0702] --> Arbiter
-    Energy[energy readiness 0705 and discovery 0707] --> Arbiter
-    Silo[silo readiness 0709 and discovery 0710] --> Arbiter
-    Artillery[artillery readiness 0712 and discovery 0713] --> Arbiter
-    Roboport[roboport readiness 0714 and discovery 0715] --> Arbiter
-    Arbiter --> Dispatcher
-    Dispatcher --> MachineExec[machine physical execution 0528]
-    Dispatcher --> ItemExec[item physical execution 0702]
-    Dispatcher --> EnergyExec[energy physical execution 0707]
-    Dispatcher --> SiloExec[silo physical execution 0710]
-    Dispatcher --> ArtilleryExec[artillery physical execution 0713]
-    Dispatcher --> RoboportExec[roboport repair-pack execution 0715]
+    Control["control.lua"] --> Legacy["Generated fragments and bootstrap"]
+    Control --> Explicit["Shared owners and explicit later installs"]
+    Legacy --> Registry["Canonical event registry"]
+    Explicit --> Registry
+    Registry --> Events["Lifecycle and world-event handlers"]
+    Registry --> Siblings["Independent periodic handlers"]
+    Registry --> Broker["0600 central broker pulse"]
+    Broker --> Admission["0598 rotating background admission"]
+    Admission --> Services["Admitted background and due exempt callbacks"]
+    Siblings --> Discovery["Catalog, legacy work and presentation"]
+    Services --> Discovery
+    Services --> Dispatcher["0510 routine and incumbent execution"]
 ```
 
-Readiness and discovery broker services do not execute physical work. The classifier is read-only. The dispatcher is the sole caller of each physical executor. Roboport placement remains a construction concern; `0714/0715` inspect and service existing roboports only.
+The registry composes owner-keyed routes. It is not evidence that all callers use a common work budget. Its periodic routes and the broker's internal callbacks are separate admission boundaries. The current broker invokes 0598 for saved deadlines, deterministic initial phasing and rotating admission of at most four eligible background callbacks per pulse. Movement/dispatcher/combat categories and named queue, original-priest and custody services remain outside that background cap. Source-preserved direct/fallback calls and conditional installations remain explicitly inventoried.
 
-## Standard-Fluid Authority
-
-```mermaid
-flowchart LR
-    Doctrine[0689 read-only machine context] --> Input[exact input proposals]
-    Doctrine --> Output[exact output sink proposals]
-    Input --> Route[0691 wrapper-free input/output route coordinator]
-    Output --> Route
-    Reservations[work_reservations native surface keys] --> Route
-    Route --> Request[identified construction_request]
-    Request --> Construction[construction_planner]
-    Construction --> Ledger[construction_last_task_0338]
-    Ledger --> Route
-    Route --> Connected[verified machine connection]
-```
-
-`fluid_network_doctrine_0689` is the sole standard-fluid inspection and proposal authority. It owns exact machine/report context, recipe fluid requirements, fluidbox identity, shared-port collision safety, source and sink discovery, and read-only input/output proposals. `fluid_connection_planner_0691` is the sole standard-fluid route coordinator. It owns route search, surface-scoped route reservations, cooldowns, retries, identified construction requests, and final connection verification. It never wraps construction, moves priests, removes pipe items, or places entities.
-
-The retired standard-fluid wrappers are:
-
-- `fluid_output_sink_doctrine_0694`
-- `reservation_position_scope_0697`
-- `fluid_connection_execution_guard_0692`
-- `fluid_output_connection_planner_0696`
-- `fluid_port_collision_validator_0699`
-- `fluid_port_context_guard_0700`
-
-Their useful rules are consolidated into `work_reservations`, `0689`, and `0691`. The broker services are `fluid_network_doctrine_0689` and `standard_fluid_route_discovery_0691`.
-
-## Fluid-Turret Authority
-
-```mermaid
-flowchart LR
-    Readiness[0716 corrected read-only readiness] --> Proposal[0717 exact safe proposals]
-    Proposal --> Route[0719 wrapper-free route planner]
-    Route --> Request[identified construction_request]
-    Request --> Construction[construction_planner]
-    Construction --> Ledger[construction_last_task_0338]
-    Ledger --> Route
-    Route --> Connected[verified turret connection]
-```
-
-`fluid_turret_readiness_0716` owns accepted attack-fluid, pipeline, contamination, and corrected internal-buffer interpretation. `fluid_turret_connection_proposals_0717` owns exact source segment and free-port identity. `fluid_turret_connection_planner_0719` owns route search, route reservations, request identity, retries, and completion. It publishes `fluid_turret_route_discovery_0719` and ordinary fixed-position construction requests; it never wraps construction, moves priests, carries pipe items, or places pipes.
-
-The retired fluid-turret wrappers are `fluid_turret_internal_buffer_guard_0731`, `fluid_turret_proposal_integrity_0718`, and `fluid_turret_planner_integrity_0730`.
-
-## Storage and Transfer Boundaries
-
-```mermaid
-flowchart LR
-    Containers[station chest and generic containers] --> Storage[storage_role_authority_0686]
-    Storage -->|generic container domain| Sources[efficiency_economy_0587 source_cache]
-    Fetch[logistics_fetch_executor_0527] -->|typed inventory domain| Sources
-    Sources -->|initial population or station domain change| Discovery[typed area discovery]
-    Discovery -->|complete physical membership| Sources
-    Sources -->|live inventory and role checks| Storage
-    Sources -->|live inventory wire force and range checks| Fetch
-    Events[runtime_event_registry entity and movement events] -->|membership updates| Sources
-    PriestCargo[inventory_steward_0357] --> TransferCustody[inventory_transfer_custody_0687]
-    TransferCustody --> Storage
-    MachineSlots[assembler furnace lab and fuel slots] -. excluded from generic storage .-> Storage
-```
-
-Generic storage cannot use machine work inventories. Machine-specific executors may access only the exact target inventory required by their family.
-
-`storage_role_authority_0686.nearby_containers` calls `efficiency_economy_0587.container_candidates`; 0527 calls the shared `source_candidates` implementation with its separate inventory types and same-or-neutral force policy. Both reuse the existing `source_cache`. A missing item changes the live stock answer, not entity membership, and 0527 no longer forces a catalog scan after an item miss. The fetch wrapper remains installed before 0510; its inventory candidate path is distinct from its loose-ground-item fallback.
-
-Initial population retains the complete typed entity list in the bounded station area, independently of current quantities and force eligibility. The generic-storage caller receives at most 256 eligible candidates while the retained overflow remains available for promotion after removal. Candidate identities survive elapsed time, the existing cleanup cadence and save/reload; there is no periodic full-area expiry. Station position, force, surface, radius or source policy changes permit an initial population for that new domain. Every read still checks live inventory handles, quantities, quality, roles, force, surface, range and the caller's wire restrictions.
-
-The existing 0587 registry routes add or remove individual members for builds, removals, clones, raised teleports, surface changes and the module's own stash creation. Player vehicle movement/entry/exit, spider command completion and affected train-carriage events update moving inventory sources without a world scan. Character-corpse creation and expiry are also observed. Force eligibility is checked live because Factorio does not provide an individual entity-force-change event. Unannounced scripted creation or movement into an unobserved domain must raise the corresponding event or explicitly refresh that domain; no periodic scan is used to guess that a mutation occurred. With no accepted event routing, discovery remains uncached.
-
-## Retired Authority Boundary
-
-Forty-eight files remain source-preserved but cannot install. They include the retired `0363` station-pair recovery wrapper, the direct movement and mutable-leaf chain, remote salvage, construction placement wrapper, repair wrappers, machine wrappers, the retired `0505` behavior-execution wrapper, the retired `0426` death/re-imprint wrapper, six standard-fluid wrappers, item integrity wrapper, energy wrappers, silo live-ownership wrapper, artillery train-validity wrapper, and three fluid-turret wrappers.
-
-A retired authority may be read for historical context, but reintroducing its installer, service, direct event route, command ownership, physical mutation, or wrapper hook is a source-validation failure.
-
-## Validation Authority
+## Order, selector, executor and observation
 
 ```mermaid
 flowchart TD
-    Planning[planning_constraints_0646 declarative graph] --> Integration[check_development_integration_0732]
-    Integration --> Cardinality[global active and retired cardinality]
-    Integration --> InstallOrder[global installation and service graph]
-    Family[focused boundary audits 0750-0760] --> Contracts[family ownership custody and forbidden regressions]
-    Workflow[source-validation.yml] --> Integration
-    Workflow --> Family
+    World["World event or discovery result"] --> Work["Shared candidates and reservation"]
+    Work --> Queue["0469 accepted order"]
+    Queue --> Select["0488 action classification"]
+    Select --> Dispatcher["0510 selected family"]
+    Dispatcher --> Executor["Physical family executor"]
+    Executor --> Movement["0418 request and native movement"]
+    Executor --> Custody["Exact source debit and held inventory"]
+    Custody --> Terminal["Counted deposit, work or retained refund"]
+    Terminal --> Queue
+    Dispatcher --> Canonical["canonical_action_0744"]
+    Canonical --> Visual["Overhead, intent and diagnostics"]
 ```
 
-`check_development_integration_0732.py` is the sole static authority for repository-wide hardener cardinality, retired-authority membership, service uniqueness, and installation ordering. Focused family audits enforce only their family’s source contracts. `check_standard_fluid_boundary_0760.py` verifies the consolidated doctrine, route coordinator, native reservation scoping, construction handoff, and six retired standard-fluid wrappers.
+0527 fetch wraps the dispatcher before the original `service_pair`; incumbent cargo, defense, rail and expansion paths also precede ordinary classification. These are mapped in the [dispatcher drilldown](BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0667_SINGLE_DISPATCHER.md). The broad behavior monitor is observational and incomplete; it is not the exhaustive executor graph.
 
-## Post-Cleanup Authority Inventory — 2026-07-23
+## Canonical movement and lifecycle
 
-The read-only inventory at `de8630c5307348f812c06edcd08cf85700731244` scanned 306 Lua files. It found 171 unique command registrations with no duplicate command names: 38 in generated fragments, 126 in core modules, and 7 elsewhere. It found 109 direct `script.on_*` routes: 70 `on_nth_tick`, 37 `on_event`, one `on_init`, and one `on_configuration_changed`.
+| Responsibility | Current owner | Preserved boundary |
+| --- | --- | --- |
+| Ground request, priority, TTL, leases, native commands | `movement_controller` | One movement request; active custody and original owner checks. |
+| Corridor proposal | `authority_corridor_pathing_0574` | Read-only route proposal, no independent command owner. |
+| Void/platform backend | `void_movement_authority_0630`, explicit platform owners | Backend-specific surface/stepped movement; not an offscreen ground teleport substitute. |
+| Pair ledger/reverse maps and disappearance | `station_pair_state`, `priest_lifecycle_authority_0499` | Observe original identities, conservative rebind and controlled recovery. |
+| Controlled missing-priest recovery | 0503 under 0499 authorization | Existing exact recovery policy; not a free respawn loop. |
+| Physical station relocation | `station_relocation_0823`, `station_cargo_0824` | Original station/worker, engine inventory custody, exact staged rebuild. |
+| Station starvation reversal | 0850 family, 0921 continuations and protected depots | Reserve future work without abandoning physical incumbent work. |
+| Station resupply | `station_surplus_resupply_1208` | Original counted courier; movement recovery exclusions. |
 
-All command names retired by milestones 0779–0790 are absent. Therefore those milestones are closed, but the wider commandless-runtime and owner-keyed-event recovery is not yet closed. The next bounded authority audit begins with generated fragments 015–020 and then classifies each direct route as canonical registry ownership, explicitly authorized bootstrap, or obsolete fallback. Static counts are inventory evidence only; they do not prove runtime installation or behavior.
+## Construction and resource strategy
+
+```mermaid
+flowchart TD
+    Defense["Hostile defensive need"] --> Dispatch["Existing 0510 / perimeter authority"]
+    Factory["Independent factory shortage"] --> Gate["Frustration admission"]
+    Gate --> Planner["0640 execution and 0645 new ghost admission"]
+    Survey["Independent 0644 infrastructure survey"] --> Plan["Current plan context"]
+    Plan --> Planner
+    Rail["0835 survey and 0836 original frontier"] --> Request["Identified construction request"]
+    Planner --> Request
+    Frontier["1076 grid and roboport expansion"] --> Request
+    Request --> Builder["0338 physical builder"]
+    Dispatch --> Builder
+    Builder --> Paid["Actual source item and native placement"]
+    Paid --> Receipt["Original result and custody cleanup"]
+```
+
+Defensive construction stays separate from the frustration timer. The timer admits independent emergency factory expansion; it does not suspend urgent repair or defense. The periodic 0644 survey may still run before frustration; 0640 gates autonomous prerequisite execution, while 0645 gates new ghosts after reconciling existing owned sites. Plans and ghosts are not completion. Native robot jobs require actual material/network prerequisites and a real build receipt.
+
+Remote-resource strategies remain source-distinct: 0820 station chain; 0835 railway observation; 0836 next surveyed rail/build request; 0837 counted ore courier; existing native train, builder and worker execution. The source map does not establish sustained production or a successful rail save/reload.
+
+## Consolidated specialized logistics
+
+| Family | Readiness / discovery | Dispatcher physical owner | Persistent custody |
+| --- | --- | --- | --- |
+| Machines | 0528 discovery | 0528 | `machine_logistics_custody_0528` |
+| Item inventories | 0702 | 0702 | `item_family_custody_0702` |
+| Energy and fuel | 0705 / 0707 | 0707 | `energy_family_custody_0707` |
+| Rocket silos | 0709 / 0710 | 0710 | `rocket_silo_custody_0710` |
+| Artillery | 0712 / 0713 | 0713 | `artillery_custody_0713` |
+| Existing roboports | 0714 / 0715 | 0715 | `roboport_repair_custody_0715` |
+
+Readiness is not physical transfer. Discovery-only services publish candidates; the corresponding executor revalidates source, target, external ownership and actual inventory before acting. Roboport placement remains construction, while 0715 services repair packs in existing ports.
+
+## Standard-fluid authority
+
+```mermaid
+flowchart TD
+    Machine["0689 exact machine/fluidbox context"] --> Proposal["Validated source or sink proposal"]
+    Proposal --> Route["0691 route search, retry and reservation"]
+    Claim["0601 surface-scoped positional claim"] --> Route
+    Route --> Request["Identified pipe construction request"]
+    Request --> Builder["0338 physical pipe placement"]
+    Builder --> Ledger["construction_last_task_0338"]
+    Ledger --> Verify["0691 real connectivity verification"]
+    Verify --> Route
+```
+
+The installed services are `fluid_network_doctrine_0689` and `standard_fluid_route_discovery_0691`. 0689 inspects and proposes; 0691 coordinates route/reservations/requests; 0338 alone moves the priest and consumes/places pipe items. Their explicit 1259 control installation is material: requiring a file in a unit test does not install its services in Factorio.
+
+## Fluid-turret authority
+
+```mermaid
+flowchart TD
+    Ready["0716 native turret fluid readiness"] --> Proposal["0717 source and exact endpoint proposal"]
+    Proposal --> Route["0719 route coordinator"]
+    Route --> Builder["0338 identified pipe construction"]
+    Builder --> Result["Native placement and connectivity result"]
+    Result --> Route
+    Invalid["Destroyed or incompatible endpoint"] --> Cleanup["Release route claims and retry state"]
+    Cleanup --> Route
+```
+
+`fluid_turret_route_discovery_0719` owns route discovery, not direct inventory or entity mutation. 0716/0717 interpret internal fluid/ammunition state and exact endpoints.
+
+## Physical accounting and terminal cleanup
+
+| Physical work | Accounting owner | Failure handling |
+| --- | --- | --- |
+| Direct acquisition | 0513 | Preserve extracted cargo until actual station deposit. |
+| Recipe production | 0514 | Ingredient rollback or recipe-backed output custody. |
+| Repair | 0516 | Held pack, verified health write, exact refund. |
+| Consecration | 0515 | Shared sanctify claim, real rite item, retained refund and matching-order terminal acknowledgement. |
+| Construction | 0338 | Real carried item, exact site revalidation, return remainder. |
+| Generic storage / transfer | 0686 and `inventory_steward` | Generic stores only; no treating machine work slots as generic depots. |
+| Legacy known-source fetch | 0527 | Immediate transfer compatibility route; inspect its actual partial-deposit/refund contract separately. |
+
+## Native combat and additional runtime families
+
+The [full source inventory](BEHAVIOR_SOURCE_INVENTORY.md) also includes enemy colony seeding/research announcements, combat roster/muster/native AAI integration, bunker weapons, hydrogen runtime, orbital-trader visuals, Martian infrastructure and conditional Voidship armory. These explicit `control.lua` installs cannot be omitted merely because they were added after the older behavior-map series.
+
+Combat roster preparation uses original 0338/0702 material owners. Native combat movement/targeting belongs to the native bridge/controller. Combat actors, including AAI forms implemented as cars, are excluded by consecration eligibility. Physical pickup and old-save cleanup are lifecycle/registry concerns, not a new sanctity behavior.
+
+`control.lua` installs `bunker_cannon_integration.install_main` through the canonical event registry. Its init/configuration routes call `bunker_family_visuals.init`, which both seeds existing weapon visuals and restores enabled recipes for already researched bunker technologies. The unlock recovery reads `technology.prototype.effects` and writes the corresponding force recipe's `enabled` state. The module therefore has this lifecycle mutation alongside its visual role; native weapon targeting, projectiles, damage and ammunition remain separate combat owners. The source-preserved raw `install()` route is not the canonical main installation path.
+
+The existing proxy ammunition owner 0649 keeps live inventory accounting and retained refund custody. Its current source collects station sources once per ammo query, reuses a derived immutable-prototype ammo list and returns early for a valid empty proxy inventory. Those read reductions do not change its 41-tick combat service into a deferred background route.
+
+## Retired authority boundary
+
+Forty-eight files remain explicitly retired in the planning declaration. They include the old mutable movement/leaf chain, construction preemption, remote salvage, duplicate repair/machine wrappers, 0505 behavior executor, death/recovery duplicates and specialized fluid/item/energy/silo/artillery wrappers. The [function index](BEHAVIOR_FUNCTION_MAP_0659.md#retired-source-must-not-be-drawn-as-live-behavior) gives their replacements; the inventory records every declared entry.
+
+Retired source may be inspected as history. Re-enabling an installer, timer, state writer or wrapper is a runtime design change and must not happen incidentally while fixing a canonical owner.
+
+## Performance protocol boundaries
+
+- The broker's per-callback work budget and its four eligible-background-callback admission cap are different limits. Every callback must honor its offered work count; the cap does not limit total callbacks or elapsed milliseconds.
+- Registry siblings, raw fallbacks and synchronous caller chains require separate accounting.
+- A native-query result cap, a Lua candidate-loop cap, a pair budget and a time measurement are different facts.
+- Per-pair fairness needs a retained cursor. Prefix loops in 0689 and 0716 remain open source findings; restart-from-first scanning can starve larger populations.
+- `station_catalog` has a separate 60-tick registry cadence and synchronous cold/explicit access; broker deferral does not cover it automatically. The route rotates two due stations, while due-roster collection and sorting still visit the roster.
+- Movement, incumbent inventory return, defense and queue continuation must keep their existing required response while expensive discovery is deferred.
+
+The 0640 discarded-budget/acted-only loop is repaired in its existing owner: the broker passes its budget; traversal counts every inspected slot and resumes saved `service_cursor`, preserving the acted-count compatibility result. Source tests can prove visit counts and rotation; only native evidence can establish its cost in the owner's save.
+
+The shared discovery changes are mapped in [0661](BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0661.md). 0527 and 0686 reuse item-independent typed source membership in the existing 0587 cache owner. Physical identities are retained independently of live force eligibility; topology, player/vehicle/train/spider movement and corpse events update membership. The 1800-tick demand expiry remains a fallback for unobserved movement or missed events. Consumers read current quantities/eligibility, and 0527's catalog path checks live radius and distance before choosing a retained source. Initial or expired discovery is a complete native query; a 256-entry generic-storage view is not an engine query cap. 0527 and the source-preserved 0526 helper read existing catalog state without forcing a scan on item misses. 0634 retains dirty catalog snapshots rather than synchronously rescanning per world event; ordinary known-resource rendering reuses an existing snapshot but cold `get_for_pair` can still scan.
+
+0644 shares item counts only inside one synchronous `build_plan` call. A fresh 0646 unlock scan can return the selected recipe for immediate checked reuse; cached Boolean unlock results do not pin a recipe. The current map records these actual source boundaries without claiming a measured native improvement.
 
 ## Stage 5 — Evidence and Release Boundary
 
-Source consolidation is not runtime proof. The remaining objective gates are:
+Source mapping, freshness checking, installation, native execution, save/reload, timing, packaging and publication are different evidence states. Record the exact source commit/digest and artifact for each. A generated map or a green static count check cannot close a performance complaint.
 
-1. **Completed:** Source validation passed for `511254d59e76980706921c0a518c7b7f9440d214` in run `29875375384`.
-2. New-save and protected `0.1.672` migration loads in Factorio 2.x.
-3. Configuration-change and save/reload runs for new and migrated saves.
-4. The full behavioral scenario matrix, including construction effectiveness, standard-fluid route recovery, and fluid-turret route recovery.
-5. Idle, active, and high-count profiler evidence.
-6. Digest-bound evidence validation and reviewed release authorization.
-7. Qualified version advancement, deterministic packaging, and packaged-load testing.
+Historical validation of `511254d59e76980706921c0a518c7b7f9440d214` in run `29875375384` applies only to that historical source. It is not current performance evidence. Historical 0.1.672/0.1.674-dev/rc.3 milestone statements are likewise not current release authorization or current `info.json` values. Current work and results belong in canonical development history and the current testing goals.
 
-Until those gates are accepted, `tech-priests_src/info.json` remains `0.1.672`, no package is verified, and no release is authorized.
+To accept a performance repair, retain matched source/save/settings, engine version, population, warmup/sample windows, profile scope, before/after timings and workload progress. If the comparison cannot be run, leave performance acceptance open and name the missing evidence.
 
+## Update and evidence rule
 
-## Generated Command Closure — 2026-07-23
-
-The 38 generated-fragment command registrations recorded by the post-cleanup inventory are now fully retired through milestones 0792 and 0793. Generated fragments retain 69 registry-owned event/cadence routes and no direct script.on_* routes. Exact historical commands that predate the tp- prefix are removed through explicit KNOWN_COMMANDS ownership before prefix filtering. The next authority audit concerns direct event/timer routes outside generated fragments.
-
-
-## Consecration Route Ownership — 2026-07-23
-
-The consecration history GUI is a client of scripts.gui.gui_router and no longer binds Factorio GUI events directly or duplicates those routes through the runtime registry. Its periodic refresh, the consecration runtime bridge, and the mining-operation sensor are registry-owned and have no script.on_* fallback. Installers fail closed before publishing installed state when canonical routing is unavailable.
-
-
-## Startup Provisioning Route Ownership — 2026-07-23
-
-startup_provisioning owns one registry route for player creation, one for player join, and one registry cadence for delayed starter-kit retries. It has no direct script.on_* routes and publishes installed state only after canonical registration succeeds. Physical starter-kit insertion and per-player duplicate protection remain within the existing module.
-
-
-## Acquisition Route Ownership — 2026-07-23
-
-The acquisition executor owns one 30-tick registry route, acquisition repair owns one 90-tick registry watchdog, and acquisition unstick owns one 120-tick registry watchdog. None retains a direct script.on_nth_tick fallback. All three fail closed and publish installed state only after canonical route acceptance.
-
-
-## Stable Visual Route Ownership — 2026-07-24
-
-alt_writ_visual_stability_0474 owns one periodic registry cadence and three registry event routes. It retains no direct script.on_* fallback and publishes globals and installed state only after canonical route acceptance.
-
-
-## Behavior Mutex Route Ownership — 2026-07-24
-
-behavior_mutex_0466 owns one 11-tick registry cadence for combat/acquisition mutual exclusion and invalid combat-target cleanup. It retains no direct script.on_nth_tick fallback and publishes wrappers, commands, globals, and installed state only after canonical route acceptance.
-
-
-## Behavior Contracts Route Ownership — 2026-07-24
-
-behavior_contracts_0479 owns one registry cadence for movement-before-beam and related behavior contracts. It retains no direct script.on_nth_tick fallback and publishes wrappers, commands, globals, and installed state only after canonical route acceptance.
-
-
-## Behavior-Tree Monitor Route Ownership — 2026-07-24
-
-behavior_tree_monitor_0642 is broker-owned when runtime_tick_broker accepts its service and uses one named registry cadence only when broker ownership is unavailable. It retains no direct script.on_nth_tick fallback and fails closed when neither canonical owner accepts the route.
-
-
-## Bootstrap Resource Governor Route Ownership — 2026-07-24
-
-bootstrap_resource_governor_0637 owns one registry cadence while remaining disabled by default. It retains no direct script.on_nth_tick route and publishes its command, global, and installed state after canonical route acceptance.
-
-
-## Construction Ghost Planner Ownership — 2026-07-24
-
-construction_bootstrap_ghost_planner_0645 is broker-owned when available and uses one named registry cadence only as fallback. It retains no direct script.on_nth_tick route and fails closed when neither owner accepts the service.
-
-
-## Audio Route Ownership — 2026-07-24
-
-conversation_voice_0530 owns two named audio routes, operational_sounds_0531 owns four, and placeholder_audio_0533 owns four. None retains a direct script.on_* route, and registry owner/category metadata is passed through the canonical options argument.
-
-## Milestone 0804 GUI/visual authority boundary
-
-- `scripts/gui/gui_router.lua` owns Factorio GUI opened/closed/click event bindings.
-- `station_work_inventory.lua` is a router client and owns only Work State handling plus its boot-display cadence.
-- `alt_writ_visual_stability_0474.lua` owns station overlay, selection, placement, Alt-icon, and command-camera refresh.
-- `network_visuals.lua`, `station_network_overlay.lua`, and `workstate_gui_radar_recovery_0465.lua` are route-free compatibility modules.
-- `station_catalog.lua` owns catalog scan/destruction routes; Work State owns catalog presentation.
-- `task_retention_visual_lease_0476.lua` owns retention scheduling only.
-
-## Milestone 0805 — Frequent route ownership
-
-- `crafting_executor.lua`: one fail-closed 17-tick registry cadence; no direct unit-command escape hatch.
-- `overhead_status_governor_0471.lua`: sole periodic overhead display owner through `overhead-status-service`.
-- `overhead_text_authority_0473.lua`: route-free late wrapper authority; duplicate pending loop retired.
-
-## Milestone 0806 — Infrastructure route ownership
-
-- `master_infrastructure_plan_0644.lua`: broker-first station survey planner; one named registry fallback; typed station-local facility scan.
-- `infrastructure_first_governor_0640.lua`: broker-first high-tier gate; one named registry fallback; force-scoped typed facility scan.
-- Storage, globals, child installation, commands, and installed-state publication occur only after route ownership succeeds.
-
-## Milestone 0807 — Status-State Sanity Ownership
-
-```mermaid
-flowchart LR
-    Registry[runtime_event_registry] -->|31-tick named route| Sanity[status_state_sanity_0448]
-    Sanity --> Mutation[stale combat-state cleanup]
-    Visual[classify_priest_visual_state adapter] -->|read-only observation| Display[combat or idle visual state]
-```
-
-`status_state_sanity_0448` owns one fail-closed registry cadence named `stale-combat-status-sanity`. Route acceptance occurs before global or wrapper publication. The visual classifier no longer calls the mutating inspection path; it only suppresses a stale combat presentation when the observed target is not hostile. No raw `script.on_nth_tick` fallback remains. This is source ownership evidence only.
-
-
-## Milestone 0808 — Canonical Station Inventory Stewardship
-
-```mermaid
-flowchart LR
-    Broker[runtime_tick_broker] --> Steward[inventory_steward_0357]
-    Priest[priest physical inventory] -->|remove exact item first| Custody[inventory_transfer_custody_0687]
-    Custody --> Storage[storage_role_authority_0686 exact deposit]
-    Storage -->|blocked| Restore[exact source restore or retained custody]
-    Cache[stone_cache_filter_0534] -->|remove then exact reroute| Storage
-```
-
-`inventory_steward` replaces the active `0687` patch layer one-for-one, so the graph remains 26 active hardeners while retired source-only authorities increase to 48. Storage and cache modules call canonical APIs directly; neither wraps the other at installation.
-
-## Milestone 0809 — Runtime Invalidation Route Ownership
-
-```mermaid
-flowchart LR
-    Registry[runtime_event_registry] -->|runtime-setting-changed| Config[runtime_config_0626]
-    Config --> Snapshot[storage-backed debug/profiler snapshot]
-    Registry -->|build-created| Area[station_area_change_invalidator_0634]
-    Registry -->|removed-destroyed| Area
-    Registry -->|player-inventory-change| Area
-    Area --> Dirty[retain snapshot and mark catalog dirty]
-    Dirty --> Catalog[station_catalog.scan_due]
-    Registry -->|existing 60-tick scan route| Catalog
-    Catalog -->|two stations with a rotating cursor| Snapshot[refreshed station catalogs]
-    Area --> Supply[stale supply conclusion invalidation]
-```
-
-`runtime_config_0626` and `station_area_change_invalidator_0634` are event consumers only; they do not own scheduling, movement, acquisition, or inventory transfer. Their storage, commands, and global APIs publish after route acceptance. Partial station-area registration is rolled back by owner/route identity, and no raw event fallback remains.
-
-Area changes set the existing catalog's `dirty_0634` flag and `next_scan` deadline instead of deleting the snapshot or calling a full scan inside each entity event. Readers retain the last complete snapshot until the existing `Catalog.scan_due(2)` route refreshes it; dirty snapshots cannot take the clean-reuse shortcut, and destroyed source entities still fail live validity checks. A saved station cursor gives continuously dirtied stations fair turns within the same two-station budget. There is no additional scan queue or tick service.
-
-## Milestone 0810 — Bootstrap and Chatter Route Ownership
-
-```mermaid
-flowchart LR
-    Registry[runtime_event_registry] -->|explicit-consecration-capsule| Capsule[bootstrap explicit use chain]
-    Registry -->|consecration-build-chain| Build[final composite build handler]
-    Registry -->|consecration-remove-chain| Remove[final composite removal handler]
-    Registry -->|consecration-selection-chain| Selection[final composite selection handler]
-    Selection --> Tap[chatter direct tap]
-    Selection --> Consecration[selected consecration refresh]
-    Registry -->|consecration-watchdog / 149 ticks| Watchdog[consecration visibility watchdog]
-    Registry -->|background-pulse| Chatter[chatter_0334]
-    Registry -->|pending-line-visibility| Chatter
-```
-
-The bootstrap routes own only the final composite handlers, which invoke preserved predecessor wrappers once. Earlier wrapper layers no longer register competing Factorio handlers. Chatter owns its two presentation cadences after route acceptance and contributes selection-tap behavior through the final selection chain rather than through an independent event registration.
-
-
-## Milestone 0811 — Economy Housekeeping Route Ownership
-
-```mermaid
-flowchart LR
-    Registry[runtime_event_registry] -->|named passive cadences| Cache[0568/0570/0571 cache pruning]
-    Registry -->|named passive cadences| Dirty[0569/0579 dirty and catalog cleanup]
-    Registry -->|named passive cadences| Corridor[0575 corridor cache service]
-    Registry -->|named passive cadences| Budget[0576 claims/budget cleanup]
-    Registry -->|runtime-setting-changed| Budget
-    Registry -->|named passive cadences| Housekeeping[0578/0582/0585 housekeeping and coalesced flush]
-    Registry -->|named passive cadences| Performance[0593/0594 performance cache prune and adaptive rescan]
-    Hook[0596 early raw nth-tick hook] -. temporary compatibility only .-> Registry
-```
-
-The twelve economy-housekeeping cadences no longer own raw Factorio nth-tick registrations, and 0576 no longer owns a raw runtime-setting event. Their control loaders require literal installation success. The early 0596 monkeypatch remains temporary while the non-economy raw-route inventory is audited; this milestone does not claim that all direct registrations in the codebase are gone.
-
-
-## Milestone 0812 — Dormant Wake-Event Route Ownership
-
-```mermaid
-flowchart LR
-    Registry[runtime_event_registry] -->|wake-build| Dormant[0595 dormant runtime gate]
-    Registry -->|wake-remove| Dormant
-    Registry -->|wake-research| Dormant
-    Dormant -->|accepted routes| Command[0595 diagnostic command registration]
-    Command -->|success| Publish[0595 global wake APIs]
-    Command -.->|registration error| Failure[installation failure]
-    Failure -->|owner/route rollback| Registry
-```
-
-The dormant runtime gate no longer falls back to raw `script.on_event`. Build, removal, and research wake behavior is owner/route keyed and rollback-capable. Build/removal event names are resolved individually to tolerate missing optional Factorio event constants without truncating later routes. The diagnostic command must succeed before either global wake API is exposed; a command-registration exception rolls back accepted routes. The separate 0596 early nth-tick monkeypatch remains a temporary pre-registry compatibility hook and is not represented as ordinary event ownership.
-
-
-## Stage 5 isolated smoke evidence boundary — 2026-10-07
-
-```mermaid
-flowchart LR
-    Source[Protected 0.1.672 source tree] --> Checks[Stage 5 smoke check bundle]
-    Checks -->|pass| Unpacked[Isolated unpacked mod directory]
-    Unpacked -->|--mod-directory| Factorio[Factorio smoke load]
-    Factorio --> Evidence[Unedited runtime observations]
-    Evidence -->|complete accepted recovery record only| Authorization[Verified release authorization]
-    Checks -.->|not release authorization| Authorization
-    Unpacked -.->|not a package| Authorization
-```
-
-The smoke fixture is never a `dist/` ZIP and does not invoke or bypass the canonical release packager. This diagram represents the **validation boundary**, not an additional gameplay runtime authority; the movement ownership diagram above remains unchanged. A narrow smoke pass cannot satisfy migration, save/reload, profiler, complete behavioral, or packaged-load gates.
-
-## Requested enemy planetary outposts (2026-11-14)
-
-```mermaid
-flowchart LR
-  Chunk[Chunk generated or charted] --> Registry[Shared runtime event registry]
-  Registry --> Seeder[enemy_planetary_seeding: one candidate chunk]
-  Seeder --> Safety[Planet, setting, peaceful, terrain, spawn and base clearance]
-  Safety --> Once[Persist successful surface/chunk placement]
-  Once --> Outpost[Native enemy cogitator spawner]
-  Outpost --> Native[Factorio reinforcement and combat AI]
-  Deleted[Surface deleted via registry] --> Cleanup[Remove surface placement records]
-```
-
-Placement is event-driven with one bounded terrain search and bounded-radius entity queries, only for deterministic candidate chunks. No broker service, periodic scan, friendly pair task or friendly resource custody authority is added. Native spawner limits govern local recruitment. Destroyed outposts remain recorded to preserve cleared territory. No on_load storage writes.
-
-## Clarified colony authority (supersedes native-spawner path)
-
-```mermaid
-flowchart LR
- Chunk[Shared chunk/chart event] --> Seed[One-time enemy_colony starter layout]
- Seed --> Built[Existing canonical on_built station lifecycle]
- Built --> Pairs[Normal Magos / Senior / Intermediate bound pairs]
- Pairs --> Runtime[Existing scheduler / planner / physical executors]
- Runtime --> Factory[Own-force construction, logistics, defense and research]
-```
-
-One hostile force per planet owns colony entities and research. The initial world-generation grant is finite and explicit. No colony tick owner, replenishment cheat, replacement research system or private movement controller is introduced. All subsequent worker operations use existing ordinary priest authorities.
-
-## Colony modifiers and population admission
-
-The existing seeder reads enemy_colony_options before placement. The canonical create_pair owner reads the same admission rules before creating a new renegade priest, covering ordinary expansion. Neither module installs a population tick service. Slot counts derive from existing bound valid stations; colony counts derive from surviving original station records. Existing-pair recovery keeps its reserved slot. Friendly forces bypass enemy-only admission checks.
-
-## Enemy research intercept authority
-
-Shared on_research_finished event -> enemy_research_announcements -> mode / colony-force / by-script filters -> localized transmission -> hostile connected players' chat. The observer has no gameplay write path, periodic service, research ownership or persistent notification queue. Variant selection hashes technology name and force identity without consuming gameplay RNG.
+Change the relevant diagram and ownership/exit description with the source change. Regenerate the source inventory with `python tools/audit_ups_hotspots_0743.py --write-behavior-maps`, explicitly acknowledge the reviewed curated maps with `--acknowledge-behavior-map-review`, then run `--check-behavior-maps` through the same tool. Generation alone does not bless a changed manual diagram. Follow the [performance validation protocol](UPS_VALIDATION_RUNBOOK_0742.md) for exact source, save, engine version, population, profiling settings, sample window and artifacts. A clean map check proves freshness only.

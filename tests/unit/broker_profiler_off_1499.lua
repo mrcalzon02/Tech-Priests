@@ -10,7 +10,7 @@ for i=1,10000 do
 end
 assert(next(r.profiler.routes)==nil, "disabled profiler created route records")
 local calls=0
-local profiler=setmetatable({}, {__tostring=function()calls=calls+1;return "0.75" end})
+local profiler=setmetatable({}, {__tostring=function()calls=calls+1;return "Duration: 0.75ms" end})
 local record=B.record_profile("broker","idle-service","economy",profiler,true)
 assert(record and record.calls==1 and record.total_ms==0.75
  and record.avg_ms==0.75 and record.worst_ms==0.75 and record.errors==0,

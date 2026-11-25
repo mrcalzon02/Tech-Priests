@@ -74,14 +74,42 @@ local function matches(event,filters)
  return acc~=false
 end
 
-local function profile(entry,ok,elapsed)
+local function profiler_ms(text)
+ -- Native tostring(LuaProfiler) is not a duration. Only explicit, complete
+ -- millisecond text is numeric evidence; addresses and unitless digits are not.
+ local value=text:match("^%s*Duration:%s*([%d%.eE%+%-]+)%s*ms%s*$")
+   or text:match("^%s*([%d%.eE%+%-]+)%s*ms%s*$")
+ local milliseconds=tonumber(value)
+ if not milliseconds or milliseconds<0 or milliseconds==math.huge
+   or milliseconds~=milliseconds then return nil end
+ return milliseconds
+end
+local function profile(entry,ok,elapsed,profiler,text)
  local key=entry.profile_key
  if not key then
   key=(entry.event and("event:"..entry.event)or entry.tick and("nth:"..entry.tick)
     or entry.lifecycle or"route")..":"..entry.id
   entry.profile_key=key
  end
- local r=Registry.stats[key]or{calls=0,errors=0,total_ms=0,worst_ms=0};r.calls=r.calls+1;if not ok then r.errors=r.errors+1 end;if elapsed then r.total_ms=r.total_ms+elapsed;r.worst_ms=math.max(r.worst_ms,elapsed);r.avg_ms=r.total_ms/r.calls end;Registry.stats[key]=r
+ local r=Registry.stats[key]or{calls=0,errors=0,timed_samples=0,profiled_calls=0,native_log_samples=0}
+ r.calls=r.calls+1;if not ok then r.errors=r.errors+1 end
+ if profiler then
+  r.profiled_calls=r.profiled_calls+1;r.last_text=text
+  if elapsed~=nil then
+   r.timed_samples=r.timed_samples+1
+   r.total_ms=(r.total_ms or 0)+elapsed
+   r.worst_ms=math.max(r.worst_ms or 0,elapsed)
+   r.avg_ms=r.total_ms/r.timed_samples
+  end
+  -- The engine renders native elapsed time only in a LocalisedString.
+  -- Bounded diagnostic samples remain in the log, never in persistent state.
+  if log and(r.profiled_calls==1 or r.profiled_calls%32==0)then
+   local logged=pcall(log,{"","[TP-RUNTIME-PROFILE] tick=",now(),
+    " scope=registry-callback name=",key," call=",r.calls," duration=",profiler})
+   if logged then r.native_log_samples=r.native_log_samples+1 end
+  end
+ end
+ Registry.stats[key]=r
 end
 local function profiler_factory()
  -- Factorio 2.1.7+ provides LuaProfiler on helpers, not game.
@@ -99,7 +127,7 @@ local function call(entry,event)
   if create then local ok,p=pcall(create,false);if ok then profiler=p end end
  end
  local ok,result=pcall(entry.handler,event)
- local ms;if profiler then pcall(function()profiler.stop()end);local text=safe(profiler);ms=tonumber(text:match("([%d%.]+)"))end;profile(entry,ok,ms)
+ local ms,text;if profiler then pcall(function()profiler.stop()end);text=safe(profiler);ms=profiler_ms(text)end;profile(entry,ok,ms,profiler,text)
  if not ok then stat("handler_errors");remember("handler-error",entry,result);if log then log("[Tech Priests event registry] isolated handler failure owner="..entry.owner.." route="..entry.route.." source="..entry.source..":"..entry.line.." error="..safe(result))end;return nil end
  return result
 end
@@ -168,8 +196,8 @@ local function install_tick(tick)
   dispatch_tick(key,event)
   if profiler then
     pcall(function()profiler.stop()end)
-    if log then pcall(log,"[TP-REGISTRY-NTH-PROFILE-1195] tick="..safe(event.tick)
-      .." interval="..safe(tick).." scope=registry-nth-dispatch duration="..safe(profiler)) end
+    if log then pcall(log,{"","[TP-REGISTRY-NTH-PROFILE-1195] tick=",event.tick,
+      " interval=",tick," scope=registry-nth-dispatch duration=",profiler}) end
   end
 end)end)
  if not ok then stat("registration_errors");remember("nth-registration-error",{owner="runtime_event_registry",route=key},err);return false end
@@ -294,7 +322,26 @@ function Registry.count_event_handlers()local n=0;for _,r in pairs(Registry.even
 function Registry.count_nth_tick_handlers()local n=0;for _,r in pairs(Registry.nth_tick_routes)do n=n+#r end;return n end
 function Registry.set_profiler_enabled(v)Registry.profiler_enabled=v==true;return Registry.profiler_enabled end
 function Registry.profiler_report_lines(limit)
- local lines={"[tp-runtime-report] registry-0744 version="..Registry.version.." events="..Registry.count_event_handlers().." nth="..Registry.count_nth_tick_handlers().." errors="..safe(Registry.stats.handler_errors or 0).." unknown_filters="..safe(Registry.stats.unknown_filter_broadened or 0).." profiler="..safe(Registry.profiler_enabled)};local n=math.max(1,#Registry.recent-(tonumber(limit)or 8)+1);for i=n,#Registry.recent do local e=Registry.recent[i];if e then lines[#lines+1]="  registry.recent["..i.."] "..safe(e.kind).." owner="..safe(e.owner).." route="..safe(e.route).." src="..safe(e.source)..":"..safe(e.line).." "..safe(e.detail)end end;return lines
+ local lines={"[tp-runtime-report] registry-0744 version="..Registry.version.." events="..Registry.count_event_handlers().." nth="..Registry.count_nth_tick_handlers().." errors="..safe(Registry.stats.handler_errors or 0).." unknown_filters="..safe(Registry.stats.unknown_filter_broadened or 0).." profiler="..safe(Registry.profiler_enabled)};local n=math.max(1,#Registry.recent-(tonumber(limit)or 8)+1);for i=n,#Registry.recent do local e=Registry.recent[i];if e then lines[#lines+1]="  registry.recent["..i.."] "..safe(e.kind).." owner="..safe(e.owner).." route="..safe(e.route).." src="..safe(e.source)..":"..safe(e.line).." "..safe(e.detail)end end
+ local records={}
+ for key,r in pairs(Registry.stats)do
+  if type(r)=="table"and r.profiled_calls and r.profiled_calls>0 then
+   records[#records+1]={key=key,record=r}
+  end
+ end
+ table.sort(records,function(a,b)
+  local am,bm=a.record.worst_ms or -1,b.record.worst_ms or -1
+  return am==bm and a.key<b.key or am>bm
+ end)
+ for i=1,math.min(#records,tonumber(limit)or 8)do
+  local key,r=records[i].key,records[i].record
+  lines[#lines+1]="  registry.profile "..key.." calls="..r.calls
+   .." profiled_calls="..r.profiled_calls.." timed_samples="..r.timed_samples
+   .." native_log_samples="..r.native_log_samples
+   .." avg_ms="..safe(r.avg_ms~=nil and r.avg_ms or"unavailable")
+   .." worst_ms="..safe(r.worst_ms~=nil and r.worst_ms or"unavailable")
+ end
+ return lines
 end
 function RegistryProfiler0625_report_lines(limit)return Registry.profiler_report_lines(limit)end
 function Registry.print_summary(player)if not(player and player.valid)then return end;for _,line in ipairs(Registry.profiler_report_lines(8))do player.print(line)end end

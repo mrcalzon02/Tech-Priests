@@ -1,3 +1,38 @@
+## Four-priest lag repair and current source mapping - 2026-11-25
+
+The owner reported severe lag with four priests and directed the investigation
+onto the headed GitHub runner. Existing maps were stale: they continued to draw
+retired hardeners as current owners, omitted later families and concealed
+registry/direct paths outside the broker. The 16 existing maps now describe
+current source ownership with 26 Mermaid graphs and a generated inventory of
+all 381 runtime Lua modules. The inventory is a lexical source index, not a
+claim that every candidate installs or runs.
+
+The existing UPS auditor now generates/checks that inventory and records a
+separate explicit review receipt for the curated maps. The existing hot-path
+Lua harness runs the freshness check first. Source or diagram drift fails it;
+regeneration alone cannot approve a diagram. This is an executable check when
+invoked, not a claim of months of historical tracking or background monitoring.
+
+Repairs remain in the existing owners: 0587 retains item-independent nearby
+source membership for 1,800 ticks with immediate event updates and live stock
+reads; 0526/0527 reuse catalog snapshots; 0634/catalog defer dirty refresh and
+rotate two due stations; 0598 admits up to four eligible background broker
+callbacks while preserving active-work exclusions; 0640 honors inspected-slot
+budgets and resumes traversal; 0644 reuses synchronous plan-local inventory
+counts and an immediately resolved recipe. The broker/registry profiler no
+longer parses object identifiers as elapsed milliseconds or reports missing
+durations as zero.
+
+Focused fixtures include 3,072 item lookups across four stations with four
+spatial discoveries, live stock changes, moving-source expiry, event-fed
+membership, custody conservation, scheduling fairness and the 0640 inspection
+budget. The planner fixture reduces storage reads from 1,040 to 12 and lab
+reads from 1,028 to 4 without retaining stock across separate plans. These are
+source operation counts, not native speed claims. Exact native results and
+their scope belong in the UPS runbook; the headed owner-save comparison is
+still required before closing the reported lag.
+
 ## Local-only authored content synchronized to main — 2026-11-18
 
 All 69 indexed local-only records are now preserved on main. The 68 ready records

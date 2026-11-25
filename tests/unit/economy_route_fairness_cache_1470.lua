@@ -74,6 +74,15 @@ local indexed=E579.entities_for_area(surface,area)
 assert(type(indexed)=="table" and #indexed==1,
   "complete area scan must be reusable")
 assert(E579.note_area_scan(surface,area,{entity},1))
+indexed=E579.entities_for_area(surface,area)
+assert(type(indexed)=="table" and #indexed==1,
+  "uncertified observation must preserve an already complete snapshot (1486)")
+-- A capped observation cannot certify a cell after an actual world change.
+-- It also cannot invalidate an otherwise current complete snapshot above.
+E579.mark_entity_dirty(entity,"world-change")
+assert(E579.entities_for_area(surface,area)==nil,
+  "world change must invalidate the previously complete snapshot")
+assert(E579.note_area_scan(surface,area,{entity},1))
 assert(E579.entities_for_area(surface,area)==nil,
   "capped area scan must fail closed instead of returning an incomplete index")
 

@@ -49,7 +49,7 @@ local function radius_for(pair)
 end
 local function safe_inventory(entity, id) if not (valid(entity) and entity.get_inventory and id) then return nil end local ok, inv = pcall(function() return entity.get_inventory(id) end); if ok and inv and inv.valid then return inv end return nil end
 local function inv_count(inv, item) if not (inv and inv.valid and item) then return 0 end local ok, n = pcall(function() return inv.get_item_count(item) end); return ok and (tonumber(n) or 0) or 0 end
-local function station_count(pair, item)
+local function read_station_count(pair, item)
   -- 1223: use the same force/surface-bound generic storage authority as
   -- physical construction. In the real midgame fixture finished equipment
   -- lives in external steel chests, not inside the Cogitator. Reading only a
@@ -79,46 +79,62 @@ local function station_count(pair, item)
   end
   return n
 end
+local function station_count(pair, item, counts)
+  if counts and counts[item]~=nil then return counts[item] end
+  local n=read_station_count(pair,item)
+  if counts and item~=nil then counts[item]=n end
+  return n
+end
 local function unlocked_recipe(pair, item)
   local policy = rawget(_G, "TechPriestsPlanningConstraints0646")
   if not policy then local ok, mod = pcall(require, "scripts.core.planning_constraints_0646"); if ok then policy = mod end end
   if not (policy and type(policy.item_unlocked) == "function") then return false end
-  local ok, allowed = pcall(policy.item_unlocked, pair.station.force, item)
-  return ok and allowed == true
+  local ok, allowed, _, recipe = pcall(policy.item_unlocked, pair.station.force, item)
+  return ok and allowed == true, ok and recipe or nil
 end
-local function craft_feasibility(pair, item)
+local function enabled_product_recipe(recipe,item)
+  local enabled,produces=false,false
+  pcall(function()
+    enabled=recipe.enabled==true
+    for _,product in pairs(recipe.products or {}) do
+      if product.name==item then produces=true;break end
+    end
+  end)
+  return enabled and produces
+end
+local function craft_feasibility(pair, item, counts)
   if not item then return false, "no-item" end
-  if station_count(pair, item) > 0 then return true, "stocked" end
-  if not unlocked_recipe(pair, item) then return false, "technology-locked-or-no-recipe" end
-  local recipes = pair.station.force.recipes
-  for _, recipe in pairs(recipes or {}) do
-    local enabled, produces = false, false
-    pcall(function()
-      enabled = recipe.enabled == true
-      for _, product in pairs(recipe.products or {}) do if product.name == item then produces = true end end
-    end)
-    if enabled and produces then
-      local missing = {}
-      local craftable = true
-      pcall(function()
-        for _, ingredient in pairs(recipe.ingredients or {}) do
-          if ingredient.type == "fluid" then
-            craftable = false; missing[#missing+1] = "fluid:" .. ingredient.name
-          elseif station_count(pair, ingredient.name) < (ingredient.amount or 1) then
-            craftable = false; missing[#missing+1] = ingredient.name
-          end
-        end
-      end)
-      if craftable then return true, "ingredients-stocked" end
-      return false, "missing-ingredients:" .. table.concat(missing, ",")
+  if station_count(pair, item, counts) > 0 then return true, "stocked" end
+  local unlocked,recipe=unlocked_recipe(pair,item)
+  if not unlocked then return false, "technology-locked-or-no-recipe" end
+  -- Reuse 0646's selected recipe, while rechecking its live enabled state
+  -- and the same product semantics used by this planner. Legacy/custom
+  -- unlock providers may return only a Boolean and still need the scan.
+  if not (recipe and enabled_product_recipe(recipe,item)) then
+    recipe=nil
+    for _,candidate in pairs(pair.station.force.recipes or {}) do
+      if enabled_product_recipe(candidate,item) then recipe=candidate;break end
     end
   end
-  return false, "recipe-unavailable"
+  if not recipe then return false, "recipe-unavailable" end
+  local missing = {}
+  local craftable = true
+  pcall(function()
+    for _, ingredient in pairs(recipe.ingredients or {}) do
+      if ingredient.type == "fluid" then
+        craftable = false; missing[#missing+1] = "fluid:" .. ingredient.name
+      elseif station_count(pair, ingredient.name, counts) < (ingredient.amount or 1) then
+        craftable = false; missing[#missing+1] = ingredient.name
+      end
+    end
+  end)
+  if craftable then return true, "ingredients-stocked" end
+  return false, "missing-ingredients:" .. table.concat(missing, ",")
 end
-local function item_available(pair, emergency, standard)
-  local standard_ok, standard_why = craft_feasibility(pair, standard)
+local function item_available(pair, emergency, standard, counts)
+  local standard_ok, standard_why = craft_feasibility(pair, standard, counts)
   if standard_ok then return standard, emergency, standard_why end
-  local emergency_ok, emergency_why = craft_feasibility(pair, emergency)
+  local emergency_ok, emergency_why = craft_feasibility(pair, emergency, counts)
   if emergency_ok then return emergency, standard, "emergency-scarcity:" .. standard_why end
   -- If neither device can be crafted yet, the cheap, enabled emergency recipe
   -- is the bootstrap material goal. Selecting the standard recipe here creates
@@ -160,7 +176,7 @@ local function scan_roles(pair)
 end
 local function has_role(roles, a, b) return (tonumber(roles[a] or 0) > 0) or (b and tonumber(roles[b] or 0) > 0) end
 local function first_resource(resources) local names = {}; for name in pairs(resources or {}) do names[#names+1]=name end; table.sort(names, function(a,b) return (RESOURCE_PRIORITY[a] or 1000) < (RESOURCE_PRIORITY[b] or 1000) end); return names[1] end
-local function uncovered_drill_output(pair,entities)
+local function uncovered_drill_output(pair,entities,counts)
   if not valid_pair(pair) then return nil end
   local drills={}
   for _,entity in pairs(entities or {}) do
@@ -197,7 +213,7 @@ local function uncovered_drill_output(pair,entities)
         -- would select. A different drill may have a legal output even
         -- when this one is obstructed.
         local item=item_available(pair,TARGETS.drill_receiver.item,
-          TARGETS.drill_receiver.fallback)
+          TARGETS.drill_receiver.fallback,counts)
         local legal=false
         if inside then
           if type(pair.station.surface.can_place_entity)=="function" then
@@ -226,7 +242,7 @@ local function uncovered_drill_output(pair,entities)
   end
   return nil,nil,deferred
 end
-local function choose(pair, resources, roles, entities)
+local function choose(pair, resources, roles, entities, counts)
   local t,site_position,deferred_output
   if not has_role(roles, "emergency-smelter", "normal-smelter") then t = TARGETS.smelter
   elseif not has_role(roles, "storage") then t = TARGETS.storage
@@ -242,8 +258,8 @@ local function choose(pair, resources, roles, entities)
     -- This is staged progression, not retirement of the emergency miner.
     if has_role(roles, "emergency-miner")
       and not has_role(roles, "emergency-assembler", "normal-assembler") then
-      local ready,why=craft_feasibility(pair,TARGETS.assembler.item)
-      local fallback_ready,fallback_why=craft_feasibility(pair,TARGETS.assembler.fallback)
+      local ready,why=craft_feasibility(pair,TARGETS.assembler.item,counts)
+      local fallback_ready,fallback_why=craft_feasibility(pair,TARGETS.assembler.fallback,counts)
       local reachable=ready or fallback_ready
         or (type(why)=="string" and why:find("^missing%-ingredients:")
           and not why:find("fluid:",1,true))
@@ -256,7 +272,7 @@ local function choose(pair, resources, roles, entities)
     -- now be built before waiting on the far costlier burner-drill dependency.
     -- The following standard-drill stage remains mandatory and does not
     -- retire the existing emergency miner or assembler.
-    if not t and station_count(pair,"electronic-circuit")>0
+    if not t and station_count(pair,"electronic-circuit",counts)>0
         and has_role(roles,"emergency-miner")
         and has_role(roles,"emergency-assembler","normal-assembler")
         and not has_role(roles,"lab") then
@@ -267,7 +283,7 @@ local function choose(pair, resources, roles, entities)
     -- pursuing the physical standard drill and its output receiver.
     if not t and first_resource(resources) and has_role(roles, "emergency-miner")
       and not has_role(roles, "normal-miner") then
-      local ready,why=craft_feasibility(pair,"burner-mining-drill")
+      local ready,why=craft_feasibility(pair,"burner-mining-drill",counts)
       local materials=type(why)=="string"
         and why:find("^missing%-ingredients:")~=nil
         and why:find("fluid:",1,true)==nil
@@ -278,7 +294,7 @@ local function choose(pair, resources, roles, entities)
       end
     end
     if not t then
-      site_position,_,deferred_output=uncovered_drill_output(pair,entities)
+      site_position,_,deferred_output=uncovered_drill_output(pair,entities,counts)
       if site_position then t=TARGETS.drill_receiver end
     end
   end
@@ -299,7 +315,7 @@ local function choose(pair, resources, roles, entities)
         if item_proto then
           pcall(function() place=item_proto.place_result end)
         end
-        if place and station_count(pair,kit)>0 then
+        if place and station_count(pair,kit,counts)>0 then
           return {status="planned",class=t.class,stage=t.stage,
             preferred_item=kit,fallback_item=t.item,
             resource=first_resource(resources),blocker=nil,
@@ -308,10 +324,10 @@ local function choose(pair, resources, roles, entities)
         end
       end
     end
-    local item,fallback,feasibility=item_available(pair,t.item,t.fallback)
+    local item,fallback,feasibility=item_available(pair,t.item,t.fallback,counts)
     return {status="planned",class=t.class,stage=t.stage,preferred_item=item,
       fallback_item=fallback,site_position=site_position,
-      blocker=item and station_count(pair,item)>0 and nil or feasibility,
+      blocker=item and station_count(pair,item,counts)>0 and nil or feasibility,
       delivery=t.delivery,feasibility=feasibility,reason=t.stage,
       deferred_output=deferred_output}
   end
@@ -335,11 +351,11 @@ local function choose(pair, resources, roles, entities)
     return {status="planned",class="idle",stage="ready",
       delivery="none",reason="local bootstrap spine appears present"}
   end
-  local item, fallback, feasibility = item_available(pair, t.item, t.fallback)
-  return { status = "planned", class = t.class, stage = t.stage, preferred_item = item, fallback_item = fallback, resource = first_resource(resources), blocker = item and station_count(pair, item) > 0 and nil or feasibility, delivery = t.delivery, feasibility = feasibility, reason = t.stage,
+  local item, fallback, feasibility = item_available(pair, t.item, t.fallback, counts)
+  return { status = "planned", class = t.class, stage = t.stage, preferred_item = item, fallback_item = fallback, resource = first_resource(resources), blocker = item and station_count(pair, item, counts) > 0 and nil or feasibility, delivery = t.delivery, feasibility = feasibility, reason = t.stage,
     deferred_output = deferred_output }
 end
-local function cheapest_available_science(pair)
+local function cheapest_available_science(pair,counts)
   local force = pair.station.force
   local labs = pair.station.surface.find_entities_filtered({
     position = pair.station.position, radius = radius_for(pair),
@@ -353,7 +369,7 @@ local function cheapest_available_science(pair)
   local available_by_item = {}
   local function available_science(item)
     if available_by_item[item] == nil then
-      local available = station_count(pair, item)
+      local available = station_count(pair, item, counts)
       if defines and defines.inventory and defines.inventory.lab_input then
         for _, lab in pairs(labs) do
           available = available + inv_count(
@@ -423,14 +439,18 @@ end
 local function summarize(t) local bits = {}; for k,v in pairs(t or {}) do bits[#bits+1]=k..":"..tostring(type(v)=="table" and (v.count or 1) or v) end; table.sort(bits); return table.concat(bits, ",") end
 function M.build_plan(pair, reason)
   if not valid_pair(pair) then return nil, "invalid-pair" end
-  local resources = scan_resources(pair); local roles,entities = scan_roles(pair); local target = choose(pair, resources, roles, entities)
+  -- This survey only reads inventory. Reuse each physical count inside
+  -- this synchronous call; never retain it across plans, transfers, or
+  -- research changes, including another plan in the same engine tick.
+  local counts={}
+  local resources = scan_resources(pair); local roles,entities = scan_roles(pair); local target = choose(pair, resources, roles, entities, counts)
   local plan = { version = M.version, tick = now(), station = station_unit(pair), priest = priest_unit(pair), radius = radius_for(pair), reason = reason or "survey", resources = resources, roles = roles, resource_summary = summarize(resources), role_summary = summarize(roles), target = target, stage = target.stage, status = target.status, blocker = target.blocker }
   -- A physically built lab with actual science is eligible for its
   -- cheapest compatible, prerequisite-complete research now. Do not postpone
   -- research behind unrelated drill, inserter or belt construction. Keep
   -- those target/stage obligations intact so the master planner still
   -- proceeds with the rest of the industrial infrastructure.
-  plan.science, plan.science_reason = cheapest_available_science(pair)
+  plan.science, plan.science_reason = cheapest_available_science(pair,counts)
   if plan.science then
     plan.research_candidate=plan.science.name
     if plan.stage=="ready" then plan.stage="science-ready" end

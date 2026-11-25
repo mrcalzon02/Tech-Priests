@@ -31,9 +31,19 @@ jobs:
           fetch-depth: 1
           filter: blob:none
           sparse-checkout: |
-            tech-priests_src/scripts/core
-            tests
-          sparse-checkout-cone-mode: true
+            /tech-priests_src/*.lua
+            /tech-priests_src/scripts/
+            /tech-priests_src/shared/
+            /tech-priests_src/prototypes/
+            /tech-priests_src/locale/
+            /tests/unit/
+            /tests/run_hotpath_regressions.py
+            /tests/test_behavior_source_inventory.py
+            /tools/audit_ups_hotspots_0743.py
+            /tools/behavior_source_inventory.py
+            /docs/BEHAVIOR*
+            /docs/RECOVERY_AUTHORITY_MAP_CURRENT.md
+          sparse-checkout-cone-mode: false
 
       - name: Check source and available Lua interpreter
         shell: bash
@@ -71,7 +81,7 @@ jobs:
         shell: bash
         run: |
           {
-            echo "### Tech Priests Lua hot-path validation"
+            echo "### Tech Priests behavior-map and Lua hot-path validation"
             echo
             echo "Source: \`$(git rev-parse HEAD)\`"
             echo
@@ -80,7 +90,7 @@ jobs:
             echo "Results:"
             printf '%s\n' '```text'
             if [ -f hotpath-regressions.log ]; then
-              grep -E '\[hotpath-regressions\]' hotpath-regressions.log || true
+              grep -E '\[(hotpath-regressions|behavior-map)\]' hotpath-regressions.log || true
             else
               echo "Blocked before Lua regression execution"
             fi

@@ -361,10 +361,23 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--markdown")
     parser.add_argument("--print-summary", action="store_true")
     parser.add_argument("--check-baseline", action="store_true")
+    parser.add_argument("--write-behavior-maps", action="store_true",
+                        help="Generate complete source inventory and human module/route index; does not acknowledge curated map review")
+    parser.add_argument("--check-behavior-maps", action="store_true",
+                        help="Check generated inventory freshness and explicit curated source/map review fingerprints")
+    parser.add_argument("--acknowledge-behavior-map-review", action="store_true",
+                        help="Explicitly acknowledge review of current source against all curated behavior/Mermaid maps")
     args = parser.parse_args(argv)
     source = pathlib.Path(args.root)
     if not source.is_absolute():
         source = ROOT / source
+    if args.write_behavior_maps or args.check_behavior_maps or args.acknowledge_behavior_map_review:
+        import behavior_source_inventory
+        return behavior_source_inventory.run(
+            ROOT, source, scan_risk, write=args.write_behavior_maps,
+            check=args.check_behavior_maps,
+            acknowledge=args.acknowledge_behavior_map_review,
+        )
     report = audit(source)
     if args.json:
         output = pathlib.Path(args.json)

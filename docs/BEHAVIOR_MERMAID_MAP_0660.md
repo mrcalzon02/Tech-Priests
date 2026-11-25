@@ -1,491 +1,149 @@
-# Tech-Priests Mermaid Behavior Map
+# Tech-Priests Current Behavior and Scheduling Map
 
-Version: 0.1.660-map-pass-1  
-Base behavior map: `docs/BEHAVIOR_FUNCTION_MAP_0659.md`  
-Purpose: provide a visual, iterative, code-shaped behavior map of how the Tech-Priest pair systems currently act on each other.
+**Reviewed:** 2026-11-25. This is a source map, not native behavior or performance acceptance.
+The number in this filename is retained for existing links; it is not a claim that the old implementation is still active.
 
-This document is intended to grow over multiple commits. It should be updated whenever a behavior authority, dispatcher wrapper, movement owner, overhead/visual owner, construction owner, logistics owner, or direct-acquisition owner changes.
+Use the [complete source inventory](BEHAVIOR_SOURCE_INVENTORY.md) and its
+[content hashes and source sites](BEHAVIOR_SOURCE_INVENTORY.json) for the full module/function/registration index.
+Potential reachability, conditional wrappers, and retired source are distinguished there.
+Source presence does not prove that a callback installed or ran in Factorio.
 
-The current consolidated owners and performance admission paths are shown in `docs/RECOVERY_AUTHORITY_MAP_CURRENT.md`, especially **Canonical Loader and Runtime Spine**, **Canonical Movement Cadence**, and **Storage and Transfer Boundaries**. The diagrams below preserve the earlier design and wrapper analysis; they do not authorize reinstalling retired leaf/movement wrappers or fetching generic storage from machine work inventories. The still-installed 0527 fetch wrapper and 0686 generic storage now use the existing 0587 source cache for their separate retained entity domains; missing inventory items do not trigger rediscovery of those entities.
+## Scope and corrections
 
-## Reading Rules
+This map replaces the earlier 0.1.660 intended-priority sketch. That sketch incorrectly continued to show retired movement, leaf and construction wrappers as live owners. The executable system is a combination of generated legacy routes, explicit runtime installers, broker services, executor wrappers and native event owners. It is not one centrally executed behavior tree.
 
-The diagrams use these conventions:
+The [function/family index](BEHAVIOR_FUNCTION_MAP_0659.md) names the current owners. The [recovery map](RECOVERY_AUTHORITY_MAP_CURRENT.md) records custody and retired replacements. The generated inventory covers all runtime files rather than only the original thirteen drilldown subjects.
 
-- **Authority** means a module can change pair state, movement target, task ownership, or visible status.
-- **Observer** means a module reports state but should not decide behavior.
-- **Leaf task** means the actual concrete action being performed right now.
-- **Parent order** means the broader objective that created a chain of leaf tasks.
-- **Movement truth** means the target the priest's feet and vector enforcer should obey.
-- **Visual truth** means the target shown to the player through overhead text and selected intent line.
-
-The existing prose behavior map states the governing rule: each behavior should have a clear entry condition, active owner, movement target, overhead status, and exit condition. If a future patch adds a behavior without placing it in this map, it is probably another hidden competing authority.
-
----
-
-## 1. Current Authority Install Order
-
-This shows the order currently installed through `planning_constraints_0646.lua` after the 0.1.659 scavenge consolidation.
+## 1. Loader and registration paths
 
 ```mermaid
 flowchart TD
-    PC[planning_constraints_0646.install]
-
-    PC --> DAPG[direct_acquisition_physical_guard_0649]
-    PC --> PAH[proxy_ammo_hardener_0649]
-    PC --> DAML[direct_acquisition_movement_lock_0650]
-    PC --> MTR[movement_target_reconciler_0652]
-    PC --> MIA[movement_intent_authority_0654]
-    PC --> CPA[construction_placement_authority_0656]
-    PC --> ALTT[active_leaf_task_truth_0655]
-    PC --> LMSB[logistics_mineable_source_bridge_0657]
-    PC --> VILA[visual_intent_line_authority_0657]
-    PC --> MVE[movement_vector_enforcer_0651]
-
-    DAPG --> DirectTruth[physical direct target exists]
-    DAML --> DirectTruth
-    MTR --> MovementTruth[movement request rewritten]
-    MIA --> MovementTruth
-    CPA --> ConstructionTruth[construction leaf task published]
-    ALTT --> LeafTruth[active_leaf_task_0655]
-    LMSB --> SalvageFallback[mineable fallback]
-    VILA --> VisualTruth[intent line target]
-    MVE --> VectorEnforce[enforce current movement request]
-
-    DirectTruth --> LeafTruth
-    ConstructionTruth --> LeafTruth
-    LeafTruth --> MovementTruth
-    LeafTruth --> VisualTruth
-    MovementTruth --> VectorEnforce
+    C["control.lua"] --> Early["0596 early raw timer hook"]
+    Early --> Legacy["22 generated legacy fragments"]
+    Legacy --> Registry["runtime_event_registry"]
+    Legacy --> Bootstrap["part 022: bootstrap_runtime.install"]
+    C --> Shared["Config, broker, buckets and reservations"]
+    Shared --> Policy["planning_constraints_0646"]
+    Policy --> Hardeners["26 declarative active hardeners"]
+    Policy --> Retired["48 explicitly retired authorities"]
+    C --> Late["Explicit later owners and final wrappers"]
+    Bootstrap --> Registry
+    Hardeners --> Registry
+    Late --> Registry
 ```
 
-Critical rule: target/leaf truth must run before vector enforcement. Vector enforcement must never decide the target; it only enforces whatever movement target is already authoritative.
+`planning_constraints_0646.HARDENERS` is one installation list, not the complete module list. Its `RETIRED` table declares source-preserved replacements. Other owners are installed by generated fragments, bootstrap and explicit late blocks. A literal `require` dependency may only preload a module; its existence is not proof that `install()` succeeded. Final reconciliation of death, robot-build and research event delivery is in `control.lua`.
 
----
-
-## 2. Global Pair Tick / Service Shape
-
-This is the broad order of operations as the pair is serviced by runtime broker / nth-tick handlers and wrapped dispatchers.
+## 2. Independent scheduling lanes
 
 ```mermaid
 flowchart TD
-    Tick[Runtime tick / service pulse] --> Valid{Pair valid?}
-    Valid -- no --> Invalid[BT-020 cleanup / invalid pair recovery]
-    Valid -- yes --> Threat{Combat or survival threat?}
-
-    Threat -- yes --> Combat[BT-100 combat / defense / ammo]
-    Combat --> AmmoCheck{Proxy gun has ammo?}
-    AmmoCheck -- no --> ProxyAmmo[proxy_ammo_hardener_0649 loads proxy from station]
-    AmmoCheck -- yes --> CombatAct[combat behavior continues]
-
-    Threat -- no --> BuildReady{Station has buildable infrastructure item?}
-    BuildReady -- yes --> BuildAuthority[construction_placement_authority_0656]
-    BuildAuthority --> BuildLeaf[active leaf: walking to build / placing]
-    BuildLeaf --> MovementRequest[authoritative movement_request_0418]
-
-    BuildReady -- no --> ExistingLeaf{Concrete active leaf task exists?}
-    ExistingLeaf -- yes --> LeafTruth[active_leaf_task_truth_0655]
-    ExistingLeaf -- no --> FetchNeed{Needed item missing from station?}
-
-    FetchNeed -- yes --> LogisticsFetch[logistics_fetch_executor_0527]
-    LogisticsFetch --> FetchSource{Real inventory / loose stack source found?}
-    FetchSource -- yes --> FetchLeaf[active leaf: fetching item from source]
-    FetchSource -- no --> MineableFallback{Known source is mineable without inventory?}
-    MineableFallback -- yes --> MineableBridge[logistics_mineable_source_bridge_0657]
-    MineableFallback -- no --> DirectNeed{Need raw resource?}
-
-    DirectNeed -- yes --> DirectAcq[direct_acquisition_executor_0513]
-    DirectAcq --> DirectGuard[physical target guard + movement lock]
-    DirectGuard --> MineLeaf[active leaf: mining immediate resource]
-
-    DirectNeed -- no --> Emergency{Need devolved emergency production?}
-    Emergency -- yes --> EmergencyProd[emergency_production_executor_0514]
-    EmergencyProd --> DevolvedLeaf[leaf task should describe current material step]
-
-    Emergency -- no --> Consecrate{Maintenance / consecration available?}
-    Consecrate -- yes --> Consecration[consecration_executor_0515]
-    Consecration --> ConsecrateLeaf[active leaf: walking to consecrate / consecrating]
-
-    Consecrate -- no --> Idle[BT-900 idle / waiting / chatter]
-
-    FetchLeaf --> LeafTruth
-    MineLeaf --> LeafTruth
-    DevolvedLeaf --> LeafTruth
-    ConsecrateLeaf --> LeafTruth
-    LeafTruth --> MovementRequest
-    MovementRequest --> VectorEnforcer[movement_vector_enforcer_0651]
-    LeafTruth --> Overhead[overhead_status_governor_0471 patched]
-    LeafTruth --> VisualLine[visual_intent_line_authority_0657]
+    Engine["Factorio events and nth-tick callbacks"] --> Events["Registry event routes"]
+    Engine --> Periodic["Registry periodic routes"]
+    Engine --> Raw["Remaining raw or fallback routes"]
+    Periodic --> Dormant["0595 dormant admission"]
+    Dormant --> RouteBudget["0598 route admission and 0594 wrappers"]
+    RouteBudget --> LegacyWork["Legacy and other periodic callbacks"]
+    RouteBudget --> Pulse["0600 broker central pulse: 5 ticks"]
+    Pulse --> Due["Service due dates and 0598 background admission"]
+    Due --> Admit["Up to four eligible background callbacks"]
+    Due --> Critical["Due critical and explicitly excluded services"]
+    Admit --> Service["Priority-ordered callbacks with offered work budgets"]
+    Critical --> Service
+    Service --> Work["Discovery, execution or presentation"]
+    Raw --> Early["0596 raw timer dormant hook where installed"]
 ```
 
-This graph is the current desired end-to-end behavior shape. Any module that bypasses this and writes `pair.target` or `pair.movement_request_0418` directly without publishing leaf truth is a candidate for future cleanup.
+The broker is a registry route. It does not replace every registry periodic route. The event registry's outer budget cannot infer how many services or native scans a broker callback invokes. The current broker explicitly calls `0598.broker_plan` to phase and fairly rotate eligible due background callbacks, at most four per pulse, and `broker_ran` to persist deadlines. Deferred callbacks keep their deadline. The cap is not population-gated and is not a limit of four total callbacks. Movement, dispatcher and combat categories are outside its background allowlist; order queue, original-priest expansion and inventory custody have named exclusions.
 
----
+That internal cap does not govern `station_catalog`'s separate registry route or synchronous callers. Conditional fallback registrations and source-only candidates remain visible in the inventory. [Shared discovery](BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0661.md) maps the retained source caches, expiry, event updates and remaining direct scan paths.
 
-## 3. Behavior Priority Stack
+A service `budget` is a work-count contract passed to a callback, not a millisecond ceiling. The callback must honor it and retain a cursor if work is deferred. Native movement is not slowed to compensate for discovery costs.
 
-The prose map defines the current intended priority order as pair validity, combat, construction placement, active leaf task, real-inventory logistics fetch, mineable salvage fallback, direct acquisition, emergency production, consecration, and idle.
+## 3. Dispatcher, incumbent work and routine selection
 
 ```mermaid
 flowchart TD
-    Start[Pair Service] --> P0{Valid pair?}
-    P0 -- no --> Cleanup[Pair cleanup / recovery]
-    P0 -- yes --> P1{Combat / death / survival?}
-    P1 -- yes --> Combat[Combat / defense / rearm]
-    P1 -- no --> P2{Buildable structure already in station?}
-    P2 -- yes --> Construction[Construction placement authority]
-    P2 -- no --> P3{Existing concrete leaf target?}
-    P3 -- yes --> Leaf[Active leaf task truth]
-    P3 -- no --> P4{Known real inventory source for needed item?}
-    P4 -- yes --> Fetch[Logistics fetch executor 0527]
-    P4 -- no --> P5{Inventoryless mineable known source?}
-    P5 -- yes --> Salvage[Mineable source bridge 0657]
-    P5 -- no --> P6{Raw resource acquisition needed?}
-    P6 -- yes --> Direct[Direct acquisition + physical guard]
-    P6 -- no --> P7{Emergency production needed?}
-    P7 -- yes --> Emergency[Emergency production executor]
-    P7 -- no --> P8{Consecration / maintenance target?}
-    P8 -- yes --> Consecrate[Consecration executor]
-    P8 -- no --> Idle[Idle / chatter / wait]
-
-    Combat --> End[End service pulse]
-    Construction --> End
-    Leaf --> End
-    Fetch --> End
-    Salvage --> End
-    Direct --> End
-    Emergency --> End
-    Consecrate --> End
-    Idle --> End
-    Cleanup --> End
+    Broker["single_dispatcher_0510: 5 ticks"] --> Roster["Cached roster and rotating pair cursor"]
+    Roster --> Fetch["0527 known-source fetch wrapper"]
+    Fetch -->|"handled"| FetchWork["Fetch movement or transfer"]
+    Fetch -->|"declined"| Pair["0510 service_pair"]
+    Pair --> Incumbent["Existing cargo, defense and machine work"]
+    Incumbent -->|"owner handled"| Result["Publish or return owner result"]
+    Incumbent -->|"free"| Strategic["Rail, expansion, couriers, power and muster"]
+    Strategic -->|"owner handled"| Result
+    Strategic -->|"free"| Queue["0469 order lifecycle"]
+    Queue --> Select["0488 action classifier"]
+    Select --> Family["0510 family executor selection"]
+    Family --> Action["canonical_action_0744"]
+    Family --> Execute["One selected routine executor"]
 ```
 
-This is an intended priority stack, not yet a proven single centralized switch statement. Several pieces are still wrappers, broker services, or older subsystem calls. That matters: if behavior still fights, the next audit should identify which legacy module is bypassing this priority stack.
+The legacy fetch wrapper is a real pre-dispatch path and still writes legacy leaf/status fields; it must not be hidden behind a claim that every action originates in the classifier. `0510` also calls incumbent and strategic owners before routine classification. Those early paths have their own eligibility and custody guards; the diagram does not claim a single universal priority ordering for every callback.
 
----
+The dispatcher offers 24 pairs per ordinary pulse before broker adaptation. Its cached roster amortizes rebuilding/sorting; checking the live pair map still visits it. The legacy `tick_pair` gate window is 30 ticks for dispatcher-owned active work. Compatibility families such as ordinary combat and movement can still resolve outside the routine executor table.
 
-## 4. Parent Order to Leaf Task Pipeline
-
-This diagram separates the parent objective from the concrete task the priest is actually doing.
-
-```mermaid
-flowchart LR
-    Parent[Parent order / broad objective]
-    Pending[Pending action / required item / blocked recipe]
-    Devolve[Devolve into immediate requirement]
-    Leaf[Concrete leaf task]
-    Target[Real entity or position target]
-    Move[Movement request]
-    Display[Overhead + visual intent line]
-    Exit[Exit condition]
-
-    Parent --> Pending
-    Pending --> Devolve
-    Devolve --> Leaf
-    Leaf --> Target
-    Target --> Move
-    Target --> Display
-    Move --> Exit
-    Display --> Exit
-
-    subgraph Examples
-        P1[Make iron plate] --> L1[Mine/fetch iron ore]
-        L1 --> L2[Feed smelter]
-        L2 --> L3[Retrieve iron plate]
-        P2[Consecrate machine] --> L4[Walk to target machine]
-        L4 --> L5[Perform rite]
-        P3[Build emergency smelter] --> L6[Fetch/place smelter item]
-        L6 --> L7[Create entity]
-    end
-```
-
-Invariant: the overhead text and visual intent line must describe `Leaf`, not `Parent`.
-
----
-
-## 5. Movement Truth Pipeline
-
-This is the currently intended movement ownership chain.
+## 4. Physical work and terminal ownership
 
 ```mermaid
 flowchart TD
-    LeafSource{Which module has concrete work?}
-    LeafSource -->|Direct acquisition| DirectLock[direct_acquisition_target_lock_0650]
-    LeafSource -->|Construction| BuildTask[construction_task_0338 / construction_priority_0656]
-    LeafSource -->|Logistics| FetchTask[logistics_fetch_0527]
-    LeafSource -->|Consecration| ConsecrateTask[consecration_0515]
-    LeafSource -->|Emergency| EmergencyTask[emergency_craft / current subtask]
-
-    DirectLock --> ALTT[active_leaf_task_truth_0655]
-    BuildTask --> CPA[construction_placement_authority_0656]
-    CPA --> ALTT
-    FetchTask --> ALTT
-    ConsecrateTask --> ALTT
-    EmergencyTask --> ALTT
-
-    ALTT --> PairTarget[pair.target / current_work_target_0655]
-    ALTT --> PairMove[pair.movement_request_0418]
-    PairMove --> MC[storage.tech_priests.movement_controller_0419.requests[key]]
-    MC --> Command[Factorio go_to_location command]
-    MC --> MVE[movement_vector_enforcer_0651]
-    MVE --> Reissue[Reissue movement if walking away]
-    Reissue --> Command
+    Task["Accepted order or incumbent transaction"] --> Executor["Family executor"]
+    Executor --> Claim["0601 reservation or family claim"]
+    Executor --> Move["0418 movement request"]
+    Move --> Ground["Ground controller and native command"]
+    Move --> Void["Void movement backend"]
+    Executor --> Source["Revalidate actual source and target"]
+    Source --> Custody["Record removed items in custody"]
+    Custody --> Success["Physical work or counted destination deposit"]
+    Custody --> Refusal["Blocked destination or interrupted work"]
+    Refusal --> Retry["Retain remainder and retry or refund"]
+    Success --> Terminal["Executor cleanup and 0469 terminal transition"]
+    Retry --> Terminal
+    Terminal --> Next["Queue promotion"]
 ```
 
-Debugging rule: if the priest walks the wrong way, inspect `pair.active_leaf_task_0655`, then `pair.movement_request_0418`, then the vector enforcer. Do not begin by changing the vector enforcer.
+This is the canonical transaction contract. It is not an assertion that every compatibility transfer satisfies it. In particular, the older 0527 immediate fetch/deposit route warrants separate accounting review. Inventory counts, actual source removal, physical custody and final destination acceptance must be measured independently.
 
----
+## 5. Full behavior-family routes
 
-## 6. Visual Truth Pipeline
+| Family | Discovery / decision | Physical or state owner | Detailed map |
+| --- | --- | --- | --- |
+| Pair creation, removal, pickup and recovery | Generated lifecycle, station state, 0499 policy | Generated canonical lifecycle; 0503 controlled recovery; 0823 relocation/0824 cargo | [Recovery](RECOVERY_AUTHORITY_MAP_CURRENT.md) |
+| Orders, pause, cancellation and promotion | 0469 queue and legacy admission wrappers | `order_queue_0469` | [Queue](BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0669_ORDER_QUEUE.md) |
+| Ground travel and leases | Executor intent, corridor planner | `movement_controller` | [Movement](BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0664_MOVEMENT_CONTROLLER.md) |
+| Void/platform travel | Existing movement/platform request | Void and platform movement backends | [Direct movement](BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0662_DIRECT_MOVEMENT.md) |
+| Inventory fetch and loose items | Catalog, typed inventory scan, loose-item scan | 0527 wrapper and transfer route | [Shared/fetch](BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0661.md) |
+| Direct resources and salvage | Identified literal physical target | `direct_acquisition_executor_0513` | [Acquisition](BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0663_DIRECT_EXECUTOR.md) |
+| Emergency production and strict recipe work | Recipe and infrastructure planners | 0514, guarded crafting fallback, facility feeder | [Production](BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0670_EMERGENCY_PRODUCTION.md) |
+| Construction, defensive buildings and robots | Site planner, 0644/0645, defense/frontier requests | `construction_planner`; native construction robots for their accepted jobs | [Construction](BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0665_CONSTRUCTION.md) |
+| Infrastructure, science and frustration | 0640/0644, power, belt, science and station planners | Existing 0338/0514/0528 executors and native machines | [Infrastructure](BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0666_INFRASTRUCTURE_PLANNING.md) |
+| Repair | Event feeder, queue, bounded local search | `repair_executor_0516` | [Repair](BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0672_REPAIR.md) |
+| Tactical repair | 0517 wall danger and cover evaluation | 0517 selection; 0516 physical repair | [Combat repair](BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0675_COMBAT_REPAIR.md) |
+| Consecration | Shared work queue and eligibility predicate | `consecration_executor_0515`; shared sanctity state | [Consecration](BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0671_CONSECRATION.md) |
+| Machine, item and energy logistics | 0528, 0702, 0705/0707 | Dispatcher invokes corresponding custody executor | [Dispatcher](BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0667_SINGLE_DISPATCHER.md) |
+| Silo, artillery and roboport logistics | 0709/0710, 0712/0713, 0714/0715 | Dispatcher invokes 0710, 0713 or 0715 | [Recovery](RECOVERY_AUTHORITY_MAP_CURRENT.md) |
+| Standard fluids and fluid turrets | 0689/0691 and 0716/0717/0719 | Route planner submits construction; 0338 places physical parts | [Recovery](RECOVERY_AUTHORITY_MAP_CURRENT.md) |
+| Remote resources, rails and courier chains | 0820, 0835, 0836, 0837 | Original builders, workers, physical train and counted cargo owners | [Dispatcher](BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0667_SINGLE_DISPATCHER.md) |
+| Starvation, relocation and station resupply | 0850 family, 0921 continuations, 1208 resupply | Existing lifecycle, custody, original-priest and construction owners | [Recovery](RECOVERY_AUTHORITY_MAP_CURRENT.md) |
+| Hostile defense, recruits and native combat | Defense perimeter, roster orders, native AAI bridge | Perimeter executor, 0338/0702 for preparation, native combat controller | [Dispatcher](BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0667_SINGLE_DISPATCHER.md) |
+| Bunker weapons and researched unlock recovery | `control.lua` calls `bunker_cannon_integration.install_main` | Canonical registry events; family initialization restores researched recipe unlocks from prototype effects; native weapons own combat | [Recovery](RECOVERY_AUTHORITY_MAP_CURRENT.md) |
+| Hydrogen, orbital and other infrastructure | Explicit `control.lua` module installation | Respective native event/runtime modules | [Full inventory](BEHAVIOR_SOURCE_INVENTORY.md) |
+| Chatter, UI, visuals and diagnostics | Observed pair/canonical state | Presentation modules; no general task authority | [Classifier](BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0668_ACTION_STATE_ARBITER.md) |
 
-```mermaid
-flowchart TD
-    ALTT[active_leaf_task_truth_0655] --> Status[pair.actual_task_status_0655]
-    ALTT --> WorkTarget[pair.current_work_target_0655]
+## 6. Observed boundaries requiring performance work
 
-    Status --> OverheadPatch[overhead_status_governor_0471 canonical status patch]
-    WorkTarget --> VisualAuthority[visual_intent_line_authority_0657]
-    Status --> VisualAuthority
-    Movement[pair.movement_request_0418] --> VisualAuthority
+| Source path | Actual boundary | Open risk |
+| --- | --- | --- |
+| `station_catalog` | Separate 60-tick registry route scans two due stations; dirty snapshots retained and `scan_cursor_0634` rotates | Broker callback limits do not cap this route; due-roster collection/sort, initial `get_for_pair` and explicit `scan_pair` remain separate costs. |
+| `infrastructure_first_governor_0640` | Broker passes its offered budget into the existing owner | Repaired source counts every inspected slot, resumes saved `service_cursor`, and separates acted/waiting/invalid/failed counts; native cost acceptance remains separate. |
+| `fluid_network_doctrine_0689`, `fluid_turret_readiness_0716` | Prefix `pairs(pair_map())` loops break at offered budget | No rotating cursor: stable populations above the budget can starve later entries. |
+| `logistics_fetch_executor_0527`, `storage_role_authority_0686` | Item-independent retained source membership in 0587; 1800-tick demand expiry and event updates; current stock rechecked | Initial/expired typed searches are complete and uncapped. Live inventory probes remain; 0527 no longer forces catalog scans on item misses. |
+| `runtime_tick_broker` and 0598 | At most four admitted eligible background callbacks per pulse, with deterministic phase, saved deadlines and rotation | Callback count does not bound work inside a callback; exempt active-work categories and registry siblings need their own accounting. |
+| Registry and raw fallback callbacks | Run outside broker-service loop | Need separate admission/cadence evidence. |
+| `behavior_tree_monitor_0642` | Broad read-only BT classifications from several legacy fields | Not an exhaustive executed tree; specialty families are incompletely represented. |
 
-    VisualAuthority --> HasLeaf{Active leaf or live movement request?}
-    HasLeaf -- yes --> BrightLine[Draw bright line priest -> active target]
-    HasLeaf -- no --> HomeLink[Draw subdued station ownership link]
+These are source findings. Their existence does not establish their share of the reported slowdown. The performance protocol must retain exact native timing and visit/query counts before closing each item.
 
-    OverheadPatch --> Text[Draw overhead leaf action text]
-```
+## Update and evidence rule
 
-The bright line is no longer supposed to mean station ownership. It is now meant to represent the current active intent target whenever a current target exists.
-
----
-
-## 7. Logistics / Inventory Scavenge Flow
-
-This map reflects the 0.1.659 consolidation: `logistics_fetch_executor_0527` owns real inventory scavenging. `nearby_inventory_scavenge_authority_0658` was removed.
-
-```mermaid
-flowchart TD
-    Need[Active item need] --> Have{Station already has enough?}
-    Have -- yes --> Done[Exit: already in station]
-    Have -- no --> Catalog{Known catalog storage source?}
-
-    Catalog -- yes --> Source[Source entity + inventory]
-    Catalog -- no --> Nearby{Nearby real inventory source?}
-    Nearby -- yes --> Source
-    Nearby -- no --> Ground{Loose ground item stack?}
-    Ground -- yes --> Loose[Loose item entity]
-    Ground -- no --> Mineable{Known source mineable but no inventory?}
-
-    Source --> Move[Move priest to source]
-    Loose --> Move
-    Move --> Adjacent{Priest adjacent?}
-    Adjacent -- no --> MoveRequest[Publish logistics fetch movement request]
-    MoveRequest --> Move
-    Adjacent -- yes --> Remove[Remove item from exact source inventory or stack]
-    Remove --> Deposit[Deposit item into Cogitator Station]
-    Deposit --> Success[phase = deposited]
-    Success --> Clear[Clear stale scavenge / inventory_scan / logistic_requested_item]
-
-    Mineable -- yes --> MineableBridge[logistics_mineable_source_bridge_0657]
-    Mineable -- no --> NoSource[Exit: no known fetch source]
-    MineableBridge --> Salvage[Mine/salvage source into station]
-    Salvage --> Success
-```
-
-Inventory source classes now intended to include containers, logistic containers, assembling machines, furnaces, mining drills, labs, cars, spider vehicles, cargo wagons, artillery wagons, rocket silos, roboports, ammo turrets, artillery turrets, character corpses, and loose item stacks.
-
----
-
-## 8. Direct Acquisition Flow
-
-```mermaid
-flowchart TD
-    NeedRaw[Need raw resource / immediate material] --> ExistingFetch{Can logistics fetch satisfy it from inventory?}
-    ExistingFetch -- yes --> Fetch0527[logistics_fetch_executor_0527]
-    ExistingFetch -- no --> CreateDirect[direct_acquisition_executor_0513 task]
-
-    CreateDirect --> HasEntity{Task has valid physical target entity?}
-    HasEntity -- no --> PhysicalGuard[direct_acquisition_physical_guard_0649]
-    PhysicalGuard --> Adopt{Nearby matching physical target found?}
-    Adopt -- yes --> LockTarget[direct_acquisition_movement_lock_0650]
-    Adopt -- no --> ClearTask[Clear stale/synthetic direct task]
-
-    HasEntity -- yes --> LockTarget
-    LockTarget --> TargetReconcile[movement_target_reconciler_0652]
-    TargetReconcile --> IntentAuthority[movement_intent_authority_0654]
-    IntentAuthority --> LeafTruth[active_leaf_task_truth_0655]
-    LeafTruth --> MoveToTarget[Move to ore / rock / tree]
-    MoveToTarget --> Adjacent{At target?}
-    Adjacent -- no --> VectorEnforce[movement_vector_enforcer_0651]
-    Adjacent -- yes --> Mine[Mine / extract immediate resource]
-    Mine --> Deposit[Deposit to station]
-    Deposit --> Complete[Direct task complete or parent chain continues]
-```
-
-Invariant: if the parent needs iron plate but the direct task is mining ore, the displayed leaf action is `Mining iron ore`.
-
----
-
-## 9. Construction / Infrastructure Flow
-
-```mermaid
-flowchart TD
-    Survey[master_infrastructure_plan_0644] --> Stage{Which infrastructure gap?}
-    Stage --> Smelting[Smelting capability]
-    Stage --> Storage[Storage buffer]
-    Stage --> Resource[Resource extraction]
-    Stage --> Crafting[Crafting capability]
-    Stage --> Research[Research capability]
-
-    Smelting --> Ghost[construction_bootstrap_ghost_planner_0645]
-    Storage --> Ghost
-    Resource --> Ghost
-    Crafting --> Ghost
-    Research --> Ghost
-
-    Ghost --> HasItem{Station has placeable item?}
-    HasItem -- no --> NeedMaterials[Parent order / emergency production / logistics fetch]
-    NeedMaterials --> Logistics0527[Fetch existing items first]
-    Logistics0527 --> DirectAcq[Direct acquisition if no inventory source]
-    DirectAcq --> EmergencyProd[Emergency production if needed]
-    EmergencyProd --> HasItem
-
-    HasItem -- yes --> PlacementAuthority[construction_placement_authority_0656]
-    PlacementAuthority --> SitePlanner[construction_site_planner.lua]
-    SitePlanner --> Site{Valid site found?}
-    Site -- no --> Blocked[Exit: blocked / no site]
-    Site -- yes --> ConstructionPlanner[construction_planner.lua]
-    ConstructionPlanner --> MoveBuild[Move priest to build site]
-    MoveBuild --> AtSite{At site?}
-    AtSite -- no --> ConstructionMove[construction movement request]
-    ConstructionMove --> MoveBuild
-    AtSite -- yes --> RemoveItem[Remove one structure item from station inventory]
-    RemoveItem --> CreateEntity[Create entity]
-    CreateEntity --> Built[Exit: infrastructure physically placed]
-```
-
-Construction should preempt additional acquisition once a buildable structure item exists in the station.
-
----
-
-## 10. Consecration / Maintenance Flow
-
-```mermaid
-flowchart TD
-    Candidate[Consecration executor scans/receives machine target] --> ValidTarget{Target machine valid?}
-    ValidTarget -- no --> ExitNoTarget[Exit: no target]
-    ValidTarget -- yes --> InRange{Priest within rite range?}
-
-    InRange -- no --> WalkLeaf[Leaf: Walking to consecrate machine]
-    WalkLeaf --> MoveRequest[Movement request to target machine]
-    MoveRequest --> Visual[Intent line priest -> machine]
-    MoveRequest --> Overhead[Overhead: Walking to consecrate machine]
-    MoveRequest --> InRange
-
-    InRange -- yes --> RiteLeaf[Leaf: Consecrating machine]
-    RiteLeaf --> Perform[Perform rite / maintenance]
-    Perform --> Complete{Rite complete?}
-    Complete -- no --> RiteLeaf
-    Complete -- yes --> Exit[Exit: consecration complete]
-```
-
-If this behavior visibly points to a station while claiming consecration, the bug is in the leaf truth / movement request / visual intent chain, not in the rite itself.
-
----
-
-## 11. Combat / Ammo Flow
-
-```mermaid
-flowchart TD
-    Threat[Threat / combat target / survival mode] --> NeedAmmo{Proxy has usable ammo?}
-    NeedAmmo -- yes --> Fight[Engage / defend]
-    NeedAmmo -- no --> StationAmmo{Station has ammo?}
-    StationAmmo -- yes --> ProxyHardener[proxy_ammo_hardener_0649]
-    ProxyHardener --> Load[Move ammo into hidden proxy gun]
-    Load --> Fight
-    StationAmmo -- no --> AmmoNeed[Need ammo item]
-    AmmoNeed --> FetchAmmo[logistics_fetch_executor_0527 fetches existing ammo]
-    FetchAmmo --> StationAmmo
-    AmmoNeed --> CraftAmmo[Emergency production / direct acquisition if fetch fails]
-    CraftAmmo --> StationAmmo
-    Fight --> ThreatGone{Threat gone?}
-    ThreatGone -- no --> Fight
-    ThreatGone -- yes --> NormalPriority[Return to normal behavior priority stack]
-```
-
-Combat may preempt normal work. Ammo satisfaction must mean the proxy can actually fire, not merely that ammunition exists somewhere in station storage.
-
----
-
-## 12. Emergency Production / Devolved Work Flow
-
-```mermaid
-flowchart TD
-    ParentNeed[Parent item needed] --> CanFetch{Existing source has parent item?}
-    CanFetch -- yes --> FetchParent[logistics_fetch_executor_0527]
-    CanFetch -- no --> Recipe{Recipe / emergency recipe available?}
-    Recipe -- no --> DirectRaw[Direct raw acquisition / salvage]
-    Recipe -- yes --> Ingredients{Ingredients available in station?}
-
-    Ingredients -- yes --> Craft[Emergency production executor crafts]
-    Ingredients -- no --> Devolve[Create immediate ingredient need]
-    Devolve --> IngredientFetch{Ingredient exists in nearby inventory?}
-    IngredientFetch -- yes --> FetchIngredient[logistics_fetch_executor_0527]
-    IngredientFetch -- no --> IngredientRaw{Ingredient is raw/minable?}
-    IngredientRaw -- yes --> MineIngredient[direct_acquisition_executor_0513]
-    IngredientRaw -- no --> FurtherDevolve[Further devolve / blocked]
-
-    FetchIngredient --> Ingredients
-    MineIngredient --> Ingredients
-    FurtherDevolve --> Ingredients
-    Craft --> Product[Deposit / make product available]
-    Product --> ParentComplete{Parent need satisfied?}
-    ParentComplete -- no --> Devolve
-    ParentComplete -- yes --> Exit[Exit: parent objective can continue]
-```
-
-Display rule: if the priest is currently fetching/mine/crafting an ingredient, overhead shows the ingredient leaf action, not the parent item.
-
----
-
-## 13. Diagnostics / Debugging Decision Tree
-
-```mermaid
-flowchart TD
-    Bug[Priest appears wrong] --> LeafQ{active_leaf_task_0655 correct?}
-    LeafQ -- no --> FixLeaf[Fix leaf task publisher / parent-to-leaf decomposition]
-    LeafQ -- yes --> MoveQ{movement_request_0418 points to leaf target?}
-    MoveQ -- no --> FixMove[Fix movement authority / request writer]
-    MoveQ -- yes --> VisualQ{Intent line points to movement target?}
-    VisualQ -- no --> FixVisual[Fix visual_intent_line_authority_0657 / network visuals]
-    VisualQ -- yes --> VectorQ{Vector enforcer moving toward request?}
-    VectorQ -- no --> FixVector[Fix movement_vector_enforcer_0651]
-    VectorQ -- yes --> ActionQ{At target but not acting?}
-    ActionQ -- yes --> FixExecutor[Fix executor exit/action logic]
-    ActionQ -- no --> Wait[Observe next tick / inspect broad node]
-
-    FixLeaf --> Retest[Retest same save/log]
-    FixMove --> Retest
-    FixVisual --> Retest
-    FixVector --> Retest
-    FixExecutor --> Retest
-```
-
-This decision tree is meant to stop repair work from adding duplicate authorities before identifying which layer diverged first.
-
----
-
-## 14. Known Incomplete Areas For Future Map Passes
-
-The following areas need deeper per-module Mermaid maps in later commits:
-
-1. `single_dispatcher_0510.lua` exact branch order.
-2. Combat/defense modules and their interaction with proxy ammo.
-3. Inventory steward family and all safe deposit/count helpers.
-4. Emergency production recipe decomposition and blocked-item state fields.
-5. Station catalog scan/update cycle and known-source selection.
-6. Consecration target selection, rite timing, and completion state.
-7. Remaining legacy modules that still write `pair.target`, `pair.mode`, or `pair.movement_request_0418` directly.
-8. Remaining slash-command cleanup map for old diagnostic modules.
-
-Any one of these can become the next sequential Mermaid-map commit.
+Change the relevant diagram and ownership/exit description with the source change. Regenerate the source inventory with `python tools/audit_ups_hotspots_0743.py --write-behavior-maps`, explicitly acknowledge the reviewed curated maps with `--acknowledge-behavior-map-review`, then run `--check-behavior-maps` through the same tool. Generation alone does not bless a changed manual diagram. Follow the [performance validation protocol](UPS_VALIDATION_RUNBOOK_0742.md) for exact source, save, engine version, population, profiling settings, sample window and artifacts. A clean map check proves freshness only.

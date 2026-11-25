@@ -36,7 +36,10 @@ function M.item_unlocked(force,item_name)
  local tick=game and game.tick or 0;if unlock_cache_tick~=tick then unlock_cache_tick=tick;unlock_cache={}end
  local key=tostring(force.index or force.name or"?")..":"..item_name
  if unlock_cache[key]~=nil then return unlock_cache[key],unlock_cache[key]and"enabled-recipe"or"technology-locked-or-no-enabled-recipe"end
- for _,recipe in pairs(force.recipes)do local enabled=false;pcall(function()enabled=recipe.enabled==true end);if enabled and recipe_produces(recipe,item_name)then unlock_cache[key]=true;return true,"enabled-recipe"end end
+ -- Expose the recipe only when this call actually found it. A cached
+ -- Boolean must not pin a recipe choice after another callback changes
+ -- enabled recipes in the same tick. The first two returns are unchanged.
+ for _,recipe in pairs(force.recipes)do local enabled=false;pcall(function()enabled=recipe.enabled==true end);if enabled and recipe_produces(recipe,item_name)then unlock_cache[key]=true;return true,"enabled-recipe",recipe end end
  unlock_cache[key]=false;return false,"technology-locked-or-no-enabled-recipe"
 end
 function M.entity_unlocked(pair,entity_name)

@@ -16,6 +16,15 @@ from time import perf_counter
 
 ROOT = Path(__file__).resolve().parent.parent
 SMOKE = (
+    "runtime_profiler_truth.lua",
+    "infrastructure_inspection_budget.lua",
+    "master_infrastructure_survey_reads.lua",
+    "broker_background_admission.lua",
+    "proxy_ammo_discovery_0649.lua",
+    "station_catalog_event_deferral_0634.lua",
+    "storage_discovery_cache_0587.lua",
+    "logistics_general_storage_custody.lua",
+    "logistics_retained_sources_0527.lua",
     "quality_turret_dormant_service.lua",
     "locale_structure.lua",
     "combat_roster_quality_transfer.lua",
@@ -82,6 +91,22 @@ def main() -> int:
     parser.add_argument("--all", action="store_true", help="Run extended integration fixtures too")
     parser.add_argument("--lua", default="texlua", help="Executable to run Lua tests (default: texlua)")
     args = parser.parse_args()
+    inventory_contract = subprocess.run(
+        [sys.executable, str(ROOT / "tests/test_behavior_source_inventory.py")],
+        cwd=ROOT, check=False,
+    )
+    if inventory_contract.returncode:
+        print("[hotpath-regressions] FAIL: behavior inventory regression contract", file=sys.stderr)
+        return 1
+    # The maps are part of the behavior change contract. Regenerating the
+    # inventory does not acknowledge review of the handwritten Mermaid maps.
+    mapped = subprocess.run(
+        [sys.executable, str(ROOT / "tools/audit_ups_hotspots_0743.py"),
+         "--check-behavior-maps"], cwd=ROOT, check=False,
+    )
+    if mapped.returncode:
+        print("[hotpath-regressions] FAIL: source/map coverage or review is stale", file=sys.stderr)
+        return 1
     lua = shutil.which(args.lua)
     if lua is None:
         print(f"[hotpath-regressions] FAIL: Lua interpreter not found: {args.lua}", file=sys.stderr)

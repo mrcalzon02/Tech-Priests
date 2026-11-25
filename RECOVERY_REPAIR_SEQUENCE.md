@@ -8,6 +8,26 @@
 **Engineering safety authority:** `docs/STANDARDS_AND_PRACTICES.md`  
 **Canonical development history:** `docs/DEVELOPMENT_HISTORY.md`
 
+## Current owner-directed repair - 2026-11-25
+
+The immediate work order is the reported four-priest slowdown: use the existing
+headed GitHub runner, identify actual native cost, repair the existing owners,
+and keep the behavior maps aligned with source. The older baseline/lane labels
+above describe the July recovery record; current source metadata is in
+`tech-priests_src/info.json` and exact tested artifacts have separate identities.
+
+The current source inventory and 16 curated maps are linked from `README.md`.
+The existing hot-path regression harness now fails when their generated source
+inventory or explicit source/diagram review receipt is stale. Generating files
+alone does not acknowledge review. This enforces freshness when the harness is
+run; it is not an always-running monitor or proof of native performance.
+
+Use `docs/UPS_VALIDATION_RUNBOOK_0742.md` for the matched owner-save replay.
+Preserve the owner's original save and exact mod versions. Report source
+regressions, actual native timings, identity/custody checks and completed
+behavior separately. Retain the existing owners and workflow; do not introduce
+another scheduler or lower movement/physical-custody cadence to conceal cost.
+
 ## Purpose and Explicit Exception
 
 This document is an explicit project-owner exception to the ordinary rule against creating standalone audit, repair-pass, or implementation-history documents.

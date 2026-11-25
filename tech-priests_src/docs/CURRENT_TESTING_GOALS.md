@@ -1,5 +1,41 @@
 # Current Testing Goals
 
+## 2026-11-25 - Four-priest slowdown and behavior-map drift
+
+The owner has directed the immediate performance reproduction onto the existing
+headed Core30 / GTX 1660 SUPER GitHub runner. Use the private owner-save workflow
+in `mrcalzon02/Dens-Mortis`, installed graphical Factorio 2.1.25, the uploaded
+save and its exact mod stack. The save predates station placement: the observer
+explicitly reconstructs one station of each of the four ground ranks on a copy.
+Do not call these four priests original saved entities; preserve their identities
+after reconstruction and leave the input save unchanged.
+
+Current source changes address repeated storage discovery, synchronous catalog
+rescans, broker background admission, discarded infrastructure inspection
+budgets, repeated planner inventory reads and misleading profiler aggregates.
+Focused Lua fixtures prove their source contracts. Native improvement remains
+unaccepted until the paired run supplies complete per-tick data and behavior
+observations. Missing timing values stay unknown; a zero error count or faster
+loop is not proof that physical work completed.
+
+1. Run the existing hot-path harness, including its source-inventory and curated
+   map freshness check. Keep the 16 existing maps and generated inventory current.
+2. Replay published baseline and immutable candidate source overlays on separate
+   copies of the same save, on the same headed runner, with the same mods,
+   600-tick warmup and 6,000-tick run. Disable optional callback instrumentation
+   for the primary comparison; use a separately labeled attribution pass as needed.
+3. Retain whole-update and all-mod script p50/p95/p99/max, >100 ms tick counts,
+   exact build/save/engine hashes and the genuine native warmup screenshot.
+4. Inspect identity stability, actual movement, inventory/custody and completed
+   actions. Fix any exposed runtime error or loss of physical progress.
+5. Update the existing development history and evidence runbook with run IDs,
+   exact source identity and the observed limits of the result. Higher priest
+   counts and the older long-duration campaigns remain separate measurements.
+
+The measurement protocol is `docs/UPS_VALIDATION_RUNBOOK_0742.md`; the current
+topology starts at `docs/BEHAVIOR_MERMAID_MAP_0660.md`. No native timing pass is
+claimed by this checklist.
+
 ## 2026-11-02 — Goal #6 functional closure, measurable efficiency, and new-method execution plan
 
 **Authority:** [Issue #6](https://github.com/mrcalzon02/Tech-Priests/issues/6) remains the live goal/acceptance ledger. This section is a work plan, not a claim of release readiness. No new workflow, controller, or independent narrative ledger is authorized. Preserve the recovery authority, physical custody and original 123,000-tick science/combat gates. Keep existing checks; run focused tests before expensive full-engine repeats. Only objective functional failures may block builds; visual/style/balance and performance measurements are diagnostic.
