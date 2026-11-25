@@ -161,3 +161,4 @@ require("prototypes.faction_factories").register()
 -- Authoritative production roster: 15 recruitable AAI actors and shared arsenal.
 -- Never register combat_armory separately (it would duplicate weapons/technologies).
 require("prototypes.combat_roster").register()
+require("prototypes.wall_branches")

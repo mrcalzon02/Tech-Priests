@@ -1,10 +1,12 @@
 -- Tech-Priests proprietary combat damage channels (Factorio 2.1).
--- Registration ONLY. Existing vanilla ammo, projectiles, resistances, enemy
--- definitions and effective combat balance are intentionally unchanged.
--- A new damage type is just a resistance key, not an armor debuff or DoT.
+-- Register damage channels before weapon and wall prototypes reference them.
 local M = {}
 
 M.types = {
+  {name="tech-priests-penetration", role="dedicated armor-piercing rounds"},
+  {name="tech-priests-bolt", role="bolt ammunition"},
+  {name="tech-priests-power-field", role="charged melee tools"},
+  {name="tech-priests-thermal-ray", role="directed thermal energy"},
   {name="tech-priests-plasma", role="contained superheated plasma"},
   {name="tech-priests-corrosive", role="persistent chemical/material corrosion"},
   {name="tech-priests-radiation", role="radiological energy and radium exposure"},
