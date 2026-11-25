@@ -438,7 +438,6 @@ if mods["space-age"] then
     ["intermediate-cogitator-station"] = true,
     ["senior-cogitator-station"] = true,
     ["planetary-magos-cogitator-station"] = true,
-    ["void-cogitator-station"] = true,
     ["orbital-trader"] = true,
     ["tech-priests-hidden-requester-cache"] = true,
     ["tech-priests-hidden-return-cache"] = true,
@@ -464,10 +463,10 @@ if mods["space-age"] then
       local proto = prototypes_of_type and prototypes_of_type[name]
       if proto then
         proto.surface_conditions = tech_priests_platform_safe_surface_conditions()
-        if tech_priests_platform_tile_source and (name == "junior-cogitator-station" or name == "intermediate-cogitator-station" or name == "senior-cogitator-station" or name == "planetary-magos-cogitator-station" or name == "void-cogitator-station" or name == "orbital-trader") then
+        if tech_priests_platform_tile_source and (name == "junior-cogitator-station" or name == "intermediate-cogitator-station" or name == "senior-cogitator-station" or name == "planetary-magos-cogitator-station" or name == "orbital-trader") then
           proto.tile_buildability_rules = table.deepcopy(tech_priests_platform_tile_source.tile_buildability_rules)
         end
-        if name == "junior-cogitator-station" or name == "intermediate-cogitator-station" or name == "senior-cogitator-station" or name == "planetary-magos-cogitator-station" or name == "void-cogitator-station" then
+        if name == "junior-cogitator-station" or name == "intermediate-cogitator-station" or name == "senior-cogitator-station" or name == "planetary-magos-cogitator-station" then
           proto.placeable_by = { item = name, count = 1 }
         end
         if proto.type ~= "unit" and proto.type ~= "corpse" then
@@ -518,10 +517,6 @@ local TECH_PRIESTS_ARMOR_TECH_BY_STATION_RECIPE = {
   },
   ["planetary-magos-cogitator-station"] = {
     "power-armor",
-    "mech-armor"
-  },
-  ["void-cogitator-station"] = {
-    "power-armor-mk2",
     "mech-armor"
   }
 }
@@ -633,11 +628,11 @@ require("prototypes.generated_graphics.atmospheric-water-condenser-v24")
 
 require("prototypes.generated_graphics.sterling-steam-catalyzer-v1")
 
-require("prototypes.generated_graphics.void-steam-engine-v1")
-
-require("prototypes.generated_graphics.citadel-manufactoreo-v1")
-
-require("prototypes.generated_graphics.entropic-extractor-v1")
+if mods["space-age"] then
+  require("prototypes.generated_graphics.void-steam-engine-v1")
+  require("prototypes.generated_graphics.citadel-manufactoreo-v1")
+  require("prototypes.generated_graphics.entropic-extractor-v1")
+end
 
 require("prototypes.generated_graphics.orbital-trader-v1")
 

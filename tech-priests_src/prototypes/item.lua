@@ -23,9 +23,17 @@ local stations = {
   { name = "junior-cogitator-station", order = "a", icon = "__tech-priests__/graphics/icons/junior-cogitator-station.png", tint = { r = 1.0, g = 0.58, b = 0.18, a = 1.0 } },
   { name = "intermediate-cogitator-station", order = "b", icon = "__tech-priests__/graphics/icons/cogitator-station.png", tint = { r = 0.70, g = 0.70, b = 0.70, a = 1.0 } },
   { name = "senior-cogitator-station", order = "c", icon = "__tech-priests__/graphics/icons/senior-cogitator-station.png", tint = { r = 0.92, g = 0.10, b = 0.08, a = 1.0 } },
-  { name = "planetary-magos-cogitator-station", order = "d", icon = "__tech-priests__/graphics/icons/planetary-magos-cogitator-station.png", tint = { r = 0.08, g = 0.07, b = 0.06, a = 1.0 } },
-  { name = "void-cogitator-station", order = "e", icon = "__tech-priests__/graphics/icons/void-cogitator-station.png", tint = { r = 1.00, g = 0.96, b = 0.86, a = 1.0 } }
+  { name = "planetary-magos-cogitator-station", order = "d", icon = "__tech-priests__/graphics/icons/planetary-magos-cogitator-station.png", tint = { r = 0.08, g = 0.07, b = 0.06, a = 1.0 } }
 }
+
+if mods["space-age"] then
+  stations[#stations + 1] = {
+    name = "void-cogitator-station",
+    order = "e",
+    icon = "__tech-priests__/graphics/icons/void-cogitator-station.png",
+    tint = { r = 1.00, g = 0.96, b = 0.86, a = 1.0 }
+  }
+end
 
 local items = {}
 for _, station in pairs(stations) do

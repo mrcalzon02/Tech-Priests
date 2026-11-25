@@ -234,8 +234,11 @@ local TIER_DEFS = {
     priest_health = 850,
     inventory_size = 7, -- 0.1.529: base +2 working slots
     tint = { r = 0.08, g = 0.07, b = 0.06, a = 1.0 }
-  },
-  {
+  }
+}
+
+if mods["space-age"] then
+  TIER_DEFS[#TIER_DEFS + 1] = {
     key = "void",
     order = "e",
     station_name = "void-cogitator-station",
@@ -248,7 +251,7 @@ local TIER_DEFS = {
     -- A pale void-duty tint: mostly white, but still recognizably robed.
     tint = { r = 1.00, g = 0.96, b = 0.86, a = 1.0 }
   }
-}
+end
 
 local function soften_station_tint_0311(tint)
   tint = tint or { r = 1, g = 1, b = 1, a = 1 }

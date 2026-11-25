@@ -420,18 +420,6 @@ local techs = {
   },
   {
     type = "technology",
-    name = "void-cogitator-stations",
-    icon = "__tech-priests__/graphics/icons/tech-priests-category.png",
-    icon_size = 64,
-    prerequisites = { "planetary-magos-cogitator-stations", "void-sealed-cargo-unsealing" },
-    effects = {
-      { type = "unlock-recipe", recipe = "void-cogitator-station" }
-    },
-    unit = red_green_blue_science(180, 35),
-    order = "c-k-e"
-  },
-  {
-    type = "technology",
     name = "ritual-of-machine-appeasement",
     icon = "__tech-priests__/graphics/icons/tech-priests-category.png",
     icon_size = 64,
@@ -527,6 +515,19 @@ local techs = {
   }
 }
 
+
+if mods["space-age"] then
+  techs[#techs + 1] = {
+    type = "technology",
+    name = "void-cogitator-stations",
+    prerequisites = { "space-platform", "planetary-magos-cogitator-stations", "void-sealed-cargo-unsealing" },
+    effects = {
+      { type = "unlock-recipe", recipe = "void-cogitator-station" }
+    },
+    unit = red_green_blue_science(180, 35),
+    order = "c-k-e"
+  }
+end
 
 -- 0.1.562 doctrine appeasement researches. These are infinite, hard-coded
 -- pressure relief rites for the Conclave system: when a doctrine family cannot
