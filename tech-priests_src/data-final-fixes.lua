@@ -676,3 +676,6 @@ for _, beacon in pairs(data.raw.beacon or {}) do
     beacon.allowed_module_categories = table.deepcopy(general_beacon_module_categories)
   end
 end
+
+-- Resolve byte-identical asset aliases after all local prototype registration.
+require('prototypes.png_asset_aliases').apply(data.raw)
