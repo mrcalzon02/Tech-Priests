@@ -14,9 +14,14 @@ Current source changes address repeated storage discovery, synchronous catalog
 rescans, broker background admission, discarded infrastructure inspection
 budgets, repeated planner inventory reads and misleading profiler aggregates.
 Focused Lua fixtures prove their source contracts. Native improvement remains
-unaccepted until the paired run supplies complete per-tick data and behavior
-observations. Missing timing values stay unknown; a zero error count or faster
-loop is not proof that physical work completed.
+unaccepted until the paired run supplies complete measurements appropriate to
+its execution mode and behavior observations. Missing timing values stay unknown;
+a zero error count or faster loop is not proof that physical work completed.
+The e4c505ce attribution run found catalog work in nine of ten warm ticks above
+100 ms, including 150 ms planetary scans and overlapping scans above 250 ms.
+Incremental discovery must preserve completed snapshots, live claims and useful
+progress while removing those scheduled bursts; one other slow tick remains
+unattributed until the next diagnostic resolves it.
 
 1. Run the existing hot-path harness, including its source-inventory and curated
    map freshness check. Keep the 16 existing maps and generated inventory current.
@@ -24,12 +29,17 @@ loop is not proof that physical work completed.
    copies of the same save, on the same headed runner, with the same mods,
    600-tick warmup and 6,000-tick run. Disable optional callback instrumentation
    for the primary comparison; use a separately labeled attribution pass as needed.
-3. Retain whole-update and all-mod script p50/p95/p99/max, exact slow-tick rows,
-   >100 ms counts, build/save/engine hashes and the genuine native warmup PNG.
+3. Retain the native frame CSV, schema, hash, frame warmup and raw distributions
+   for the graphical replay, together with independent contiguous simulation
+   counts, stable identities and the genuine native PNG. Frame rows have no
+   game-tick column; units remain unconfirmed. Do not invent script timings or
+   a frame-to-tick association. A separately labeled CPU benchmark retains
+   whole-update and all-mod script p50/p95/p99/max, exact slow-tick rows and
+   >100 ms counts. Keep build/save/engine hashes and both raw evidence streams.
    Use the approved OpenGL path within the runner's existing Session 0; record
    actual renderer/session evidence and do not call it a visible desktop. The
-   interactive Task Scheduler handoff was denied with 0x80070005. Keep JSON/PNG
-   log chunks because artifact upload is currently failing its storage quota.
+   interactive Task Scheduler handoff was denied with 0x80070005. Keep complete
+   CSV/JSON/PNG log chunks because artifact upload is failing its storage quota.
 4. Inspect identity stability, actual movement, inventory/custody and completed
    actions. Fix any exposed runtime error or loss of physical progress.
 5. Update the existing development history and evidence runbook with run IDs,

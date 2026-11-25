@@ -1,3 +1,67 @@
+## Bound the measured catalog stalls and separate graphical evidence - 2026-11-25
+
+Native attribution run 45608041558 at e4c505ce identified catalog work in nine
+of ten warm whole-update ticks over 100 ms, including a 281.642 ms tick. The
+concurrent retained-inventory repair at 5228dfc was preserved; its diagnostic
+45610962644 still measured six warm ticks over 100 ms, including 305.161 ms.
+Those observations require a remaining scheduled-work repair, not a claim that
+a lower mean alone resolved the slowdown.
+
+The existing catalog owner now resumes physical discovery through DenseScan
+begin/step state and a five-tick registry route. One native query and 128
+inspected entries are shared across an admission; invalid and duplicate entries,
+claim validation and old-key release checks consume that allowance. Last
+completed snapshots stay available while pending work advances. Topology,
+radar and built-claim revisions survive publication; stock-only changes do not
+invalidate physical discovery. Domain changes and explicit scans supersede
+older pending work. Incomplete scans retain prior claims and usable safe partial
+observations. Ownership still changes through the existing reverse-index owner.
+
+The combined implementation retains 5228dfc's inventory authority and native
+trunk selection. Scheduled physical slices do not read inventory quantities or
+invoke its complete cold inventory seed/mobile-list enrichment. Item questions
+and explicit UI snapshots retain their separate live-read boundary. The final
+Lua-table ownership commit and roster bookkeeping are separate costs; the
+admission budget is not a wall-time guarantee or a global mod budget.
+
+Focused delivery evidence preserves four-station progress: four stations with
+300 resources each completed within 85 ticks of their respective starts. Four
+stations with 3,000 resources and 3,000 old claims each completed a steady
+refresh within 1,530 ticks. The 600-tick deadline is a due target, not a promised
+completion period under that dense load. The native owner-save replay must
+report useful work and complete/partial sweep latency alongside frame/tick cost.
+
+The same diagnostic exposed an 811-tick force armor refresh at up to 100.338 ms.
+The existing generated 0297 owner now retains immutable armor facts and reuses
+0646 recipe membership while checking live enablement. Its cadence, research
+refreshes, direct-name compatibility, per-force profile writes and later 0302
+behavior remain unchanged. The focused fixture holds one item-table walk and
+one recipe-table walk per force through 100 further refreshes, with live unlock,
+profile isolation, damage/effect and reload checks. This is an operation-count
+reduction awaiting the combined native replay.
+
+The existing 0634 event owner now routes finite resource depletion through
+canonical claim release and pending revision, preventing a resource that dies
+after one validation slice from entering the completed snapshot. Infinite
+resources at minimum yield retain their usable claim. The bounded continuation
+fixture covers both branches without adding an event-side spatial query.
+
+The remaining 5228dfc tick74715 contains 216.135 ms of all-mod script time. No
+catalog, 0643 or rare registry callback appears there. Incremental GC accounts
+for another 9.739 ms, not the dominant script stall. The next diagnostic also
+times every outer broker pulse and inventory-candidate read to narrow that
+unattributed interval; it is not assigned to a source owner by inference.
+
+The Core30 graphical replay 45610253533 passed both baseline and e4c505ce
+candidate steps and its matched-comparison step. Its quantitative evidence is
+being recovered separately; job success alone is not an accepted performance
+claim. The corrected worker reads the engine's native rendering CSV, counts
+contiguous simulation observations independently, and leaves absent CPU/script
+timings unknown. Graphical CSV units remain unconfirmed. Full frame/native logs,
+JSON and native PNG have recoverable chunk formats with hashes. Exhaustive
+attribution now covers catalog admissions/publication, 0644, 0643 and rare
+registry callbacks; nested timings overlap and cannot be summed.
+
 ## Retain inventory identities without timed rediscovery - 2026-11-25
 
 The current candidate follows the owner's later instruction to maintain the

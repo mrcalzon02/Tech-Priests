@@ -12,6 +12,7 @@ import argparse
 import csv
 import base64
 import hashlib
+import io
 import json
 import math
 import os
@@ -21,9 +22,87 @@ import shutil
 import subprocess
 import time
 import zipfile
+import zlib
 
 
 WINDOWS_GRAPHICS_FLAGS = ("--force-opengl", "--fullscreen=false", "--disable-audio", "--gfx-safe-mode")
+FRAME_METRICS = ("update", "prepare", "cpu-render", "cpu-flip", "sleep", "cpu-frame", "gpu-frame")
+FRAME_TIMING_UNITS = "unconfirmed native CSV units; no conversion applied"
+
+
+def parse_frame_stats(raw: bytes, warmup_frames: int) -> dict:
+    """Validate native graphical frame rows without inventing game-tick timing."""
+    result={"csv_valid":False,"file_sha256":hashlib.sha256(raw).hexdigest(),"file_bytes":len(raw),
+        "raw_headers":[],"row_count":0,"measured_frame_count":0,"metrics":{},
+        "nonmetric_metadata_columns":["config-key","config-value"],
+        "timing_units":FRAME_TIMING_UNITS,"unit_source":None,
+        "row_index_basis":"zero-based native CSV data row; not a game tick",
+        "game_tick_correlation":"unavailable","script_update_timing":"unavailable",
+        "excluded_warmup_frames":warmup_frames,
+        "warmup_basis":"first N graphical CSV frame rows; independent of game-tick observation warmup"}
+    try:
+        if warmup_frames<0:
+            raise ValueError("Negative frame warmup")
+        rows=csv.reader(io.StringIO(raw.decode("utf-8-sig")),strict=True)
+        header=next(rows,[])
+        result["raw_headers"]=header
+        if not header or any(not name for name in header) or len(set(header))!=len(header):
+            raise ValueError("Missing or duplicate frame CSV headers")
+        if not all(name in header for name in FRAME_METRICS):
+            raise ValueError("Native graphical frame metric columns missing")
+        numeric=[i for i,name in enumerate(header) if name not in ("config-key","config-value")]
+        frames=[]
+        for index,row in enumerate(rows):
+            if len(row)!=len(header):
+                raise ValueError(f"Frame row {index} has an incorrect column count")
+            values={header[i]:float(row[i]) for i in numeric}
+            if any(not math.isfinite(value) or value<0 for value in values.values()):
+                raise ValueError(f"Frame row {index} contains nonfinite or negative numeric values")
+            frames.append({name:values[name] for name in FRAME_METRICS})
+        result["row_count"]=len(frames)
+        if not frames:
+            raise ValueError("Native graphical frame CSV has no data rows")
+        result["csv_valid"]=True
+        measured=frames[warmup_frames:]
+        result["measured_frame_count"]=len(measured)
+        for name in FRAME_METRICS:
+            if not measured:
+                break
+            values=sorted(row[name] for row in measured)
+            result["metrics"][name]={"samples":len(values),"mean":sum(values)/len(values),
+                "p50":values[max(0,math.ceil(len(values)*.50)-1)],
+                "p95":values[max(0,math.ceil(len(values)*.95)-1)],
+                "p99":values[max(0,math.ceil(len(values)*.99)-1)],"max":values[-1]}
+        largest=sorted(enumerate(frames),key=lambda item:(-item[1]["update"],item[0]))[:100]
+        result["largest_update_frames"]=[{"frame_row_index":index,
+            "phase":"frame-warmup" if index<warmup_frames else "measured-frames",**values}
+            for index,values in largest]
+    except (UnicodeDecodeError,csv.Error,ValueError) as exc:
+        result["error"]=str(exc)
+    return result
+
+
+def emit_compressed_evidence(raw: bytes, marker: str, kind: str) -> dict:
+    """Keep complete native bytes in bounded log records when artifacts fail."""
+    compressed=zlib.compress(raw,9)
+    encoded=base64.b64encode(compressed).decode("ascii")
+    chunks=[encoded[i:i+16000] for i in range(0,len(encoded),16000)]
+    receipt={"kind":kind,"encoding":"zlib+base64","raw_sha256":hashlib.sha256(raw).hexdigest(),
+             "raw_bytes":len(raw),"compressed_sha256":hashlib.sha256(compressed).hexdigest(),
+             "compressed_bytes":len(compressed),"parts":len(chunks)}
+    for index,chunk in enumerate(chunks):
+        print(marker+" "+json.dumps({"part":index,"total":len(chunks),"kind":kind,
+            "sha256":receipt["raw_sha256"],"compressed_sha256":receipt["compressed_sha256"],
+            "encoding":"zlib+base64","data":chunk}),flush=True)
+    return receipt
+
+
+def emit_frame_csv(raw: bytes) -> dict:
+    return emit_compressed_evidence(raw,"TP_OWNER_FRAME_CSV_PART","native-graphical-frame-csv")
+
+
+def emit_native_log(raw: bytes) -> dict:
+    return emit_compressed_evidence(raw,"TP_OWNER_NATIVE_LOG_PART","native-update-benchmark-log")
 
 
 def windows_session_id(pid: int | None = None) -> int | None:
@@ -68,6 +147,7 @@ do
   local broker = require("scripts.core.runtime_tick_broker")
   local installed_local_hooks
   local elapsed_start, original_ids, original_count, reconstructed
+  local observed_tick_count,last_observed_tick,observed_tick_sequence_valid=0,nil,true
   -- Read existing owners only. These are receipts from the physical mutation
   -- paths, not manufactured test work or an extra entity-discovery pass.
   local counter_specs={
@@ -126,6 +206,10 @@ do
     for _,item in ipairs(live_pairs()) do
       local p=item.pair
       local station,priest=p.station,p.priest
+      local catalog_root=storage.tech_priests and storage.tech_priests.station_catalog_0327
+      local current=catalog_root and catalog_root.stations and catalog_root.stations[station.unit_number]
+      local pending=catalog_root and catalog_root.pending_scans and catalog_root.pending_scans[station.unit_number]
+      local partial=catalog_root and catalog_root.partial_stations and catalog_root.partial_stations[station.unit_number]
       if original_ids and original_ids[station.unit_number]~=priest.unit_number then stable=false end
       values[#values+1]={station=station.unit_number,station_name=station.name,
         priest=priest.unit_number,priest_name=priest.name,
@@ -137,6 +221,16 @@ do
         direct_phase=p.dispatcher_direct_0513 and p.dispatcher_direct_0513.phase,
         direct_custody=p.direct_acquisition_custody_0513 and {
           item=p.direct_acquisition_custody_0513.item,count=p.direct_acquisition_custody_0513.count},
+        catalog_observation={published_present=current~=nil,
+          published_started_tick=current and current.scan_started_tick,
+          published_completed_tick=current and current.scan_completed_tick,
+          published_incomplete=current and current.scan_incomplete_1478,
+          partial_completed_tick=partial and partial.scan_completed_tick,
+          pending_phase=pending and pending.phase,
+          pending_started_tick=pending and pending.started_tick,
+          pending_age_ticks=pending and (game.tick-pending.started_tick),
+          pending_processed=pending and pending.processed,
+          pending_queries=pending and pending.dense and pending.dense.info and pending.dense.info.queries},
         station_chest_items=station_stock(station),
         task=p.order_queue_0469 and p.order_queue_0469.current and p.order_queue_0469.current.kind}
     end
@@ -152,6 +246,8 @@ do
     end
     local counters,owners=behavior_counters()
     emit{phase=phase,tick=game.tick,elapsed_ticks=elapsed,live_pairs=#values,
+      observed_tick_count=__GRAPHICS__ and observed_tick_count or nil,
+      observed_tick_sequence_valid=__GRAPHICS__ and observed_tick_sequence_valid or nil,
       identities_stable=stable,reconstructed=reconstructed==true,pairs=values,
       behavior_counters=counters,behavior_owners=owners,
       connected_players=#game.connected_players,repair_queue_by_force=repair_by_force,
@@ -183,6 +279,11 @@ do
     reconstructed=true
   end
   registry.on_event(defines.events.on_tick,function(event)
+    if __GRAPHICS__ then
+      observed_tick_count=observed_tick_count+1
+      if last_observed_tick and event.tick~=last_observed_tick+1 then observed_tick_sequence_valid=false end
+      last_observed_tick=event.tick
+    end
     if not elapsed_start then
       elapsed_start=event.tick
       if __INSTRUMENT__ then
@@ -214,18 +315,26 @@ do
           path="owner-profile/four-priests.png"}
       end
     end
-    if elapsed>0 and (elapsed%600==0 or elapsed==__WARMUP__ or elapsed==__TICKS__-1) then snapshot("sample",elapsed) end
+    if elapsed>0 and (elapsed%600==0 or elapsed==__WARMUP__ or elapsed==__TICKS__-1) then
+      snapshot(__GRAPHICS__ and elapsed==__TICKS__-1 and "end" or "sample",elapsed)
+    end
   end,nil,{owner="ci-owner-save-profile",route="observe-original-identities",priority=1000000})
   if __INSTRUMENT__ then
     local function wrap(fn,scope,name,per_pair)
       local call_counts={}
-      -- One-in-32 sampling can miss every warm call of a rare costly route.
-      -- Observe infrequent scheduled callbacks and each catalog rebuild;
-      -- the final performance comparison disables all of these wrappers.
+      -- Rare scheduled owners need every invocation to avoid sampling away a
+      -- complete warm replay. All wrappers are absent in comparison mode.
       local interval=scope=="registry-nth" and tonumber(name:match("^(%d+):"))
       local every_call=(interval and interval>=60)
-        or name=="scripts.core.station_catalog.scan_pair"
-        or name=="emergency_facility_placement_bridge_0643"
+        or (scope=="registry-nth" and name=="5:runtime_tick_broker_0600:central-pulse")
+        or (scope=="dispatcher-branch" and (
+        name=="scripts.core.station_catalog.scan_pair" or name=="scripts.core.station_catalog.step_pair"
+        or name=="scripts.core.station_catalog.publish_pending"
+        or name=="scripts.core.station_catalog.inventory_candidates"
+        or name=="scripts.core.master_infrastructure_plan_0644.service_pair"))
+        or (scope=="broker-service" and (name=="master_infrastructure_plan_0644"
+          or name=="emergency_facility_placement_bridge_0643"))
+        or (scope=="infrastructure-local" and name:sub(1,5)=="0644.")
       return function(...)
         local label=name
         if per_pair then
@@ -288,7 +397,7 @@ do
       {"","scripts.core.combat_roster_orders",{"service_pair","recommend_action"}},
       {"TechPriestsProxyAmmoHardener0649","scripts.core.proxy_ammo_hardener_0649",{"station_ammo","station_has_ammo","proxy_has_ammo","load_proxy_from_station","service_pair"}},
       {"TechPriestsMasterInfrastructurePlan0644","scripts.core.master_infrastructure_plan_0644",{"build_plan","service_pair"}},
-      {"TechPriestsStationCatalog","scripts.core.station_catalog",{"scan_pair","get_for_pair","find_known_source"}},
+      {"TechPriestsStationCatalog","scripts.core.station_catalog",{"scan_pair","step_pair","publish_pending","inventory_candidates","get_for_pair","find_known_source"}},
     }
     for _,spec in ipairs(owners) do
       local owner=rawget(_G,spec[1]) or package.loaded[spec[2]]
@@ -332,6 +441,23 @@ end
 LOCAL_PROFILE_FUNCTIONS_0644 = (
     "scan_resources", "scan_roles", "choose", "cheapest_available_science",
     "craft_feasibility", "unlocked_recipe", "station_count", "uncovered_drill_output")
+
+
+def callback_sampling_policy(enabled: bool) -> dict | None:
+    if not enabled:
+        return None
+    return {"default":"calls 1, 33, 65, ... per label",
+        "every_call":[
+            {"scope":"registry-nth","minimum_interval_ticks":60},
+            {"scope":"registry-nth","name":"5:runtime_tick_broker_0600:central-pulse"},
+            *({"scope":"dispatcher-branch","name":"scripts.core.station_catalog."+name}
+              for name in ("scan_pair","step_pair","publish_pending","inventory_candidates")),
+            {"scope":"broker-service","name":"master_infrastructure_plan_0644"},
+            {"scope":"broker-service","name":"emergency_facility_placement_bridge_0643"},
+            {"scope":"dispatcher-branch","name":"scripts.core.master_infrastructure_plan_0644.service_pair"},
+            *({"scope":"infrastructure-local","name":"0644."+name} for name in LOCAL_PROFILE_FUNCTIONS_0644)],
+        "warmup_included":True,
+        "overlap":"nested service/local scopes overlap; final step_pair includes publish_pending; do not sum these durations"}
 
 
 def instrument_infrastructure_locals(mod: pathlib.Path) -> None:
@@ -587,12 +713,20 @@ def behavior_summary(snapshots: list[dict], warmup: int) -> dict:
     return result
 
 
-def validate_observations(observed: dict, ticks: int, warmup: int) -> tuple[bool, list[dict]]:
-    snapshots = [v for v in observed["observations"] if v.get("phase") in ("start", "sample")]
+def validate_observations(observed: dict, ticks: int, warmup: int, *, graphics: bool = False) -> tuple[bool, list[dict]]:
+    phases=("start","sample","end") if graphics else ("start","sample")
+    snapshots = [v for v in observed["observations"] if v.get("phase") in phases]
     expected = sorted({0, ticks - 1, warmup, *range(600, ticks, 600)})
     complete = bool(snapshots and snapshots[0].get("phase") == "start"
         and [s.get("elapsed_ticks") for s in snapshots] == expected
         and all(s.get("tick") == snapshots[0]["tick"] + s["elapsed_ticks"] for s in snapshots))
+    if graphics:
+        complete=bool(complete and snapshots[-1].get("phase")=="end"
+            and snapshots[-1].get("observed_tick_count")==ticks
+            and all(s.get("observed_tick_count")==s["elapsed_ticks"]+1
+                    and s.get("observed_tick_sequence_valid") is True for s in snapshots)
+            and all(s.get("phase")==("start" if i==0 else "end" if i==len(snapshots)-1 else "sample")
+                    for i,s in enumerate(snapshots)))
     return complete, snapshots
 
 
@@ -627,10 +761,25 @@ def compare_reports(baseline: dict, candidate: dict) -> dict:
               "scope": "matched instrumented diagnostic" if candidate.get("callback_instrumentation")
                        else "matched observer-equipped replay; callback profiling disabled",
               "mismatches": [], "matched_fields": [], "timings": {}}
+    graphical=candidate.get("graphical_benchmark") is True
+    if graphical:
+        result["scope"]="matched graphical frame statistics; no game-tick correlation or scriptUpdate timing"
+        result["frame_metrics"]={}
     for label, report in (("baseline", baseline), ("candidate", candidate)):
         if report.get("passed") is not True:
             result["mismatches"].append(label + ":replay-did-not-pass")
-        if report.get("observed", {}).get("per_tick_complete") is not True:
+        if graphical:
+            frames=report.get("graphical_frames",{})
+            complete,_=validate_observations(report.get("observed",{"observations":[]}),
+                report.get("requested_ticks",0),report.get("warmup_ticks",0),graphics=True)
+            if not complete or report.get("four_pairs_verified") is not True:
+                result["mismatches"].append(label+":incomplete-graphical-simulation-observations")
+            if (not frames.get("csv_valid") or frames.get("measured_frame_count",0)<=0
+                    or frames.get("measured_frame_count")!=frames.get("row_count",0)-frames.get("excluded_warmup_frames",0)):
+                result["mismatches"].append(label+":incomplete-native-frame-evidence")
+            if report.get("screenshot",{}).get("png_1600x1000") is not True:
+                result["mismatches"].append(label+":missing-native-screenshot")
+        elif report.get("observed", {}).get("per_tick_complete") is not True:
             result["mismatches"].append(label + ":incomplete-per-tick-evidence")
     for field in fields:
         if field not in baseline or field not in candidate or baseline[field] != candidate[field]:
@@ -647,9 +796,29 @@ def compare_reports(baseline: dict, candidate: dict) -> dict:
         result["mismatches"].append("initial-fixture-identities-and-positions")
     else:
         result["matched_fields"].append("initial-fixture-identities-and-positions")
+    if graphical:
+        first_frames,second_frames=(r.get("graphical_frames",{}) for r in (baseline,candidate))
+        for field in ("raw_headers","excluded_warmup_frames","timing_units","unit_source"):
+            if field not in first_frames or field not in second_frames or first_frames[field]!=second_frames[field]:
+                result["mismatches"].append("graphical-frames:"+field)
+            else:
+                result["matched_fields"].append("graphical-frames:"+field)
+        result["frame_sampling"]={"baseline_rows":first_frames.get("row_count"),
+            "candidate_rows":second_frames.get("row_count"),"excluded_warmup_frames":first_frames.get("excluded_warmup_frames"),
+            "frame_count_delta":second_frames.get("row_count",0)-first_frames.get("row_count",0),
+            "timing_units":first_frames.get("timing_units"),"game_tick_correlation":"unavailable",
+            "raw_csv_sha256":{"baseline":first_frames.get("file_sha256"),"candidate":second_frames.get("file_sha256")}}
+        for name in FRAME_METRICS:
+            a,b=first_frames.get("metrics",{}).get(name),second_frames.get("metrics",{}).get(name)
+            if not a or not b or a.get("samples")!=first_frames.get("measured_frame_count") or b.get("samples")!=second_frames.get("measured_frame_count"):
+                result["mismatches"].append(name+":incomplete-measured-frame-window")
+                continue
+            result["frame_metrics"][name]={metric:{"baseline":a[metric],"candidate":b[metric],
+                "delta":b[metric]-a[metric],"reduction_percent":(a[metric]-b[metric])/a[metric]*100 if a[metric] else None}
+                for metric in ("mean","p50","p95","p99","max")}
     before = baseline.get("observed", {}).get("timings", {})
     after = candidate.get("observed", {}).get("timings", {})
-    for name in ("wholeUpdate", "scriptUpdate"):
+    for name in (() if graphical else ("wholeUpdate", "scriptUpdate")):
         a, b = before.get(name), after.get(name)
         if not a or not b or a.get("samples") != baseline.get("requested_ticks", 0) - baseline.get("warmup_ticks", 0) or b.get("samples") != candidate.get("requested_ticks", 0) - candidate.get("warmup_ticks", 0):
             result["mismatches"].append(name + ":incomplete-measured-window")
@@ -699,7 +868,8 @@ def main() -> int:
     parser.add_argument("--compare",nargs=2,type=pathlib.Path,metavar=("BASELINE","CANDIDATE"),
         help="Compare two existing profile directories or JSON receipts; performs no replay")
     parser.add_argument("--ticks",type=int,default=6000)
-    parser.add_argument("--warmup",type=int,default=600)
+    parser.add_argument("--warmup",type=int,default=600,
+        help="Tick warmup for update benchmark; graphics excludes this many frame rows independently of game ticks")
     parser.add_argument("--timeout",type=int,default=1800)
     parser.add_argument("--deploy-four",action="store_true")
     parser.add_argument("--instrument-callbacks",action="store_true")
@@ -721,14 +891,11 @@ def main() -> int:
             "reconstruction_requested":args.deploy_four,
             "callback_instrumentation":args.instrument_callbacks,
             "graphical_benchmark":args.graphics,
-            "script_scope":"whole-engine-all-installed-mods",
-            "callback_scope":("one-in-32 frequent calls; every nth-tick callback with interval at least 60 ticks, catalog scan, and emergency placement bridge; nested scopes overlap; diagnostic overhead present"
+            "script_scope":"unavailable in graphical frame CSV" if args.graphics else "whole-engine-all-installed-mods",
+            "timing_evidence_scope":"native graphical frame CSV; no game-tick correlation" if args.graphics else "native per-game-tick update benchmark",
+            "callback_scope":("all catalog scan/step/publish/inventory candidates, outer broker pulse, 0644 broker/pair/local, 0643 broker, and registry nth-tick callbacks with interval at least 60 ticks; other owners one-in-32 including warmup; nested scopes overlap; diagnostic overhead present"
                               if args.instrument_callbacks else "disabled"),
-            "callback_sampling_policy":({"default":"calls 1, 33, 65, ... per label",
-                "every_call":[{"scope":"registry-nth","minimum_interval_ticks":60},
-                    {"scope":"dispatcher-branch","name":"scripts.core.station_catalog.scan_pair"},
-                    {"scope":"broker-service","name":"emergency_facility_placement_bridge_0643"}],
-                "warmup_included":True} if args.instrument_callbacks else None),
+            "callback_sampling_policy":callback_sampling_policy(args.instrument_callbacks),
             "graphics_backend":None,"graphics_renderer":None,
             "performance_scope":"observer-equipped replay; instrumented runs do not establish diagnostics-off production performance",
             "run_provenance":{"github_run_id":os.environ.get("GITHUB_RUN_ID"),
@@ -789,39 +956,55 @@ def main() -> int:
         common=[str(args.factorio),"--config",str(config),"--mod-directory",str(args.output/"mods"),
                 "--benchmark-graphics" if args.graphics else "--benchmark",str(save),
                 "--benchmark-ticks",str(args.ticks),"--benchmark-runs","1"]
+        frame_stats=args.output/"native-frame-stats.csv"
         if args.graphics:
-            common += ["--window-size","1600x1000"]
+            common += ["--window-size","1600x1000","--output-perf-stats",str(frame_stats)]
             common += list(WINDOWS_GRAPHICS_FLAGS) if os.name=="nt" else ["--disable-audio"]
         report["benchmark_options"]={"mode":"graphics" if args.graphics else "headless",
             "ticks":args.ticks,"runs":1,"verbose":"all",
             "window_size":"1600x1000" if args.graphics else None,"audio_disabled":args.graphics,
             "windows_graphics_flags":list(WINDOWS_GRAPHICS_FLAGS) if args.graphics and os.name=="nt" else [],
+            "frame_warmup_rows":args.warmup if args.graphics else None,
+            "graphical_stats_format":"native output-perf-stats CSV" if args.graphics else None,
             "screenshot_tick":300 if args.graphics else None,
-            "screenshot_in_measured_window":args.graphics and args.warmup<=300}
+            "screenshot_in_measured_window":None if args.graphics else False,
+            "screenshot_frame_window":"unknown; no game-tick/frame correlation" if args.graphics else None}
         verbose=args.output/"benchmark-verbose.log"
         verbose_command=common+["--benchmark-verbose","all"]
         report["commands"].append(verbose_command)
         report["verbose_process"]=run(verbose_command,verbose,args.timeout,cwd=args.output,env=launch_env)
-        content=verbose.read_text(encoding="utf-8",errors="replace")
+        native_bytes=verbose.read_bytes()
+        content=native_bytes.decode("utf-8",errors="replace")
+        if not args.graphics:
+            report["native_log_captures"]=[{"file":verbose.name,**emit_native_log(native_bytes)}]
         report["observed"]=parse_log(content,args.ticks,args.warmup)
         exit_code=report["verbose_process"]["exit_code"]
         # Only the engine's previously observed verbose-output crash permits
         # a plain same-save retry. All other errors remain real failures.
-        if (exit_code!=0 and "Received SIGSEGV" in content
+        if (not args.graphics and exit_code!=0 and "Received SIGSEGV" in content
                 and report["observed"]["engine_updates"]==args.ticks
                 and "tick," in content and not report["observed"]["per_tick_complete"]):
             plain=args.output/"benchmark-plain.log"
             report["commands"].append(common)
             report["plain_process"]=run(common,plain,args.timeout,cwd=args.output,env=launch_env)
             report["observed_verbose_incomplete"]=report["observed"]
-            content=plain.read_text(encoding="utf-8",errors="replace")
+            native_bytes=plain.read_bytes()
+            report["native_log_captures"].append({"file":plain.name,**emit_native_log(native_bytes)})
+            content=native_bytes.decode("utf-8",errors="replace")
             report["observed"]=parse_log(content,args.ticks,args.warmup)
             exit_code=report["plain_process"]["exit_code"]
         active_process=report.get("plain_process",report["verbose_process"])
         report["native_session_id"]=active_process["native_session_id"]
+        if args.graphics:
+            raw_frames=frame_stats.read_bytes() if frame_stats.is_file() else b""
+            report["graphical_frames"]=parse_frame_stats(raw_frames,args.warmup)
+            if frame_stats.is_file():
+                report["frame_csv_log_capture"]=emit_frame_csv(raw_frames)
         report["active_local_hooks"]=next((v["local_hook_names"]
             for v in report["observed"]["observations"] if v.get("phase")=="instrumentation-ready"),[])
-        report["observation_complete"],snapshots=validate_observations(report["observed"],args.ticks,args.warmup)
+        report["observation_complete"],snapshots=validate_observations(report["observed"],args.ticks,args.warmup,graphics=args.graphics)
+        if args.graphics:
+            report["observed_simulation_tick_count"]=snapshots[-1].get("observed_tick_count") if snapshots else None
         report["four_pairs_verified"]=bool(report["observation_complete"]
             and all(v.get("live_pairs")==4 and len(v.get("pairs",[]))==4 and v.get("identities_stable") is True for v in snapshots))
         loaded=[v for v in report["observed"]["observations"] if v.get("phase")=="loaded"]
@@ -830,8 +1013,13 @@ def main() -> int:
         report["timing_evidence_complete"]=bool(report["observed"]["per_tick_complete"]
             and all(report["observed"]["timings"].get(name,{}).get("samples")==args.ticks-args.warmup
                     for name in ("wholeUpdate","scriptUpdate")))
+        if args.graphics:
+            report["timing_evidence_complete"]=bool(report["graphical_frames"]["csv_valid"]
+                and report["graphical_frames"]["measured_frame_count"]>0)
         report["original_save_unchanged"]=digest(args.save)==report["save_sha256"]
-        report["passed"]=bool(exit_code==0 and report["observed"]["engine_updates"]==args.ticks
+        simulation_complete=(report["observed_simulation_tick_count"]==args.ticks and report["observation_complete"]
+                             if args.graphics else report["observed"]["engine_updates"]==args.ticks)
+        report["passed"]=bool(exit_code==0 and simulation_complete
             and report["original_save_unchanged"] and report["active_mods"]
             and report["four_pairs_verified"] and report["timing_evidence_complete"]
             and (not args.instrument_callbacks
@@ -897,12 +1085,17 @@ def main() -> int:
         "four_pairs_verified":report.get("four_pairs_verified"),
         "observation_complete":report.get("observation_complete"),
         "timing_evidence_complete":report.get("timing_evidence_complete"),
+        "timing_evidence_scope":report.get("timing_evidence_scope"),
+        "observed_simulation_tick_count":report.get("observed_simulation_tick_count"),
+        "graphical_frames":report.get("graphical_frames"),
         "reconstruction_requested":args.deploy_four,"instrumented":args.instrument_callbacks,
         "engine_updates":observed.get("engine_updates"),
         "engine_mean_ms":observed.get("engine_mean_ms"),
         "engine_benchmark_ups":observed.get("engine_benchmark_ups"),
         "per_tick_complete":observed.get("per_tick_complete"),
         "timing_windows":observed.get("timing_windows",[]),
+        "slowest_ticks":observed.get("slowest_ticks",[]),
+        "slowest_warm_ticks":observed.get("slowest_warm_ticks",[]),
         "spike_evidence":observed.get("spike_evidence",{}),
         "callback_sampling_policy":report.get("callback_sampling_policy"),
         "native_session_id":report.get("native_session_id"),

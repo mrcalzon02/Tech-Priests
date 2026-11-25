@@ -18,6 +18,11 @@ Catalog.version = "0.1.579"
 Catalog.storage_key = "station_catalog_0327"
 Catalog.legacy_storage_key = "station_catalog_0326"
 Catalog.scan_period = 60
+-- Keep the radar deadlines; spend a small share of a scan on each admission.
+-- Explicit scan_pair/commands remain synchronous compatibility APIs.
+Catalog.scan_step_period = 5
+Catalog.scan_step_queries = 1
+Catalog.scan_step_entities = 128
 Catalog.scan_limit = 768
 Catalog.max_dense_scan_queries_1478 = 13
 Catalog.max_dense_scan_entities_1478 = 3072
@@ -53,7 +58,16 @@ local function ensure_root()
   root.owned_resources = root.owned_resources or {}
   root.render_tags = root.render_tags or {}
   root.stats = root.stats or {}
+  root.pending_scans = root.pending_scans or {}
+  root.partial_stations = root.partial_stations or {}
+  root.station_revisions = root.station_revisions or {}
   return root
+end
+
+local function revise_station(root, unit)
+  if unit then
+    root.station_revisions[unit] = (root.station_revisions[unit] or 0) + 1
+  end
 end
 
 local function pairs_table()
@@ -170,19 +184,30 @@ local function release_entity_ownership(root, key)
   release_render_tag(root, key)
 end
 
-local function claim_entity(root, pair, entity, kind, known_key)
+local function claim_entity(root, pair, entity, kind, known_key, deferred)
   if not (root and pair and pair.station and pair.station.valid and valid(entity)) then return false end
   local unit = station_unit(pair)
   local key = known_key or entity_key(entity)
   if not (unit and key) then return false end
   local owner = root.owned_resources[key]
+  local legacy_key
   if not owner then
     -- Compatibility for old saves: a previously claimed unitless resource
     -- should not switch owners during the identity upgrade. New claims always
     -- use the precise key, while complete scans retire old claim keys.
-    owner = root.owned_resources[legacy_entity_key(entity)]
+    legacy_key = legacy_entity_key(entity)
+    owner = root.owned_resources[legacy_key]
   end
   if owner and owner ~= unit and station_owner_valid(root, owner) then return false end
+  if deferred then
+    legacy_key = legacy_key or legacy_entity_key(entity)
+    local previous = deferred.by_key[key]
+    if previous then return previous.entity == entity end
+    local claim = { key = key, entity = entity, legacy_key = legacy_key }
+    deferred.by_key[key] = claim
+    deferred.list[#deferred.list + 1] = claim
+    return true
+  end
   OwnerIndex1496.assign(root, key, unit)
   local old = pair.catalog_owned_resource_keys_0327 or {}
   old[key] = true
@@ -214,7 +239,9 @@ end
 function Catalog.claim_built_entity(pair, entity, kind)
   if not (pair and pair.station and pair.station.valid and valid(entity)) then return false end
   local root = ensure_root()
-  return claim_entity(root, pair, entity, kind or "built")
+  local claimed = claim_entity(root, pair, entity, kind or "built")
+  if claimed then revise_station(root, station_unit(pair)) end
+  return claimed
 end
 
 function Catalog.entity_key(entity)
@@ -456,8 +483,7 @@ local function inventory_probe_ids_0578()
 end
 
 local function inventory_scan_context_1493(station)
-  -- These are runtime settings; a single scan executes synchronously, so
-  -- reading them once preserves immediate config updates between sweeps.
+  -- Incremental continuations recheck these settings before each admission.
   local universal = universal_inventory_scavenging_enabled_0741()
   return {
     universal = universal,
@@ -815,26 +841,56 @@ local function clean_reuse_allowed_0570(pair, catalog, radius)
   return true
 end
 
-local function add_entity_to_catalog(root, pair, catalog, entity, station)
+local function add_claim_sources(pair, catalog, entity, key, kind, products)
+  local fresh = not catalog.owned_keys[key]
+  catalog.owned_keys[key] = true
+  if catalog.incremental_scan and fresh then
+    catalog.owned_resource_count = catalog.owned_resource_count + 1
+  end
+  local distance = distance_sq(entity.position, pair.station.position)
+  if kind == "resource" then
+    if catalog.incremental_scan and not catalog.resources[entity.name] then
+      catalog.active_resource_count = catalog.active_resource_count + 1
+    end
+    add_source(catalog.resources, entity.name, {entity = entity,
+      count = entity.amount or 1, kind = "resource", distance_sq = distance,
+      owner_unit = station_unit(pair)})
+  end
+  for _, product in ipairs(products or {}) do
+    add_source(catalog.mineable_products, product.name, {entity = entity,
+      count = product.amount or 1,
+      kind = kind == "resource" and "resource-product" or "mineable-entity",
+      distance_sq = distance, owner_unit = station_unit(pair)})
+  end
+end
+
+local function add_entity_to_catalog(root, pair, catalog, entity, station, scan_context)
   if not valid(entity) then return end
   if entity == station or not should_catalog_entity(entity) then return end
-  add_count(catalog.entities, entity.name or entity.type, 1)
+  local name = entity.name or entity.type
+  if catalog.incremental_scan and not catalog.entities[name] then
+    catalog.entity_count = catalog.entity_count + 1
+  end
+  add_count(catalog.entities, name, 1)
+  local deferred = scan_context and scan_context.deferred_claims
   if entity.type == "resource" then
     local key = entity_key(entity)
-    if claim_entity(root, pair, entity, "resource", key) then
-      catalog.owned_keys[key] = true
-      add_source(catalog.resources, entity.name, { entity = entity, count = entity.amount or 1, kind = "resource", distance_sq = distance_sq(entity.position, station.position), owner_unit = station_unit(pair) })
-      for _, product in ipairs(mineable_products(entity)) do
-        add_source(catalog.mineable_products, product.name, { entity = entity, count = product.amount or 1, kind = "resource-product", distance_sq = distance_sq(entity.position, station.position), owner_unit = station_unit(pair) })
+    if claim_entity(root, pair, entity, "resource", key, deferred) then
+      local products = mineable_products(entity)
+      if deferred then
+        deferred.by_key[key].kind, deferred.by_key[key].products = "resource", products
+      else
+        add_claim_sources(pair, catalog, entity, key, "resource", products)
       end
     end
   else
     local mineable, products = is_mineable_candidate(entity)
     local key = mineable and entity_key(entity) or nil
-    if mineable and claim_entity(root, pair, entity, "mineable", key) then
-      catalog.owned_keys[key] = true
-      for _, product in ipairs(products) do
-        add_source(catalog.mineable_products, product.name, { entity = entity, count = product.amount or 1, kind = "mineable-entity", distance_sq = distance_sq(entity.position, station.position), owner_unit = station_unit(pair) })
+    if mineable and claim_entity(root, pair, entity, "mineable", key, deferred) then
+      if deferred then
+        deferred.by_key[key].kind, deferred.by_key[key].products = "mineable", products
+      else
+        add_claim_sources(pair, catalog, entity, key, "mineable", products)
       end
     end
   end
@@ -843,7 +899,9 @@ end
 local function release_absent_owned_keys(root, pair, new_keys)
   local old = pair.catalog_owned_resource_keys_0327 or {}
   for key in pairs(old) do
-    if not new_keys[key] then release_entity_ownership(root, key) end
+    if not new_keys[key] and root.owned_resources[key] == station_unit(pair) then
+      release_entity_ownership(root, key)
+    end
   end
   pair.catalog_owned_resource_keys_0327 = new_keys
 end
@@ -853,6 +911,9 @@ function Catalog.cleanup_station(unit, reason)
   if not unit then return end
   root.stations[unit] = nil
   root.next_scan[unit] = nil
+  root.pending_scans[unit] = nil
+  root.partial_stations[unit] = nil
+  root.station_revisions[unit] = nil
   -- O(claims owned by this station), rather than O(all claimed resources).
   -- The reverse index is rebuilt once after load from canonical saved claims.
   local removed = OwnerIndex1496.release_station(root, unit, function(key)
@@ -867,6 +928,11 @@ end
 
 function Catalog.prune_invalid()
   local root = ensure_root()
+  for unit in pairs(root.pending_scans) do
+    if not station_owner_valid(root, unit) then
+      Catalog.cleanup_station(unit, "invalid-pending-station")
+    end
+  end
   for unit in pairs(root.stations or {}) do
     if not station_owner_valid(root, unit) then
       Catalog.cleanup_station(unit, "invalid-station")
@@ -891,6 +957,10 @@ function Catalog.scan_pair(pair)
   local unit = station_unit(pair)
   if not unit then return nil end
   local root = ensure_root()
+  -- An explicitly requested synchronous result supersedes older continuations.
+  root.pending_scans[unit] = nil
+  root.partial_stations[unit] = nil
+  revise_station(root, unit)
   local radius = radius_for(pair)
   local existing = root.stations[unit]
   if clean_reuse_allowed_0570(pair, existing, radius) then
@@ -1046,39 +1116,396 @@ function Catalog.scan_pair(pair)
   return catalog
 end
 
-function Catalog.scan_due(max_count)
-  local root = ensure_root()
-  Catalog.prune_invalid()
-  local limit = math.max(0, math.floor(tonumber(max_count) or 4))
-  if limit == 0 then return end
-  local tick = now()
-  local due_pairs = {}
-  for _, pair in pairs(pairs_table()) do
-    if pair and pair.station and pair.station.valid then
-      local unit = station_unit(pair)
-      local due = unit and root.next_scan[unit] or nil
-      if unit and not due then
-        root.next_scan[unit] = tick + ((unit or 1) % 90) + 30
-      elseif unit and tick >= due then
-        due_pairs[#due_pairs + 1] = { unit = unit, pair = pair }
-      end
+local function in_pending_area(pending, entity, station)
+  if not valid(entity) or entity.surface ~= station.surface then return false end
+  local position, center = entity.position, pending.catalog.station_position_1484
+  local radius = pending.catalog.radius
+  return position and center and math.abs(position.x - center.x) <= radius
+    and math.abs(position.y - center.y) <= radius
+end
+
+local function pending_complete(pending)
+  return pending.scan_info and pending.scan_info.complete == true
+    and not pending.invalidated and not pending.invalid_entity
+    and not pending.ownership_conflict
+end
+
+local function reset_pending_claims(pending)
+  local catalog = pending.catalog
+  catalog.resources, catalog.mineable_products, catalog.owned_keys = {}, {}, {}
+  catalog.active_resource_count, catalog.owned_resource_count = 0, 0
+end
+
+local function pending_changed(root, pair, pending)
+  local marker = pair.station_area_dirty_0634
+  local revision = root.station_revisions[pending.unit] or 0
+  local revision_changed = revision ~= pending.station_revision
+  if marker ~= pending.dirty_marker or revision ~= pending.station_revision then
+    -- Keep useful observed additions, but this traversal can no longer prove
+    -- absence or clear an event which arrived after it began. Table identity
+    -- also detects two invalidations occurring in the same game tick.
+    pending.invalidated = true
+    pending.dirty_marker, pending.station_revision = marker, revision
+    if pending.phase == "release" or pending.phase == "publish"
+        or (pending.phase == "validate" and revision_changed) then
+      pending.phase, pending.validation_cursor = "validate", 1
+      reset_pending_claims(pending)
     end
   end
-  if #due_pairs == 0 then return end
-  -- Nearby construction can dirty the first stations again before every
-  -- pulse. Keep the existing scanner and budget, but resume after its last
-  -- station so continuous events cannot starve retained dirty snapshots.
-  table.sort(due_pairs, function(a, b) return a.unit < b.unit end)
-  local cursor = tonumber(root.scan_cursor_0634) or 0
-  local first = 1
-  for index, entry in ipairs(due_pairs) do
-    if entry.unit > cursor then first = index; break end
+end
+
+local function begin_pending(root, pair, unit, radius)
+  local catalog = empty_catalog(pair, radius)
+  catalog.incremental_scan = true
+  catalog.scan_source_1478 = "incremental-direct"
+  catalog.scan_started_tick = now()
+  -- Inventory stock has its own live-question/UI authority. Physical surveys
+  -- only stage resource claims; they never call inventory get_contents.
+  local context = {deferred_claims = {list = {}, by_key = {}}}
+  local position = catalog.station_position_1484
+  local area = {{position.x - radius, position.y - radius},
+    {position.x + radius, position.y + radius}}
+  local pending = {
+    schema = 1, unit = unit, catalog = catalog, context = context,
+    dirty_marker = pair.station_area_dirty_0634,
+    station_revision = root.station_revisions[unit] or 0,
+    started_tick = now(), deadline = now() + sweep_ticks_for(pair),
+    phase = "scan", processed = 0,
+    dense = DenseScan1478.begin(area, {
+      limit = Catalog.scan_limit,
+      max_queries = Catalog.max_dense_scan_queries_1478,
+      max_entities = Catalog.max_dense_scan_entities_1478,
+      exclude_types = Catalog.noise_prefilter_types_1482,
+    }),
+  }
+  root.pending_scans[unit] = pending
+  root.stats.incremental_started = (root.stats.incremental_started or 0) + 1
+  return pending
+end
+
+local function note_scan_metadata(root, pending)
+  local cat, info = pending.catalog, pending.scan_info or {}
+  cat.scan_queries_1478 = info.queries or 0
+  cat.scan_entities_1478 = pending.dense and #pending.dense.out or 0
+  cat.scan_identity_collisions_1481 = info.identity_collisions or 0
+  cat.scan_filtered_queries_1482 = info.filtered_queries or 0
+  cat.scan_prefilter_fallbacks_1482 = info.prefilter_fallbacks or 0
+  cat.scan_incomplete_1478 = not pending_complete(pending)
+  cat.scan_limit_reached_1477 = cat.scan_incomplete_1478
+  cat.scan_reason_1478 = pending.invalidated and "invalidated-during-scan"
+    or pending.ownership_conflict and "ownership-changed-during-scan"
+    or pending.invalid_entity and "entity-changed-during-scan"
+    or info.reason or "unknown"
+  cat.scan_completed_tick = now()
+  cat.dirty_0634 = cat.scan_incomplete_1478 or nil
+  for field, amount in pairs({
+    scan_queries_1478 = cat.scan_queries_1478,
+    scan_identity_collisions_1481 = cat.scan_identity_collisions_1481,
+    scan_prefilter_filtered_queries_1482 = cat.scan_filtered_queries_1482,
+    scan_prefilter_fallbacks_1482 = cat.scan_prefilter_fallbacks_1482,
+  }) do root.stats[field] = (root.stats[field] or 0) + amount end
+  if cat.scan_incomplete_1478 then
+    root.stats.scan_limit_reached_1477 = (root.stats.scan_limit_reached_1477 or 0) + 1
+    root.stats.dense_scans_incomplete_1478 = (root.stats.dense_scans_incomplete_1478 or 0) + 1
+  elseif cat.scan_queries_1478 > 1 then
+    root.stats.dense_scans_completed_1478 = (root.stats.dense_scans_completed_1478 or 0) + 1
   end
-  for offset = 0, math.min(limit, #due_pairs) - 1 do
-    local entry = due_pairs[((first + offset - 1) % #due_pairs) + 1]
-    Catalog.scan_pair(entry.pair)
-    root.scan_cursor_0634 = entry.unit
+end
+
+-- Traceable final transaction. Entity validity/ownership and legacy tag cleanup
+-- are checked in bounded preceding slices. The commit itself only changes Lua
+-- tables through the existing reverse-index owner; it never re-scans the world.
+-- Its maximum new-key work is the existing dense result cap (3,072 by default).
+function Catalog.publish_pending(pair, pending)
+  local root = ensure_root()
+  local unit = station_unit(pair)
+  if not (pending and unit and root.pending_scans[unit] == pending
+      and CatalogReuseGuard1484.matches(pair, pending.catalog, radius_for(pair))) then
+    return false, "superseded-domain"
   end
+  pending_changed(root, pair, pending)
+  if pending.phase ~= "publish" then return false, "needs-validation" end
+  for _, claim in ipairs(pending.context.deferred_claims.list) do
+    if claim.accepted and (root.owned_resources[claim.key] ~= claim.expected_owner
+        or (claim.legacy_key and root.owned_resources[claim.legacy_key]
+          ~= claim.expected_legacy_owner)) then
+      -- Another station may have published between our validation slices.
+      -- Revalidate the bounded claim list, not the discovery traversal.
+      pending.phase, pending.validation_cursor = "validate", 1
+      reset_pending_claims(pending)
+      return false, "ownership-changed"
+    end
+  end
+  local complete = pending_complete(pending)
+  local kept = complete and pending.catalog.owned_keys
+    or (pair.catalog_owned_resource_keys_0327 or {})
+  for _, claim in ipairs(pending.context.deferred_claims.list) do
+    if claim.accepted then
+      OwnerIndex1496.assign(root, claim.key, unit)
+      kept[claim.key] = true
+    end
+  end
+  if complete then
+    for _, key in ipairs(pending.release_keys or {}) do
+      if root.owned_resources[key] == unit then OwnerIndex1496.release(root, key) end
+    end
+  end
+  pair.catalog_owned_resource_keys_0327 = kept
+  note_scan_metadata(root, pending)
+  local catalog = pending.catalog
+  local previous = root.stations[unit]
+  catalog.storage_items = previous and previous.storage_items or {}
+  catalog.inventory_tick_1497 = previous and previous.inventory_tick_1497 or nil
+  catalog.stored_item_kinds = previous and previous.stored_item_kinds or 0
+  catalog.wired_sources_skipped_1495 = previous and previous.wired_sources_skipped_1495 or 0
+  if complete then
+    root.stations[unit], root.partial_stations[unit] = catalog, nil
+    pair.known_resources_0326, pair.known_resources_0327 = catalog, catalog
+    root.stats.incremental_completed = (root.stats.incremental_completed or 0) + 1
+  else
+    -- A cap, failed query or later event cannot establish absence. Retain the
+    -- last snapshot and claims, while exposing safe additions through the
+    -- existing known-source lookup. Cold stations can still use a flagged
+    -- partial catalog until a complete sweep is possible.
+    root.partial_stations[unit] = catalog
+    if not root.stations[unit] then
+      root.stations[unit] = catalog
+      pair.known_resources_0326, pair.known_resources_0327 = catalog, catalog
+    else
+      root.stations[unit].dirty_0634 = true
+    end
+    root.stats.incremental_partial = (root.stats.incremental_partial or 0) + 1
+  end
+  root.next_scan[unit] = math.max(now() + Catalog.scan_step_period, pending.deadline)
+  if pending.invalidated then
+    root.next_scan[unit] = math.min(root.next_scan[unit], now() + Catalog.scan_period)
+  end
+  root.pending_scans[unit] = nil
+  root.stats.scans = (root.stats.scans or 0) + 1
+  root.stats.last_scan_tick = now()
+  root.stats.last_incremental_duration_ticks = now() - pending.started_tick
+  root.stats.max_incremental_duration_ticks = math.max(
+    root.stats.max_incremental_duration_ticks or 0, now() - pending.started_tick)
+  return true, complete and "complete" or "partial"
+end
+
+local function advance_pending(root, pair, pending, budget, used)
+  local station, catalog = pair.station, pending.catalog
+  local transitions = 0
+  while transitions < 8 do
+    transitions = transitions + 1
+    local remaining = budget.entities - used.entities
+    if pending.phase == "scan" then
+      if remaining <= 0 then break end
+      local before = #pending.dense.out
+      local done, out, info, spent = DenseScan1478.step(pending.dense, station.surface,
+        {queries = budget.queries - used.queries, entities = remaining}, entity_key)
+      used.queries = used.queries + (spent.queries or 0)
+      used.entities = used.entities + (spent.entities or 0)
+      -- Each newly discovered entity is classified in the same bounded slice.
+      -- Duplicate/invalid query results still consume the traversal budget.
+      for index = before + 1, #(out or {}) do
+        local entity = out[index]
+        if in_pending_area(pending, entity, station) then
+          add_entity_to_catalog(root, pair, catalog, entity, station, pending.context)
+        else pending.invalid_entity = true end
+        pending.processed = pending.processed + 1
+      end
+      pending.scan_info = info
+      if not done then break end
+      pending.phase = "subordinate-seed"
+    elseif pending.phase == "subordinate-seed" then
+      pending.subordinate_ids = {}
+      for id in pairs(pairs_table()) do pending.subordinate_ids[#pending.subordinate_ids + 1] = id end
+      table.sort(pending.subordinate_ids)
+      pending.subordinate_cursor, pending.phase = 1, "subordinates"
+    elseif pending.phase == "subordinates" then
+      if remaining <= 0 then break end
+      local ids = pending.subordinate_ids
+      for _ = 1, remaining do
+        local id = ids[pending.subordinate_cursor]
+        if not id then break end
+        pending.subordinate_cursor = pending.subordinate_cursor + 1
+        used.entities = used.entities + 1
+        local other = pairs_table()[id]
+        if id ~= pending.unit and other and valid(other.station)
+            and other.station.force == station.force and other.station.surface == station.surface then
+          local distance = distance_sq(other.station.position, station.position)
+          if pair_rank(other) < catalog.rank and distance <= (catalog.radius * 3)^2 then
+            catalog.subordinate_stations[#catalog.subordinate_stations + 1] = {
+              unit = station_unit(other), name = other.station.name,
+              backer_name = other.station.backer_name, rank = pair_rank(other),
+              distance_sq = distance, mode = other.mode,
+              emergency = other.independent_emergency_operation_0184 ~= nil,
+            }
+          end
+        end
+      end
+      if pending.subordinate_cursor <= #ids then break end
+      table.sort(catalog.subordinate_stations, function(a, b)
+        if a.rank ~= b.rank then return a.rank > b.rank end
+        return a.distance_sq < b.distance_sq
+      end)
+      pending.subordinate_ids = nil
+      pending.validation_cursor, pending.phase = 1, "validate"
+      reset_pending_claims(pending)
+    elseif pending.phase == "validate" then
+      if remaining <= 0 then break end
+      local claims = pending.context.deferred_claims.list
+      for _ = 1, remaining do
+        local claim = claims[pending.validation_cursor]
+        if not claim then break end
+        pending.validation_cursor = pending.validation_cursor + 1
+        used.entities = used.entities + 1
+        claim.expected_owner = root.owned_resources[claim.key]
+        claim.expected_legacy_owner = claim.legacy_key and root.owned_resources[claim.legacy_key]
+        local owner = claim.expected_owner or claim.expected_legacy_owner
+        local eligible = in_pending_area(pending, claim.entity, station)
+        local conflict = owner and owner ~= pending.unit and station_owner_valid(root, owner)
+        claim.accepted = eligible and not conflict
+        if claim.accepted then
+          add_claim_sources(pair, catalog, claim.entity, claim.key, claim.kind, claim.products)
+          release_render_tag(root, claim.key)
+        else
+          if not eligible then pending.invalid_entity = true end
+          if conflict then pending.ownership_conflict = true end
+        end
+      end
+      if pending.validation_cursor <= #claims then break end
+      pending.old_keys, pending.release_keys = {}, {}
+      if pending_complete(pending) then
+        for key in pairs(pair.catalog_owned_resource_keys_0327 or {}) do
+          pending.old_keys[#pending.old_keys + 1] = key
+        end
+        table.sort(pending.old_keys)
+      end
+      pending.release_cursor, pending.phase = 1, "release"
+    elseif pending.phase == "release" then
+      if remaining <= 0 then break end
+      for _ = 1, remaining do
+        local key = pending.old_keys[pending.release_cursor]
+        if not key then break end
+        pending.release_cursor = pending.release_cursor + 1
+        used.entities = used.entities + 1
+        if not catalog.owned_keys[key] and root.owned_resources[key] == pending.unit then
+          pending.release_keys[#pending.release_keys + 1] = key
+          release_render_tag(root, key)
+        end
+      end
+      if pending.release_cursor <= #pending.old_keys then break end
+      pending.old_keys, pending.phase = nil, "publish"
+    elseif pending.phase == "publish" then
+      local published, reason = Catalog.publish_pending(pair, pending)
+      used.published, used.reason = published, reason
+      break
+    else
+      error("unknown catalog continuation phase: " .. tostring(pending.phase))
+    end
+  end
+  used.phase = pending.phase
+end
+
+-- One measurable admission. Saved continuation state contains plain tables,
+-- numeric cursors and supported LuaEntity references; no closures/coroutines.
+function Catalog.step_pair(pair, budgets)
+  local used = {queries = 0, entities = 0, published = false}
+  if not (pair and valid(pair.station)) then return used end
+  local root, unit = ensure_root(), station_unit(pair)
+  if not unit then return used end
+  local radius, pending = radius_for(pair), root.pending_scans[unit]
+  budgets = budgets or {}
+  local budget = {
+    queries = math.max(0, math.floor(tonumber(budgets.queries) or Catalog.scan_step_queries)),
+    entities = math.max(0, math.floor(tonumber(budgets.entities) or Catalog.scan_step_entities)),
+  }
+  if pending and (pending.schema ~= 1
+      or not CatalogReuseGuard1484.matches(pair, pending.catalog, radius)) then
+    root.pending_scans[unit], root.partial_stations[unit] = nil, nil
+    root.next_scan[unit] = now() + Catalog.scan_step_period
+    if root.stations[unit] then root.stations[unit].dirty_0634 = true end
+    root.stats.incremental_abandoned = (root.stats.incremental_abandoned or 0) + 1
+    used.reason = "domain-or-settings-changed"
+    return used
+  end
+  if not pending then
+    local existing = root.stations[unit]
+    if clean_reuse_allowed_0570(pair, existing, radius) then
+      root.next_scan[unit] = now() + math.min(sweep_ticks_for(pair),
+        Catalog.clean_reuse_ticks_0570) + (unit % 60)
+      root.stats.clean_reuse_skips_0570 = (root.stats.clean_reuse_skips_0570 or 0) + 1
+      pair.known_resources_0326, pair.known_resources_0327 = existing, existing
+      used.reason = "clean-reuse"
+      return used
+    end
+    if budget.queries == 0 or budget.entities == 0 then return used end
+    pending = begin_pending(root, pair, unit, radius)
+  end
+  pending_changed(root, pair, pending)
+  local ok, err = pcall(advance_pending, root, pair, pending, budget, used)
+  root.stats.incremental_steps = (root.stats.incremental_steps or 0) + 1
+  root.stats.incremental_queries = (root.stats.incremental_queries or 0) + used.queries
+  root.stats.incremental_inspected = (root.stats.incremental_inspected or 0) + used.entities
+  root.stats.max_incremental_step_entities = math.max(
+    root.stats.max_incremental_step_entities or 0, used.entities)
+  root.stats.max_incremental_step_queries = math.max(
+    root.stats.max_incremental_step_queries or 0, used.queries)
+  if not ok then
+    root.pending_scans[unit] = nil
+    root.next_scan[unit] = now() + Catalog.scan_period
+    root.stats.incremental_errors = (root.stats.incremental_errors or 0) + 1
+    root.stats.last_incremental_error = tostring(err)
+    error(err)
+  end
+  return used
+end
+
+function Catalog.scan_due(max_count)
+  local root, tick = ensure_root(), now()
+  local limit = math.max(0, math.floor(tonumber(max_count) or 2))
+  if limit == 0 then return end
+  if tick >= (root.roster_due or 0) then
+    Catalog.prune_invalid()
+    local ids, members = {}, {}
+    for _, pair in pairs(pairs_table()) do
+      if pair and valid(pair.station) then
+        local unit = station_unit(pair)
+        if unit then
+          ids[#ids + 1] = unit
+          members[unit] = true
+          if root.next_scan[unit] == nil then
+            root.next_scan[unit] = tick + (unit % 90) + 30
+          end
+        end
+      end
+    end
+    table.sort(ids)
+    root.scan_roster, root.scan_roster_members = ids, members
+    root.roster_due = tick + Catalog.scan_period
+  end
+  local ids = root.scan_roster or {}
+  if #ids == 0 then return end
+  local cursor, first = tonumber(root.scan_cursor_0634) or 0, 1
+  for index, unit in ipairs(ids) do if unit > cursor then first = index; break end end
+  local left = {queries = Catalog.scan_step_queries, entities = Catalog.scan_step_entities}
+  local admitted = 0
+  for offset = 0, #ids - 1 do
+    local unit = ids[((first + offset - 1) % #ids) + 1]
+    local pair = pairs_table()[unit]
+    if pair and valid(pair.station) and (root.pending_scans[unit]
+        or tick >= (root.next_scan[unit] or math.huge)) then
+      local used = Catalog.step_pair(pair, left)
+      left.queries, left.entities = left.queries - used.queries, left.entities - used.entities
+      if used.queries == 0 and used.entities == 0 and not used.reason and not used.published then
+        -- No query allowance remains for this station. Leave the cursor at
+        -- the previous admission so it gets the first allowance next pulse.
+        break
+      end
+      root.scan_cursor_0634 = unit
+      admitted = admitted + 1
+      if admitted >= limit or left.entities <= 0 then break end
+    end
+  end
+  return admitted
 end
 
 function Catalog.scan_some(max_count)
@@ -1097,7 +1524,18 @@ function Catalog.get_for_pair(pair)
   local unit = station_unit(pair)
   local root = ensure_root()
   local cat = unit and root.stations[unit] or nil
-  if not cat then cat = Catalog.scan_pair(pair) end
+  if cat and not CatalogReuseGuard1484.matches(pair, cat, radius_for(pair)) then cat = nil end
+  if not cat then
+    local partial = unit and root.partial_stations[unit] or nil
+    if partial and CatalogReuseGuard1484.matches(pair, partial, radius_for(pair)) then cat = partial end
+  end
+  if not cat and unit and not root.pending_scans[unit] then
+    -- Reading an empty ledger must not bypass the scheduled work budget.
+    root.next_scan[unit] = 0
+    if not (root.scan_roster_members and root.scan_roster_members[unit]) then
+      root.roster_due = 0
+    end
+  end
   return cat
 end
 
@@ -1138,18 +1576,48 @@ function Catalog.find_known_source(pair, item_name)
   if not item_name then return nil end
   local stored = Catalog.find_inventory_source(pair, item_name)
   if stored then return stored end
-  local root = ensure_root()
-  local cat = root.stations[station_unit(pair)]
-  if not cat then return nil end
-  local res = cat.resources and cat.resources[item_name]
-  if res and res.entity and res.entity.valid then
-    return { kind = "known-resource-0327", entity = res.entity, item_name = item_name, output_item = item_name, count = 1, value = 1100, station_distance_sq = res.distance_sq or 0 }
+  local cat = Catalog.get_for_pair(pair)
+  if not (pair and valid(pair.station)) then return nil end
+  local root, unit = ensure_root(), station_unit(pair)
+  local partial = unit and root.partial_stations[unit] or nil
+  if partial and not CatalogReuseGuard1484.matches(pair, partial, radius_for(pair)) then partial = nil end
+  local function from_catalog(known)
+    if not known then return nil end
+    local function live_record(record, require_owner)
+      if not record then return nil end
+      local function eligible(source)
+        local entity = source and source.entity
+        if not (valid(entity) and entity.surface == pair.station.surface) then return false end
+        local center, position = pair.station.position, entity.position
+        if not (position and math.abs(position.x - center.x) <= known.radius
+            and math.abs(position.y - center.y) <= known.radius) then return false end
+        if require_owner then
+          local key = entity_key(entity)
+          local owner = key and root.owned_resources[key]
+          if owner == nil then owner = root.owned_resources[legacy_entity_key(entity)] end
+          if owner ~= unit then return false end
+        end
+        return true
+      end
+      if eligible(record) then return record end
+      for _, instance in ipairs(record.instances or {}) do
+        if eligible(instance) then return instance end
+      end
+    end
+    local resource = live_record(known.resources and known.resources[item_name], true)
+    if resource then
+      return {kind = "known-resource-0327", entity = resource.entity,
+        item_name = item_name, output_item = item_name, count = 1, value = 1100,
+        station_distance_sq = resource.distance_sq or 0}
+    end
+    local mined = live_record(known.mineable_products and known.mineable_products[item_name], true)
+    if mined then
+      return {kind = "known-mineable-product-0327", entity = mined.entity,
+        item_name = item_name, output_item = item_name, count = 1, value = 900,
+        station_distance_sq = mined.distance_sq or 0}
+    end
   end
-  local mined = cat.mineable_products and cat.mineable_products[item_name]
-  if mined and mined.entity and mined.entity.valid then
-    return { kind = "known-mineable-product-0327", entity = mined.entity, item_name = item_name, output_item = item_name, count = 1, value = 900, station_distance_sq = mined.distance_sq or 0 }
-  end
-  return nil
+  return from_catalog(cat) or (partial ~= cat and from_catalog(partial) or nil)
 end
 
 function Catalog.note_radar_detection(pair, entity, info)
@@ -1157,9 +1625,17 @@ function Catalog.note_radar_detection(pair, entity, info)
   if not should_catalog_entity(entity) then return false end
   if not (info and (info.kind == "resource" or info.kind == "mineable" or entity.type == "resource" or entity.type == "tree" or entity.type == "simple-entity")) then return false end
   local root = ensure_root()
-  local cat = Catalog.get_for_pair(pair) or empty_catalog(pair, radius_for(pair))
+  local cat = Catalog.get_for_pair(pair)
+  if not cat then
+    cat = empty_catalog(pair, radius_for(pair))
+    cat.scan_incomplete_1478, cat.scan_limit_reached_1477, cat.dirty_0634 = true, true, true
+    cat.scan_reason_1478 = "radar-observation-before-sweep"
+  end
   add_entity_to_catalog(root, pair, cat, entity, pair.station)
-  root.stations[station_unit(pair)] = cat
+  local unit = station_unit(pair)
+  root.stations[unit] = cat
+  pair.known_resources_0326, pair.known_resources_0327 = cat, cat
+  revise_station(root, unit)
   root.stats.radar_detections = (root.stats.radar_detections or 0) + 1
   return true
 end
@@ -1302,6 +1778,14 @@ function Catalog.handle_destroyed_entity(entity, reason)
   local unit = entity.unit_number
   if is_station_entity(entity) and unit then Catalog.cleanup_station(unit, reason or "station-destroyed") end
   local root = ensure_root()
+  for station_id, pending in pairs(root.pending_scans) do
+    local pair = pairs_table()[station_id]
+    if pair and valid(pair.station) and in_pending_area(pending, entity, pair.station) then
+      -- Even an unclaimed entity can invalidate a previously checked staged
+      -- reference. Do not let a later publication resurrect its claim.
+      revise_station(root, station_id)
+    end
+  end
   local key = entity_key(entity)
   if key and root.owned_resources[key] then release_entity_ownership(root, key) end
   local legacy_key = legacy_entity_key(entity)
@@ -1383,7 +1867,7 @@ function Catalog.install()
   if events.on_robot_mined_entity then destroy_events[#destroy_events + 1] = events.on_robot_mined_entity end
   if events.script_raised_destroy then destroy_events[#destroy_events + 1] = events.script_raised_destroy end
   if #destroy_events == 0 then return false end
-  local scan = registry.on_nth_tick(Catalog.scan_period, function()
+  local scan = registry.on_nth_tick(Catalog.scan_step_period, function()
     Catalog.scan_due(2)
   end, {
     owner = "station_catalog_0327",

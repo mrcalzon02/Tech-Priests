@@ -72,12 +72,16 @@ for i,pair in ipairs(roster)do
 end
 assert(queries==4,'a catalog reader bypassed the existing scan budget')
 
-game.tick=60
-Catalog.scan_due(2)
-assert(queries==6,'existing scanner did not respect its two-station budget')
-game.tick=120
-Catalog.scan_due(2)
-assert(queries==8,'remaining dirty stations were not serviced next pulse')
+local function pulses(start_tick, count)
+  for index=1,count do
+    game.tick=start_tick+(index-1)*Catalog.scan_step_period
+    local before=queries
+    Catalog.scan_due(2)
+    assert(queries-before<=1,'incremental admission exceeded one native query')
+  end
+end
+pulses(60,4)
+assert(queries==8,'four small dirty stations were not refreshed fairly')
 for _,pair in ipairs(roster)do
   local fresh=Catalog.get_for_pair(pair)
   assert(not fresh.dirty_0634 and fresh.entities['wooden-chest'].count==2,
@@ -118,8 +122,7 @@ for _,pair in ipairs(roster)do
     'retained snapshot exposed a destroyed physical source')
 end
 assert(queries==8,'removal event or source lookup performed an eager area scan')
-game.tick=180;Catalog.scan_due(2)
-game.tick=240;Catalog.scan_due(2)
+pulses(180,4)
 for _,pair in ipairs(roster)do
   assert(Catalog.get_for_pair(pair).entities['wooden-chest']==nil,
     'bounded refresh did not remove destroyed entities')
@@ -127,17 +130,17 @@ end
 
 -- Continuous nearby construction dirties all four stations before every
 -- pulse. Restarting the pair iteration would permanently favor the first
--- two stations; retained snapshots must still receive fair refreshes.
+-- station; retained snapshots must still receive fair refreshes.
 local refreshes={}
-for pulse=1,4 do
-  game.tick=240+pulse*60
+for pulse=1,8 do
+  game.tick=240+pulse*Catalog.scan_step_period
   local added=chest(20+pulse)
   entities[#entities+1]=added
   local before=queries
   emit('on_built_entity',{created_entity=added})
   assert(queries==before,'continuous construction performed eager scanning')
   Catalog.scan_due(2)
-  assert(queries==before+2,'continuous construction exceeded scan budget')
+  assert(queries==before+1,'continuous construction exceeded scan budget')
   local updated=0
   for _,pair in ipairs(roster)do
     if Catalog.get_for_pair(pair).tick==game.tick then
@@ -146,7 +149,7 @@ for pulse=1,4 do
       updated=updated+1
     end
   end
-  assert(updated==2,'scanner did not refresh exactly two dirty stations')
+  assert(updated==1,'scanner did not complete one bounded small-area refresh')
 end
 for _,pair in ipairs(roster)do
   assert(refreshes[pair.station.unit_number]==2,

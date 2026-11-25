@@ -2,23 +2,23 @@
   "counts": {
     "broker_services": 55,
     "commands": 141,
-    "dependencies": 693,
+    "dependencies": 695,
     "event_routes": 304,
-    "functions": 11671,
+    "functions": 11695,
     "install_calls": 213,
-    "module_string_references": 984,
+    "module_string_references": 986,
     "module_tables": 56,
     "modules": 381,
-    "named_functions": 8476,
+    "named_functions": 8498,
     "potential_literal_reachable_modules": 306,
-    "scans": 213,
-    "state_writers": 4520,
+    "scans": 212,
+    "state_writers": 4526,
     "storage_roots": 1873,
     "unresolved_loads": 9,
-    "wrapper_candidates": 783
+    "wrapper_candidates": 785
   },
   "evidence_class": "static lexical inventory; no runtime or performance acceptance",
-  "generator_sha256": "3fca08fc6271b4b4b1c7418c400cbe72e66cef4afc010508777498440f82f7ef",
+  "generator_sha256": "9f728ed64e14a0feaf61787dbddeb0cd7ebfb029c3b2f0024c5af43678bf41c4",
   "limitations": [
     "Literal require reachability includes calls in unexecuted branches/functions; it is potential, not installed.",
     "Dynamic require, globals, aliases, generated loops and function wrappers cannot be fully resolved lexically.",
@@ -16805,28 +16805,63 @@
       "functions": [
         {
           "kind": "declaration",
-          "line": 6,
+          "line": 7,
           "local": true,
           "name": "bounds",
           "parameters": "area"
         },
         {
           "kind": "declaration",
-          "line": 15,
+          "line": 16,
           "local": true,
           "name": "identity",
           "parameters": "entity , key_of"
         },
         {
           "kind": "declaration",
-          "line": 26,
+          "line": 27,
+          "local": false,
+          "name": "M.begin",
+          "parameters": "area , opts"
+        },
+        {
+          "kind": "declaration",
+          "line": 61,
+          "local": true,
+          "name": "result",
+          "parameters": "state , usage"
+        },
+        {
+          "kind": "declaration",
+          "line": 68,
+          "local": true,
+          "name": "finish",
+          "parameters": "state , check_pending"
+        },
+        {
+          "kind": "declaration",
+          "line": 76,
+          "local": true,
+          "name": "finish_buffer",
+          "parameters": "state"
+        },
+        {
+          "kind": "declaration",
+          "line": 102,
+          "local": false,
+          "name": "M.step",
+          "parameters": "state , surface , budget , key_of"
+        },
+        {
+          "kind": "declaration",
+          "line": 201,
           "local": false,
           "name": "M.scan",
           "parameters": "surface , area , opts"
         }
       ],
       "install_calls": [],
-      "lines": 146,
+      "lines": 211,
       "module": "scripts.core.catalog_dense_scan_1478",
       "module_string_references": [],
       "module_tables": [],
@@ -16838,23 +16873,13 @@
             "query"
           ],
           "callee": "surface.find_entities_filtered",
-          "line": 64,
-          "protected_call": true,
-          "runtime_cost": "unmeasured",
-          "static_risk_hint": "global-or-unbounded"
-        },
-        {
-          "arguments": [
-            "query"
-          ],
-          "callee": "surface.find_entities_filtered",
-          "line": 78,
+          "line": 176,
           "protected_call": true,
           "runtime_cost": "unmeasured",
           "static_risk_hint": "global-or-unbounded"
         }
       ],
-      "sha256": "2f5e651316b13dbff67b552dc6b7b7d67e9e5aa20aefedcd930f1c355d60463c",
+      "sha256": "75719336f5b3bdcd801d757ba6c930afcbb2ae0fcdc0bff9820fe99a5e3e548f",
       "state_writers": [],
       "storage_roots": [],
       "unresolved_loads": [],
@@ -96579,7 +96604,7 @@
             "function ( event ) local player = event and event . player_index and game . get_player ( event . player_index ) or nil local invalidated = false if player and player . valid and player . character and player . character . valid then invalid …"
           ],
           "callee": "commands.add_command",
-          "line": 193,
+          "line": 219,
           "protected_call": true
         }
       ],
@@ -96588,7 +96613,16 @@
           "callee": "require",
           "execution": "conditional-or-unconditional; not evaluated",
           "kind": "literal-require",
-          "line": 206,
+          "line": 133,
+          "protected_call": false,
+          "target": "scripts.core.station_catalog",
+          "target_scope": "inventoried-runtime-module"
+        },
+        {
+          "callee": "require",
+          "execution": "conditional-or-unconditional; not evaluated",
+          "kind": "literal-require",
+          "line": 232,
           "protected_call": true,
           "target": "scripts.core.runtime_event_registry",
           "target_scope": "inventoried-runtime-module"
@@ -96601,7 +96635,7 @@
           "event": "on_event",
           "handler": "nil",
           "kind": "registry-or-helper",
-          "line": 141,
+          "line": 160,
           "options": {},
           "protected_call": true,
           "selector": {
@@ -96615,7 +96649,7 @@
           "event": "on_event",
           "handler": "handler",
           "kind": "registry-or-helper",
-          "line": 149,
+          "line": 168,
           "options": {},
           "protected_call": true,
           "selector": {
@@ -96718,109 +96752,121 @@
         },
         {
           "kind": "declaration",
-          "line": 90,
+          "line": 95,
           "local": false,
           "name": "M.invalidate_near",
           "parameters": "surface , position , reason , inventory_only"
         },
         {
           "kind": "declaration",
-          "line": 107,
+          "line": 112,
           "local": true,
           "name": "entity_position",
           "parameters": "event"
         },
         {
           "kind": "declaration",
-          "line": 113,
+          "line": 118,
           "local": false,
           "name": "M.handle_entity_event",
           "parameters": "event , reason"
         },
         {
           "kind": "declaration",
-          "line": 119,
+          "line": 124,
+          "local": false,
+          "name": "M.handle_resource_depleted",
+          "parameters": "event"
+        },
+        {
+          "kind": "declaration",
+          "line": 138,
           "local": false,
           "name": "M.handle_player_inventory_event",
           "parameters": "event , reason"
         },
         {
           "kind": "declaration",
-          "line": 127,
+          "line": 146,
           "local": true,
           "name": "route_options",
           "parameters": "route"
         },
         {
           "kind": "declaration",
-          "line": 137,
+          "line": 156,
           "local": true,
           "name": "unregister_routes",
           "parameters": "registry , routes"
         },
         {
           "kind": "declaration",
-          "line": 146,
+          "line": 165,
           "local": true,
           "name": "register_route",
           "parameters": "registry , events , handler , route_name"
         },
         {
           "kind": "declaration",
-          "line": 154,
+          "line": 173,
           "local": true,
           "name": "install_events",
           "parameters": "registry"
         },
         {
           "kind": "anonymous",
-          "line": 162,
+          "line": 181,
           "local": false,
           "name": "<anonymous>",
           "parameters": "event"
         },
         {
           "kind": "anonymous",
-          "line": 172,
+          "line": 191,
           "local": false,
           "name": "<anonymous>",
           "parameters": "event"
         },
         {
           "kind": "anonymous",
-          "line": 182,
+          "line": 208,
           "local": false,
           "name": "<anonymous>",
           "parameters": "event"
         },
         {
           "kind": "declaration",
-          "line": 190,
+          "line": 216,
           "local": true,
           "name": "install_command",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 193,
+          "line": 219,
           "local": false,
           "name": "<anonymous>",
           "parameters": "event"
         },
         {
           "kind": "declaration",
-          "line": 202,
+          "line": 228,
           "local": false,
           "name": "M.install",
           "parameters": ""
         }
       ],
       "install_calls": [],
-      "lines": 237,
+      "lines": 263,
       "module": "scripts.core.station_area_change_invalidator_0634",
       "module_string_references": [
         {
-          "line": 206,
+          "line": 133,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.station_catalog"
+        },
+        {
+          "line": 232,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
           "target": "scripts.core.runtime_event_registry"
         }
@@ -96829,7 +96875,7 @@
       "path": "scripts/core/station_area_change_invalidator_0634.lua",
       "reachability": "potential-literal-require-path",
       "scans": [],
-      "sha256": "5eda711e1b38a2c3e3c5d1829ce0b232296c019d9b054ab06f21395d6c045a2b",
+      "sha256": "28506943836dbb926b2fa9a49d2b884bf1dde09b1a1c275ac9c9a54bee40df7e",
       "state_writers": [
         {
           "kind": "state-assignment",
@@ -96904,12 +96950,12 @@
         },
         {
           "kind": "state-assignment",
-          "line": 84,
+          "line": 88,
           "target": "pair.station_area_dirty_0634"
         },
         {
           "kind": "state-assignment",
-          "line": 230,
+          "line": 256,
           "target": "_G.TechPriestsStationAreaChangeInvalidator0634"
         }
       ],
@@ -97341,7 +97387,7 @@
             "function ( event ) run_catalog_command ( event , spec . compact ) end"
           ],
           "callee": "commands.add_command",
-          "line": 1362,
+          "line": 1846,
           "protected_call": false
         }
       ],
@@ -97395,7 +97441,7 @@
           "callee": "require",
           "execution": "conditional-or-unconditional; not evaluated",
           "kind": "literal-require",
-          "line": 560,
+          "line": 586,
           "protected_call": true,
           "target": "scripts.core.efficiency_economy_0587",
           "target_scope": "inventoried-runtime-module"
@@ -97404,7 +97450,7 @@
           "callee": "require",
           "execution": "conditional-or-unconditional; not evaluated",
           "kind": "literal-require",
-          "line": 1373,
+          "line": 1857,
           "protected_call": true,
           "target": "scripts.core.runtime_event_registry",
           "target_scope": "inventoried-runtime-module"
@@ -97417,7 +97463,7 @@
           "event": "on_nth_tick",
           "handler": "function ( ) Catalog . scan_due ( 2 ) end",
           "kind": "registry-or-helper",
-          "line": 1386,
+          "line": 1870,
           "options": {
             "category": {
               "expression": "\"catalog\"",
@@ -97436,11 +97482,11 @@
           "selector": {
             "declared_scalar_candidates": [
               {
-                "line": 20,
-                "value": 60
+                "line": 23,
+                "value": 5
               }
             ],
-            "expression": "Catalog . scan_period",
+            "expression": "Catalog . scan_step_period",
             "runtime_value": "not evaluated"
           }
         },
@@ -97450,7 +97496,7 @@
           "event": "on_event",
           "handler": "function ( event ) local entity = event and event . entity if entity then Catalog . handle_destroyed_entity ( entity , \"destroy/mined\" ) end end",
           "kind": "registry-or-helper",
-          "line": 1393,
+          "line": 1877,
           "options": {
             "category": {
               "expression": "\"catalog\"",
@@ -97475,339 +97521,332 @@
       "functions": [
         {
           "kind": "declaration",
-          "line": 36,
+          "line": 41,
           "local": true,
           "name": "valid",
           "parameters": "e"
         },
         {
           "kind": "declaration",
-          "line": 37,
+          "line": 42,
           "local": true,
           "name": "now",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 39,
+          "line": 44,
           "local": true,
           "name": "ensure_root",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 59,
+          "line": 67,
+          "local": true,
+          "name": "revise_station",
+          "parameters": "root , unit"
+        },
+        {
+          "kind": "declaration",
+          "line": 73,
           "local": true,
           "name": "pairs_table",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 63,
+          "line": 77,
           "local": true,
           "name": "station_unit",
           "parameters": "pair"
         },
         {
           "kind": "declaration",
-          "line": 67,
+          "line": 81,
           "local": true,
           "name": "pair_rank",
           "parameters": "pair"
         },
         {
           "kind": "declaration",
-          "line": 80,
+          "line": 94,
           "local": true,
           "name": "distance_sq",
           "parameters": "a , b"
         },
         {
           "kind": "declaration",
-          "line": 87,
+          "line": 101,
           "local": true,
           "name": "radius_for",
           "parameters": "pair"
         },
         {
           "kind": "declaration",
-          "line": 95,
+          "line": 109,
           "local": true,
           "name": "sweep_ticks_for",
           "parameters": "pair"
         },
         {
           "kind": "declaration",
-          "line": 104,
+          "line": 118,
           "local": true,
           "name": "entity_key",
           "parameters": "entity"
         },
         {
           "kind": "declaration",
-          "line": 110,
+          "line": 124,
           "local": true,
           "name": "legacy_entity_key",
           "parameters": "entity"
         },
         {
           "kind": "declaration",
-          "line": 120,
+          "line": 134,
           "local": true,
           "name": "is_station_entity",
           "parameters": "entity"
         },
         {
           "kind": "declaration",
-          "line": 126,
+          "line": 140,
           "local": true,
           "name": "is_transient_belt_entity",
           "parameters": "entity"
         },
         {
           "kind": "declaration",
-          "line": 137,
+          "line": 151,
           "local": true,
           "name": "should_catalog_entity",
           "parameters": "entity"
         },
         {
           "kind": "declaration",
-          "line": 147,
+          "line": 161,
           "local": true,
           "name": "station_owner_valid",
           "parameters": "root , unit"
         },
         {
           "kind": "declaration",
-          "line": 152,
+          "line": 166,
           "local": true,
           "name": "tag_destroy",
           "parameters": "object"
         },
         {
           "kind": "anonymous",
-          "line": 154,
+          "line": 168,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 157,
+          "line": 171,
           "local": true,
           "name": "release_render_tag",
           "parameters": "root , key"
         },
         {
           "kind": "declaration",
-          "line": 165,
+          "line": 179,
           "local": true,
           "name": "release_entity_ownership",
           "parameters": "root , key"
         },
         {
           "kind": "declaration",
-          "line": 173,
+          "line": 187,
           "local": true,
           "name": "claim_entity",
-          "parameters": "root , pair , entity , kind , known_key"
+          "parameters": "root , pair , entity , kind , known_key , deferred"
         },
         {
           "kind": "declaration",
-          "line": 199,
+          "line": 224,
           "local": false,
           "name": "Catalog.draw_tag",
           "parameters": "pair , entity , key , kind"
         },
         {
           "kind": "declaration",
-          "line": 214,
+          "line": 239,
           "local": false,
           "name": "Catalog.claim_built_entity",
           "parameters": "pair , entity , kind"
         },
         {
           "kind": "declaration",
-          "line": 220,
+          "line": 247,
           "local": false,
           "name": "Catalog.entity_key",
           "parameters": "entity"
         },
         {
           "kind": "declaration",
-          "line": 224,
+          "line": 251,
           "local": true,
           "name": "add_count",
           "parameters": "tbl , key , count"
         },
         {
           "kind": "declaration",
-          "line": 232,
+          "line": 259,
           "local": true,
           "name": "add_source",
           "parameters": "tbl , key , source"
         },
         {
           "kind": "declaration",
-          "line": 270,
+          "line": 297,
           "local": true,
           "name": "safe_inventory",
           "parameters": "entity , inv_id"
         },
         {
           "kind": "anonymous",
-          "line": 272,
+          "line": 299,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 277,
+          "line": 304,
           "local": true,
           "name": "for_each_inventory_item",
           "parameters": "contents , callback"
         },
         {
           "kind": "declaration",
-          "line": 314,
+          "line": 341,
           "local": true,
           "name": "prototype_cache_key",
           "parameters": "entity"
         },
         {
           "kind": "declaration",
-          "line": 319,
+          "line": 346,
           "local": true,
           "name": "read_bool_setting_0741",
           "parameters": "name , fallback"
         },
         {
           "kind": "declaration",
-          "line": 329,
+          "line": 356,
           "local": true,
           "name": "universal_inventory_scavenging_enabled_0741",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 333,
+          "line": 360,
           "local": true,
           "name": "skip_wired_inventory_sources_enabled_0741",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 337,
+          "line": 364,
           "local": true,
           "name": "connector_has_connections_0741",
           "parameters": "connector"
         },
         {
           "kind": "anonymous",
-          "line": 339,
+          "line": 366,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 343,
+          "line": 370,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 359,
+          "line": 386,
           "local": true,
           "name": "circuit_ids_1493",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 374,
+          "line": 401,
           "local": true,
           "name": "entity_has_circuit_wire_0741",
           "parameters": "entity"
         },
         {
           "kind": "anonymous",
-          "line": 380,
+          "line": 407,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 393,
+          "line": 420,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 405,
+          "line": 432,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 413,
+          "line": 440,
           "local": true,
           "name": "entity_inventory_blocked_by_wire_0741",
           "parameters": "entity"
         },
         {
           "kind": "declaration",
-          "line": 417,
+          "line": 444,
           "local": true,
           "name": "broad_inventory_probe_ids_0741",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 428,
+          "line": 455,
           "local": true,
           "name": "conservative_inventory_probe_ids_0741",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 454,
+          "line": 481,
           "local": true,
           "name": "inventory_probe_ids_0578",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 458,
+          "line": 485,
           "local": true,
           "name": "inventory_scan_context_1493",
           "parameters": "station"
         },
         {
           "kind": "declaration",
-          "line": 471,
+          "line": 497,
           "local": true,
           "name": "inventory_ids_for_entity_0578",
           "parameters": "entity , context"
-        },
-        {
-          "kind": "anonymous",
-          "line": 485,
-          "local": false,
-          "name": "<anonymous>",
-          "parameters": ""
-        },
-        {
-          "kind": "declaration",
-          "line": 494,
-          "local": true,
-          "name": "inventory_types_1497",
-          "parameters": ""
         },
         {
           "kind": "anonymous",
@@ -97818,392 +97857,497 @@
         },
         {
           "kind": "declaration",
-          "line": 529,
+          "line": 520,
+          "local": true,
+          "name": "inventory_types_1497",
+          "parameters": ""
+        },
+        {
+          "kind": "anonymous",
+          "line": 537,
+          "local": false,
+          "name": "<anonymous>",
+          "parameters": ""
+        },
+        {
+          "kind": "declaration",
+          "line": 555,
           "local": false,
           "name": "Catalog.inventory_types",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 534,
+          "line": 560,
           "local": false,
           "name": "Catalog.inventory_candidates",
           "parameters": "pair , requested_radius , requested_types"
         },
         {
           "kind": "declaration",
-          "line": 539,
+          "line": 565,
           "local": true,
           "name": "discover",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 582,
+          "line": 608,
           "local": true,
           "name": "inside_inventory_area_1497",
           "parameters": "entity , station , radius"
         },
         {
           "kind": "assigned-function",
-          "line": 594,
+          "line": 620,
           "local": false,
           "name": "append_engine_candidates_1497",
           "parameters": "pair , radius , candidates , requested_types"
         },
         {
           "kind": "declaration",
-          "line": 602,
+          "line": 628,
           "local": true,
           "name": "append",
           "parameters": "entity , from_engine"
         },
         {
           "kind": "anonymous",
-          "line": 652,
+          "line": 678,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 654,
+          "line": 680,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 656,
+          "line": 682,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 665,
+          "line": 691,
           "local": false,
           "name": "Catalog.find_inventory_source",
           "parameters": "pair , item_name , options"
         },
         {
           "kind": "declaration",
-          "line": 673,
+          "line": 699,
           "local": true,
           "name": "consider",
           "parameters": "entity , id , inventory"
         },
         {
           "kind": "anonymous",
-          "line": 675,
+          "line": 701,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 701,
+          "line": 727,
           "local": true,
           "name": "collect_inventory",
           "parameters": "catalog , entity , station , scan_context"
         },
         {
           "kind": "anonymous",
-          "line": 721,
+          "line": 747,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 723,
+          "line": 749,
           "local": false,
           "name": "<anonymous>",
           "parameters": "item , count"
         },
         {
           "kind": "declaration",
-          "line": 735,
+          "line": 761,
           "local": true,
           "name": "mineable_products",
           "parameters": "entity"
         },
         {
           "kind": "anonymous",
-          "line": 743,
+          "line": 769,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 757,
+          "line": 783,
           "local": true,
           "name": "is_mineable_candidate",
           "parameters": "entity"
         },
         {
           "kind": "declaration",
-          "line": 769,
+          "line": 795,
           "local": true,
           "name": "empty_catalog",
           "parameters": "pair , radius"
         },
         {
           "kind": "declaration",
-          "line": 801,
+          "line": 827,
           "local": true,
           "name": "clean_reuse_allowed_0570",
           "parameters": "pair , catalog , radius"
         },
         {
           "kind": "declaration",
-          "line": 818,
+          "line": 844,
           "local": true,
-          "name": "add_entity_to_catalog",
-          "parameters": "root , pair , catalog , entity , station"
+          "name": "add_claim_sources",
+          "parameters": "pair , catalog , entity , key , kind , products"
         },
         {
           "kind": "declaration",
-          "line": 843,
+          "line": 867,
+          "local": true,
+          "name": "add_entity_to_catalog",
+          "parameters": "root , pair , catalog , entity , station , scan_context"
+        },
+        {
+          "kind": "declaration",
+          "line": 899,
           "local": true,
           "name": "release_absent_owned_keys",
           "parameters": "root , pair , new_keys"
         },
         {
           "kind": "declaration",
-          "line": 851,
+          "line": 909,
           "local": false,
           "name": "Catalog.cleanup_station",
           "parameters": "unit , reason"
         },
         {
           "kind": "anonymous",
-          "line": 858,
+          "line": 919,
           "local": false,
           "name": "<anonymous>",
           "parameters": "key"
         },
         {
           "kind": "declaration",
-          "line": 868,
+          "line": 929,
           "local": false,
           "name": "Catalog.prune_invalid",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 888,
+          "line": 954,
           "local": false,
           "name": "Catalog.scan_pair",
           "parameters": "pair"
         },
         {
           "kind": "anonymous",
-          "line": 1024,
+          "line": 1094,
           "local": false,
           "name": "<anonymous>",
           "parameters": "a , b"
         },
         {
           "kind": "declaration",
-          "line": 1049,
+          "line": 1119,
+          "local": true,
+          "name": "in_pending_area",
+          "parameters": "pending , entity , station"
+        },
+        {
+          "kind": "declaration",
+          "line": 1127,
+          "local": true,
+          "name": "pending_complete",
+          "parameters": "pending"
+        },
+        {
+          "kind": "declaration",
+          "line": 1133,
+          "local": true,
+          "name": "reset_pending_claims",
+          "parameters": "pending"
+        },
+        {
+          "kind": "declaration",
+          "line": 1139,
+          "local": true,
+          "name": "pending_changed",
+          "parameters": "root , pair , pending"
+        },
+        {
+          "kind": "declaration",
+          "line": 1157,
+          "local": true,
+          "name": "begin_pending",
+          "parameters": "root , pair , unit , radius"
+        },
+        {
+          "kind": "declaration",
+          "line": 1186,
+          "local": true,
+          "name": "note_scan_metadata",
+          "parameters": "root , pending"
+        },
+        {
+          "kind": "declaration",
+          "line": 1219,
+          "local": false,
+          "name": "Catalog.publish_pending",
+          "parameters": "pair , pending"
+        },
+        {
+          "kind": "declaration",
+          "line": 1292,
+          "local": true,
+          "name": "advance_pending",
+          "parameters": "root , pair , pending , budget , used"
+        },
+        {
+          "kind": "anonymous",
+          "line": 1345,
+          "local": false,
+          "name": "<anonymous>",
+          "parameters": "a , b"
+        },
+        {
+          "kind": "declaration",
+          "line": 1410,
+          "local": false,
+          "name": "Catalog.step_pair",
+          "parameters": "pair , budgets"
+        },
+        {
+          "kind": "declaration",
+          "line": 1462,
           "local": false,
           "name": "Catalog.scan_due",
           "parameters": "max_count"
         },
         {
-          "kind": "anonymous",
-          "line": 1071,
-          "local": false,
-          "name": "<anonymous>",
-          "parameters": "a , b"
-        },
-        {
           "kind": "declaration",
-          "line": 1084,
+          "line": 1511,
           "local": false,
           "name": "Catalog.scan_some",
           "parameters": "max_count"
         },
         {
           "kind": "declaration",
-          "line": 1095,
+          "line": 1522,
           "local": false,
           "name": "Catalog.get_for_pair",
           "parameters": "pair"
         },
         {
           "kind": "declaration",
-          "line": 1104,
+          "line": 1542,
           "local": false,
           "name": "Catalog.snapshot_inventory",
           "parameters": "pair , catalog"
         },
         {
           "kind": "anonymous",
-          "line": 1121,
+          "line": 1559,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 1123,
+          "line": 1561,
           "local": false,
           "name": "<anonymous>",
           "parameters": "item , count"
         },
         {
           "kind": "declaration",
-          "line": 1137,
+          "line": 1575,
           "local": false,
           "name": "Catalog.find_known_source",
           "parameters": "pair , item_name"
         },
         {
           "kind": "declaration",
-          "line": 1155,
+          "line": 1584,
+          "local": true,
+          "name": "from_catalog",
+          "parameters": "known"
+        },
+        {
+          "kind": "declaration",
+          "line": 1586,
+          "local": true,
+          "name": "live_record",
+          "parameters": "record , require_owner"
+        },
+        {
+          "kind": "declaration",
+          "line": 1588,
+          "local": true,
+          "name": "eligible",
+          "parameters": "source"
+        },
+        {
+          "kind": "declaration",
+          "line": 1623,
           "local": false,
           "name": "Catalog.note_radar_detection",
           "parameters": "pair , entity , info"
         },
         {
           "kind": "declaration",
-          "line": 1167,
+          "line": 1643,
           "local": true,
           "name": "clear_gui",
           "parameters": "player"
         },
         {
           "kind": "declaration",
-          "line": 1173,
+          "line": 1649,
           "local": true,
           "name": "top_keys",
           "parameters": "tbl , limit"
         },
         {
           "kind": "anonymous",
-          "line": 1176,
+          "line": 1652,
           "local": false,
           "name": "<anonymous>",
           "parameters": "a , b"
         },
         {
           "kind": "declaration",
-          "line": 1185,
+          "line": 1661,
           "local": true,
           "name": "add_section",
           "parameters": "frame , title , tbl , limit , width"
         },
         {
           "kind": "declaration",
-          "line": 1200,
+          "line": 1676,
           "local": false,
           "name": "Catalog.show_gui",
           "parameters": "player , pair"
         },
         {
           "kind": "declaration",
-          "line": 1272,
+          "line": 1748,
           "local": false,
           "name": "Catalog.handle_gui_opened",
           "parameters": "event"
         },
         {
           "kind": "declaration",
-          "line": 1282,
+          "line": 1758,
           "local": false,
           "name": "Catalog.handle_gui_closed",
           "parameters": "event"
         },
         {
           "kind": "declaration",
-          "line": 1288,
+          "line": 1764,
           "local": false,
           "name": "Catalog.handle_gui_click",
           "parameters": "event"
         },
         {
           "kind": "declaration",
-          "line": 1300,
+          "line": 1776,
           "local": false,
           "name": "Catalog.handle_destroyed_entity",
           "parameters": "entity , reason"
         },
         {
           "kind": "declaration",
-          "line": 1313,
+          "line": 1797,
           "local": true,
           "name": "run_catalog_command",
           "parameters": "event , compact"
         },
         {
           "kind": "declaration",
-          "line": 1354,
+          "line": 1838,
           "local": false,
           "name": "Catalog.register_commands",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 1360,
+          "line": 1844,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 1361,
+          "line": 1845,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 1362,
+          "line": 1846,
           "local": false,
           "name": "<anonymous>",
           "parameters": "event"
         },
         {
           "kind": "declaration",
-          "line": 1369,
+          "line": 1853,
           "local": false,
           "name": "Catalog.install",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 1386,
+          "line": 1870,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 1393,
+          "line": 1877,
           "local": false,
           "name": "<anonymous>",
           "parameters": "event"
         },
         {
           "kind": "assigned-function",
-          "line": 1417,
+          "line": 1901,
           "local": false,
           "name": "_G.tech_priests_0578_station_catalog_cache_counts",
           "parameters": ""
         },
         {
           "kind": "assigned-function",
-          "line": 1426,
+          "line": 1910,
           "local": false,
           "name": "_G.tech_priests_radar_remember_detection_0278",
           "parameters": "pair , entity , info"
         }
       ],
       "install_calls": [],
-      "lines": 1438,
+      "lines": 1922,
       "module": "scripts.core.station_catalog",
       "module_string_references": [
         {
@@ -98232,12 +98376,12 @@
           "target": "scripts.core.catalog_owner_index_1496"
         },
         {
-          "line": 560,
+          "line": 586,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
           "target": "scripts.core.efficiency_economy_0587"
         },
         {
-          "line": 1373,
+          "line": 1857,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
           "target": "scripts.core.runtime_event_registry"
         }
@@ -98251,218 +98395,260 @@
             "query"
           ],
           "callee": "station.surface.find_entities_filtered",
-          "line": 551,
+          "line": 577,
           "protected_call": true,
           "runtime_cost": "unmeasured",
           "static_risk_hint": "global-or-unbounded"
         }
       ],
-      "sha256": "97df19d7c66442c037f17d25dbb36956d3603f7ef180b51dc64d35d042191315",
+      "sha256": "e1c4c4566663f48cf6ca3c0dca06559a232ac865423284023dbe455d50772cb0",
       "state_writers": [
         {
           "kind": "state-assignment",
-          "line": 40,
+          "line": 45,
           "target": "storage.tech_priests"
         },
         {
           "kind": "state-assignment",
-          "line": 41,
+          "line": 46,
           "target": "storage.tech_priests[Catalog . storage_key]"
         },
         {
           "kind": "state-assignment",
-          "line": 148,
+          "line": 162,
           "target": "pair"
         },
         {
           "callee": "object.destroy",
           "kind": "mutation-call-candidate",
-          "line": 154,
+          "line": 168,
           "protected_call": false
         },
         {
           "kind": "state-assignment",
-          "line": 189,
+          "line": 214,
           "target": "pair.catalog_owned_resource_keys_0327"
         },
         {
           "kind": "state-assignment",
-          "line": 848,
+          "line": 906,
           "target": "pair.catalog_owned_resource_keys_0327"
         },
         {
           "kind": "state-assignment",
-          "line": 900,
+          "line": 970,
           "target": "pair.known_resources_0326"
         },
         {
           "kind": "state-assignment",
-          "line": 901,
+          "line": 971,
           "target": "pair.known_resources_0327"
         },
         {
           "kind": "state-assignment",
-          "line": 1040,
+          "line": 1110,
           "target": "pair.known_resources_0326"
         },
         {
           "kind": "state-assignment",
-          "line": 1041,
+          "line": 1111,
           "target": "pair.known_resources_0327"
         },
         {
           "kind": "state-assignment",
-          "line": 1063,
+          "line": 1253,
+          "target": "pair.catalog_owned_resource_keys_0327"
+        },
+        {
+          "kind": "state-assignment",
+          "line": 1263,
+          "target": "pair.known_resources_0327"
+        },
+        {
+          "kind": "state-assignment",
+          "line": 1273,
+          "target": "pair.known_resources_0327"
+        },
+        {
+          "kind": "state-assignment",
+          "line": 1436,
+          "target": "pair.known_resources_0327"
+        },
+        {
+          "kind": "state-assignment",
+          "line": 1493,
           "target": "pair"
         },
         {
           "kind": "state-assignment",
-          "line": 1277,
+          "line": 1637,
+          "target": "pair.known_resources_0327"
+        },
+        {
+          "kind": "state-assignment",
+          "line": 1753,
           "target": "pair"
         },
         {
           "kind": "state-assignment",
-          "line": 1278,
+          "line": 1754,
           "target": "pair"
         },
         {
           "kind": "state-assignment",
-          "line": 1296,
+          "line": 1772,
           "target": "pair"
         },
         {
           "kind": "state-assignment",
-          "line": 1316,
+          "line": 1782,
           "target": "pair"
         },
         {
           "kind": "state-assignment",
-          "line": 1319,
+          "line": 1800,
           "target": "pair"
         },
         {
           "kind": "state-assignment",
-          "line": 1323,
+          "line": 1803,
           "target": "pair"
         },
         {
           "kind": "state-assignment",
-          "line": 1403,
+          "line": 1807,
+          "target": "pair"
+        },
+        {
+          "kind": "state-assignment",
+          "line": 1887,
           "target": "_G.tech_priests_0326_get_station_catalog"
         },
         {
           "kind": "state-assignment",
-          "line": 1404,
+          "line": 1888,
           "target": "_G.tech_priests_0326_find_known_source"
         },
         {
           "kind": "state-assignment",
-          "line": 1405,
+          "line": 1889,
           "target": "_G.tech_priests_0326_scan_station_catalog"
         },
         {
           "kind": "state-assignment",
-          "line": 1406,
+          "line": 1890,
           "target": "_G.tech_priests_0327_get_station_catalog"
         },
         {
           "kind": "state-assignment",
-          "line": 1407,
+          "line": 1891,
           "target": "_G.tech_priests_0327_find_known_source"
         },
         {
           "kind": "state-assignment",
-          "line": 1408,
+          "line": 1892,
           "target": "_G.tech_priests_0327_scan_station_catalog"
         },
         {
           "kind": "state-assignment",
-          "line": 1409,
+          "line": 1893,
           "target": "_G.tech_priests_0327_inventory_candidates"
         },
         {
           "kind": "state-assignment",
-          "line": 1410,
+          "line": 1894,
           "target": "_G.tech_priests_0327_find_inventory_source"
         },
         {
           "kind": "state-assignment",
-          "line": 1411,
+          "line": 1895,
           "target": "_G.tech_priests_0327_snapshot_inventory"
         },
         {
           "kind": "state-assignment",
-          "line": 1412,
+          "line": 1896,
           "target": "_G.tech_priests_0327_note_radar_detection"
         },
         {
           "kind": "state-assignment",
-          "line": 1413,
+          "line": 1897,
           "target": "_G.tech_priests_0327_catalog_gui_opened"
         },
         {
           "kind": "state-assignment",
-          "line": 1414,
+          "line": 1898,
           "target": "_G.tech_priests_0327_catalog_gui_closed"
         },
         {
           "kind": "state-assignment",
-          "line": 1415,
+          "line": 1899,
           "target": "_G.tech_priests_0327_catalog_gui_click"
         },
         {
           "kind": "state-assignment",
-          "line": 1416,
+          "line": 1900,
           "target": "_G.TechPriestsStationCatalog"
         },
         {
           "kind": "state-assignment",
-          "line": 1417,
+          "line": 1901,
           "target": "_G.tech_priests_0578_station_catalog_cache_counts"
         },
         {
           "kind": "state-assignment",
-          "line": 1425,
+          "line": 1909,
           "target": "_G.TECH_PRIESTS_0327_PRE_RADAR_REMEMBER_DETECTION"
         },
         {
           "kind": "state-assignment",
-          "line": 1426,
+          "line": 1910,
           "target": "_G.tech_priests_radar_remember_detection_0278"
         }
       ],
       "storage_roots": [
         {
           "expression": "storage.tech_priests",
-          "line": 40
+          "line": 45
         },
         {
           "expression": "storage.tech_priests[Catalog . storage_key]",
-          "line": 41
+          "line": 46
         },
         {
           "expression": "storage.tech_priests[Catalog . storage_key]",
-          "line": 49
+          "line": 54
         },
         {
           "expression": "storage.tech_priests",
-          "line": 60
+          "line": 74
         },
         {
           "expression": "storage.tech_priests.pairs_by_station",
-          "line": 60
+          "line": 74
         }
       ],
       "unresolved_loads": [],
       "wrapper_candidates": [
         {
+          "kind": "saved-function-or-value-candidate",
+          "line": 204,
+          "target": "previous",
+          "value": "deferred . by_key ["
+        },
+        {
+          "kind": "saved-function-or-value-candidate",
+          "line": 1256,
+          "target": "previous",
+          "value": "root . stations ["
+        },
+        {
           "kind": "function-replacement-candidate; original/wrapper semantics not inferred",
-          "line": 1417,
+          "line": 1901,
           "target": "_G.tech_priests_0578_station_catalog_cache_counts"
         },
         {
           "kind": "function-replacement-candidate; original/wrapper semantics not inferred",
-          "line": 1426,
+          "line": 1910,
           "target": "_G.tech_priests_radar_remember_detection_0278"
         }
       ]
@@ -142777,7 +142963,17 @@
     {
       "broker_services": [],
       "commands": [],
-      "dependencies": [],
+      "dependencies": [
+        {
+          "callee": "require",
+          "execution": "conditional-or-unconditional; not evaluated",
+          "kind": "literal-require",
+          "line": 956,
+          "protected_call": true,
+          "target": "scripts.core.planning_constraints_0646",
+          "target_scope": "inventoried-runtime-module"
+        }
+      ],
       "event_routes": [
         {
           "action": "clear",
@@ -142813,7 +143009,7 @@
           "event": "on_event",
           "handler": "on_built",
           "kind": "registry-or-helper",
-          "line": 1117,
+          "line": 1179,
           "options": {},
           "protected_call": false,
           "selector": {
@@ -142827,7 +143023,7 @@
           "event": "on_event",
           "handler": "tech_priests_0297_on_research_finished",
           "kind": "registry-or-helper",
-          "line": 1166,
+          "line": 1228,
           "options": {},
           "protected_call": false,
           "selector": {
@@ -142841,7 +143037,7 @@
           "event": "on_event",
           "handler": "function ( event ) if event and event . force then tech_priests_0297_apply_force_armor_to_existing_priests ( event . force , \"technology-effects-reset\" ) end end",
           "kind": "registry-or-helper",
-          "line": 1168,
+          "line": 1230,
           "options": {},
           "protected_call": false,
           "selector": {
@@ -142855,7 +143051,7 @@
           "event": "on_event",
           "handler": "tech_priests_0297_mitigate_damage",
           "kind": "registry-or-helper",
-          "line": 1173,
+          "line": 1235,
           "options": {},
           "protected_call": false,
           "selector": {
@@ -142869,8 +143065,25 @@
           "event": "on_nth_tick",
           "handler": "function ( ) ensure_storage ( ) if not ( game and game . forces ) then return end for _ , force in pairs ( game . forces ) do tech_priests_0297_refresh_force_armor_profile ( force , \"periodic\" ) end end",
           "kind": "registry-or-helper",
-          "line": 1177,
-          "options": {},
+          "line": 1239,
+          "options": {
+            "category": {
+              "expression": "\"uncategorized\"",
+              "literal": "uncategorized"
+            },
+            "note": {
+              "expression": "\"force armor refresh; retained prototype facts and live recipe enablement\"",
+              "literal": "force armor refresh; retained prototype facts and live recipe enablement"
+            },
+            "owner": {
+              "expression": "\"armor_profile_0297\"",
+              "literal": "armor_profile_0297"
+            },
+            "route": {
+              "expression": "\"force-armor-refresh\"",
+              "literal": "force-armor-refresh"
+            }
+          },
           "protected_call": false,
           "selector": {
             "expression": "811",
@@ -143462,317 +143675,351 @@
         },
         {
           "kind": "declaration",
-          "line": 863,
+          "line": 869,
           "local": false,
           "name": "tech_priests_0297_get_item_prototypes",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 869,
+          "line": 875,
           "local": false,
           "name": "tech_priests_0297_is_priest_entity",
           "parameters": "entity"
         },
         {
           "kind": "declaration",
-          "line": 879,
+          "line": 885,
           "local": false,
           "name": "tech_priests_0297_resistance_type_name",
           "parameters": "entry_key , entry"
         },
         {
           "kind": "declaration",
-          "line": 886,
+          "line": 892,
           "local": false,
           "name": "tech_priests_0297_resistance_decrease",
           "parameters": "entry"
         },
         {
           "kind": "declaration",
-          "line": 892,
+          "line": 898,
           "local": false,
           "name": "tech_priests_0297_resistance_percent",
           "parameters": "entry"
         },
         {
           "kind": "declaration",
-          "line": 898,
+          "line": 904,
           "local": false,
           "name": "tech_priests_0297_collect_resistances",
           "parameters": "proto"
         },
         {
           "kind": "anonymous",
-          "line": 901,
+          "line": 907,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 905,
+          "line": 911,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 920,
+          "line": 926,
           "local": false,
           "name": "tech_priests_0297_resistance_score",
           "parameters": "resistances"
         },
         {
           "kind": "declaration",
-          "line": 931,
+          "line": 937,
           "local": false,
           "name": "tech_priests_0297_recipe_outputs_item",
           "parameters": "recipe , item_name"
         },
         {
           "kind": "anonymous",
-          "line": 935,
+          "line": 941,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 938,
+          "line": 944,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 946,
+          "line": 952,
+          "local": true,
+          "name": "armor_recipe_candidates_0297",
+          "parameters": "force , armor_name"
+        },
+        {
+          "kind": "declaration",
+          "line": 971,
           "local": false,
           "name": "tech_priests_0297_force_can_use_armor",
           "parameters": "force , armor_name"
         },
         {
           "kind": "anonymous",
-          "line": 960,
+          "line": 988,
+          "local": false,
+          "name": "<anonymous>",
+          "parameters": ""
+        },
+        {
+          "kind": "anonymous",
+          "line": 1000,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 970,
+          "line": 1011,
+          "local": true,
+          "name": "armor_candidates_0297",
+          "parameters": "item_prototypes"
+        },
+        {
+          "kind": "anonymous",
+          "line": 1014,
+          "local": false,
+          "name": "<anonymous>",
+          "parameters": ""
+        },
+        {
+          "kind": "anonymous",
+          "line": 1016,
+          "local": false,
+          "name": "<anonymous>",
+          "parameters": ""
+        },
+        {
+          "kind": "declaration",
+          "line": 1033,
           "local": false,
           "name": "tech_priests_0297_find_best_force_armor_profile",
           "parameters": "force"
         },
         {
           "kind": "anonymous",
-          "line": 974,
-          "local": false,
-          "name": "<anonymous>",
-          "parameters": ""
-        },
-        {
-          "kind": "anonymous",
-          "line": 977,
+          "line": 1037,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 995,
+          "line": 1057,
           "local": false,
           "name": "tech_priests_0297_refresh_force_armor_profile",
           "parameters": "force , reason"
         },
         {
           "kind": "declaration",
-          "line": 1011,
+          "line": 1073,
           "local": false,
           "name": "tech_priests_0297_get_force_armor_profile",
           "parameters": "force"
         },
         {
           "kind": "declaration",
-          "line": 1020,
+          "line": 1082,
           "local": false,
           "name": "tech_priests_0297_apply_profile_to_pair",
           "parameters": "pair , reason"
         },
         {
           "kind": "declaration",
-          "line": 1031,
+          "line": 1093,
           "local": false,
           "name": "tech_priests_0297_apply_force_armor_to_existing_priests",
           "parameters": "force , reason"
         },
         {
           "kind": "declaration",
-          "line": 1042,
+          "line": 1104,
           "local": false,
           "name": "tech_priests_0297_get_pair_for_priest",
           "parameters": "entity"
         },
         {
           "kind": "declaration",
-          "line": 1054,
+          "line": 1116,
           "local": false,
           "name": "tech_priests_0297_event_damage_type",
           "parameters": "event"
         },
         {
           "kind": "anonymous",
-          "line": 1056,
+          "line": 1118,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 1062,
+          "line": 1124,
           "local": false,
           "name": "tech_priests_0297_mitigate_damage",
           "parameters": "event"
         },
         {
           "kind": "anonymous",
-          "line": 1083,
+          "line": 1145,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 1102,
+          "line": 1164,
           "local": false,
           "name": "on_built",
           "parameters": "event"
         },
         {
           "kind": "declaration",
-          "line": 1134,
+          "line": 1196,
           "local": false,
           "name": "tech_priests_0297_on_research_finished",
           "parameters": "event"
         },
         {
           "kind": "anonymous",
-          "line": 1168,
+          "line": 1230,
           "local": false,
           "name": "<anonymous>",
           "parameters": "event"
         },
         {
           "kind": "anonymous",
-          "line": 1177,
+          "line": 1239,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 1188,
+          "line": 1255,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 1212,
+          "line": 1279,
           "local": false,
           "name": "tech_priests_0298_is_reimprint_tech",
           "parameters": "name"
         },
         {
           "kind": "declaration",
-          "line": 1219,
+          "line": 1286,
           "local": false,
           "name": "tech_priests_0298_reimprint_upgrade_count",
           "parameters": "force"
         },
         {
           "kind": "declaration",
-          "line": 1229,
+          "line": 1296,
           "local": false,
           "name": "tech_priests_0298_reimprint_duration",
           "parameters": "force"
         },
         {
           "kind": "declaration",
-          "line": 1235,
+          "line": 1302,
           "local": false,
           "name": "tech_priests_0298_format_time",
           "parameters": "ticks"
         },
         {
           "kind": "declaration",
-          "line": 1244,
+          "line": 1311,
           "local": false,
           "name": "tech_priests_0298_destroy_render",
           "parameters": "obj"
         },
         {
           "kind": "declaration",
-          "line": 1248,
+          "line": 1315,
           "local": false,
           "name": "tech_priests_0298_clear_reimprint_render",
           "parameters": "pair"
         },
         {
           "kind": "declaration",
-          "line": 1255,
+          "line": 1322,
           "local": false,
           "name": "tech_priests_0298_update_reimprint_render",
           "parameters": "pair"
         },
         {
           "kind": "anonymous",
-          "line": 1261,
+          "line": 1328,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 1281,
+          "line": 1348,
           "local": false,
           "name": "tech_priests_0298_pair_is_reimprinting",
           "parameters": "pair"
         },
         {
           "kind": "declaration",
-          "line": 1285,
+          "line": 1352,
           "local": false,
           "name": "tech_priests_0298_reimprint_status",
           "parameters": "pair"
         },
         {
           "kind": "declaration",
-          "line": 1294,
+          "line": 1361,
           "local": false,
           "name": "tech_priests_0298_enter_reimprint",
           "parameters": "pair , dead_priest , reason"
         },
         {
           "kind": "anonymous",
-          "line": 1303,
+          "line": 1370,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 1339,
+          "line": 1406,
           "local": false,
           "name": "tech_priests_on_removed_reimprint_wrapper_0298",
           "parameters": "event"
         }
       ],
       "install_calls": [],
-      "lines": 1345,
+      "lines": 1412,
       "module": "scripts.generated.control_legacy_part_019",
-      "module_string_references": [],
+      "module_string_references": [
+        {
+          "line": 956,
+          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
+          "target": "scripts.core.planning_constraints_0646"
+        }
+      ],
       "module_tables": [],
       "path": "scripts/generated/control_legacy_part_019.lua",
       "reachability": "potential-literal-require-path",
@@ -143808,7 +144055,7 @@
           "static_risk_hint": "broad-area"
         }
       ],
-      "sha256": "1567f68623e33180a3993db811cd92a7e753a288e73c60144aa9e31b66b0b20f",
+      "sha256": "72212a4f7d49809aea4d051dd56c415cada9cac1b4369892e5ee193ab78c3716",
       "state_writers": [
         {
           "kind": "state-assignment",
@@ -144223,198 +144470,198 @@
         },
         {
           "kind": "state-assignment",
-          "line": 998,
+          "line": 1060,
           "target": "storage.tech_priests.armor_profiles_0297"
         },
         {
           "kind": "state-assignment",
-          "line": 1004,
+          "line": 1066,
           "target": "storage.tech_priests.armor_profiles_0297[force . name]"
         },
         {
           "kind": "state-assignment",
-          "line": 1006,
+          "line": 1068,
           "target": "storage.tech_priests.armor_profiles_0297[force . name]"
         },
         {
           "kind": "state-assignment",
-          "line": 1014,
+          "line": 1076,
           "target": "storage.tech_priests.armor_profiles_0297"
         },
         {
           "kind": "state-assignment",
-          "line": 1023,
+          "line": 1085,
           "target": "pair.sub_equipment_armor_profile_0297"
         },
         {
           "kind": "state-assignment",
-          "line": 1087,
+          "line": 1149,
           "target": "pair"
         },
         {
           "kind": "state-assignment",
-          "line": 1089,
+          "line": 1151,
           "target": "pair.last_armor_mitigation_0297"
         },
         {
           "kind": "state-assignment",
-          "line": 1107,
+          "line": 1169,
           "target": "pair"
         },
         {
           "kind": "state-assignment",
-          "line": 1110,
+          "line": 1172,
           "target": "pair"
         },
         {
           "kind": "state-assignment",
-          "line": 1138,
+          "line": 1200,
           "target": "storage.tech_priests.last_researched_technology_by_force"
         },
         {
           "kind": "state-assignment",
-          "line": 1139,
+          "line": 1201,
           "target": "storage.tech_priests.last_researched_technology_by_force[event . research . force . name]"
         },
         {
           "kind": "state-assignment",
-          "line": 1251,
+          "line": 1318,
           "target": "pair.reimprint_0298.render"
         },
         {
           "kind": "state-assignment",
-          "line": 1277,
+          "line": 1344,
           "target": "pair.reimprint_0298.render"
         },
         {
           "kind": "state-assignment",
-          "line": 1301,
+          "line": 1368,
           "target": "storage.tech_priests.station_by_priest[old_unit]"
         },
         {
           "callee": "pair.proxy.destroy",
           "kind": "mutation-call-candidate",
-          "line": 1303,
+          "line": 1370,
           "protected_call": false
         },
         {
           "kind": "state-assignment",
-          "line": 1304,
+          "line": 1371,
           "target": "pair.proxy"
         },
         {
           "kind": "state-assignment",
-          "line": 1305,
+          "line": 1372,
           "target": "pair.proxy_expires"
         },
         {
           "kind": "state-assignment",
-          "line": 1306,
+          "line": 1373,
           "target": "pair.priest"
         },
         {
           "kind": "state-assignment",
-          "line": 1307,
+          "line": 1374,
           "target": "pair.priest_unit"
         },
         {
           "kind": "state-assignment",
-          "line": 1308,
+          "line": 1375,
           "target": "pair.mode"
         },
         {
           "kind": "state-assignment",
-          "line": 1309,
+          "line": 1376,
           "target": "pair.target"
         },
         {
           "kind": "state-assignment",
-          "line": 1310,
+          "line": 1377,
           "target": "pair.combat_target"
         },
         {
           "kind": "state-assignment",
-          "line": 1311,
+          "line": 1378,
           "target": "pair.active_task"
         },
         {
           "kind": "state-assignment",
-          "line": 1312,
+          "line": 1379,
           "target": "pair.active_task_0285"
         },
         {
           "kind": "state-assignment",
-          "line": 1313,
+          "line": 1380,
           "target": "pair.scavenge"
         },
         {
           "kind": "state-assignment",
-          "line": 1314,
+          "line": 1381,
           "target": "pair.cram"
         },
         {
           "kind": "state-assignment",
-          "line": 1315,
+          "line": 1382,
           "target": "pair.inventory_scan"
         },
         {
           "kind": "state-assignment",
-          "line": 1316,
+          "line": 1383,
           "target": "pair.emergency_craft"
         },
         {
           "kind": "state-assignment",
-          "line": 1317,
+          "line": 1384,
           "target": "pair.retreat_0294"
         },
         {
           "kind": "state-assignment",
-          "line": 1318,
+          "line": 1385,
           "target": "pair.pinned_no_ammo_0295"
         },
         {
           "kind": "state-assignment",
-          "line": 1319,
+          "line": 1386,
           "target": "pair.reimprint_0298"
         },
         {
           "kind": "state-assignment",
-          "line": 1320,
+          "line": 1387,
           "target": "pair.reimprint_0298.active"
         },
         {
           "kind": "state-assignment",
-          "line": 1321,
+          "line": 1388,
           "target": "pair.reimprint_0298.started_tick"
         },
         {
           "kind": "state-assignment",
-          "line": 1322,
+          "line": 1389,
           "target": "pair.reimprint_0298.finish_tick"
         },
         {
           "kind": "state-assignment",
-          "line": 1323,
+          "line": 1390,
           "target": "pair.reimprint_0298.duration"
         },
         {
           "kind": "state-assignment",
-          "line": 1324,
+          "line": 1391,
           "target": "pair.reimprint_0298.reason"
         },
         {
           "kind": "state-assignment",
-          "line": 1325,
+          "line": 1392,
           "target": "pair.reimprint_0298.station_unit"
         },
         {
           "kind": "state-assignment",
-          "line": 1326,
+          "line": 1393,
           "target": "pair.next_allowed_priest_respawn_tick"
         },
         {
           "kind": "state-assignment",
-          "line": 1327,
+          "line": 1394,
           "target": "pair.deployment_queued"
         }
       ],
@@ -144433,96 +144680,96 @@
         },
         {
           "expression": "storage.tech_priests.armor_profiles_0297",
-          "line": 998
+          "line": 1060
         },
         {
           "expression": "storage.tech_priests.armor_profiles_0297[force . name]",
-          "line": 1004
+          "line": 1066
         },
         {
           "expression": "storage.tech_priests.armor_profiles_0297[force . name]",
-          "line": 1006
+          "line": 1068
         },
         {
           "expression": "storage.tech_priests.armor_profiles_0297",
-          "line": 1014
+          "line": 1076
         },
         {
           "expression": "storage.tech_priests.armor_profiles_0297[force . name]",
-          "line": 1015
+          "line": 1077
         },
         {
           "expression": "storage.tech_priests",
-          "line": 1034
+          "line": 1096
         },
         {
           "expression": "storage.tech_priests.pairs_by_station",
-          "line": 1034
+          "line": 1096
         },
         {
           "expression": "storage.tech_priests.pairs_by_station",
-          "line": 1035
+          "line": 1097
         },
         {
           "expression": "storage.tech_priests",
-          "line": 1045
+          "line": 1107
         },
         {
           "expression": "storage.tech_priests.station_by_priest",
-          "line": 1045
+          "line": 1107
         },
         {
           "expression": "storage.tech_priests.station_by_priest[entity . unit_number]",
-          "line": 1046
+          "line": 1108
         },
         {
           "expression": "storage.tech_priests.pairs_by_station",
-          "line": 1047
+          "line": 1109
         },
         {
           "expression": "storage.tech_priests.pairs_by_station[station . unit_number]",
-          "line": 1048
+          "line": 1110
         },
         {
           "expression": "storage.tech_priests.last_researched_technology_by_force",
-          "line": 1138
+          "line": 1200
         },
         {
           "expression": "storage.tech_priests.last_researched_technology_by_force[event . research . force . name]",
-          "line": 1139
+          "line": 1201
         },
         {
           "expression": "storage.tech_priests.pairs_by_station",
-          "line": 1141
+          "line": 1203
         },
         {
           "expression": "storage.tech_priests.pairs_by_station",
-          "line": 1149
+          "line": 1211
         },
         {
           "expression": "storage.tech_priests",
-          "line": 1300
+          "line": 1367
         },
         {
           "expression": "storage.tech_priests.station_by_priest",
-          "line": 1300
+          "line": 1367
         },
         {
           "expression": "storage.tech_priests.station_by_priest[old_unit]",
-          "line": 1301
+          "line": 1368
         }
       ],
       "unresolved_loads": [],
       "wrapper_candidates": [
         {
           "kind": "saved-function-or-value-candidate",
-          "line": 1156,
+          "line": 1218,
           "target": "previous_base_max",
           "value": "get_base_sanctification_max ( event ."
         },
         {
           "kind": "saved-function-or-value-candidate",
-          "line": 1299,
+          "line": 1366,
           "target": "old_unit",
           "value": "pair . priest_unit or"
         }
@@ -153447,7 +153694,7 @@
     }
   ],
   "schema": "tech-priests-behavior-source-inventory-v1",
-  "source_digest": "048dd05c00553f6228d6c85485256f0425beba4bf491fedf3b10326e228e8493",
+  "source_digest": "5ee74b379ee6947c13160c818c1bc2a46d3f50cda2e06e45fa7af312890ad0c3",
   "source_scope": [
     "control.lua",
     "scripts/**/*.lua",

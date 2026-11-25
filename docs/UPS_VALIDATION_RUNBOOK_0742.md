@@ -58,6 +58,11 @@ claiming a graphical run. Session 0 rendering is not a visible foreground deskto
 | [45600647747](https://github.com/mrcalzon02/Dens-Mortis/actions/runs/45600647747) | Matched `5934720f` request was cancelled while pending by a subsequent fresh-world request | No job ran; it is not a comparison |
 | [45601230986](https://github.com/mrcalzon02/Dens-Mortis/actions/runs/45601230986) | Fresh-world staging succeeded; desktop task registration was denied | No visible-desktop performance result |
 | [45602737126](https://github.com/mrcalzon02/Dens-Mortis/actions/runs/45602737126) | Candidate-only Linux headless diagnostic of `f209086407c2a20aa9d4ac0e68d8fd539dea289c`; 6,000 native updates, 5,400 after warmup, four stable identities, no isolated/runtime errors | Callback instrumentation enabled; baseline and paired-comparison steps skipped |
+| [45607054793](https://github.com/mrcalzon02/Dens-Mortis/actions/runs/45607054793) | Factorio 2.1.25 initialized the GTX 1660 SUPER through OpenGL in Session 0 and exited successfully from a disposable graphical probe | The old gate expected the CPU benchmark summary, which graphical mode does not emit; no owner replay ran |
+| [45608041558](https://github.com/mrcalzon02/Dens-Mortis/actions/runs/45608041558) | Instrumented Linux attribution of `e4c505ce9b9c09afbb097094184a4d966cf91932`; 6,000 native updates, 5,400 after warmup, four stable identities, no isolated/runtime errors; exact spike rows retained | Candidate-only diagnostic; every catalog scan was timed, other callbacks were sampled; not a matched graphical comparison |
+| [45608431362](https://github.com/mrcalzon02/Dens-Mortis/actions/runs/45608431362) | Graphical probe observed exactly simulation ticks 0 and 1, native OpenGL, Session 0, exit 0 and a two-row native rendering CSV | Confirms simulation and rendering capability; the old CPU-summary/CSV gate rejected the different output format before any owner replay |
+| [45610253533](https://github.com/mrcalzon02/Dens-Mortis/actions/runs/45610253533) | Core30 graphical baseline and e4c505ce candidate replay steps, plus matched-comparison step, all succeeded | Full measurements are being recovered from the large job log; workflow success alone is not a performance claim |
+| [45610962644](https://github.com/mrcalzon02/Dens-Mortis/actions/runs/45610962644) | Instrumented Linux diagnostic of retained-inventory source 5228dfc4175a5bd4d9ff17740d64fc441c800113; 6,000 updates, four stable identities and useful completion counters | Six warm ticks still exceeded 100 ms; different instrumentation from the preceding trace prevents a matched improvement ratio |
 
 In [45602737126](https://github.com/mrcalzon02/Dens-Mortis/actions/runs/45602737126), steady-state whole-update mean/p95/p99/max were
 3.179/9.728/39.376/340.245 ms. All-mod script-update mean/p99/max were
@@ -75,6 +80,49 @@ JSON survived in job-log chunks, but its raw per-tick CSV did not. Subsequent
 runs must retain bounded exact spike rows in the JSON as well as the full CSV,
 and preserve the JSON and actual screenshot chunks in logs. An upload failure
 must not silently discard the evidence needed to investigate the remaining lag.
+
+The later [45608041558](https://github.com/mrcalzon02/Dens-Mortis/actions/runs/45608041558)
+trace establishes the missing attribution: nine of ten measured whole-update
+ticks above 100 ms include a timed `Catalog.scan_pair` call. Whole-update
+mean/p95/p99/max were 2.761/8.767/33.039/281.642 ms; script-update values were
+2.291/7.929/32.033/272.610 ms. Six warm planetary refreshes took
+147.761–158.987 ms each. Planetary and senior scans together consumed
+257.439 ms of game tick 73320 (281.642 ms whole update), and 243.228 ms of tick
+73920 (250.066 ms whole update). Tick 77045 remained unattributed at
+123.7 ms whole update / 115.3 ms script update. Eight direct deposits and one
+emergency-production completion occurred after warmup. These are measured
+stalls despite the lower average; the source at `e4c505ce` did not eliminate
+them. The candidate's worker SHA-256 was
+`af16df07bd8e6850b3573eca6e8354047b9928ffd134e28fb5a30257ddbe25db`.
+The exact attribution, full recovered receipt/job log and graphical-probe CSV
+are retained with hashes in the private
+[evidence manifest](https://github.com/mrcalzon02/Dens-Mortis/blob/228d8605d27074e5b66ed401f05b66b4d7649cd6/runner-evidence/tech-priests/20261125/owner-profile-e4c505ce-45608041558-manifest.json).
+
+### Graphical measurement contract
+
+`--benchmark-graphics` runs simulation with rendering. On the verified 2.1.25
+engine it does not produce the ordinary `--benchmark` update summary or
+per-tick CSV, even with `--benchmark-verbose all`. The native
+`--output-perf-stats` file is a separate frame-statistics stream. Its observed
+45-column header includes `update`, `cpu-frame` and `gpu-frame`; it contains
+neither a game-tick column nor `scriptUpdate`. Do not translate these columns
+into CPU-benchmark timings or fabricate a frame-to-tick association.
+
+For a graphical replay, retain the complete native frame CSV and its hash,
+header, row count, frame warmup, raw distributions and exact renderer/session
+evidence. Require an independent contiguous observer callback count for the
+requested simulation ticks, stable start/sample/end station and priest
+identities, and a native screenshot. A frame warmup is expressed in frames;
+the simulation warmup remains a separate tick boundary. Units not established
+by the native output or an authoritative specification remain unconfirmed.
+Same-schema baseline/candidate ratios do not establish milliseconds or FPS.
+Missing CPU-update or script timing remains unknown rather than zero.
+
+Keep both graphical copies on the same engine, worker, save, non-Tech-Priests
+mods/settings, rendering command and observation scheme. Preserve raw CSV,
+measurement JSON and actual PNG through bounded encoded log chunks when the
+artifact service is full. The ordinary CPU benchmark retains its strict
+sequential tick CSV and summary gates; a graphical run does not weaken them.
 
 ## Objective
 
@@ -113,8 +161,9 @@ stops doing its job cannot be reported as a performance improvement.
    build/mine/destroy, cargo/corpse/chunk and autonomous vehicle/robot arrivals;
    last-cell removal; live stock, wire and force changes; immediate
    movement/combat/lifecycle work; and save/reload with pending work. Verify
-   that scheduled resource surveys exclude inventory-bearing types and do not
-   read contents, while item questions and explicit UI snapshots read live
+   that scheduled physical surveys filter the existing noise types, share their
+   query/entry allowance across stations, and read no inventory quantities or
+   complete mobile-source lists, while item questions and explicit UI snapshots read live
    quantities. Retaining identities must not freeze stock or suppress events.
    Record engine mobile-list traversal separately from spatial queries. Verify
    that explicit cache clearing recovers unsupported/unraised changes; elapsed
@@ -217,8 +266,8 @@ the exact validation state; regeneration alone does not resolve the listed risks
 
 The following paths are the first UPS suspects to watch during the next clean-world pass.
 
-1. Station catalog fallback: `station_catalog.scan_pair` still falls back to a bounded area scan when the 0579 cell index is dirty or unknown. This is correct for universal discovery but is the main scan cliff if repeated often.
-2. Inventory discovery and logistics: 0327's inventory API retains item-independent typed source identities in 0587 and updates the same owner from events and engine mobile lists. 0527, 0686, doctrine and 0643 use that API with their own live policies; 0686 keeps its four-type, 256-entry eligible generic-storage view. Verify that fuel-only car stock is neither counted nor withdrawn, while trunk stock is available and fuel remains unchanged. Measure cold/domain/coverage-expansion queries, mobile-list reads, live item probes, explicit UI contents snapshots and the separate loose-item scan independently. Scheduled resource surveys must exclude inventory types; a covered 0527 miss must not start another inventory domain or force a catalog scan. The 0643 assessment still traverses all groups despite its advertised budget of four.
+1. Station catalog: the scheduled route now advances `station_catalog.step_pair` every five ticks, sharing one native query and 128 entry visits across stations. Discovery, claim validation and old-key release checks consume that allowance. Native query latency, the final table/index commit, and roster bookkeeping remain separately measurable costs. The explicitly requested synchronous `scan_pair` still has its 0579 index/fallback route and must be attributed separately. Record complete and partial sweep latency so delayed work cannot masquerade as a speedup.
+2. Inventory discovery and logistics: 0327's inventory API retains item-independent typed source identities in 0587 and updates the same owner from events and engine mobile lists. 0527, 0686, doctrine and 0643 use that API with their own live policies; 0686 keeps its four-type, 256-entry eligible generic-storage view. Verify that fuel-only car stock is neither counted nor withdrawn, while trunk stock is available and fuel remains unchanged. Measure cold/domain/coverage-expansion queries, mobile-list reads, live item probes, explicit UI contents snapshots and the separate loose-item scan independently. Scheduled physical surveys must not perform these inventory reads or complete mobile-list walks; a covered 0527 miss must not start another inventory domain or force a catalog scan. The 0643 assessment still traverses all groups despite its advertised budget of four.
 3. Repair discovery: `work_queue_authority.discover_repair_near` now filters by force before damaged-entity checks. If repair direct scans remain high, repair discovery should be converted to event-fed damage submissions first and scan fallback second.
 4. Direct acquisition physical guard: `direct_acquisition_physical_guard_0649` now scans only resource/tree/mineable-debris types. If it still appears in profiler output, the next step is to stop scanning when the task already has a valid entity and only retry after a terminal target failure.
 5. Movement ownership: `active_leaf_task_truth_0655`, `movement_intent_authority_0654`, and `direct_acquisition_movement_lock_0650` should reduce repeated engine commands. If `engine_commands` keeps climbing without completions, movement ownership is still fighting.

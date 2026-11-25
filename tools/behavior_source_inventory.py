@@ -32,12 +32,12 @@ CURATED_MAPS = (
 # Reviewed dependency coverage for the hand-written drilldowns. The umbrella
 # maps above always include EVERY inventoried runtime file, including additions.
 DRILLDOWN_SOURCES = {
-    "0661": ("planning_constraints_0646", "logistics_fetch_executor_0527", "scan_routing_0610", "station_catalog", "storage_role_authority_0686", "efficiency_economy_0587", "runtime_tick_broker", "efficiency_economy_0598", "logistics_fetch_executor_0526", "station_area_change_invalidator_0634", "station_work_inventory", "proxy_ammo_hardener_0649", "catalog_dense_scan_1478", "entity_identity_1481", "catalog_owner_index_1496"),
+    "0661": ("planning_constraints_0646", "logistics_fetch_executor_0527", "scan_routing_0610", "station_catalog", "storage_role_authority_0686", "efficiency_economy_0587", "runtime_tick_broker", "efficiency_economy_0598", "logistics_fetch_executor_0526", "station_area_change_invalidator_0634", "station_work_inventory", "proxy_ammo_hardener_0649", "catalog_dense_scan_1478", "entity_identity_1481", "catalog_owner_index_1496", "station_catalog_reuse_guard_1484", "efficiency_economy_0579", "resource_doctrine", "emergency_facility_placement_bridge_0643"),
     "0662": ("direct_acquisition_physical_guard_0649", "direct_acquisition_executor_0513", "movement_controller", "void_movement_authority_0630", "platform_movement_authority", "planning_constraints_0646"),
     "0663": ("direct_acquisition_executor_0513", "order_queue_0469", "movement_controller", "single_dispatcher_0510"),
     "0664": ("movement_controller", "authority_corridor_pathing_0574", "void_movement_authority_0630", "runtime_tick_broker"),
     "0665": ("construction_planner", "construction_site_planner", "construction_bootstrap_ghost_planner_0645", "work_reservations", "single_dispatcher_0510", "self_construction_frustration_gate"),
-    "0666": ("infrastructure_first_governor_0640", "master_infrastructure_plan_0644", "construction_bootstrap_ghost_planner_0645", "power_setup_1252", "self_construction_frustration_gate", "planning_constraints_0646", "control.lua", "runtime_tick_broker", "efficiency_economy_0598"),
+    "0666": ("infrastructure_first_governor_0640", "master_infrastructure_plan_0644", "construction_bootstrap_ghost_planner_0645", "power_setup_1252", "self_construction_frustration_gate", "planning_constraints_0646", "control.lua", "runtime_tick_broker", "efficiency_economy_0598", "emergency_facility_placement_bridge_0643"),
     "0667": ("single_dispatcher_0510", "action_state_arbiter_0488", "logistics_fetch_executor_0527", "order_queue_0469", "combat_roster_orders"),
     "0668": ("action_state_arbiter_0488", "single_dispatcher_0510", "behavior_tree_monitor_0642"),
     "0669": ("order_queue_0469", "consecration_executor_0515", "priest_lifecycle_authority_0499"),

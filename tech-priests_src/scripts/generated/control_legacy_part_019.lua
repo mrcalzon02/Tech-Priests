@@ -860,6 +860,12 @@ TECH_PRIESTS_ARMOR_FALLBACK_RECIPES_0297 = {
   ["power-armor-mk2"] = true
 }
 
+-- Prototypes are immutable within a runtime. Keep only their armor facts here;
+-- force enablement and published profile tables remain live and independent.
+-- Lua reload/configuration rebuilds these locals rather than saving metadata.
+local armor_metadata_0297 = nil
+local armor_recipe_policy_0297 = nil
+
 function tech_priests_0297_get_item_prototypes()
   if tech_priests_prototype_table_0440 then return tech_priests_prototype_table_0440("item") end
   if prototypes and prototypes.item then return prototypes.item end
@@ -900,7 +906,7 @@ function tech_priests_0297_collect_resistances(proto)
   local raw = nil
   local ok, result = pcall(function() return proto and proto.resistances end)
   if ok then raw = result end
-  if not raw then return resistances end
+  if not raw then return resistances, ok end
 
   local ok_pairs = pcall(function()
     for key, entry in pairs(raw) do
@@ -913,8 +919,8 @@ function tech_priests_0297_collect_resistances(proto)
       end
     end
   end)
-  if not ok_pairs then return {} end
-  return resistances
+  if not ok_pairs then return {}, false end
+  return resistances, true
 end
 
 function tech_priests_0297_resistance_score(resistances)
@@ -943,6 +949,25 @@ function tech_priests_0297_recipe_outputs_item(recipe, item_name)
   return found
 end
 
+local function armor_recipe_candidates_0297(force, armor_name)
+  if not armor_recipe_policy_0297 then
+    local policy = rawget(_G, "TechPriestsPlanningConstraints0646")
+    if not (policy and type(policy.recipe_names_for_item) == "function") then
+      local ok, found = pcall(require, "scripts.core.planning_constraints_0646")
+      if ok then policy = found end
+    end
+    if policy and type(policy.recipe_names_for_item) == "function" then
+      armor_recipe_policy_0297 = policy
+    end
+  end
+  if armor_recipe_policy_0297 then
+    local ok, names = pcall(armor_recipe_policy_0297.recipe_names_for_item,
+      force, armor_name, true)
+    if ok and type(names) == "table" then return names end
+  end
+  return nil
+end
+
 function tech_priests_0297_force_can_use_armor(force, armor_name)
   if not (force and force.valid and armor_name) then return false end
   -- Vanilla light armor is effectively a starting item in most games; allow it
@@ -954,42 +979,79 @@ function tech_priests_0297_force_can_use_armor(force, armor_name)
   local direct = recipes[armor_name]
   if direct and direct.enabled then return true end
 
-  -- Some mods unlock armor through a recipe whose name does not exactly match
-  -- the item.  Scan enabled recipes and match their product list.
+  -- The existing planning owner retains product-to-recipe-name membership,
+  -- including disabled recipes. Read current recipes/enablement here; never
+  -- cache an answer about whether this force can presently use the armor.
   local found = false
+  local candidates = armor_recipe_candidates_0297(force, armor_name)
+  if candidates then
+    pcall(function()
+      for _, recipe_name in ipairs(candidates) do
+        local recipe = recipes[recipe_name]
+        if recipe and recipe.enabled and tech_priests_0297_recipe_outputs_item(recipe, armor_name) then
+          found = true
+          break
+        end
+      end
+    end)
+    return found
+  end
+  -- Preserve compatibility when the shared membership provider is unavailable.
   pcall(function()
     for _, recipe in pairs(recipes) do
       if recipe and recipe.enabled and tech_priests_0297_recipe_outputs_item(recipe, armor_name) then
         found = true
+        break
       end
     end
   end)
   return found
 end
 
+local function armor_candidates_0297(item_prototypes)
+  if armor_metadata_0297 then return armor_metadata_0297 end
+  local candidates, complete = {}, true
+  local ok = pcall(function()
+    for item_name, proto in pairs(item_prototypes) do
+      local type_ok, item_type = pcall(function() return proto.type end)
+      if not type_ok then complete = false end
+      if item_type == "armor" then
+        local resistances, read_ok = tech_priests_0297_collect_resistances(proto)
+        if not read_ok then complete = false end
+        local score = tech_priests_0297_resistance_score(resistances)
+        candidates[#candidates + 1] = {name = item_name, score = score,
+          resistances = resistances}
+      end
+    end
+  end)
+  -- A transient prototype error may yield useful current facts, but cannot
+  -- permanently certify that a missing armor has no resistance profile.
+  if ok and complete then armor_metadata_0297 = candidates end
+  return candidates
+end
+
 function tech_priests_0297_find_best_force_armor_profile(force)
   local item_prototypes = tech_priests_0297_get_item_prototypes()
   if not item_prototypes then return nil end
   local best = nil
-  local ok = pcall(function()
-    for item_name, proto in pairs(item_prototypes) do
-      local item_type = nil
-      pcall(function() item_type = proto.type end)
-      if item_type == "armor" and tech_priests_0297_force_can_use_armor(force, item_name) then
-        local resistances = tech_priests_0297_collect_resistances(proto)
-        local score = tech_priests_0297_resistance_score(resistances)
-        if score > 0 and ((not best) or score > best.score) then
-          best = {
-            name = item_name,
-            score = score,
-            resistances = resistances
-          }
-        end
+  pcall(function()
+    -- Preserve prototype iteration order, including the original first-wins
+    -- tie rule. No per-force traversal of unrelated item prototypes remains.
+    for _, candidate in ipairs(armor_candidates_0297(item_prototypes)) do
+      if tech_priests_0297_force_can_use_armor(force, candidate.name)
+          and candidate.score > 0 and (not best or candidate.score > best.score) then
+        best = candidate
       end
     end
   end)
-  if not ok then return best end
-  return best
+  if not best then return nil end
+  -- Callers add force/reason/tick and persist profiles. Do not publish aliases
+  -- of private metadata or share mutable resistance tables between forces.
+  local resistances = {}
+  for damage_type, resistance in pairs(best.resistances) do
+    resistances[damage_type] = {decrease = resistance.decrease, percent = resistance.percent}
+  end
+  return {name = best.name, score = best.score, resistances = resistances}
 end
 
 function tech_priests_0297_refresh_force_armor_profile(force, reason)
@@ -1180,7 +1242,12 @@ TechPriestsRuntimeEventRegistry.on_nth_tick(811, function()
   for _, force in pairs(game.forces) do
     tech_priests_0297_refresh_force_armor_profile(force, "periodic")
   end
-end)
+end, {
+  owner = "armor_profile_0297",
+  route = "force-armor-refresh",
+  category = "uncategorized",
+  note = "force armor refresh; retained prototype facts and live recipe enablement",
+})
 
 -- 0.1.674-dev / 0792: retired manual generated command tp-armor-0297.
 

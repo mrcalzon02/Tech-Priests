@@ -81,7 +81,12 @@ local function clear_pair_state(pair, reason, inventory_only)
   pair.last_shortage_item = nil
   pair.logistic_requested_item = nil
   pair.active_supply_request = nil
-  pair.station_area_dirty_0634 = { tick=now(), reason=tostring(reason or "area-change") }
+  if not inventory_only then
+    -- Physical continuation tokens must survive stock/cursor-only changes.
+    -- Replacing the table also distinguishes multiple topology events at
+    -- the same tick without relying on a timestamp-only generation check.
+    pair.station_area_dirty_0634 = { tick=now(), reason=tostring(reason or "area-change") }
+  end
 
   if type(_G.tech_priests_0575_invalidate_corridor_cache_for_pair)=="function" then pcall(_G.tech_priests_0575_invalidate_corridor_cache_for_pair,pair,"station-area-change-0634") end
   return true
@@ -114,6 +119,20 @@ function M.handle_entity_event(event, reason)
   local surface, pos = entity_position(event)
   if surface and pos then return M.invalidate_near(surface,pos,reason) end
   return false
+end
+
+function M.handle_resource_depleted(event)
+  local entity = event and event.entity
+  if not valid(entity) or entity.type ~= "resource" then return false end
+  -- This event also fires when an infinite resource reaches minimum yield.
+  -- That entity remains a usable source and must retain its catalog claim.
+  if entity.prototype and entity.prototype.infinite_resource then return false end
+  -- The existing owner releases finite claims and revises pending scans even
+  -- when depletion follows an earlier validation slice. No world query or
+  -- synchronous refresh belongs in this event handler.
+  local Catalog = require("scripts.core.station_catalog")
+  Catalog.handle_destroyed_entity(entity, "resource-depleted")
+  return M.invalidate_near(entity.surface, entity.position, "resource-depleted")
 end
 
 function M.handle_player_inventory_event(event, reason)
@@ -174,6 +193,13 @@ local function install_events(registry)
   end, "removed-destroyed")
   if not remove_route then unregister_routes(registry, routes); return nil end
   routes[#routes+1]=remove_route
+
+  if defines.events.on_resource_depleted then
+    local depleted_route = register_route(registry, {defines.events.on_resource_depleted},
+      M.handle_resource_depleted, "resource-depleted")
+    if not depleted_route then unregister_routes(registry, routes); return nil end
+    routes[#routes+1]=depleted_route
+  end
 
   local inventory_events={}
   for _, name in ipairs({"on_player_main_inventory_changed","on_player_cursor_stack_changed"}) do
