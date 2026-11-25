@@ -6,7 +6,9 @@ on:
     paths: ['.github/workflows/verify-v1-draft-assets.yml']
 
 permissions:
-  contents: read
+  # GitHub Actions cannot read unpublished draft releases with contents:read.
+  # The job performs GET-only checks; write permission is required for visibility.
+  contents: write
 
 jobs:
   readback:
