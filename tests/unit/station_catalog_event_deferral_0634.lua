@@ -23,6 +23,10 @@ surface.find_entities_filtered=function(query)
   local types={}
   if type(query.type)=='string' then types[query.type]=true
   else for _,kind in ipairs(query.type or {})do types[kind]=true end end
+  if query.invert then
+    assert(types.container,
+      'scheduled world discovery included retained inventory-bearing entity types')
+  end
   local out={}
   for _,entity in ipairs(entities)do
     local matches=not query.type or types[entity.type]==true
@@ -58,6 +62,30 @@ assert(queries==4 and inventory_queries==4,
   'each station should seed inventories once and survey the remaining world once')
 local originals={}
 for i,pair in ipairs(roster)do originals[i]=Catalog.get_for_pair(pair)end
+local catalog_root=storage.tech_priests.station_catalog_0327
+local function advance(first_tick,last_tick)
+  local publications={}
+  for tick=first_tick,last_tick,Catalog.continuation_period_1498 do
+    game.tick=tick
+    local before_queries,before_catalogs=queries,{}
+    for _,pair in ipairs(roster)do
+      before_catalogs[pair.station.unit_number]=Catalog.get_for_pair(pair)
+    end
+    Catalog.scan_due(2)
+    assert(queries-before_queries<=1,'continuation exceeded its global native-query ceiling')
+    assert(catalog_root.stats.continuation_last_work_1498<=Catalog.work_budget_per_pulse_1498,
+      'continuation exceeded its global work ceiling')
+    for _,pair in ipairs(roster)do
+      local unit=pair.station.unit_number
+      if Catalog.get_for_pair(pair)~=before_catalogs[unit] then
+        publications[unit]=(publications[unit]or 0)+1
+        assert(not catalog_root.scan_jobs_1498[unit],
+          'published a partial catalog before its replacement finished')
+      end
+    end
+  end
+  return publications
+end
 
 game.tick=2
 entities[2]=chest(11)
@@ -72,18 +100,12 @@ for i,pair in ipairs(roster)do
 end
 assert(queries==4,'a catalog reader bypassed the existing scan budget')
 
-local function pulses(start_tick, count)
-  for index=1,count do
-    game.tick=start_tick+(index-1)*Catalog.scan_step_period
-    local before=queries
-    Catalog.scan_due(2)
-    assert(queries-before<=1,'incremental admission exceeded one native query')
-  end
-end
-pulses(60,4)
-assert(queries==8,'four small dirty stations were not refreshed fairly')
+local initial_publications=advance(60,125)
+assert(queries==8,'four dirty stations did not finish through bounded continuation pulses')
 for _,pair in ipairs(roster)do
   local fresh=Catalog.get_for_pair(pair)
+  assert(initial_publications[pair.station.unit_number]==1,
+    'the two admission rounds starved or repeatedly rebuilt a station')
   assert(not fresh.dirty_0634 and fresh.entities['wooden-chest'].count==2,
     'dirty snapshot was clean-reused or new construction was missed')
 end
@@ -91,7 +113,6 @@ end
 -- Inventory/cursor events change stock, not the surrounding entity list.
 -- Clear shortage conclusions while retaining each physical catalog's due
 -- time and clean status; a player transfer must not request world discovery.
-local catalog_root=storage.tech_priests.station_catalog_0327
 local prior_due={}
 for _,pair in ipairs(roster)do
   local unit=pair.station.unit_number
@@ -113,7 +134,7 @@ for _,pair in ipairs(roster)do
 end
 assert(queries==8,'player stock changes rediscovered nearby inventories')
 
-game.tick=121
+game.tick=126
 emit('on_entity_died',{entity=entities[1]})
 emit('on_entity_died',{entity=entities[2]})
 entities[1].valid=false;entities[2].valid=false
@@ -122,38 +143,39 @@ for _,pair in ipairs(roster)do
     'retained snapshot exposed a destroyed physical source')
 end
 assert(queries==8,'removal event or source lookup performed an eager area scan')
-pulses(180,4)
+advance(180,245)
 for _,pair in ipairs(roster)do
   assert(Catalog.get_for_pair(pair).entities['wooden-chest']==nil,
     'bounded refresh did not remove destroyed entities')
 end
 
 -- Continuous nearby construction dirties all four stations before every
--- pulse. Restarting the pair iteration would permanently favor the first
--- station; retained snapshots must still receive fair refreshes.
+-- admission round. Their replacement work runs through bounded slices;
+-- restarting the station cursor would permanently favor the first two.
 local refreshes={}
-for pulse=1,8 do
-  game.tick=240+pulse*Catalog.scan_step_period
+for pulse=1,4 do
+  game.tick=240+pulse*60
   local added=chest(20+pulse)
   entities[#entities+1]=added
   local before=queries
   emit('on_built_entity',{created_entity=added})
   assert(queries==before,'continuous construction performed eager scanning')
-  Catalog.scan_due(2)
-  assert(queries==before+1,'continuous construction exceeded scan budget')
+  local published=advance(game.tick,game.tick+55)
+  assert(queries==before+2,'continuous construction changed the two-station admission bound')
   local updated=0
   for _,pair in ipairs(roster)do
-    if Catalog.get_for_pair(pair).tick==game.tick then
-      local unit=pair.station.unit_number
+    local unit=pair.station.unit_number
+    if published[unit] then
+      assert(published[unit]==1,'one admission round repeated a station refresh')
       refreshes[unit]=(refreshes[unit]or 0)+1
       updated=updated+1
     end
   end
-  assert(updated==1,'scanner did not complete one bounded small-area refresh')
+  assert(updated==2,'scanner did not refresh exactly two dirty stations')
 end
 for _,pair in ipairs(roster)do
   assert(refreshes[pair.station.unit_number]==2,
     'continuous event stream starved a dirty station catalog')
 end
 assert(inventory_queries==4,'events, item questions or resource surveys rediscovered inventory membership')
-print('[station-catalog-event-deferral-0634] PASS: world events deferred fairly; 200 stock events clear shortages without dirtying physical membership; live validity')
+print('[station-catalog-event-deferral-0634] PASS: fair bounded continuation; 200 stock events clear shortages without dirtying physical membership; no inventory rediscovery; live validity')

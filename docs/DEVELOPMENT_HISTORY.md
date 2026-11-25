@@ -1,66 +1,131 @@
-## Bound the measured catalog stalls and separate graphical evidence - 2026-11-25
+## Align lifecycle audits with canonical retirements - 2026-11-25
 
-Native attribution run 45608041558 at e4c505ce identified catalog work in nine
-of ten warm whole-update ticks over 100 ms, including a 281.642 ms tick. The
-concurrent retained-inventory repair at 5228dfc was preserved; its diagnostic
-45610962644 still measured six warm ticks over 100 ms, including 305.161 ms.
-Those observations require a remaining scheduled-work repair, not a claim that
-a lower mean alone resolved the slowdown.
+Incoming all-broker trace 45619891933 measured a 119.017 ms 0733 checkpoint at
+game tick 75745, among nine warm callbacks. The trace did not separate nested
+audits. Source review found a definite expectation mismatch: 0733 called the
+retired 0730 audit, 0725 required retired 0718/0730 services, and 0721 expected
+ten retired module globals. Those failures prevented successful checkpoints
+under the current declared owners and repeated the full audits on retry.
 
-The existing catalog owner now resumes physical discovery through DenseScan
-begin/step state and a five-tick registry route. One native query and 128
-inspected entries are shared across an admission; invalid and duplicate entries,
-claim validation and old-key release checks consume that allowance. Last
-completed snapshots stay available while pending work advances. Topology,
-radar and built-claim revisions survive publication; stock-only changes do not
-invalidate physical discovery. Domain changes and explicit scans supersede
-older pending work. Incomplete scans retain prior claims and usable safe partial
-observations. Ownership still changes through the existing reverse-index owner.
+The existing auditors now require the live replacements. 0725 checks 0717 and
+the actual `fluid_turret_route_discovery_0719` service; 0721 retains its live
+owner checks and adds canonical work reservations. Retirement metadata is
+reported from existing `0646.RETIRED`. 0733 records retired 0730 with
+`passed=false`, checks 0719 capabilities without executing planning, and relies
+on the existing broker/integration checks for live activation. Init/config,
+source-revision handling, incomplete retries and 0735 migration assertions
+remain. A completed checkpoint reaches the original cheap broker branch.
 
-The combined implementation retains 5228dfc's inventory authority and native
-trunk selection. Scheduled physical slices do not read inventory quantities or
-invoke its complete cold inventory seed/mobile-list enrichment. Item questions
-and explicit UI snapshots retain their separate live-read boundary. The final
-Lua-table ownership commit and roster bookkeeping are separate costs; the
-admission budget is not a wall-time guarantee or a global mod budget.
+The integrated regression fails against the original three auditors and passes
+against the repaired source. It verifies twelve cheap calls with no full audit,
+missing-live-owner and real custody/migration failures, retry/recovery, source
+revision and configuration metadata. The separate 0721 serialization audit
+still runs when due. The established runner contains 79 Lua fixtures after
+adding this case; the combined source/native gates record their own outcomes.
+No measured speedup or attribution of the 119 ms call to the storage walk is
+claimed. Existing maps, testing goals and the runbook retain that open timing
+question and the independent audit cadences.
 
-Focused delivery evidence preserves four-station progress: four stations with
-300 resources each completed within 85 ticks of their respective starts. Four
-stations with 3,000 resources and 3,000 old claims each completed a steady
-refresh within 1,530 ticks. The 600-tick deadline is a due target, not a promised
-completion period under that dense load. The native owner-save replay must
-report useful work and complete/partial sweep latency alongside frame/tick cost.
+## Continue resource surveys and preserve fixed-rank armor - 2026-11-25
 
-The same diagnostic exposed an 811-tick force armor refresh at up to 100.338 ms.
-The existing generated 0297 owner now retains immutable armor facts and reuses
-0646 recipe membership while checking live enablement. Its cadence, research
-refreshes, direct-name compatibility, per-force profile writes and later 0302
-behavior remain unchanged. The focused fixture holds one item-table walk and
-one recipe-table walk per force through 100 further refreshes, with live unlock,
-profile isolation, damage/effect and reload checks. This is an operation-count
-reduction awaiting the combined native replay.
+The retained-inventory candidate still produced six measured ticks over 100 ms
+in diagnostic run [45610962644](https://github.com/mrcalzon02/Dens-Mortis/actions/runs/45610962644).
+Its catalog callback reached 284.811 ms, an individual magos scan reached
+184.945 ms and the obsolete 811-tick armor callback reached 100.338 ms. Four
+inventory seeds served the replay without timed rediscovery. Those values
+identify remaining work in that earlier candidate; they do not measure the
+changes described below or establish a matched performance ratio.
 
-The existing 0634 event owner now routes finite resource depletion through
-canonical claim release and pending revision, preventing a resource that dies
-after one validation slice from entering the completed snapshot. Infinite
-resources at minimum yield retain their usable claim. The bounded continuation
-fixture covers both branches without adding an event-side spatial query.
+The existing 0327 catalog now retains pending query/result, classification,
+subordinate-sort and claim-retirement cursors. It admits two due stations every
+60 ticks and resumes through its same registry owner every four ticks, sharing
+one native query and 256 counted work units. Published snapshots remain usable.
+Events request a follow-up without restarting progress; domain cancellation
+rolls back staged-only claims, preserves external radar/build claims and
+transfers retirement knowledge when a pair record is replaced. Native world
+area overlap remains unchanged. Explicit synchronous refresh supersedes a
+pending scan. Admission time remains the age/deadline basis; publication time
+is recorded separately. Finite depletion now releases exact/legacy claims
+through the existing 0634/0327 event owners and requests a dirty follow-up;
+infinite minimum-yield resources retain their usable claims. Stock-only events
+leave the physical dirty token intact. Current-domain placeholder reads avoid
+synchronous scans, while resource lookup rechecks native area overlap, surface
+and current ownership and can use a valid retained alternate.
+Unexpected classification errors mark the same job for existing bounded
+claim cancellation, keep it due, increment the error counter and rethrow the
+original error rather than allowing a consumed partial batch to publish.
 
-The remaining 5228dfc tick74715 contains 216.135 ms of all-mod script time. No
-catalog, 0643 or rare registry callback appears there. Incremental GC accounts
-for another 9.739 ms, not the dominant script stall. The next diagnostic also
-times every outer broker pulse and inventory-candidate read to narrow that
-unattributed interval; it is not assigned to a source owner by inference.
+0587 lends its existing retained identity array and revision to the catalog;
+there is no second membership owner or timer-based inventory discovery. A
+changed or compacted borrowed list requests a follow-up instead of silently
+certifying skipped entries. Quantities, roles, force, range and inventory
+slots remain live in their existing item/UI consumers.
 
-The Core30 graphical replay 45610253533 passed both baseline and e4c505ce
-candidate steps and its matched-comparison step. Its quantitative evidence is
-being recovered separately; job success alone is not an accepted performance
-claim. The corrected worker reads the engine's native rendering CSV, counts
-contiguous simulation observations independently, and leaves absent CPU/script
-timings unknown. Graphical CSV units remain unconfirmed. Full frame/native logs,
-JSON and native PNG have recoverable chunk formats with hashes. Exhaustive
-attribution now covers catalog admissions/publication, 0644, 0643 and rare
-registry callbacks; nested timings overlap and cannot be summed.
+The exact Factorio 2.1.25 native continuation fixture saved cursor 8 of a
+768-row result after one query, resumed it after reload without repeating that
+query, and matched the synchronous reference for four catalogs of 2,400 ore
+entities plus one overlapping edge rock each. Every catalog retained 2,401
+claims and completed in 492-504 ticks, with one-query/256-work pulse maxima.
+The earlier five-tick version took 615-630 ticks before the edge assertion was
+added; the final four-tick setting restores capacity within the fastest
+600-tick sweep interval for this dense fixture. Larger workloads and the
+owner-save comparison remain separate. Roster sorts, cold owner-index builds,
+initial population and explicit synchronous manual scans are still real costs.
+Ordinary cold catalog readers now return an incomplete pending snapshot and mark
+it due without scanning.
+
+The incoming private-API `station_catalog_incremental.lua` fixture is retired;
+its distinct depletion, stale-domain, ownership, partial-coverage, removal and
+failure cases are consolidated into the selected catalog/DenseScan continuation
+fixtures rather than forwarded to or duplicated beside another implementation.
+The catalog fixture now passes 16 scenarios, and the established regression
+runner contains 78 Lua fixtures; that count does not assert a full gate pass.
+
+Generated 0302 remains the fixed-rank armor owner. The superseded 0297 timer
+811 is retired and its build entry delegates to 0302. Direct recipes, the
+missing-mech fallback and live alias enablement are preserved through existing
+0646 recipe membership. Creation/recovery, research/reset, damage response and
+887-tick all-pair maintenance remain. The concurrent 643228c4 change to explicit
+0297 force-profile helpers is retained: immutable armor facts and 0646 recipe
+membership are reused, enablement stays live and returned resistance tables are
+independent. The concurrent proposal to retain timer 811 is superseded by the
+installed-owner fix above. The full-fragment Lua fixture and native
+create/reload/damage fixture pass, including 100 warm membership questions.
+These source and isolated-engine contracts are not an owner-save UPS verdict.
+Existing maps, testing goals and the evidence runbook were updated; the next
+combined source/freshness gate and matched replay must record their own result.
+
+## Concurrent attribution and graphical evidence retained - 2026-11-25
+
+The concurrent 643228c4 review preserved the e4c505ce CPU attribution run
+[45608041558](https://github.com/mrcalzon02/Dens-Mortis/actions/runs/45608041558):
+catalog work appeared in nine of ten measured whole-update ticks above 100 ms,
+including a 281.642 ms tick. The retained-inventory diagnostic 45610962644
+subsequently still had six such ticks; game tick 74715 alone contained
+216.135 ms of all-mod script work without an identifying sampled owner. The
+next diagnostic expands scheduled/on-tick coverage and retained-inventory
+scopes. These traces used different instrumentation and establish attribution
+limits, not a matched performance improvement.
+
+The concurrent five-tick/128-inspection continuation and preserved 811-tick
+armor poll were not selected. The current four-tick/256-work continuation and
+0302 ownership are described above; legitimate finite-resource invalidation,
+live source validation, explicit legacy armor metadata reuse and source-map
+dependency coverage are reconciled into those existing owners. The alternate
+Lua fixture's 85-tick small-world and 1,530-tick dense-refresh results belong to
+that concurrent implementation, not the selected native continuation fixture.
+
+Graphical probes 45607054793 and 45608431362 established native OpenGL in
+Session 0; the latter observed two simulation ticks and a two-row rendering
+CSV. They did not replay the owner save. Core30 run
+[45610253533](https://github.com/mrcalzon02/Dens-Mortis/actions/runs/45610253533)
+passed baseline, candidate and comparison workflow steps, but its complete
+quantitative receipt is not independently accepted here. The worker separates
+native frame statistics from contiguous simulation observations: its observed
+45-column CSV has no game-tick or script-update column, and numeric units
+remain unconfirmed. Preserve CSV, JSON and native PNG bytes/hashes through log
+chunks when artifact storage is full. The current evidence and graphical
+measurement contract are in the [UPS runbook](UPS_VALIDATION_RUNBOOK_0742.md).
 
 ## Retain inventory identities without timed rediscovery - 2026-11-25
 

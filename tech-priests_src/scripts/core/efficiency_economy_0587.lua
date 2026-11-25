@@ -215,6 +215,7 @@ local function candidate_view(record, limit, view_radius)
     -- next already-known entity without another spatial search.
     for index = read, size do list[write] = list[index]; write = write + 1 end
     for index = write, size do list[index] = nil end
+    record.identity_revision_1498 = (record.identity_revision_1498 or 0) + 1
   end
   return view
 end
@@ -262,6 +263,41 @@ function M.source_candidates(pair, radius, domain, types, force_policy, discover
   return retained_candidates(pair, radius, domain, types, force_policy, discover)
 end
 
+-- The catalog's scheduled continuation borrows this owner's identity array
+-- without copying/filtering every source in one pulse. Item/UI callers still
+-- use source_candidates and read live eligibility normally. A borrower must
+-- recheck the record identity and revision before publishing a clean snapshot.
+-- With no discover callback this is a read-only, constant-membership lookup.
+function M.borrow_source_candidates(pair, radius, domain, types, force_policy, discover)
+  if not valid_pair(pair) then return nil, false end
+  local root = M.root()
+  if root.enabled == false or root.cache_sources == false
+      or not container_events_installed then return nil, false end
+  local station = pair.station
+  local key = candidate_cache_key(pair, domain, force_policy)
+  if not key then return nil, false end
+  local record = key and root.source_cache[key]
+  if record and record.retained_candidates == 1 and record.complete == true
+      and record.station == station and record.surface == station.surface
+      and record.force == station.force and record.radius >= radius
+      and record.x == station.position.x and record.y == station.position.y
+      and source_types_match(record, types) then return record, false end
+  if type(discover) ~= "function" then return nil, false end
+  local list = discover()
+  if type(list) ~= "table" then return nil, true end
+  record = {retained_candidates = 1, complete = true, list = list,
+    domain = domain, force_policy = force_policy, types = {}, type_names = {},
+    station = station, surface = station.surface, force = station.force,
+    surface_index = station.surface.index, radius = radius,
+    x = station.position.x, y = station.position.y, tick = now(), identity_revision_1498 = 0}
+  for index, name in ipairs(types) do
+    record.types[name], record.type_names[index] = true, name
+  end
+  root.source_cache[key] = record
+  stat("retained_source_initial_discoveries")
+  return record, true
+end
+
 -- A caller may encounter additional identities in an engine-owned vehicle or
 -- robot list. Merge that batch into this existing domain once; do not turn
 -- every observed robot into a walk over every station's retained sources.
@@ -288,6 +324,7 @@ local function merge_source_identities(record, entities, retain_outside)
       end
     end
   end
+  if added > 0 then record.identity_revision_1498 = (record.identity_revision_1498 or 0) + 1 end
   return added
 end
 
@@ -364,7 +401,11 @@ local function update_source_membership(record, event, change)
   if not entity then
     if event and event.surface_index == record.surface_index then
       if change == "surface-deleted" then return "discard" end
-      if change == "surface-cleared" then record.list = {}; return "updated" end
+      if change == "surface-cleared" then
+        record.list = {}
+        record.identity_revision_1498 = (record.identity_revision_1498 or 0) + 1
+        return "updated"
+      end
     end
     return nil
   end
@@ -398,7 +439,10 @@ local function update_source_membership(record, event, change)
   end
   for index = write, size do list[index] = nil end
   if belongs and not found then list[#list + 1] = entity; changed = true end
-  if changed then return "updated" end
+  if changed then
+    record.identity_revision_1498 = (record.identity_revision_1498 or 0) + 1
+    return "updated"
+  end
   return nil
 end
 

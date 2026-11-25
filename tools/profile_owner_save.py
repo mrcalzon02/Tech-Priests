@@ -191,6 +191,16 @@ do
   local function emit(record)
     log("[TP-OWNER-SAVE] " .. helpers.table_to_json(record))
   end
+  local function cached_audit_status(value)
+    if type(value)~="table" then return nil end
+    return {available=value.available,ok=value.ok,passed=value.passed,error=value.error,
+      detail=value.detail,second=value.second,retired=value.retired,
+      retirement_reason=value.retirement_reason,replacement_available=value.replacement_available,
+      replacement_ready=value.replacement_ready}
+  end
+  local function cached_array_count(value)
+    if type(value)=="table" then return #value end
+  end
   local function live_pairs()
     local found={}
     for key,pair in pairs(storage.tech_priests and storage.tech_priests.pairs_by_station or {}) do
@@ -209,7 +219,11 @@ do
       local station,priest=p.station,p.priest
       local catalog_root=storage.tech_priests and storage.tech_priests.station_catalog_0327
       local current=catalog_root and catalog_root.stations and catalog_root.stations[station.unit_number]
-      local pending=catalog_root and catalog_root.pending_scans and catalog_root.pending_scans[station.unit_number]
+      -- Passive receipts only: use the selected owner's retained tables.
+      -- Never request a catalog, discover entities, or walk its source lists.
+      local pending_owner=catalog_root and (catalog_root.scan_jobs_1498 and "scan_jobs_1498"
+        or catalog_root.pending_scans and "pending_scans")
+      local pending=pending_owner and catalog_root[pending_owner][station.unit_number]
       local partial=catalog_root and catalog_root.partial_stations and catalog_root.partial_stations[station.unit_number]
       local pending_info=pending and (pending.scan_info or (pending.dense and pending.dense.info))
       if original_ids and original_ids[station.unit_number]~=priest.unit_number then stable=false end
@@ -223,14 +237,22 @@ do
         direct_phase=p.dispatcher_direct_0513 and p.dispatcher_direct_0513.phase,
         direct_custody=p.direct_acquisition_custody_0513 and {
           item=p.direct_acquisition_custody_0513.item,count=p.direct_acquisition_custody_0513.count},
-        catalog_observation={published_present=current~=nil,
-          published_started_tick=current and current.scan_started_tick,
-          published_completed_tick=current and current.scan_completed_tick,
+        catalog_observation={pending_owner=pending_owner,published_present=current~=nil,
+          published_started_tick=current and (current.scan_started_tick_1498 or current.scan_started_tick or current.tick),
+          published_completed_tick=current and (current.scan_finished_tick_1498 or current.scan_completed_tick),
+          published_slices=current and current.scan_slices_1498,
+          published_work=current and current.scan_work_1498,
+          published_entities=current and current.scan_entities_1478,
+          published_queries=current and current.scan_queries_1478,
           published_incomplete=current and current.scan_incomplete_1478,
           published_reason=current and current.scan_reason_1478,
-          published_queries=current and current.scan_queries_1478,
-          published_entities=current and current.scan_entities_1478,
           published_collisions=current and current.scan_identity_collisions_1481,
+          published_owned_resources=current and current.owned_resource_count,
+          published_active_resources=current and current.active_resource_count,
+          published_entity_count=current and current.entity_count,
+          published_inventory_members=current and current.inventory_members_1497,
+          published_dirty=current and current.dirty_0634,
+          published_pending_snapshot=current and current.pending_snapshot_1498,
           partial_completed_tick=partial and partial.scan_completed_tick,
           partial_incomplete=partial and partial.scan_incomplete_1478,
           partial_reason=partial and partial.scan_reason_1478,
@@ -239,10 +261,14 @@ do
           partial_collisions=partial and partial.scan_identity_collisions_1481,
           pending_phase=pending and pending.phase,
           pending_started_tick=pending and pending.started_tick,
-          pending_age_ticks=pending and (game.tick-pending.started_tick),
+          pending_age_ticks=pending and pending.started_tick and (game.tick-pending.started_tick),
+          pending_next_due=pending and pending.next_due,
+          pending_pulses=pending and pending.pulses,
+          pending_work=pending and pending.work,
           pending_processed=pending and pending.processed,
-          pending_queries=pending_info and pending_info.queries,
-          -- The in-progress coverage flag is not a completed certificate.
+          pending_queries=pending and (pending.queries or (pending_info and pending_info.queries)),
+          pending_unique=pending_info and pending_info.unique,
+          -- In-progress coverage is a receipt, not a completed certificate.
           pending_scan_done=pending and pending.dense and pending.dense.done==true,
           pending_scan_complete=pending_info and pending_info.complete,
           pending_scan_reason=pending_info and pending_info.reason,
@@ -254,12 +280,28 @@ do
           pending_budget_exhausted=pending_info and pending_info.budget_exhausted==true,
           pending_invalidated=pending and pending.invalidated==true,
           pending_invalid_entity=pending and pending.invalid_entity==true,
-          pending_ownership_conflict=pending and pending.ownership_conflict==true},
+          pending_ownership_conflict=pending and pending.ownership_conflict==true,
+          pending_query_cursor=pending and pending.dense and pending.dense.current and pending.dense.current.cursor,
+          pending_inventory_cursor=pending and pending.inventory_cursor,
+          pending_inventory_limit=pending and pending.inventory_limit,
+          pending_cancelled=pending and pending.cancelled,
+          pending_dirtied=pending and pending.dirtied,
+          next_scan=catalog_root and catalog_root.next_scan and catalog_root.next_scan[station.unit_number]},
         station_chest_items=station_stock(station),
         task=p.order_queue_0469 and p.order_queue_0469.current and p.order_queue_0469.current.kind}
     end
     if original_count and #values~=original_count then stable=false end
     local tp=storage.tech_priests or {}
+    -- Passive audit receipts: never execute an audit or traverse saved state.
+    local lifecycle=tp.development_lifecycle_checkpoint_0733
+    local lifecycle_last=lifecycle and lifecycle.last
+    local lifecycle_audits=lifecycle_last and lifecycle_last.audits
+    local integration=tp.development_integration_audit_0721
+    local integration_last=integration and integration.last
+    local serialization=integration_last and integration_last.serialization
+      or integration and integration.last_serialization
+    local integrity=tp.broker_registry_integrity_0725
+    local integrity_last=integrity and integrity.last
     local repair_by_force={}
     for _,by_force in pairs(tp.work_queue_authority_0601 and tp.work_queue_authority_0601.queues or {}) do
       for force_id,categories in pairs(by_force) do
@@ -276,6 +318,44 @@ do
       behavior_counters=counters,behavior_owners=owners,
       connected_players=#game.connected_players,repair_queue_by_force=repair_by_force,
       enemy_force_index=game.forces.enemy.index,
+      audit_observation={
+        lifecycle={available=lifecycle~=nil,enabled=lifecycle and lifecycle.enabled,
+          source_revision=lifecycle and lifecycle.source_revision,
+          checkpoints=lifecycle and lifecycle.stats and lifecycle.stats.checkpoints,
+          last_tick=lifecycle_last and lifecycle_last.tick,
+          last_complete=lifecycle_last and lifecycle_last.complete,
+          last_reason=lifecycle_last and lifecycle_last.reason,
+          last_source_revision=lifecycle_last and lifecycle_last.source_revision,
+          installation_complete=lifecycle_last and lifecycle_last.installation and lifecycle_last.installation.complete,
+          installation_failed=lifecycle_last and lifecycle_last.installation and lifecycle_last.installation.failed,
+          registry_complete=lifecycle_last and lifecycle_last.registry and lifecycle_last.registry.complete,
+          audits=lifecycle_audits and {
+            hardener=cached_audit_status(lifecycle_audits.hardener),
+            broker=cached_audit_status(lifecycle_audits.broker),
+            planner=cached_audit_status(lifecycle_audits.planner),
+            integration=cached_audit_status(lifecycle_audits.integration),
+            commandless=cached_audit_status(lifecycle_audits.commandless),
+            migration_pair_integrity_0734=cached_audit_status(lifecycle_audits.migration_pair_integrity_0734)}},
+        integration={available=integration~=nil,enabled=integration and integration.enabled,
+          last_tick=integration_last and integration_last.tick,
+          issues_added=integration_last and integration_last.issues_added,
+          missing_modules=cached_array_count(integration_last and integration_last.missing_modules),
+          surviving_commands=cached_array_count(integration_last and integration_last.surviving_commands),
+          retirement_registry_available=integration_last and integration_last.retirement_registry_available,
+          serialization=serialization and {tick=serialization.tick,nodes=serialization.nodes,
+            tables=serialization.tables,lua_objects=serialization.lua_objects,
+            circular_references=serialization.circular_references,unsupported=serialization.unsupported,
+            truncated=serialization.truncated,issues=cached_array_count(serialization.issues)}},
+        integrity={available=integrity~=nil,enabled=integrity and integrity.enabled,
+          last_tick=integrity_last and integrity_last.tick,complete=integrity_last and integrity_last.complete,
+          central_route_complete=integrity_last and integrity_last.central_route_complete,
+          missing=cached_array_count(integrity_last and integrity_last.missing),
+          malformed=cached_array_count(integrity_last and integrity_last.malformed),
+          duplicates=cached_array_count(integrity_last and integrity_last.duplicates),
+          central_route_malformed=cached_array_count(integrity_last and integrity_last.central_route_malformed),
+          retirement_registry_available=integrity_last and integrity_last.retirement_registry_available},
+        planner_replacement_enabled=tp.fluid_turret_connection_planner_0719
+          and tp.fluid_turret_connection_planner_0719.enabled},
       station_catalog_stats=tp.station_catalog_0327 and tp.station_catalog_0327.stats,
       logistics_fetch_stats=tp.logistics_fetch_executor_0527 and tp.logistics_fetch_executor_0527.stats,
       broker_stats=tp.runtime_tick_broker_0600 and tp.runtime_tick_broker_0600.stats,
@@ -350,18 +430,19 @@ do
   end,nil,{owner="ci-owner-save-profile",route="observe-original-identities",priority=1000000})
   if __INSTRUMENT__ then
     installed_global_hooks={}
-    local every_call_branches=__EVERY_CALL_BRANCHES__
     local function wrap(fn,scope,name,per_pair)
       local call_counts={}
-      -- Rare scheduled owners need every invocation to avoid sampling away a
-      -- complete warm replay. All wrappers are absent in comparison mode.
-      local interval=scope=="registry-nth" and tonumber(name:match("^(%d+):"))
-      local every_call=(interval and interval>=60)
-        or (scope=="registry-nth" and name=="5:runtime_tick_broker_0600:central-pulse")
-        or (scope=="dispatcher-branch" and every_call_branches[name])
-        or scope=="dispatcher-global"
-        or scope=="broker-service"
+      -- Record every scheduled owner, including on_tick routes outside the
+      -- broker, so a costly native tick cannot fall between top-level samples.
+      -- Record every dispatcher owner branch/global to attribute the repeated
+      -- costly dispatcher frame. Non-tick events remain sparse. All
+      -- wrappers are disabled in the final performance comparison. Native
+      -- durations are rendered by log(), never read as numeric Lua values.
+      local every_call=scope=="broker-service" or scope=="registry-nth"
+        or scope=="dispatcher-branch" or scope=="dispatcher-global"
         or scope=="resource-expansion-local"
+        or (scope=="registry-event"
+          and tonumber(name:match("^(%d+):"))==defines.events.on_tick)
         or (scope=="infrastructure-local" and name:sub(1,5)=="0644.")
       return function(...)
         local label=name
@@ -431,8 +512,12 @@ do
       {"TechPriestsProxyAmmoHardener0649","scripts.core.proxy_ammo_hardener_0649",{"station_ammo","station_has_ammo","proxy_has_ammo","load_proxy_from_station","service_pair"}},
       {"TechPriestsMasterInfrastructurePlan0644","scripts.core.master_infrastructure_plan_0644",{"build_plan","service_pair"}},
       {"TechPriestsStationCatalog","scripts.core.station_catalog",{"scan_pair","step_pair","publish_pending","inventory_candidates","get_for_pair","find_known_source"}},
-      {"TechPriestsDevelopmentIntegrationAudit0721","scripts.core.development_integration_audit_0721",{"audit_all","step_storage_audit"}},
       {"TechPriestsDevelopmentLifecycleCheckpoint0733","scripts.core.development_lifecycle_checkpoint_0733",{"checkpoint"}},
+      {"TechPriestsHardenerInstallationAudit0723","scripts.core.hardener_installation_audit_0723",{"inspect"}},
+      {"TechPriestsBrokerRegistryIntegrity0725","scripts.core.broker_registry_integrity_0725",{"audit"}},
+      {"TechPriestsFluidTurretPlannerIntegrity0730","scripts.core.fluid_turret_planner_integrity_0730",{"audit"}},
+      {"TechPriestsDevelopmentIntegrationAudit0721","scripts.core.development_integration_audit_0721",{"audit_all","step_storage_audit"}},
+      {"TechPriestsRuntimeCommandCleanup0720","scripts.core.runtime_command_cleanup_0720",{"remove_all"}},
     }
     for _,spec in ipairs(owners) do
       local owner=rawget(_G,spec[1]) or package.loaded[spec[2]]
@@ -496,15 +581,7 @@ LOCAL_PROFILE_FUNCTIONS_0259 = (
 CAMPAIGN_PROFILE_METHODS_0259 = ("local_supply", "offer_local_drill", "explore", "admit")
 RESOURCE_EXPANSION_PROFILE_HOOKS_0259 = (
     *LOCAL_PROFILE_FUNCTIONS_0259, *("Campaign."+name for name in CAMPAIGN_PROFILE_METHODS_0259))
-EVERY_CALL_BRANCHES = (
-    *("scripts.core.station_catalog."+name for name in (
-        "scan_pair", "step_pair", "publish_pending", "inventory_candidates", "get_for_pair", "find_known_source")),
-    "scripts.core.master_infrastructure_plan_0644.service_pair",
-    "scripts.core.development_integration_audit_0721.audit_all",
-    "scripts.core.development_integration_audit_0721.step_storage_audit",
-    "scripts.core.development_lifecycle_checkpoint_0733.checkpoint")
-OBSERVER = (OBSERVER.replace("__RESOURCE_EXPANSION_HOOK_COUNT__", str(len(RESOURCE_EXPANSION_PROFILE_HOOKS_0259)))
-    .replace("__EVERY_CALL_BRANCHES__", "{"+",".join("["+json.dumps(name)+"]=true" for name in EVERY_CALL_BRANCHES)+"}"))
+OBSERVER = OBSERVER.replace("__RESOURCE_EXPANSION_HOOK_COUNT__", str(len(RESOURCE_EXPANSION_PROFILE_HOOKS_0259)))
 
 
 def callback_sampling_policy(enabled: bool) -> dict | None:
@@ -512,14 +589,12 @@ def callback_sampling_policy(enabled: bool) -> dict | None:
         return None
     return {"default":"calls 1, 33, 65, ... per label",
         "every_call":[
-            {"scope":"registry-nth","minimum_interval_ticks":60},
-            {"scope":"registry-nth","name":"5:runtime_tick_broker_0600:central-pulse"},
-            *({"scope":"dispatcher-branch","name":name} for name in EVERY_CALL_BRANCHES),
-            {"scope":"dispatcher-global"},
-            {"scope":"broker-service"},
+            {"scope":"broker-service"},{"scope":"registry-nth"},
+            {"scope":"registry-event","event":"defines.events.on_tick"},
+            {"scope":"dispatcher-branch"},{"scope":"dispatcher-global"},
             *({"scope":"resource-expansion-local","name":"0259."+name} for name in RESOURCE_EXPANSION_PROFILE_HOOKS_0259),
             *({"scope":"infrastructure-local","name":"0644."+name} for name in LOCAL_PROFILE_FUNCTIONS_0644)],
-        "warmup_included":True,
+        "warmup_included":True,"duration_threshold":None,
         "overlap":"nested service/local scopes overlap; final step_pair includes publish_pending; do not sum these durations"}
 
 
@@ -984,7 +1059,7 @@ def main() -> int:
             "graphical_benchmark":args.graphics,
             "script_scope":"unavailable in graphical frame CSV" if args.graphics else "whole-engine-all-installed-mods",
             "timing_evidence_scope":"native graphical frame CSV; no game-tick correlation" if args.graphics else "native per-game-tick update benchmark",
-            "callback_scope":("all broker services and outer broker pulse, every listed dispatcher branch including 0519/0527/0529 wrappers and saved dispatcher delegates, 0644 locals, and registry nth-tick callbacks with interval at least 60 ticks; other owners one-in-32 including warmup; nested scopes overlap; diagnostic overhead present"
+            "callback_scope":("every broker-service, registry-nth, registry on_tick, dispatcher-branch and dispatcher-global call; all 0259 and 0644 diagnostic local hooks; non-tick events one-in-32 per label; nested scopes overlap; diagnostic overhead present"
                               if args.instrument_callbacks else "disabled"),
             "callback_sampling_policy":callback_sampling_policy(args.instrument_callbacks),
             "graphics_backend":None,"graphics_renderer":None,

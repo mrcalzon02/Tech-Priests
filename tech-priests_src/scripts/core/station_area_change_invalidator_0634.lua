@@ -6,6 +6,7 @@
 -- near a station, or when the player directly inserts/removes items, stations in
 -- that area must stop trusting old radar/catalog/emergency conclusions.
 
+local Catalog = require("scripts.core.station_catalog")
 local M = {}
 M.version = "0.1.634"
 M.storage_key = "station_area_change_invalidator_0634"
@@ -82,9 +83,6 @@ local function clear_pair_state(pair, reason, inventory_only)
   pair.logistic_requested_item = nil
   pair.active_supply_request = nil
   if not inventory_only then
-    -- Physical continuation tokens must survive stock/cursor-only changes.
-    -- Replacing the table also distinguishes multiple topology events at
-    -- the same tick without relying on a timestamp-only generation check.
     pair.station_area_dirty_0634 = { tick=now(), reason=tostring(reason or "area-change") }
   end
 
@@ -124,13 +122,12 @@ end
 function M.handle_resource_depleted(event)
   local entity = event and event.entity
   if not valid(entity) or entity.type ~= "resource" then return false end
-  -- This event also fires when an infinite resource reaches minimum yield.
-  -- That entity remains a usable source and must retain its catalog claim.
+  -- Minimum yield fires this event for infinite resources too. Those sources
+  -- remain usable and retain their existing membership and ownership.
   if entity.prototype and entity.prototype.infinite_resource then return false end
-  -- The existing owner releases finite claims and revises pending scans even
-  -- when depletion follows an earlier validation slice. No world query or
-  -- synchronous refresh belongs in this event handler.
-  local Catalog = require("scripts.core.station_catalog")
+  -- Finite ore is still valid during the event. Release its precise/legacy
+  -- claim now, then let the existing continuation consume the invalidation.
+  -- Neither depletion nor ordinary mining performs a synchronous world scan.
   Catalog.handle_destroyed_entity(entity, "resource-depleted")
   return M.invalidate_near(entity.surface, entity.position, "resource-depleted")
 end

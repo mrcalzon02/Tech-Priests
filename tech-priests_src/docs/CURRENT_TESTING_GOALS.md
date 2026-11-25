@@ -50,6 +50,80 @@ The measurement protocol is `docs/UPS_VALIDATION_RUNBOOK_0742.md`; the current
 topology starts at `docs/BEHAVIOR_MERMAID_MAP_0660.md`. No native timing pass is
 claimed by this checklist.
 
+### Resource catalog continuation and fixed-rank armor
+
+The existing 0327 registry owner now admits at most two due stations every
+60 ticks and resumes saved jobs every four ticks. All pending jobs share one
+native query and 256 counted work units per pulse. Retain the published
+snapshot while query/result traversal, collision handling, classification,
+subordinate sorting and claim retirement progress. Admission and actual-work
+cursors are separate. Preserve the original sweep deadline and admission-based
+catalog age; record publication time separately.
+
+Validate continuous and same-tick invalidation without restart starvation,
+external radar/build claims, live ownership transfers, domain cancellation,
+replaced-pair retirement tracking and explicit-refresh supersession. Scheduled
+inventory classification borrows the existing 0587 identity array and checks
+its revision; it must not copy the full list per slice, introduce timer-based
+inventory rediscovery or certify a shifted array as unchanged. Keep native
+area-query collision-box overlap for world entities and the existing separate
+inventory-view position policies. Test finite depletion after a classification
+slice: release its canonical claim immediately and converge through the existing
+dirty follow-up. Infinite minimum-yield resources keep their claims. Stock-only
+events preserve the physical dirty token. Cold and obsolete-domain readers
+return incomplete current-domain pending views without synchronous queries; a
+matching replacement job retains its deadline. Resource lookup rechecks live
+area overlap, surface and ownership and can select a valid retained alternate.
+
+The exact 2.1.25 native fixture saved cursor 8 of a 768-row query result and
+resumed after reload without repeating the query. Four stations, each with
+2,400 ore entities plus an overlapping edge rock, matched synchronous totals
+and 2,401 claims in 492-504 ticks at the one-query/256-work maxima. This is
+8.2-8.4 seconds for that dense fixture, not an owner-save UPS result. Preserve
+completion latency and full-survey throughput in the next matched replay.
+Roster collection/sorting, cold ownership-index construction, initial metadata
+and inventory population, per-entity native/product work and explicit synchronous
+manual scans remain outside any claim of a hard elapsed-time bound. Ordinary cold
+catalog readers return an incomplete pending snapshot and mark it due without
+scanning.
+
+Run `tests/unit/catalog_dense_scan_continuation_1498.lua` and
+`tests/unit/station_catalog_continuation_1498.lua`, plus the existing event
+invalidation and retained-inventory fixtures. The reusable native scenario is
+`tests/scenarios/catalog-continuation/control.lua`.
+
+Armor remains with generated 0302 fixed-rank damage and refresh behavior.
+Only the superseded 811-tick force-wide best-armor poll is retired; the 0297
+build alias delegates to 0302, whose alias-recipe lookup shares 0646 membership
+and reads enabled state live. Creation/recovery, research/reset, actual damage
+and the existing 887-tick all-pair maintenance remain. Validate the direct
+recipe path, missing-mech fallback and same-tick unlock/disable with
+`tests/unit/fixed_rank_armor_existing_authority.lua` and the native
+`tests/scenarios/fixed-rank-armor/control.lua` fixture. The 887 route still
+visits every pair; it has no new inner work cap. Explicit legacy 0297 force-profile
+helpers also reuse immutable armor metadata and 0646 recipe membership while
+checking enablement live and returning independent profiles. Run
+`tests/unit/armor_profile_metadata_0297.lua` against explicit helper refreshes;
+do not restore timer 811 to satisfy that compatibility fixture.
+
+### Lifecycle audit expectations and remaining cost
+
+Run `tests/unit/development_audit_retired_owners.lua` with the existing auditors,
+registry/broker and canonical 0646 declarations. The original three auditors
+fail because intentional retirements leave the checkpoint incomplete. The
+repaired owners pass: twelve healthy 0733 broker calls invoke no full audits;
+missing live services/capabilities, a missing work-reservation owner, real
+orphaned custody and missing 0734 migration service/audit still fail, retry and
+recover. Configuration metadata and source-revision checks remain. Retired
+0730 is explicitly reported as retired with `passed=false`, while its live 0719
+replacement is required. The established runner now contains 79 Lua fixtures.
+
+The unchanged 0721 task/custody/request checks and periodic serialization walk
+remain active. Its separate 307-tick service can trigger the synchronous walk
+after a 3,600-tick minimum interval. Incoming trace 45619891933 measured one
+119.017 ms 0733 call among nine warm calls; nested audit timings must locate that
+cost before another runtime change or a claim that this stall is resolved.
+
 ### Retained inventory membership and facility accounting
 
 The current inventory repair keeps the existing 0587 source-cache authority.
@@ -65,7 +139,8 @@ their retained identities and does not read inventory contents. Item questions
 read current counts; explicitly opened/refreshed Work State and catalog panels
 call the inventory snapshot API. Player stock/cursor invalidation in 0634 clears
 shortage answers without dirtying the physical catalog. Entity topology events
-retain the last resource snapshot until the existing rotating scan route runs.
+retain the last resource snapshot until the pending survey publishes; they do
+not restart its saved progress.
 
 Verify ordinary mobile arrivals through current engine vehicle/robot lists,
 retained-silo pods and the existing membership owner. Cargo, rocket, corpse,

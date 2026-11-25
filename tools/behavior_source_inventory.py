@@ -44,7 +44,7 @@ DRILLDOWN_SOURCES = {
     "0670": ("emergency_production_executor_0514", "crafting_executor", "emergency_facility_doctrine", "storage_role_authority_0686", "inventory_steward"),
     "0671": ("consecration_executor_0515", "work_reservations", "work_queue_authority", "scripts/core/consecration/*.lua", "shared/combat_roster_catalog.lua", "control.lua"),
     "0672": ("repair_executor_0516", "event_driven_work_feeder_0608", "work_queue_authority", "work_reservations", "combat_repair_doctrine_0517"),
-    "0675": ("combat_repair_doctrine_0517", "repair_executor_0516", "action_state_arbiter_0488"),
+    "0675": ("combat_repair_doctrine_0517", "repair_executor_0516", "action_state_arbiter_0488", "scripts/generated/control_legacy_part_019.lua", "scripts/generated/control_legacy_part_020.lua", "planning_constraints_0646"),
 }
 
 

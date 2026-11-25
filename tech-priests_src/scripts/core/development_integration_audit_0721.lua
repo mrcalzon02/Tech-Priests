@@ -17,21 +17,15 @@ local M = {
   serialization_issue_limit = 40,
 }
 
+-- Require the current owners after 0646's declared consolidation. Intentional
+-- retirements are reported from that same declaration, not as missing globals.
 local REQUIRED_GLOBALS = {
   "TechPriestsFluidNetworkDoctrine0689",
-  "TechPriestsFluidOutputSinkDoctrine0694",
-  "TechPriestsReservationPositionScope0697",
+  "TechPriestsWorkReservations0601",
   "TechPriestsFluidConnectionPlanner0691",
-  "TechPriestsFluidConnectionExecutionGuard0692",
-  "TechPriestsFluidOutputConnectionPlanner0696",
-  "TechPriestsFluidPortCollisionValidator0699",
-  "TechPriestsFluidPortContextGuard0700",
   "TechPriestsItemFamilyLogistics0702",
-  "TechPriestsItemFamilyIntegrity0703",
   "TechPriestsEnergyFamilyReadiness0705",
-  "TechPriestsEnergyReadinessDiagnostics0711",
   "TechPriestsEnergyFamilyLogistics0707",
-  "TechPriestsEnergyItemAutomationGuard0722",
   "TechPriestsRocketSiloReadiness0709",
   "TechPriestsRocketSiloLogistics0710",
   "TechPriestsArtilleryReadiness0712",
@@ -40,7 +34,6 @@ local REQUIRED_GLOBALS = {
   "TechPriestsRoboportRepairPackLogistics0715",
   "TechPriestsFluidTurretReadiness0716",
   "TechPriestsFluidTurretConnectionProposals0717",
-  "TechPriestsFluidTurretProposalIntegrity0718",
   "TechPriestsFluidTurretConnectionPlanner0719",
   "TechPriestsRuntimeCommandCleanup0720",
 }
@@ -462,6 +455,8 @@ function M.audit_all()
   local remaining_commands = tech_priests_commands()
   for _, name in ipairs(remaining_commands) do issue(nil, "surviving-command", name) end
   local serialization = maybe_audit_storage(state)
+  local constraints = rawget(_G, "TechPriestsPlanningConstraints0646")
+  local retired = constraints and constraints.RETIRED
 
   stat("audits")
   stat("pairs-audited", audited_pairs)
@@ -470,6 +465,10 @@ function M.audit_all()
     pairs = audited_pairs,
     issues_added = (state.stats.issues or 0) - before,
     missing_modules = missing,
+    -- Report the loader's declaration itself; missing live replacement globals
+    -- above remain real audit issues, not silently skipped retirements.
+    retired_modules = type(retired) == "table" and retired or {},
+    retirement_registry_available = type(retired) == "table",
     surviving_commands = remaining_commands,
     serialization = serialization,
   }
@@ -499,6 +498,7 @@ local function patch_diagnostics()
       .. " last_issues=" .. safe(last.issues_added or 0)
       .. " total_issues=" .. safe(state.stats.issues or 0)
       .. " missing_modules=" .. safe(table_count(last.missing_modules))
+      .. " retirement_registry_available=" .. safe(last.retirement_registry_available)
       .. " surviving_commands=" .. safe(table_count(last.surviving_commands))
       .. " storage_nodes=" .. safe(serialization.nodes or 0)
       .. " storage_unsupported=" .. safe(serialization.unsupported or 0)

@@ -9,6 +9,8 @@ local M = {
   central_route_id = "runtime_tick_broker_0600:central-pulse",
 }
 
+-- Live registrations after 0646's declared consolidation: 0717 owns 0718's
+-- checks, and 0730's replacement registers fluid_turret_route_discovery_0719.
 local CRITICAL_SERVICES = {
   "energy_family_readiness_0705",
   "energy_family_logistics_0707",
@@ -20,12 +22,11 @@ local CRITICAL_SERVICES = {
   "roboport_repair_pack_logistics_0715",
   "fluid_turret_readiness_0716",
   "fluid_turret_connection_proposals_0717",
-  "fluid_turret_proposal_integrity_0718",
+  "fluid_turret_route_discovery_0719",
   "runtime_command_cleanup_0720",
   "development_integration_audit_0721",
   "hardener_installation_audit_0723",
   "broker_registry_integrity_0725",
-  "fluid_turret_planner_integrity_0730",
   "development_lifecycle_checkpoint_0733",
 }
 
@@ -111,6 +112,8 @@ local function inspect_services()
   local broker = broker_module()
   local registry = registry_module()
   local installation = installation_snapshot(broker)
+  local constraints = rawget(_G, "TechPriestsPlanningConstraints0646")
+  local retired = constraints and constraints.RETIRED
   local interval = broker and tonumber(broker.base_interval) or 5
   local route_count, route_malformed = central_routes(registry, interval)
 
@@ -178,6 +181,10 @@ local function inspect_services()
     central_route_complete = route_complete,
     total = total,
     critical_expected = #CRITICAL_SERVICES,
+    -- Keep intentional retirement visible without inventing a passed audit
+    -- or requiring registrations that the canonical loader explicitly retired.
+    retired_modules = type(retired) == "table" and retired or {},
+    retirement_registry_available = type(retired) == "table",
     missing = missing,
     duplicates = duplicates,
     malformed = malformed,
@@ -291,6 +298,7 @@ local function patch_diagnostics()
       .. " central_route_id=" .. safe(last.central_route_id)
       .. " total_services=" .. safe(last.total or 0)
       .. " critical_expected=" .. safe(last.critical_expected or 0)
+      .. " retirement_registry_available=" .. safe(last.retirement_registry_available)
       .. " missing=" .. safe(#(last.missing or {}))
       .. " duplicates=" .. safe(#(last.duplicates or {}))
       .. " malformed=" .. safe(#(last.malformed or {}))

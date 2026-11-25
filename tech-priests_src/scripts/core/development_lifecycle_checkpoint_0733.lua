@@ -9,7 +9,7 @@
 
 local M = {
   version = "0.1.674-dev",
-  source_revision = "0.1.674-dev-lifecycle-0733-b",
+  source_revision = "0.1.674-dev-lifecycle-0733-c",
   storage_key = "development_lifecycle_checkpoint_0733",
   audit_interval = 601,
   owner = "development_lifecycle_checkpoint_0733",
@@ -150,6 +150,38 @@ local function call_audit(module_global, module_path, method)
   }
 end
 
+local function retired_planner_snapshot()
+  local constraints = rawget(_G, "TechPriestsPlanningConstraints0646")
+  local retired = constraints and constraints.RETIRED
+  local module_path = "scripts.core.fluid_turret_planner_integrity_0730"
+  local reason = type(retired) == "table" and retired[module_path] or nil
+  local replacement = rawget(_G, "TechPriestsFluidTurretConnectionPlanner0719")
+    or package.loaded["scripts.core.fluid_turret_connection_planner_0719"]
+  -- 0730 has no live audit method. Check its declared retirement and the
+  -- existing replacement's capabilities without executing route planning.
+  -- 0725 separately verifies the replacement's actual broker registration.
+  local replacement_ready = type(replacement) == "table"
+    and type(replacement.service_all) == "function"
+    and type(replacement.refresh_pair) == "function"
+    and type(replacement.next_construction_request) == "function"
+    and replacement.wrapper_free == true
+    and replacement.read_only_route_planner == true
+    and replacement.construction_handoff == true
+  return {
+    available = false,
+    ok = false,
+    passed = false,
+    retired = reason ~= nil,
+    detail = reason and "retired-owner" or "retirement-unverified",
+    retirement_reason = reason,
+    module = module_path,
+    replacement_module = "scripts.core.fluid_turret_connection_planner_0719",
+    replacement_service = "fluid_turret_route_discovery_0719",
+    replacement_available = type(replacement) == "table",
+    replacement_ready = replacement_ready,
+  }
+end
+
 function M.checkpoint(reason, event)
   local state = persistent_root()
   if state.enabled == false then return false, "disabled" end
@@ -168,11 +200,7 @@ function M.checkpoint(reason, event)
     "scripts.core.broker_registry_integrity_0725",
     "audit"
   )
-  local planner = call_audit(
-    "TechPriestsFluidTurretPlannerIntegrity0730",
-    "scripts.core.fluid_turret_planner_integrity_0730",
-    "audit"
-  )
+  local planner = retired_planner_snapshot()
   local integration = call_audit(
     "TechPriestsDevelopmentIntegrationAudit0721",
     "scripts.core.development_integration_audit_0721",
@@ -185,7 +213,8 @@ function M.checkpoint(reason, event)
   )
 
   local complete = installation.complete and registry.complete
-    and hardener.passed and broker.passed and planner.passed
+    and hardener.passed and broker.passed
+    and planner.retired and planner.replacement_ready
     and integration.passed and commandless.passed
 
   state.source_revision = M.source_revision
@@ -216,6 +245,8 @@ function M.checkpoint(reason, event)
     hardener_passed = hardener.passed,
     broker_passed = broker.passed,
     planner_passed = planner.passed,
+    planner_retired = planner.retired,
+    planner_replacement_ready = planner.replacement_ready,
     integration_passed = integration.passed,
     commandless_passed = commandless.passed,
     old_version = change.old_version,
@@ -294,6 +325,8 @@ local function patch_diagnostics()
       .. " hardener_passed=" .. safe(audits.hardener and audits.hardener.passed == true)
       .. " broker_passed=" .. safe(audits.broker and audits.broker.passed == true)
       .. " planner_passed=" .. safe(audits.planner and audits.planner.passed == true)
+      .. " planner_retired=" .. safe(audits.planner and audits.planner.retired == true)
+      .. " planner_replacement_ready=" .. safe(audits.planner and audits.planner.replacement_ready == true)
       .. " integration_passed=" .. safe(audits.integration and audits.integration.passed == true)
       .. " commandless_passed=" .. safe(audits.commandless and audits.commandless.passed == true)
       .. " old_version=" .. safe(change.old_version or "none")

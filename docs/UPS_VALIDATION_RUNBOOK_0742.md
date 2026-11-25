@@ -62,7 +62,7 @@ claiming a graphical run. Session 0 rendering is not a visible foreground deskto
 | [45608041558](https://github.com/mrcalzon02/Dens-Mortis/actions/runs/45608041558) | Instrumented Linux attribution of `e4c505ce9b9c09afbb097094184a4d966cf91932`; 6,000 native updates, 5,400 after warmup, four stable identities, no isolated/runtime errors; exact spike rows retained | Candidate-only diagnostic; every catalog scan was timed, other callbacks were sampled; not a matched graphical comparison |
 | [45608431362](https://github.com/mrcalzon02/Dens-Mortis/actions/runs/45608431362) | Graphical probe observed exactly simulation ticks 0 and 1, native OpenGL, Session 0, exit 0 and a two-row native rendering CSV | Confirms simulation and rendering capability; the old CPU-summary/CSV gate rejected the different output format before any owner replay |
 | [45610253533](https://github.com/mrcalzon02/Dens-Mortis/actions/runs/45610253533) | Core30 graphical baseline and e4c505ce candidate replay steps, plus matched-comparison step, all succeeded | Full measurements are being recovered from the large job log; workflow success alone is not a performance claim |
-| [45610962644](https://github.com/mrcalzon02/Dens-Mortis/actions/runs/45610962644) | Instrumented Linux diagnostic of retained-inventory source 5228dfc4175a5bd4d9ff17740d64fc441c800113; 6,000 updates, four stable identities and useful completion counters | Six warm ticks still exceeded 100 ms; different instrumentation from the preceding trace prevents a matched improvement ratio |
+| [45610962644](https://github.com/mrcalzon02/Dens-Mortis/actions/runs/45610962644) | Candidate-only Linux headless diagnostic after retained-inventory separation; source digest `f2fbab3ab4d19f850a216b73f8da3ba214aec3edab6deda5e852ab61582d6546`; four initial inventory queries and six measured whole/script-update ticks over 100 ms | Every nth-tick callback with interval at least 60 ticks, catalog scan and 0643 callback instrumented; frequent callbacks sampled one in 32. This precedes catalog continuation and armor changes and is not their performance result |
 
 In [45602737126](https://github.com/mrcalzon02/Dens-Mortis/actions/runs/45602737126), steady-state whole-update mean/p95/p99/max were
 3.179/9.728/39.376/340.245 ms. All-mod script-update mean/p99/max were
@@ -97,6 +97,62 @@ them. The candidate's worker SHA-256 was
 The exact attribution, full recovered receipt/job log and graphical-probe CSV
 are retained with hashes in the private
 [evidence manifest](https://github.com/mrcalzon02/Dens-Mortis/blob/228d8605d27074e5b66ed401f05b66b4d7649cd6/runner-evidence/tech-priests/20261125/owner-profile-e4c505ce-45608041558-manifest.json).
+
+The later [45610962644](https://github.com/mrcalzon02/Dens-Mortis/actions/runs/45610962644)
+diagnostic retained every nth-tick callback with an interval of at least 60 ticks,
+every catalog scan and every 0643 emergency-placement callback; frequent callbacks
+were sampled one in 32. Its 5,400 measured
+whole-update mean/p95/p99/max were 3.527/13.693/36.457/305.161 ms. The catalog's
+60-tick callback reached 284.811 ms and an individual magos catalog scan reached
+184.945 ms. The obsolete 811-tick armor callback reached 100.338 ms. These
+observations motivated continuation within the existing catalog and removal of
+the superseded armor timer. The diagnostic's source and instrumentation differ
+from earlier runs; these values are attribution evidence, not a matched speedup.
+Candidate3 game tick 74715 still contained 216.135 ms of all-mod script work
+without a timed catalog, 0643 or rare registry callback identifying its owner.
+Frequent-callback sampling cannot rule those other paths out. The candidate4
+profiler records every broker-service, registry nth-tick and registry `on_tick`
+callback and every configured dispatcher-branch/global hook, including catalog,
+0644 and retained-inventory reads. It also targets the checkpoint and its five
+audit methods when callable; retired 0730 has no audit method to time. Other
+non-tick events remain sparsely sampled. This broader coverage does not apply
+retroactively to candidate3.
+
+The incoming `643228c4` all-broker trace
+[45619891933](https://github.com/mrcalzon02/Dens-Mortis/actions/runs/45619891933)
+measured nine warm 0733 checkpoint callbacks: median 0.675 ms, maximum
+119.017 ms at elapsed tick 3744 / game tick 75745. The trace does not separate
+its nested audits. Source review found that 0733, 0725 and 0721 still required
+explicitly retired owners, preventing a completed checkpoint from settling into
+its cheap branch. Their expectations now validate the actual live replacements
+and report intentional retirements separately. The integrated regression passes
+against the repaired owners and fails against the original three files. This
+does not prove which nested operation caused 119 ms or establish a measured
+speedup: 0721 retains its own periodic audit and synchronous storage walk.
+
+### Isolated continuation and armor contracts
+
+The current [catalog continuation fixture](../tests/scenarios/catalog-continuation/control.lua)
+uses exact Factorio 2.1.25 and four stations with 2,400 ore entities plus one
+boundary-overlapping rock each. A native save captures cursor 8 of a 768-row
+result after one query. Reload resumes that result without repeating the query;
+all four catalogs match the synchronous reference, including 2,401 claims each.
+At the final four-tick continuation cadence they complete in 492–504 ticks
+(8.2–8.4 seconds), with maxima of one native query and 256 counted work units per
+pulse. The earlier five-tick version took 615–630 ticks before the edge-rock
+assertion was added;
+the final cadence preserves capacity below the fastest 600-tick sweep deadline
+for this specific dense test. Larger populations or different density remain
+separate measurements. Admission stays every 60 ticks, and publication does
+not extend the original sweep deadline or clean-reuse age.
+
+The [armor fixture](../tests/scenarios/fixed-rank-armor/control.lua) exercises
+the actual generated fragments and a native damage event after reload. It
+confirms that obsolete timer 811 is absent, fixed-rank timer 887 remains,
+100 warm unlock questions reuse 0646 recipe membership and same-tick alias
+enablement remains live. These are isolated correctness/latency contracts,
+not the matched owner-save UPS result. Keep their create/reload logs with the
+final source identity and compare the complete candidate on the owner save.
 
 ### Graphical measurement contract
 
@@ -161,9 +217,8 @@ stops doing its job cannot be reported as a performance improvement.
    build/mine/destroy, cargo/corpse/chunk and autonomous vehicle/robot arrivals;
    last-cell removal; live stock, wire and force changes; immediate
    movement/combat/lifecycle work; and save/reload with pending work. Verify
-   that scheduled physical surveys filter the existing noise types, share their
-   query/entry allowance across stations, and read no inventory quantities or
-   complete mobile-source lists, while item questions and explicit UI snapshots read live
+   that scheduled resource surveys exclude inventory-bearing types and do not
+   read contents, while item questions and explicit UI snapshots read live
    quantities. Retaining identities must not freeze stock or suppress events.
    Record engine mobile-list traversal separately from spatial queries. Verify
    that explicit cache clearing recovers unsupported/unraised changes; elapsed
@@ -171,6 +226,21 @@ stops doing its job cannot be reported as a performance improvement.
    Verify that the 0644 continuation preserves the original per-cycle attempt
    quota, cursor fairness, failure accounting and pending deadlines across
    reload while movement, combat, lifecycle and custody remain responsive.
+   For 0327, save inside a partially consumed native result, then verify query
+   and result cursors resume, all four dense stations publish, and repeated
+   events do not reset progress. Preserve native area-overlap selection,
+   external radar/build claims, current ownership, replaced-pair retirement
+   knowledge, explicit-refresh supersession and borrowed-array revision checks.
+   Deplete a finite resource after classification and verify immediate claim
+   release plus eventual dirty-snapshot convergence; an infinite resource at
+   minimum yield must retain its claim. Stock-only events must preserve the
+   physical dirty token. Cold and changed-domain readers must return pending
+   views without synchronous queries, and live lookup must reject a transferred
+   owner or moved source while accepting an eligible retained alternate.
+   Record start/finish ticks and full-survey throughput alongside per-pulse
+   work. Roster sorts, cold ownership-index construction and synchronous manual
+   access remain outside the work-unit cap. Verify 0302 armor damage and live
+   rank gates while retiring only obsolete timer 811; existing 887 still runs.
 8. Once the four-priest failure is resolved, repeat the established higher-count
    cases and representative idle/logistics/combat/construction workloads before
    extending the performance claim to those populations. Report any unrun case
@@ -266,11 +336,13 @@ the exact validation state; regeneration alone does not resolve the listed risks
 
 The following paths are the first UPS suspects to watch during the next clean-world pass.
 
-1. Station catalog: the scheduled route now advances `station_catalog.step_pair` every five ticks, sharing one native query and 128 entry visits across stations. Discovery, claim validation and old-key release checks consume that allowance. Native query latency, the final table/index commit, and roster bookkeeping remain separately measurable costs. The explicitly requested synchronous `scan_pair` still has its 0579 index/fallback route and must be attributed separately. Record complete and partial sweep latency so delayed work cannot masquerade as a speedup.
-2. Inventory discovery and logistics: 0327's inventory API retains item-independent typed source identities in 0587 and updates the same owner from events and engine mobile lists. 0527, 0686, doctrine and 0643 use that API with their own live policies; 0686 keeps its four-type, 256-entry eligible generic-storage view. Verify that fuel-only car stock is neither counted nor withdrawn, while trunk stock is available and fuel remains unchanged. Measure cold/domain/coverage-expansion queries, mobile-list reads, live item probes, explicit UI contents snapshots and the separate loose-item scan independently. Scheduled physical surveys must not perform these inventory reads or complete mobile-list walks; a covered 0527 miss must not start another inventory domain or force a catalog scan. The 0643 assessment still traverses all groups despite its advertised budget of four.
+1. Station catalog continuation: `scan_due` admits two due stations every 60 ticks and the same registry owner resumes saved work every four ticks, sharing one native query and 256 counted work units. Measure complete-survey latency, dirty follow-ups and actual progress as well as pulse durations. The existing 13-query / 3,072-result total bounds still leave dense-tail coverage limits. Ordinary cold `get_for_pair` calls create an incomplete pending snapshot and mark it due without scanning. Roster collection/sorting, cold owner-index initialization and explicit synchronous `scan_pair`/manual scans remain separate potential stalls; the synchronous path can still use or fall back from 0579. A count budget is not a time ceiling.
+2. Inventory discovery and logistics: 0327's inventory API retains item-independent typed source identities in 0587 and updates the same owner from events and engine mobile lists. 0527, 0686, doctrine and 0643 use that API with their own live policies; 0686 keeps its four-type, 256-entry eligible generic-storage view. Verify that fuel-only car stock is neither counted nor withdrawn, while trunk stock is available and fuel remains unchanged. Measure cold/domain/coverage-expansion queries, mobile-list reads, live item probes, explicit UI contents snapshots and the separate loose-item scan independently. Scheduled resource surveys must exclude inventory types; a covered 0527 miss must not start another inventory domain or force a catalog scan. The 0643 assessment still traverses all groups despite its advertised budget of four.
 3. Repair discovery: `work_queue_authority.discover_repair_near` now filters by force before damaged-entity checks. If repair direct scans remain high, repair discovery should be converted to event-fed damage submissions first and scan fallback second.
 4. Direct acquisition physical guard: `direct_acquisition_physical_guard_0649` now scans only resource/tree/mineable-debris types. If it still appears in profiler output, the next step is to stop scanning when the task already has a valid entity and only retry after a terminal target failure.
 5. Movement ownership: `active_leaf_task_truth_0655`, `movement_intent_authority_0654`, and `direct_acquisition_movement_lock_0650` should reduce repeated engine commands. If `engine_commands` keeps climbing without completions, movement ownership is still fighting.
+
+6. Lifecycle audits: distinguish 0733 full checkpoints from its completed-state broker checks, and time 0723 inspection, 0725 registry audit, 0721 integration audit and 0720 command cleanup separately. Keep 0735 migration checks visible. Correlate 0721 serialization timestamps/node counts with any expensive `audit_all` call; its own 307-tick service can still trigger the whole-storage walk after the 3,600-tick minimum interval. The retirement correction must not hide real live-owner, custody or migration failures.
 
 ## Signals to Investigate
 

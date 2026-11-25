@@ -1,6 +1,5 @@
 -- Bounded deterministic subdivision for dense station Auspex scans.
--- Plain continuation data; entity references are values, never saved keys.
--- No polling, callback closures in state, event handlers, or world mutations.
+-- No global event handlers or world mutations; caller-owned continuations are serializable.
 local M = { version = "0.1.674-dev", max_queries = 13,
   max_depth = 2, max_entities = 3072, min_extent = 2 }
 
@@ -24,6 +23,8 @@ local function identity(entity, key_of)
     tostring(p.x or p[1] or 0) .. ":" .. tostring(p.y or p[2] or 0)
 end
 
+-- Only primitives, arrays/maps and LuaEntity references are saved here.
+-- key_of is supplied to step(), never retained in the continuation.
 function M.begin(area, opts)
   opts = opts or {}
   local x1, y1, x2, y2 = bounds(area)
@@ -31,181 +32,169 @@ function M.begin(area, opts)
     saturated_queries = 0, truncated_leaves = 0, unique = 0,
     identity_collisions = 0, budget_exhausted = false, reason = "complete",
     filtered_queries = 0, prefilter_fallbacks = 0 }
-  local state = {
-    schema = 1, info = info, out = {}, seen = {}, collisions = {},
-    pending = {}, cursor = 1, done = false,
+  if not (x1 and x2 > x1 and y2 > y1) then
+    info.complete, info.reason = false, "invalid-scan-request"
+    return nil, info
+  end
+  local excluded = {}
+  for _, kind in ipairs(opts.exclude_types or {}) do excluded[#excluded + 1] = kind end
+  return { version = 1, info = info,
     limit = math.max(1, math.floor(tonumber(opts.limit) or 768)),
     max_queries = math.max(1, math.floor(tonumber(opts.max_queries) or M.max_queries)),
     max_depth = math.max(0, math.floor(tonumber(opts.max_depth) or M.max_depth)),
     max_entities = math.max(1, math.floor(tonumber(opts.max_entities) or M.max_entities)),
     min_extent = tonumber(opts.min_extent) or M.min_extent,
-  }
-  -- Only native type names belong in this option. Do not retain opts itself:
-  -- its key_of callback must be supplied anew to step after a module reload.
-  if type(opts.exclude_types) == "table" and #opts.exclude_types > 0 then
-    state.exclude_types = {}
-    for index, name in ipairs(opts.exclude_types) do
-      if type(name) == "string" then state.exclude_types[index] = name end
-    end
-  end
-  state.prefilter_available = state.exclude_types ~= nil and #state.exclude_types > 0
-  if not (x1 and x2 > x1 and y2 > y1) then
-    info.complete, info.reason = false, "invalid-scan-request"
-    state.done, state.nil_result = true, true
-  else
-    state.pending[1] = {x1, y1, x2, y2, 0}
-  end
-  return state
+    pending = {{x1, y1, x2, y2, 0}}, cursor = 1,
+    results = {}, seen = {}, collisions = {}, exclude_types = excluded,
+    prefilter_available = #excluded > 0,
+  }, info
 end
 
-local function result(state, usage)
-  state.info.unique = #state.out
-  local out = state.out
-  if state.nil_result then out = nil end
-  return state.done, out, state.info, usage
-end
-
-local function finish(state, check_pending)
-  if check_pending and state.cursor <= #state.pending then
-    state.info.complete, state.info.budget_exhausted = false, true
-    state.info.reason = "query-budget"
+local function finish(state, reason)
+  state.done = true
+  state.info.unique = #state.results
+  if reason then
+    state.info.complete, state.info.reason = false, reason
   end
-  state.done, state.buffer, state.buffer_index, state.current = true, nil, nil, nil
 end
 
-local function finish_buffer(state)
-  local item, info = state.current, state.info
-  local ax, ay, bx, by, depth = item[1], item[2], item[3], item[4], item[5]
-  if #state.buffer >= state.limit then
-    info.saturated_queries = info.saturated_queries + 1
+local function accept(state, entity, key, batch, keys)
+  if #state.results >= state.max_entities then
+    state.info.budget_exhausted = true
+    finish(state, "entity-budget")
+    return false
+  end
+  state.results[#state.results + 1] = entity
+  batch[#batch + 1], keys[#keys + 1] = entity, key
+  state.info.unique = #state.results
+  return true
+end
+
+local function finish_result(state)
+  local current = state.current
+  local item = current.area
+  if #current.entities >= state.limit then
+    local ax, ay, bx, by, depth = item[1], item[2], item[3], item[4], item[5]
+    state.info.saturated_queries = state.info.saturated_queries + 1
     if depth >= state.max_depth or bx - ax <= state.min_extent or by - ay <= state.min_extent then
-      info.complete = false
-      info.truncated_leaves = info.truncated_leaves + 1
-      info.reason = "saturated-leaf"
+      state.info.complete = false
+      state.info.truncated_leaves = state.info.truncated_leaves + 1
+      state.info.reason = "saturated-leaf"
     else
       local mx, my = (ax + bx) / 2, (ay + by) / 2
-      -- Preserve the original breadth-first fixed quadrant order.
       local pending = state.pending
       pending[#pending + 1] = {ax, ay, mx, my, depth + 1}
       pending[#pending + 1] = {mx, ay, bx, my, depth + 1}
       pending[#pending + 1] = {ax, my, mx, by, depth + 1}
       pending[#pending + 1] = {mx, my, bx, by, depth + 1}
-      info.splits = info.splits + 1
+      state.info.splits = state.info.splits + 1
     end
   end
-  state.buffer, state.buffer_index, state.current = nil, nil, nil
+  state.current = nil
 end
 
--- info.complete is a coverage result only when done is true. Per-call usage
--- counts real engine queries and every inspected buffer entry, even an invalid
--- or duplicate entity. A caller may classify just the newly appended out tail.
-function M.step(state, surface, budget, key_of)
-  local usage = {queries = 0, entities = 0}
-  if state.done then return result(state, usage) end
-  if not (surface and surface.valid ~= false
-      and type(surface.find_entities_filtered) == "function") then
-    state.info.complete, state.info.reason = false, "invalid-scan-request"
-    state.nil_result = true
-    finish(state, false)
-    return result(state, usage)
+-- Budget counts include invalid/duplicate result rows and every collision
+-- comparison, so a yielded native result cannot hide an unbounded Lua walk.
+-- Native calls and result traversal have separate GLOBAL caller budgets.
+function M.step(surface, state, opts)
+  opts = opts or {}
+  local batch, keys = {}, {}
+  local work = { queries = 0, entities = 0, keys = keys }
+  if not state then return batch, nil, true, work end
+  if not (surface and type(surface.find_entities_filtered) == "function") then
+    finish(state, "invalid-scan-request")
   end
-  budget = budget or {}
-  local queries = math.max(0, math.floor(tonumber(budget.queries) or 1))
-  local entities = math.max(0, math.floor(tonumber(budget.entities) or 128))
-  local info = state.info
+  local query_budget = math.max(0, math.floor(tonumber(opts.query_budget) or 0))
+  local entity_budget = math.max(0, math.floor(tonumber(opts.entity_budget) or 0))
   while not state.done do
-    if state.buffer then
-      local entity = state.buffer[state.buffer_index]
-      if entity == nil then
-        finish_buffer(state)
-      elseif usage.entities >= entities then
-        return result(state, usage)
+    if state.candidate then
+      if work.entities >= entity_budget then break end
+      local candidate = state.candidate
+      local group = state.collisions[candidate.key]
+      work.entities = work.entities + 1
+      if group[candidate.index] == candidate.entity then
+        state.candidate = nil -- same actual entity from an overlapping cell
+      elseif candidate.index < #group then
+        candidate.index = candidate.index + 1
       else
-        state.buffer_index = state.buffer_index + 1
-        usage.entities = usage.entities + 1
+        group[#group + 1] = candidate.entity
+        state.info.identity_collisions = state.info.identity_collisions + 1
+        state.info.complete, state.info.reason = false, "identity-collision"
+        accept(state, candidate.entity, candidate.key, batch, keys)
+        state.candidate = nil
+      end
+    elseif state.current then
+      local current = state.current
+      if current.cursor > #current.entities then
+        finish_result(state)
+      else
+        if work.entities >= entity_budget then break end
+        local entity = current.entities[current.cursor]
+        current.cursor = current.cursor + 1
+        work.entities = work.entities + 1
         if entity and entity.valid then
-          local key = identity(entity, key_of)
+          local key = identity(entity, opts.key_of)
           local first = state.seen[key]
-          local duplicate = first ~= nil and first == entity
-          if first and not duplicate then
-            -- LuaEntity equality distinguishes colliding unitless identities.
-            -- References are retained as values under deterministic string keys.
-            local group = state.collisions[key]
-            if not group then group = {first}; state.collisions[key] = group end
-            for i = 1, #group do
-              if group[i] == entity then duplicate = true; break end
-            end
-            if not duplicate then
-              group[#group + 1] = entity
-              info.identity_collisions = info.identity_collisions + 1
-              info.complete = false
-              info.reason = "identity-collision"
-            end
-          elseif not first then
+          if not first then
             state.seen[key] = entity
-          end
-          if not duplicate then
-            if #state.out >= state.max_entities then
-              info.complete, info.budget_exhausted = false, true
-              info.reason = "entity-budget"
-              finish(state, false)
-              return result(state, usage)
-            end
-            state.out[#state.out + 1] = entity
+            accept(state, entity, key, batch, keys)
+          elseif first ~= entity then
+            if not state.collisions[key] then state.collisions[key] = {first} end
+            state.candidate = {entity = entity, key = key, index = 1}
           end
         end
       end
     else
-      if not state.current then
-        if state.cursor > #state.pending or info.queries >= state.max_queries then
-          finish(state, true)
-          return result(state, usage)
-        end
-        state.current = state.pending[state.cursor]
-        state.cursor = state.cursor + 1
-      end
-      if usage.queries >= queries then return result(state, usage) end
-      local item = state.current
-      local query = {area = {{item[1], item[2]}, {item[3], item[4]}}, limit = state.limit}
-      local filtered = state.prefilter_available
-      if filtered then
-        query.type, query.invert = state.exclude_types, true
-        info.filtered_queries = info.filtered_queries + 1
-      end
-      info.queries, usage.queries = info.queries + 1, usage.queries + 1
-      local ok, found = pcall(surface.find_entities_filtered, query)
-      if (not ok or type(found) ~= "table") and filtered then
-        info.prefilter_fallbacks = info.prefilter_fallbacks + 1
-        state.prefilter_available = false
-        if info.queries >= state.max_queries then
-          info.complete, info.budget_exhausted = false, true
-          info.reason = "prefilter-fallback-budget"
-          finish(state, true)
-        end
-        -- Keep the current partition for an unfiltered retry. It consumes a
-        -- second real query, in a later admission when this one's budget ends.
-      elseif not ok or type(found) ~= "table" then
-        info.complete, info.reason = false, "surface-query-failed"
-        info.error = not ok and tostring(found) or "non-table-result"
-        state.nil_result = info.queries == 1
-        finish(state, not state.nil_result)
+      if not state.retry and state.cursor > #state.pending then
+        finish(state)
+      elseif state.info.queries >= state.max_queries then
+        state.info.budget_exhausted = true
+        finish(state, state.retry and "prefilter-fallback-budget" or "query-budget")
+      elseif work.queries >= query_budget then
+        break
       else
-        state.buffer, state.buffer_index = found, 1
+        local item = state.retry or state.pending[state.cursor]
+        if not state.retry then state.cursor = state.cursor + 1 end
+        local filtered = not state.retry and state.prefilter_available
+        state.retry = nil
+        local query = {area = {{item[1], item[2]}, {item[3], item[4]}}, limit = state.limit}
+        if filtered then
+          query.type, query.invert = state.exclude_types, true
+          state.info.filtered_queries = state.info.filtered_queries + 1
+        end
+        state.info.queries = state.info.queries + 1
+        work.queries = work.queries + 1
+        local ok, found = pcall(surface.find_entities_filtered, query)
+        if (not ok or type(found) ~= "table") and filtered then
+          state.info.prefilter_fallbacks = state.info.prefilter_fallbacks + 1
+          state.prefilter_available = false
+          state.retry = item -- retry uses a later pulse if its call budget is spent
+        elseif not ok or type(found) ~= "table" then
+          state.info.error = not ok and tostring(found) or "non-table-result"
+          finish(state, "surface-query-failed")
+        else
+          state.had_result = true
+          state.current = {area = item, entities = found, cursor = 1}
+        end
       end
     end
   end
-  return result(state, usage)
+  return batch, state.info, state.done == true, work
 end
 
--- Compatibility callers deliberately retain the synchronous public API.
+-- Explicit synchronous compatibility for manual callers and fixtures. The
+-- scheduled catalog path calls begin/step through its existing registry owner.
 function M.scan(surface, area, opts)
-  local state = M.begin(area, opts)
-  local done, out, info
-  repeat
-    done, out, info = M.step(state, surface,
-      {queries = state.max_queries, entities = math.huge}, opts and opts.key_of)
-  until done
-  return out, info
+  local state, info = M.begin(area, opts)
+  if not state then return nil, info end
+  while not state.done do
+    M.step(surface, state, {query_budget = state.max_queries,
+      entity_budget = math.huge, key_of = opts and opts.key_of})
+  end
+  if not state.had_result and state.info.queries <= 1
+      and (state.info.reason == "surface-query-failed"
+        or state.info.reason == "invalid-scan-request") then return nil, state.info end
+  return state.results, state.info
 end
 
 return M

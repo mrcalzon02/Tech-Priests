@@ -96,143 +96,137 @@ local Identity=require("scripts.core.entity_identity_1481")
 local precise,exact=M.scan(surface({a,b}),area,{limit=768,key_of=Identity.key})
 assert(exact.complete and #precise==2 and exact.identity_collisions==0,
   "precise keys failed to preserve both real resources")
-
--- A reload retains ordinary continuation data and native entity identities,
--- while functions are recreated by requiring the module. These plain fixture
--- entities stand in for serialized LuaEntity handles; never use them as keys
--- in the continuation itself.
+-- The incoming incremental fixture's distinct serialization/parity contracts
+-- use the selected begin/step API. No callback, metatable or object table key
+-- belongs in a saved continuation; only engine handles retain their identity.
 local handles={}
-for _,item in ipairs(crowd) do handles[item]=true end
+for _,item in ipairs(crowd)do handles[item]=true end
 local function saved_copy(value,seen)
   local kind=type(value)
-  assert(kind~="function" and kind~="thread","continuation retained a callback")
-  if kind~="table" then return value end
-  assert(getmetatable(value)==nil,"continuation retained a metatable")
-  if handles[value] then return value end
-  seen=seen or {}
-  if seen[value] then return seen[value] end
+  assert(kind~='function' and kind~='thread','continuation retained a callback')
+  if kind~='table' then return value end
+  if handles[value]then return value end
+  assert(getmetatable(value)==nil,'continuation retained a metatable')
+  seen=seen or {};if seen[value]then return seen[value]end
   local copy={};seen[value]=copy
-  for key,child in pairs(value) do
-    assert(type(key)=="string" or type(key)=="number" or type(key)=="boolean",
-      "continuation retained an object identity as a table key")
+  for key,child in pairs(value)do
+    assert(type(key)=='string' or type(key)=='number' or type(key)=='boolean',
+      'continuation retained an object identity as a table key')
     copy[key]=saved_copy(child,seen)
   end
   return copy
 end
-
-local stepped_surface=surface(crowd)
-local state=M.begin(area,{limit=768,key_of=Identity.key})
-local finished,stepped,stepped_info,total_visits=false,nil,nil,0
-local admissions=0
-while not finished do
-  admissions=admissions+1
-  assert(admissions<100,"bounded dense continuation stopped making progress")
-  local before_calls,before_size=stepped_surface.calls(),#state.out
-  local usage
-  finished,stepped,stepped_info,usage=M.step(state,stepped_surface,
-    {queries=1,entities=128},Identity.key)
-  assert(usage.queries<=1 and usage.entities<=128,
-    "continuation exceeded a per-admission query/entity budget")
-  assert(stepped_surface.calls()-before_calls==usage.queries,
-    "usage concealed a real native query")
-  assert(#state.out-before_size<=usage.entities,
-    "newly appended records exceeded inspected-entry work")
-  total_visits=total_visits+usage.entities
-  if admissions==2 then
-    state=saved_copy(state)
-    package.loaded["scripts.core.catalog_dense_scan_1478"]=nil
-    M=require("scripts.core.catalog_dense_scan_1478")
+do
+  local stepped_surface=surface(crowd)
+  local state=M.begin(area,{limit=768})
+  local admissions,visits=0,0
+  while not state.done do
+    admissions=admissions+1
+    assert(admissions<100,'dense continuation stopped making progress')
+    local before_calls,before_size=stepped_surface.calls(),#state.results
+    local batch,_,_,usage=M.step(stepped_surface,state,
+      {query_budget=1,entity_budget=128,key_of=Identity.key})
+    assert(usage.queries<=1 and usage.entities<=128
+      and stepped_surface.calls()-before_calls==usage.queries,
+      'continued usage concealed a native query or exceeded its budget')
+    assert(#state.results-before_size==#batch and #batch<=usage.entities,
+      'newly appended records escaped inspected-entry accounting')
+    visits=visits+usage.entities
+    if admissions==2 then
+      state=saved_copy(state)
+      package.loaded['scripts.core.catalog_dense_scan_1478']=nil
+      M=require('scripts.core.catalog_dense_scan_1478')
+    end
   end
+  assert(admissions>5 and visits>#state.results and #state.results==#all,
+    'reload did not exercise buffered duplicates or changed result coverage')
+  for index,item in ipairs(all)do
+    assert(state.results[index]==item,'reload changed deterministic scan order')
+  end
+  for key,value in pairs(info)do
+    assert(state.info[key]==value,'continued metadata differs: '..key)
+  end
+  local final_calls=stepped_surface.calls()
+  local batch,meta,done,idle=M.step(stepped_surface,state,
+    {query_budget=1,entity_budget=128,key_of=Identity.key})
+  assert(done and #batch==0 and meta==state.info and idle.queries==0
+    and idle.entities==0 and stepped_surface.calls()==final_calls,
+    'completed continuation repeated work')
 end
-assert(admissions>5 and total_visits>#stepped,
-  "test did not exercise a buffered query and duplicate visits across pulses")
-assert(#stepped==#all,"reload lost or duplicated dense scan results")
-for index,item in ipairs(all) do
-  assert(stepped[index]==item,"continuation changed deterministic scan order")
-end
-for key,value in pairs(info) do
-  assert(stepped_info[key]==value,"continuation changed final metadata: "..key)
-end
-local final_calls=stepped_surface.calls()
-local done_again,out_again,info_again,idle=M.step(state,stepped_surface,
-  {queries=1,entities=128},Identity.key)
-assert(done_again and out_again==stepped and info_again==stepped_info
-  and idle.queries==0 and idle.entities==0 and stepped_surface.calls()==final_calls,
-  "a completed continuation repeated work")
 
--- Invalid and duplicate buffered entries still consume the offered work.
-local invalid={valid=false,position={x=1,y=1}}
-local live=entity(9001,1,1)
-local tail=entity(9002,2,2)
-local mixed_calls=0
-local mixed_surface={find_entities_filtered=function()
-  mixed_calls=mixed_calls+1
-  return {invalid,live,live,tail}
-end}
-local mixed=M.begin(area,{limit=768})
-for index=1,4 do
-  local done,items,details,usage=M.step(mixed,mixed_surface,
-    {queries=index==1 and 1 or 0,entities=1})
-  assert(usage.entities==1 and usage.queries==(index==1 and 1 or 0),
-    "invalid/duplicate entry escaped the inspection budget")
-  assert(#items==({0,1,1,2})[index],"buffered visit produced the wrong result tail")
-  assert(done==(index==4),"buffered work was discarded or falsely completed")
-  if done then assert(details.complete and details.unique==2) end
+-- Invalid and duplicate entries still consume result traversal budget, even
+-- when no native calls are allowed while the saved buffer is being drained.
+do
+  local invalid={valid=false,position={x=1,y=1}}
+  local live,tail=entity(9001,1,1),entity(9002,2,2)
+  local calls=0
+  local mixed_surface={find_entities_filtered=function()
+    calls=calls+1;return {invalid,live,live,tail}
+  end}
+  local state=M.begin(area,{limit=768})
+  for index=1,4 do
+    local _,details,done,usage=M.step(mixed_surface,state,
+      {query_budget=index==1 and 1 or 0,entity_budget=1})
+    assert(usage.entities==1 and usage.queries==(index==1 and 1 or 0)
+      and #state.results==({0,1,1,2})[index] and done==(index==4),
+      'invalid/duplicate entry escaped its slice or discarded buffered work')
+    if done then assert(details.complete and details.unique==2)end
+  end
+  assert(calls==1,'buffer traversal repeated a spatial query')
 end
-assert(mixed_calls==1,"buffer continuation repeated the spatial query")
 
--- Rejected filtering consumes this admission; retry the same partition in
--- the next one, without storing callbacks or resetting the global query cap.
-local fallback_calls=0
-local fallback_surface={find_entities_filtered=function(query)
-  fallback_calls=fallback_calls+1
-  if query.invert then error("unsupported inverted filter") end
-  return {live}
-end}
-local fallback=M.begin(area,{exclude_types={"transport-belt"}})
-local pending,items,details,used=M.step(fallback,fallback_surface,
-  {queries=1,entities=128})
-assert(not pending and #items==0 and used.queries==1 and used.entities==0
-  and details.prefilter_fallbacks==1 and fallback_calls==1,
-  "unfiltered fallback exceeded this admission's native query budget")
-fallback=saved_copy(fallback)
-local fallback_done,fallback_out,fallback_info,fallback_used=M.step(
-  fallback,fallback_surface,{queries=1,entities=128})
-assert(fallback_done and #fallback_out==1 and fallback_info.complete
-  and fallback_info.queries==2 and fallback_used.queries==1
-  and fallback_used.entities==1 and fallback_calls==2,
-  "pending fallback did not survive data serialization")
+-- Persisting a rejected-filter retry must not repeat its already-counted
+-- probe. The aggregate unique-entity cap also spans all resumed buffers.
+do
+  local calls=0
+  local fallback_surface={find_entities_filtered=function(query)
+    calls=calls+1
+    if query.invert then error('unsupported inverted filter')end
+    return {crowd[1]}
+  end}
+  local state=M.begin(area,{exclude_types={'transport-belt'}})
+  local batch,details,done,usage=M.step(fallback_surface,state,
+    {query_budget=1,entity_budget=128})
+  assert(not done and #batch==0 and usage.queries==1 and usage.entities==0
+    and details.prefilter_fallbacks==1 and calls==1)
+  state=saved_copy(state)
+  batch,details,done,usage=M.step(fallback_surface,state,
+    {query_budget=1,entity_budget=128})
+  assert(done and #batch==1 and details.complete and details.queries==2
+    and usage.queries==1 and usage.entities==1 and calls==2,
+    'pending filter fallback lost its partition or reset the total query cap')
 
--- Sliced collisions retain both physical entities and never certify the
--- ambiguous key; the duplicate of the second identity must still coalesce.
-local collision_state=M.begin(area,{limit=768})
-local collision_surface={find_entities_filtered=function() return {a,b,b} end}
-local final_collision,collision_out,collision_info=false
-for index=1,3 do
-  final_collision,collision_out,collision_info,used=M.step(collision_state,
-    collision_surface,{queries=1,entities=1},function() return "same-key" end)
-  assert(used.entities==1)
+  local capped_surface=surface(quiet)
+  state=M.begin(area,{limit=768,max_entities=200})
+  while not state.done do
+    local _,_,_,used=M.step(capped_surface,state,{query_budget=1,entity_budget=31})
+    assert(used.queries<=1 and used.entities<=31)
+  end
+  assert(#state.results==200 and state.info.reason=='entity-budget'
+    and state.info.budget_exhausted and capped_surface.calls()==1,
+    'continued buffer lost its aggregate unique-entity cap')
+  local invalid_state,invalid_info=M.begin({{0,0},{0,0}})
+  local before=capped_surface.calls()
+  local invalid_out,invalid_scan=M.scan(capped_surface,{{0,0},{0,0}})
+  assert(invalid_state==nil and not invalid_info.complete and invalid_out==nil
+    and invalid_scan.reason=='invalid-scan-request' and capped_surface.calls()==before,
+    'invalid geometry issued a query or lost the synchronous nil contract')
 end
-assert(final_collision and #collision_out==2
-  and collision_info.identity_collisions==1 and not collision_info.complete,
-  "cross-pulse collision handling dropped or duplicated a real entity")
 
-local capped_state=M.begin(area,{limit=768,max_entities=200})
-local cap_done,cap_out,cap_info=false
-local cap_surface=surface(quiet)
-while not cap_done do
-  cap_done,cap_out,cap_info,used=M.step(capped_state,cap_surface,
-    {queries=1,entities=31})
-  assert(used.queries<=1 and used.entities<=31)
+-- A duplicate of the second distinct identity in a collision group must
+-- coalesce even when its equality comparisons are split across pulses.
+do
+  local state=M.begin(area,{limit=768})
+  local collision_surface={find_entities_filtered=function()return {a,b,b}end}
+  local slices=0
+  while not state.done do
+    slices=slices+1
+    local _,_,_,used=M.step(collision_surface,state,
+      {query_budget=1,entity_budget=1,key_of=function()return 'same-key'end})
+    assert(used.entities<=1 and used.queries<=1 and slices<20)
+  end
+  assert(#state.results==2 and state.info.identity_collisions==1
+    and not state.info.complete and slices>=6,
+    'continued collision comparisons dropped or duplicated a physical identity')
 end
-assert(#cap_out==200 and cap_info.reason=="entity-budget"
-  and cap_info.budget_exhausted and cap_surface.calls()==1,
-  "continued query-buffer processing lost the aggregate entity cap")
-
-local invalid_state=M.begin({{0,0},{0,0}})
-local invalid_done,invalid_out,invalid_info,invalid_usage=M.step(
-  invalid_state,stepped_surface,{queries=1,entities=128})
-assert(invalid_done and invalid_out==nil and not invalid_info.complete
-  and invalid_usage.queries==0 and invalid_usage.entities==0,
-  "invalid geometry issued work or lost the legacy nil result")
-print("[catalog-dense-scan-1478] PASS: synchronous parity, continued budgets, duplicates, fallback, collision, caps and reload")
+print('[catalog-dense-scan-1478] PASS: synchronous parity; continued budgets, duplicates, caps and serializable reload')

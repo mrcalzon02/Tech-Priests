@@ -1080,6 +1080,12 @@ function tech_priests_0297_get_force_armor_profile(force)
 end
 
 function tech_priests_0297_apply_profile_to_pair(pair, reason)
+  -- The preserved build chain still calls this compatibility name. Fixed-rank
+  -- 0302 owns current armor; do not rebuild or restore the superseded
+  -- force-wide best-armor profile during that chain.
+  if type(tech_priests_0302_refresh_pair_fixed_armor) == "function" then
+    return tech_priests_0302_refresh_pair_fixed_armor(pair, reason or "compatibility-0297")
+  end
   if not (pair and pair.priest and pair.priest.valid) then return end
   local profile = tech_priests_0297_get_force_armor_profile(pair.priest.force)
   pair.sub_equipment_armor_profile_0297 = profile and {
@@ -1236,18 +1242,10 @@ if script and defines and defines.events then
   end
 end
 
-TechPriestsRuntimeEventRegistry.on_nth_tick(811, function()
-  ensure_storage()
-  if not (game and game.forces) then return end
-  for _, force in pairs(game.forces) do
-    tech_priests_0297_refresh_force_armor_profile(force, "periodic")
-  end
-end, {
-  owner = "armor_profile_0297",
-  route = "force-armor-refresh",
-  category = "uncategorized",
-  note = "force armor refresh; retained prototype facts and live recipe enablement",
-})
+-- The force-wide 0297 armor timer is retired. Fixed-rank 0302 owns current
+-- damage, creation, recovery and periodic refresh. Keep the historical
+-- callable exports and their immutable metadata above without scheduling
+-- another force-wide refresh alongside the current rank owner.
 
 -- 0.1.674-dev / 0792: retired manual generated command tp-armor-0297.
 

@@ -711,6 +711,25 @@ function tech_priests_0302_force_can_use_armor(force, armor_name)
   if not recipes then return false end
   local direct = recipes[armor_name]
   if direct and direct.enabled then return true end
+  -- Share the existing planner's immutable product-to-recipe membership.
+  -- Armor enablement remains live, including an alias recipe unlocked or
+  -- disabled earlier in this same tick; no additional armor recipe cache.
+  local policy = rawget(_G, "TechPriestsPlanningConstraints0646")
+    or package.loaded["scripts.core.planning_constraints_0646"]
+  if not policy then
+    local ok, found = pcall(require, "scripts.core.planning_constraints_0646")
+    if ok then policy = found end
+  end
+  if policy and type(policy.recipe_names_for_item) == "function" then
+    local ok, names = pcall(policy.recipe_names_for_item, force, armor_name, true)
+    if ok and type(names) == "table" then
+      for _, name in ipairs(names) do
+        local recipe = recipes[name]
+        if recipe and recipe.enabled then return true end
+      end
+      return false
+    end
+  end
   local found = false
   pcall(function()
     for _, recipe in pairs(recipes) do

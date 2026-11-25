@@ -1,5 +1,7 @@
--- The measured 811-tick owner must reuse immutable metadata while recipe
+-- Retained legacy public helpers reuse immutable metadata while recipe
 -- enablement, force identity, force-local profiles and event effects stay live.
+-- Their superseded periodic timer is absent; installed 0302 ownership is
+-- covered separately by fixed_rank_armor_existing_authority.lua.
 package.path = "./tech-priests_src/?.lua;./tech-priests_src/?/init.lua;" .. package.path
 local file = assert(io.open("tech-priests_src/scripts/generated/control_legacy_part_019.lua", "r"))
 local source = file:read("*a"); file:close()
@@ -109,8 +111,13 @@ local function load_owner(item_prototypes, forces, reset_policy)
 end
 
 local env, routes, ticks = load_owner(items, {alpha = alpha, beta = beta}, true)
-assert(ticks[811] and not ticks[810], "the existing armor refresh cadence changed")
-ticks[811].fn()
+assert(not ticks[811], "superseded force-wide armor timer remains installed")
+local function refresh_legacy_profiles()
+  for _, current_force in pairs(env.game.forces) do
+    env.tech_priests_0297_refresh_force_armor_profile(current_force, "explicit-compatibility")
+  end
+end
+refresh_legacy_profiles()
 local profiles = env.storage.tech_priests.armor_profiles_0297
 assert(profiles.alpha.name == "mod-armor-z" and profiles.beta.name == "mod-armor-a",
   "alternate armor recipes, force isolation or original tie order changed")
@@ -120,17 +127,13 @@ local initial_types, initial_resistances, initial_products =
   counts.types, counts.resistances, counts.unrelated_products
 for iteration = 1, 100 do
   env.game.tick = 811 * (iteration + 1)
-  ticks[811].fn()
+  refresh_legacy_profiles()
 end
 assert(counts.items == 1 and counts.recipes == 2 and counts.types == initial_types
   and counts.resistances == initial_resistances and counts.unrelated_products == initial_products,
-  "warm 811 refresh re-enumerated prototypes or unrelated recipe products")
-assert(profiles.alpha.tick == env.game.tick and profiles.alpha.reason == "periodic",
+  "warm compatibility refresh re-enumerated prototypes or unrelated recipe products")
+assert(profiles.alpha.tick == env.game.tick and profiles.alpha.reason == "explicit-compatibility",
   "metadata reuse suppressed the existing profile refresh")
-assert(ticks[811].options and ticks[811].options.owner == "armor_profile_0297"
-  and ticks[811].options.route == "force-armor-refresh"
-  and ticks[811].options.category == "uncategorized",
-  "811 route identity is missing or its existing scheduling category changed")
 
 -- All toggles occur without advancing the tick: only immutable membership
 -- is retained, never a Boolean answer about currently unlocked armor.
@@ -229,4 +232,4 @@ local compatible = load_owner(items, {beta = beta}, false)
 compatible.require = function() error("shared recipe metadata unavailable") end
 assert(compatible.tech_priests_0297_force_can_use_armor(beta, "mod-armor-a"),
   "unavailable shared metadata removed the legacy alternate-recipe fallback")
-print("[armor-profile-metadata-0297] PASS: one item walk; one recipe walk per force;100 periodic refreshes; live unlocks; isolation; effects; damage; force replacement and reload")
+print("[armor-profile-metadata-0297] PASS: one item walk; one recipe walk per force;100 explicit compatibility refreshes; live unlocks; isolation; effects; damage; force replacement and reload")
