@@ -1,0 +1,128 @@
+name: Assemble authentic Tech-Priests 1.0 publication media
+
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/build-1-0-publication-media.yml']
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tech-priests-publish-media-v1
+  cancel-in-progress: false
+
+jobs:
+  package:
+    if: >-
+      github.repository == 'mrcalzon02/Tech-Priests' &&
+      github.ref == 'refs/heads/main' &&
+      github.event_name == 'push' &&
+      github.event.head_commit.message == 'build(media): bundle verified Tech-Priests original screenshots for self publication'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    env:
+      GH_TOKEN: ${{ github.token }}
+      SOURCE_SHA: e694f0d97b174f66e49fc2b4c4d1eb8b914a5b13
+      MEDIA_NAME: Tech-Priests-1.0-Genuine-Media.zip
+      DRAFT_ID: '457757452'
+    steps:
+      - name: Fetch selected source-bound original media only
+        shell: bash
+        run: |
+          set -euo pipefail
+          git init -q src
+          git -C src remote add origin https://github.com/mrcalzon02/Tech-Priests.git
+          git -C src sparse-checkout init --cone
+          git -C src sparse-checkout set             docs/art/local-content-20261118/native-combined             docs/art/thruster-resumption-20261117/animation-capture/native-narrow-v11e             docs/art/thruster-resumption-20261117/animation-capture/native-wide-v18g             docs/art/hydrogen-thruster-v01/native             docs/art/boiler-v08-state-layers             docs/art/workbench-v7-motion             docs/art/martian-infrastructure
+          git -C src -c protocol.version=2 fetch --quiet --depth=1 --filter=blob:none origin "$SOURCE_SHA"
+          git -C src checkout -q --detach FETCH_HEAD
+          test "$(git -C src rev-parse HEAD)" = "$SOURCE_SHA"
+          echo 'TP_PUBLISH_MEDIA_PINNED_SOURCE_ACCEPTED'
+
+      - name: Build native-media ZIP with source hashes and correct captions
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import hashlib,json,os,pathlib,zipfile
+          root=pathlib.Path('src/docs/art')
+          specs=[
+           ('priest-ranks.png','local-content-20261118/native-combined/skins-native-ranks.png','Native Factorio character ranks'),
+           ('priest-picker.png','local-content-20261118/native-combined/skins-native-picker.png','Native Factorio character picker'),
+           ('manufactorum-overview.png','local-content-20261118/native-combined/factories-native-overview.png','Native Factorio faction factories'),
+           ('factories-day.png','local-content-20261118/native-combined/factories-fx-day-00.png','Native Factorio machines working by day'),
+           ('factories-night.png','local-content-20261118/native-combined/factories-fx-night-14.png','Native Factorio machines working at night'),
+           ('void-thruster-working.png','thruster-resumption-20261117/animation-capture/native-narrow-v11e/void-fusion-thruster-working.png','Native Factorio void thruster working'),
+           ('void-thruster-night.png','thruster-resumption-20261117/animation-capture/native-narrow-v11e/void-fusion-thruster-night.png','Native Factorio void thruster at night'),
+           ('void-thruster-working.gif','thruster-resumption-20261117/animation-capture/native-narrow-v11e/void-fusion-thruster-native-power-working.gif','Native engine drive animation'),
+           ('large-void-thruster-working.png','thruster-resumption-20261117/animation-capture/native-wide-v18g/large-void-fusion-thruster-working.png','Native Factorio large void thruster working'),
+           ('large-void-thruster-night.png','thruster-resumption-20261117/animation-capture/native-wide-v18g/large-void-fusion-thruster-night.png','Native Factorio large void thruster at night'),
+           ('large-void-thruster-working.gif','thruster-resumption-20261117/animation-capture/native-wide-v18g/large-void-fusion-thruster-native-power-working.gif','Native large drive animation'),
+           ('hydrogen-thruster-running.png','hydrogen-thruster-v01/native/candidate-run-connected.png','Original candidate native thruster image'),
+           ('boiler-native-states.png','boiler-v08-state-layers/native-cold-working-stopped.png','Native Factorio boiler state comparison'),
+           ('boiler-native-working.gif','boiler-v08-state-layers/native-working-loop.gif','Native Factorio boiler animation'),
+           ('workbench-contact.png','workbench-v7-motion/native-contact.png','Native Factorio workbench contact'),
+           ('workbench-directions.gif','workbench-v7-motion/four-directions-cycle.gif','Native reviewed four-direction cycle'),
+           ('infrastructure-family-review.png','martian-infrastructure/family-review.png','Asset family preview, NOT a gameplay screenshot')
+          ]
+          manifest=[]
+          readme=('Tech Priests native source-bound evidence gallery. Original files copied without redrawing.\n'
+           'Source: '+os.environ['SOURCE_SHA']+'\n'
+           'Do not upload this ZIP as the Factorio mod; use the separate tech-priests_1.0.0.zip.\n'
+           'These older captures do not prove all 1.0 runtime features.\n'
+           'The 3 original combat GIFs are in the private Dens-Mortis evidence repository, not in this public kit.\n'
+           'Confirm redistribution rights before uploading third-party-derived sprites publicly.\n')
+          with zipfile.ZipFile(os.environ['MEDIA_NAME'],'x',compression=zipfile.ZIP_DEFLATED,compresslevel=6) as out:
+           out.writestr('README-FIRST.txt',readme)
+           for name,src,caption in specs:
+            path=root/src
+            assert path.is_file() and path.stat().st_size>1000,src
+            raw=path.read_bytes()
+            if path.suffix.lower()=='.png': assert raw.startswith(bytes.fromhex('89504e470d0a1a0a')),src
+            if path.suffix.lower()=='.gif': assert raw[:6] in (b'GIF89a',b'GIF87a'),src
+            dest='media/'+name
+            out.writestr(dest,raw)
+            manifest.append({'file':dest,'source':'docs/art/'+src,'caption':caption,
+             'size':len(raw),'sha256':hashlib.sha256(raw).hexdigest(),'source_commit':os.environ['SOURCE_SHA']})
+           out.writestr('media-provenance.json',json.dumps({'schema':'tech-priests-original-captures.v1',
+             'source_sha':os.environ['SOURCE_SHA'],'items':manifest,'native_current_release_behavior_accepted':False},indent=2))
+          with zipfile.ZipFile(os.environ['MEDIA_NAME']) as archive: assert archive.testzip() is None
+          sha=hashlib.file_digest(open(os.environ['MEDIA_NAME'],'rb'),'sha256').hexdigest()
+          pathlib.Path(os.environ['MEDIA_NAME']+'.sha256').write_text(sha+'  '+os.environ['MEDIA_NAME']+'\n')
+          print('TP_NATIVE_PUBLICATION_MEDIA_ZIP_VERIFIED',json.dumps({'items':len(manifest),
+            'bytes':pathlib.Path(os.environ['MEDIA_NAME']).stat().st_size,'sha256':sha}))
+          PY
+
+      - name: Retain downloadable zip as bounded Actions artifact
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: Tech-Priests-1.0-Genuine-Media
+          path: |
+            Tech-Priests-1.0-Genuine-Media.zip
+            Tech-Priests-1.0-Genuine-Media.zip.sha256
+          retention-days: 30
+          if-no-files-found: error
+
+      - name: Attach verified media ZIP to existing Github draft
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh api "repos/$GITHUB_REPOSITORY/releases?per_page=100" > drafts.json
+          python3 - <<'PY'
+          import json,os
+          r=next((x for x in json.load(open('drafts.json')) if x['id']==int(os.environ['DRAFT_ID'])),None)
+          assert r and r['draft'] and r['tag_name']=='v1.0.0-rc.1'
+          assert any(a['name']=='tech-priests_1.0.0.zip' for a in r['assets'])
+          assert not any(a['name']==os.environ['MEDIA_NAME'] for a in r['assets'])
+          PY
+          curl --fail-with-body --silent --show-error --connect-timeout 20 --max-time 300             --request POST -H "Authorization: Bearer $GH_TOKEN"             -H 'Content-Type: application/zip'             --data-binary "@$MEDIA_NAME"             "https://uploads.github.com/repos/$GITHUB_REPOSITORY/releases/$DRAFT_ID/assets?name=$MEDIA_NAME"             -o media-attachment.json
+          python3 - <<'PY'
+          import hashlib,json,os,pathlib
+          d=json.load(open('media-attachment.json'))
+          want=hashlib.file_digest(open(os.environ['MEDIA_NAME'],'rb'),'sha256').hexdigest()
+          assert d['state']=='uploaded'
+          assert d['size']==pathlib.Path(os.environ['MEDIA_NAME']).stat().st_size
+          assert d.get('digest')=='sha256:'+want
+          print('TP_GITHUB_DRAFT_MEDIA_ASSET_CONFIRMED',d['id'],d['name'],d['size'])
+          PY
