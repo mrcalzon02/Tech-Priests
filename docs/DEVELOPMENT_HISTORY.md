@@ -1,3 +1,50 @@
+## Preserve service throughput and evidence for the four-priest repair - 2026-11-25
+
+The concurrent `f2090864` changes were retained: 0646 indexes immutable recipe
+producer names while reading enablement and ingredients live; 0645 reuses the
+current owner's matching plan; consecration retains its event-maintained registry.
+The old main-product patch was superseded by the native-aware recipe index and
+was not reapplied over it.
+
+Two correctness regressions were repaired before the next matched native run.
+An event-only source cache could miss a previously unseen autonomous vehicle
+entering an empty cached area forever; 0587 again expires requested membership
+after 1,800 ticks, alongside immediate events and live source/stock checks.
+Reducing 0644's budget from eight to one at its original cadence cut survey
+throughput. Its existing broker service now spreads the original bounded batch
+across five-tick pulses, preserves the cycle deadline and fair station cursor,
+and persists continuation through the existing 0598 deadline owner. The real
+broker fixture proves four-station 100-tick refresh, eight attempts per cycle at
+larger populations, no movement throttling, failure/removal handling and reload.
+A smaller callback is not a performance win unless the work rate is retained.
+
+Native catalog evidence identified a 247 ms initial callback, including a 182 ms
+planetary scan. Its existing scan now reuses each ownership key and immutable
+prototype product list, and successful native wire counts avoid connection-array
+copies and obsolete fallback probes. These changes preserve entity selection,
+query limits, ownership, live wired-inventory exclusions and source quantities.
+The strict native-shaped fixture fails against the preceding catalog source and
+passes with the reductions; these operation checks are not a native speed ratio.
+
+The matched profiler and private stage now use the runner's documented OpenGL
+path in its existing Windows session, preserve the installed engine and Steam
+initialization, and refuse to interrupt an existing Factorio process. Session
+and renderer evidence distinguish native Session 0 graphics from a visible
+desktop. Exact bounded slow-tick rows, complete result JSON and screenshot chunks
+survive in job logs even if artifact upload fails. The optional attribution pass
+samples every catalog scan; other callback sampling remains bounded.
+
+Source validation passed: 72/72 existing hot-path Lua fixtures, five inventory/
+review drift contracts, and seven focused native-worker parser/launch fixtures.
+All 16 curated maps were reviewed; 27 Mermaid blocks, 122 relative links and 286
+exported symbols passed structural checks. This is not a graphical Mermaid render.
+
+Candidate-only headless run `45602737126` completed 6,000 ticks with four stable
+pairs and no runtime/isolation errors, but retained nine script ticks over 100 ms
+after warmup. It is not the headed before/after result and does not close the lag
+report. The UPS runbook records provenance, failed launch attempts, the denied
+desktop handoff and the limits of the recovered diagnostic evidence.
+
 ## Four-priest lag repair and current source mapping - 2026-11-25
 
 The owner reported severe lag with four priests and directed the investigation

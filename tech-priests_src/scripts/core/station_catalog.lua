@@ -170,10 +170,10 @@ local function release_entity_ownership(root, key)
   release_render_tag(root, key)
 end
 
-local function claim_entity(root, pair, entity, kind)
+local function claim_entity(root, pair, entity, kind, known_key)
   if not (root and pair and pair.station and pair.station.valid and valid(entity)) then return false end
   local unit = station_unit(pair)
-  local key = entity_key(entity)
+  local key = known_key or entity_key(entity)
   if not (unit and key) then return false end
   local owner = root.owned_resources[key]
   if not owner then
@@ -328,12 +328,16 @@ local function skip_wired_inventory_sources_enabled_0741()
 end
 
 local function connector_has_connections_0741(connector)
-  if not connector then return false end
+  if not connector then return false, true end
   local ok_count, count = pcall(function() return connector.connection_count end)
-  if ok_count and tonumber(count) and tonumber(count) > 0 then return true end
+  -- The native count already answers the empty case. Materializing the
+  -- connection array after a successful zero repeats work for every machine.
+  if ok_count and tonumber(count) then return tonumber(count) > 0, true end
   local ok_connections, connections = pcall(function() return connector.connections end)
-  if ok_connections and type(connections) == "table" and next(connections) ~= nil then return true end
-  return false
+  if ok_connections and type(connections) == "table" then
+    return next(connections) ~= nil, true
+  end
+  return false, false
 end
 
 -- These Factorio connector IDs do not change while a game is running.
@@ -364,10 +368,20 @@ local function entity_has_circuit_wire_0741(entity)
   if not valid(entity) then return false end
   local ids = circuit_ids_1493()
   if #ids > 0 and entity.get_wire_connector then
+    local complete = true
     for _, id in ipairs(ids) do
       local ok, connector = pcall(function() return entity.get_wire_connector(id, false) end)
-      if ok and connector_has_connections_0741(connector) then return true end
+      if ok then
+        local connected, known = connector_has_connections_0741(connector)
+        if connected then return true end
+        if not known then complete = false end
+      else
+        complete = false
+      end
     end
+    -- Successful modern connector queries are authoritative, including nil
+    -- connectors. Do not probe removed legacy fields on every native entity.
+    if complete then return false end
   end
   local ok_connected, connected = pcall(function() return entity.circuit_connected_entities end)
   if ok_connected and type(connected) == "table" then
@@ -502,17 +516,13 @@ local function collect_inventory(catalog, entity, station, scan_context)
 end
 
 local function mineable_products(entity)
-  local out = {}
-  if not valid(entity) then return out end
+  if not valid(entity) then return {} end
   local key = prototype_cache_key(entity)
   local cached = prototype_mineable_cache_0578[key]
-  if cached ~= nil then
-    for i = 1, #cached do
-      local product = cached[i]
-      out[#out + 1] = { name = product.name, amount = product.amount or 1 }
-    end
-    return out
-  end
+  -- This private helper's consumers only read names/amounts. Reuse the
+  -- existing immutable prototype facts instead of cloning them per ore tile.
+  if cached ~= nil then return cached end
+  local out = {}
   local ok, props = pcall(function() return entity.prototype and entity.prototype.mineable_properties end)
   if ok and props and props.products then
     for _, product in pairs(props.products) do
@@ -521,9 +531,7 @@ local function mineable_products(entity)
     end
   end
   if #out == 0 and entity.type == "resource" and entity.name then out[#out + 1] = { name = entity.name, amount = 1 } end
-  local stored = {}
-  for i = 1, #out do stored[i] = { name = out[i].name, amount = out[i].amount or 1 } end
-  prototype_mineable_cache_0578[key] = stored
+  prototype_mineable_cache_0578[key] = out
   local root = ensure_root()
   root.stats.mineable_prototype_cache_misses_0578 = (root.stats.mineable_prototype_cache_misses_0578 or 0) + 1
   return out
@@ -531,8 +539,13 @@ end
 
 local function is_mineable_candidate(entity)
   if not valid(entity) then return false end
-  if entity.type == "resource" or entity.type == "tree" then return true end
-  if entity.type == "simple-entity" or entity.type == "simple-entity-with-owner" then return #mineable_products(entity) > 0 end
+  if entity.type == "resource" or entity.type == "tree" then
+    return true, mineable_products(entity)
+  end
+  if entity.type == "simple-entity" or entity.type == "simple-entity-with-owner" then
+    local products = mineable_products(entity)
+    return #products > 0, products
+  end
   return false
 end
 
@@ -591,19 +604,20 @@ local function add_entity_to_catalog(root, pair, catalog, entity, station, scan_
   add_count(catalog.entities, entity.name or entity.type, 1)
   collect_inventory(catalog, entity, station, scan_context)
   if entity.type == "resource" then
-    if claim_entity(root, pair, entity, "resource") then
-      local key = entity_key(entity)
+    local key = entity_key(entity)
+    if claim_entity(root, pair, entity, "resource", key) then
       catalog.owned_keys[key] = true
       add_source(catalog.resources, entity.name, { entity = entity, count = entity.amount or 1, kind = "resource", distance_sq = distance_sq(entity.position, station.position), owner_unit = station_unit(pair) })
       for _, product in ipairs(mineable_products(entity)) do
         add_source(catalog.mineable_products, product.name, { entity = entity, count = product.amount or 1, kind = "resource-product", distance_sq = distance_sq(entity.position, station.position), owner_unit = station_unit(pair) })
       end
     end
-  elseif is_mineable_candidate(entity) then
-    if claim_entity(root, pair, entity, "mineable") then
-      local key = entity_key(entity)
+  else
+    local mineable, products = is_mineable_candidate(entity)
+    local key = mineable and entity_key(entity) or nil
+    if mineable and claim_entity(root, pair, entity, "mineable", key) then
       catalog.owned_keys[key] = true
-      for _, product in ipairs(mineable_products(entity)) do
+      for _, product in ipairs(products) do
         add_source(catalog.mineable_products, product.name, { entity = entity, count = product.amount or 1, kind = "mineable-entity", distance_sq = distance_sq(entity.position, station.position), owner_unit = station_unit(pair) })
       end
     end

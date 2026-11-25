@@ -488,24 +488,31 @@ function M.service_pair(pair, reason) local r = root(); if r.enabled == false th
 -- The broker's offered budget caps *attempted* station surveys, not just
 -- successful plans. Rotate by stable station ID, persisted in the existing
 -- planner state, so a failed station cannot starve its neighbors.
-function M.service_all(reason,budget)
-  local r=root()
-  if r.enabled==false then return 0,0,false,0 end
-  local limit=math.max(0,math.min(M.max_pairs_per_pulse,
-    math.floor(tonumber(budget) or M.max_pairs_per_pulse)))
-  if limit==0 then return 0,0,false,0 end
+local function ordered_pairs()
   local list={}
   for _,pair in pairs(pair_map()) do
     local id=valid_pair(pair) and tonumber(station_unit(pair)) or nil
     if id then list[#list+1]={id=id,pair=pair} end
   end
   table.sort(list,function(a,b)return a.id<b.id end)
-  if #list==0 then return 0,0,false,0 end
-  local cursor=tonumber(r.last_serviced_station_1070) or 0
+  return list
+end
+local function first_after_cursor(list,cursor)
   local start=1
   for i,entry in ipairs(list) do
     if entry.id>cursor then start=i;break end
   end
+  return start
+end
+function M.service_all(reason,budget)
+  local r=root()
+  if r.enabled==false then return 0,0,false,0 end
+  local limit=math.max(0,math.min(M.max_pairs_per_pulse,
+    math.floor(tonumber(budget) or M.max_pairs_per_pulse)))
+  if limit==0 then return 0,0,false,0 end
+  local list=ordered_pairs()
+  if #list==0 then return 0,0,false,0 end
+  local start=first_after_cursor(list,tonumber(r.last_serviced_station_1070) or 0)
   local processed,acted,failed=0,0,0
   for offset=0,math.min(limit,#list)-1 do
     local entry=list[((start+offset-1)%#list)+1]
@@ -517,6 +524,71 @@ function M.service_all(reason,budget)
   end
   return acted,processed,#list>processed,failed
 end
+-- Keep the former eight-visit survey cycle, while spreading its bounded
+-- station-ID batch over separate broker pulses. The cycle deadline is based
+-- on its first attempt, so spreading work does not divide the refresh rate.
+-- Save only IDs/counters/deadlines; every attempt resolves the current pair.
+local function broker_survey_pulse(event,budget,service,cadence)
+  local r=root()
+  local tick=tonumber(event and event.tick) or now()
+  local step=math.max(1,tonumber(cadence) or 5)
+  local interval=math.max(1,tonumber(service and service.interval) or M.tick_interval)
+  local function schedule(cycle,due)
+    cycle.next_due_tick=due
+    if service then
+      service.next_due_tick=due
+      -- 0598 normally saves the broker's deadline before this callback.
+      -- Persist the revised continuation deadline through that same owner.
+      local ran=rawget(_G,"tech_priests_broker_ran_0598")
+      if type(ran)=="function" then ran(service) end
+    end
+  end
+  local cycle=r.broker_cycle
+  local quota=math.max(0,math.min(M.max_pairs_per_pulse,
+    math.floor(tonumber(budget) or 8)))
+  if r.enabled==false or quota==0 then
+    if type(cycle)=="table" then schedule(cycle,tick+interval) end
+    return {processed=0,acted=0,failed=0,exhausted=false,sleeping=true}
+  end
+  if not (type(cycle)=="table" and type(cycle.station_ids)=="table"
+      and type(cycle.next_index)=="number" and cycle.next_index>=1
+      and type(cycle.deadline)=="number" and type(cycle.population)=="number") then
+    cycle=nil
+  end
+  if not cycle or cycle.next_index>#cycle.station_ids then
+    if cycle and tick<cycle.deadline then
+      schedule(cycle,cycle.deadline)
+      return {processed=0,acted=0,failed=0,exhausted=false,sleeping=true}
+    end
+    local list=ordered_pairs()
+    local start=first_after_cursor(list,tonumber(r.last_serviced_station_1070) or 0)
+    cycle={station_ids={},next_index=1,deadline=tick+interval,population=#list}
+    for offset=0,math.min(quota,#list)-1 do
+      cycle.station_ids[#cycle.station_ids+1]=list[((start+offset-1)%#list)+1].id
+    end
+    r.broker_cycle=cycle
+  end
+  local id=cycle.station_ids[cycle.next_index]
+  if not id then
+    schedule(cycle,math.max(tick+step,cycle.deadline))
+    return {processed=0,acted=0,failed=0,exhausted=false,sleeping=true}
+  end
+  local map=pair_map()
+  local pair=map[id] or map[tostring(id)]
+  local ok,worked=true,false
+  if valid_pair(pair) and tonumber(station_unit(pair))==id then
+    ok,worked=pcall(M.service_pair,pair,"broker")
+  end
+  -- A removed/invalid pair or a failed survey still consumes this attempt.
+  -- Advance before the next pulse so it cannot repeatedly block its peers.
+  r.last_serviced_station_1070=id
+  cycle.next_index=cycle.next_index+1
+  local pending=cycle.next_index<=#cycle.station_ids
+  schedule(cycle,pending and tick+step or math.max(tick+step,cycle.deadline))
+  return {processed=1,acted=ok and worked and 1 or 0,failed=ok and 0 or 1,
+    exhausted=pending or cycle.population>#cycle.station_ids,
+    detail="station infrastructure survey plan"}
+end
 local function install_bootstrap() local ok, mod = pcall(require, "scripts.core.construction_bootstrap_ghost_planner_0645"); if ok and mod and type(mod.install)=="function" then pcall(mod.install) end end
 function M.install()
   if M.installed then return true end
@@ -527,16 +599,16 @@ function M.install()
     if ok then broker = found end
   end
   if broker and type(broker.register_service) == "function" then
+    local cycle=root().broker_cycle
     local ok, service = pcall(broker.register_service, {
       name = "master_infrastructure_plan_0644",
       category = "diagnostics",
       interval = M.tick_interval,
       priority = 980,
-      budget = 1,
-      fn = function(event, budget)
-        local acted,processed,exhausted,failed=M.service_all("broker",budget)
-        return { processed=processed, acted=acted, exhausted=exhausted,
-          failed=failed, detail="station infrastructure survey plan" }
+      budget = 8,
+      next_due_tick = type(cycle)=="table" and tonumber(cycle.next_due_tick) or nil,
+      fn = function(event, budget, current_service)
+        return broker_survey_pulse(event,budget,current_service,broker.base_interval)
       end,
       note = "station infrastructure survey plan"
     })

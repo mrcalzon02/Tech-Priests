@@ -14,7 +14,7 @@ The actual source names are `infrastructure_first_governor_0640`, `master_infras
 
 ```mermaid
 flowchart TD
-    Survey["0644 periodic survey; one station per callback"] --> Plan["Retained station-domain infrastructure plan"]
+    Survey["0644 bounded cycle; one station per admitted pulse"] --> Plan["Retained station-domain infrastructure plan"]
     Need["Station shortage or higher-tier dependency"] --> Gate["Self-construction frustration admission"]
     Gate -->|"not ready"| Maintain["Existing repair and maintenance continue"]
     Gate -->|"ready"| Governor["0640 prerequisite and recipe selection"]
@@ -39,10 +39,34 @@ This is the dependency relationship, not an assertion that each selected factory
 | Owner | Registered cadence / offered budget | Boundary |
 | --- | --- | --- |
 | `infrastructure_first_governor_0640` | 23 ticks / 10 | Callback passes the offered budget. `service_all` counts every inspected slot and resumes saved `service_cursor`; fallback defaults to the existing cap of 32. |
-| `master_infrastructure_plan_0644` | 97 ticks / 1, category `diagnostics` | Existing fair cursor admits one station per callback. Despite the category, source includes research/science servicing. Do not infer presentation-only behavior from the label. |
+| `master_infrastructure_plan_0644` | 97-tick cycle / 8; continuations on admitted 5-tick broker pulses; category `diagnostics` | One station attempt per callback, preserving up to eight visits per cycle through a saved batch and cursor. 0598 admission can delay continuations. Despite the category, source includes research/science servicing. |
 | `construction_bootstrap_ghost_planner_0645` | 83 ticks / 6 | Existing rotating discovery work; planning-ghost/request generation is distinct from paid construction. |
 
 Each installer prefers the broker and retains a registry fallback when broker registration fails. An inventory entry for both paths does not mean both were installed. The 0644 survey itself is not behind the frustration gate. 0640 gates new autonomous industry; 0645 reconciles already owned sites first and applies the gate before creating a new autonomous ghost.
+
+### 0644 cycle continuation
+
+```mermaid
+flowchart TD
+    Pulse["Admitted 0644 broker callback"] --> Pending{"Saved batch still pending?"}
+    Pending -->|"no"| Due{"Original cycle deadline reached?"}
+    Due -->|"no"| Sleep["Retain cycle deadline"]
+    Due -->|"yes or first cycle"| Batch["Capture up to eight station IDs after cursor"]
+    Batch --> Attempt["Resolve current pair and attempt one survey"]
+    Pending -->|"yes"| Attempt
+    Attempt --> Save["Advance saved cursor and batch index"]
+    Save --> More{"More saved IDs?"}
+    More -->|"yes"| Continue["Next due tick: current tick plus five"]
+    More -->|"no"| Finish["Next due: cycle deadline or next pulse"]
+    Sleep --> Persist["Persist revised deadline through 0598 broker_ran"]
+    Continue --> Persist
+    Finish --> Persist
+    Persist --> Pulse
+```
+
+The existing owner stores `broker_cycle.station_ids`, `next_index`, `deadline`, `population` and `next_due_tick`, plus `last_serviced_station_1070`. It sorts the current valid station roster once when capturing a cycle and saves at most the offered eight IDs. Each continuation resolves its ID against the current pair map; removed, invalid or failed pairs still consume one attempt and advance the cursor. The original deadline is set on the cycle's first attempt rather than after its final continuation. With admission available, this preserves up to eight visits per roughly 100 ticks on the five-tick broker grid. The installer restores the saved next deadline, and each continuation updates it through the existing 0598 persistence owner. This is not eight visits every five ticks or one visit every 97 ticks.
+
+Public `service_all(reason, budget)` remains synchronous and keeps its acted/processed/remaining/failed return contract. The conditional registry fallback still calls it every 97 ticks with the existing default cap of 24. The one-attempt continuation applies to the broker route. One station's survey can still be expensive, roster collection/sorting still visits the population, and background admission can delay work; the cycle is not an elapsed-time ceiling.
 
 0645 reads the existing `pair.master_infrastructure_plan_0644` when station identity, surface, force, position, canonical clamped radius, stage and target match. It does not introduce an age-based survey timer. Cold stations, old snapshot schemas and changed domains can initialize through 0644 once. Observing physical completion of the retained proposal's target permits one owner refresh to prevent recreating the completed ghost; an already advanced plan remains reusable. Live storage and custody checks still govern replacement of an active ghost. Explicit requested-entity reservations do not invoke the autonomous master survey. A failed domain/completion refresh cannot authorize the obsolete proposal.
 

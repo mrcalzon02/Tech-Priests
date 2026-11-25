@@ -3,8 +3,8 @@
     {
       "covered_source_files": 381,
       "path": "docs/BEHAVIOR_FUNCTION_MAP_0659.md",
-      "reviewed_source_digest": "f910a267499bb0ab41ac2a0527bf3694ecbbbf13d8e4823ecb8a52d22423f6c1",
-      "sha256": "2e8a58c2febf82f6bdaffcc460f931b8e085510fd734d3a5710043265b8c9ced",
+      "reviewed_source_digest": "986d51445e077ac853197617afec32292f832ba0359935706c0b7b5e95d5bdbc",
+      "sha256": "a71b0120e70f67846463dfd2ee0c746b8cc9ea9374f92ffaf6c4af3c4aa7540e",
       "source_patterns": [
         "control.lua",
         "scripts/**/*.lua",
@@ -12,10 +12,10 @@
       ]
     },
     {
-      "covered_source_files": 12,
+      "covered_source_files": 15,
       "path": "docs/BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0661.md",
-      "reviewed_source_digest": "eef9564f61e88c7a46205005175fb29c758155604ce4b8343fb52d5ce99eb44d",
-      "sha256": "ec03910e702c495697bf7352e33c83b800e11e82b8ca63414c1107bb2b2ba147",
+      "reviewed_source_digest": "f19fdb9baa5a2393db03f8913c7929505d9d725a9921961c4062dcc272ddb7a6",
+      "sha256": "b7a972c7c611731946a7bf435fe1d81236a544d834a03b36495839cd3939f09f",
       "source_patterns": [
         "scripts/core/planning_constraints_0646.lua",
         "scripts/core/logistics_fetch_executor_0527.lua",
@@ -28,7 +28,10 @@
         "scripts/core/logistics_fetch_executor_0526.lua",
         "scripts/core/station_area_change_invalidator_0634.lua",
         "scripts/core/station_work_inventory.lua",
-        "scripts/core/proxy_ammo_hardener_0649.lua"
+        "scripts/core/proxy_ammo_hardener_0649.lua",
+        "scripts/core/catalog_dense_scan_1478.lua",
+        "scripts/core/entity_identity_1481.lua",
+        "scripts/core/catalog_owner_index_1496.lua"
       ]
     },
     {
@@ -84,10 +87,10 @@
       ]
     },
     {
-      "covered_source_files": 7,
+      "covered_source_files": 9,
       "path": "docs/BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0666_INFRASTRUCTURE_PLANNING.md",
-      "reviewed_source_digest": "92876c07d07ea640b044ac2b72062ac0767d5b120d39d43e75e26b17c6dd65d4",
-      "sha256": "39acf6a64014afbd18587bbf2e634bc40a352c11bc898d664c802a654b486ffd",
+      "reviewed_source_digest": "915469b1947b38a43196c397f19969f5c9edc546187fb34cc1c36fe5b1cc5f55",
+      "sha256": "35982cb759bc6f3f92cdbed7669c50391bf0eb488c2de8d8615cffd837de6257",
       "source_patterns": [
         "scripts/core/infrastructure_first_governor_0640.lua",
         "scripts/core/master_infrastructure_plan_0644.lua",
@@ -95,7 +98,9 @@
         "scripts/core/power_setup_1252.lua",
         "scripts/core/self_construction_frustration_gate.lua",
         "scripts/core/planning_constraints_0646.lua",
-        "control.lua"
+        "control.lua",
+        "scripts/core/runtime_tick_broker.lua",
+        "scripts/core/efficiency_economy_0598.lua"
       ]
     },
     {
@@ -187,8 +192,8 @@
     {
       "covered_source_files": 381,
       "path": "docs/BEHAVIOR_MERMAID_MAP_0660.md",
-      "reviewed_source_digest": "f910a267499bb0ab41ac2a0527bf3694ecbbbf13d8e4823ecb8a52d22423f6c1",
-      "sha256": "dde4fd437159a502fc971946b884c30d7ae71839e51490b280fbc00b5758620c",
+      "reviewed_source_digest": "986d51445e077ac853197617afec32292f832ba0359935706c0b7b5e95d5bdbc",
+      "sha256": "0fc13a369452f19e4c37e4a282ecbb93f74e2472a94a1b71e71f5a1ce90aeeb3",
       "source_patterns": [
         "control.lua",
         "scripts/**/*.lua",
@@ -198,8 +203,8 @@
     {
       "covered_source_files": 381,
       "path": "docs/RECOVERY_AUTHORITY_MAP_CURRENT.md",
-      "reviewed_source_digest": "f910a267499bb0ab41ac2a0527bf3694ecbbbf13d8e4823ecb8a52d22423f6c1",
-      "sha256": "0604e69e0fa6eb8091d681a651903653b7cea184535bed4fba8773ed1c5a22bd",
+      "reviewed_source_digest": "986d51445e077ac853197617afec32292f832ba0359935706c0b7b5e95d5bdbc",
+      "sha256": "df05b4d6e7b171a08ffdbbb7c673703fad36d1544f63bafd052b6763b100cda5",
       "source_patterns": [
         "control.lua",
         "scripts/**/*.lua",
@@ -209,7 +214,7 @@
   ],
   "review_meaning": "Explicit source/diagram review acknowledgment; no semantic or runtime proof.",
   "schema": "tech-priests-behavior-map-review-v1",
-  "source_digest": "f910a267499bb0ab41ac2a0527bf3694ecbbbf13d8e4823ecb8a52d22423f6c1",
+  "source_digest": "986d51445e077ac853197617afec32292f832ba0359935706c0b7b5e95d5bdbc",
   "source_scope": [
     "control.lua",
     "scripts/**/*.lua",

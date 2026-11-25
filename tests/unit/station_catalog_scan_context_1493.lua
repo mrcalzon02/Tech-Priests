@@ -3,6 +3,14 @@ package.path='./tech-priests_src/?.lua;./tech-priests_src/?/init.lua;'..package.
 storage={tech_priests={pairs_by_station={}}};game={tick=1}
 defines={inventory={chest=1,assembling_machine_input=2},wire_connector_id={circuit_red=3}}
 local setting_reads,rock_wires=0,0
+local legacy_reads,connection_array_reads,ore_key_reads=0,0,0
+local Identity=require('scripts.core.entity_identity_1481')
+local original_key=Identity.key
+Identity.key=function(entity)
+ if entity==nil then return nil end
+ if entity.name=='iron-ore' then ore_key_reads=ore_key_reads+1 end
+ return original_key(entity)
+end
 _G.tech_priests_runtime_setting_bool_0626=function(_,fallback)
  setting_reads=setting_reads+1; return fallback
 end
@@ -23,15 +31,26 @@ local function machine(i,has_wire)
   end} end
  end
  e.get_wire_connector=function()
-  return e.wired and {connection_count=1} or nil
+  return setmetatable({connection_count=e.wired and 1 or 0},{__index=function(_,key)
+   if key=='connections' then
+    connection_array_reads=connection_array_reads+1
+    error('connection array must not be materialized after a numeric count')
+   end
+  end})
  end
- return e
+ return setmetatable(e,{__index=function(_,key)
+  if key=='circuit_connected_entities' then
+   legacy_reads=legacy_reads+1
+   error('LuaEntity does not contain key circuit_connected_entities')
+  end
+ end})
 end
 for i=1,10 do entities[#entities+1]=machine(i,false) end
 for i=11,13 do wired[#wired+1]=machine(i,true);entities[#entities+1]=wired[#wired] end
 for i=1,10 do
  local e={valid=true,unit_number=100+i,position={x=12+i,y=16},
   surface=surface,force=force,name='stone',type='simple-entity',
+  prototype={mineable_properties={products={{name='stone',amount=3}}}},
   get_inventory=function() return nil end}
  e.get_wire_connector=function() rock_wires=rock_wires+1 end
  entities[#entities+1]=e
@@ -56,6 +75,12 @@ assert(rock_wires==0,'non-inventory rocks received wire checks')
 assert(first.storage_items['iron-plate'].count==20,'wired inventories were included')
 assert(first.storage_items['copper-plate'].count==10)
 assert(first.wired_sources_skipped_1495==3,'wired omissions are not reported')
+assert(legacy_reads==0 and connection_array_reads==0,
+ 'successful native connector answers still triggered obsolete probes or array copies')
+assert(ore_key_reads==2,
+ 'one deduplication key and one ownership key should suffice for a cataloged ore entity')
+assert(first.mineable_products.stone.count==30 and first.resources['iron-ore'].count==50,
+ 'reusing prototype product facts changed physical resource/product accounting')
 local root=storage.tech_priests[C.storage_key]
 local key=C.entity_key(ore)
 local destroyed=0
@@ -68,4 +93,22 @@ local second=C.scan_pair(pair)
 assert(second.storage_items['iron-plate'].count==22,'newly disconnected inventory unavailable')
 assert(second.wired_sources_skipped_1495==2,'wire omission count did not refresh')
 assert(setting_reads==4 and rock_wires==0,'settings or non-inventory wire checks regressed')
+assert(legacy_reads==0 and connection_array_reads==0,
+ 'subsequent scans repeated obsolete native API probes')
+assert(second.mineable_products.stone.count==30 and first.mineable_products.stone.count==30,
+ 'later catalog accumulation mutated retained prototype facts or earlier snapshots')
+-- A successful missing connector is a native empty answer. A failed modern
+-- query is not: compatible legacy providers must still protect wired stock.
+entities[1].get_wire_connector=function() return nil end
+game.tick=2000
+local absent_connector=C.scan_pair(pair)
+assert(absent_connector.storage_items['iron-plate'].count==22 and legacy_reads==0,
+ 'a missing native connector lost stock or caused obsolete fallback probing')
+entities[2].get_wire_connector=function() error('unsupported modern connector query') end
+entities[2].circuit_connected_entities={red={{valid=true}}}
+game.tick=3000
+local legacy_fallback=C.scan_pair(pair)
+assert(legacy_fallback.storage_items['iron-plate'].count==20
+ and legacy_fallback.wired_sources_skipped_1495==3,
+ 'a failed modern query incorrectly exposed legacy wired inventory')
 print('[station-catalog-scan-context-1493] PASS')

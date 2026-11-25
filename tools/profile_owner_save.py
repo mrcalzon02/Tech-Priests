@@ -23,6 +23,44 @@ import time
 import zipfile
 
 
+WINDOWS_GRAPHICS_FLAGS = ("--force-opengl", "--fullscreen=false", "--disable-audio", "--gfx-safe-mode")
+
+
+def windows_session_id(pid: int | None = None) -> int | None:
+    """Read the real process session; never acquire or impersonate a token."""
+    if os.name != "nt":
+        return None
+    import ctypes
+    from ctypes import wintypes
+    session = wintypes.DWORD()
+    kernel = ctypes.WinDLL("kernel32", use_last_error=True)
+    if not kernel.ProcessIdToSessionId(pid or os.getpid(), ctypes.byref(session)):
+        raise ctypes.WinError(ctypes.get_last_error())
+    return session.value
+
+
+def refuse_running_factorio() -> None:
+    """Refuse concurrent games; do not stop or attach to existing processes."""
+    if os.name != "nt":
+        return
+    result = subprocess.run(["tasklist.exe", "/fo", "csv", "/nh", "/fi", "IMAGENAME eq factorio.exe"],
+                            capture_output=True, text=True, errors="replace", check=True, timeout=15)
+    if not result.stdout.strip():
+        raise RuntimeError("FACTORIO_PROCESS_CHECK_UNAVAILABLE: no tasklist response")
+    if any(row and row[0].lower() == "factorio.exe" for row in csv.reader(result.stdout.splitlines())):
+        raise RuntimeError("FACTORIO_ALREADY_RUNNING: existing game was not interrupted")
+
+
+def graphics_evidence(text: str) -> dict:
+    """Only a native initialization line identifies the observed backend."""
+    lines = [line.strip() for line in text.splitlines()
+             if any(term in line for term in ("Direct3D", "OpenGL", "Vulkan", "Graphics backend", "Video memory", "Graphics Adapter"))][:40]
+    match = re.search(r"(?im)^.*?\bInitiali[sz]ed\s+(OpenGL|Direct3D(?:\s*\d+)?|Vulkan)\s*:\s*(.+)$", text)
+    return {"observed_backend": match[1] if match else None,
+            "renderer_identity": match[2].strip() if match else None,
+            "initialization_lines": lines}
+
+
 OBSERVER = r'''
 -- Disposable owner-save benchmark observer. Not part of the shipped mod.
 do
@@ -191,7 +229,8 @@ do
         end
         local calls=(call_counts[label] or 0)+1
         call_counts[label]=calls
-        if calls%32~=1 then return fn(...) end
+        local every_scan=scope=="dispatcher-branch" and name=="scripts.core.station_catalog.scan_pair"
+        if not every_scan and calls%32~=1 then return fn(...) end
         local profiler=helpers.create_profiler(false)
         local result=table.pack(pcall(fn,...))
         profiler.stop()
@@ -329,7 +368,8 @@ def parse_log(text: str, expected_ticks: int, warmup: int) -> dict:
     result = {"engine_updates": None, "engine_mean_ms": None,
               "engine_benchmark_ups": None, "per_tick_complete": False,
               "timings": {}, "timing_windows": [], "observations": [], "callback_samples": [],
-              "callback_sample_rows": [], "callback_samples_after_warmup": []}
+              "callback_sample_rows": [], "callback_samples_after_warmup": [],
+              "spike_evidence": {"available": False}}
     summary = re.search(r"Performed\s+(\d+)\s+updates in\s+([\d.]+)\s+ms", text)
     if summary:
         updates, elapsed = int(summary[1]), float(summary[2])
@@ -338,6 +378,8 @@ def parse_log(text: str, expected_ticks: int, warmup: int) -> dict:
     for line in text.splitlines():
         if "[TP-OWNER-SAVE] " in line:
             result["observations"].append(json.loads(line.split("[TP-OWNER-SAVE] ", 1)[1]))
+    starts=[row.get("tick") for row in result["observations"] if row.get("phase")=="start"]
+    start_tick=starts[0] if len(starts)==1 and isinstance(starts[0],int) else None
     rows, headers = [], None
     for line in text.splitlines():
         if line.startswith("tick,"):
@@ -374,9 +416,32 @@ def parse_log(text: str, expected_ticks: int, warmup: int) -> dict:
                 "timings": {name: distribution([r[1][index] for r in rows[start:end]])
                             for index, name in enumerate(headers[1:])
                             if name in ("wholeUpdate", "scriptUpdate")}})
+        # Preserve exact costly rows when artifact quota discards the full CSV.
+        # Benchmark row zero is the first update; observer elapsed zero is its
+        # on_tick snapshot. Warmup attribution uses that same zero-based index.
+        indexes={name:index for index,name in enumerate(headers[1:]) if name!="timestamp"}
+        if all(name in indexes for name in ("wholeUpdate","scriptUpdate")):
+            spikes=[]
+            counts={phase:{"over_33_333_ms":0,"over_100_ms":0} for phase in ("all","warmup","measured")}
+            for tick,values in rows:
+                duration=max(values[indexes["wholeUpdate"]],values[indexes["scriptUpdate"]])
+                if duration<=33.333:
+                    continue
+                phase="warmup" if tick<warmup else "measured"
+                for scope in ("all",phase):
+                    counts[scope]["over_33_333_ms"]+=1
+                    counts[scope]["over_100_ms"]+=int(duration>100)
+                names=list(indexes) if len(indexes)<=48 else ["wholeUpdate","scriptUpdate"]
+                spikes.append({"csv_row_index":tick,"elapsed_tick":tick,
+                    "game_tick":start_tick+tick if start_tick is not None else None,
+                    "phase":phase,"duration_ms":duration,
+                    "timings_ms":{name:values[indexes[name]] for name in names}})
+            spikes.sort(key=lambda row:(-row["duration_ms"],row["csv_row_index"]))
+            result["spike_evidence"]={"available":True,"threshold_ms":33.333,"row_limit":100,
+                "row_index_basis":"zero-based native benchmark update; game_tick anchored to unique observer start",
+                "counts":counts,"retained_rows":spikes[:100],"truncated":len(spikes)>100,
+                "all_timing_columns_retained":len(indexes)<=48}
     callbacks, warm_callbacks = {}, {}
-    start_tick=next((row["tick"] for row in result["observations"]
-                     if row.get("phase")=="start"),None)
     expression = (r"\[TP-OWNER-CALLBACK\] tick=(\d+) scope=(\S+) name=(.*?) call=(\d+) "
                   r"duration=(?:Elapsed|Duration):\s*([\d.]+)\s*ms")
     for tick, scope, name, call, ms in re.findall(expression, text):
@@ -398,16 +463,29 @@ def parse_log(text: str, expected_ticks: int, warmup: int) -> dict:
 
 def run(args: list[str], log: pathlib.Path, timeout: int, *,
         cwd: pathlib.Path | None = None, env: dict | None = None) -> dict:
+    refuse_running_factorio()
+    parent_session=windows_session_id()
     start = time.monotonic()
     with log.open("w", encoding="utf-8") as stream:
+        proc = subprocess.Popen(args, stdout=stream, stderr=subprocess.STDOUT, cwd=cwd, env=env)
         try:
-            proc = subprocess.run(args, stdout=stream, stderr=subprocess.STDOUT,
-                                  timeout=timeout, check=False, cwd=cwd, env=env)
-            status = proc.returncode
+            child_session=windows_session_id(proc.pid)
+            if child_session!=parent_session:
+                raise RuntimeError("Native child did not remain in the launcher's Windows session")
+            status=proc.wait(timeout=timeout)
         except subprocess.TimeoutExpired:
+            proc.kill()  # Only the child created by this invocation.
+            proc.wait()
             status=124
             stream.write("\nTP_OWNER_SAVE_TIMEOUT\n")
-    return {"exit_code":status,"wall_seconds":round(time.monotonic()-start,6),"log":log.name}
+        except Exception:
+            if proc.poll() is None:
+                proc.kill()
+            proc.wait()
+            raise
+    return {"exit_code":status,"wall_seconds":round(time.monotonic()-start,6),"log":log.name,
+            "process_id":proc.pid,"launcher_session_id":parent_session,"native_session_id":child_session,
+            "same_windows_session_verified":parent_session is not None and parent_session==child_session}
 
 
 def prepare_mods(source: pathlib.Path, target: pathlib.Path) -> pathlib.Path:
@@ -521,7 +599,8 @@ def compare_reports(baseline: dict, candidate: dict) -> dict:
               "callback_instrumentation", "reconstruction_requested",
               "tech_priests_version", "active_mods", "non_tech_priests_mods_sha256",
               "mod_settings_sha256", "observer_sha256", "worker_sha256", "benchmark_options",
-              "run_provenance", "launch_method", "steam_app_id")
+              "run_provenance", "launch_method", "steam_app_id", "callback_sampling_policy",
+              "process_session_id", "native_session_id", "graphics_backend", "graphics_renderer")
     result = {"schema": "tech-priests.owner-save-comparison.v1", "passed": False,
               "comparison_valid": False, "performance_acceptance": "not-evaluated",
               "scope": "matched instrumented diagnostic" if candidate.get("callback_instrumentation")
@@ -622,8 +701,12 @@ def main() -> int:
             "callback_instrumentation":args.instrument_callbacks,
             "graphical_benchmark":args.graphics,
             "script_scope":"whole-engine-all-installed-mods",
-            "callback_scope":("sparse one-in-32 calls including warmup, nested scopes overlap; diagnostic overhead present"
+            "callback_scope":("all station_catalog.scan_pair calls; other owners one-in-32 including warmup; nested scopes overlap; diagnostic overhead present"
                               if args.instrument_callbacks else "disabled"),
+            "callback_sampling_policy":({"default":"calls 1, 33, 65, ... per label",
+                "every_call":[{"scope":"dispatcher-branch","name":"scripts.core.station_catalog.scan_pair"}],
+                "warmup_included":True} if args.instrument_callbacks else None),
+            "graphics_backend":None,"graphics_renderer":None,
             "performance_scope":"observer-equipped replay; instrumented runs do not establish diagnostics-off production performance",
             "run_provenance":{"github_run_id":os.environ.get("GITHUB_RUN_ID"),
                 "github_run_attempt":os.environ.get("GITHUB_RUN_ATTEMPT"),
@@ -632,12 +715,14 @@ def main() -> int:
                 "runner_name":os.environ.get("RUNNER_NAME"),"runner_os":os.environ.get("RUNNER_OS")},
             "commands":[]}
     try:
+        refuse_running_factorio()
+        report["process_session_id"]=windows_session_id()
         report["engine_binary_sha256"]=digest(args.factorio)
         report["worker_sha256"]=digest(pathlib.Path(__file__))
         report["harness_sha256"]=report["worker_sha256"]
         version_command=[str(args.factorio),"--version"]
         report["commands"].append(version_command)
-        native=subprocess.run(version_command,capture_output=True,text=True,check=True,cwd=args.output)
+        native=subprocess.run(version_command,capture_output=True,text=True,check=True,cwd=args.output,timeout=30)
         report["engine_version"]=(native.stdout+native.stderr).strip()
         launch_env=None
         report["launch_method"]="direct-native-executable"
@@ -682,10 +767,12 @@ def main() -> int:
                 "--benchmark-graphics" if args.graphics else "--benchmark",str(save),
                 "--benchmark-ticks",str(args.ticks),"--benchmark-runs","1"]
         if args.graphics:
-            common += ["--window-size","1600x1000","--disable-audio"]
+            common += ["--window-size","1600x1000"]
+            common += list(WINDOWS_GRAPHICS_FLAGS) if os.name=="nt" else ["--disable-audio"]
         report["benchmark_options"]={"mode":"graphics" if args.graphics else "headless",
             "ticks":args.ticks,"runs":1,"verbose":"all",
             "window_size":"1600x1000" if args.graphics else None,"audio_disabled":args.graphics,
+            "windows_graphics_flags":list(WINDOWS_GRAPHICS_FLAGS) if args.graphics and os.name=="nt" else [],
             "screenshot_tick":300 if args.graphics else None,
             "screenshot_in_measured_window":args.graphics and args.warmup<=300}
         verbose=args.output/"benchmark-verbose.log"
@@ -707,6 +794,8 @@ def main() -> int:
             content=plain.read_text(encoding="utf-8",errors="replace")
             report["observed"]=parse_log(content,args.ticks,args.warmup)
             exit_code=report["plain_process"]["exit_code"]
+        active_process=report.get("plain_process",report["verbose_process"])
+        report["native_session_id"]=active_process["native_session_id"]
         report["active_local_hooks"]=next((v["local_hook_names"]
             for v in report["observed"]["observations"] if v.get("phase")=="instrumentation-ready"),[])
         report["observation_complete"],snapshots=validate_observations(report["observed"],args.ticks,args.warmup)
@@ -735,8 +824,14 @@ def main() -> int:
             report["passed"] = False
         screenshot=userdata/"script-output/owner-profile/four-priests.png"
         if args.graphics:
-            report["graphics_initialization_lines"]=[line.strip() for line in content.splitlines()
-                if any(term in line for term in ("Direct3D", "OpenGL", "Vulkan", "Graphics backend", "Video memory", "Graphics Adapter"))][:40]
+            graphics=graphics_evidence(content)
+            report["graphics_initialization_lines"]=graphics["initialization_lines"]
+            report["graphics_backend"]=graphics["observed_backend"]
+            report["graphics_renderer"]=graphics["renderer_identity"]
+            if os.name=="nt" and (report["graphics_backend"]!="OpenGL"
+                    or not active_process["same_windows_session_verified"]):
+                report["passed"]=False
+                report["graphics_context_error"]="Native OpenGL initialization in the launcher's session was not verified"
             report["screenshot"]={"exists":screenshot.is_file(),
                 "sha256":digest(screenshot) if screenshot.is_file() else None}
             if not screenshot.is_file():
@@ -785,6 +880,10 @@ def main() -> int:
         "engine_benchmark_ups":observed.get("engine_benchmark_ups"),
         "per_tick_complete":observed.get("per_tick_complete"),
         "timing_windows":observed.get("timing_windows",[]),
+        "spike_evidence":observed.get("spike_evidence",{}),
+        "callback_sampling_policy":report.get("callback_sampling_policy"),
+        "native_session_id":report.get("native_session_id"),
+        "graphics_backend":report.get("graphics_backend"),"graphics_renderer":report.get("graphics_renderer"),
         "behavior":report.get("behavior"),
         "timings":{k:v for k,v in observed.get("timings",{}).items()
                    if k in ("wholeUpdate","scriptUpdate","entityUpdate","pathFinder","turretTargetAcquisition","luaGarbageIncremental")},

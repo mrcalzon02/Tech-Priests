@@ -27,6 +27,55 @@ Performance observations remain diagnostics under the owner's release policy;
 they do not create an additional release approval gate. This does not authorize
 claiming that an unresolved slowdown is fixed.
 
+### Owner-save fixture and runner identity
+
+The supplied `_autosave1.zip` has SHA-256
+`12aca8ea806977251dd0683fa56c8ab9a04e992de0ae12914ca544f380e66b6c`.
+It predates the four station placements. The diagnostic explicitly reconstructs
+one planetary, junior, intermediate and senior station on each disposable copy,
+then records and preserves their station/priest identities. These reconstructed
+pairs must not be described as entities already present in the supplied save.
+The pinned graphics baseline is `tech-priests_1.0.0.zip`, SHA-256
+`6870e0b0ad71501d501eb9fc66853d81b12d617e4876b8c9ebd1138a6d464ab6`.
+
+`OLD-CORE30-homebrew` is the Windows/GTX 1660 SUPER runner. Its service context
+is Session 0. The attempted interactive-desktop handoff in private Actions run
+[45601230986](https://github.com/mrcalzon02/Dens-Mortis/actions/runs/45601230986) failed at `Register-ScheduledTask` with `0x80070005` (access denied).
+The existing desktop bridge uses the same operation; it is not a second
+permission route. The approved alternative is native OpenGL rendering in the
+existing session with `--force-opengl --fullscreen=false --disable-audio
+--gfx-safe-mode`, retaining the installed engine and normal Steam initialization.
+The runner's prior native capture run [43352927548](https://github.com/mrcalzon02/Dens-Mortis/actions/runs/43352927548) establishes this capability
+for Factorio 2.1.24; it does not establish success for this 2.1.25 owner-save test.
+Record the actual session, renderer lines, exact command and native PNG before
+claiming a graphical run. Session 0 rendering is not a visible foreground desktop.
+
+### Retained diagnostic observations
+
+| Private Actions run | Actual result | Evidence limit |
+|---|---|---|
+| [45593930310](https://github.com/mrcalzon02/Dens-Mortis/actions/runs/45593930310) | Exact save/mod staging succeeded; graphical launch requested a Steam restart and performed zero updates | No native performance measurement or screenshot |
+| [45600647747](https://github.com/mrcalzon02/Dens-Mortis/actions/runs/45600647747) | Matched `5934720f` request was cancelled while pending by a subsequent fresh-world request | No job ran; it is not a comparison |
+| [45601230986](https://github.com/mrcalzon02/Dens-Mortis/actions/runs/45601230986) | Fresh-world staging succeeded; desktop task registration was denied | No visible-desktop performance result |
+| [45602737126](https://github.com/mrcalzon02/Dens-Mortis/actions/runs/45602737126) | Candidate-only Linux headless diagnostic of `f209086407c2a20aa9d4ac0e68d8fd539dea289c`; 6,000 native updates, 5,400 after warmup, four stable identities, no isolated/runtime errors | Callback instrumentation enabled; baseline and paired-comparison steps skipped |
+
+In [45602737126](https://github.com/mrcalzon02/Dens-Mortis/actions/runs/45602737126), steady-state whole-update mean/p95/p99/max were
+3.179/9.728/39.376/340.245 ms. All-mod script-update mean/p99/max were
+2.662/38.089/333.707 ms; nine script-update ticks exceeded 100 ms. A sampled
+catalog callback took 247.305 ms at elapsed tick 59, **before** the 600-tick
+warmup ended. Its first planetary and junior scans took 182.005 and 65.165 ms.
+The sampled warm callbacks do not identify the nine later >100 ms script ticks.
+Do not attribute those spikes to catalog work merely because nine incomplete
+catalog scans were also counted.
+
+That diagnostic's worker hash differs from the earlier `9a67b586` diagnostic,
+so their elapsed times are not an accepted matched improvement ratio. Artifact
+upload failed because the account's artifact quota was exhausted. The complete
+JSON survived in job-log chunks, but its raw per-tick CSV did not. Subsequent
+runs must retain bounded exact spike rows in the JSON as well as the full CSV,
+and preserve the JSON and actual screenshot chunks in logs. An upload failure
+must not silently discard the evidence needed to investigate the remaining lag.
+
 ## Objective
 
 The UPS pass answers two questions:
@@ -59,13 +108,16 @@ stops doing its job cannot be reported as a performance improvement.
 6. Capture callback invocations/deferrals, scanned candidates and native query
    calls, cache hits/misses/invalidations, queue depth, oldest pending age and
    actual completed actions. A deferred callback must retain its obligation.
-7. Exercise the concrete change: repeated chest lookup across many 1,800-tick
-   boundaries without timed rediscovery; build/mine/destroy and vehicle/corpse
-   membership events; live stock changes; immediate movement/combat/lifecycle
-   work; and save/reload with pending work. Retaining source identities must
-   not freeze inventory quantities or suppress membership events. Verify that
-   an explicit refresh recovers an entity created without a supported event;
-   elapsed time alone must not substitute for that refresh.
+7. Exercise the concrete change: repeated item lookups reuse one typed physical
+   membership discovery within its 1,800-tick lifetime; build/mine/destroy and
+   vehicle/corpse events update known membership immediately; stock and source
+   eligibility remain live. A previously unseen vehicle can enter an empty
+   cached area without a movement event, so prove that the next requested
+   lookup at expiry discovers it. This bounded fallback is required for
+   correctness; an event-only fixture does not cover autonomous entry. Verify
+   that smoothing planner work preserves the former per-cycle attempt quota,
+   cursor fairness, failure accounting and pending deadlines across reload.
+   Keep movement, combat, lifecycle and physical custody work responsive.
 8. Once the four-priest failure is resolved, repeat the established higher-count
    cases and representative idle/logistics/combat/construction workloads before
    extending the performance claim to those populations. Report any unrun case
@@ -162,7 +214,7 @@ the exact validation state; regeneration alone does not resolve the listed risks
 The following paths are the first UPS suspects to watch during the next clean-world pass.
 
 1. Station catalog fallback: `station_catalog.scan_pair` still falls back to a bounded area scan when the 0579 cell index is dirty or unknown. This is correct for universal discovery but is the main scan cliff if repeated often.
-2. Logistics source fallback: `logistics_fetch_executor_0527` uses 0587's retained, item-independent typed source membership without timed rediscovery. Measure live inventory probes separately from initial/domain-change discovery, membership events and the independent loose-item scan; an item miss no longer forces a catalog scan.
+2. Logistics source fallback: `logistics_fetch_executor_0527` uses 0587's retained, item-independent typed source membership with a 1,800-tick demand expiry for unobserved moving sources. Measure live inventory probes separately from cold/domain-change/expiry discovery, immediate membership events and the independent loose-item scan; an item miss no longer forces a catalog scan.
 3. Repair discovery: `work_queue_authority.discover_repair_near` now filters by force before damaged-entity checks. If repair direct scans remain high, repair discovery should be converted to event-fed damage submissions first and scan fallback second.
 4. Direct acquisition physical guard: `direct_acquisition_physical_guard_0649` now scans only resource/tree/mineable-debris types. If it still appears in profiler output, the next step is to stop scanning when the task already has a valid entity and only retry after a terminal target failure.
 5. Movement ownership: `active_leaf_task_truth_0655`, `movement_intent_authority_0654`, and `direct_acquisition_movement_lock_0650` should reduce repeated engine commands. If `engine_commands` keeps climbing without completions, movement ownership is still fighting.

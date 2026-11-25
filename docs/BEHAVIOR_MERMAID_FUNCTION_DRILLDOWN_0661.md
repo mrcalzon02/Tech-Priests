@@ -58,7 +58,7 @@ Source order is catalog, typed nearby storage, loose ground. The wrapper can ret
 | Movement | Calls `tech_priests_request_movement_0418`; it does not prewrite movement request storage or issue fallback commands. |
 | Transfer | Immediate contact transfer with deposit/refund helpers. Do not call it an accepted persistent-custody transaction without separate verification. |
 | Timing | No independent fetch timer; work happens through its dispatcher wrapper and direct calls. |
-| Discovery | Nearby storage uses `0587.source_candidates` with domain `inventory-fetch-0527` and same-or-neutral force policy. Membership is independent of requested item/order and has no timed expiry. Initial/domain-change or explicit-refresh typed native queries have no result limit. |
+| Discovery | Nearby storage uses `0587.source_candidates` with domain `inventory-fetch-0527` and same-or-neutral force policy. Membership is independent of requested item/order. Event updates are immediate; a 1,800-tick demand expiry also discovers unobserved arrivals, including after an empty result. Initial, expired, changed-domain and explicit-refresh typed native queries have no result limit. |
 | Loose items | The separate routed pickup query still has a 240-tick cache request and native result limit 128. It does not use the retained inventory-source domain. |
 | Catalog access | 0527 reads existing `station_catalog_0327.stations` directly, checks the source's live position against the current station radius, ranks live distances and rechecks current stock. A missing item no longer invokes `find_known_source`, `get_for_pair` or a forced catalog scan. The source-preserved 0526 compatibility helper uses the retained-only catalog approach; this does not establish a new installation path for 0526. |
 
@@ -68,10 +68,10 @@ Source order is catalog, typed nearby storage, loose ground. The wrapper can ret
 flowchart TD
     Fetch["0527 item request"] --> Membership["0587 retained source membership"]
     Storage["0686 generic storage request"] --> Membership
-    Membership --> Valid{"Complete membership in matching station domain?"}
+    Membership --> Valid{"Complete, unexpired membership in matching domain?"}
     Valid -->|"yes"| View["Keep physical identities and filter live eligibility"]
     Valid -->|"no"| Query["Complete typed native area query"]
-    Query --> Record["Retain physical membership without time expiry"]
+    Query --> Record["Retain physical membership with 1800-tick expiry"]
     Record --> View
     Events["Build, remove, movement and corpse events"] --> Record
     View --> Live["Current inventory, role, wire and stock checks"]
@@ -84,11 +84,15 @@ flowchart TD
 
 Build/removal events, including space-platform variants, clones, script teleports and surface changes update or discard membership. Player driving/position/surface changes update moving vehicles; spider-command completion and train changes update their affected inventory sources. Corpse creation and expiry are also observed. Programmatic stash creation in 0686 calls the same invalidator. Force eligibility is evaluated on every read and does not depend on an entity-force-change notification.
 
-Retained inventory membership has no timer expiry, including an initially empty result. Records stay in the existing persisted `source_cache` through module reload; short-lived legacy answer cleanup is separate and does not expire these lists. Station/domain changes or explicit refresh can repopulate membership. An entity created or moved without any supported event may remain unknown until such a refresh; elapsed time does not silently start a replacement area search. Without successful event registration or enabled caching, the owner falls back to discovery. Failed/non-table query results are not installed as complete negative records.
+`candidate_ttl = 60 * 30` bounds reuse of retained inventory membership to 1,800 ticks, including an initially empty result. The first demand after expiry performs complete typed discovery, so a previously unseen vehicle entering without a supported event cannot remain unknown indefinitely. Expiry alone does not run a scan. Records stay in the existing persisted `source_cache` through module reload; old retained records without an expiry refresh on their next demand. Event updates, station/domain changes and explicit refresh can change membership sooner. Short-lived legacy answer cleanup remains separate. Without successful event registration or enabled caching, the owner falls back to discovery. Failed/non-table query results are not installed as complete negative records.
 
-The 0686 generic-storage view returns at most 256 candidates while retaining overflow membership. Removal of a visible entry can promote a known overflow entity without another spatial query. Initial population or an explicit/domain-change native query is complete and has no entity limit; its cost still grows with local density. 0527's retained typed view is not capped at 256. Cached membership also does not eliminate repeated live inventory probes.
+The 0686 generic-storage view returns at most 256 candidates while retaining overflow membership. Removal of a visible entry can promote a known overflow entity without another spatial query. Initial population, expired membership or an explicit/domain-change native query is complete and has no entity limit; its cost still grows with local density. 0527's retained typed view is not capped at 256. Cached membership also does not eliminate repeated live inventory probes.
 
 `station_area_change_invalidator_0634.clear_pair_state` marks the catalog dirty and due while retaining the last snapshot. It no longer forces a scan for every nearby entity event. `station_catalog.scan_due(2)` runs through a separate registry route every 60 ticks, sorts due station units, and resumes after saved `scan_cursor_0634`. Collecting/sorting due stations still visits the roster. `get_for_pair` can synchronously scan a station with no existing snapshot; explicit refresh can also force a scan. Ordinary known-resource GUI rendering now calls `catalog_for_pair(pair, false)`, so it reuses an existing snapshot but can still initialize a missing one. These paths remain outside the broker's internal callback cap.
+
+Station rotation does not provide fairness within a dense station area. `catalog_dense_scan_1478.scan` starts its fixed subdivision order again on each invocation, with at most 13 native queries and 3,072 unique returned entities. It does not retain a subtree/entity cursor. An incomplete scan replaces the catalog snapshot with an explicit completeness flag while preserving old ownership keys; retained ownership is not complete candidate knowledge. A stable area above those bounds may repeatedly omit its tail.
+
+Within each scan, `station_catalog` reuses the identity key passed into a resource/mineable claim and the existing read-only prototype-product arrays. Mineable eligibility returns the same product list for catalog insertion. These remove repeated identity construction and per-entity product copies without changing selection, scan limits or cadence. A successful numeric connector count answers both connected and empty cases without materializing `connections`; fully successful modern connector queries avoid obsolete field probes, while uncertain or failed queries retain compatibility fallbacks. Positive and empty inventory-ID results already use the existing prototype cache. These are source reductions, not measured native acceptance.
 
 0327's broad world survey still includes inventory-bearing entities and reads their current contents. It is distinct from the retained 0527/0686 source-selection paths; the dedicated inventory repair does not establish that every surrounding-world query is event-only. Loose-ground-item pickup retains its separate 240-tick routed cache request.
 

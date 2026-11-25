@@ -24,8 +24,12 @@ loop is not proof that physical work completed.
    copies of the same save, on the same headed runner, with the same mods,
    600-tick warmup and 6,000-tick run. Disable optional callback instrumentation
    for the primary comparison; use a separately labeled attribution pass as needed.
-3. Retain whole-update and all-mod script p50/p95/p99/max, >100 ms tick counts,
-   exact build/save/engine hashes and the genuine native warmup screenshot.
+3. Retain whole-update and all-mod script p50/p95/p99/max, exact slow-tick rows,
+   >100 ms counts, build/save/engine hashes and the genuine native warmup PNG.
+   Use the approved OpenGL path within the runner's existing Session 0; record
+   actual renderer/session evidence and do not call it a visible desktop. The
+   interactive Task Scheduler handoff was denied with 0x80070005. Keep JSON/PNG
+   log chunks because artifact upload is currently failing its storage quota.
 4. Inspect identity stability, actual movement, inventory/custody and completed
    actions. Fix any exposed runtime error or loss of physical progress.
 5. Update the existing development history and evidence runbook with run IDs,
