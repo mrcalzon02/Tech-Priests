@@ -1,0 +1,179 @@
+name: Stage Tech-Priests 1.0.0 GitHub draft candidate
+
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/stage-v1-release-candidate.yml']
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tech-priests-v1-candidate
+  cancel-in-progress: false
+
+jobs:
+  package:
+    if: >-
+      github.repository == 'mrcalzon02/Tech-Priests' &&
+      github.ref == 'refs/heads/main' &&
+      github.event_name == 'push' &&
+      github.event.head_commit.message == 'build(rc): stage pinned Tech-Priests 1.0.0 GitHub draft candidate'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    env:
+      SOURCE_SHA: e694f0d97b174f66e49fc2b4c4d1eb8b914a5b13
+      SOURCE_TREE_SHA: 0ce90fcfb3499ffe3c87cc2685ce9ed01ad4b75a
+      GH_TOKEN: ${{ github.token }}
+      TAG: v1.0.0-rc.1
+    steps:
+      - name: Sparse-fetch immutable source once; no Factorio or dependency downloads
+        shell: bash
+        run: |
+          set -euo pipefail
+          git init -q source
+          git -C source remote add origin "https://github.com/${GITHUB_REPOSITORY}.git"
+          git -C source sparse-checkout init --cone
+          git -C source sparse-checkout set tech-priests_src docs/releases
+          git -C source -c protocol.version=2 fetch --depth=1 --filter=blob:none origin "${GITHUB_SHA}"
+          git -C source checkout -q --detach FETCH_HEAD
+          test "$(git -C source rev-parse HEAD)" = "${GITHUB_SHA}"
+          test "$(git -C source rev-parse 'HEAD:tech-priests_src')" = "${SOURCE_TREE_SHA}"
+          test -f source/docs/releases/v1.0.0-candidate-notes.md
+          echo "TP_100_IMMUTABLE_SOURCE_TREE_VERIFIED sha=${SOURCE_TREE_SHA} baseline=${SOURCE_SHA}"
+
+      - name: Assemble and CRC-verify standalone 1.0.0 candidate ZIP
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -u - <<'PY'
+          import hashlib, json, os, pathlib, zipfile
+          root=pathlib.Path('source/tech-priests_src')
+          out=pathlib.Path('candidate')
+          out.mkdir(exist_ok=False)
+          original=json.loads((root/'info.json').read_text(encoding='utf-8'))
+          assert original['name']=='tech-priests'
+          assert original['version']=='0.1.687'
+          assert original['factorio_version']=='2.1'
+          assert 'aai-programmable-vehicles >= 0.9.2' in original['dependencies']
+          candidate=dict(original,version='1.0.0')
+          patch_info=(json.dumps(candidate,indent=2,ensure_ascii=False)+'\n').encode()
+          patch_changelog=('---------------------------------------------------------------------------------------------------\n'
+             'Version: 1.0.0\n'
+             'Date: 2026-11-24\n'
+             '  Changes:\n'
+             '    - Prepared from source 0.1.687 for candidate native acceptance.\n'
+             '    - This build is an unverified GitHub draft, not a Mod Portal release.\n\n').encode()
+          skip_dirs={'.git','.github','__pycache__','.pytest_cache','.mypy_cache','.ruff_cache','node_modules','build','dist'}
+          skip_ext={'.pyc','.pyo','.tmp','.bak','.log','.zip'}
+          paths=[p for p in sorted(root.rglob('*')) if p.is_file() and
+            not any(part in skip_dirs for part in p.relative_to(root).parts) and
+            p.suffix.lower() not in skip_ext and
+            p.name not in {'MIGRATION_TEST_ONLY.json','.DS_Store','Thumbs.db'}]
+          relative={p.relative_to(root).as_posix() for p in paths}
+          required={'info.json','control.lua','data.lua','data-updates.lua','data-final-fixes.lua',
+                    'thumbnail.png','changelog.txt','THIRD-PARTY-NOTICES-GLADIUS.txt',
+                    'THIRD-PARTY-NOTICES-MECHANICUS.txt'}
+          assert required<=relative, sorted(required-relative)
+          assert any(x.startswith('graphics/') for x in relative)
+          assert any(x.startswith('scripts/') for x in relative)
+          assert any(x.startswith('locale/') for x in relative)
+          assert len(paths)>5000, 'Unexpectedly incomplete source checkout'
+          archive=out/'tech-priests_1.0.0.zip'
+          root_name='tech-priests_1.0.0'
+          records=[]
+          seen=set()
+          with zipfile.ZipFile(archive,'x',compression=zipfile.ZIP_DEFLATED,compresslevel=6,allowZip64=True) as z:
+            for i,p in enumerate(paths,1):
+              rel=p.relative_to(root).as_posix()
+              assert rel.casefold() not in seen, 'Ambiguous case-folded path: '+rel
+              seen.add(rel.casefold())
+              content=(patch_info if rel=='info.json' else
+                       patch_changelog+p.read_bytes() if rel=='changelog.txt' else p.read_bytes())
+              info=zipfile.ZipInfo(root_name+'/'+rel,date_time=(1980,1,1,0,0,0))
+              info.compress_type=zipfile.ZIP_DEFLATED
+              info.external_attr=0o644<<16
+              info.create_system=3
+              z.writestr(info,content,compress_type=zipfile.ZIP_DEFLATED,compresslevel=6)
+              records.append({'path':rel,'size':len(content),
+                   'sha256':hashlib.sha256(content).hexdigest(),
+                   'original_source_bytes':rel not in {'info.json','changelog.txt'}})
+              if i%300==0:
+                print('TP_100_ZIP_PROGRESS',i,len(paths),archive.stat().st_size,flush=True)
+          size=archive.stat().st_size
+          assert size<2*1024**3, f'GitHub asset limit exceeded: {size}'
+          assert size>100_000_000, f'Unexpectedly small release archive: {size}'
+          print('TP_100_ZIP_CRC_BEGIN',len(paths),flush=True)
+          with zipfile.ZipFile(archive) as z:
+            assert z.testzip() is None, 'CRC failure'
+            members=z.namelist()
+            assert len(members)==len(paths)
+            assert all(p.startswith(root_name+'/') for p in members)
+            assert json.loads(z.read(root_name+'/info.json'))==candidate
+            assert all(root_name+'/'+p in members for p in required)
+          digest=hashlib.file_digest(archive.open('rb'),'sha256').hexdigest()
+          (out/(archive.name+'.sha256')).write_text(digest+'  '+archive.name+'\n')
+          manifest={'schema':'tech-priests.v1-candidate-archive.v1',
+              'classification':'github-draft-only-unverified',
+              'source_sha':os.environ['SOURCE_SHA'],
+              'exact_source_tree_sha':os.environ['SOURCE_TREE_SHA'],
+              'workflow_source_commit':os.environ['GITHUB_SHA'],
+              'source_metadata_version':'0.1.687','candidate_version':'1.0.0',
+              'archive_name':archive.name,'archive_size_bytes':size,
+              'archive_sha256':digest,'files':len(paths),
+              'source_changes':['info.json version and changelog prefix inside ZIP only'],
+              'archive_crc_pass':True,'native_runtime_test_pass':False,
+              'full_required_dependencies_test_pass':False,
+              'save_reload_pass':False,'mod_portal_published':False,
+              'source_version_bumped_in_git':False}
+          (out/'candidate-receipt.json').write_text(json.dumps(manifest,indent=2)+'\n')
+          (out/'file-manifest.json').write_text(json.dumps(records,separators=(',',':'))+'\n')
+          print('TP_100_ZIP_VERIFIED',json.dumps(manifest),flush=True)
+          PY
+          cp source/docs/releases/v1.0.0-candidate-notes.md candidate/RELEASE-NOTES.md
+
+      - name: Create GitHub DRAFT only, upload exact ZIP and evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          if gh release view "${TAG}" --repo "${GITHUB_REPOSITORY}" >/dev/null 2>&1; then
+            echo "Refusing to overwrite or silently retag existing candidate release" >&2
+            exit 1
+          fi
+          gh release create "${TAG}" \
+            candidate/tech-priests_1.0.0.zip \
+            candidate/tech-priests_1.0.0.zip.sha256 \
+            candidate/candidate-receipt.json \
+            candidate/file-manifest.json \
+            --repo "${GITHUB_REPOSITORY}" \
+            --target "${GITHUB_SHA}" \
+            --title "Tech Priests 1.0.0 — unverified release candidate" \
+            --notes-file candidate/RELEASE-NOTES.md \
+            --draft --prerelease
+
+      - name: Verify private draft release and asset readback
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh api "repos/${GITHUB_REPOSITORY}/releases/tags/${TAG}" > candidate/release-readback.json
+          python3 - <<'PY'
+          import json,os,pathlib
+          d=json.loads(pathlib.Path('candidate/release-readback.json').read_text())
+          r=json.loads(pathlib.Path('candidate/candidate-receipt.json').read_text())
+          assert d['draft'] is True and d['prerelease'] is True
+          assert d['tag_name']==os.environ['TAG']
+          assets={a['name']:a for a in d['assets']}
+          assert r['archive_name'] in assets and assets[r['archive_name']]['size']==r['archive_size_bytes']
+          assert 'candidate-receipt.json' in assets and 'file-manifest.json' in assets
+          assert 'tech-priests_1.0.0.zip.sha256' in assets
+          print('TP_100_DRAFT_RELEASE_VERIFIED',json.dumps({
+            'url':d['html_url'],'draft':d['draft'],'source':r['source_sha'],
+            'archive_sha256':r['archive_sha256'],'bytes':r['archive_size_bytes']}))
+          PY
+          {
+            echo "### Tech Priests 1.0.0 GitHub draft"
+            echo "- Verified source tree: \`${SOURCE_TREE_SHA}\`"
+            echo "- Candidate mod ZIP SHA-256: \`$(cut -d' ' -f1 candidate/tech-priests_1.0.0.zip.sha256)\`"
+            echo "- GitHub release status: **draft, prerelease**"
+            echo "- Native exact-ZIP startup/save/reload acceptance: **not performed by packaging**"
+          } >> "${GITHUB_STEP_SUMMARY}"
