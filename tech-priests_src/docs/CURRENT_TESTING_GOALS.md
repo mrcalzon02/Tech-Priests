@@ -1,5 +1,43 @@
 # Current Testing Goals
 
+## Active follow-up - 100 working priests on the headed runner
+
+The current performance goal is at least 30 rendered FPS with stable normal-speed
+UPS and at least 100 active priests. The accepted four-priest reconstruction and
+the character/movement pass at `c6eb8d4f18adc9edf7fd47f067d61980a7b9a073`
+do not establish that population result. Preserve the completed cosmetic-only
+picker, native player movement and improved ground-priest movement.
+
+Use the existing private owner-save profiling workflow on the signed-in
+Core30 / GTX 1660 SUPER runner in Session 1. The controlled scaling comparison
+uses one fresh Space Age save, mandatory dependencies only, the exact accepted
+`c6eb8d4` package as baseline and an immutable descendant as candidate. Deploy
+25 priests of each ground rank through the actual station lifecycle. Preserve
+all 100 identities and record individual movement and physical completed work;
+an idle roster is not a successful active-workload test. Keep game speed and
+native movement cadence unchanged.
+
+Keep the baseline and candidate engine, save, workload, graphics settings,
+warmup and observer identical. Optional callback attribution is a separately
+labeled diagnostic run. Retain original native frame CSV, elapsed-time
+observations, genuine in-game captures, package/source hashes and actual work
+counters. Confirm frame timing units against native elapsed-time evidence
+before reporting FPS; script/update cost alone is not rendered FPS. Record
+slow-frame tails and sustained windows as well as averages.
+
+The integrated 0644 receiver lookup has existing native function evidence in
+private run `45699182910`: the three-call sample means changed from 1783.738 ms
+to 71.742 ms across nine alternating-order samples with 4,320 native entities
+and 96 unconnected drills. Both tested decisions matched under controlled
+placement responses. This is isolated helper evidence, not a whole-planner,
+game-tick or 100-priest pass. 0643 also uses the native chest slot for known
+container stock instead of probing every inventory identifier; quantities and
+compatibility behavior remain live. The complete headed scaling result remains
+open until retained evidence shows population, physical activity, FPS and UPS.
+
+The Mod Portal remains unpublished unless the owner explicitly authorizes it.
+Existing scheduled work is not stopped or disabled by this diagnostic.
+
 ## 2026-11-25 - Four-priest slowdown and behavior-map drift
 
 The owner has directed the immediate performance reproduction onto the existing

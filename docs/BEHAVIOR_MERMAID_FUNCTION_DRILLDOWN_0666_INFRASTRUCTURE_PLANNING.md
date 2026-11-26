@@ -21,7 +21,7 @@ flowchart TD
     Plan --> Governor
     Governor --> Existing["Use real existing facilities and stock"]
     Governor --> Build["0645 matching plan and original ghost/request"]
-    Assessment["0643 live group shortage and facility reservation"] -->|"explicit facility request"| Build
+    Assessment["0643 live group shortage; typed inventory reads"] -->|"explicit facility reservation"| Build
     Plan --> Build
     Build -->|"cold/domain change or observed target completion"| Survey
     Build --> Constructor["0338 physical construction"]
@@ -71,6 +71,43 @@ The existing owner stores `broker_cycle.station_ids`, `next_index`, `deadline`, 
 Public `service_all(reason, budget)` remains synchronous and keeps its acted/processed/remaining/failed return contract. The conditional registry fallback still calls it every 97 ticks with the existing default cap of 24. The one-attempt continuation applies to the broker route. One station's survey can still be expensive, roster collection/sorting still visits the population, and background admission can delay work; the cycle is not an elapsed-time ceiling.
 
 0645 reads the existing `pair.master_infrastructure_plan_0644` when station identity, surface, force, position, canonical clamped radius, stage and target match. It does not introduce an age-based survey timer. Cold stations, old snapshot schemas and changed domains can initialize through 0644 once. Observing physical completion of the retained proposal's target permits one owner refresh to prevent recreating the completed ghost; an already advanced plan remains reusable. Live storage and custody checks still govern replacement of an active ghost. Explicit requested-entity reservations do not invoke the autonomous master survey. A failed domain/completion refresh cannot authorize the obsolete proposal.
+
+### 0644 drill-output receiver lookup
+
+```mermaid
+flowchart TD
+    Survey["Current role-survey entities"] --> Drills["Existing drill distance order"]
+    Drills --> Lookup["Direct lookup or call-local receiver index"]
+    Lookup --> Receiver{"Receiver strictly within one tile?"}
+    Receiver -->|"yes"| Next["Continue to the next drill"]
+    Next --> Lookup
+    Receiver -->|"no"| Placement["Existing authority, stock and native placement checks"]
+    Placement -->|"blocked"| Next
+    Placement -->|"allowed"| Target["Original physical output target"]
+```
+
+Native `drop_target` remains the first receiver check. For a survey with at
+least eight drills, the third missing-target fallback builds one position index
+from the same already returned entities; the remaining fallbacks inspect only
+the drop cell and its eight neighbors. Smaller surveys and early exits keep the
+direct search. Both paths use the same receiver types and strict squared
+distance below one. Negative cell coordinates, first blocked output reporting,
+drill order, inventory feasibility and native placement authority are unchanged.
+The index is discarded when the synchronous helper returns; it does not cache
+inventory, issue another world query, defer movement or persist entity positions.
+
+The private [native probe run 45699182910](https://github.com/mrcalzon02/Dens-Mortis/actions/runs/45699182910)
+compared the exact candidate helper against the `c6eb8d4` helper on 4,320 native
+entities, including 96 unconnected drills. Both blocked and open placement
+decisions matched. Nine alternating-order samples each timed **three helper
+calls**: mean baseline 1,783.738 ms versus candidate 71.742 ms, equivalent to
+594.579 ms versus 23.914 ms per helper call. The fixture used real entity
+geometry with a controlled placement response. It did not time the whole
+planner, run the owner's save or measure game FPS/UPS. The candidate module hash
+was `2671aeb591f6d6469472eac8891dcee01daf57ef9f8e40d846a87261a3d7fc87`.
+The extended existing receiver reconciliation test separately covers the dense
+path across negative cell boundaries, the strict one-tile exclusion, moved
+receivers and removed receivers between plans.
 
 ## Expanded infrastructure families
 
@@ -140,7 +177,7 @@ The current 0646 owner retains product-to-recipe-name membership in original for
 
 Each synchronous 0644 `build_plan` shares a call-local item-count snapshot across feasibility and science checks, and science uses laboratories already returned by the role survey. The snapshot is discarded after that call, so another plan in the same tick reads current stock again. 0645 consumes the retained owner plan instead of repeating those surveys on ordinary ghost-planning passes. These are source cost reductions, not a measured UPS result.
 
-The 0643 assessment obtains machine and logistic-provider identities through `0327.inventory_candidates`, backed by the existing 0587 retained membership. It still checks current force, surface, the 36-tile circle and each provider's actual logistic-network identity. One distinct provider list serves the three reserve-item counts in a snapshot; item quantities are read live, and build-material checks remain separate. Its inventory calls use the native bound `get_inventory(id)` form: supplying the entity again previously raised an argument error that was swallowed and reported stocked native inventories as empty. Placeable-item lookup reuses `0646.item_for_entity` with its existing first-match semantics. Missing shared discovery retains a typed compatibility query. Planned-ghost discovery and all-group assessment remain real work; the advertised budget of four does not bound them.
+The 0643 assessment obtains machine and logistic-provider identities through `0327.inventory_candidates`, backed by the existing 0587 retained membership. It still checks current force, surface, the 36-tile circle and each provider's actual logistic-network identity. One distinct provider list serves the three reserve-item counts in a snapshot; item quantities are read live, and build-material checks remain separate. Its inventory calls use the native bound `get_inventory(id)` form: supplying the entity again previously raised an argument error that was swallowed and reported stocked native inventories as empty. Cogitator prototypes inherit the native `container` type from `steel-chest`. Containers, logistic containers, infinity containers and linked containers now request only `defines.inventory.chest` for each live item question. Other/unknown types, absent chest-slot metadata or a rejected typed access retain the previous exhaustive, numeric-ID-deduplicated inventory search. No quantity is retained across questions or assessments. The existing provider snapshot fixture checks these supported and compatibility paths, including same-tick physical stock changes. Placeable-item lookup reuses `0646.item_for_entity` with its existing first-match semantics. Missing shared discovery retains a typed compatibility query. Planned-ghost discovery and all-group assessment remain real work; the advertised budget of four does not bound them.
 
 Separate remaining risks include complete cold inventory-membership seeds, live mobile-list traversal, explicit synchronous catalog scans, physical infrastructure surveys and the 0689/0716 prefix-only discovery loops. The [scheduled catalog continuation](BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0661.md#scheduled-resource-continuation) has its own shared work allowance and delivery-latency evidence; it does not bound those separate paths. A callback limit does not bound nested native work or guarantee fairness. Keep native cost acceptance open until source and workload-progress evidence are recorded.
 

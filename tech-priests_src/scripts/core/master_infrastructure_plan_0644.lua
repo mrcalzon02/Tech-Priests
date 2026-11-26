@@ -177,6 +177,60 @@ local function scan_roles(pair)
 end
 local function has_role(roles, a, b) return (tonumber(roles[a] or 0) > 0) or (b and tonumber(roles[b] or 0) > 0) end
 local function first_resource(resources) local names = {}; for name in pairs(resources or {}) do names[#names+1]=name end; table.sort(names, function(a,b) return (RESOURCE_PRIORITY[a] or 1000) < (RESOURCE_PRIORITY[b] or 1000) end); return names[1] end
+local RECEIVER_KIND = {
+  container=true, ["logistic-container"]=true, ["transport-belt"]=true,
+  ["underground-belt"]=true, splitter=true, furnace=true,
+  ["assembling-machine"]=true,
+}
+
+local function direct_receiver(entities,drop)
+  for _,entity in pairs(entities or {}) do
+    if valid(entity) and RECEIVER_KIND[entity.type]
+        and entity.position and dist_sq(entity.position,drop)<1 then
+      return true
+    end
+  end
+  return false
+end
+
+-- Positions are local to this synchronous survey, not an inventory cache.
+-- A point less than one tile away can only be in this cell or an adjacent one.
+local function receiver_buckets(entities)
+  local buckets={}
+  for _,entity in pairs(entities or {}) do
+    if valid(entity) and RECEIVER_KIND[entity.type] then
+      local pos=entity.position
+      if pos then
+        local x,y=math.floor(pos.x or 0),math.floor(pos.y or 0)
+        local row=buckets[x]
+        if not row then row={};buckets[x]=row end
+        local cell=row[y]
+        if not cell then cell={};row[y]=cell end
+        cell[#cell+1]=pos
+      end
+    end
+  end
+  return buckets
+end
+
+local function indexed_receiver(buckets,drop)
+  local x,y=math.floor(drop.x or 0),math.floor(drop.y or 0)
+  for bx=x-1,x+1 do
+    local row=buckets[bx]
+    if row then
+      for by=y-1,y+1 do
+        local cell=row[by]
+        if cell then
+          for _,pos in ipairs(cell) do
+            if dist_sq(pos,drop)<1 then return true end
+          end
+        end
+      end
+    end
+  end
+  return false
+end
+
 local function uncovered_drill_output(pair,entities,counts)
   if not valid_pair(pair) then return nil end
   local drills={}
@@ -188,21 +242,20 @@ local function uncovered_drill_output(pair,entities,counts)
   table.sort(drills,function(a,b)
     return dist_sq(a.position,pair.station.position)<dist_sq(b.position,pair.station.position)
   end)
-  local deferred
+  local deferred,buckets,fallbacks=nil,nil,0
   for _,drill in ipairs(drills) do
     local drop,target=nil,nil
     pcall(function()drop=drill.drop_position;target=drill.drop_target end)
     if drop and not valid(target) then
       local pos={x=math.floor(drop.x)+0.5,y=math.floor(drop.y)+0.5}
-      local receiver=false
-      for _,entity in pairs(entities or {}) do
-        local kind=valid(entity) and entity.type or ""
-        if entity~=drill and (kind=="container" or kind=="logistic-container"
-          or kind=="transport-belt" or kind=="underground-belt"
-          or kind=="splitter" or kind=="furnace" or kind=="assembling-machine")
-          and entity.position and dist_sq(entity.position,drop)<1
-        then receiver=true;break end
+      fallbacks=fallbacks+1
+      -- Keep early-out on small surveys and the first two fallback queries.
+      if not buckets and #drills>=8 and fallbacks==3 then
+        buckets=receiver_buckets(entities)
       end
+      local receiver
+      if buckets then receiver=indexed_receiver(buckets,drop)
+      else receiver=direct_receiver(entities,drop) end
       if not receiver then
         local policy=rawget(_G,"TechPriestsPlanningConstraints0646")
         local inside=true

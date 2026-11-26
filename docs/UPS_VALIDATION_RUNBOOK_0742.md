@@ -8,6 +8,13 @@
 
 ## Current Incident and Evidence Boundary — 2026-11-25
 
+The active follow-up is the 100-working-priest headed comparison described at
+the start of `tech-priests_src/docs/CURRENT_TESTING_GOALS.md`. It preserves the
+accepted appearance/movement baseline `c6eb8d4f18adc9edf7fd47f067d61980a7b9a073`
+and uses the existing signed-in Core30 Session 1 path. Earlier Session 0 probes
+and four-priest headless measurements below retain their original limited
+scope; they are not the acceptance evidence for this new comparison.
+
 The immediate reproduction is the reported severe slowdown with one of each of
 four priests. Start with an untouched copy of that save and its exact mod list.
 A clean world cannot rule out a failure in the populated owner save; a fast

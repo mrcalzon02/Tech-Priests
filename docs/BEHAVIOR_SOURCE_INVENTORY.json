@@ -4,12 +4,12 @@
     "commands": 141,
     "dependencies": 699,
     "event_routes": 306,
-    "functions": 11718,
+    "functions": 11721,
     "install_calls": 213,
     "module_string_references": 996,
     "module_tables": 56,
     "modules": 383,
-    "named_functions": 8523,
+    "named_functions": 8526,
     "potential_literal_reachable_modules": 307,
     "scans": 214,
     "state_writers": 4527,
@@ -49822,7 +49822,7 @@
             }
           },
           "installation": "source-call-site-only",
-          "line": 386,
+          "line": 400,
           "protected_call": false,
           "specification": "literal-table"
         }
@@ -49833,7 +49833,7 @@
           "callee": "require",
           "execution": "conditional-or-unconditional; not evaluated",
           "kind": "literal-require",
-          "line": 52,
+          "line": 66,
           "protected_call": true,
           "target": "scripts.core.planning_constraints_0646",
           "target_scope": "inventoried-runtime-module"
@@ -49842,7 +49842,7 @@
           "callee": "require",
           "execution": "conditional-or-unconditional; not evaluated",
           "kind": "literal-require",
-          "line": 61,
+          "line": 75,
           "protected_call": true,
           "target": "scripts.core.station_catalog",
           "target_scope": "inventoried-runtime-module"
@@ -49851,7 +49851,7 @@
           "callee": "require",
           "execution": "conditional-or-unconditional; not evaluated",
           "kind": "literal-require",
-          "line": 295,
+          "line": 309,
           "protected_call": true,
           "target": "scripts.core.construction_bootstrap_ghost_planner_0645",
           "target_scope": "inventoried-runtime-module"
@@ -49860,7 +49860,7 @@
           "callee": "require",
           "execution": "conditional-or-unconditional; not evaluated",
           "kind": "literal-require",
-          "line": 380,
+          "line": 394,
           "protected_call": true,
           "target": "scripts.core.runtime_tick_broker",
           "target_scope": "inventoried-runtime-module"
@@ -49898,208 +49898,208 @@
         },
         {
           "kind": "declaration",
-          "line": 25,
+          "line": 29,
           "local": true,
           "name": "count_entity",
           "parameters": "entity , name"
         },
         {
           "kind": "declaration",
-          "line": 40,
+          "line": 54,
           "local": true,
           "name": "active_pairs",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 45,
+          "line": 59,
           "local": false,
           "name": "<anonymous>",
           "parameters": "a , b"
         },
         {
           "kind": "declaration",
-          "line": 49,
+          "line": 63,
           "local": true,
           "name": "planning_constraints",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 58,
+          "line": 72,
           "local": true,
           "name": "nearby_known_entities",
           "parameters": "pair , types"
         },
         {
           "kind": "declaration",
-          "line": 75,
+          "line": 89,
           "local": true,
           "name": "within_station_reach",
           "parameters": "entity , station"
         },
         {
           "kind": "declaration",
-          "line": 83,
+          "line": 97,
           "local": true,
           "name": "infrastructure",
           "parameters": "group"
         },
         {
           "kind": "declaration",
-          "line": 107,
+          "line": 121,
           "local": true,
           "name": "accessible_logistic_containers",
           "parameters": "group"
         },
         {
           "kind": "anonymous",
-          "line": 111,
+          "line": 125,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 116,
+          "line": 130,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 127,
+          "line": 141,
           "local": true,
           "name": "accessible_logistic_stock",
           "parameters": "group , item , known_containers"
         },
         {
           "kind": "declaration",
-          "line": 135,
+          "line": 149,
           "local": true,
           "name": "snapshot",
           "parameters": "group"
         },
         {
           "kind": "declaration",
-          "line": 159,
+          "line": 173,
           "local": true,
           "name": "classify",
           "parameters": "item"
         },
         {
           "kind": "declaration",
-          "line": 175,
+          "line": 189,
           "local": true,
           "name": "machine_eligible",
           "parameters": "pair , name"
         },
         {
           "kind": "declaration",
-          "line": 184,
+          "line": 198,
           "local": true,
           "name": "planned_capacity",
           "parameters": "group , stage"
         },
         {
           "kind": "anonymous",
-          "line": 200,
+          "line": 214,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 208,
+          "line": 222,
           "local": true,
           "name": "candidate_for",
           "parameters": "group , stage"
         },
         {
           "kind": "declaration",
-          "line": 221,
+          "line": 235,
           "local": true,
           "name": "build_materials",
           "parameters": "group , entity"
         },
         {
           "kind": "declaration",
-          "line": 237,
+          "line": 251,
           "local": true,
           "name": "synchronize_reservations",
           "parameters": "key , group , report"
         },
         {
           "kind": "declaration",
-          "line": 272,
+          "line": 286,
           "local": true,
           "name": "science_gap",
           "parameters": "group , report"
         },
         {
           "kind": "anonymous",
-          "line": 287,
+          "line": 301,
           "local": false,
           "name": "<anonymous>",
           "parameters": "a , b"
         },
         {
           "kind": "declaration",
-          "line": 291,
+          "line": 305,
           "local": true,
           "name": "connect_construction",
           "parameters": "groups"
         },
         {
           "kind": "declaration",
-          "line": 348,
+          "line": 362,
           "local": false,
           "name": "M.assess",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 366,
+          "line": 380,
           "local": false,
           "name": "<anonymous>",
           "parameters": "a , b"
         },
         {
           "kind": "declaration",
-          "line": 376,
+          "line": 390,
           "local": false,
           "name": "M.install",
           "parameters": ""
         },
         {
           "kind": "assigned-function",
-          "line": 392,
+          "line": 406,
           "local": false,
           "name": "fn",
           "parameters": ""
         }
       ],
       "install_calls": [],
-      "lines": 406,
+      "lines": 420,
       "module": "scripts.core.emergency_facility_placement_bridge_0643",
       "module_string_references": [
         {
-          "line": 52,
+          "line": 66,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
           "target": "scripts.core.planning_constraints_0646"
         },
         {
-          "line": 61,
+          "line": 75,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
           "target": "scripts.core.station_catalog"
         },
         {
-          "line": 295,
+          "line": 309,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
           "target": "scripts.core.construction_bootstrap_ghost_planner_0645"
         },
         {
-          "line": 380,
+          "line": 394,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
           "target": "scripts.core.runtime_tick_broker"
         }
@@ -50113,7 +50113,7 @@
             "{ position = station . position , radius = 36 , force = station . force , type = types }"
           ],
           "callee": "station.surface.find_entities_filtered",
-          "line": 70,
+          "line": 84,
           "protected_call": false,
           "runtime_cost": "unmeasured",
           "static_risk_hint": "unbounded-filtered"
@@ -50123,13 +50123,13 @@
             "{ position = station . position , radius = 36 , force = station . force , name = \"entity-ghost\" }"
           ],
           "callee": "station.surface.find_entities_filtered",
-          "line": 194,
+          "line": 208,
           "protected_call": false,
           "runtime_cost": "unmeasured",
           "static_risk_hint": "unbounded-filtered"
         }
       ],
-      "sha256": "4c0da8c1ff9bdfa7fdc8ebe6bb117d6cd6e0f703ed4ac30f071be25667ce338e",
+      "sha256": "db8ad57848e6c8b87b94c4c774cbea077909f2f1880c6525b149ffa783443a98",
       "state_writers": [
         {
           "kind": "state-assignment",
@@ -50168,25 +50168,25 @@
       "wrapper_candidates": [
         {
           "kind": "saved-function-or-value-candidate",
-          "line": 249,
+          "line": 263,
           "target": "previous",
           "value": "reservations [ id ]"
         },
         {
           "kind": "saved-function-or-value-candidate",
-          "line": 259,
+          "line": 273,
           "target": "previous.missing",
           "value": "need . missing previous"
         },
         {
           "kind": "saved-function-or-value-candidate",
-          "line": 260,
+          "line": 274,
           "target": "previous.material_error",
           "value": "material , material_error previous"
         },
         {
           "kind": "saved-function-or-value-candidate",
-          "line": 261,
+          "line": 275,
           "target": "previous.last_assessed_tick",
           "value": "game . tick end"
         }
@@ -68013,7 +68013,7 @@
             }
           },
           "installation": "source-call-site-only",
-          "line": 603,
+          "line": 656,
           "protected_call": true,
           "specification": "literal-table"
         }
@@ -68042,7 +68042,7 @@
           "callee": "require",
           "execution": "conditional-or-unconditional; not evaluated",
           "kind": "literal-require",
-          "line": 592,
+          "line": 645,
           "protected_call": true,
           "target": "scripts.core.construction_bootstrap_ghost_planner_0645",
           "target_scope": "inventoried-runtime-module"
@@ -68051,7 +68051,7 @@
           "callee": "require",
           "execution": "conditional-or-unconditional; not evaluated",
           "kind": "literal-require",
-          "line": 598,
+          "line": 651,
           "protected_call": true,
           "target": "scripts.core.runtime_tick_broker",
           "target_scope": "inventoried-runtime-module"
@@ -68060,7 +68060,7 @@
           "callee": "require",
           "execution": "conditional-or-unconditional; not evaluated",
           "kind": "literal-require",
-          "line": 620,
+          "line": 673,
           "protected_call": true,
           "target": "scripts.core.runtime_event_registry",
           "target_scope": "inventoried-runtime-module"
@@ -68073,7 +68073,7 @@
           "event": "on_nth_tick",
           "handler": "function ( ) M . service_all ( \"nth-tick\" ) end",
           "kind": "registry-or-helper",
-          "line": 624,
+          "line": 677,
           "options": {
             "category": {
               "expression": "\"diagnostics\"",
@@ -68332,182 +68332,203 @@
         },
         {
           "kind": "declaration",
-          "line": 180,
+          "line": 186,
+          "local": true,
+          "name": "direct_receiver",
+          "parameters": "entities , drop"
+        },
+        {
+          "kind": "declaration",
+          "line": 198,
+          "local": true,
+          "name": "receiver_buckets",
+          "parameters": "entities"
+        },
+        {
+          "kind": "declaration",
+          "line": 216,
+          "local": true,
+          "name": "indexed_receiver",
+          "parameters": "buckets , drop"
+        },
+        {
+          "kind": "declaration",
+          "line": 234,
           "local": true,
           "name": "uncovered_drill_output",
           "parameters": "pair , entities , counts"
         },
         {
           "kind": "anonymous",
-          "line": 188,
+          "line": 242,
           "local": false,
           "name": "<anonymous>",
           "parameters": "a , b"
         },
         {
           "kind": "anonymous",
-          "line": 194,
+          "line": 248,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 221,
+          "line": 274,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 246,
+          "line": 299,
           "local": true,
           "name": "choose",
           "parameters": "pair , resources , roles , entities , counts"
         },
         {
           "kind": "anonymous",
-          "line": 317,
+          "line": 370,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 359,
+          "line": 412,
           "local": true,
           "name": "cheapest_available_science",
           "parameters": "pair , known_entities , counts"
         },
         {
           "kind": "declaration",
-          "line": 373,
+          "line": 426,
           "local": true,
           "name": "available_science",
           "parameters": "item"
         },
         {
           "kind": "anonymous",
-          "line": 389,
+          "line": 442,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 394,
+          "line": 447,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 402,
+          "line": 455,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 451,
+          "line": 504,
           "local": true,
           "name": "summarize",
           "parameters": "t"
         },
         {
           "kind": "declaration",
-          "line": 452,
+          "line": 505,
           "local": false,
           "name": "M.build_plan",
           "parameters": "pair , reason"
         },
         {
           "kind": "declaration",
-          "line": 475,
+          "line": 528,
           "local": true,
           "name": "service_science",
           "parameters": "pair , plan"
         },
         {
           "kind": "anonymous",
-          "line": 482,
+          "line": 535,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 487,
+          "line": 540,
           "local": false,
           "name": "M.service_pair",
           "parameters": "pair , reason"
         },
         {
           "kind": "declaration",
-          "line": 491,
+          "line": 544,
           "local": true,
           "name": "ordered_pairs",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 497,
+          "line": 550,
           "local": false,
           "name": "<anonymous>",
           "parameters": "a , b"
         },
         {
           "kind": "declaration",
-          "line": 500,
+          "line": 553,
           "local": true,
           "name": "first_after_cursor",
           "parameters": "list , cursor"
         },
         {
           "kind": "declaration",
-          "line": 507,
+          "line": 560,
           "local": false,
           "name": "M.service_all",
           "parameters": "reason , budget"
         },
         {
           "kind": "declaration",
-          "line": 531,
+          "line": 584,
           "local": true,
           "name": "broker_survey_pulse",
           "parameters": "event , budget , service , cadence"
         },
         {
           "kind": "declaration",
-          "line": 536,
+          "line": 589,
           "local": true,
           "name": "schedule",
           "parameters": "cycle , due"
         },
         {
           "kind": "declaration",
-          "line": 592,
+          "line": 645,
           "local": true,
           "name": "install_bootstrap",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 593,
+          "line": 646,
           "local": false,
           "name": "M.install",
           "parameters": ""
         },
         {
           "kind": "assigned-function",
-          "line": 610,
+          "line": 663,
           "local": false,
           "name": "fn",
           "parameters": "event , budget , current_service"
         },
         {
           "kind": "anonymous",
-          "line": 624,
+          "line": 677,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
@@ -68516,7 +68537,7 @@
       "install_calls": [
         {
           "callee": "mod.install",
-          "line": 592,
+          "line": 645,
           "literal_alias_candidates": [
             "scripts.core.construction_bootstrap_ghost_planner_0645",
             "scripts.core.planning_constraints_0646"
@@ -68525,7 +68546,7 @@
           "resolution": "lexical-alias-only"
         }
       ],
-      "lines": 647,
+      "lines": 700,
       "module": "scripts.core.master_infrastructure_plan_0644",
       "module_string_references": [
         {
@@ -68544,17 +68565,17 @@
           "target": "scripts.core.planning_constraints_0646"
         },
         {
-          "line": 592,
+          "line": 645,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
           "target": "scripts.core.construction_bootstrap_ghost_planner_0645"
         },
         {
-          "line": 598,
+          "line": 651,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
           "target": "scripts.core.runtime_tick_broker"
         },
         {
-          "line": 620,
+          "line": 673,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
           "target": "scripts.core.runtime_event_registry"
         }
@@ -68584,7 +68605,7 @@
           "static_risk_hint": "unbounded-filtered"
         }
       ],
-      "sha256": "c892056740346975f38d8303018d616c5f87cf40556db1d0eeb53f74b76c30f2",
+      "sha256": "2671aeb591f6d6469472eac8891dcee01daf57ef9f8e40d846a87261a3d7fc87",
       "state_writers": [
         {
           "kind": "state-assignment",
@@ -68609,22 +68630,22 @@
         },
         {
           "kind": "state-assignment",
-          "line": 472,
+          "line": 525,
           "target": "pair.master_infrastructure_plan_0644"
         },
         {
           "kind": "state-assignment",
-          "line": 495,
+          "line": 548,
           "target": "pair"
         },
         {
           "kind": "state-assignment",
-          "line": 577,
+          "line": 630,
           "target": "pair"
         },
         {
           "kind": "state-assignment",
-          "line": 640,
+          "line": 693,
           "target": "_G.TechPriestsMasterInfrastructurePlan0644"
         }
       ],
@@ -154103,7 +154124,7 @@
     }
   ],
   "schema": "tech-priests-behavior-source-inventory-v1",
-  "source_digest": "bc832af156911531c9c6014133b2762b4af4680b071c9d3b44160cf5c821a330",
+  "source_digest": "e924740f11d9d91e5eb8c4174d88412c705dcf435dd009a711e060fde805f075",
   "source_scope": [
     "control.lua",
     "scripts/**/*.lua",

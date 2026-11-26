@@ -4,7 +4,10 @@
 package.path="tech-priests_src/?.lua;tech-priests_src/?/init.lua;"..package.path
 game={tick=107200}
 storage={tech_priests={pairs_by_station={}}}
-defines={inventory={chest=1,assembling_machine_input=2}}
+defines={inventory={chest=1,assembling_machine_input=2,car_trunk=3,fuel=4,
+  chest_alias=1}}
+local chest_slot=defines.inventory.chest
+local inventory_accesses,unsupported_accesses=0,0
 local network={valid=true}
 local force={valid=true,index=1,name="player"}
 local scans,provider_requests=0,0
@@ -18,7 +21,9 @@ local provider={valid=true,unit_number=91,type="logistic-container",
   logistic_network=network,force=force,surface=surface,position={x=16,y=0}}
 provider.get_inventory=function(id)
   assert(type(id)=="number","LuaEntity.get_inventory is already bound")
-  if id==defines.inventory.chest then return inventory(provider_stock) end
+  inventory_accesses=inventory_accesses+1
+  if id==chest_slot then return inventory(provider_stock) end
+  unsupported_accesses=unsupported_accesses+1
 end
 surface.find_entities_filtered=function(args)
   scans=scans+1
@@ -42,17 +47,21 @@ end}
 local base={["iron-plate"]=20,["copper-plate"]=12,
   ["iron-gear-wheel"]=8}
 for _,id in ipairs({11,21}) do
-  local station={valid=true,unit_number=id,force=force,surface=surface,
+  local station={valid=true,type="container",unit_number=id,force=force,surface=surface,
     position={x=id,y=0},logistic_network=network}
   station.get_inventory=function(slot)
     assert(type(slot)=="number","LuaEntity.get_inventory is already bound")
-    if slot==defines.inventory.chest then return inventory(base) end
+    inventory_accesses=inventory_accesses+1
+    if slot==chest_slot then return inventory(base) end
+    unsupported_accesses=unsupported_accesses+1
   end
   storage.tech_priests.pairs_by_station[id]={
     station=station,priest={valid=true,unit_number=id+1000}}
 end
 local Bridge=require("scripts.core.emergency_facility_placement_bridge_0643")
-local function assess(expect_iron,expect_copper,expect_gears,expect_requests)
+local function assess(expect_iron,expect_copper,expect_gears,expect_requests,
+    expect_accesses,expect_unsupported)
+  local before,before_unsupported=inventory_accesses,unsupported_accesses
   local reports=Bridge.assess()
   local report=reports["1:1"]
   assert(report and report.station_count==2
@@ -63,15 +72,17 @@ local function assess(expect_iron,expect_copper,expect_gears,expect_requests)
     and scans==0 and provider_requests==expect_requests,
     "0643 duplicated physical stock, repeated per-item provider discovery, "
     .."or changed shortage accounting")
+  assert(inventory_accesses-before==expect_accesses
+    and unsupported_accesses-before_unsupported==(expect_unsupported or 0),
+    "0643 probed unrelated inventory kinds for a known container or changed compatibility access")
 end
-assess(43,26,17,2)
--- Change physical stock between broker pulses: container identities may
--- be retained across pulses, but item quantities must never be cached.
+assess(43,26,17,2,9)
+-- Change physical stock before another assessment in the same tick:
+-- identities may be retained, but quantities must never be cached.
 provider_stock["iron-plate"]=0
 provider_stock["copper-plate"]=0
 provider_stock["iron-gear-wheel"]=0
-game.tick=game.tick+Bridge.interval
-assess(40,24,16,4)
+assess(40,24,16,4,9)
 -- A second station may report a different logistic network; the same
 -- provider returned by the retained identity owner must be credited at most once
 -- and only to its real network owner.
@@ -81,7 +92,7 @@ provider_stock["iron-plate"]=7
 provider_stock["copper-plate"]=4
 provider_stock["iron-gear-wheel"]=2
 game.tick=game.tick+Bridge.interval
-assess(47,28,18,6)
+assess(47,28,18,6,9)
 -- A second, different network could see the same world-space container
 -- from the identity list, but must never count it as that network's property.
 -- Disconnect BOTH stations while the physical provider stays full:
@@ -89,5 +100,22 @@ assess(47,28,18,6)
 storage.tech_priests.pairs_by_station[11].station.logistic_network=nil
 storage.tech_priests.pairs_by_station[21].station.logistic_network=nil
 game.tick=game.tick+Bridge.interval
-assess(40,24,16,6)
-print("[facility-provider-snapshot-1072] PASS zero spatial inventory discovery; bound native calls; live counts, range, force, network and disconnection")
+assess(40,24,16,6,6)
+-- Other native chest-family types also own exactly one supported slot.
+for _,kind in ipairs({"infinity-container","linked-container"}) do
+  for _,pair in pairs(storage.tech_priests.pairs_by_station) do
+    pair.station.type=kind
+  end
+  assess(40,24,16,6,6)
+end
+-- Unknown/other types retain the old inventory-ID search, including alias
+-- deduplication. Missing native chest metadata must retain that path too.
+storage.tech_priests.pairs_by_station[11].station.type="assembling-machine"
+storage.tech_priests.pairs_by_station[21].station.type=nil
+assess(40,24,16,6,24,18)
+for _,pair in pairs(storage.tech_priests.pairs_by_station) do
+  pair.station.type="container"
+end
+defines.inventory.chest=nil
+assess(40,24,16,6,24,18)
+print("[facility-provider-snapshot-1072] PASS zero spatial inventory discovery; one typed access per item; live counts, range, force, network, disconnection and compatibility fallback")

@@ -22,9 +22,23 @@ local function count_inventory(inv, name)
   if not (inv and inv.valid) then return 0 end
   return inv.get_item_count(name)
 end
+local CHEST_INVENTORY_TYPES = {
+  container=true, ["logistic-container"]=true,
+  ["infinity-container"]=true, ["linked-container"]=true,
+}
 local function count_entity(entity, name)
   local total = 0
   if not (valid(entity) and entity.get_inventory and defines and defines.inventory) then return total end
+  -- Cogitators are native containers; providers use the same chest slot.
+  -- Ask for that one supported inventory instead of probing every inventory
+  -- kind for each live item count. No quantity is retained between questions.
+  local chest = defines.inventory.chest
+  if CHEST_INVENTORY_TYPES[entity.type] and type(chest) == "number" then
+    local ok, inv = pcall(entity.get_inventory, chest)
+    if ok then return count_inventory(inv, name) end
+  end
+  -- Preserve the exhaustive compatibility path for other entity types,
+  -- unavailable native slot metadata, or a provider rejecting the typed call.
   local seen = {}
   for _, id in pairs(defines.inventory) do
     if type(id) == "number" and not seen[id] then

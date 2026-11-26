@@ -1,3 +1,44 @@
+## Resume 100-priest performance work - source and isolated evidence
+
+The native-tested 0644 drill-output receiver optimization is now integrated
+into the main source work. It builds a temporary spatial lookup only after the
+third fallback receiver question in a survey containing at least eight drills.
+Native drop_target priority, eligible receiver kinds, strict distance less
+than one tile, drill order, live placement checks and first blocked-output
+reporting are preserved. The index exists only within that synchronous helper
+call; no world query, cross-tick position cache or movement delay is added.
+
+Private Dens-Mortis run `45699182910` exercised 4,320 native entities and 96
+unconnected drills. Nine alternating-order samples timed three helper calls
+each: mean 1783.738 ms before and 71.742 ms after (594.579 and 23.914 ms per
+helper call). The two blocked/open decisions matched under the fixture's
+controlled placement responses. The integrated module SHA-256 is
+`2671aeb591f6d6469472eac8891dcee01daf57ef9f8e40d846a87261a3d7fc87`.
+This is an isolated helper result, not whole-game FPS/UPS acceptance.
+
+The existing receiver, survey-read, recipe-membership and broker-continuation
+fixtures pass. Receiver coverage includes the indexed dense path, negative
+coordinates, the strict one-tile boundary and changed/removed receivers on a
+later plan. Its old factory fixture was corrected to supply an already-reached
+logistics-frustration deadline; production admission was not relaxed.
+
+0643 now uses the known chest slot of native containers for each live stock
+question instead of probing every inventory identifier. Actual Cogitators
+inherit the native container prototype. Logistic, infinity and linked
+containers share this supported path. Other/unknown types, unavailable slot
+metadata and rejected typed access retain the exhaustive compatibility path;
+item quantities remain live. The existing provider fixture reads the same
+stock with nine supported accesses instead of 36 identifier probes in its
+two-station/one-provider case and checks live quantity changes and fallback
+behavior. This access-count result is not an engine timing claim.
+
+The active next measurement compares the accepted appearance/movement source
+`c6eb8d4f18adc9edf7fd47f067d61980a7b9a073` with an immutable descendant in the
+existing headed workflow, on the same fresh Space Age save and 100 physically
+working priests. The current testing goals and existing behavior maps record
+that scope. Population performance acceptance remains pending its native
+result; no Mod Portal publication is authorized by this work.
+
 ## Bound the existing integration audit and reconcile live expectations - 2026-11-25
 
 Candidate4 diagnostic 45628586690 still reported four missing broker services,

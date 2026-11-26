@@ -73,7 +73,8 @@ surface.create_entity=function(o)
 end
 surface.find_entity=function()return ghost end
 local pair={station=station,priest={valid=true,unit_number=12,
-  position={x=0,y=0}},radius=24,station_unit=11}
+  position={x=0,y=0}},radius=24,station_unit=11,
+  logistic_frustration_start_tick=0,logistic_frustration_due_tick=1500}
 storage.tech_priests.pairs_by_station[11]=pair
 local plan=require("scripts.core.master_infrastructure_plan_0644")
 local ghosts=require("scripts.core.construction_bootstrap_ghost_planner_0645")
@@ -169,4 +170,51 @@ check(second.stage=="mining-output-buffer"
     and second.target.deferred_output
     and second.target.deferred_output.position.x==12.5,
   "blocked first drill prevented planning a legal second output")
-print("[drill-output-regression] PASS scenarios=7")
+-- Dense surveys must make the same physical choice after the third fallback,
+-- including receiver positions across negative cell boundaries. The first two
+-- outputs are blocked; the third is covered; the fourth is buildable.
+local dense_drills={}
+for i=1,12 do
+  dense_drills[i]={valid=true,type="mining-drill",name="burner-mining-drill",
+    unit_number=200+i,position={x=-4*i,y=-4},
+    drop_position={x=-4*i-.01,y=-4.01},drop_target=nil,
+    force=force,surface=surface}
+end
+local dense_receiver={valid=true,type="container",name="iron-chest",
+  position={x=-11.51,y=-3.51},force=force,surface=surface}
+surface.find_entities_filtered=function(filter)
+  if type(filter.type)=="table" then
+    local found={smelter,storage_chest,dense_receiver}
+    for _,entity in ipairs(completed) do found[#found+1]=entity end
+    for _,entity in ipairs(dense_drills) do found[#found+1]=entity end
+    return found
+  end
+  return old_find(filter)
+end
+surface.can_place_entity=function(o)
+  return (o.position.x==-12.5 or o.position.x==-16.5) and o.position.y==-4.5
+end
+local dense=plan.build_plan(pair,"dense-negative-cell-receiver")
+check(dense.stage=="mining-output-buffer"
+    and dense.target.site_position.x==-16.5,
+  "dense survey ignored a receiver across negative cell boundaries")
+
+-- A receiver exactly one tile away does not cover the drop. Moving it between
+-- plans must be visible immediately, even in the same game tick.
+dense_receiver.position={x=dense_drills[3].drop_position.x+1,
+  y=dense_drills[3].drop_position.y}
+local boundary=plan.build_plan(pair,"dense-strict-receiver-distance")
+check(boundary.stage=="mining-output-buffer"
+    and boundary.target.site_position.x==-12.5,
+  "dense survey changed the strict receiver radius or retained old positions")
+dense_receiver.position.x=dense_drills[3].drop_position.x+.99
+local moved=plan.build_plan(pair,"dense-live-receiver-position")
+check(moved.stage=="mining-output-buffer"
+    and moved.target.site_position.x==-16.5,
+  "dense survey did not read the newly moved receiver")
+dense_receiver.valid=false
+local removed=plan.build_plan(pair,"dense-invalid-receiver")
+check(removed.stage=="mining-output-buffer"
+    and removed.target.site_position.x==-12.5,
+  "dense survey retained a removed receiver")
+print("[drill-output-regression] PASS scenarios=11")
