@@ -32,12 +32,28 @@ stock with nine supported accesses instead of 36 identifier probes in its
 two-station/one-provider case and checks live quantity changes and fallback
 behavior. This access-count result is not an engine timing claim.
 
-The active next measurement compares the accepted appearance/movement source
-`c6eb8d4f18adc9edf7fd47f067d61980a7b9a073` with an immutable descendant in the
-existing headed workflow, on the same fresh Space Age save and 100 physically
-working priests. The current testing goals and existing behavior maps record
-that scope. Population performance acceptance remains pending its native
-result; no Mod Portal publication is authorized by this work.
+Source `72a427570e73a2db578db4ed7e3e4e4cbe519b99` commits these two repairs.
+The native and local package copies match at 258,926,658 bytes, SHA-256
+`5ab22d52a132a4872ba0d948058f584a4ddb00e1ad1f79356b7253cc0359cf1e`.
+The headed comparison uses the accepted appearance/movement baseline
+`c6eb8d4f18adc9edf7fd47f067d61980a7b9a073` and the same fresh Space Age save,
+with a target of 100 physically working priests.
+
+The first headed attempt, private Dens-Mortis run
+[45761775784](https://github.com/mrcalzon02/Dens-Mortis/actions/runs/45761775784),
+failed. Its baseline recorded the first loaded tick at zero, then fixture setup
+used the removed `defines.inventory.assembling_machine_input`; no completed
+fixture was observed. The candidate process exited with code 3489660927.
+Runner shutdown at 05:34:17 UTC on 2026-11-26 interrupted the diagnostic.
+This attempt establishes neither 100 active priests nor an FPS/UPS result.
+
+Dens-Mortis harness commit `aa34e9e668ae4e72be98c94a1e14d2f8948b16e8`
+uses `defines.inventory.crafter_input`, the matching native settings file,
+a game-speed-one assertion and native-log capture on failure. The corrected
+[run 45763523511](https://github.com/mrcalzon02/Dens-Mortis/actions/runs/45763523511),
+triggered by `e6949891f8138fbe9c449926e28e79de030ada15`, remained queued
+without a runner assignment at this evidence update. Native population and
+performance acceptance remain pending; no Mod Portal publication occurred.
 
 ## Bound the existing integration audit and reconcile live expectations - 2026-11-25
 

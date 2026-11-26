@@ -9,11 +9,26 @@
 ## Current Incident and Evidence Boundary — 2026-11-25
 
 The active follow-up is the 100-working-priest headed comparison described at
-the start of `tech-priests_src/docs/CURRENT_TESTING_GOALS.md`. It preserves the
+the start of `tech-priests_src/docs/CURRENT_TESTING_GOALS.md`. It compares the
 accepted appearance/movement baseline `c6eb8d4f18adc9edf7fd47f067d61980a7b9a073`
-and uses the existing signed-in Core30 Session 1 path. Earlier Session 0 probes
-and four-priest headless measurements below retain their original limited
-scope; they are not the acceptance evidence for this new comparison.
+with committed source `72a427570e73a2db578db4ed7e3e4e4cbe519b99`, using the
+same fresh Space Age save and the existing signed-in Core30 Session 1 path.
+The candidate's native and local package copies match: 258,926,658 bytes,
+SHA-256 `5ab22d52a132a4872ba0d948058f584a4ddb00e1ad1f79356b7253cc0359cf1e`.
+
+| Current private Actions run | Observed result | Evidence limit |
+|---|---|---|
+| [45761775784](https://github.com/mrcalzon02/Dens-Mortis/actions/runs/45761775784) | First headed attempt failed. Baseline recorded first loaded tick 0, then fixture setup used removed `defines.inventory.assembling_machine_input`; no completed fixture. Candidate exited 3489660927. Runner shutdown at 05:34:17 UTC on 2026-11-26 interrupted the diagnostic. | No proof of 100 active priests and no FPS/UPS result. |
+| [45763523511](https://github.com/mrcalzon02/Dens-Mortis/actions/runs/45763523511) | Corrected request, triggered by `e6949891f8138fbe9c449926e28e79de030ada15`, remained queued without a runner assignment at this evidence update. | Native population and performance acceptance remain pending. |
+
+The corrected harness is Dens-Mortis commit
+[`aa34e9e668ae4e72be98c94a1e14d2f8948b16e8`](https://github.com/mrcalzon02/Dens-Mortis/commit/aa34e9e668ae4e72be98c94a1e14d2f8948b16e8).
+It uses `defines.inventory.crafter_input`, the matching native settings file,
+a game-speed-one assertion and native-log capture on failure. These harness
+corrections are not a completed native measurement. No Mod Portal publication
+occurred. Earlier Session 0 probes and four-priest headless measurements below
+retain their original limited scope; they are not acceptance evidence for the
+100-priest comparison.
 
 The immediate reproduction is the reported severe slowdown with one of each of
 four priests. Start with an untouched copy of that save and its exact mod list.
