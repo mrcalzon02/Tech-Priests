@@ -1,3 +1,33 @@
+## 2026-11-26 — 1507 saved force-planning continuations
+
+- Started from verified main `025a7a5d613f1df6e3b131aad0b1cc5006760160`.
+- Added one runtime-broker executor with saved per-force/job rotation, charged
+  no-action/rejected work, bounded ordinary admission and reserved dependency
+  capacity for incremental item/recipe indices after configuration reset.
+- Ordinary 0359 placement shares its search and final live admission between 0338
+  and 0645. Mining, defense and fixed-output proposals retain inner continuation
+  state; pending/full is not failure or material custody.
+- Fixed positions and owned ghosts now require the same live physical admission;
+  ticketless unstarted candidates from older saves reacquire a current ticket.
+  0259 perimeter, territory, ammunition, pole and pipe support planning uses saved
+  inner steps while its existing physical executor and repair dispatch continue.
+- Replaced 0643 whole-group assessment and 0644 whole-station surveying with saved
+  station/entity/provider/stock/recipe/science/validation steps. Publication is
+  advisory, never a partial inventory reservation. Late world/domain changes
+  reject results; used stock and selected science are checked again.
+- Added learned traversable crossings beneath 0418 native movement. Edited chunks
+  invalidate affected crossings; stale/pending learning falls back to native
+  movement and cannot authorize obstacle-bypassing teleportation.
+- Added actual-caller and broker regressions for full queues, no-action fairness,
+  saved-table/module reload, world/stock changes, paid construction and retained
+  identities. Behavior maps record current boundaries and remaining synchronous
+  costs. These source contracts do not establish native FPS.
+- Prepared a cache-only fresh workload around the existing headed launcher.
+  Four working priests must pass before matched 100. Powered production, real
+  per-priest work and full timing windows are mandatory. Native save/reload,
+  continuous visible evidence and displayed FPS remain separate observations.
+  No release/version bump or Mod Portal publication is authorized.
+
 ## 0.1.530 — Conversation Voice Bark Audio
 
 ## 0.1.531 — Operational/mechanical sound pass

@@ -1,6 +1,6 @@
 # Infrastructure, Frustration Admission and Physical Handoffs
 
-**Reviewed:** 2026-11-25. This is a source map, not native behavior or performance acceptance.
+**Reviewed:** 2026-11-26. This is a source map, not native behavior or performance acceptance.
 The number in this filename is retained for existing links; it is not a claim that the old implementation is still active.
 
 Use the [complete source inventory](BEHAVIOR_SOURCE_INVENTORY.md) and its
@@ -14,14 +14,14 @@ The actual source names are `infrastructure_first_governor_0640`, `emergency_fac
 
 ```mermaid
 flowchart TD
-    Survey["0644 bounded cycle; one station per admitted pulse"] --> Plan["Retained station-domain infrastructure plan"]
+    Survey["0644 saved entity, stock and recipe steps"] --> Plan["Retained station-domain infrastructure plan"]
     Need["Station shortage or higher-tier dependency"] --> Gate["Self-construction frustration admission"]
     Gate -->|"not ready"| Maintain["Existing repair and maintenance continue"]
     Gate -->|"ready"| Governor["0640 prerequisite and recipe selection"]
     Plan --> Governor
     Governor --> Existing["Use real existing facilities and stock"]
     Governor --> Build["0645 matching plan and original ghost/request"]
-    Assessment["0643 live group shortage; typed inventory reads"] -->|"explicit facility reservation"| Build
+    Assessment["0643 saved within-group shortage assessment"] -->|"explicit facility reservation"| Build
     Plan --> Build
     Build -->|"cold/domain change or observed target completion"| Survey
     Build --> Constructor["0338 physical construction"]
@@ -37,77 +37,88 @@ This is the dependency relationship, not an assertion that each selected factory
 
 ## Scheduling and current work bounds
 
-| Owner | Registered cadence / offered budget | Boundary |
+| Owner | Admission / execution | Actual work boundary |
 | --- | --- | --- |
-| `infrastructure_first_governor_0640` | 23 ticks / 10 | Callback passes the offered budget. `service_all` counts every inspected slot and resumes saved `service_cursor`; fallback defaults to the existing cap of 32. |
-| `emergency_facility_placement_bridge_0643` | 113 ticks / 4, category `diagnostics` | The offered budget is not a group limit: its callback calls `assess()` across all force/surface groups and their stations, then reconciles reservations and construction requests. |
-| `master_infrastructure_plan_0644` | 97-tick cycle / 8; continuations on admitted 5-tick broker pulses; category `diagnostics` | One station attempt per callback, preserving up to eight visits per cycle through a saved batch and cursor. 0598 admission can delay continuations. Despite the category, source includes research/science servicing. |
-| `construction_bootstrap_ghost_planner_0645` | 83 ticks / 6 | Existing rotating discovery work; planning-ghost/request generation is distinct from paid construction. |
+| `force_planning_queue_1507` | One broker service; nominal five-tick cadence, priority 58 | At most 16 charged handler visits per admitted pulse. Forces and jobs rotate, including no-action work. Repeated same-tick calls do not advance again. |
+| `infrastructure_first_governor_0640` | Existing 23 ticks / 10 | Every inspected pair consumes budget; active executors retain their original authority. Its remaining recipe/dependency helpers are separately audited. |
+| `emergency_facility_placement_bridge_0643` | 113-tick admission callback | Admission does no group survey. Saved roster, station, entity, provider, recipe and material cursors execute through the shared queue. Healthy completed groups defer deep reconsideration for 1,800 ticks; relevant events wake them. |
+| `master_infrastructure_plan_0644` | 97-tick admission callback | Admission does no station survey. `build_plan`, `service_pair` and `service_all` enqueue/poll; one saved roster entry, world candidate, inventory, ingredient, technology or validation cell is charged per visit. No synchronous registry fallback remains. |
+| `construction_bootstrap_ghost_planner_0645` | Existing 83-tick caller cadence | Ordinary, mining, defense and fixed-output searches submit to 0359's shared jobs. A pending/full queue is not a no-site failure. |
 
-The 0640/0644/0645 installers prefer the broker and retain a registry fallback when broker registration fails. The 0643 installer requires successful broker registration. An inventory entry for both possible paths does not mean both were installed. The 0644 survey itself is not behind the frustration gate. 0640 gates new autonomous industry; 0645 reconciles already owned sites first and applies the gate before creating a new autonomous ghost.
+The queue holds at most 64 ordinary jobs per force and 256 globally. Shared
+item/recipe builders alone have bounded reserved dependency capacity, so a full
+queue cannot deadlock after a configuration reset. They consume the same
+16-work budget and release their slots when complete. Results expire through
+charged incremental cleanup. No time measurement affects simulation choices.
+Movement, repairs, active construction and custody remain with their current
+executors and are not paused behind a pending plan.
 
 ### 0644 cycle continuation
 
 ```mermaid
 flowchart TD
-    Pulse["Admitted 0644 broker callback"] --> Pending{"Saved batch still pending?"}
-    Pending -->|"no"| Due{"Original cycle deadline reached?"}
-    Due -->|"no"| Sleep["Retain cycle deadline"]
-    Due -->|"yes or first cycle"| Batch["Capture up to eight station IDs after cursor"]
-    Batch --> Attempt["Resolve current pair and attempt one survey"]
-    Pending -->|"yes"| Attempt
-    Attempt --> Save["Advance saved cursor and batch index"]
-    Save --> More{"More saved IDs?"}
-    More -->|"yes"| Continue["Next due tick: current tick plus five"]
-    More -->|"no"| Finish["Next due: cycle deadline or next pulse"]
-    Sleep --> Persist["Persist revised deadline through 0598 broker_ran"]
-    Continue --> Persist
-    Finish --> Persist
-    Persist --> Pulse
+    Caller["0644 callers: submit or read"] --> Queue["Shared force planner"]
+    Queue --> World["One bounded cell or entity"]
+    World --> Inputs["One stock, recipe or science fact"]
+    Inputs --> Choose["Existing infrastructure doctrine"]
+    Choose --> Recheck["Recount used stock and validate world"]
+    Recheck -->|"changed"| Retry["Discard proposal; request fresh work"]
+    Retry --> Queue
+    Recheck -->|"complete"| Plan["Advisory plan with world witness"]
+    Plan --> Consumer["0645 or existing physical executor"]
+    Consumer --> Live["Current stock, recipe and placement authority"]
 ```
 
-The existing owner stores `broker_cycle.station_ids`, `next_index`, `deadline`, `population` and `next_due_tick`, plus `last_serviced_station_1070`. It sorts the current valid station roster once when capturing a cycle and saves at most the offered eight IDs. Each continuation resolves its ID against the current pair map; removed, invalid or failed pairs still consume one attempt and advance the cursor. The original deadline is set on the cycle's first attempt rather than after its final continuation. With admission available, this preserves up to eight visits per roughly 100 ticks on the five-tick broker grid. The installer restores the saved next deadline, and each continuation updates it through the existing 0598 persistence owner. This is not eight visits every five ticks or one visit every 97 ticks.
+The roster uses a saved table key instead of gathering or sorting the whole
+station population. Deleted keys, invalid pairs, failures and no-action visits
+consume work and allow other stations to progress. A failed station admission
+does not terminate the roster. The public APIs never run the worker directly.
+Jobs retain ordinary saved tables, entity identities and scalar cursors; module
+handlers are re-registered after load. No coroutine or profiler is serialized.
 
-Public `service_all(reason, budget)` remains synchronous and keeps its acted/processed/remaining/failed return contract. The conditional registry fallback still calls it every 97 ticks with the existing default cap of 24. The one-attempt continuation applies to the broker route. One station's survey can still be expensive, roster collection/sorting still visits the population, and background admission can delay work; the cycle is not an elapsed-time ceiling.
+`bounded_planning_area_1507` walks existing indexed cell identities one at a
+time. Cold areas use capped 16-result queries and deterministic subdivision;
+returned and rejected candidates are charged separately. Final cell validation
+is also sliced. Fixed region counters detect later entity edits in constant
+bounded work, including an edit after scanning but before publication or
+consumption. Station/domain and metadata-epoch changes reject the proposal.
 
-0645 reads the existing `pair.master_infrastructure_plan_0644` when station identity, surface, force, position, canonical clamped radius, stage and target match. It does not introduce an age-based survey timer. Cold stations, old snapshot schemas and changed domains can initialize through 0644 once. Observing physical completion of the retained proposal's target permits one owner refresh to prevent recreating the completed ghost; an already advanced plan remains reusable. Live storage and custody checks still govern replacement of an active ghost. Explicit requested-entity reservations do not invoke the autonomous master survey. A failed domain/completion refresh cannot authorize the obsolete proposal.
+0644 preserves its infrastructure doctrine, first enabled matching recipe,
+stocked standard-miner priority, emergency workshop/lab progression and cheapest
+physically supported science selection. Quantities are rolling observations;
+used stock is recounted before final selection and the chosen science packs and
+prerequisites are checked again. These observations grant no material custody
+or reservation. Native research and physical construction retain final action
+authority. Inventories can change after any observation, so this is not an
+atomic factory snapshot.
+
+0645 reuses a retained plan only while its domain and new world/metadata witness
+remain valid. Cold, changed or completed domains request the canonical owner.
+Explicit requested-entity work keeps its own authority. A pending refresh does
+not authorize the old proposal or prevent incumbent physical work.
 
 ### 0644 drill-output receiver lookup
 
-```mermaid
-flowchart TD
-    Survey["Current role-survey entities"] --> Drills["Existing drill distance order"]
-    Drills --> Lookup["Direct lookup or call-local receiver index"]
-    Lookup --> Receiver{"Receiver strictly within one tile?"}
-    Receiver -->|"yes"| Next["Continue to the next drill"]
-    Next --> Lookup
-    Receiver -->|"no"| Placement["Existing authority, stock and native placement checks"]
-    Placement -->|"blocked"| Next
-    Placement -->|"allowed"| Target["Original physical output target"]
-```
+Every drill and receiver bucket candidate is a separate saved step. Native
+`drop_target` is checked first, then the drop cell and its eight neighbors using
+the original strict distance below one. Selection retains the closest legal
+output and a deferred blocked output. Current interior and engine placement
+checks precede proposal. Fixed-output ghost placement uses the same shared live
+admission token as other 0359 work; the later physical builder rechecks its
+actual site and item.
 
-Native `drop_target` remains the first receiver check. For a survey with at
-least eight drills, the third missing-target fallback builds one position index
-from the same already returned entities; the remaining fallbacks inspect only
-the drop cell and its eight neighbors. Smaller surveys and early exits keep the
-direct search. Both paths use the same receiver types and strict squared
-distance below one. Negative cell coordinates, first blocked output reporting,
-drill order, inventory feasibility and native placement authority are unchanged.
-The index is discarded when the synchronous helper returns; it does not cache
-inventory, issue another world query, defer movement or persist entity positions.
+Both legal and deferred output proposals retain the selected native drill,
+its position and its exact drop coordinate. Resumed work, final publication
+and retained-plan consumption revalidate that witness. A rotated/moved drill
+or a newly connected native `drop_target` invalidates the old receiver proposal;
+player rotation also invalidates the relevant area epoch. The actual
+0644-to-0645 regression covers rotation while scanning, immediately before
+publication and after fixed placement is ready, including saved-state reload.
 
-The private [native probe run 45699182910](https://github.com/mrcalzon02/Dens-Mortis/actions/runs/45699182910)
-compared the exact candidate helper against the `c6eb8d4` helper on 4,320 native
-entities, including 96 unconnected drills. Both blocked and open placement
-decisions matched. Nine alternating-order samples each timed **three helper
-calls**: mean baseline 1,783.738 ms versus candidate 71.742 ms, equivalent to
-594.579 ms versus 23.914 ms per helper call. The fixture used real entity
-geometry with a controlled placement response. It did not time the whole
-planner, run the owner's save or measure game FPS/UPS. The candidate module hash
-was `2671aeb591f6d6469472eac8891dcee01daf57ef9f8e40d846a87261a3d7fc87`.
-The extended existing receiver reconciliation test separately covers the dense
-path across negative cell boundaries, the strict one-tile exclusion, moved
-receivers and removed receivers between plans.
+The earlier private [receiver-helper run 45699182910](https://github.com/mrcalzon02/Dens-Mortis/actions/runs/45699182910)
+compared a synchronous helper at an older revision on 4,320 entities. Its
+three-call sample means were 1,783.738 ms and 71.742 ms. That historical result
+is neither a measurement of this continuation nor game FPS/UPS evidence.
 
 ## Expanded infrastructure families
 
@@ -175,9 +186,19 @@ The previous 0640 callback advertised budget 10 but discarded it, stopped after 
 
 The current 0646 owner retains product-to-recipe-name membership in original force recipe traversal order, including disabled recipes. `recipe_names_for_item(force,item,true)` provides products-only candidates for 0644; the default lookup preserves the older main-product fallback where the provider supports it. Enabled flags and ingredient quantities remain live, and `item_unlocked` returns its freshly selected recipe as an optional third result. The previous one-tick Boolean unlock-answer cache is removed. 0644 checks these ordered candidates and preserves the first enabled matching recipe's feasibility result rather than selecting a later alternate merely because its ingredients are available. The initial metadata traversal remains real work and must be included in native measurements.
 
-Each synchronous 0644 `build_plan` shares a call-local item-count snapshot across feasibility and science checks, and science uses laboratories already returned by the role survey. The snapshot is discarded after that call, so another plan in the same tick reads current stock again. 0645 consumes the retained owner plan instead of repeating those surveys on ordinary ghost-planning passes. These are source cost reductions, not a measured UPS result.
+The shared `planning_metadata_1507` owner builds item and ordered recipe
+memberships one prototype/product row at a time. Completed indices are reused;
+enablement and ingredient requirements remain live. Configuration changes
+invalidate the saved index epoch, and reserved dependency capacity permits
+rebuilding while ordinary queues are full.
 
-The 0643 assessment obtains machine and logistic-provider identities through `0327.inventory_candidates`, backed by the existing 0587 retained membership. It still checks current force, surface, the 36-tile circle and each provider's actual logistic-network identity. One distinct provider list serves the three reserve-item counts in a snapshot; item quantities are read live, and build-material checks remain separate. Its inventory calls use the native bound `get_inventory(id)` form: supplying the entity again previously raised an argument error that was swallowed and reported stocked native inventories as empty. Cogitator prototypes inherit the native `container` type from `steel-chest`. Containers, logistic containers, infinity containers and linked containers now request only `defines.inventory.chest` for each live item question. Other/unknown types, absent chest-slot metadata or a rejected typed access retain the previous exhaustive, numeric-ID-deduplicated inventory search. No quantity is retained across questions or assessments. The existing provider snapshot fixture checks these supported and compatibility paths, including same-tick physical stock changes. Placeable-item lookup reuses `0646.item_for_entity` with its existing first-match semantics. Missing shared discovery retains a typed compatibility query. Planned-ghost discovery and all-group assessment remain real work; the advertised budget of four does not bound them.
+0643 uses the same force planner and the bounded area helper. Its group report
+is private until complete. Providers retain current reach, force, surface,
+network and typed-inventory policy, with one inventory-slot read per work step.
+A final per-need stock pass notices supplies arriving during assessment. Current
+local shortage, material and recipe witnesses precede canonical 0645 admission;
+partial totals never publish reservations. See the detailed
+[shortage continuation map](SHORTAGE_PLANNING_CONTINUATION_1507.md).
 
 Separate remaining risks include complete cold inventory-membership seeds, live mobile-list traversal, explicit synchronous catalog scans, physical infrastructure surveys and the 0689/0716 prefix-only discovery loops. The [scheduled catalog continuation](BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0661.md#scheduled-resource-continuation) has its own shared work allowance and delivery-latency evidence; it does not bound those separate paths. A callback limit does not bound nested native work or guarantee fairness. Keep native cost acceptance open until source and workload-progress evidence are recorded.
 
@@ -189,7 +210,7 @@ These names are taken from the current source; local helpers and call sites are 
 | --- | --- |
 | [infrastructure_first_governor_0640](../tech-priests_src/scripts/core/infrastructure_first_governor_0640.lua) | `M.cooperative_labor_for_pair`, `M.cooperative_workshop_for_pair`, `M.yield_uncommitted_recipe_to_reversal_0938`, `M.request_installed_lab_power_pole_1251`, `M.service_pair`, `M.service_all`, `M.report_lines`, `M.status_for_pair`, `M.install` |
 | [emergency_facility_placement_bridge_0643](../tech-priests_src/scripts/core/emergency_facility_placement_bridge_0643.lua) | `M.assess`, `M.install` |
-| [master_infrastructure_plan_0644](../tech-priests_src/scripts/core/master_infrastructure_plan_0644.lua) | `M.build_plan`, `M.service_pair`, `M.service_all`, `M.install` |
+| [master_infrastructure_plan_0644](../tech-priests_src/scripts/core/master_infrastructure_plan_0644.lua) | `M.build_plan`, `M.plan_current`, `M.service_pair`, `M.service_all`, `M.install` |
 | [construction_bootstrap_ghost_planner_0645](../tech-priests_src/scripts/core/construction_bootstrap_ghost_planner_0645.lua) | `M.physical_site_obstruction`, `M.service_pair`, `M.service_all`, `M.install` |
 | [power_setup_1252](../tech-priests_src/scripts/core/power_setup_1252.lua) | `M.service_pair` |
 | [self_construction_frustration_gate](../tech-priests_src/scripts/core/self_construction_frustration_gate.lua) | `M.ready` |

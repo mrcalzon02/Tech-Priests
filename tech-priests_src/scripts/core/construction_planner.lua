@@ -265,7 +265,7 @@ local request_fields={"structure_construction_requested_item","construction_requ
 local function bootstrap_request(pair)
  -- An unstarted autonomous ghost is not a player-ordered build.
  if not SelfConstructionGate.ready(pair,now()) then return nil end
- local rec=pair and pair.construction_bootstrap_ghost_0645;if type(rec)~="table"then return nil end;local ghost=valid(rec.ghost)and rec.ghost or nil;if not ghost and rec.position and valid_pair(pair)then local ok,e=pcall(pair.station.surface.find_entity,pair.station.surface,"entity-ghost",rec.position);if ok and valid(e)then ghost=e end end
+ local rec=pair and pair.construction_bootstrap_ghost_0645;if type(rec)~="table"then return nil end;local ghost=valid(rec.ghost)and rec.ghost or nil;if not ghost and rec.position and valid_pair(pair)then local ok,e=pcall(pair.station.surface.find_entity,"entity-ghost",rec.position);if ok and valid(e)and e.ghost_name==rec.entity_name and e.force==pair.station.force then ghost=e;rec.ghost=e end end
  local placeable=normalize_placeable({item_name=rec.item,entity_name=rec.entity_name,category=rec.category or rec.class,source="construction-bootstrap-ghost-0645",direction=rec.direction});if not placeable or not rec.position then return nil end;return{field="construction_bootstrap_ghost_0645",value=rec,placeable=placeable,position={x=rec.position.x,y=rec.position.y},ghost=ghost,site_reason="bootstrap-ghost",effectiveness=rec.effectiveness}
 end
 -- An unfunded, unstarted bootstrap candidate must not monopolize the sole
@@ -931,8 +931,27 @@ local function clear_request(pair,task)
  local field=task and task.request_field;if not field then return end;if field=="construction_bootstrap_ghost_0645"then if type(pair[field])=="table"then pair[field].status="built";pair[field].completed_tick=now()end;pair[field]=nil elseif pair[field]==task.request_value then pair[field]=nil end;if field=="construction_task"then pair.construction_task=nil end
 end
 local function plan_request(pair,request)
- if request.position then local planner=site_planner();local report;if planner and type(planner.placement_effectiveness_report)=="function"and tostring(request.placeable.category or""):find("defense",1,true)then local ok,r,why=pcall(planner.placement_effectiveness_report,pair,request.placeable.entity_name,request.position,request.placeable.category);if not(ok and r)then return nil,ok and(why or"ineffective-fixed-defense-site")or("site-effectiveness-error:"..safe(r))end;report=r end;return request.position,request.site_reason or"fixed-request-site",report end
- local planner=site_planner();if not(planner and type(planner.plan_site)=="function")then return nil,"site-planner-unavailable"end;local ok,pos,why,report=pcall(planner.plan_site,pair,request.placeable);if not ok then return nil,"site-planner-error:"..safe(pos)end;return pos,why,report
+ if request.position then
+  local planner=site_planner();local report,ticket
+  if planner and type(planner.placement_effectiveness_report)=="function"
+    and tostring(request.placeable.category or""):find("defense",1,true)then
+   local ok,r,why,claim=pcall(planner.placement_effectiveness_report,pair,
+     request.placeable.entity_name,request.position,request.placeable.category)
+   if not(ok and r)then return nil,ok and(why or"ineffective-fixed-defense-site")or("site-effectiveness-error:"..safe(r))end
+   report,ticket=r,claim
+  else
+   if not(planner and type(planner.plan_fixed_admission)=="function")then
+    return nil,"placement-pending-authority-unavailable"
+   end
+   local ok,pos,why,effect,claim=pcall(planner.plan_fixed_admission,pair,
+     request.placeable,request.position,request.ghost)
+   if not ok then return nil,"site-planner-error:"..safe(pos)end
+   if not pos then return nil,why end
+   report,ticket=effect,claim
+  end
+  return request.position,request.site_reason or"fixed-request-site",report,ticket
+ end
+ local planner=site_planner();if not(planner and type(planner.plan_site)=="function")then return nil,"site-planner-unavailable"end;local ok,pos,why,report,ticket=pcall(planner.plan_site,pair,request.placeable);if not ok then return nil,"site-planner-error:"..safe(pos)end;return pos,why,report,ticket
 end
 -- An unstarted bootstrap discovery is not a reservation. If a separate
 -- earlier construction writ actually has a real item source, 0338 must
@@ -1007,6 +1026,15 @@ local function defer_unfunded_for_remote(pair)
 end
 function M.discover_pair(pair,force)
  local state=M.root();if state.enabled==false or not valid_pair(pair)then return nil end
+ if not pair.construction_task_0338 and not pair.construction_custody_0338 then
+  local policy=rawget(_G,"TechPriestsPlanningConstraints0646")
+    or package.loaded["scripts.core.planning_constraints_0646"]
+  if policy and type(policy.request_metadata)=="function"
+    and not policy.request_metadata(pair.station.force) then
+   pair.construction_pending_0359="placement-pending-metadata"
+   return nil
+  end
+ end
  if refresh_unfunded_frontier_candidate(pair) then force=true end
  if refresh_funded_prior_over_unfunded_bootstrap_0338(pair) then force=true end
  defer_unfunded_for_remote(pair)
@@ -1020,7 +1048,15 @@ function M.discover_pair(pair,force)
  if not force and now()<(tonumber(pair.construction_cooldown_0338)or 0)then return pair.construction_candidate_0338 end
  local request=construction_request(pair);if not request then pair.construction_candidate_0338=nil;return nil end
  if retire_unclaimed_starter_request_1205(pair,request) then return nil end
- local pos,why,effect=plan_request(pair,request)
+ local pos,why,effect,ticket=plan_request(pair,request)
+ if not pos and type(why)=="string" and why:sub(1,17)=="placement-pending" then
+  pair.construction_candidate_0338=nil
+  pair.construction_pending_0359=why
+  pair.construction_blocked_reason_0338=nil
+  pair.construction_site_refusal_0338=nil
+  return nil
+ end
+ pair.construction_pending_0359=nil
  if not pos then
   pair.construction_candidate_0338=nil
   pair.construction_blocked_reason_0338=why
@@ -1031,7 +1067,7 @@ function M.discover_pair(pair,force)
   return nil
  end
  pair.construction_site_refusal_0338=nil
- local c={version=M.version,tick=now(),item_name=request.placeable.item_name,entity_name=request.placeable.entity_name,category=request.placeable.category,position={x=pos.x,y=pos.y},direction=request.placeable.direction,site_reason=why,effectiveness=effect,request_field=request.field,request_value=request.value,ghost=request.ghost,source="construction-planner-0338"};pair.construction_candidate_0338=c;pair.construction_blocked_reason_0338=nil;stat("candidates-discovered");return c
+ local c={version=M.version,tick=now(),item_name=request.placeable.item_name,entity_name=request.placeable.entity_name,category=request.placeable.category,position={x=pos.x,y=pos.y},direction=request.placeable.direction,site_reason=why,effectiveness=effect,placement_ticket_0359=ticket,request_field=request.field,request_value=request.value,ghost=request.ghost,source="construction-planner-0338"};pair.construction_candidate_0338=c;pair.construction_blocked_reason_0338=nil;stat("candidates-discovered");return c
 end
 -- Method II: 0338 submits one real ghost to Factorio's construction
 -- robots. The physically paired parent, not the distant Magos, must own the
@@ -1875,6 +1911,50 @@ local function begin_task(pair,c)
    return nil,"train-stop-original-physical-request-stale"
   end
  end
+ -- A saved proposal must pass one shared, charged live check immediately
+ -- before site reservation or material custody. A pending scan is not a task.
+ if not c.placement_ticket_0359 then
+  -- Older saves may contain an unstarted discovery candidate from before
+  -- tickets existed. Retain its requested position, but acquire present
+  -- authority before it can become an admitted task.
+  local ghost=c.ghost
+  if c.request_field=="construction_bootstrap_ghost_0645" then
+   local request=bootstrap_request(pair)
+   if not(request and request.value==c.request_value)then
+    pair.construction_candidate_0338=nil
+    return nil,"placement-pending-request-changed"
+   end
+   ghost=request.ghost
+  end
+  local pos,why,effect,ticket=plan_request(pair,{position=c.position,ghost=ghost,
+   placeable={item_name=c.item_name,entity_name=c.entity_name,category=c.category,direction=c.direction},
+   field=c.request_field,value=c.request_value,site_reason=c.site_reason})
+  if not(pos and ticket)then return nil,why or "placement-pending-authority-unavailable"end
+  c.ghost,c.effectiveness,c.placement_ticket_0359=ghost,effect or c.effectiveness,ticket
+ end
+ if c.placement_ticket_0359 then
+  if c.request_field and pair[c.request_field]~=c.request_value then
+   pair.construction_candidate_0338=nil
+   return nil,"placement-pending-request-changed"
+  end
+  local current=normalize_placeable(c.request_value)
+  local fixed=type(c.request_value)=="table" and (c.request_value.position or c.request_value.site_position)
+  if not current or current.item_name~=c.item_name or current.entity_name~=c.entity_name
+    or current.category~=c.category or current.direction~=c.direction
+    or (fixed and (fixed.x~=c.position.x or fixed.y~=c.position.y)) then
+   pair.construction_candidate_0338=nil
+   return nil,"placement-pending-request-changed"
+  end
+  local planner=site_planner()
+  if not(planner and type(planner.authorize)=="function")then
+   return nil,"placement-pending-authority-unavailable"
+  end
+  local allowed,why=planner.authorize(pair,c.placement_ticket_0359,c.position)
+  if not allowed then
+   if why~="placement-pending-live-budget" then pair.construction_candidate_0338=nil end
+   return nil,why
+  end
+ end
  local task={version=M.version,phase="waiting-source",item_name=c.item_name,entity_name=c.entity_name,category=c.category,position={x=c.position.x,y=c.position.y},direction=c.direction,site_reason=c.site_reason,effectiveness=c.effectiveness,request_field=c.request_field,request_value=c.request_value,ghost=c.ghost,started_tick=now()};local ok,why=claim_site(pair,task);if not ok then return nil,why end;pair.construction_task_0338=task;return task
 end
 local function restore_orphan_custody(pair)
@@ -1907,7 +1987,12 @@ local function site_still_valid(pair,task)
   end
   return true,"matching-ghost"
  end
- local planner=site_planner();if planner and type(planner.placement_effectiveness_report)=="function"and tostring(task.category or""):find("defense",1,true)then local ok,report,why=pcall(planner.placement_effectiveness_report,pair,task.entity_name,task.position,task.category);if ok and report then task.effectiveness=report;return true,"effectiveness-revalidated"end;return false,ok and(why or"ineffective-defense-site")or("effectiveness-error:"..safe(report))end
+ local planner=site_planner()
+ if planner and type(planner.live_admitted_defense_site)=="function"
+   and tostring(task.category or""):find("defense",1,true)then
+  return planner.live_admitted_defense_site(pair,task.entity_name,task.position,
+    task.category,task.effectiveness)
+ end
  local ok,can=pcall(function()return pair.station.surface.can_place_entity({name=task.entity_name,position=task.position,force=pair.station.force,direction=task.direction})end);return ok and can==true,ok and"engine-revalidated"or"engine-check-failed"
 end
 -- Factorio can refuse an otherwise valid receiver tile when the builder
@@ -2515,7 +2600,14 @@ function M.service_pair(pair,reason)
    return{processed=1,waiting=1,detail="bootstrap-smelter-already-physical-1205"}
   end
   local why;task,why=begin_task(pair,c)
-  if not task then return{processed=1,blocked=1,detail="reservation-blocked:"..safe(why)}end
+  if not task then
+   if type(why)=="string" and why:sub(1,17)=="placement-pending" then
+    pair.construction_pending_0359=why
+    return{processed=1,waiting=1,detail=why}
+   end
+   return{processed=1,blocked=1,detail="reservation-blocked:"..safe(why)}
+  end
+  pair.construction_pending_0359=nil
  end
  if task.phase=="return-custody"then return return_custody(pair,task)end
  -- A physically credited railway may NEVER inherit the admin creative
@@ -3027,7 +3119,28 @@ end
  return{processed=1,failed=1,detail="unknown-phase:"..safe(task.phase)}
 end
 function M.service_all(reason,budget)
- local list={};for key,pair in pairs(pair_map())do if valid_pair(pair)then list[#list+1]={key=tostring(key),pair=pair}end end;table.sort(list,function(a,b)return a.key<b.key end);local state=M.root();local limit=math.min(#list,math.max(0,math.floor(tonumber(budget)or M.max_pairs_per_discovery)));if limit==0 then return{processed=0,acted=0,detail="no-pairs"}end;local start=state.cursor%#list+1;local failed=0;for offset=0,limit-1 do local pair=list[((start+offset-1)%#list)+1].pair;local ok=pcall(M.discover_pair,pair,false);if not ok then failed=failed+1 end end;state.cursor=(start+limit-2)%#list+1;return{processed=limit,acted=0,failed=failed,exhausted=#list>limit,detail="pairs="..limit.." failed="..failed}
+ local state=M.root();local map=pair_map()
+ local limit=math.max(0,math.min(M.max_pairs_per_discovery,math.floor(tonumber(budget)or M.max_pairs_per_discovery)))
+ local cursor=state.discovery_cursor_1507
+ if cursor~=nil and map[cursor]==nil then cursor=nil end
+ local processed,failed=0,0
+ while processed<limit do
+  local key,pair=next(map,cursor)
+  if key==nil then
+   cursor=nil
+   if processed>0 then break end
+   key,pair=next(map)
+   if key==nil then break end
+  end
+  cursor=key;processed=processed+1
+  if valid_pair(pair)then
+   local ok=pcall(M.discover_pair,pair,false)
+   if not ok then failed=failed+1 end
+  end
+ end
+ state.discovery_cursor_1507=cursor
+ return{processed=processed,acted=0,failed=failed,exhausted=processed==limit and limit>0,
+  detail="bounded construction admission"}
 end
 function M.describe_pair(pair)if not pair then return"No pair."end;local task=pair.construction_task_0338;if task then return"Construction "..safe(task.entity_name).." phase="..safe(task.phase).." site="..safe(task.position and(task.position.x..","..task.position.y))end;local c=pair.construction_candidate_0338;if c then return"Construction candidate "..safe(c.entity_name).." reason="..safe(c.site_reason)end;return"No construction work."end
 local function canonical_broker()
@@ -3054,5 +3167,5 @@ local function register_native_robot_receipt_0338()
     route="native-robot-station-receipt",priority=20})
  return registered and route~=nil and route~=false
 end
-function M.install()M.root();register_creative_command();_G.TechPriestsConstructionPlanner0338=M;_G.TECH_PRIESTS_CONSTRUCTION_PLANNER=M;if not register_service()then return false end;if not register_native_robot_receipt_0338()then return false end;if log then log("[Tech-Priests recovery] dispatcher-owned construction planner armed; defense effectiveness and exact custody enabled")end;return true end
+function M.install()M.root();if not require("scripts.core.construction_site_planner").install()then return false end;register_creative_command();_G.TechPriestsConstructionPlanner0338=M;_G.TECH_PRIESTS_CONSTRUCTION_PLANNER=M;if not register_service()then return false end;if not register_native_robot_receipt_0338()then return false end;if log then log("[Tech-Priests recovery] dispatcher-owned construction planner armed; defense effectiveness and exact custody enabled")end;return true end
 return M

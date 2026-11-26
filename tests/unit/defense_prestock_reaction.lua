@@ -1,4 +1,7 @@
 -- Exercise the real legacy perimeter executor, not a mocked replacement.
+package.path="tech-priests_src/?.lua;tech-priests_src/?/init.lua;"..package.path
+TechPriestsRuntimeTickBroker0600={base_interval=5,register_service=function(spec)return spec end}
+TechPriestsRuntimeEventRegistry={on_event=function()end,on_configuration_changed=function()end}
 local stock={["gun-turret"]=0,["firearm-magazine"]=60}
 local function inventory()
   return {valid=true,
@@ -46,6 +49,7 @@ tech_priests_prototype_table_0440=function(kind)
   end
   return {}
 end
+prototypes={item=tech_priests_prototype_table_0440("item")}
 TechPriestsPlanningConstraints0646={
   entity_unlocked=function()return false,"recipe-locked" end,
   item_for_entity=function(name)
@@ -60,7 +64,7 @@ local turret_inventory={valid=true,
   get_item_count=function(name)if name=="firearm-magazine" then return turret_ammo end;return 0 end,
 }
 local constructed={}
-local surface={
+local surface={index=1,valid=true,
   can_place_entity=function()return true end,
   -- The actual 0259 rearm service looks up a physically built turret
   -- through the same bounded live-entity query as Factorio. The old stub
@@ -103,7 +107,7 @@ local surface={
     return e
   end,
 }
-local force={valid=true,name="player"}
+local force={valid=true,name="player",index=1,recipes={}}
 local station={valid=true,name="planetary-magos-cogitator-station",
   unit_number=11,force=force,surface=surface,position={x=0,y=0},
   get_inventory=function(id)
@@ -119,6 +123,38 @@ tick_pair=function()return false end
 dofile("tech-priests_src/scripts/defense_perimeter.lua")
 assert(type(tick_pair)=="function","defense perimeter dispatcher unavailable")
 local defense_bridge=rawget(_G,"TechPriestsDefensePerimeter0259")
+local planner=require("scripts.core.force_planning_queue")
+local defense_planner=require("scripts.core.defense_planning_1507")
+local function authorize_existing(task)
+ for _=1,20000 do
+  local pos=defense_planner.retry_position(pair,task)
+  if pos then task.position=pos;return end
+  game.tick=game.tick+1
+  local work=planner.pulse({tick=game.tick},16)
+  assert((work.failed or 0)==0,"existing defense authority failed")
+ end
+ error("existing defense authority did not finish")
+end
+local function await_task(kind)
+ for _=1,20000 do
+  if pair.defense_task_0259 and pair.defense_task_0259.type==kind then return {acted=1} end
+  game.tick=game.tick+1
+  local work=planner.pulse({tick=game.tick},16)
+  assert((work.failed or 0)==0,"defense planner failed")
+  defense_bridge.service_pair(pair)
+ end
+ error("bounded defense did not finish: "..tostring(pair.defense_perimeter_0259.last_reason))
+end
+local function await_result()
+ for _=1,20000 do
+  game.tick=game.tick+1
+  local work=planner.pulse({tick=game.tick},16)
+  assert((work.failed or 0)==0,"defense planner failed")
+  local _,status=planner.peek(force.index,"defense-planning",tostring(station.unit_number)..":perimeter")
+  if status=="ready" then return defense_bridge.service_pair(pair) end
+ end
+ error("defense negative scan did not finish")
+end
 assert(defense_bridge and type(defense_bridge.service_pair)=="function"
   and type(defense_bridge.has_pending)=="function",
   "canonical dispatcher defense service was not exported")
@@ -132,7 +168,8 @@ surface.can_place_entity=function(args)
   return dx*dx+dy*dy>(20.5*20.5)
 end
 stock["gun-turret"]=1
-local outside_only=defense_bridge.service_pair(pair)
+defense_bridge.service_pair(pair)
+local outside_only=await_result()
 assert((outside_only.acted or 0)==0
   and pair.defense_task_0259==nil
   and #pair.defense_perimeter_0259.threats==1
@@ -158,7 +195,8 @@ assert(yield.waiting==1 and not pair.defense_task_0259
   and #pair.defense_perimeter_0259.threats==1,
   "canonical defense bridge stole a reserved machine item")
 pair.machine_logistics_custody_0528=nil
-local started=defense_bridge.service_pair(pair)
+defense_bridge.service_pair(pair)
+local started=await_task("build-turret")
 assert(started.acted==1 and pair.defense_task_0259
   and pair.defense_task_0259.type=="build-turret"
   and pair.defense_task_0259.item=="gun-turret"
@@ -173,6 +211,7 @@ assert(built.acted==1 and #constructed==1
   and stock["gun-turret"]==0
   and pair.defense_perimeter_0259.turrets_built==1,
   "canonical turret construction failed physical item accounting")
+await_task("ammo-turret")
 assert(pair.defense_task_0259
   and pair.defense_task_0259.type=="ammo-turret",
   "real new turret did not schedule ammunition service")
@@ -199,7 +238,8 @@ turret_inventory.is_empty=function()return turret_ammo==0 end
 turret_ammo=0
 local before_rearm_stock=stock["firearm-magazine"]
 game.tick=game.tick+61
-local refill=defense_bridge.service_pair(pair)
+defense_bridge.service_pair(pair)
+local refill=await_task("ammo-turret")
 assert(refill.acted==1 and pair.defense_task_0259
   and pair.defense_task_0259.type=="ammo-turret"
   and stock["firearm-magazine"]==before_rearm_stock,
@@ -216,17 +256,20 @@ state.unresolved_incidents_0817=0
 TechPriestsCombatDefenseReaction0816=nil
 -- A stocked turret emergency may park, but never destroy, an unrelated
 -- routine wall assignment. Existing logistics custody must finish first.
-state.hostile_incidents_0817={{id=41}}
+state.hostile_incidents_0817={{id=41,expires_at=game.tick+7200}}
 state.threats={{incident_id_0817=41,position={x=-17,y=0}}}
 state.unresolved_incidents_0817=1
 state.next_scan_tick=0
 local routine_wall={
   type="build-wall",item="stone-wall",entity_name="stone-wall",
-  position={x=17,y=13},mode="placing-defense-wall",
+  position={x=17,y=8},mode="placing-defense-wall",
   phase="approach",build_due_tick=game.tick+20,
 }
 pair.defense_task_0259=routine_wall
+stock["stone-wall"]=1
+TechPriestsPlanningConstraints0646.entity_unlocked=function(_,name)return name=="stone-wall" end
 stock["gun-turret"]=1
+authorize_existing(routine_wall)
 _G.TechPriestsCombatDefenseReaction0816={
   reconcile_pair=function()return 1 end,
 }
@@ -239,7 +282,8 @@ assert(reserved.waiting==1 and pair.defense_task_0259==routine_wall
   "defensive interruption illegally preempted existing physical custody")
 pair.machine_logistics_custody_0528=nil
 game.tick=game.tick+1
-local emergency=defense_bridge.service_pair(pair)
+defense_bridge.service_pair(pair)
+local emergency=await_task("build-turret")
 assert(emergency.acted==1 and state.suspended_defense_task_0819==routine_wall
   and pair.defense_task_0259.type=="build-turret"
   and #state.threats==0 and stock["gun-turret"]==1,
@@ -290,6 +334,7 @@ pair.defense_task_0259={
   key="19:0",position={x=19,y=0},build_due_tick=game.tick-1,
   mode="placing-defense-wall"
 }
+authorize_existing(pair.defense_task_0259)
 game.tick=game.tick+2
 local wall_result=defense_bridge.service_pair(pair)
 assert(wall_result.acted==1 and #constructed==built_before+1

@@ -1,44 +1,75 @@
 # Current Testing Goals
 
-## Active follow-up - 100 working priests on the headed runner
+## Active follow-up — deterministic force planning and visible native proof
 
-The current performance goal is at least 30 rendered FPS with stable normal-speed
-UPS and at least 100 active priests. The accepted four-priest reconstruction and
-the character/movement pass at `c6eb8d4f18adc9edf7fd47f067d61980a7b9a073`
-do not establish that population result. Preserve the completed cosmetic-only
-picker, native player movement and improved ground-priest movement.
+Current source baseline checked before editing and again during integration:
+`025a7a5d613f1df6e3b131aad0b1cc5006760160`. The 1507 continuation changes
+replace whole-station/group/site work with saved steps under one shared force
+planner. This section supersedes older owner-save replay instructions below.
 
-Use the existing private owner-save profiling workflow on the signed-in
-Core30 / GTX 1660 SUPER runner in Session 1. The controlled scaling comparison
-uses one fresh Space Age save, mandatory dependencies only, the exact accepted
-`c6eb8d4` package as baseline and an immutable descendant as candidate. Deploy
-25 priests of each ground rank through the actual station lifecycle. Preserve
-all 100 identities and record individual movement and physical completed work;
-an idle roster is not a successful active-workload test. Keep game speed and
-native movement cadence unchanged.
+Use a **fresh Factorio 2.1.25 + Space Age scenario**, verified cached mandatory
+AAI dependencies only, and the existing signed-in Windows desktop launcher.
+Do not read or alter personal saves, download optional mods, replace the working
+launcher, run competing jobs, or publish a release/Mod Portal update.
 
-Keep the baseline and candidate engine, save, workload, graphics settings,
-warmup and observer identical. Optional callback attribution is a separately
-labeled diagnostic run. Retain original native frame CSV, elapsed-time
-observations, genuine in-game captures, package/source hashes and actual work
-counters. Confirm frame timing units against native elapsed-time evidence
-before reporting FPS; script/update cost alone is not rendered FPS. Record
-slow-frame tails and sustained windows as well as averages.
+Required order:
 
-The integrated 0644 receiver lookup has existing native function evidence in
-private run `45699182910`: the three-call sample means changed from 1783.738 ms
-to 71.742 ms across nine alternating-order samples with 4,320 native entities
-and 96 unconnected drills. Both tested decisions matched under controlled
-placement responses. This is isolated helper evidence, not a whole-planner,
-game-tick or 100-priest pass. 0643 also uses the native chest slot for known
-container stock instead of probing every inventory identifier; quantities and
-compatibility behavior remain live. The complete headed scaling result remains
-open until retained evidence shows population, physical activity, FPS and UPS.
+1. Finish source/caller regressions and behavior-map review: queue saturation,
+   no-action fairness, pending-world/stock changes and saved-state continuation.
+   Mock reload is not native Factorio save/reload proof.
+2. Run a visible four-priest smoke on the exact candidate. Require original
+   station/priest identities, physical work, powered producing machines,
+   complete native timing windows and a foreground client.
+3. Only after that gate, run a matched baseline/candidate fresh factory with at
+   least 100 genuinely active original priests. Match engine, initial save,
+   dependency hashes, fixture, rendering settings, warmup and observer. Record
+   per-priest physical work in every complete window and retain worst stalls.
+4. Target sustained displayed FPS >=30 with stable normal-speed UPS; 60 FPS is
+   a stretch target. Retain full native frame/timing data and continuous visible
+   in-game evidence. A graphics benchmark, script timing, screenshot, capture
+   frame rate or simulation-tick rate is not displayed FPS.
 
-The Mod Portal remains unpublished unless the owner explicitly authorizes it.
-Existing scheduled work is not stopped or disabled by this diagnostic.
+The existing `open_desktop.py` launches a real `--load-game` foreground client,
+but its original proof explicitly has `fps_verified=false`. The new
+`tools/run_fresh_native_performance_1507.py` supplies an isolated fresh workload
+and activity checks around that unchanged helper. Full-window display capture
+and calibrated frame timing remain separate gates. An activity success must
+not be renamed a performance pass.
 
-## 2026-11-25 - Four-priest slowdown and behavior-map drift
+Use the continuous signed-in LCI worker when its exact capability and current
+execution are verified. Do not substitute an hourly automation. Core30's
+2026-11-26 readback showed a persistent supervisor and model queue, but only
+objective/workspace metadata tools had run; no source-reading proposal, patch
+or native Factorio result was available. It also reported deferment around
+another game/render workload. Preserve other work and use an exclusive native
+route when the machine is free.
+
+Implemented source contracts include shared ordinary placement and final live
+authorization, within-group 0643 assessment, within-station 0644 surveying and
+stock/science revalidation, mining/defense site continuations, fixed/owned-ghost
+physical admission, the separate 0259 perimeter/support continuation, shared incremental
+prototype membership, and locally invalidated learned crossings with native
+movement fallback. Native acceptance stays open until actual results identify
+the exact candidate revision and complete evidence.
+
+### Integrated source verification
+
+The current smoke command `PYTHONDONTWRITEBYTECODE=1 python3 tests/run_hotpath_regressions.py`
+passes 79/79 Lua cases, all five inventory-generation regression checks and the
+reviewed source/map freshness gate. The public native wrapper passes 21 Python
+tests. The separate private request controller passes four pure authorization
+tests. These counts do not represent native game runs.
+
+An isolated checkout of exact baseline `025a7a5d613f1df6e3b131aad0b1cc5006760160`,
+using original baseline tests and source with no candidate overlay, reproduces
+six broader test-command failures: station recycling's five-station reservation
+assertion, the roboport fixture's 200-local parser limit, Magos first-assembler
+planning, bootstrap physical-overlap replanning, resource-station reserved-leaf
+assignment, and the rail-expedition assertion chained from the movement-overleash
+test. The movement test's own 26 cases pass before the chained failure. These
+failures remain open; they are not hidden by the green focused suite.
+
+## Historical 2026-11-25 — Four-priest slowdown and behavior-map drift
 
 The owner has directed the immediate performance reproduction onto the existing
 headed Core30 / GTX 1660 SUPER GitHub runner. Use the private owner-save workflow
@@ -255,24 +286,16 @@ instrumented duration must be compared with uninstrumented evidence before
 assigning elapsed cost to those branches. No UPS acceptance follows from the
 isolated discovery-count proof.
 
-The 0643 facility assessment now uses the bound native `get_inventory(id)` call
-and retained machine/provider identities. The former extra entity argument
-was caught as an error and made real stock appear empty. Its focused native
-comparison reads the actual 20 iron plates, 12 copper plates and 8 gears after
-the fix, with no corresponding deficits. Run
-`tests/unit/emergency_facility_provider_snapshot_1072.lua` to retain live
-force/surface/36-tile/network checks, provider deduplication and disconnection
-behavior. Its three reserve-item counts share one provider list. The 113-tick
-assessment still visits all force/surface groups despite its advertised budget
-of four; planned-ghost, other physical resource/infrastructure surveys and
-loose-item pickup remain separate work to measure.
+### 1507 replacement of whole-group and whole-station planning
 
-The merged 0644 broker path preserves the former allowance of up to eight
-station attempts per 97-tick cycle, spreading them one per admitted five-tick
-pulse. Validate the saved batch, cursor, original deadline, failed/removed
-station accounting and reload continuation; do not describe it as one visit
-every 97 ticks. Public synchronous calls and the conditional registry fallback
-retain their separate contracts.
+The typed native inventory repair remains, with provider force, surface, reach
+and network checks. 0643 now charges station/entity/provider/recipe and material
+work inside a single group. Private rolling observations, final stock recount
+and current local witnesses precede canonical ghost admission. 0644's former
+eight-whole-station cycle is replaced by a shared saved worker and admission-only
+public callers. Full queues, failures, removed keys and reload must preserve
+fairness; active movement and physical custody keep their owners. The current
+infrastructure, placement and shortage maps record exact work accounting.
 
 ## 2026-11-02 — Goal #6 functional closure, measurable efficiency, and new-method execution plan
 
@@ -986,7 +1009,7 @@ The separate cold-pose native/GLB branch passes raw geometry/UV/normal/image ins
 The authored model/static GLB, 18 PBR maps, 7+7 source poses, exact atlas cells, registered shadow and real late import pass the model/render/native graphics lane. All seven working rectangles are displayed as frozen native variants; connected/disconnected caps and night glow are reviewed. All nonvisual prototype fields are preserved. Only the graphics set and measured drawing-box extent change. Source/fixture hashes and commands are in `docs/art/hydrogen-thruster-v01/`. Powered working-clock, fuel/thrust behavior, regression and release readiness are not tested or claimed.
 
 
-## 2026-11-13 � local machine art integration
+## 2026-11-13 — local machine art integration
 
 V24 condenser scale/registration and Beach Pump V12 have combined current-source graphical/runtime proof in docs/art/local-machine-alignment/integrated-source-validation.json. Alignment accepted by the owner. Underwater sprite separation remains an open visual defect. Next art target: resume timber workbench V7 finish, measure its native eight-second clock, independently inspect animated interchange, preserve the current burner/collision/recipe interfaces, and promote only after real capture review.
 

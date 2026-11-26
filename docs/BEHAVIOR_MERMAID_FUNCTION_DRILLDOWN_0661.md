@@ -1,6 +1,6 @@
 # Shared Policy, Discovery and Known-Source Fetch
 
-**Reviewed:** 2026-11-25. This is a source map, not native behavior or performance acceptance.
+**Reviewed:** 2026-11-26. This is a source map, not native behavior or performance acceptance.
 The number in this filename is retained for existing links; it is not a claim that the old implementation is still active.
 
 Use the [complete source inventory](BEHAVIOR_SOURCE_INVENTORY.md) and its
@@ -145,6 +145,28 @@ Movement, dispatcher, combat and other categories outside the background allowli
 The separate `proxy_ammo_hardener_0649` combat service collects station inventory sources once per `station_ammo` call, derives fallback ammo names once from immutable prototypes per runtime, and short-circuits a valid empty proxy inventory. Stock remains live. Its 41-tick broker route retains category `combat` and offered budget 6; it is not governed by the background allowlist.
 
 The complete registration, scan and wrapper-site index is in the generated inventory. These source changes do not establish native timing or workload acceptance.
+
+## Shared force planner and bounded world observations
+
+`force_planning_queue_1507` is a single broker executor for the new planning
+continuations. Forces and jobs rotate through at most 16 charged visits per
+admitted five-tick pulse. Rejected candidates and no-action work count. Callers
+only submit/read; queue backpressure is pending. Shared item/recipe indices
+build one definition/product row at a time and have bounded reserved dependency
+slots, while still using the same work budget.
+
+0643 and 0644 use `bounded_planning_area_1507` to walk retained 0579 cell identities
+one entry per step or query capped small cells with deterministic subdivision.
+A returned native batch is not processed as a single work unit. Final cell
+validation is sliced. Fixed region epochs detect later entity edits without
+walking all stations/jobs; tile events conservatively invalidate planning
+observations on that surface. Route crossings use their independent local
+chunk invalidation. See [infrastructure](BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0666_INFRASTRUCTURE_PLANNING.md)
+and [placement](PLACEMENT_CONTINUATION_1507.md) for consumers and live authority.
+
+This does not remove the separate costs of ordinary inventory source discovery,
+manual synchronous catalog scans or other listed planner families. Native
+whole-frame measurement and workload progress remain required evidence.
 
 ## Audited exported entry points
 

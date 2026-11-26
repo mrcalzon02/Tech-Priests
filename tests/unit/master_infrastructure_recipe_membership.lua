@@ -6,14 +6,14 @@ storage={tech_priests={pairs_by_station={}}}
 defines={inventory={chest=1}}
 local product_reads,recipe_walks=0,0
 local order,recipes={},{}
+local positions={}
 setmetatable(recipes,{__pairs=function(t)
-  recipe_walks=recipe_walks+1
-  local i=0
-  return function()
-    i=i+1
-    local key=order[i]
-    if key then return key,t[key] end
-  end
+  return function(_,key)
+    local i=key and positions[key]+1 or 1
+    if key==nil then recipe_walks=recipe_walks+1 end
+    local name=order[i]
+    if name then return name,t[name] end
+  end,t,nil
 end})
 local function recipe(name,product,enabled,ingredients)
   local value=setmetatable({valid=true,name=name,enabled=enabled,
@@ -23,7 +23,7 @@ local function recipe(name,product,enabled,ingredients)
         return {{type="item",name=product,amount=1}}
       end
     end})
-  recipes[name]=value;order[#order+1]=name
+  recipes[name]=value;order[#order+1]=name;positions[name]=#order
   return value
 end
 for i=1,1000 do recipe("unrelated-"..i,"unrelated-output-"..i,false) end
@@ -39,7 +39,7 @@ local inventory={valid=true,get_item_count=function(name)return stock[name] or 0
 local surface={index=1,name="nauvis",find_entities_filtered=function()return {} end}
 local pairs_to_plan={}
 for i=1,4 do
-  local station={valid=true,unit_number=i*10,position={x=i*50,y=0},
+  local station={valid=true,type="container",unit_number=i*10,position={x=i*50,y=0},
     force=force,surface=surface,get_inventory=function()return inventory end}
   local pair={station=station,station_unit=station.unit_number,radius=24,
     priest={valid=true,unit_number=i*10+1,position={x=i*50,y=0}}}
@@ -47,8 +47,9 @@ for i=1,4 do
 end
 _G.TechPriestsPlanningConstraints0646=require("scripts.core.planning_constraints_0646")
 local Plan=require("scripts.core.master_infrastructure_plan_0644")
+local Async=dofile("tests/helpers/planning_continuation_1507.lua")
 local function plan(pair,item,reason)
-  local result=assert(Plan.build_plan(pair,reason))
+  local result=assert(Async.plan(Plan,pair,reason))
   assert(result.stage=="bootstrap-smelting" and result.target.preferred_item==item,
     reason..": unexpected target "..tostring(result.target.preferred_item))
   return result

@@ -21,6 +21,7 @@ local StationRelocation0823 = require("scripts.core.station_relocation_0823")
 local StationCargo0824 = require("scripts.core.station_cargo_0824")
 local StationDepot0852 = require("scripts.core.station_starvation_depot_0852")
 local ResourceReturnMovement0953 = require("scripts.core.resource_return_movement_0953")
+local TraversableCrossings1507 = require("scripts.core.traversable_crossings_1507")
 -- The 1208 station-item courier must NEVER enter generic teleport recovery.
 local StationSurplusResupply1208 = require("scripts.core.station_surplus_resupply_1208")
 local CombatSafety = nil
@@ -240,6 +241,26 @@ local function plan_visible_ground_segment(pair, destination, reason, opts)
     or player_near(pair.priest.surface, destination, M.visible_ground_probe_radius)
     or player_near(pair.priest.surface, pair.station.position, M.visible_ground_probe_radius)
   if not visible and not return_or_recovery_reason(reason, opts) then return destination, opts end
+  if TraversableCrossings1507.installed then
+    -- Learning is optional background work. A full/stalled queue never holds
+    -- a priest still, nor substitutes a guessed straight waypoint for a real
+    -- native detour. Both the final goal and cached waypoint keep 0418's
+    -- original authority checks; the cache cannot grant a larger work area.
+    local merged = {}
+    for key,value in pairs(opts or {}) do merged[key]=value end
+    merged.ground_route_final_destination={x=destination.x,y=destination.y}
+    local authorized=M.position_allowed(pair,destination,reason,merged)
+    local waypoint,token
+    if authorized then
+      waypoint,token=TraversableCrossings1507.select(pair,destination,maximum,merged.radius)
+      if waypoint and not M.position_allowed(pair,waypoint,reason,merged) then waypoint,token=nil,nil end
+    end
+    merged.crossing_managed_1507=true
+    merged.crossing_token_1507=token
+    merged.ground_route_chunked=waypoint~=nil
+    merged.ttl=math.max(tonumber(merged.ttl) or 0,600)
+    return waypoint or destination,merged
+  end
   local distance = math.sqrt(distance_sq)
   local ratio = maximum / math.max(distance, 0.001)
   local waypoint = {
@@ -584,7 +605,12 @@ local function direct_go_to(priest, pos, radius, distraction)
     type = defines.command.go_to_location,
     destination = { x = pos.x, y = pos.y },
     radius = radius or M.default_radius,
-    distraction = distraction or defines.distraction.none
+    distraction = distraction or defines.distraction.none,
+    -- Learned crossings are advice; native physics/pathfinding is the final
+    -- check, including script edits which deliberately raise no world event.
+    pathfind_flags = pos.crossing_managed_1507 and {cache=false,
+      no_break=false,allow_destroy_friendly_entities=false,
+      allow_paths_through_own_entities=false} or nil
   }
   local ok_any = false
   pcall(function()
@@ -806,6 +832,20 @@ function M.request(pair, destination, reason, opts)
   local priority = tonumber(opts.priority) or 50
   local long_action = opts.long_action == true or long_action_owner(owner)
   local real_machine_phase_handoff = false
+  if current and current.crossing_managed_1507 and opts.crossing_managed_1507
+    and current.owner==owner and current.reason==tostring(reason or opts.owner or "movement")
+    and current.priority==priority and (tonumber(current.expires_tick) or -1)>=now()
+    and (dist_sq(current.ground_route_final_destination or current,
+      opts.ground_route_final_destination or pos) or math.huge)<=0.04 then
+    -- Repeated same-job submissions must not replace a useful learned/native
+    -- route merely because the priest moved into another start cell.
+    current.expires_tick=math.max(current.expires_tick,now()+math.max(1,
+      tonumber(opts.ttl) or M.default_request_ttl))
+    note_active_request(root,key,pair)
+    pair.movement_request_0418=current
+    root.stats.crossing_same_goal_collapsed_1507=(root.stats.crossing_same_goal_collapsed_1507 or 0)+1
+    return true,"already-moving-to-verified-crossing-goal"
+  end
   -- Resume cleanly from an older save or a terminal construction task that
   -- failed to retire its priority-968 route. This is not a priority bypass:
   -- the physical construction task and its cargo must both be absent.
@@ -956,7 +996,9 @@ function M.request(pair, destination, reason, opts)
     corridor_station_unit = opts.corridor_station_unit,
     corridor_final_destination = opts.corridor_final_destination,
     ground_route_chunked = opts.ground_route_chunked == true,
-    ground_route_final_destination = opts.ground_route_final_destination
+    ground_route_final_destination = opts.ground_route_final_destination,
+    crossing_managed_1507 = opts.crossing_managed_1507 == true,
+    crossing_token_1507 = opts.crossing_token_1507
   }
   root.requests[key] = req
   if real_machine_phase_handoff then
@@ -1922,6 +1964,28 @@ end
 
 local function recover_bad_route(pair, req, reason)
   local priest = pair.priest
+  if req.crossing_managed_1507 then
+    -- A stale or incomplete learned route may only ask native movement to
+    -- retry the authorized final goal. Never enter coordinate-teleport
+    -- recovery, even if an obstacle appeared without a raised event.
+    local goal=req.ground_route_final_destination or req
+    if not M.position_allowed(pair,goal,req.reason,{owner=req.owner,
+      ground_route_final_destination=goal}) then return false,"crossing-goal-not-authorized" end
+    if not movement_command_budget_allowed(req) then return false,"crossing-native-budget-deferred" end
+    req.x,req.y=goal.x,goal.y
+    req.ground_route_chunked,req.crossing_token_1507=false,nil
+    local accepted=direct_go_to(priest,req,req.radius,req.distraction)
+    if accepted then
+      req.last_command_tick,req.last_progress_tick=now(),now()
+      req.last_progress_position={x=priest.position.x,y=priest.position.y}
+      req.recovery_route_origin={x=priest.position.x,y=priest.position.y}
+      req.recovery_last_position={x=priest.position.x,y=priest.position.y}
+      req.recovery_last_motion_tick=now()
+      req.recovery_wrong_direction_since,req.recovery_wrong_position_since=nil,nil
+      pair.movement_controller_state_0418="crossing-native-repath"
+    end
+    return accepted,"crossing-native-repath"
+  end
   local physical_courier = req.owner=="resource-return-courier-0953"
   local physical_surplus = req.owner=="station-surplus-relay-1208"
   if physical_station_recovery_route(req) or physical_courier
@@ -2126,6 +2190,25 @@ local function apply_request(pair, req)
   end
   pair.movement_controller_clamp_0418 = nil
 
+  if req.crossing_token_1507 then
+    local still_current=TraversableCrossings1507.validate(req.crossing_token_1507,pair)
+    if not still_current then
+      -- This also handles a temporarily exhausted validation budget. Continue
+      -- the same job with native movement instead of idling or reusing advice
+      -- whose chunk revisions were not fully checked this tick.
+      local goal=req.ground_route_final_destination or req
+      if not M.position_allowed(pair,goal,req.reason,
+        {owner=req.owner,ground_route_final_destination=goal}) then
+        direct_stop(priest)
+        pair.movement_controller_state_0418="crossing-goal-no-longer-authorized"
+        return false
+      end
+      req.x,req.y=goal.x,goal.y
+      req.ground_route_chunked,req.crossing_token_1507=false,nil
+      req.last_command_tick=0
+    end
+  end
+
   local d2 = dist_sq(priest.position, req) or 999999
   req.last_distance_sq = d2
   local radius = math.max(0.15, tonumber(req.radius) or M.default_radius)
@@ -2138,10 +2221,18 @@ local function apply_request(pair, req)
     if final and remaining_sq > (radius + loiter_pad) * (radius + loiter_pad) then
       -- Advance a real route segment without waiting for another family to
       -- re-submit the goal. The engine is issued only the next short hop.
-      local remaining = math.sqrt(remaining_sq)
-      local ratio = math.min(1, M.visible_ground_segment / remaining)
-      req.x = priest.position.x + (final.x - priest.position.x) * ratio
-      req.y = priest.position.y + (final.y - priest.position.y) * ratio
+      if req.crossing_managed_1507 then
+        local next_point,token=TraversableCrossings1507.select(pair,final,M.visible_ground_segment,req.radius)
+        if next_point and not M.position_allowed(pair,next_point,req.reason,
+          {owner=req.owner,ground_route_final_destination=final}) then next_point,token=nil,nil end
+        req.x,req.y=(next_point or final).x,(next_point or final).y
+        req.ground_route_chunked,req.crossing_token_1507=next_point~=nil,token
+      else
+        local remaining = math.sqrt(remaining_sq)
+        local ratio = math.min(1, M.visible_ground_segment / remaining)
+        req.x = priest.position.x + (final.x - priest.position.x) * ratio
+        req.y = priest.position.y + (final.y - priest.position.y) * ratio
+      end
       req.updated_tick = now()
       req.expires_tick = math.max(tonumber(req.expires_tick) or 0, now() + 600)
       req.last_command_tick = 0
@@ -2608,6 +2699,10 @@ function M.install()
   local broker = rawget(_G, "TechPriestsRuntimeTickBroker0600")
   if not broker then pcall(function() broker = require("scripts.core.runtime_tick_broker") end) end
   if not (broker and type(broker.register_service) == "function") then return false end
+  local crossing_ok,crossing_enabled=pcall(TraversableCrossings1507.install)
+  if not (crossing_ok and crossing_enabled) and log then
+    log("[Tech-Priests] crossing learning unavailable; native movement remains installed")
+  end
   local service = broker.register_service({ name = "movement_controller_service_0611", category = "movement", priority = 42, interval = M.service_ticks, budget = 24, fn = function(event, budget) return M.service(event, budget) end, note = "service only active movement requests; cadence and long-action leases integrated" })
   local sample = broker.register_service({ name = "movement_controller_sample_0611", category = "movement", priority = 80, interval = M.snap_sample_ticks, budget = 32, fn = function(event, budget) return M.sample(event, budget) end, note = "sample only active movement requests" })
   local enforcement = broker.register_service({ name = "movement_controller_enforcement_0566", category = "movement", priority = 70, interval = M.enforcement_service_ticks, budget = M.enforcement_budget, fn = function(event, budget) return M.enforcement_service(event, budget) end, note = "canonical ground envelope, stale-request, and overleash enforcement" })

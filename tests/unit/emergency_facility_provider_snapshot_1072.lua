@@ -58,18 +58,34 @@ for _,id in ipairs({11,21}) do
   storage.tech_priests.pairs_by_station[id]={
     station=station,priest={valid=true,unit_number=id+1000}}
 end
+-- Borrow the event-maintained raw index instead of the synchronous catalog
+-- view, which filters/copies an entire provider array in one call.
+local cells={}
+for x=-2,2 do for y=-2,2 do cells[x..":"..y]={known_tick=game.tick,entities={}} end end
+cells["0:0"].entities={provider,far,foreign}
+storage.tech_priests.efficiency_economy_0579={surfaces={["1"]={cells=cells,dirty={}}}}
+local Queue=require("scripts.core.force_planning_queue")
 local Bridge=require("scripts.core.emergency_facility_placement_bridge_0643")
 local function assess(expect_iron,expect_copper,expect_gears,expect_requests,
     expect_accesses,expect_unsupported)
   local before,before_unsupported=inventory_accesses,unsupported_accesses
+  for _,cell in pairs(cells) do cell.known_tick=game.tick end
+  local target=(Bridge.root().stats.assessments or 0)+1
+  Bridge.root().next_assessment_tick=0;Bridge.root().next_groups["1:1"]=0
   local reports=Bridge.assess()
+  for _=1,5000 do
+    game.tick=game.tick+1
+    Queue.pulse({tick=game.tick},16)
+    local job,status=Queue.peek(1,"shortage-assessment","surface:1")
+    if (Bridge.root().stats.assessments or 0)>=target and status=="ready" then break end
+  end
   local report=reports["1:1"]
   assert(report and report.station_count==2
     and report.available["iron-plate"]==expect_iron
     and report.available["copper-plate"]==expect_copper
     and report.available["iron-gear-wheel"]==expect_gears
     and next(report.deficits)==nil
-    and scans==0 and provider_requests==expect_requests,
+    and scans==0 and provider_requests==0,
     "0643 duplicated physical stock, repeated per-item provider discovery, "
     .."or changed shortage accounting")
   assert(inventory_accesses-before==expect_accesses
@@ -77,8 +93,8 @@ local function assess(expect_iron,expect_copper,expect_gears,expect_requests,
     "0643 probed unrelated inventory kinds for a known container or changed compatibility access")
 end
 assess(43,26,17,2,9)
--- Change physical stock before another assessment in the same tick:
--- identities may be retained, but quantities must never be cached.
+-- Change physical stock before another broker-owned assessment:
+-- identities may be retained, but quantities must be recounted for that cycle.
 provider_stock["iron-plate"]=0
 provider_stock["copper-plate"]=0
 provider_stock["iron-gear-wheel"]=0
@@ -118,4 +134,4 @@ for _,pair in pairs(storage.tech_priests.pairs_by_station) do
 end
 defines.inventory.chest=nil
 assess(40,24,16,6,24,18)
-print("[facility-provider-snapshot-1072] PASS zero spatial inventory discovery; one typed access per item; live counts, range, force, network, disconnection and compatibility fallback")
+print("[facility-provider-snapshot-1072] PASS broker-owned physical recount; zero spatial inventory discovery; typed accesses, range, force, network, disconnection and compatibility fallback")

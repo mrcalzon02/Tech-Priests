@@ -1,10 +1,10 @@
 {
   "maps": [
     {
-      "covered_source_files": 383,
+      "covered_source_files": 389,
       "path": "docs/BEHAVIOR_FUNCTION_MAP_0659.md",
-      "reviewed_source_digest": "e924740f11d9d91e5eb8c4174d88412c705dcf435dd009a711e060fde805f075",
-      "sha256": "8e4f479c37346795df1af11e6daef66b094cb7a1e653a23eb11d03e9c2b2aac0",
+      "reviewed_source_digest": "be9c323c2819d31ab137d66f83161f7fa9411260bf3c185ec3706b096972db31",
+      "sha256": "611274285cb8936fd034667f94ebecf16f711fc60ce03ec7e7a34ae66155b47a",
       "source_patterns": [
         "control.lua",
         "scripts/**/*.lua",
@@ -14,8 +14,8 @@
     {
       "covered_source_files": 19,
       "path": "docs/BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0661.md",
-      "reviewed_source_digest": "c9033af5e8c1401993d38b3a9621008033c58d2a8ef78c25fc71d3d8e1ced2ef",
-      "sha256": "75398d5758d7a2d6b7993334327326ba02aee3e733b89810bfb6247f304d8309",
+      "reviewed_source_digest": "120bd015ed4125478386bd9940158fdd463a184ce7ee95388437812769ac9980",
+      "sha256": "9941b5dd928092bc16f18c105733a7b062b3d478e4593d01219e620cc06d5a39",
       "source_patterns": [
         "scripts/core/planning_constraints_0646.lua",
         "scripts/core/logistics_fetch_executor_0527.lua",
@@ -41,7 +41,7 @@
     {
       "covered_source_files": 6,
       "path": "docs/BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0662_DIRECT_MOVEMENT.md",
-      "reviewed_source_digest": "07ff7f188fff8b56a6678ec62b34be1d180c2249b2701aefa94f813ce6accaf6",
+      "reviewed_source_digest": "597ca91cf4308c8fb0e1fa990cdb1d2e17b9996cca6e2741c70089aed8130e26",
       "sha256": "a0e5e16f723f6bf493b74e4422a9812583ed2f715e6fce7a6cb88d7af3f1856a",
       "source_patterns": [
         "scripts/core/direct_acquisition_physical_guard_0649.lua",
@@ -55,7 +55,7 @@
     {
       "covered_source_files": 4,
       "path": "docs/BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0663_DIRECT_EXECUTOR.md",
-      "reviewed_source_digest": "c7e05946db213e2dd19bddedc9728a43fdcb1131c8948d865b7b2083a7a2b184",
+      "reviewed_source_digest": "5c0b6b1a52e5534d51833c09c6f315a9d54be5f95d1a675b903cb96d28b69e6d",
       "sha256": "1e446fd6c64e724d63483b2eab8a11ed47aff704fbe4a51e7627815d03a9c330",
       "source_patterns": [
         "scripts/core/direct_acquisition_executor_0513.lua",
@@ -67,8 +67,8 @@
     {
       "covered_source_files": 4,
       "path": "docs/BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0664_MOVEMENT_CONTROLLER.md",
-      "reviewed_source_digest": "16b9b4265f27be9c98d0389b1425434b6fd708414f22fb6ab7a6c3f3fd4efd89",
-      "sha256": "fb10b6ee139213a96a2edea705afa69f477b0654708121ddac9c820661fa6d48",
+      "reviewed_source_digest": "68bb2e7a77d70328d758c642e13a220384410ec02510188d8e304f8a98d16f36",
+      "sha256": "aade3f1ce3b85e4cee90de2f7b273d3c1a1db680bc55e649cc5b7f496108c99a",
       "source_patterns": [
         "scripts/core/movement_controller.lua",
         "scripts/core/authority_corridor_pathing_0574.lua",
@@ -79,8 +79,8 @@
     {
       "covered_source_files": 6,
       "path": "docs/BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0665_CONSTRUCTION.md",
-      "reviewed_source_digest": "1a8aee642477da2c1f7b56ed70d703550bb8b32f4e8d8add14347bb2ff40ce7e",
-      "sha256": "a756cf7a7c6c509245c9afc7d5360c5d271267c0bb3399b8b18c18a055180b8d",
+      "reviewed_source_digest": "461d8af6330a0f598c319c9126046e6c3f90ab263b3bfbc1a558189ea0916458",
+      "sha256": "b5441ea3b020cde7050babb3cf59616370f89f7a5576079e80f0e1e65a4107db",
       "source_patterns": [
         "scripts/core/construction_planner.lua",
         "scripts/core/construction_site_planner.lua",
@@ -93,8 +93,8 @@
     {
       "covered_source_files": 16,
       "path": "docs/BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0666_INFRASTRUCTURE_PLANNING.md",
-      "reviewed_source_digest": "55cd05e40d17b3511d9ee6fd99c4b2d1ab95dc8ccaad710916f8afc12f01fc78",
-      "sha256": "9d7694caafdff3cff254794969a9bf8afd9fbc063680e71d95ee410448dc2af0",
+      "reviewed_source_digest": "b80574e60f02b12cf0784985e89e3eb1f4b318cc3a9e65022514437c59187b7b",
+      "sha256": "ca622e9f23adc754c9254b10c38b716fe6e69e080a74aa7b207c9585b531e9cb",
       "source_patterns": [
         "scripts/core/infrastructure_first_governor_0640.lua",
         "scripts/core/master_infrastructure_plan_0644.lua",
@@ -204,7 +204,7 @@
     {
       "covered_source_files": 6,
       "path": "docs/BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0675_COMBAT_REPAIR.md",
-      "reviewed_source_digest": "de452687ad7e3d39e869bf91541aefa3732275585de8e2efa7b3a2eafbe37f06",
+      "reviewed_source_digest": "09e138657768508a1b52b5ac7d03c1c1ab734ad0977568cb4069cbe85b31919f",
       "sha256": "e9274698ac4a44d8dd65c5d70d2cefb298bc28e01ed601e0d41d736f19b2af3b",
       "source_patterns": [
         "scripts/core/combat_repair_doctrine_0517.lua",
@@ -216,10 +216,10 @@
       ]
     },
     {
-      "covered_source_files": 383,
+      "covered_source_files": 389,
       "path": "docs/BEHAVIOR_MERMAID_MAP_0660.md",
-      "reviewed_source_digest": "e924740f11d9d91e5eb8c4174d88412c705dcf435dd009a711e060fde805f075",
-      "sha256": "ef6ed7997d8de97bf0737c40e39f98ac0816e8e9dacdd4b4722a2c43d56d59e9",
+      "reviewed_source_digest": "be9c323c2819d31ab137d66f83161f7fa9411260bf3c185ec3706b096972db31",
+      "sha256": "888fe38e64e8ce1a3812692d30f7506662b85f9d7c06e7d9ab7b8fe8c1b34a02",
       "source_patterns": [
         "control.lua",
         "scripts/**/*.lua",
@@ -227,10 +227,10 @@
       ]
     },
     {
-      "covered_source_files": 383,
+      "covered_source_files": 389,
       "path": "docs/RECOVERY_AUTHORITY_MAP_CURRENT.md",
-      "reviewed_source_digest": "e924740f11d9d91e5eb8c4174d88412c705dcf435dd009a711e060fde805f075",
-      "sha256": "e28dd8f8e667028e17202cdb14841818a806e25a265ef8e73706511c75b86537",
+      "reviewed_source_digest": "be9c323c2819d31ab137d66f83161f7fa9411260bf3c185ec3706b096972db31",
+      "sha256": "a53cda75a41690c7a32d54c2b13c2cdd60b7496f9668bced70ce611beeb24f75",
       "source_patterns": [
         "control.lua",
         "scripts/**/*.lua",
@@ -240,7 +240,7 @@
   ],
   "review_meaning": "Explicit source/diagram review acknowledgment; no semantic or runtime proof.",
   "schema": "tech-priests-behavior-map-review-v1",
-  "source_digest": "e924740f11d9d91e5eb8c4174d88412c705dcf435dd009a711e060fde805f075",
+  "source_digest": "be9c323c2819d31ab137d66f83161f7fa9411260bf3c185ec3706b096972db31",
   "source_scope": [
     "control.lua",
     "scripts/**/*.lua",

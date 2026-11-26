@@ -1,0 +1,4 @@
+station recycling 0822: rank, custody, active mission, peer and physical-item preflight PASS
+[reversal-carrier-recipe-0963] PASS real 0640/0850 worker handoff, active duties, custody, foreign requests and movement refusal
+[station-starvation-reversal-0850] PASS five real pairs, leaf-first ordering, blocked custody, rank, target, and reload preflight
+tests/unit/station_recycling_preflight_0822.lua:823: 0640 must honor production five-station future-work reservation

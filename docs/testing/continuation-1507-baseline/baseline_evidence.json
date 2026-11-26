@@ -1,0 +1,100 @@
+{
+  "revision": "025a7a5d613f1df6e3b131aad0b1cc5006760160",
+  "tree": "17e2e41fd0516e44f5f1d255f5f702710cb40776",
+  "archived_paths": [
+    "tech-priests_src/scripts",
+    "tests/unit"
+  ],
+  "archive_commands": [
+    [
+      "git",
+      "archive",
+      "--prefix=tech-priests_src/scripts/",
+      "025a7a5d613f1df6e3b131aad0b1cc5006760160:tech-priests_src/scripts"
+    ],
+    [
+      "git",
+      "archive",
+      "--prefix=tests/unit/",
+      "025a7a5d613f1df6e3b131aad0b1cc5006760160:tests/unit"
+    ]
+  ],
+  "subtree_ids": {
+    "tech-priests_src/scripts": "fbf460ee37e6c9add77a2ce50a073cb4a19cab62",
+    "tests/unit": "92255b665a6f58225d2c76756722a8d7b0bd48f8"
+  },
+  "created_utc": "2026-11-26T20:47:38.375820+00:00",
+  "runtime": "/usr/bin/texlua",
+  "runtime_version": "This is LuaTeX, Version 1.18.0 (TeX Live 2025/dev/Debian)",
+  "original_source_and_tests": true,
+  "working_tree_overlays": false,
+  "lazy_fetch_disabled": true,
+  "cases": [
+    {
+      "test": "station_recycling_preflight_0822.lua",
+      "command": [
+        "texlua",
+        "tests/unit/station_recycling_preflight_0822.lua"
+      ],
+      "cwd": "/home/agent/tp-baseline-evidence",
+      "exit_code": 1,
+      "sha256": "ec04383ef73e11a2286f5d5e6f63b193ba17407eb90ac3db1e0df14a807ec6f5",
+      "last_output_line": "tests/unit/station_recycling_preflight_0822.lua:823: 0640 must honor production five-station future-work reservation"
+    },
+    {
+      "test": "roboport_expansion_frontier_1076.lua",
+      "command": [
+        "texlua",
+        "tests/unit/roboport_expansion_frontier_1076.lua"
+      ],
+      "cwd": "/home/agent/tp-baseline-evidence",
+      "exit_code": 1,
+      "sha256": "1aab89e1e76e065afd8cd7d2ca3fcf4b49747f90ab37437cc3d084fa032c20d7",
+      "last_output_line": "tests/unit/roboport_expansion_frontier_1076.lua:1263: too many local variables (limit is 200) in main function near '='"
+    },
+    {
+      "test": "magos_component_construction_1150.lua",
+      "command": [
+        "texlua",
+        "tests/unit/magos_component_construction_1150.lua"
+      ],
+      "cwd": "/home/agent/tp-baseline-evidence",
+      "exit_code": 1,
+      "sha256": "a6b99f857bc2b8d8f20b991dc59ff5557945e02b504b2f159321d1272601c350",
+      "last_output_line": "tests/unit/magos_component_construction_1150.lua:110: missing real gears production did not plan the first physical assembler"
+    },
+    {
+      "test": "bootstrap_ghost_physical_overlap_replan.lua",
+      "command": [
+        "texlua",
+        "tests/unit/bootstrap_ghost_physical_overlap_replan.lua"
+      ],
+      "cwd": "/home/agent/tp-baseline-evidence",
+      "exit_code": 1,
+      "sha256": "2aba0b6e6319d9e001a010ba51a8743824d818811dde4ba5c7b7b4c6085f0ef5",
+      "last_output_line": "tests/unit/bootstrap_ghost_physical_overlap_replan.lua:101: bootstrap-ghost-overlap: physical-overlap ghost did not replan to a different permitted site"
+    },
+    {
+      "test": "resource_station_physical_0820.lua",
+      "command": [
+        "texlua",
+        "tests/unit/resource_station_physical_0820.lua"
+      ],
+      "cwd": "/home/agent/tp-baseline-evidence",
+      "exit_code": 1,
+      "sha256": "985c37257de794af74fc016b93b46ee23d9703cf0117633ca130c48f59aee31f",
+      "last_output_line": "tests/unit/resource_station_physical_0820.lua:470: 0640 must not assign a new material-acquisition task to a reserved leaf"
+    },
+    {
+      "test": "movement_overleash_return_continuity.lua",
+      "command": [
+        "texlua",
+        "tests/unit/movement_overleash_return_continuity.lua"
+      ],
+      "cwd": "/home/agent/tp-baseline-evidence",
+      "exit_code": 1,
+      "sha256": "dd33a125cb912fcf74d9b11c8ef999eb012422cd9c618542305cd3adfa2698dd",
+      "last_output_line": "tests/unit/rail_expedition_transit_1401.lua:88: [rail-expedition-transit-1401] paid site journey must use original-owned bounded physical waypoints"
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+[movement-first-junior-pickup-0941] PASS original 0939 route, 0566 handoff, counted independent depots, malformed save refusal, no teleport
+[movement-second-junior-pickup-0946] PASS original rebuilt first Junior, physical depot 0/1, priority-70 route, 0566 handoff, combat and malformed custody refusal, no synthetic items
+[movement-overleash-regression] PASS scenarios=26 including verified mined-Junior return, lost item and unreadable engine inventory
+[movement-resource-courier-0953] PASS canonical movement, leash handoff, counted cargo, combat, identity and hierarchy refusal
+tests/unit/rail_expedition_transit_1401.lua:88: [rail-expedition-transit-1401] paid site journey must use original-owned bounded physical waypoints

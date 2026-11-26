@@ -3,6 +3,7 @@
 -- Every retained hardener must return literal true. Retired authorities remain
 -- source-only and may not install, register cadences, or mutate runtime state.
 
+local Metadata=require("scripts.core.planning_metadata_1507")
 local M={
  version="0.1.674-dev",perimeter_band=4.0,perimeter_tolerance=2.25,
  active_hardener_count=26,retired_authority_count=48,
@@ -10,6 +11,7 @@ local M={
  install_complete=false,install_phase="unarmed",degraded_families={},broker_prearm={}
 }
 local item_by_entity={}
+local item_index_complete=false
 -- Recipe products are immutable for a runtime; enabled state and inventory
 -- quantities are not. Keep names in the force's original iteration order,
 -- never LuaRecipe objects or answers about current availability.
@@ -17,6 +19,16 @@ local recipe_names_by_force={}
 local empty_recipe_names={}
 local resource_names_by_product
 local empty_resource_names={}
+-- Planning callers wait for this bounded shared seed before using policy
+-- lookups. Existing execution-time policy remains unchanged.
+function M.request_metadata(force)
+ local items,recipes=Metadata.indices(force)
+ if not items then return false,"metadata-pending" end
+ item_by_entity=items
+ item_index_complete=true
+ recipe_names_by_force[force.index or force]=recipes
+ return true
+end
 local function valid(e)return e and e.valid end
 local function safe(v)local ok,s=pcall(tostring,v);return ok and s or"?"end
 local function dist_sq(a,b)local x=(a.x or 0)-(b.x or 0);local y=(a.y or 0)-(b.y or 0);return x*x+y*y end
@@ -141,6 +153,7 @@ end
 function M.item_for_entity(entity_name)
  if not(entity_name and prototypes and prototypes.item)then return nil end
  if item_by_entity[entity_name]~=nil then return item_by_entity[entity_name]or nil end
+ if item_index_complete then return nil end
  for item_name,item in pairs(prototypes.item)do local result;pcall(function()result=item.place_result end);if result and result.name==entity_name then item_by_entity[entity_name]=item_name;return item_name end end
  item_by_entity[entity_name]=false;return nil
 end
@@ -331,6 +344,13 @@ function M.feature_available(family)return M.install_complete==true or M.degrade
 function M.install()
  _G.TechPriestsPlanningConstraints0646=M;local broker_ok,broker_reason=ensure_broker("prearm")
  if not broker_ok then M.install_phase="broker-unavailable";M.broker_prearm={phase="prearm",complete=false,reason=tostring(broker_reason)};M.prearm_results={};M.prearm_failures={{module="scripts.core.runtime_tick_broker",label="runtime_tick_broker_0600",reason=tostring(broker_reason)}};M.prearm_attempted=0;M.prearm_passed=0;return false end
+ Metadata.install()
+ local registry=rawget(_G,"TechPriestsRuntimeEventRegistry")
+ if registry and registry.on_configuration_changed then
+  registry.on_configuration_changed(function()
+   item_by_entity={};item_index_complete=false;recipe_names_by_force={};resource_names_by_product=nil
+  end,{owner="planning_constraints_0646",route="invalidate-prototype-membership"})
+ end
  local s=attempt_all("prearm");M.prearm_results=s.results;M.prearm_failures=s.failures;M.prearm_attempted=s.attempted;M.prearm_passed=s.passed;M.install_phase="prearmed";return true
 end
 return M

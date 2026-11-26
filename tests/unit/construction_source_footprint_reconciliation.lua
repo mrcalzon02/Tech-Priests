@@ -4,7 +4,9 @@ package.path="tech-priests_src/?.lua;tech-priests_src/?/init.lua;"..package.path
 game={tick=1000}
 storage={tech_priests={pairs_by_station={}}}
 defines={distraction={none=0}}
+require("scripts.core.construction_site_planner")
 local Construction=require("scripts.core.construction_planner")
+local Async=dofile("tests/helpers/planning_continuation_1507.lua")
 local stock=1
 local inv={valid=true}
 inv.get_item_count=function(name)
@@ -161,7 +163,7 @@ prototypes={item={["burner-mining-drill"]={},["stone-furnace"]={}},
  entity={["burner-mining-drill"]={},["stone-furnace"]={}}}
 pair.construction_candidate_0338={request_field="construction_request",
  request_value=routine,item_name="stone-furnace",position={x=4,y=0}}
-local chosen=Construction.discover_pair(pair,false)
+local chosen=Async.discover(Construction,pair,false)
 check(chosen and chosen.request_field=="remote_drill_request_1011"
  and chosen.request_value==priority and chosen.item_name=="burner-mining-drill"
  and pair.construction_request==routine,

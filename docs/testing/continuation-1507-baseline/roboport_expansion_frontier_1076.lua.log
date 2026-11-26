@@ -1,0 +1,1 @@
+tests/unit/roboport_expansion_frontier_1076.lua:1263: too many local variables (limit is 200) in main function near '='

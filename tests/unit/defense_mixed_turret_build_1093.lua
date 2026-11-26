@@ -27,8 +27,8 @@ end
 game={tick=100}
 defines={inventory={chest=1,turret_ammo=2},direction={north=0,east=2},
  command={go_to_location=1},distraction={by_enemy=1}}
-local force={name="player",index=1}
-local surface={}
+local force={valid=true,name="player",index=1,recipes={}}
+local surface={index=1,valid=true}
 local made={}
 local proto_types={
  ["gun-turret"]="ammo-turret",["laser-turret"]="electric-turret",
@@ -61,6 +61,8 @@ tech_priests_prototype_table_0440=function(kind)
  out["firearm-magazine"]={type="ammo"}
  return out
 end
+prototypes={item=tech_priests_prototype_table_0440("item"),entity=entity_proto}
+TechPriestsRuntimeTickBroker0600={base_interval=5,register_service=function(spec)return spec end}
 TechPriestsPlanningConstraints0646={
  entity_unlocked=function()return true end,
  item_for_entity=function(name)return entity_proto[name]and name or nil end,
@@ -73,6 +75,7 @@ local function entity(name,pos,extra)
  function ammo.get_item_count(item)
   return item=="firearm-magazine"and ammo.quantity or 0 end
  function ammo.insert(st)ammo.quantity=ammo.quantity+st.count;return st.count end
+ function ammo.is_empty()return ammo.quantity==0 end
  local e={valid=true,name=name,type=proto_types[name],
    position={x=pos.x,y=pos.y},unit_number=next_unit,
    surface=surface,force=force,prototype=entity_proto[name],
@@ -115,7 +118,7 @@ function surface.find_entities_filtered(spec)
     ok=ok and e.position.x>=x0 and e.position.x<=x1
       and e.position.y>=y0 and e.position.y<=y1
   end
-  if ok then out[#out+1]=e end
+  if ok then out[#out+1]=e;if spec.limit and #out>=spec.limit then break end end
  end
  return out
 end
@@ -135,6 +138,17 @@ storage={tech_priests={pairs_by_station={[station.unit_number]=pair}}}
 tick_pair=function()return false end
 dofile("tech-priests_src/scripts/defense_perimeter.lua")
 local bridge=assert(_G.TechPriestsDefensePerimeter0259)
+local planner=require("scripts.core.force_planning_queue")
+local function await_task(kind,legacy)
+ for _=1,20000 do
+  if pair.defense_task_0259 and pair.defense_task_0259.type==kind then return true end
+  game.tick=game.tick+1
+  local work=planner.pulse({tick=game.tick},16)
+  assert((work.failed or 0)==0,"defense planner failed")
+  if legacy then tick_pair(pair) else bridge.service_pair(pair) end
+ end
+ error("bounded defense did not finish: "..tostring(state.last_reason))
+end
 local function attack_at(x,y,wanted)
  -- The 0818 bridge owns one service pulse per priest per engine tick.
  -- The preceding weapon's ammo handoff can finish during this same tick.
@@ -145,6 +159,10 @@ local function attack_at(x,y,wanted)
  state.next_scan_tick=0
  local before=stock[wanted]
  local started=bridge.service_pair(pair)
+ if not pair.defense_task_0259 then
+  await_task("build-turret")
+  started={acted=1,detail=state.last_reason}
+ end
  assert(started.acted==1 and pair.defense_task_0259
    and pair.defense_task_0259.type=="build-turret"
    and pair.defense_task_0259.item==wanted,
@@ -174,6 +192,7 @@ local function attack_at(x,y,wanted)
  return built
 end
 local gun=attack_at(17,0,"gun-turret")
+await_task("ammo-turret")
 assert(pair.defense_task_0259
  and pair.defense_task_0259.type=="ammo-turret",
  "gun was built without scheduling real ammo supply")
@@ -249,7 +268,8 @@ end
 stock["stone-wall"]=0
 stock["gun-turret"]=1
 game.tick=game.tick+240
-assert(tick_pair(pair) and pair.defense_task_0259
+tick_pair(pair)
+assert(await_task("build-turret",true) and pair.defense_task_0259
  and pair.defense_task_0259.type=="build-turret"
  and pair.defense_task_0259.entity_name=="gun-turret"
  and string.find(pair.defense_task_0259.key or "","gun-turret:",1,true)==1,
@@ -286,7 +306,8 @@ stock["gun-turret"]=5
 stock["laser-turret"]=1
 state.next_scan_tick=0
 game.tick=game.tick+240
-assert(tick_pair(pair) and pair.defense_task_0259
+tick_pair(pair)
+assert(await_task("build-turret",true) and pair.defense_task_0259
  and pair.defense_task_0259.type=="build-turret"
  and pair.defense_task_0259.entity_name=="laser-turret"
  and string.find(pair.defense_task_0259.key or "","laser-turret:",1,true)==1,

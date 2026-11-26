@@ -85,11 +85,13 @@ dofile("tests/unit/resource_courier_dispatch_reservation_0840.lua")
 -- Exercise the REAL 0338 selection, not just the dispatcher test double.
 -- Native rail connectivity and item debit still require Factorio engine proof.
 do
+ local Async=dofile("tests/helpers/planning_continuation_1507.lua")
  local old_prototypes=prototypes
  local old_storage_authority=_G.TechPriestsStorageRoleAuthority0686
  local old_reservations=_G.TechPriestsWorkReservations0601
  local old_move=_G.tech_priests_request_movement_0418
  local old_find,old_can=surface.find_entity,surface.can_place_entity
+ local old_query=surface.find_entities_filtered
  local previous=storage.tech_priests.pairs_by_station[104]
  local stock={rail=3,["stone-furnace"]=1}
  local inventory={valid=true,get_item_count=function(item)return stock[item]or 0 end}
@@ -106,10 +108,14 @@ do
   ["stone-furnace"]={place_result={name="stone-furnace"}}},
   entity={["straight-rail"]={type="straight-rail"},
    ["stone-furnace"]={type="furnace"}}}
- local ghost={valid=true,name="entity-ghost",ghost_name="stone-furnace",
+ force.valid=true
+ force.recipes={rail={enabled=true,products={{name="rail"}}},
+   ["stone-furnace"]={enabled=true,products={{name="stone-furnace"}}}}
+ local ghost={valid=true,name="entity-ghost",type="entity-ghost",unit_number=660,ghost_name="stone-furnace",
   position={x=6,y=6},force=force,surface=surface}
  surface.find_entity=function()return ghost end
  surface.can_place_entity=function()return true end
+ surface.find_entities_filtered=function(query)return Async.query({ghost},query,surface,force)end
  local station={valid=true,unit_number=104,
   name="planetary-magos-cogitator-station",position={x=0,y=0},
   force=force,surface=surface}
@@ -126,10 +132,12 @@ do
   rail_frontier_0836={segment=0,built_units={}},
   pending_rail_0836={request=req,position=req.position,direction=4,segment=1}}
  local p={station=station,priest=priest,construction_request=req,
-  construction_bootstrap_ghost_0645=bootstrap,remote_rail_outpost_0835=mission}
+  construction_bootstrap_ghost_0645=bootstrap,remote_rail_outpost_0835=mission,
+  self_construction_frustration_unlocked_1504=true}
  storage.tech_priests.pairs_by_station[104]=p
+ require("scripts.core.construction_site_planner")
  local Builder=require("scripts.core.construction_planner")
- local function choose()p.construction_candidate_0338=nil;return Builder.discover_pair(p,true)end
+ local function choose()p.construction_candidate_0338=nil;return Async.discover(Builder,p,true)end
  local chosen=choose()
  assert(chosen and chosen.request_value==req and chosen.item_name=="rail"
   and chosen.direction==4 and chosen.position.x==13
@@ -171,7 +179,7 @@ do
  p.construction_candidate_0338={item_name="stone-furnace",
   request_field="construction_bootstrap_ghost_0645",request_value=bootstrap,
   position=bootstrap.position}
- Builder.service_pair(p,"pending-rail-over-cached-funded-ghost")
+ Async.construct(Builder,p,"pending-rail-over-cached-funded-ghost")
  assert(p.construction_task_0338 and p.construction_task_0338.request_value==req
   and p.construction_task_0338.item_name=="rail"
   and p.construction_bootstrap_ghost_0645==bootstrap
@@ -206,7 +214,7 @@ do
  p.construction_candidate_0338=nil
  p.construction_cooldown_0338=0
  local start_tick=game.tick
- local waiting=Builder.service_pair(p,"rail-source-exhausted-after-discovery")
+ local waiting=Async.construct(Builder,p,"rail-source-exhausted-after-discovery")
  assert(waiting and waiting.waiting==1
    and p.construction_task_0338
    and p.construction_task_0338.phase=="waiting-source"
@@ -216,6 +224,7 @@ do
    and p.construction_task_0338.creative_build~=true
    and stock.rail==0 and stock["stone-furnace"]==1,
    "creative mode let an unstocked original rail bypass 0338 physical source accounting")
+ start_tick=game.tick -- The physical source deadline begins after queued admission.
  game.tick=start_tick+Builder.rail_source_wait_ticks_0836
  local at_limit=Builder.service_pair(p,"rail-source-wait-boundary")
  assert(at_limit and at_limit.waiting==1
@@ -243,7 +252,7 @@ do
  p.construction_last_task_0338=nil
  p.construction_candidate_0338=nil
  p.construction_cooldown_0338=0
- local restored=Builder.service_pair(p,"reenter-original-rail-after-timeout")
+ local restored=Async.construct(Builder,p,"reenter-original-rail-after-timeout")
  assert(restored and p.construction_task_0338
    and p.construction_task_0338.phase=="waiting-source"
    and not p.construction_task_0338.creative_build,
@@ -339,6 +348,7 @@ do
  storage.tech_priests.pairs_by_station[104]=previous
  prototypes=old_prototypes
  surface.find_entity, surface.can_place_entity=old_find,old_can
+ surface.find_entities_filtered=old_query
  _G.TechPriestsStorageRoleAuthority0686=old_storage_authority
  _G.TechPriestsWorkReservations0601=old_reservations
  _G.tech_priests_request_movement_0418=old_move

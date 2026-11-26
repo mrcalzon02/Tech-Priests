@@ -5,14 +5,14 @@ local force={name="player",index=1}
 local enemy={name="enemy",index=2}
 local function native_proto(supply)
   return setmetatable({
-    get_supply_area_distance=function(_,quality)
+    get_supply_area_distance=function(quality)
       -- Factorio methods can be called as proto.method("normal").
       assert(quality==nil or quality=="normal" or quality=="legendary",
         "laser support requested unexpected quality")
       if supply==nil then return nil end
       return supply+(quality=="legendary" and 5 or 0)
     end,
-    get_max_wire_distance=function(_,quality)
+    get_max_wire_distance=function(quality)
       return 9+(quality=="legendary" and 10 or 0) end
   },{__index=function(_,name)
     if name=="supply_area_distance" then
@@ -115,7 +115,7 @@ assert(not wire_connected(pair,next_proto,one_site,{real_anchor}),
   "laser power support wired to foreign-force grid")
 local upgraded=pole(0,0,73,3)
 upgraded.quality={name="legendary"}
-local future_pole={get_max_wire_distance=function(_,quality)
+local future_pole={get_max_wire_distance=function(quality)
   assert(quality=="normal") return 18 end}
 assert(wire_connected(pair,future_pole,{x=12,y=0},{upgraded}),
   "legendary anchor's native wire range ignored")

@@ -1,205 +1,104 @@
--- 1070: actual budgeted broker traversal, including a failing station,
--- preserves fair station selection across saved state and module reload.
+-- Actual 0644 admission and the shared force-planning broker. The former
+-- "one complete station per callback" fixture hid the single-factory stall.
 package.path="tech-priests_src/?.lua;tech-priests_src/?/init.lua;"..package.path
-game={tick=10700}
-storage={tech_priests={pairs_by_station={}}}
+game={tick=10700};storage={tech_priests={pairs_by_station={}}};defines={events={}}
+local captured={}
+_G.TechPriestsRuntimeEventRegistry={on_event=function()return{}end,on_configuration_changed=function()return{}end}
+_G.TechPriestsRuntimeTickBroker0600={base_interval=5,register_service=function(s)captured[s.name]=s;return s end}
+package.loaded["scripts.core.construction_bootstrap_ghost_planner_0645"]={install=function()return true end}
+local Q=require("scripts.core.force_planning_queue")
 local Plan=require("scripts.core.master_infrastructure_plan_0644")
-local ids={10,20,30,40,50}
-for _,id in ipairs(ids) do
-  storage.tech_priests.pairs_by_station[id]={
-    station={valid=true,unit_number=id},
-    priest={valid=true,unit_number=id+1000}
-  }
+local force={valid=true,index=1,name="player",recipes={},technologies={}}
+local surface={valid=true,index=1}
+local function pair(id)
+  return {station={valid=true,type="container",unit_number=id,position={x=id,y=0},force=force,surface=surface},
+    priest={valid=true,unit_number=id+1000},radius=24}
 end
-local visited={}
-local function fake_service(pair)
-  local id=pair.station.unit_number
-  visited[#visited+1]=id
-  if id==20 then error("station temporarily unavailable") end
-  return true,"planned"
+local roster=storage.tech_priests.pairs_by_station
+for _,id in ipairs({10,20,30,40,50})do roster[id]=pair(id)end
+local visits={};local throw_id=20
+local function no_action(p)
+  local id=p.station.unit_number;visits[#visits+1]={id=id,tick=game.tick}
+  if id==throw_id then error("station temporarily unavailable")end
+  return false,"planning-pending"
 end
-Plan.service_pair=fake_service
-local function evaluate(budget,want,worked,errors)
-  local before=#visited
-  local acted,processed,exhausted,failed=Plan.service_all("broker",budget)
-  assert(processed==#want and acted==worked and failed==errors
-    and exhausted==(budget>0 and #ids>processed),
-    "broker count/budget incorrectly reports attempted work")
-  for i,id in ipairs(want) do
-    assert(visited[before+i]==id,
-      "round robin failed after error, save/reload, or station changes")
+Plan.service_pair=no_action
+assert(Plan.install() and captured.master_infrastructure_plan_0644.budget==1,
+  "0644 admission did not retain the canonical broker")
+local function pulse(budget)
+  game.tick=game.tick+1;local before=#visits;local r=Q.pulse({tick=game.tick},budget or 1)
+  assert(r.processed<=(budget or 1) and #visits-before<=(budget or 1),"roster hid unbounded station admissions")
+  return r
+end
+local function pending_roster()return Q.peek(0,"infrastructure-roster","active")end
+local function finish(limit)
+  for _=1,limit or 200 do
+    pulse();local j,status=pending_roster()
+    if j and status=="ready"then return j end
   end
+  error("roster stalled")
 end
-evaluate(0,{},0,0)
-evaluate(2,{10,20},1,1)
-evaluate(2,{30,40},2,0)
-evaluate(2,{50,10},2,0)
-evaluate(2,{20,30},1,1)
--- Persistent cursor survives module reload, without saving transient Lua
--- profiler/module objects into storage.
-local cursor=storage.tech_priests.master_infrastructure_plan_0644
-  .last_serviced_station_1070
-assert(cursor==30,"station traversal cursor not durable")
+for _=1,100 do
+  local acted,processed=Plan.service_all("caller",1000)
+  assert(acted==0 and processed==0,"ordinary caller advanced a survey")
+end
+assert(#visits==0 and Q.root().total==1,"repeated admission duplicated work or ran synchronously")
+assert(pulse(0).processed==0 and #visits==0,"zero broker budget ran work")
+-- A no-action or throwing station is charged without losing the other visits.
+local finished=finish()
+local seen={};for _,v in ipairs(visits)do seen[v.id]=(seen[v.id]or 0)+1 end
+for _,id in ipairs({10,20,30,40,50})do assert(seen[id]==1,"failure/no-action starved or repeated station "..id)end
+assert(finished.state.failures==1 and not finished.error,"one failed station terminated the roster job")
+-- Start another roster; delete its saved key and reload the module with the
+-- saved cursor/seen set intact. Every surviving station still gets a visit.
+visits={};throw_id=nil;Plan.service_all("reload-cycle");pulse();pulse()
+local saved=pending_roster().state.cursor
+assert(type(saved)=="number","roster cursor is not save-safe")
+roster[saved]=nil;roster[60]=pair(60)
 package.loaded["scripts.core.master_infrastructure_plan_0644"]=nil
-Plan=require("scripts.core.master_infrastructure_plan_0644")
-Plan.service_pair=fake_service
-evaluate(2,{40,50},2,0)
-assert(storage.tech_priests.master_infrastructure_plan_0644
-  .last_serviced_station_1070==50,"reload resumed at wrong station")
-storage.tech_priests.pairs_by_station[10]=nil
-storage.tech_priests.pairs_by_station[60]={
-  station={valid=true,unit_number=60},priest={valid=true,unit_number=1060}}
-ids={20,30,40,50,60}
-evaluate(2,{60,20},1,1)
--- An invalid pair cannot consume budget or block other valid stations.
-storage.tech_priests.pairs_by_station[30].priest.valid=false
-ids={20,40,50,60}
-evaluate(2,{40,50},2,0)
--- The installed broker callback must actually *forward* the offered budget,
--- rather than ignoring it and traversing the whole population.
-package.loaded["scripts.core.construction_bootstrap_ghost_planner_0645"]={
-  install=function()return true end}
-local captured
-_G.TechPriestsRuntimeTickBroker0600={register_service=function(spec)
-  if spec.name=="master_infrastructure_plan_0644" then
-    captured=spec
-  end
-  return spec
-end}
-assert(Plan.install()==true and captured and captured.budget==8,
-  "master survey did not install under the canonical runtime broker")
-local before=#visited
-local result=captured.fn({tick=10700},1)
-assert(result.processed==1 and result.acted==1
-  and result.exhausted==true and result.failed==0
-  and #visited==before+1 and visited[#visited]==60,
-  "broker callback ignored one-work-unit budget or cursor")
-print("[master-infrastructure-budget-1070] PASS bounded visits, failure fairness, reload, broker budget")
+Plan=require("scripts.core.master_infrastructure_plan_0644");Plan.service_pair=no_action
+finish()
+seen={};for _,v in ipairs(visits)do seen[v.id]=(seen[v.id]or 0)+1 end
+for id in pairs(roster)do assert(seen[id]==1,"save/reload or deletion lost station "..id)end
+for _,count in pairs(seen)do assert(count==1,"saved roster repeated an admitted station")end
+-- The installed periodic callback itself only admits, regardless of the
+-- offered number. A different no-action force must not suppress this roster.
+assert(Plan.install());local before=#visits
+local admitted=captured.master_infrastructure_plan_0644.fn({tick=game.tick},1)
+assert(admitted.processed==0 and #visits==before,"periodic admission ran a complete station")
+local stalls=0
+Q.register("no-action-fixture",function()stalls=stalls+1;return{processed=1,waiting=true}end)
+Q.submit(2,"no-action-fixture","other-force",{})
+finish(400)
+assert(#visits>before and stalls>0,"shared no-action fairness failed")
+Q.forget(2,"no-action-fixture","other-force")
+print("[master-infrastructure-budget-1070] PASS admission-only callers; charged failing/no-action visits; deleted cursor and reload; force fairness")
 
--- Exercise the real broker and its admission/deadline owner, not a callback
--- loop that ignores scheduling. One visit per pulse must retain the former
--- up-to-eight visits per ~100-tick cycle, including reload and failed visits.
-local Broker,Economy,attempts,polls,movement,throw_id
-local function install_scheduler()
-  package.loaded["scripts.core.runtime_tick_broker"]=nil
-  package.loaded["scripts.core.efficiency_economy_0598"]=nil
-  package.loaded["scripts.core.master_infrastructure_plan_0644"]=nil
-  Broker=require("scripts.core.runtime_tick_broker")
-  Economy=require("scripts.core.efficiency_economy_0598")
-  Economy.install()
-  _G.TechPriestsRuntimeTickBroker0600=Broker
-  Plan=require("scripts.core.master_infrastructure_plan_0644")
-  Plan.service_pair=function(pair)
-    local id=pair.station.unit_number
-    attempts[#attempts+1]={id=id,tick=game.tick}
-    if id==throw_id then error("failed survey") end
-    return true,"planned"
-  end
-  assert(Plan.install())
-  for i=1,3 do
-    local name="competing-poll-"..i
-    assert(Broker.register_service{name=name,category="planning",interval=5,
-      next_due_tick=5,budget=1,fn=function()
-        polls[name]=(polls[name] or 0)+1;return {processed=1,acted=1}
-      end})
-  end
-  assert(Broker.register_service{name="movement",category="movement",interval=5,
-    budget=1,fn=function()movement=movement+1;return {processed=1,acted=1}end})
+-- Real runtime broker: movement receives every due tick while shared planner
+-- continuations are admitted through the same background scheduling owner.
+for _,name in ipairs({"runtime_tick_broker","efficiency_economy_0598","force_planning_queue", "planning_metadata_1507", "infrastructure_continuation_1507","master_infrastructure_plan_0644"})do package.loaded["scripts.core."..name]=nil end
+storage={tech_priests={pairs_by_station={}}};game={tick=0};visits={};throw_id=nil
+roster=storage.tech_priests.pairs_by_station
+for id=1,100 do roster[id]=pair(id)end
+local Broker=require("scripts.core.runtime_tick_broker")
+_G.TechPriestsRuntimeTickBroker0600=Broker
+require("scripts.core.efficiency_economy_0598").install()
+Q=require("scripts.core.force_planning_queue")
+Plan=require("scripts.core.master_infrastructure_plan_0644");Plan.service_pair=no_action;assert(Plan.install())
+local movement,polls=0,{}
+Broker.register_service{name="movement-fixture",category="movement",interval=5,budget=1,
+  fn=function()movement=movement+1;return{processed=1,acted=1}end}
+for i=1,3 do
+  local key="other-planning-fixture-"..i
+  Broker.register_service{name=key,category="planning",interval=5,budget=1,
+    fn=function()polls[key]=(polls[key]or 0)+1;return{processed=1,acted=0}end}
 end
-local function service()
-  for _,entry in ipairs(Broker.services) do
-    if entry.name=="master_infrastructure_plan_0644" then return entry end
-  end
-  error("missing real broker service")
+for tick=5,1000,5 do
+  game.tick=tick;Broker.pulse{tick=tick}
+  assert((Q.root().last_work or 0)<=Q.budget,"real broker exceeded central planning allowance")
 end
-local function pulse(tick)
-  game.tick=tick
-  local before=#attempts
-  Broker.pulse{tick=tick}
-  assert(#attempts-before<=1,"separate station surveys collapsed into one pulse")
-end
-local function world(population)
-  storage={tech_priests={pairs_by_station={}}}
-  game={tick=0}
-  attempts,polls,movement={}, {}, 0
-  throw_id=nil
-  for i=1,population do
-    local id=i*10
-    storage.tech_priests.pairs_by_station[id]={
-      station={valid=true,unit_number=id},priest={valid=true,unit_number=id+1000}}
-  end
-  install_scheduler()
-  service().next_due_tick=5
-end
-world(4)
-for tick=5,100,5 do pulse(tick) end
-assert(#attempts==4,"four-station population lost or duplicated its first survey cycle")
-for i=1,4 do
-  assert(attempts[i].id==i*10 and attempts[i].tick==i*5,
-    "four stations were not spread across separate broker pulses")
-end
-for tick=105,200,5 do pulse(tick) end
-assert(#attempts==8,"budget smoothing reduced the former four-station refresh throughput")
-for i=1,4 do
-  assert(attempts[i+4].id==i*10 and attempts[i+4].tick-attempts[i].tick==100,
-    "per-station refresh interval grew after spreading the batch")
-end
-assert(movement==40,"survey continuation slowed active movement")
-for _,count in pairs(polls) do assert(count==40,"survey continuation starved a competing poll") end
-
-world(12)
-throw_id=20
-pulse(5);pulse(10)
-local cycle=storage.tech_priests.master_infrastructure_plan_0644.broker_cycle
-local saved=storage.tech_priests.efficiency_economy_0598.broker_deadlines
-  .master_infrastructure_plan_0644
-assert(cycle.next_due_tick==15 and saved.next_due_tick==15,
-  "the governor persisted the old long deadline instead of the continuation")
--- Remove a snapshotted station and add a new one while the batch is pending.
--- The removed slot consumes one bounded attempt; the newcomer enters the
--- next cycle through the existing station cursor.
-storage.tech_priests.pairs_by_station[30]=nil
-storage.tech_priests.pairs_by_station[130]={
-  station={valid=true,unit_number=130},priest={valid=true,unit_number=1130}}
-game.tick=12
-install_scheduler()
-assert(service().next_due_tick==15,"reload lost the saved continuation deadline")
-for tick=15,100,5 do pulse(tick) end
-local stats=Broker.root().service_stats.master_infrastructure_plan_0644
-assert(stats.processed==8 and stats.failed==1 and stats.acted==6,
-  "failure/removal lost the eight-attempt quota or falsely reported success")
-assert(#attempts==7 and attempts[3].id==40 and attempts[7].id==80,
-  "reload skipped/repeated a station or retried an invalid slot indefinitely")
-assert(service().next_due_tick==102,
-  "finishing a spread batch postponed the original cycle deadline")
-for tick=105,200,5 do pulse(tick) end
-assert(stats.processed==16,"spread visits cut the old eight-attempt cycle throughput")
-local next_ids={90,100,110,120,130,10,20,40}
-for index,id in ipairs(next_ids) do
-  assert(attempts[7+index].id==id,"persistent cursor starved a tail/new station")
-end
-assert(stats.failed==2,"failed stations stopped receiving their fair later attempts")
-
-world(4)
-assert(Broker.register_service{name="competing-poll-4",category="planning",
-  interval=5,next_due_tick=5,budget=1,fn=function()
-    polls["competing-poll-4"]=(polls["competing-poll-4"] or 0)+1
-    return {processed=1,acted=1}
-  end})
-for tick=5,300,5 do pulse(tick) end
-assert(#attempts==12,"admission contention cut the four-station cycle quota")
-local admission=storage.tech_priests.efficiency_economy_0598.stats
-assert(admission.broker_background_deferred>0 and admission.broker_background_peak==4,
-  "continuations bypassed the canonical shared admission cap")
-for _,count in pairs(polls) do assert(count>=50,"continuations starved another due poll") end
-assert(movement==60,"shared background contention deferred active movement")
-
-world(0)
-for tick=5,100,5 do pulse(tick) end
-assert(#attempts==0 and Broker.root().service_stats.master_infrastructure_plan_0644.run==1,
-  "an empty survey batch created a five-tick polling loop")
-storage.tech_priests.pairs_by_station[10]={
-  station={valid=true,unit_number=10},priest={valid=true,unit_number=1010}}
-pulse(105)
-assert(#attempts==1 and attempts[1].id==10,"empty cycle hid a newly added station")
-print("[master-infrastructure-budget-1070] PASS real broker: one visit per pulse, unchanged cycle throughput, admission fairness, failure/removal accounting and saved continuation deadlines")
+seen={};for _,v in ipairs(visits)do seen[v.id]=true end
+for id=1,100 do assert(seen[id],"real broker starved station "..id)end
+assert(movement==200,"planning admission reduced active movement service")
+for _,count in pairs(polls)do assert(count>100,"continuations starved another eligible service")end
+print("[master-infrastructure-budget-1070] PASS real broker: 100 no-action stations reached; movement receives all 200 due pulses; other services remain live")

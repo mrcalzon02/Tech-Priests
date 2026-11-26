@@ -1,10 +1,13 @@
 -- Power infrastructure must win UNSTARTED construction discovery from a
 -- ghost, not erase ghost state or interrupt any genuine 0338 cargo.
 package.path="tech-priests_src/?.lua;tech-priests_src/?/init.lua;"..package.path
+local Async=dofile("tests/helpers/planning_continuation_1507.lua")
 game={tick=15000}
 storage={tech_priests={pairs_by_station={}}}
 defines={inventory={chest=1}}
-local force={index=1,name="player"}
+local force={valid=true,index=1,name="player",recipes={
+ boiler={enabled=true,products={{name="boiler"}}},
+ ["tech-priests-emergency-miner"]={enabled=true,products={{name="tech-priests-emergency-miner"}}}}}
 local surface={index=1}
 local station={valid=true,name="planetary-magos-cogitator-station",
  unit_number=20,position={x=0,y=0},force=force,surface=surface}
@@ -20,11 +23,12 @@ _G.TechPriestsStorageRoleAuthority0686={
  generic_storage_sources=function()return{source}end,
  generic_station_inventories=function()return{}end,
 }
-local ghost={valid=true,name="entity-ghost",
+local ghost={valid=true,name="entity-ghost",type="entity-ghost",unit_number=77,
  ghost_name="tech-priests-emergency-miner",
  position={x=11,y=0},force=force,surface=surface}
 surface.find_entity=function()return ghost end
 surface.can_place_entity=function()return true end
+surface.find_entities_filtered=function(query)return Async.query({ghost},query,surface,force)end
 prototypes={item={
  ["tech-priests-emergency-miner"]={
   place_result={name="tech-priests-emergency-miner"}},
@@ -33,7 +37,7 @@ prototypes={item={
  ["tech-priests-emergency-miner"]={type="assembling-machine"},
  boiler={type="boiler"},
 }}
-local pair={station=station,priest=priest,station_unit=20}
+local pair={station=station,priest=priest,station_unit=20,self_construction_frustration_unlocked_1504=true}
 storage.tech_priests.pairs_by_station[20]=pair
 local bootstrap={item="tech-priests-emergency-miner",
  entity_name="tech-priests-emergency-miner",position={x=11,y=0},
@@ -50,8 +54,9 @@ _G.TechPriestsWorkReservations0601={
  release=function()return true end,
 }
 _G.tech_priests_request_movement_0418=function()return true end
+require("scripts.core.construction_site_planner")
 local Builder=require("scripts.core.construction_planner")
-local candidate=Builder.discover_pair(pair,true)
+local candidate=Async.discover(Builder,pair,true)
 assert(candidate and candidate.item_name=="boiler"
  and candidate.request_value==power
  and candidate.request_field=="structure_construction_requested_item"
@@ -79,7 +84,7 @@ pair.construction_candidate_0338={
  request_value=bootstrap,position=bootstrap.position,
  request_field="construction_bootstrap_ghost_0645",
 }
-local plan=Builder.service_pair(pair,"power-priority-candidate")
+local plan=Async.construct(Builder,pair,"power-priority-candidate")
 assert(pair.construction_task_0338
  and pair.construction_task_0338.item_name=="boiler"
  and pair.construction_task_0338.request_value==power
@@ -96,6 +101,8 @@ pair.construction_candidate_0338=nil
 stored.pipe=5
 prototypes.item.pipe={place_result={name="pipe"}}
 prototypes.entity.pipe={type="pipe"}
+force.recipes.pipe={enabled=true,products={{name="pipe"}}}
+require("scripts.core.planning_metadata_1507").reset()
 local steam_machine={valid=true,unit_number=50,
  name="boiler",force=force,surface=surface}
 local water_source={valid=true,unit_number=51,
@@ -109,7 +116,7 @@ local pipe={item_name="pipe",entity_name="pipe",
  route_direction="input",route_index=1,
  position={x=-8,y=2}}
 pair.construction_request=pipe
-local ready=Builder.discover_pair(pair,true)
+local ready=Async.discover(Builder,pair,true)
 assert(ready and ready.request_field=="construction_request"
  and ready.request_value==pipe and ready.item_name=="pipe"
  and ready.position.x==-8 and ready.position.y==2
@@ -118,7 +125,7 @@ assert(ready and ready.request_field=="construction_request"
 -- Invalid route ID is not the owner and must never gain priority.
 pair.construction_candidate_0338=nil
 pipe.route_plan_id="foreign-mismatched"
-local spoof=Builder.discover_pair(pair,true)
+local spoof=Async.discover(Builder,pair,true)
 assert(spoof and spoof.request_value==bootstrap
  and stored.pipe==5 and not pair.construction_task_0338,
  "foreign pipe route illegally displaced the original funded ghost")
@@ -128,7 +135,7 @@ pipe.route_plan_id=route.id
 pair.construction_candidate_0338={item_name=bootstrap.item,
  request_value=bootstrap,request_field="construction_bootstrap_ghost_0645",
  position=bootstrap.position}
-local pipe_work=Builder.service_pair(pair,"steam-pipe-priority-1258")
+local pipe_work=Async.construct(Builder,pair,"steam-pipe-priority-1258")
 assert(pair.construction_task_0338
  and pair.construction_task_0338.item_name=="pipe"
  and pair.construction_task_0338.request_value==pipe

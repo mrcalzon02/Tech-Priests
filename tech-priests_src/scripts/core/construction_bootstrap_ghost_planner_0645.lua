@@ -3,6 +3,8 @@
 -- Commandless one-ghost construction bootstrap planner.
 
 local SelfConstructionGate=require("scripts.core.self_construction_frustration_gate")
+local PlanningQueue=require("scripts.core.force_planning_queue")
+local Metadata=require("scripts.core.planning_metadata_1507")
 
 local M = {}
 M.version = "0.1.653"
@@ -55,6 +57,7 @@ local function plan_matches_domain(pair, plan, owner)
       and type(plan.target)=="table" and type(plan.stage)=="string") then
     return false
   end
+  if owner and owner.plan_current and not owner.plan_current(pair,plan)then return false end
   local station=pair.station
   local position=station.position
   local prior=plan.station_position
@@ -114,7 +117,7 @@ end
 local function plan_site(pair, entity_name, category)
   local Site = rawget(_G, "TECH_PRIESTS_CONSTRUCTION_SITE_PLANNER_0359")
   if not Site then local ok, mod = pcall(require, "scripts.core.construction_site_planner"); if ok then Site = mod end end
-  if Site and type(Site.plan_site) == "function" then local ok, pos, why = pcall(Site.plan_site, pair, { item_name = entity_name, entity_name = entity_name, category = category or "generic", source = "construction-bootstrap-ghost-0645" }); if ok then return pos, why end end
+  if Site and type(Site.plan_site) == "function" then local ok, pos, why, report, ticket = pcall(Site.plan_site, pair, { item_name = entity_name, entity_name = entity_name, category = category or "generic", source = "construction-bootstrap-ghost-0645" }); if ok then return pos, why, ticket end end
   return nil, "site-planner-unavailable"
 end
 local function active_ghost(pair)
@@ -219,25 +222,78 @@ end
 
 local function science_pack_name(ingredient) if type(ingredient) == "string" then return ingredient end if type(ingredient) ~= "table" then return nil end return ingredient.name or ingredient[1] end
 local function technology_unlocked(tech) local ok, researched = pcall(function() return tech.researched end); return ok and researched == true end
-local function prerequisites_met(tech) local ok, prereqs = pcall(function() return tech.prerequisites end); if not ok or type(prereqs) ~= "table" then return true end for _, prereq in pairs(prereqs) do if prereq and not technology_unlocked(prereq) then return false end end return true end
-local function next_small_science_objective(pair)
-  if not valid_pair(pair) then return nil end
-  local force = pair.station.force
-  if not (force and force.valid and force.technologies) then return nil end
-  local best = nil
-  for name, tech in pairs(force.technologies) do
-    if tech and tech.valid and not technology_unlocked(tech) and prerequisites_met(tech) then
-      local enabled = true; pcall(function() enabled = tech.enabled ~= false end)
-      if enabled then
-        local unit_count = 0; local ingredients = {}
-        pcall(function() unit_count = tonumber(tech.research_unit_count) or 0 end)
-        pcall(function() for _, ing in pairs(tech.research_unit_ingredients or {}) do local pack = science_pack_name(ing); if pack then ingredients[#ingredients + 1] = pack end end end)
-        local score = unit_count + (#ingredients * 10000)
-        if not best or score < best.score or (score == best.score and name < best.name) then table.sort(ingredients); best = { name = name, count = unit_count, packs = ingredients, score = score } end
+local SCIENCE_ADVICE="bootstrap-science-advice-0645"
+PlanningQueue.register(SCIENCE_ADVICE,function(job)
+  local force,s=job.payload.force,job.state
+  if not(force and force.valid) then return {processed=1,done=true,result={}} end
+  if job.payload.epoch~=Metadata.epoch() then return {processed=1,done=true,result={stale=true}} end
+  if s.phase=="sort" then
+    local packs=s.best.packs
+    if s.sort_index>#packs then s.phase="verify";s.prereq_cursor=nil
+    elseif s.sort_cursor>1 and packs[s.sort_cursor]<packs[s.sort_cursor-1] then
+      packs[s.sort_cursor],packs[s.sort_cursor-1]=packs[s.sort_cursor-1],packs[s.sort_cursor]
+      s.sort_cursor=s.sort_cursor-1
+    else s.sort_index=s.sort_index+1;s.sort_cursor=s.sort_index end
+  elseif s.phase=="verify" then
+    local tech=force.technologies[s.best.name]
+    if not(tech and tech.valid and not technology_unlocked(tech) and tech.enabled~=false) then
+      return {processed=1,done=true,result={stale=true}}
+    end
+    local key,prereq=Metadata.next_entry(tech.prerequisites or {},s.prereq_cursor)
+    s.prereq_cursor=key
+    if not key then return {processed=1,done=true,result=s.best} end
+    if prereq and not technology_unlocked(prereq) then return {processed=1,done=true,result={stale=true}} end
+  elseif s.phase=="prerequisite" then
+    local tech=force.technologies[s.name]
+    if not(tech and tech.valid) then s.name,s.phase=nil,nil;return {processed=1} end
+    local key,prereq=Metadata.next_entry(tech.prerequisites or {},s.prereq_cursor)
+    s.prereq_cursor=key
+    if not key then s.phase="ingredient";s.ingredient_cursor=nil;s.ingredients={}
+    elseif prereq and not technology_unlocked(prereq) then s.name,s.phase=nil,nil end
+  elseif s.phase=="ingredient" then
+    local tech=force.technologies[s.name]
+    if not(tech and tech.valid) then s.name,s.phase=nil,nil;return {processed=1} end
+    local key,ingredient=Metadata.next_entry(tech.research_unit_ingredients or {},s.ingredient_cursor)
+    s.ingredient_cursor=key
+    if key then
+      local pack=science_pack_name(ingredient)
+      if pack then s.ingredients[#s.ingredients+1]=pack end
+    else
+      local count=tonumber(tech.research_unit_count) or 0
+      local score=count+#s.ingredients*10000
+      if not s.best or score<s.best.score or (score==s.best.score and s.name<s.best.name) then
+        s.best={name=s.name,count=count,packs=s.ingredients,score=score}
       end
+      s.name,s.phase,s.ingredients=nil,nil,nil
+    end
+  else
+    local name,tech=Metadata.next_entry(force.technologies or {},s.cursor)
+    s.cursor=name
+    if not name then
+      if not s.best then return {processed=1,done=true,result={}} end
+      s.phase,s.sort_index,s.sort_cursor="sort",2,2
+    elseif tech and tech.valid and not technology_unlocked(tech) and tech.enabled~=false then
+      s.name,s.phase,s.prereq_cursor=name,"prerequisite",nil
     end
   end
-  return best
+  return {processed=1}
+end)
+local function next_small_science_objective(pair)
+  if not valid_pair(pair) then return nil end
+  local force=pair.station.force
+  if not(force and force.valid and force.technologies) then return nil end
+  local key=tostring(Metadata.epoch())
+  local job,status=PlanningQueue.submit(force.index,SCIENCE_ADVICE,key,
+    {force=force,epoch=Metadata.epoch()})
+  if not job or status~="ready" then return nil end
+  local answer=job.result or {}
+  local tech=answer.name and force.technologies[answer.name]
+  if answer.stale or (answer.name and not(tech and tech.valid
+    and not technology_unlocked(tech) and tech.enabled~=false)) then
+    PlanningQueue.forget(force.index,SCIENCE_ADVICE,key)
+    return nil
+  end
+  return answer.name and answer or nil
 end
 local function should_bootstrap(pair, plan) return valid_pair(pair) and plan and plan.target and plan.stage ~= "ready" end
 
@@ -394,27 +450,40 @@ function M.service_pair(pair, reason, requested_entity)
     return false,"bootstrap-facility-already-physical"
   end
   if not entity_name then record("bootstrap-ghost-no-entity-0645", pair, "item=" .. safe(item) .. " stage=" .. safe(plan.stage)); return false, "target-not-placeable" end
-  local C = planning_constraints(); if C and type(C.entity_unlocked) == "function" then local unlocked, why = C.entity_unlocked(pair, entity_name); if not unlocked then record("bootstrap-ghost-technology-locked-0646", pair, "entity=" .. safe(entity_name) .. " why=" .. safe(why)); return false, why or "technology-locked" end end
-  local pos,why
+  local C = planning_constraints()
+  if C and type(C.request_metadata)=="function" and not C.request_metadata(pair.station.force) then
+    return false,"placement-pending-metadata"
+  end
+  if C and type(C.request_metadata) ~= "function" and type(C.entity_unlocked) == "function" then local unlocked, why = C.entity_unlocked(pair, entity_name); if not unlocked then record("bootstrap-ghost-technology-locked-0646", pair, "entity=" .. safe(entity_name) .. " why=" .. safe(why)); return false, why or "technology-locked" end end
+  local pos,why,ticket
   if type(target.site_position)=="table" then
     -- Resource machines expose the output coordinate themselves. Ordinary
     -- station spiral placement is not a functional drill output connection.
-    local fixed=target.site_position
-    pos={x=fixed.x,y=fixed.y}
-    local legal,allowed=pcall(function()
-      return pair.station.surface.can_place_entity({
-        name=entity_name,position=pos,force=pair.station.force})
-    end)
-    local owned=true
-    if C and type(C.interior_position_allowed)=="function" then
-      owned=C.interior_position_allowed(pair,pos)
-    end
-    if not (legal and allowed==true and owned==true) then
-      pos=nil;why="fixed-drill-output-position-blocked"
-    else why="drill-output-verified" end
+    local Site=rawget(_G,"TECH_PRIESTS_CONSTRUCTION_SITE_PLANNER_0359")
+      or require("scripts.core.construction_site_planner")
+    local report
+    pos,why,report,ticket=Site.plan_fixed_output(pair,entity_name,
+      category_for(entity_name,target.class),target.site_position)
   else
-    pos,why=plan_site(pair,entity_name,category_for(entity_name,target.class))
+    pos,why,ticket=plan_site(pair,entity_name,category_for(entity_name,target.class))
   end
+  -- Queue pressure and unfinished searches are normal continuation states.
+  -- They must never create a missing-ghost record or its failure cooldown.
+  if not pos and type(why)=="string" and why:sub(1,17)=="placement-pending" then
+    pair.construction_placement_pending_0645=why
+    return false,why
+  end
+  if not pos and why=="technology-locked-or-no-enabled-recipe" then return false,why end
+  if ticket then
+    local Site=rawget(_G,"TECH_PRIESTS_CONSTRUCTION_SITE_PLANNER_0359")
+      or package.loaded["scripts.core.construction_site_planner"]
+    local authorized,reason=Site.authorize(pair,ticket,pos)
+    if not authorized then
+      pair.construction_placement_pending_0645=reason
+      return false,reason
+    end
+  end
+  pair.construction_placement_pending_0645=nil
   if not pos then pair.construction_bootstrap_ghost_0645 = { version = M.version, tick = now(), station = station_unit(pair), entity_name = entity_name, item = item, class = target.class, stage = plan.stage, status = "blocked-no-site", blocker = why or "no-site", next_science = next_small_science_objective(pair) }; record("bootstrap-ghost-no-site-0645", pair, "entity=" .. safe(entity_name) .. " why=" .. safe(why)); return false, why or "no-site" end
   local new_ghost, made = create_planning_ghost(pair, entity_name, pos)
   local new_rec = make_record(pair, plan, entity_name, pos, why, new_ghost)
@@ -430,34 +499,33 @@ function M.service_all(reason,budget)
   if r.enabled==false then return 0,0,false,0 end
   local limit=math.max(0,math.min(M.max_pairs_per_pulse,
     math.floor(tonumber(budget) or M.max_pairs_per_pulse)))
-  if limit==0 then return 0,0,false,0 end
-  local list={}
-  for _,pair in pairs(pair_map()) do
-    local id=valid_pair(pair) and tonumber(station_unit(pair)) or nil
-    if id then list[#list+1]={id=id,pair=pair} end
-  end
-  table.sort(list,function(a,b)return a.id<b.id end)
-  if #list==0 then return 0,0,false,0 end
-  local cursor=tonumber(r.last_serviced_station_1070) or 0
-  local start=1
-  for i,entry in ipairs(list) do
-    if entry.id>cursor then start=i;break end
-  end
+  local map=pair_map()
+  local cursor=r.service_cursor_1507
+  if cursor~=nil and map[cursor]==nil then cursor=nil end
   local processed,acted,failed=0,0,0
-  for offset=0,math.min(limit,#list)-1 do
-    local entry=list[((start+offset-1)%#list)+1]
-    local ok,worked=pcall(M.service_pair,entry.pair,reason or "pulse")
-    processed=processed+1
-    if ok and worked then acted=acted+1
-    elseif not ok then failed=failed+1 end
-    r.last_serviced_station_1070=entry.id
+  while processed<limit do
+    local key,pair=next(map,cursor)
+    if key==nil then
+      cursor=nil
+      if processed>0 then break end
+      key,pair=next(map)
+      if key==nil then break end
+    end
+    cursor=key;processed=processed+1
+    if valid_pair(pair)then
+      local ok,worked=pcall(M.service_pair,pair,reason or "pulse")
+      if ok and worked then acted=acted+1
+      elseif not ok then failed=failed+1 end
+      r.last_serviced_station_1070=station_unit(pair)
+    end
   end
-  r.last_service_tick=now()
-  return acted,processed,#list>processed,failed
+  r.service_cursor_1507=cursor;r.last_service_tick=now()
+  return acted,processed,processed==limit and limit>0,failed
 end
 
 function M.install()
   if M.installed then return true end
+  if not require("scripts.core.construction_site_planner").install() then return false end
   local owner = nil
   local broker = rawget(_G, "TechPriestsRuntimeTickBroker0600")
   if not broker then

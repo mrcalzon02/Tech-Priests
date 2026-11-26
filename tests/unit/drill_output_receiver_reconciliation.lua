@@ -1,5 +1,6 @@
 -- Lua 5.2 regression: standard drills require real output receivers.
 package.path="tech-priests_src/?.lua;tech-priests_src/?/init.lua;"..package.path
+local Async=dofile("tests/helpers/planning_continuation_1507.lua")
 game={tick=1500}
 storage={tech_priests={pairs_by_station={}}}
 defines={inventory={chest=1},direction={north=0}}
@@ -63,6 +64,7 @@ surface.find_entities_filtered=function(filter)
   end
   return {}
 end
+Async.wrap_queries(surface,force)
 surface.can_place_entity=function(o)
   return valid_placement and o.position.x==12.5 and o.position.y==1.5
 end
@@ -79,27 +81,27 @@ storage.tech_priests.pairs_by_station[11]=pair
 local plan=require("scripts.core.master_infrastructure_plan_0644")
 local ghosts=require("scripts.core.construction_bootstrap_ghost_planner_0645")
 local function check(v,why)if not v then error("drill-output-regression: "..why,2)end end
-local built=plan.build_plan(pair,"test")
+local built=Async.plan(plan,pair,"test")
 check(built and built.stage=="mining-output-buffer",
   "real uncovered drill did not become central infrastructure objective")
 check(built.target.preferred_item=="iron-chest"
   and built.target.site_position.x==12.5
   and built.target.site_position.y==1.5,
   "physical drop position not used for chest planning")
-local ok,why=ghosts.service_pair(pair,"test")
+local ok,why=Async.ghost(ghosts,pair,"test")
 check(ok and pair.construction_bootstrap_ghost_0645
   and pair.construction_bootstrap_ghost_0645.position.x==12.5
   and pair.construction_bootstrap_ghost_0645.position.y==1.5,
   "construction ghost was not at the drill output: "..tostring(why))
 ghost=nil;pair.construction_bootstrap_ghost_0645=nil
 valid_placement=false
-local deferred=plan.build_plan(pair,"output-blocked-workshop-pending")
+local deferred=Async.plan(plan,pair,"output-blocked-workshop-pending")
 check(deferred.stage=="basic-crafting"
     and deferred.target.deferred_output
     and deferred.target.deferred_output.reason==
       "fixed-drill-output-position-blocked",
   "obstructed drill permanently blocked independent workshop construction")
-local no_workshop,why=ghosts.service_pair(pair,"workshop-pending")
+local no_workshop,why=Async.ghost(ghosts,pair,"workshop-pending")
 check(not no_workshop and why=="target-not-placeable",
   "missing workshop prototype was incorrectly constructed in the unit fixture")
 -- Once the independent equipment is actually present, an unusable output
@@ -127,22 +129,23 @@ surface.find_entities_filtered=function(filter)
   end
   return old_find(filter)
 end
-local blocked_plan=plan.build_plan(pair,"all-independent-work-complete")
+Async.wrap_queries(surface,force)
+local blocked_plan=Async.plan(plan,pair,"all-independent-work-complete")
 check(blocked_plan.status=="blocked"
     and blocked_plan.stage=="mining-output-buffer"
     and blocked_plan.target.site_position.x==12.5,
   "blocked output disappeared into false factory readiness")
-local blocked,reason=ghosts.service_pair(pair,"blocked-final-test")
+local blocked,reason=Async.ghost(ghosts,pair,"blocked-final-test")
 check(not blocked and reason=="fixed-drill-output-position-blocked",
   "fixed receiver bypassed real Factorio placement authority")
 ghost=nil;pair.construction_bootstrap_ghost_0645=nil
 valid_placement=true;receiver_present=true
-local satisfied=plan.build_plan(pair,"receiver-present")
+local satisfied=Async.plan(plan,pair,"receiver-present")
 check(satisfied.stage~="mining-output-buffer",
   "completed physical receiver was ignored by infrastructure planning")
 receiver_present=false
 drill.drop_target={valid=true,name="iron-chest"}
-local connected=plan.build_plan(pair,"engine-target-present")
+local connected=Async.plan(plan,pair,"engine-target-present")
 check(connected.stage~="mining-output-buffer",
   "connected drill falsely demanded a second receiver")
 -- A separate usable drill must be selected rather than repeatedly
@@ -160,10 +163,11 @@ surface.find_entities_filtered=function(filter)
   end
   return old_find(filter)
 end
+Async.wrap_queries(surface,force)
 surface.can_place_entity=function(o)
   return o.position.x==20.5 and o.position.y==1.5
 end
-local second=plan.build_plan(pair,"two-drill-alternate-output")
+local second=Async.plan(plan,pair,"two-drill-alternate-output")
 check(second.stage=="mining-output-buffer"
     and second.target.site_position.x==20.5
     and second.target.site_position.y==1.5
@@ -191,10 +195,11 @@ surface.find_entities_filtered=function(filter)
   end
   return old_find(filter)
 end
+Async.wrap_queries(surface,force)
 surface.can_place_entity=function(o)
   return (o.position.x==-12.5 or o.position.x==-16.5) and o.position.y==-4.5
 end
-local dense=plan.build_plan(pair,"dense-negative-cell-receiver")
+local dense=Async.plan(plan,pair,"dense-negative-cell-receiver")
 check(dense.stage=="mining-output-buffer"
     and dense.target.site_position.x==-16.5,
   "dense survey ignored a receiver across negative cell boundaries")
@@ -203,17 +208,17 @@ check(dense.stage=="mining-output-buffer"
 -- plans must be visible immediately, even in the same game tick.
 dense_receiver.position={x=dense_drills[3].drop_position.x+1,
   y=dense_drills[3].drop_position.y}
-local boundary=plan.build_plan(pair,"dense-strict-receiver-distance")
+local boundary=Async.plan(plan,pair,"dense-strict-receiver-distance")
 check(boundary.stage=="mining-output-buffer"
     and boundary.target.site_position.x==-12.5,
   "dense survey changed the strict receiver radius or retained old positions")
 dense_receiver.position.x=dense_drills[3].drop_position.x+.99
-local moved=plan.build_plan(pair,"dense-live-receiver-position")
+local moved=Async.plan(plan,pair,"dense-live-receiver-position")
 check(moved.stage=="mining-output-buffer"
     and moved.target.site_position.x==-16.5,
   "dense survey did not read the newly moved receiver")
 dense_receiver.valid=false
-local removed=plan.build_plan(pair,"dense-invalid-receiver")
+local removed=Async.plan(plan,pair,"dense-invalid-receiver")
 check(removed.stage=="mining-output-buffer"
     and removed.target.site_position.x==-12.5,
   "dense survey retained a removed receiver")

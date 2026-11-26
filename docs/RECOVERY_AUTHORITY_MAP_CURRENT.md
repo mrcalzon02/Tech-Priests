@@ -73,7 +73,7 @@ flowchart TD
     Defense["Hostile defensive need"] --> Dispatch["Existing 0510 / perimeter authority"]
     Factory["Independent factory shortage"] --> Gate["Frustration admission"]
     Gate --> Planner["0640 execution and 0645 new ghost admission"]
-    Survey["0644 eight-visit cycle; one station per admitted pulse"] --> Plan["Retained station-domain plan"]
+    Survey["0644 saved within-station planning steps"] --> Plan["Retained station-domain plan"]
     Plan --> Planner
     Rail["0835 survey and 0836 original frontier"] --> Request["Identified construction request"]
     Planner --> Request
@@ -86,7 +86,7 @@ flowchart TD
 
 Defensive construction stays separate from the frustration timer. The timer admits independent emergency factory expansion; it does not suspend urgent repair or defense. The periodic 0644 survey may still run before frustration; 0640 gates autonomous prerequisite execution, while 0645 gates new ghosts after reconciling existing owned sites. Plans and ghosts are not completion. Native robot jobs require actual material/network prerequisites and a real build receipt.
 
-0645 consumes `pair.master_infrastructure_plan_0644` while station identity, surface, force, position and canonical clamped radius match. Elapsed time does not initiate another master survey. Cold stations, old snapshot schemas and changed domains initialize through 0644; observing physical completion of its current target permits one immediate owner refresh so the same call cannot recreate that completed ghost. Live stock and construction custody still govern active-ghost replacement, and explicit requested-entity reservations bypass the autonomous proposal. Failed domain/completion refreshes cannot authorize an obsolete proposal.
+0645 consumes `pair.master_infrastructure_plan_0644` while station identity, surface, force, position, canonical clamped radius, metadata epoch and world witness match. Elapsed time does not initiate another master survey. Cold stations, old snapshot schemas and changed domains initialize through 0644; observing physical completion of its current target permits one immediate owner refresh so the same call cannot recreate that completed ghost. Live stock and construction custody still govern active-ghost replacement, and explicit requested-entity reservations bypass the autonomous proposal. Failed domain/completion refreshes cannot authorize an obsolete proposal.
 
 Remote-resource strategies remain source-distinct: 0820 station chain; 0835 railway observation; 0836 next surveyed rail/build request; 0837 counted ore courier; existing native train, builder and worker execution. The source map does not establish sustained production or a successful rail save/reload.
 
@@ -193,25 +193,47 @@ The shared discovery changes are mapped in [0661](BEHAVIOR_MERMAID_FUNCTION_DRIL
 
 0634 retains dirty resource snapshots rather than synchronously rescanning per entity event; player stock/cursor events clear shortage answers without dirtying physical discovery or replacing its dirty token. Its finite-resource-depletion route releases exact/legacy ownership through 0327 and requests a nearby follow-up without scanning; infinite minimum-yield events preserve their usable claims. Scheduled 0327 native surveys exclude inventory-bearing types and merge borrowed 0587 identities without `get_contents`, full-list copies per slice or false complete-cell certification in 0579. Source-record/list revisions detect event updates and compaction during a survey. Item lookup reads live counts; explicit Work State/catalog UI rendering calls `snapshot_inventory` for live contents while retaining membership. Cold or obsolete-domain `get_for_pair` returns an incomplete current-domain pending snapshot without scanning; an already matching replacement job retains its deadline. Resource lookup validates current surface, native area overlap and canonical ownership, tries retained alternate instances and returns live distance. Publication keeps the latest explicit UI inventory table/timestamp. Explicit manual scans, unsupported-engine compatibility paths and other physical infrastructure/resource surveys remain separate spatial work. 0527 uses a six-type shared view with its existing same-or-neutral/circular/slot policy; a covered miss does not trigger a second nearby inventory search. Its loose-ground-item path and inactive 0526 source remain distinct.
 
-0643's existing assessment reuses known machine/provider identities and reads physical stock through the correct bound native inventory call. It checks current 36-tile reach, force, surface and logistic-network membership, and deduplicates providers across stations. Its three reserve-item counts share one provider list. Known chest-family entities, including the native-container Cogitators, request the chest inventory directly once per item question; other/unknown types, absent slot metadata or a rejected typed call retain exhaustive compatibility access. Counts remain live, including repeated questions within the same tick. The 113-tick callback still assesses all force/surface groups and construction reservations: the advertised budget of four does not bound that inner traversal.
+0643 now admits a saved roster and one continuation per force/surface group
+through `force_planning_queue_1507`. Each station, entity, provider slot,
+recipe/material candidate and final request consumes work. A single large
+factory group is split internally. Typed native inventory policy, force,
+surface, 36-tile reach and logistic-network checks remain live. A final per-need
+stock pass and current local witnesses precede 0645; partial group reports never
+publish reservations. Relevant world edits cancel obsolete decisions. See the
+[shortage continuation map](SHORTAGE_PLANNING_CONTINUATION_1507.md).
 
 The catalog's existing scan reuses claim identity keys and read-only prototype-product arrays, and uses authoritative connector counts instead of materializing known-empty connections. Fully successful modern connector checks avoid obsolete property probes; uncertain checks retain compatibility fallbacks. Its scheduled continuation saves quadrant/result, deduplication, classification, subordinate-sort and ownership-retirement cursors. It publishes only after all phases finish; later changes request a follow-up without restarting current work. Domain cancellation rolls back staged-only claims while preserving external radar/build claims and current ownership, including a replaced pair record. Explicit synchronous refresh supersedes pending publication. Admission time remains the catalog age and original due-time basis; completion time is recorded separately. The native four-station fixture resumed a saved partial result and matched all 2,401 claims per station in 492–504 ticks at the one-query / 256-work maxima. This isolated result is not the matched owner-save timing acceptance.
 
-0644 shares item counts only inside one synchronous `build_plan` call and reuses laboratories from its role survey. 0646 retains immutable product-to-recipe-name membership in original force recipe order, including disabled recipes; enabled flags and ingredients are read live. Its optional third unlock result is the currently selected live recipe, not a cached availability answer. 0644 requests products-only candidates and preserves the first matching enabled recipe's feasibility result.
+0644's public callers now only submit/read shared jobs. Saved roster, area,
+entity, inventory, recipe, receiver and science cursors replace whole-station
+execution. A final bounded stock recount and cell validation precede advisory
+publication. Domain, metadata epoch and at most four region counters invalidate
+late world edits, including finished but unconsumed results. Science selection
+retains current prerequisite, lab and material checks. No observation grants
+custody or an atomic factory-wide stock reservation.
 
-0644 also reuses the current role-survey entity list for uncovered drill outputs.
-At the third fallback in a survey of at least eight drills it builds one
-call-local receiver-position index and checks the drop cell plus eight neighbors.
-Smaller/early-exit surveys retain direct lookup. The receiver type and strict
-distance predicate, drill order, native target, stock and placement checks stay
-the same; positions are never retained across calls. The isolated native
-[receiver-helper probe](https://github.com/mrcalzon02/Dens-Mortis/actions/runs/45699182910)
-matched two decisions on 4,320 entities with 96 unconnected drills. Its nine
-samples timed three helper calls each; that evidence does not establish a
-whole-planner time or game FPS/UPS. The infrastructure drilldown records the
-exact measurement scope and candidate hash.
+The one force-planning broker service shares at most 16 charged handler visits
+per admitted pulse across all forces and jobs. No-action work rotates normally;
+64 ordinary jobs per force and 256 globally impose backpressure. Shared item
+and recipe indices have bounded reserved dependency capacity with the same
+work budget, avoiding reset deadlocks when ordinary queues are full. Its
+saved state uses scalar cursors/tables and native object identities. Native
+movement, repair and active construction continue through their existing
+owners. The [infrastructure drilldown](BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0666_INFRASTRUCTURE_PLANNING.md#0644-cycle-continuation)
+records the current routes; the former eight-whole-station cycle and synchronous
+public/registry paths no longer describe 0644.
 
-The 0644 broker route retains up to eight station IDs per 97-tick cycle, attempts one current pair per admitted five-tick pulse, and saves both its cursor and the cycle's original deadline. Failed or removed IDs consume an attempt so they cannot hold the batch in place. The existing 0598 owner persists revised continuation deadlines through reload. This preserves up to eight visits per roughly 100 ticks when admission is available; it does not reduce the survey allowance to one visit per 97 ticks. Public `service_all` remains synchronous, and its conditional registry fallback retains the default cap of 24 per 97 ticks. The [infrastructure drilldown](BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0666_INFRASTRUCTURE_PLANNING.md#0644-cycle-continuation) maps those separate routes. These source boundaries do not claim a measured native improvement.
+0359's ordinary, mining, defense, fixed-output and fixed/owned-ghost proposals share queue-backed
+search and one live admission token. Pending/full is not no-site and cannot
+claim stock or start a failure cooldown. The [construction map](BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0665_CONSTRUCTION.md)
+retains physical executor ownership. Ticketless unstarted candidates restored
+from older saves acquire current admission; already admitted custody continues.
+0259's separate perimeter planner also uses saved inner catalogue, point,
+neighboring-station, support and fluidbox steps. Its physical defense executor
+remains the owner, and pending work permits other dispatch. The [defense map](BEHAVIOR_MERMAID_DEFENSE_PLANNING_1507.md)
+records its live authority and shared check allowance.
+Learned path crossings remain subordinate
+to native movement and edited-chunk invalidation, as shown in [0664](BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0664_MOVEMENT_CONTROLLER.md).
 
 ## Stage 5 — Evidence and Release Boundary
 

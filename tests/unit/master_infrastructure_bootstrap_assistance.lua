@@ -7,6 +7,7 @@ _G.TechPriestsPlanningConstraints0646={
   item_unlocked=function()return true end
 }
 local Plan=require("scripts.core.master_infrastructure_plan_0644")
+local Async=dofile("tests/helpers/planning_continuation_1507.lua")
 local stock={}
 local inventory={valid=true,get_item_count=function(name)return stock[name] or 0 end}
 local force={valid=true,index=1,name="player",recipes={
@@ -33,11 +34,10 @@ local ore={valid=true,type="resource",name="iron-ore",amount=1000,
   position={x=7,y=0}}
 machines={smelter,chest}
 surface.find_entities_filtered=function(filters)
-  if filters.type=="resource" then return {ore} end
-  if type(filters.type)=="table" then return machines end
-  return {}
+  local all={ore};for _,e in ipairs(machines) do all[#all+1]=e end
+  return Async.query(all,filters,surface,force)
 end
-local station={valid=true,name="junior-cogitator-station",unit_number=11,
+local station={valid=true,type="container",name="junior-cogitator-station",unit_number=11,
   position={x=0,y=0},surface=surface,force=force}
 station.get_inventory=function(id)
   return id==defines.inventory.chest and inventory or nil
@@ -49,7 +49,7 @@ local function check(ok,why)
   if not ok then error("bootstrap-assistance regression: "..why,2) end
 end
 local function scenario(name,expected_stage,expected_item)
-  local plan=Plan.build_plan(pair,name)
+  local plan=Async.plan(Plan,pair,name)
   check(plan and plan.stage==expected_stage,
     name..": wrong stage "..tostring(plan and plan.stage))
   check(plan.target.preferred_item==expected_item,
@@ -118,13 +118,13 @@ check(emergency.valid and machines[3]==emergency and assembler.valid,
 local drill={valid=true,type="mining-drill",name="burner-mining-drill",
   unit_number=34,position={x=8,y=1},force=force,surface=surface}
 machines[#machines+1]=drill
-local later=Plan.build_plan(pair,"standard-drill-built")
+local later=Async.plan(Plan,pair,"standard-drill-built")
 check(later.stage~="bootstrap-normal-mining"
   and later.stage~="bootstrap-mining",
   "planner remained stuck mining after both emergency and standard units exist")
 machines[#machines]=nil
 force.recipes["burner-mining-drill"].enabled=false
-local locked=Plan.build_plan(pair,"normal-drill-recipe-locked")
+local locked=Async.plan(Plan,pair,"normal-drill-recipe-locked")
 check(locked.stage~="bootstrap-normal-mining",
   "locked standard drill was queued over working emergency income")
 force.recipes["burner-mining-drill"].enabled=true
@@ -177,27 +177,27 @@ do
   end
   stock[item]=1
   force.current_research=nil
-  local planned=Plan.build_plan(pair,"real-science-before-belt")
+  local planned=Async.plan(Plan,pair,"real-science-before-belt")
   check(planned.stage~="science-ready"
       and planned.research_candidate==tech.name,
     "affordable research was hidden until unrelated infrastructure completed")
-  Plan.service_pair(pair,"authorize-physically-stocked-science")
+  Async.service(Plan,pair,"authorize-physically-stocked-science")
   check(force.current_research==tech and stock[item]==1,
     "research was not authorized by real science or consumed stored packs")
   force.current_research=nil
   stock[item]=0
   lab_items[item]=1
-  Plan.service_pair(pair,"science-already-in-real-lab")
+  Async.service(Plan,pair,"science-already-in-real-lab")
   check(force.current_research==tech and lab_items[item]==1,
     "real laboratory input was not recognized as physically available science")
   force.current_research=nil
   lab_items[item]=0
-  Plan.service_pair(pair,"no-virtual-science")
+  Async.service(Plan,pair,"no-virtual-science")
   check(force.current_research==nil,
     "research started without any physical lab or storage science packs")
   lab_items[item]=1
   tech.researched=true
-  Plan.service_pair(pair,"already-researched")
+  Async.service(Plan,pair,"already-researched")
   check(force.current_research==nil,
     "research planner assigned an already completed technology")
   tech.researched=false
@@ -234,14 +234,16 @@ do
   force.technologies.finished=unavailable_technology{enabled=true,researched=true}
   force.technologies.blocked=unavailable_technology{enabled=true,researched=false,
     prerequisites={{researched=false}}}
-  local large=Plan.build_plan(pair,'many-technologies-one-science-pack')
-  check(large.research_candidate==tech.name and stock_reads==1 and lab_reads==1,
-    'read-only survey repeatedly enumerated the same physical science stock')
+  local large=Async.plan(Plan,pair,'many-technologies-one-science-pack')
+  check(large.research_candidate==tech.name and stock_reads==2 and lab_reads==2,
+    'initial/final stock passes repeated work per technology or omitted freshness validation')
   check(irrelevant_reads==0 and lab_area_queries==0,
     'research selection copied ineligible technology data or rediscovered known labs')
   lab_items[item]=0
-  local empty_science=Plan.build_plan(pair,'science-consumed-after-survey')
-  check(empty_science.research_candidate==nil and stock_reads==2 and lab_reads==2,
+  -- No candidate remains after the next initial read; no final science
+  -- recheck is needed when no research is about to be assigned.
+  local empty_science=Async.plan(Plan,pair,'science-consumed-after-survey')
+  check(empty_science.research_candidate==nil and stock_reads==3 and lab_reads==3,
     'per-survey reuse concealed consumption before the next survey')
   inventory.get_item_count=old_count
   force.technologies=nil

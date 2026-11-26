@@ -1,0 +1,3 @@
+[resource-station-physical-0820] PASS physical item custody, rejected build retry, post-build exception, paired Senior
+[resource-station-cargo-0824] PASS local pickup, real cargo, retry and return
+tests/unit/resource_station_physical_0820.lua:470: 0640 must not assign a new material-acquisition task to a reserved leaf

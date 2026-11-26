@@ -2,7 +2,7 @@
 -- another priest has physically placed a machine in that footprint.
 package.path="tech-priests_src/?.lua;tech-priests_src/?/init.lua;"..package.path
 game={tick=9000}
-storage={tech_priests={}}
+storage={tech_priests={pairs_by_station={}}}
 prototypes={entity={
   ["tech-priests-emergency-assembler"]={
     name="tech-priests-emergency-assembler",type="assembling-machine",
@@ -35,11 +35,20 @@ _G.TechPriestsPlanningConstraints0646={
 }
 local Planner=require("scripts.core.construction_site_planner")
 local pair={station=station,priest={valid=true,position={x=0,y=0}},radius=9}
-local pos,why=Planner.plan_spiral(pair,"tech-priests-emergency-assembler","assembler")
-assert(pos and pos.x==-1 and pos.y==-3,
-  "cached pre-miner clearance accepted overlapping x=0 instead of moving to x=-1: "
-    ..tostring(pos and pos.x)..","..tostring(pos and pos.y))
-assert(calls>=2,
-  "no authoritative live scans performed for candidate and replacement sites")
+storage.tech_priests.pairs_by_station[1]=pair
+local Queue=require("scripts.core.force_planning_queue")
+local pos,why,report,ticket=Planner.plan_spiral(pair,"tech-priests-emergency-assembler","assembler")
+assert(not pos and Planner.is_pending(why),"caller advanced the queued spiral")
+Queue.pulse({tick=game.tick},1)
+pos,why,report,ticket=Planner.plan_spiral(pair,"tech-priests-emergency-assembler","assembler")
+assert(pos and pos.x==0 and pos.y==-3,"the original first candidate was not preserved")
+local allowed,pending=Planner.authorize(pair,ticket,pos)
+assert(not allowed and pending=="placement-pending-live-obstruction",
+  "cached pre-miner clearance bypassed live final authority")
+game.tick=game.tick+1;Queue.pulse({tick=game.tick},1)
+pos,why,report,ticket=Planner.plan_spiral(pair,"tech-priests-emergency-assembler","assembler")
+assert(pos and pos.x==-1 and pos.y==-3,"resumption changed original search order")
+assert(Planner.authorize(pair,ticket,pos),"replacement site was not live-authorized")
+assert(calls>=2,"candidate and replacement sites were not checked live")
 assert(machine.valid,"site search modified existing emergency mining equipment")
 print("[construction-spiral-live-clearance] PASS scenarios=3")

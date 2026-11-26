@@ -16,6 +16,18 @@ from time import perf_counter
 
 ROOT = Path(__file__).resolve().parent.parent
 SMOKE = (
+    "bounded_planning_area_1507.lua",
+    "force_planning_queue_1507.lua",
+    "infrastructure_continuation_1507.lua",
+    "drill_output_witness_1507.lua",
+    "ordinary_placement_continuation_1507.lua",
+    "owned_ghost_admission_1507.lua",
+    "placement_metadata_witness_1507.lua",
+    "placement_specialized_continuation_1507.lua",
+    "planning_metadata_backpressure_1507.lua",
+    "shortage_continuation_1507.lua",
+    "traversable_crossings_1507.lua",
+    "defense_planning_1507.lua",
     "runtime_profiler_truth.lua",
     "infrastructure_inspection_budget.lua",
     "master_infrastructure_survey_reads.lua",
@@ -28,6 +40,8 @@ SMOKE = (
     "master_infrastructure_recipe_membership.lua",
     "master_infrastructure_bootstrap_assistance.lua",
     "master_infrastructure_broker_budget_1070.lua",
+    "drill_output_receiver_reconciliation.lua",
+    "construction_ghost_broker_budget_1070.lua",
     "bootstrap_ghost_master_plan_reuse_0645.lua",
     "consecration_retained_registry.lua",
     "bunker_technology_prototype_effects.lua",
