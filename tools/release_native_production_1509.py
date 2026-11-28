@@ -28,4 +28,31 @@ release.source_commit = lambda: SOURCE
 if __name__ == "__main__":
     if os.environ.get("TP_RELEASE_SOURCE_SHA") != SOURCE:
         raise SystemExit("Exact approved source is required")
+    # Use fresh public-listing reads for the existing update publisher. Its
+    # previous upload was accepted but the cached listing did not reflect it.
+    import sys
+    if len(sys.argv)>1 and sys.argv[1]=="publish":
+        import publish_hd_mods as portal
+        def fresh_listing(name):
+            if name!="tech-priests":
+                raise ValueError("Only the approved existing mod may be updated")
+            # Query both documented listing shapes if the full response has
+            # not reflected the update; verify owner/identity on every read.
+            observed=None
+            for suffix in ("/full", ""):
+                try:
+                    result=portal.request(portal.BASE+"/api/mods/"+name+suffix+"?tp_readback="+str(time.time_ns()))
+                except portal.PortalError as exc:
+                    if exc.status==404:
+                        continue
+                    raise
+                if result.get("name")!=name or result.get("owner","").casefold()!=portal.OWNER.casefold():
+                    raise ValueError("Mod Portal owner/identity mismatch")
+                observed=result
+                versions=[x.get("version") for x in result.get("releases",[])]
+                print("TP_104_PORTAL_OBSERVED_VERSIONS",versions[-12:],flush=True)
+                if "1.0.4" in versions:
+                    return result
+            return observed
+        portal.listing=fresh_listing
     raise SystemExit(release.main())
