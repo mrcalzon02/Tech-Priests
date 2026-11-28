@@ -16,6 +16,7 @@ from time import perf_counter
 
 ROOT = Path(__file__).resolve().parent.parent
 SMOKE = (
+    "native_engineer_default_1508.lua",
     "bounded_planning_area_1507.lua",
     "force_planning_queue_1507.lua",
     "infrastructure_continuation_1507.lua",

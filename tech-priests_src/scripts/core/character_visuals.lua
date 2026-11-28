@@ -76,19 +76,25 @@ function M.track(entity,id,player_index)
 end
 local function player_character(player)
   if valid(player.character) then return player.character end
+  if valid(player.cutscene_character) then return player.cutscene_character end
   local tp=storage.tech_priests
   local picker=tp and tp.character_skin_picker
   local cached=picker and picker.characters and picker.characters[player.index]
-  return valid(cached) and cached or nil
+  -- Never attach a selected overlay to a stale body now owned by a different
+  -- player or mod. A disconnected/default Engineer already renders natively.
+  if valid(cached) and cached.type=="character" and
+    (cached.player==player or cached.associated_player==player) then return cached end
 end
 M.player_character=player_character
 function M.refresh_player(player,id)
-  local entity=player_character(player)
   if id=="vanilla" then
     M.clear_player(player)
     return true
   end
+  local entity=player_character(player)
   if valid(entity) and (entity.name=="character" or entity.name==M.host_name) then
+    local picker=storage.tech_priests and storage.tech_priests.character_skin_picker
+    if picker and picker.characters then picker.characters[player.index]=entity end
     local rec=M.track(entity,id,player.index)
     if rec then
       local updated=M.update(rec)

@@ -162,13 +162,14 @@ Generated 0302 remains the fixed-rank priest armor and damage authority. The obs
 
 ## Retired authority boundary
 
-Player appearance has no physical recovery transaction. The picker uses the
-original character and updates attached drawings for every selection, including
-Engineer; `character_skin_transfer` is no longer reachable from the picker.
-Existing custom-host saves keep that same body with corrected native animation
-timing and gameplay properties. A configuration restore reattaches the chosen
-drawing, and future deaths retain the standard native inventory corpse. No
-crafting, combat, vehicle or robot state is moved to another body. The
+Player appearance has no physical recovery transaction. The native character and
+corpse prototypes are not altered by appearance registration, including their
+graphics. Default selection clears only Tech Priests drawings; custom skins are
+explicit, additive overlays on a supported existing body. `character_skin_transfer`
+and scripted Engineer reconstruction are no longer active picker authorities.
+Legacy custom-host saves keep the same body with visible native animations.
+Configuration migration retires old owned render records before restoring choices.
+No crafting, combat, vehicle or robot state is moved to another body. The
 [appearance route](BEHAVIOR_MERMAID_MAP_0660.md#character-appearance-and-native-player-ownership)
 records rendering and lifecycle ownership separately from native simulation.
 

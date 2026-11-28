@@ -27,8 +27,10 @@ function M.default_skin() return "vanilla" end
 local function migrate_default_policy(r)
   if r.native_default_policy==1 then return end
   local ambiguous={enginseer=true}
-  for _,skin in ipairs(Catalog.skins) do
-    if M.allowed(skin.id) then ambiguous[skin.id]=true;break end
+  if not M.allowed("enginseer") then
+    for _,skin in ipairs(Catalog.skins) do
+      if M.allowed(skin.id) then ambiguous[skin.id]=true;break end
+    end
   end
   for index,id in pairs(r.selected) do
     if not r.explicit[index] and ambiguous[id] then r.selected[index]="vanilla" end
