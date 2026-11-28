@@ -3,8 +3,8 @@
     {
       "covered_source_files": 389,
       "path": "docs/BEHAVIOR_FUNCTION_MAP_0659.md",
-      "reviewed_source_digest": "be9c323c2819d31ab137d66f83161f7fa9411260bf3c185ec3706b096972db31",
-      "sha256": "611274285cb8936fd034667f94ebecf16f711fc60ce03ec7e7a34ae66155b47a",
+      "reviewed_source_digest": "beb2e80ec144b55e7021794cf9ee9264c0bab87a5aa149f744eb261aede639f5",
+      "sha256": "aef4cbac52bf076679f909312d14bdc2ab07752922bc2148615a5c9fd40bf439",
       "source_patterns": [
         "control.lua",
         "scripts/**/*.lua",
@@ -218,8 +218,8 @@
     {
       "covered_source_files": 389,
       "path": "docs/BEHAVIOR_MERMAID_MAP_0660.md",
-      "reviewed_source_digest": "be9c323c2819d31ab137d66f83161f7fa9411260bf3c185ec3706b096972db31",
-      "sha256": "888fe38e64e8ce1a3812692d30f7506662b85f9d7c06e7d9ab7b8fe8c1b34a02",
+      "reviewed_source_digest": "beb2e80ec144b55e7021794cf9ee9264c0bab87a5aa149f744eb261aede639f5",
+      "sha256": "cead34f3268afbba7ef06a29dd6925013d39890c53341924cefce4ead5226c5c",
       "source_patterns": [
         "control.lua",
         "scripts/**/*.lua",
@@ -229,8 +229,8 @@
     {
       "covered_source_files": 389,
       "path": "docs/RECOVERY_AUTHORITY_MAP_CURRENT.md",
-      "reviewed_source_digest": "be9c323c2819d31ab137d66f83161f7fa9411260bf3c185ec3706b096972db31",
-      "sha256": "a53cda75a41690c7a32d54c2b13c2cdd60b7496f9668bced70ce611beeb24f75",
+      "reviewed_source_digest": "beb2e80ec144b55e7021794cf9ee9264c0bab87a5aa149f744eb261aede639f5",
+      "sha256": "eedaab2ef5e3c9dfdd47e20baa2fa41592c0d85389a5c2df8501c71e0af21c92",
       "source_patterns": [
         "control.lua",
         "scripts/**/*.lua",
@@ -240,7 +240,7 @@
   ],
   "review_meaning": "Explicit source/diagram review acknowledgment; no semantic or runtime proof.",
   "schema": "tech-priests-behavior-map-review-v1",
-  "source_digest": "be9c323c2819d31ab137d66f83161f7fa9411260bf3c185ec3706b096972db31",
+  "source_digest": "beb2e80ec144b55e7021794cf9ee9264c0bab87a5aa149f744eb261aede639f5",
   "source_scope": [
     "control.lua",
     "scripts/**/*.lua",

@@ -2,18 +2,18 @@
   "counts": {
     "broker_services": 56,
     "commands": 141,
-    "dependencies": 721,
-    "event_routes": 315,
-    "functions": 11875,
+    "dependencies": 720,
+    "event_routes": 314,
+    "functions": 11876,
     "install_calls": 228,
-    "module_string_references": 1020,
+    "module_string_references": 1019,
     "module_tables": 56,
     "modules": 389,
-    "named_functions": 8697,
-    "potential_literal_reachable_modules": 313,
-    "scans": 214,
+    "named_functions": 8699,
+    "potential_literal_reachable_modules": 311,
+    "scans": 213,
     "state_writers": 4570,
-    "storage_roots": 1898,
+    "storage_roots": 1900,
     "unresolved_loads": 9,
     "wrapper_candidates": 787
   },
@@ -17324,7 +17324,7 @@
           "event": "on_init",
           "handler": "initialize",
           "kind": "registry-or-helper",
-          "line": 186,
+          "line": 203,
           "options": {
             "category": {
               "expression": "\"gui\"",
@@ -17352,7 +17352,7 @@
           "event": "on_configuration_changed",
           "handler": "initialize",
           "kind": "registry-or-helper",
-          "line": 187,
+          "line": 204,
           "options": {
             "category": {
               "expression": "\"gui\"",
@@ -17380,7 +17380,7 @@
           "event": "on_event",
           "handler": "player_event",
           "kind": "registry-or-helper",
-          "line": 188,
+          "line": 205,
           "options": {
             "category": {
               "expression": "\"gui\"",
@@ -17411,7 +17411,7 @@
           "event": "on_event",
           "handler": "function ( event ) local player = game . get_player ( event . player_index ) if player and player . valid then M . open ( player ) end end",
           "kind": "registry-or-helper",
-          "line": 191,
+          "line": 208,
           "options": {
             "category": {
               "expression": "\"gui\"",
@@ -17444,7 +17444,7 @@
           "event": "on_event",
           "handler": "function ( event ) local player = game . get_player ( event . player_index ) if player and player . valid then M . ensure_button ( player ) end end",
           "kind": "registry-or-helper",
-          "line": 199,
+          "line": 216,
           "options": {
             "category": {
               "expression": "\"gui\"",
@@ -17471,7 +17471,7 @@
           "event": "on_event",
           "handler": "click",
           "kind": "registry-or-helper",
-          "line": 203,
+          "line": 220,
           "options": {
             "category": {
               "expression": "\"gui\"",
@@ -17506,7 +17506,7 @@
           "event": "on_event",
           "handler": "function ( event ) if event . element and event . element . valid and event . element . name == M . frame_name then M . close ( game . get_player ( event . player_index ) ) ; return true end end",
           "kind": "registry-or-helper",
-          "line": 204,
+          "line": 221,
           "options": {
             "category": {
               "expression": "\"gui\"",
@@ -17542,133 +17542,140 @@
         },
         {
           "kind": "declaration",
-          "line": 14,
+          "line": 15,
           "local": false,
           "name": "M.enabled",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 18,
+          "line": 19,
           "local": false,
           "name": "M.allowed",
           "parameters": "id"
         },
         {
           "kind": "declaration",
-          "line": 21,
+          "line": 22,
           "local": false,
           "name": "M.selected",
           "parameters": "player"
         },
         {
           "kind": "declaration",
-          "line": 22,
+          "line": 23,
           "local": false,
           "name": "M.default_skin",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 28,
+          "line": 27,
+          "local": true,
+          "name": "migrate_default_policy",
+          "parameters": "r"
+        },
+        {
+          "kind": "declaration",
+          "line": 43,
           "local": false,
           "name": "M.ensure_button",
           "parameters": "player"
         },
         {
           "kind": "declaration",
-          "line": 45,
+          "line": 60,
           "local": false,
           "name": "M.close",
           "parameters": "player"
         },
         {
           "kind": "declaration",
-          "line": 52,
+          "line": 67,
           "local": false,
           "name": "M.open",
           "parameters": "player"
         },
         {
           "kind": "declaration",
-          "line": 75,
+          "line": 90,
           "local": true,
           "name": "card",
           "parameters": "id , label , sprite , faction"
         },
         {
           "kind": "declaration",
-          "line": 98,
+          "line": 113,
           "local": false,
           "name": "M.try_pending",
           "parameters": "player"
         },
         {
           "kind": "declaration",
-          "line": 120,
+          "line": 138,
           "local": false,
           "name": "M.choose",
           "parameters": "player , id"
         },
         {
           "kind": "declaration",
-          "line": 131,
+          "line": 150,
           "local": false,
           "name": "M.pending_tick",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 143,
+          "line": 162,
           "local": true,
           "name": "player_event",
           "parameters": "event"
         },
         {
           "kind": "declaration",
-          "line": 160,
+          "line": 176,
           "local": true,
           "name": "initialize",
           "parameters": ""
         },
         {
           "kind": "assigned-function",
-          "line": 164,
+          "line": 181,
           "local": false,
           "name": "M.restore_player",
           "parameters": "player"
         },
         {
           "kind": "declaration",
-          "line": 165,
+          "line": 182,
           "local": true,
           "name": "click",
           "parameters": "event"
         },
         {
           "kind": "declaration",
-          "line": 181,
+          "line": 198,
           "local": false,
           "name": "M.install",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 191,
+          "line": 208,
           "local": false,
           "name": "<anonymous>",
           "parameters": "event"
         },
         {
           "kind": "anonymous",
-          "line": 199,
+          "line": 216,
           "local": false,
           "name": "<anonymous>",
           "parameters": "event"
         },
         {
           "kind": "anonymous",
-          "line": 204,
+          "line": 221,
           "local": false,
           "name": "<anonymous>",
           "parameters": "event"
@@ -17677,7 +17684,7 @@
       "install_calls": [
         {
           "callee": "Visuals.install",
-          "line": 184,
+          "line": 201,
           "literal_alias_candidates": [
             "scripts.core.character_visuals"
           ],
@@ -17685,7 +17692,7 @@
           "resolution": "lexical-alias-only"
         }
       ],
-      "lines": 209,
+      "lines": 226,
       "module": "scripts.core.character_skin_picker",
       "module_string_references": [
         {
@@ -17708,7 +17715,7 @@
       "path": "scripts/core/character_skin_picker.lua",
       "reachability": "potential-literal-require-path",
       "scans": [],
-      "sha256": "7b264539e551edbf33ec830f4cc7369ebf08e87d370c25d44aa614a14b0fcee0",
+      "sha256": "5324e7d02c51e8406d50c44b09a2daf0c8790fd9bd132c4669ee545fd3c622d1",
       "state_writers": [
         {
           "kind": "state-assignment",
@@ -17718,19 +17725,19 @@
         {
           "callee": "legacy.destroy",
           "kind": "mutation-call-candidate",
-          "line": 31,
+          "line": 46,
           "protected_call": false
         },
         {
           "callee": "button.destroy",
           "kind": "mutation-call-candidate",
-          "line": 33,
+          "line": 48,
           "protected_call": false
         },
         {
           "callee": "frame.destroy",
           "kind": "mutation-call-candidate",
-          "line": 49,
+          "line": 64,
           "protected_call": false
         }
       ],
@@ -17745,14 +17752,14 @@
         },
         {
           "expression": "storage.tech_priests",
-          "line": 132
+          "line": 151
         }
       ],
       "unresolved_loads": [],
       "wrapper_candidates": [
         {
           "kind": "function-replacement-candidate; original/wrapper semantics not inferred",
-          "line": 164,
+          "line": 181,
           "target": "M.restore_player"
         }
       ]
@@ -17887,7 +17894,7 @@
             "budget": {
               "declared_scalar_candidates": [
                 {
-                  "line": 7,
+                  "line": 6,
                   "value": 128
                 }
               ],
@@ -17932,7 +17939,7 @@
             }
           },
           "installation": "source-call-site-only",
-          "line": 293,
+          "line": 318,
           "protected_call": false,
           "specification": "literal-table"
         }
@@ -17954,7 +17961,7 @@
           "kind": "literal-require",
           "line": 3,
           "protected_call": false,
-          "target": "scripts.core.engineer_visuals",
+          "target": "shared.combat_roster_catalog",
           "target_scope": "inventoried-runtime-module"
         },
         {
@@ -17963,15 +17970,6 @@
           "kind": "literal-require",
           "line": 4,
           "protected_call": false,
-          "target": "shared.combat_roster_catalog",
-          "target_scope": "inventoried-runtime-module"
-        },
-        {
-          "callee": "require",
-          "execution": "conditional-or-unconditional; not evaluated",
-          "kind": "literal-require",
-          "line": 5,
-          "protected_call": false,
           "target": "scripts.core.runtime_event_registry",
           "target_scope": "inventoried-runtime-module"
         },
@@ -17979,7 +17977,7 @@
           "callee": "require",
           "execution": "conditional-or-unconditional; not evaluated",
           "kind": "literal-require",
-          "line": 6,
+          "line": 5,
           "protected_call": false,
           "target": "scripts.core.runtime_tick_broker",
           "target_scope": "inventoried-runtime-module"
@@ -17992,7 +17990,7 @@
           "event": "on_event",
           "handler": "M . on_death",
           "kind": "registry-or-helper",
-          "line": 298,
+          "line": 323,
           "options": {
             "category": {
               "expression": "\"visual\"",
@@ -18017,9 +18015,9 @@
           "action": "register-or-forward",
           "callee": "Registry.on_init",
           "event": "on_init",
-          "handler": "restore_native_characters",
+          "handler": "retire_old_character_renders",
           "kind": "registry-or-helper",
-          "line": 299,
+          "line": 324,
           "options": {
             "category": {
               "expression": "\"visual\"",
@@ -18030,12 +18028,12 @@
               "literal": "character_visuals"
             },
             "priority": {
-              "expression": "600",
-              "literal": 600
+              "expression": "400",
+              "literal": 400
             },
             "route": {
-              "expression": "\"native-body-presentation\"",
-              "literal": "native-body-presentation"
+              "expression": "\"native-default-cleanup\"",
+              "literal": "native-default-cleanup"
             }
           },
           "protected_call": false,
@@ -18045,9 +18043,9 @@
           "action": "register-or-forward",
           "callee": "Registry.on_configuration_changed",
           "event": "on_configuration_changed",
-          "handler": "restore_native_characters",
+          "handler": "retire_old_character_renders",
           "kind": "registry-or-helper",
-          "line": 300,
+          "line": 325,
           "options": {
             "category": {
               "expression": "\"visual\"",
@@ -18058,12 +18056,12 @@
               "literal": "character_visuals"
             },
             "priority": {
-              "expression": "600",
-              "literal": 600
+              "expression": "400",
+              "literal": 400
             },
             "route": {
-              "expression": "\"native-body-presentation\"",
-              "literal": "native-body-presentation"
+              "expression": "\"native-default-cleanup\"",
+              "literal": "native-default-cleanup"
             }
           },
           "protected_call": false,
@@ -18073,36 +18071,9 @@
           "action": "register-or-forward",
           "callee": "Registry.on_event",
           "event": "on_event",
-          "handler": "function ( event ) track_native_character ( event . destination or event . entity or event . created_entity ) end",
-          "kind": "registry-or-helper",
-          "line": 301,
-          "options": {
-            "category": {
-              "expression": "\"visual\"",
-              "literal": "visual"
-            },
-            "owner": {
-              "expression": "\"character_visuals\"",
-              "literal": "character_visuals"
-            },
-            "route": {
-              "expression": "\"native-body-created\"",
-              "literal": "native-body-created"
-            }
-          },
-          "protected_call": false,
-          "selector": {
-            "expression": "{ defines . events . on_built_entity , defines . events . on_robot_built_entity , defines . events . script_raised_built , defines . events . script_raised_revive , defines . events . on_entity_cloned }",
-            "runtime_value": "not evaluated"
-          }
-        },
-        {
-          "action": "register-or-forward",
-          "callee": "Registry.on_event",
-          "event": "on_event",
           "handler": "M . post_death",
           "kind": "registry-or-helper",
-          "line": 306,
+          "line": 327,
           "options": {
             "category": {
               "expression": "\"visual\"",
@@ -18127,14 +18098,14 @@
       "functions": [
         {
           "kind": "declaration",
-          "line": 10,
+          "line": 9,
           "local": false,
           "name": "M.set_pending_processor",
           "parameters": "callback"
         },
         {
           "kind": "declaration",
-          "line": 11,
+          "line": 10,
           "local": true,
           "name": "root",
           "parameters": ""
@@ -18198,113 +18169,113 @@
         {
           "kind": "declaration",
           "line": 41,
+          "local": true,
+          "name": "remove_actor",
+          "parameters": "r , key"
+        },
+        {
+          "kind": "declaration",
+          "line": 50,
+          "local": false,
+          "name": "M.clear_player",
+          "parameters": "player"
+        },
+        {
+          "kind": "declaration",
+          "line": 56,
           "local": false,
           "name": "M.track",
           "parameters": "entity , id , player_index"
         },
         {
           "kind": "declaration",
-          "line": 54,
+          "line": 77,
           "local": true,
           "name": "player_character",
           "parameters": "player"
         },
         {
           "kind": "declaration",
-          "line": 62,
+          "line": 89,
           "local": false,
           "name": "M.refresh_player",
           "parameters": "player , id"
         },
         {
           "kind": "declaration",
-          "line": 79,
+          "line": 108,
           "local": true,
           "name": "state_for",
           "parameters": "rec"
         },
         {
           "kind": "declaration",
-          "line": 113,
+          "line": 142,
           "local": true,
           "name": "animation_name",
           "parameters": "id , state , row , part"
         },
         {
           "kind": "declaration",
-          "line": 116,
+          "line": 145,
           "local": false,
           "name": "M.update",
           "parameters": "rec"
         },
         {
           "kind": "anonymous",
-          "line": 137,
+          "line": 166,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 178,
+          "line": 208,
           "local": false,
           "name": "M.needs_dormant_tick",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 186,
+          "line": 216,
           "local": false,
           "name": "M.tick",
           "parameters": "event , budget"
         },
         {
           "kind": "declaration",
-          "line": 236,
+          "line": 266,
           "local": false,
           "name": "M.on_death",
           "parameters": "event"
         },
         {
           "kind": "declaration",
-          "line": 248,
+          "line": 278,
           "local": false,
           "name": "M.post_death",
           "parameters": "event"
         },
         {
           "kind": "declaration",
-          "line": 273,
+          "line": 303,
           "local": true,
-          "name": "track_native_character",
-          "parameters": "entity"
-        },
-        {
-          "kind": "declaration",
-          "line": 281,
-          "local": true,
-          "name": "restore_native_characters",
+          "name": "retire_old_character_renders",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 290,
+          "line": 315,
           "local": false,
           "name": "M.install",
           "parameters": ""
-        },
-        {
-          "kind": "anonymous",
-          "line": 302,
-          "local": false,
-          "name": "<anonymous>",
-          "parameters": "event"
         }
       ],
       "install_calls": [
         {
           "callee": "Broker.install",
-          "line": 292,
+          "line": 317,
           "literal_alias_candidates": [
             "scripts.core.runtime_tick_broker"
           ],
@@ -18312,7 +18283,7 @@
           "resolution": "lexical-alias-only"
         }
       ],
-      "lines": 311,
+      "lines": 332,
       "module": "scripts.core.character_visuals",
       "module_string_references": [
         {
@@ -18323,20 +18294,15 @@
         {
           "line": 3,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "scripts.core.engineer_visuals"
+          "target": "shared.combat_roster_catalog"
         },
         {
           "line": 4,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
-          "target": "shared.combat_roster_catalog"
-        },
-        {
-          "line": 5,
-          "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
           "target": "scripts.core.runtime_event_registry"
         },
         {
-          "line": 6,
+          "line": 5,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
           "target": "scripts.core.runtime_tick_broker"
         }
@@ -18344,23 +18310,12 @@
       "module_tables": [],
       "path": "scripts/core/character_visuals.lua",
       "reachability": "potential-literal-require-path",
-      "scans": [
-        {
-          "arguments": [
-            "{ name = \"character\" }"
-          ],
-          "callee": "surface.find_entities_filtered",
-          "line": 287,
-          "protected_call": false,
-          "runtime_cost": "unmeasured",
-          "static_risk_hint": "global-filtered"
-        }
-      ],
-      "sha256": "78cbba8dabf2c17f4b7948b749a383a4d35a32fc5343a9e824e2242b79e1c8ea",
+      "scans": [],
+      "sha256": "99364bae657112c3709997d60117c8fa8c777777a02eb764950087f8329f2692",
       "state_writers": [
         {
           "kind": "state-assignment",
-          "line": 12,
+          "line": 11,
           "target": "storage.tech_priests"
         },
         {
@@ -18371,62 +18326,70 @@
         },
         {
           "kind": "state-assignment",
-          "line": 104,
+          "line": 133,
           "target": "pair"
         },
         {
           "callee": "obj.destroy",
           "kind": "mutation-call-candidate",
-          "line": 154,
+          "line": 184,
           "protected_call": false
         },
         {
           "kind": "state-assignment",
-          "line": 199,
+          "line": 229,
           "target": "pair"
         }
       ],
       "storage_roots": [
         {
           "expression": "storage.tech_priests",
+          "line": 11
+        },
+        {
+          "expression": "storage.tech_priests",
           "line": 12
         },
         {
           "expression": "storage.tech_priests",
-          "line": 13
+          "line": 80
         },
         {
           "expression": "storage.tech_priests",
-          "line": 56
+          "line": 96
+        },
+        {
+          "expression": "storage.tech_priests.character_skin_picker",
+          "line": 96
         },
         {
           "expression": "storage.tech_priests.pairs_by_priest",
-          "line": 104
+          "line": 133
         },
         {
           "expression": "storage.tech_priests.pairs_by_priest[entity . unit_number]",
-          "line": 104
+          "line": 133
         },
         {
           "expression": "storage.tech_priests",
-          "line": 179
+          "line": 209
         },
         {
           "expression": "storage.tech_priests",
-          "line": 189
+          "line": 219
         }
       ],
       "unresolved_loads": [],
       "wrapper_candidates": [
         {
           "kind": "saved-function-or-value-candidate",
-          "line": 218,
+          "line": 248,
           "target": "previous_cursor",
           "value": "cursor cursor , rec"
         },
         {
           "kind": "saved-function-or-value-candidate",
-          "line": 240,
+          "line": 270,
           "target": "previous",
           "value": "r . actors ["
         }
@@ -55356,98 +55319,98 @@
         },
         {
           "kind": "declaration",
-          "line": 18,
+          "line": 19,
           "local": true,
           "name": "object",
           "parameters": "id"
         },
         {
           "kind": "declaration",
-          "line": 19,
+          "line": 20,
           "local": true,
           "name": "clear",
           "parameters": "rec"
         },
         {
           "kind": "declaration",
-          "line": 26,
+          "line": 27,
           "local": true,
           "name": "orientation",
           "parameters": "position , target , fallback"
         },
         {
           "kind": "declaration",
-          "line": 32,
+          "line": 33,
           "local": true,
           "name": "direction8",
           "parameters": "value"
         },
         {
           "kind": "declaration",
-          "line": 36,
+          "line": 37,
           "local": false,
           "name": "M.observe",
           "parameters": "rec"
         },
         {
           "kind": "declaration",
-          "line": 78,
+          "line": 79,
           "local": true,
           "name": "first_state",
           "parameters": "states , ..."
         },
         {
           "kind": "declaration",
-          "line": 81,
+          "line": 82,
           "local": true,
           "name": "pose",
           "parameters": "rec , source , variant"
         },
         {
           "kind": "declaration",
-          "line": 134,
+          "line": 135,
           "local": true,
           "name": "selection",
           "parameters": "clip , aim , walk"
         },
         {
           "kind": "declaration",
-          "line": 145,
+          "line": 146,
           "local": true,
           "name": "render_layers",
           "parameters": "variant , clip , state , mirrored"
         },
         {
           "kind": "declaration",
-          "line": 159,
+          "line": 160,
           "local": true,
           "name": "cycle",
           "parameters": "rec , state , clip , multiplier , reversed"
         },
         {
           "kind": "declaration",
-          "line": 190,
+          "line": 191,
           "local": true,
           "name": "target",
           "parameters": "entity , entry , height"
         },
         {
           "kind": "declaration",
-          "line": 197,
+          "line": 198,
           "local": false,
           "name": "M.update",
           "parameters": "rec"
         },
         {
           "kind": "anonymous",
-          "line": 220,
+          "line": 221,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         }
       ],
       "install_calls": [],
-      "lines": 255,
+      "lines": 256,
       "module": "scripts.core.engineer_visuals",
       "module_string_references": [
         {
@@ -55458,20 +55421,20 @@
       ],
       "module_tables": [],
       "path": "scripts/core/engineer_visuals.lua",
-      "reachability": "potential-literal-require-path",
+      "reachability": "not-resolved-from-literal-requires",
       "scans": [],
-      "sha256": "891285b79de64347eefd4e2d55194629957701e8d4d8862287a15690f1550240",
+      "sha256": "4fc4281e7b8844d4e221df2fa93d8535b71fd0d741e0f1a0d05cef444fa7924c",
       "state_writers": [
         {
           "callee": "render.destroy",
           "kind": "mutation-call-candidate",
-          "line": 22,
+          "line": 23,
           "protected_call": false
         },
         {
           "callee": "render.destroy",
           "kind": "mutation-call-candidate",
-          "line": 235,
+          "line": 236,
           "protected_call": false
         }
       ],
@@ -55480,13 +55443,13 @@
       "wrapper_candidates": [
         {
           "kind": "saved-function-or-value-candidate",
-          "line": 53,
+          "line": 54,
           "target": "previous",
           "value": "rec . engineer_position rec"
         },
         {
           "kind": "saved-function-or-value-candidate",
-          "line": 103,
+          "line": 104,
           "target": "previous",
           "value": "rec . engineer_previous_height if"
         }
@@ -156382,7 +156345,7 @@
       "module_string_references": [],
       "module_tables": [],
       "path": "shared/engineer_pose_map.lua",
-      "reachability": "potential-literal-require-path",
+      "reachability": "not-resolved-from-literal-requires",
       "scans": [],
       "sha256": "c7c0e942d2a177180d04c2b510c9589b93f6db420fd51cc592355f0979256830",
       "state_writers": [],
@@ -156392,7 +156355,7 @@
     }
   ],
   "schema": "tech-priests-behavior-source-inventory-v1",
-  "source_digest": "be9c323c2819d31ab137d66f83161f7fa9411260bf3c185ec3706b096972db31",
+  "source_digest": "beb2e80ec144b55e7021794cf9ee9264c0bab87a5aa149f744eb261aede639f5",
   "source_scope": [
     "control.lua",
     "scripts/**/*.lua",
