@@ -28,3 +28,8 @@ require("prototypes.plasma_reactor_family")
 if not mods["tp-hydrogen-production"] then require("hydrogen.resource-icons") end
 
 require("hydrogen.balance")
+-- The integrated line uses real selectable recipes, not script-driven clocks.
+-- Separately installed legacy add-ons still own their own machines and jobs.
+if not mods["tp-hydrogen-production"] and not mods["tp-mh7-pellet-decay"] then
+  require("hydrogen.native-recipes").register()
+end

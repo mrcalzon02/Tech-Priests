@@ -31,7 +31,14 @@ function M.touch_stack(stack)
  stack.health=math.min(stack.health,stage.health,tags.mh7_integrity_ceiling or 1)
  tags.mh7_integrity_ceiling=stack.health
  local deadline=Clock.deadline(stack)
- if tags.mh7_decay_phase~=stack.name or deadline==0 then
+ if tags.mh7_decay_phase~=stack.name and raw_stages[stack.name]==nil and Clock.native and deadline>0 and tags.mh7_decay_phase==nil then
+  -- Real native forging already inherited ingredient spoilage. Do not reroll
+  -- that new output's deadline (and thereby rejuvenate the material).
+  tags.mh7_decay_phase=stack.name
+  tags.mh7_birth_tick=game.tick-math.max(0,math.floor(stack.spoil_percent*c.interval_max_ticks+.5))
+  tags.mh7_initialized_tick=game.tick
+  stack.tags=tags
+ elseif tags.mh7_decay_phase~=stack.name or deadline==0 then
   local interval=math.random(c.interval_min_ticks,c.interval_max_ticks)
   local elapsed=Clock.native and math.max(0,math.floor(stack.spoil_percent*c.interval_max_ticks+.5)) or 0
   deadline=game.tick+math.max(1,interval-elapsed)
