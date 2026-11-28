@@ -23,6 +23,7 @@ local function create_shell_first_line(surface, force)
   end
   local line = {}
   line.sealer = place("tp-mh7-canister-assembler", 80, -20)
+  line.sealer.set_recipe("tp-mh7-native-seal-fresh")
   line.shells = place("steel-chest", 80.5, -23.5)
   line.pellets = place("steel-chest", 76.5, -19.5)
   line.output = place("steel-chest", 83.5, -19.5)
@@ -43,9 +44,11 @@ local function create_forming_line(surface, force)
     return assert(surface.create_entity{name = name, position = {x, y}, force = force, raise_built = true})
   end
   local forge = place("tp-mh7-review-forge", 100.5, -44.5)
+  forge.set_recipe("tp-mh7-native-forge-fresh")
   local fabricators = {}
   for _, position in ipairs({{96, -50}, {104, -50}, {96, -55}, {104, -55}}) do
     local machine = place("tp-mh7-review-fabricator", position[1], position[2])
+    machine.set_recipe("tp-mh7-review-hydroform")
     fabricators[#fabricators + 1] = machine
   end
   place("substation", 100, -50)
@@ -93,9 +96,10 @@ script.on_init(function()
   check_process(force, "tp-mh7-review-compress", gas, 500, liquid, 10)
   check_process(force, "tp-mh7-review-metallize", liquid, 20, "tp-mh7-raw-metallicized-pellet", 1)
   local compressor = assert(surface.create_entity{name = "tp-mh7-review-compressor", position = {70, 0}, force = force})
+  compressor.set_recipe("tp-mh7-review-compress")
   assert(compressor.insert_fluid{name = gas, amount = 500} == 500, "compressor cannot accept a full batch")
   compressor.destroy()
-  local forging = force.recipes["tp-mh7-review-forge-work"]
+  local forging = force.recipes["tp-mh7-native-forge-fresh"]
   local hydroforming = force.recipes["tp-mh7-review-hydroform"]
   assert(forging.energy == 24 and hydroforming.energy == 4 * forging.energy, "four hydroformers per forge")
   local chest = assert(surface.create_entity{name = "steel-chest", position = {75, 0}, force = force})
@@ -161,6 +165,8 @@ script.on_event(defines.events.on_tick, function(event)
     local count = (event.tick - 60) / 1500
     assert(line.forge.products_finished == count, "forge cadence")
     assert(line.forge.insert{name = "tp-mh7-raw-metallicized-pellet", count = 1} == 1)
+    local raw=line.forge.get_inventory(defines.inventory.crafter_input)[1]
+    if script.feature_flags.spoiling then raw.spoil_tick=event.tick+1800 end
   elseif event.tick == 5600 or event.tick == 6200 then
     local before = event.tick == 5600
     assert(line.forge.products_finished == (before and 3 or 4), "forge work clock")
@@ -170,20 +176,13 @@ script.on_event(defines.events.on_tick, function(event)
   end
   if event.tick == 3000 then
     local line = storage.shell_first
-    local job = remote.call("tp-mh7-assembler", "inspect", line.sealer)
-    local queued = 0
-    for _, stack in ipairs(job.stock) do
-      if stack.name == shell then queued = queued + stack.count end
-    end
-    assert(queued == 3 and line.shells.get_item_count(shell) >= 36, "assembler overfilled with shells")
-    assert(line.output.get_item_count(fuel) == 0 and line.sealer.can_insert{name = formed, count = 1},
-      "shell queue blocked the first pellet")
-    assert(line.pellets.insert{name = formed, count = 1} == 1)
+    assert(line.sealer.get_inventory(defines.inventory.crafter_input).get_item_count(shell)>=3,"native shell buffer missing")
+    assert(line.output.get_item_count(fuel)==0 and line.sealer.can_insert{name=formed,count=1},"shell queue blocked the first pellet")
+    assert(line.pellets.insert{name=formed,count=3}==3)
   elseif event.tick == 4500 then
     local line = storage.shell_first
-    assert(line.output.get_item_count(fuel) == 1, "first canister failed to reach the output chest")
-    local job = remote.call("tp-mh7-assembler", "inspect", line.sealer)
-    assert(job.completed == 1 and job.cycles == 1, "assembler failed to complete its powered cycle")
+    assert(line.output.get_item_count(fuel)==3,"native canisters failed to reach the output chest")
+    assert(line.sealer.products_finished==1,"assembler failed its native powered cycle")
   end
   if event.tick == 600 or event.tick == 660 then
     for i, grid in ipairs(storage.grids) do

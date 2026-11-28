@@ -160,6 +160,12 @@ The existing proxy ammunition owner 0649 keeps live inventory accounting and ret
 
 Generated 0302 remains the fixed-rank priest armor and damage authority. The obsolete 0297 force-wide 811-tick best-armor refresh is retired, and the preserved 0297 build entry delegates to 0302. Creation/recovery, research/reset, damage response and the existing 887-tick all-pair refresh remain. Armor alias lookups use the existing 0646 product-to-recipe membership and check enabled state live; direct recipe and missing-mech compatibility behavior are preserved. Explicit legacy 0297 force-profile helpers retain immutable armor metadata and share 0646 membership while reading enablement live and returning independent profile/resistance tables. They do not reinstate the retired poll. The 887 route still traverses the pair roster and is not an internally bounded continuation. The [combat/armor map](BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0675_COMBAT_REPAIR.md#fixed-rank-priest-armor-0302) records these separate routes.
 
+The integrated hydrogen production chain has one native crafting authority:
+[1509](HYDROGEN_NATIVE_RECIPE_AUTHORITY_1509.md). Its seven machines use native
+recipe selection, with stage-specific real forge and seal recipes. The old
+private stock/GUI/clock controllers remain only for standalone legacy add-ons;
+integrated saves recover their original stock once on configuration migration.
+
 ## Retired authority boundary
 
 Player appearance has no physical recovery transaction. The native character and

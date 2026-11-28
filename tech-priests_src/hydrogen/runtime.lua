@@ -1,7 +1,4 @@
 local decay = require("hydrogen.decay")
-local forge = require("hydrogen.forge")
-local assembler = require("hydrogen.assembler")
-local gui = require("hydrogen.player-controls")
 local registry = require("scripts.core.runtime_event_registry")
 
 -- The integrated seven-machine chain is now engine-owned. Only separately
@@ -10,6 +7,10 @@ if not script.active_mods["tp-mh7-pellet-decay"] and not script.active_mods["tp-
   require("hydrogen.native-runtime").install(registry, decay)
   return
 end
+
+local forge = require("hydrogen.forge")
+local assembler = require("hydrogen.assembler")
+local gui = require("hydrogen.player-controls")
 
 -- Already-installed prototype add-ons retain ownership of their private jobs
 -- and LuaInventories. New installs use the exact same IDs and interfaces here.

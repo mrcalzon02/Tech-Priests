@@ -69,6 +69,7 @@ script.on_init(function()
   end
   local crucible = place("tp-mh7-review-crucible", 0, 10)
   local press = place("tp-mh7-review-fabricator", 8, 10)
+  crucible.set_recipe("tp-mh7-review-metallize")
   place("substation", 4, 10)
   local power = place("electric-energy-interface", 4, 14)
   power.power_production = 100e6 / 60
@@ -91,43 +92,23 @@ local function exercise_machine_windows()
     player.set_controller{type = defines.controllers.god}
     assert(player.create_character())
   end
-  local cursor = player.cursor_stack
-  for _, machine in ipairs({storage.forge, storage.assembler}) do
-    player.teleport({machine.position.x, machine.position.y + 3}, machine.surface)
-    player.opened = machine
-    local frame = assert(player.gui.screen.tp_hydrogen_machine)
-    local panel = frame.body.machine
-    local function click(button, shift)
-      return remote.call("tp-hydrogen-player-controls", "interact", {
-        element = button, player_index = player.index, shift = shift or false,
-      })
-    end
-    local modules = panel.modules
-    local inv = machine.get_module_inventory()
-    assert(#modules.children == 4)
-    cursor.set_stack{name = "productivity-module", count = 1}
-    assert(not click(modules.slot2) and cursor.count == 1 and inv.is_empty())
-    cursor.set_stack{name = "speed-module-3", count = 4, quality = grades[#grades]}
-    for i = 1, 4 do assert(click(modules["slot" .. i])) end
-    assert(not cursor.valid_for_read and inv[4].quality.name == grades[#grades])
-    assert(click(modules.slot2) and cursor.quality.name == grades[#grades])
-    assert(click(modules.slot2) and not cursor.valid_for_read)
-    assert(click(modules.slot4, true) and not inv[4].valid_for_read)
-    if machine == storage.assembler then
-      local function load(slot, name, quality)
-        cursor.set_stack{name = name, quality = quality}
-        assert(click(panel.Input["slot" .. slot]) and not cursor.valid_for_read)
-      end
-      local grade = grades[3] or "normal"
-      load(10, config.shell, "normal")
-      load(11, config.shell, grades[#grades])
-      load(12, config.shell, grade)
-      load(13, materials, grade)
+  for _,machine in ipairs({storage.forge,storage.assembler}) do
+    player.teleport({machine.position.x,machine.position.y+3},machine.surface)
+    player.opened=machine
+    assert(player.opened==machine and not player.gui.screen.tp_hydrogen_machine,"native machine GUI was intercepted")
+    local inv=machine.get_module_inventory()
+    assert(#inv==4 and not inv.can_insert{name="productivity-module"})
+    assert(inv.insert{name="speed-module-3",count=3,quality=grades[#grades]}==3)
+    if machine==storage.assembler then
+      local grade=grades[3] or "normal"
+      machine.set_recipe("tp-mh7-native-seal-fresh",grade)
+      assert(machine.insert{name=config.shell,count=3,quality=grade}==3)
+      assert(machine.insert{name=materials,count=3,quality=grade}==3)
     else
-      cursor.set_stack{name = config.stages[1].name, quality = grades[#grades], health = .75}
-      assert(click(panel.Input.slot1))
+      machine.set_recipe("tp-mh7-native-forge-fresh",grades[#grades])
+      assert(machine.insert{name=config.stages[1].name,count=1,quality=grades[#grades]}==1)
     end
-    player.opened = nil
+    player.opened=nil
   end
 end
 
@@ -137,10 +118,8 @@ script.on_event(defines.events.on_tick, function(event)
   if event.tick % 10 == 0 then
     local formed = storage.forge.get_output_inventory()[1]
     if formed.valid_for_read and not storage.forged then
-      assert(formed.name == materials and formed.quality.name == grades[#grades] and formed.health == .75)
-      local operation = remote.call(decay, "inspect_forge", storage.forge).last_conversion
-      assert(operation.before.spoil_tick == operation.after.spoil_tick)
-      assert(operation.tick - operation.native_cycle_started < 24 * 60, "speed modules did not accelerate pressing")
+      assert(formed.name==materials and formed.quality.name==grades[#grades])
+      assert(event.tick<24*60+5,"speed modules did not accelerate native pressing")
       storage.forged = true
       formed.clear()
     end
@@ -160,7 +139,7 @@ script.on_event(defines.events.on_tick, function(event)
   local sealed = storage.assembler.get_output_inventory()[1]
   local expected = grades[3] or "normal"
   assert(sealed.valid_for_read and sealed.name == config.contained and sealed.quality.name == expected)
-  assert(sealed.tags.mh7_shell_quality == expected and sealed.tags.mh7_raw_quality == expected)
+  assert(storage.assembler.get_output_inventory().get_item_count(config.contained)==3,"native sealing batch incomplete")
   assert(storage.assembler.get_module_inventory().get_item_count() == 3, "module loss during recipe changes")
   log("Hydrogen quality: " .. (#grades)^2 .. " grade combinations, " .. storage.upgraded ..
     " quality upgrades in " .. storage.output .. " crucible crafts; hydroformed " .. shell.quality.name .. " shell")

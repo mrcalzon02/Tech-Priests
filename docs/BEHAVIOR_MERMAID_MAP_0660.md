@@ -179,6 +179,17 @@ replacement; the Mech fixture retains its native walking, water flight, bob
 and landing checks. Headed player and menu-simulation capture is separate
 from native server correctness. A source contract cannot establish pixel coverage.
 
+## Metallicized hydrogen / plasma fuel production
+
+See [native recipe authority 1509](HYDROGEN_NATIVE_RECIPE_AUTHORITY_1509.md).
+The integrated line now uses selectable native crafting recipes for all seven
+machines, with real material slots, electric load and native progress. Old
+clock/intake/dispatch and private GUI owners are inactive on integrated
+installs. A configuration-only stock migration returns saved original stacks;
+the decay owner receives native craft/spoil events rather than switching
+machine recipes or polling private jobs. Existing legacy standalone add-ons
+retain their independent authority.
+
 ## 6. Observed boundaries requiring performance work
 
 | Source path | Actual boundary | Open risk |
