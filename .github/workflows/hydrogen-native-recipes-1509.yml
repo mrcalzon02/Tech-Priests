@@ -45,7 +45,7 @@ jobs:
           git -c protocol.version=2 fetch --depth=1 --filter=blob:none --no-recurse-submodules origin "$GITHUB_SHA"
           git checkout --detach --no-recurse-submodules FETCH_HEAD
           test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
-      - name: Verify native recipe contracts, regenerate inventory, run all source regressions
+      - name: Verify single-canister recipe contracts, regenerate inventory, run all source regressions
         working-directory: source
         shell: bash
         run: |
