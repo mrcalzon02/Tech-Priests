@@ -3,7 +3,7 @@
     {
       "covered_source_files": 389,
       "path": "docs/BEHAVIOR_FUNCTION_MAP_0659.md",
-      "reviewed_source_digest": "beb2e80ec144b55e7021794cf9ee9264c0bab87a5aa149f744eb261aede639f5",
+      "reviewed_source_digest": "b21d7e27f4cfd1dd47100f21828d42d0dfa2bfbfa775d6dd857d0e6680d582f2",
       "sha256": "aef4cbac52bf076679f909312d14bdc2ab07752922bc2148615a5c9fd40bf439",
       "source_patterns": [
         "control.lua",
@@ -41,7 +41,7 @@
     {
       "covered_source_files": 6,
       "path": "docs/BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0662_DIRECT_MOVEMENT.md",
-      "reviewed_source_digest": "597ca91cf4308c8fb0e1fa990cdb1d2e17b9996cca6e2741c70089aed8130e26",
+      "reviewed_source_digest": "c53a84f6fd254d2bfd9ed1d4c0238ec5752fd28a87fd5149bdc68ce1cd3684a0",
       "sha256": "a0e5e16f723f6bf493b74e4422a9812583ed2f715e6fce7a6cb88d7af3f1856a",
       "source_patterns": [
         "scripts/core/direct_acquisition_physical_guard_0649.lua",
@@ -55,7 +55,7 @@
     {
       "covered_source_files": 4,
       "path": "docs/BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0663_DIRECT_EXECUTOR.md",
-      "reviewed_source_digest": "5c0b6b1a52e5534d51833c09c6f315a9d54be5f95d1a675b903cb96d28b69e6d",
+      "reviewed_source_digest": "e824dc183e0020abd431e255849f6b3ad55601fd455a885740f74044cd741672",
       "sha256": "1e446fd6c64e724d63483b2eab8a11ed47aff704fbe4a51e7627815d03a9c330",
       "source_patterns": [
         "scripts/core/direct_acquisition_executor_0513.lua",
@@ -67,8 +67,8 @@
     {
       "covered_source_files": 4,
       "path": "docs/BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0664_MOVEMENT_CONTROLLER.md",
-      "reviewed_source_digest": "68bb2e7a77d70328d758c642e13a220384410ec02510188d8e304f8a98d16f36",
-      "sha256": "aade3f1ce3b85e4cee90de2f7b273d3c1a1db680bc55e649cc5b7f496108c99a",
+      "reviewed_source_digest": "3c0845f161b9775a97e20c65e42daba038976bcfa2e20ea8ca26725029bc4021",
+      "sha256": "8aa6323217765d71213441aa6651457a7df8d4e51253d597c56d223794a3d376",
       "source_patterns": [
         "scripts/core/movement_controller.lua",
         "scripts/core/authority_corridor_pathing_0574.lua",
@@ -218,7 +218,7 @@
     {
       "covered_source_files": 389,
       "path": "docs/BEHAVIOR_MERMAID_MAP_0660.md",
-      "reviewed_source_digest": "beb2e80ec144b55e7021794cf9ee9264c0bab87a5aa149f744eb261aede639f5",
+      "reviewed_source_digest": "b21d7e27f4cfd1dd47100f21828d42d0dfa2bfbfa775d6dd857d0e6680d582f2",
       "sha256": "d2b71e961df741a2ccbc2d39de42841543a7e7cde99f9ee500bb4f23a01a62bf",
       "source_patterns": [
         "control.lua",
@@ -229,8 +229,8 @@
     {
       "covered_source_files": 389,
       "path": "docs/RECOVERY_AUTHORITY_MAP_CURRENT.md",
-      "reviewed_source_digest": "beb2e80ec144b55e7021794cf9ee9264c0bab87a5aa149f744eb261aede639f5",
-      "sha256": "1f72e3037f5d583028e76ac82c38556ec794b11415f9ec4bc60cb65a0fd109c7",
+      "reviewed_source_digest": "b21d7e27f4cfd1dd47100f21828d42d0dfa2bfbfa775d6dd857d0e6680d582f2",
+      "sha256": "aaa74e6306e267c1b5058e0586a973208b38e17c0e6cec0b9622098ba036ac48",
       "source_patterns": [
         "control.lua",
         "scripts/**/*.lua",
@@ -240,7 +240,7 @@
   ],
   "review_meaning": "Explicit source/diagram review acknowledgment; no semantic or runtime proof.",
   "schema": "tech-priests-behavior-map-review-v1",
-  "source_digest": "beb2e80ec144b55e7021794cf9ee9264c0bab87a5aa149f744eb261aede639f5",
+  "source_digest": "b21d7e27f4cfd1dd47100f21828d42d0dfa2bfbfa775d6dd857d0e6680d582f2",
   "source_scope": [
     "control.lua",
     "scripts/**/*.lua",

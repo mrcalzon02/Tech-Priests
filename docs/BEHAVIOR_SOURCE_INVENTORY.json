@@ -4,15 +4,15 @@
     "commands": 141,
     "dependencies": 720,
     "event_routes": 314,
-    "functions": 11876,
+    "functions": 11874,
     "install_calls": 228,
     "module_string_references": 1019,
     "module_tables": 56,
     "modules": 389,
     "named_functions": 8699,
     "potential_literal_reachable_modules": 311,
-    "scans": 213,
-    "state_writers": 4570,
+    "scans": 212,
+    "state_writers": 4573,
     "storage_roots": 1900,
     "unresolved_loads": 9,
     "wrapper_candidates": 787
@@ -71143,7 +71143,7 @@
             }
           },
           "installation": "source-call-site-only",
-          "line": 2706,
+          "line": 2754,
           "protected_call": false,
           "specification": "literal-table"
         },
@@ -71186,7 +71186,7 @@
             }
           },
           "installation": "source-call-site-only",
-          "line": 2707,
+          "line": 2755,
           "protected_call": false,
           "specification": "literal-table"
         },
@@ -71196,7 +71196,7 @@
             "budget": {
               "declared_scalar_candidates": [
                 {
-                  "line": 70,
+                  "line": 72,
                   "value": 24
                 }
               ],
@@ -71214,7 +71214,7 @@
             "interval": {
               "declared_scalar_candidates": [
                 {
-                  "line": 69,
+                  "line": 71,
                   "value": 89
                 }
               ],
@@ -71235,7 +71235,7 @@
             }
           },
           "installation": "source-call-site-only",
-          "line": 2708,
+          "line": 2756,
           "protected_call": false,
           "specification": "literal-table"
         }
@@ -71248,7 +71248,7 @@
             "function ( event ) local player = event and event . player_index and game . get_player ( event . player_index ) or nil if not ( player and player . valid ) then return end local pair = selected_pair ( player ) local root = ensure_root ( ) i …"
           ],
           "callee": "commands.add_command",
-          "line": 2613,
+          "line": 2661,
           "protected_call": false
         }
       ],
@@ -71329,7 +71329,7 @@
           "callee": "require",
           "execution": "conditional-or-unconditional; not evaluated",
           "kind": "literal-require",
-          "line": 324,
+          "line": 326,
           "protected_call": false,
           "target": "scripts.core.pair_bucket_registry",
           "target_scope": "inventoried-runtime-module"
@@ -71338,7 +71338,7 @@
           "callee": "require",
           "execution": "conditional-or-unconditional; not evaluated",
           "kind": "literal-require",
-          "line": 370,
+          "line": 392,
           "protected_call": false,
           "target": "scripts.core.void_movement_authority_0630",
           "target_scope": "inventoried-runtime-module"
@@ -71347,7 +71347,7 @@
           "callee": "require",
           "execution": "conditional-or-unconditional; not evaluated",
           "kind": "literal-require",
-          "line": 2700,
+          "line": 2748,
           "protected_call": false,
           "target": "scripts.core.runtime_tick_broker",
           "target_scope": "inventoried-runtime-module"
@@ -71371,171 +71371,164 @@
         },
         {
           "kind": "declaration",
-          "line": 92,
+          "line": 94,
           "local": true,
           "name": "long_action_owner",
           "parameters": "owner"
         },
         {
           "kind": "declaration",
-          "line": 103,
+          "line": 105,
           "local": true,
           "name": "now",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 104,
+          "line": 106,
           "local": true,
           "name": "valid",
           "parameters": "e"
         },
         {
           "kind": "declaration",
-          "line": 105,
+          "line": 107,
           "local": true,
           "name": "lower",
           "parameters": "value"
         },
         {
           "kind": "declaration",
-          "line": 106,
+          "line": 108,
           "local": true,
           "name": "metric",
           "parameters": "k , n"
         },
         {
           "kind": "declaration",
-          "line": 107,
+          "line": 109,
           "local": true,
           "name": "budget_take",
           "parameters": "bucket , amount"
         },
         {
           "kind": "declaration",
-          "line": 115,
+          "line": 117,
           "local": true,
           "name": "budget_exempt",
           "parameters": "reason , owner , priority"
         },
         {
           "kind": "declaration",
-          "line": 128,
+          "line": 130,
           "local": true,
           "name": "movement_command_budget_allowed",
           "parameters": "req"
         },
         {
           "kind": "declaration",
-          "line": 132,
+          "line": 134,
           "local": true,
           "name": "valid_hostile_target",
           "parameters": "owner , target"
         },
         {
           "kind": "anonymous",
-          "line": 142,
+          "line": 144,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 145,
+          "line": 147,
           "local": true,
           "name": "dist_sq",
           "parameters": "a , b"
         },
         {
           "kind": "declaration",
-          "line": 152,
+          "line": 154,
           "local": true,
           "name": "tier_key",
           "parameters": "pair"
         },
         {
           "kind": "declaration",
-          "line": 160,
+          "line": 162,
           "local": true,
           "name": "runtime_radius",
           "parameters": "pair"
         },
         {
           "kind": "declaration",
-          "line": 172,
+          "line": 174,
           "local": false,
           "name": "M.work_radius",
           "parameters": "pair"
         },
         {
           "kind": "declaration",
-          "line": 176,
+          "line": 178,
           "local": false,
           "name": "M.hard_leash",
           "parameters": "pair"
         },
         {
           "kind": "declaration",
-          "line": 180,
+          "line": 182,
           "local": true,
           "name": "return_or_recovery_reason",
           "parameters": "reason , opts"
         },
         {
           "kind": "declaration",
-          "line": 190,
+          "line": 192,
           "local": true,
           "name": "player_near",
           "parameters": "surface , position , radius"
         },
         {
           "kind": "declaration",
-          "line": 205,
+          "line": 207,
           "local": true,
           "name": "route_chunk_exempt",
           "parameters": "pair , reason , opts"
         },
         {
           "kind": "declaration",
-          "line": 234,
+          "line": 236,
           "local": true,
           "name": "plan_visible_ground_segment",
           "parameters": "pair , destination , reason , opts"
         },
         {
           "kind": "declaration",
-          "line": 279,
+          "line": 281,
           "local": true,
           "name": "ensure_root",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 303,
+          "line": 305,
           "local": true,
           "name": "pairs_by_station",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 307,
+          "line": 309,
           "local": true,
           "name": "pair_by_request_key",
           "parameters": "key"
         },
         {
           "kind": "declaration",
-          "line": 319,
+          "line": 321,
           "local": true,
           "name": "note_active_request",
           "parameters": "root , key , pair"
-        },
-        {
-          "kind": "anonymous",
-          "line": 324,
-          "local": false,
-          "name": "<anonymous>",
-          "parameters": ""
         },
         {
           "kind": "anonymous",
@@ -71545,568 +71538,561 @@
           "parameters": ""
         },
         {
+          "kind": "anonymous",
+          "line": 328,
+          "local": false,
+          "name": "<anonymous>",
+          "parameters": ""
+        },
+        {
           "kind": "declaration",
-          "line": 330,
+          "line": 332,
           "local": true,
           "name": "clear_active_request",
           "parameters": "root , key"
         },
         {
           "kind": "declaration",
-          "line": 334,
+          "line": 346,
+          "local": true,
+          "name": "active_visit",
+          "parameters": "root , field , seen"
+        },
+        {
+          "kind": "declaration",
+          "line": 356,
           "local": true,
           "name": "count_table",
           "parameters": "t"
         },
         {
           "kind": "declaration",
-          "line": 336,
+          "line": 358,
           "local": true,
           "name": "pair_key",
           "parameters": "pair"
         },
         {
           "kind": "declaration",
-          "line": 342,
+          "line": 364,
           "local": true,
           "name": "selected_pair",
           "parameters": "player"
         },
         {
           "kind": "declaration",
-          "line": 353,
+          "line": 375,
           "local": true,
           "name": "pair_for_priest",
           "parameters": "priest"
         },
         {
           "kind": "declaration",
-          "line": 368,
+          "line": 390,
           "local": true,
           "name": "void_backend",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 370,
+          "line": 392,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 373,
+          "line": 395,
           "local": true,
           "name": "is_space_pair",
           "parameters": "pair"
         },
         {
           "kind": "declaration",
-          "line": 385,
+          "line": 407,
           "local": false,
           "name": "M.position_allowed",
           "parameters": "pair , pos , reason , opts"
         },
         {
           "kind": "declaration",
-          "line": 501,
+          "line": 523,
           "local": true,
           "name": "proxy_prime_allowed",
           "parameters": "pair , target"
         },
         {
           "kind": "declaration",
-          "line": 519,
+          "line": 541,
           "local": true,
           "name": "direct_stop",
           "parameters": "priest"
         },
         {
           "kind": "anonymous",
-          "line": 523,
+          "line": 544,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 527,
+          "line": 547,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 530,
+          "line": 553,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 534,
+          "line": 560,
           "local": true,
           "name": "direct_go_to",
           "parameters": "priest , pos , radius , distraction"
         },
         {
           "kind": "declaration",
-          "line": 559,
+          "line": 585,
           "local": true,
           "name": "clear_step",
           "parameters": "v"
         },
         {
           "kind": "anonymous",
-          "line": 565,
+          "line": 591,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 599,
+          "line": 625,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 616,
+          "line": 644,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 621,
+          "line": 649,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 626,
+          "line": 654,
           "local": true,
           "name": "current_work_position",
           "parameters": "pair"
         },
         {
           "kind": "declaration",
-          "line": 636,
+          "line": 664,
           "local": true,
           "name": "conversation_locked",
           "parameters": "pair"
         },
         {
           "kind": "declaration",
-          "line": 645,
+          "line": 673,
           "local": true,
           "name": "work_clamped",
           "parameters": "pair"
         },
         {
           "kind": "declaration",
-          "line": 661,
+          "line": 689,
           "local": true,
           "name": "clamp_reason",
           "parameters": "pair"
         },
         {
           "kind": "declaration",
-          "line": 687,
+          "line": 715,
           "local": true,
           "name": "machine_phase_handoff",
           "parameters": "pair , current , owner , reason"
         },
         {
           "kind": "declaration",
-          "line": 704,
+          "line": 732,
           "local": false,
           "name": "M.request",
           "parameters": "pair , destination , reason , opts"
         },
         {
           "kind": "declaration",
-          "line": 1016,
+          "line": 1044,
           "local": true,
           "name": "arrival_padding",
           "parameters": "pair , req"
         },
         {
           "kind": "declaration",
-          "line": 1033,
+          "line": 1061,
           "local": false,
           "name": "M.request_status",
           "parameters": "pair , owner"
         },
         {
           "kind": "declaration",
-          "line": 1104,
+          "line": 1138,
           "local": false,
           "name": "M.combat_intent",
           "parameters": "pair , target , reason , opts"
         },
         {
           "kind": "declaration",
-          "line": 1137,
+          "line": 1171,
           "local": false,
           "name": "M.stop",
           "parameters": "pair , reason"
         },
         {
           "kind": "declaration",
-          "line": 1159,
+          "line": 1193,
           "local": true,
           "name": "verified_first_reversal_cargo_return",
           "parameters": "pair"
         },
         {
           "kind": "anonymous",
-          "line": 1195,
+          "line": 1229,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 1227,
+          "line": 1261,
           "local": true,
           "name": "verified_second_reversal_leg",
           "parameters": "pair , request"
         },
         {
           "kind": "anonymous",
-          "line": 1282,
+          "line": 1316,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 1336,
+          "line": 1370,
           "local": true,
           "name": "verified_first_junior_pickup_leg_0940",
           "parameters": "pair , request"
         },
         {
           "kind": "anonymous",
-          "line": 1419,
+          "line": 1453,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 1446,
+          "line": 1480,
           "local": true,
           "name": "verified_second_junior_pickup_leg_0946",
           "parameters": "pair , request"
         },
         {
           "kind": "anonymous",
-          "line": 1555,
+          "line": 1589,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 1575,
+          "line": 1609,
           "local": false,
           "name": "M.enforce_pair",
           "parameters": "pair , reason"
         },
         {
           "kind": "declaration",
-          "line": 1902,
+          "line": 1936,
           "local": false,
           "name": "M.enforcement_service",
           "parameters": "event , budget"
         },
         {
           "kind": "anonymous",
-          "line": 1908,
+          "line": 1942,
           "local": false,
           "name": "<anonymous>",
           "parameters": "a , b"
         },
         {
           "kind": "declaration",
-          "line": 1928,
+          "line": 1962,
           "local": true,
           "name": "off_objective_route",
           "parameters": "req , position"
         },
         {
           "kind": "declaration",
-          "line": 1940,
-          "local": true,
-          "name": "recovery_waypoint",
-          "parameters": "req , position"
-        },
-        {
-          "kind": "declaration",
-          "line": 1956,
+          "line": 1978,
           "local": true,
           "name": "physical_station_recovery_route",
           "parameters": "req"
         },
         {
           "kind": "declaration",
-          "line": 1965,
+          "line": 1987,
           "local": true,
           "name": "recover_bad_route",
           "parameters": "pair , req , reason"
         },
         {
           "kind": "declaration",
-          "line": 2073,
-          "local": true,
-          "name": "legal",
-          "parameters": "pos"
-        },
-        {
-          "kind": "anonymous",
-          "line": 2077,
-          "local": false,
-          "name": "<anonymous>",
-          "parameters": ""
-        },
-        {
-          "kind": "anonymous",
-          "line": 2085,
-          "local": false,
-          "name": "<anonymous>",
-          "parameters": ""
-        },
-        {
-          "kind": "anonymous",
-          "line": 2100,
-          "local": false,
-          "name": "<anonymous>",
-          "parameters": ""
-        },
-        {
-          "kind": "declaration",
-          "line": 2131,
+          "line": 2127,
           "local": true,
           "name": "watch_bad_route",
           "parameters": "pair , req"
         },
         {
           "kind": "declaration",
-          "line": 2182,
+          "line": 2178,
           "local": true,
           "name": "apply_request",
           "parameters": "pair , req"
         },
         {
           "kind": "anonymous",
-          "line": 2259,
+          "line": 2256,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 2317,
+          "line": 2314,
           "local": false,
           "name": "M.service",
           "parameters": "event , budget"
         },
         {
           "kind": "declaration",
-          "line": 2353,
+          "line": 2360,
+          "local": true,
+          "name": "on_native_train",
+          "parameters": "priest"
+        },
+        {
+          "kind": "anonymous",
+          "line": 2362,
+          "local": false,
+          "name": "<anonymous>",
+          "parameters": ""
+        },
+        {
+          "kind": "declaration",
+          "line": 2366,
           "local": false,
           "name": "M.sample",
           "parameters": "event , budget"
         },
         {
           "kind": "declaration",
-          "line": 2413,
+          "line": 2461,
           "local": true,
           "name": "destination_from_entity_or_position",
           "parameters": "target"
         },
         {
           "kind": "declaration",
-          "line": 2422,
+          "line": 2470,
           "local": false,
           "name": "M.route_command",
           "parameters": "priest , command , owner , opts"
         },
         {
           "kind": "anonymous",
-          "line": 2469,
+          "line": 2517,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 2473,
+          "line": 2521,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 2477,
+          "line": 2525,
           "local": false,
           "name": "M.patch_globals",
           "parameters": ""
         },
         {
           "kind": "assigned-function",
-          "line": 2479,
+          "line": 2527,
           "local": false,
           "name": "_G.tech_priests_request_movement_0418",
           "parameters": "pair , destination , reason , opts"
         },
         {
           "kind": "assigned-function",
-          "line": 2482,
+          "line": 2530,
           "local": false,
           "name": "_G.tech_priests_stop_movement_0418",
           "parameters": "pair , reason"
         },
         {
           "kind": "assigned-function",
-          "line": 2485,
+          "line": 2533,
           "local": false,
           "name": "_G.tech_priests_movement_status_0418",
           "parameters": "pair , owner"
         },
         {
           "kind": "assigned-function",
-          "line": 2488,
+          "line": 2536,
           "local": false,
           "name": "_G.tech_priests_route_ground_command_0429",
           "parameters": "priest , command , owner , opts"
         },
         {
           "kind": "assigned-function",
-          "line": 2495,
+          "line": 2543,
           "local": false,
           "name": "_G.issue_priest_command",
           "parameters": "priest , command"
         },
         {
           "kind": "assigned-function",
-          "line": 2526,
+          "line": 2574,
           "local": false,
           "name": "_G.move_priest_to",
           "parameters": "priest , target"
         },
         {
           "kind": "assigned-function",
-          "line": 2543,
+          "line": 2591,
           "local": false,
           "name": "_G.return_to_station",
           "parameters": "subject , maybe_station"
         },
         {
           "kind": "declaration",
-          "line": 2563,
+          "line": 2611,
           "local": true,
           "name": "combat_opts_after_proxy",
           "parameters": "pair , priority"
         },
         {
           "kind": "assigned-function",
-          "line": 2577,
+          "line": 2625,
           "local": false,
           "name": "_G.tech_priests_0292_prime_proxy_attack",
           "parameters": "pair , target , reason"
         },
         {
           "kind": "assigned-function",
-          "line": 2592,
+          "line": 2640,
           "local": false,
           "name": "_G.tech_priests_0293_prime_proxy_attack",
           "parameters": "pair , target , reason"
         },
         {
           "kind": "declaration",
-          "line": 2608,
+          "line": 2656,
           "local": false,
           "name": "M.commands",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 2610,
+          "line": 2658,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 2611,
+          "line": 2659,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 2612,
+          "line": 2660,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 2613,
+          "line": 2661,
           "local": false,
           "name": "<anonymous>",
           "parameters": "event"
         },
         {
           "kind": "declaration",
-          "line": 2641,
+          "line": 2689,
           "local": false,
           "name": "M.report_lines",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 2673,
+          "line": 2721,
           "local": false,
           "name": "M.cleanup_retired_pair_state",
           "parameters": ""
         },
         {
           "kind": "declaration",
-          "line": 2694,
+          "line": 2742,
           "local": false,
           "name": "M.install",
           "parameters": ""
         },
         {
           "kind": "anonymous",
-          "line": 2700,
+          "line": 2748,
           "local": false,
           "name": "<anonymous>",
           "parameters": ""
         },
         {
           "kind": "assigned-function",
-          "line": 2706,
+          "line": 2754,
           "local": false,
           "name": "fn",
           "parameters": "event , budget"
         },
         {
           "kind": "assigned-function",
-          "line": 2707,
+          "line": 2755,
           "local": false,
           "name": "fn",
           "parameters": "event , budget"
         },
         {
           "kind": "assigned-function",
-          "line": 2708,
+          "line": 2756,
           "local": false,
           "name": "fn",
           "parameters": "event , budget"
@@ -72115,7 +72101,7 @@
       "install_calls": [
         {
           "callee": "TraversableCrossings1507.install",
-          "line": 2702,
+          "line": 2750,
           "literal_alias_candidates": [
             "scripts.core.traversable_crossings_1507"
           ],
@@ -72123,7 +72109,7 @@
           "resolution": "lexical-alias-only"
         }
       ],
-      "lines": 2714,
+      "lines": 2762,
       "module": "scripts.core.movement_controller",
       "module_string_references": [
         {
@@ -72167,17 +72153,17 @@
           "target": "scripts.core.combat_safety"
         },
         {
-          "line": 324,
+          "line": 326,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
           "target": "scripts.core.pair_bucket_registry"
         },
         {
-          "line": 370,
+          "line": 392,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
           "target": "scripts.core.void_movement_authority_0630"
         },
         {
-          "line": 2700,
+          "line": 2748,
           "resolution": "reference-only; may be retired, diagnostic or a dynamic dispatch target",
           "target": "scripts.core.runtime_tick_broker"
         }
@@ -72185,246 +72171,211 @@
       "module_tables": [],
       "path": "scripts/core/movement_controller.lua",
       "reachability": "potential-literal-require-path",
-      "scans": [
-        {
-          "arguments": [
-            "priest . name",
-            "destination",
-            "M . recovery_probe_radius",
-            "0.25",
-            "false"
-          ],
-          "callee": "surface.find_non_colliding_position",
-          "line": 2086,
-          "protected_call": false,
-          "runtime_cost": "unmeasured",
-          "static_risk_hint": "global-or-unbounded"
-        }
-      ],
-      "sha256": "301777338786476094ec64d8af68afa85498a4430170795be2ddfbebf0a4b6fa",
+      "scans": [],
+      "sha256": "f9f7ee07905f027f1bd95289c0d2dda1d648f84e20bd42b582024714eb2fb467",
       "state_writers": [
         {
           "kind": "state-assignment",
-          "line": 280,
+          "line": 282,
           "target": "storage.tech_priests"
         },
         {
           "kind": "state-assignment",
-          "line": 281,
+          "line": 283,
           "target": "storage.tech_priests[M . storage_key]"
         },
         {
           "kind": "state-assignment",
-          "line": 343,
+          "line": 365,
           "target": "pair"
         },
         {
           "kind": "state-assignment",
-          "line": 344,
+          "line": 366,
           "target": "pair"
         },
         {
           "kind": "state-assignment",
-          "line": 349,
+          "line": 371,
           "target": "pair"
         },
         {
           "kind": "state-assignment",
-          "line": 364,
+          "line": 386,
           "target": "pair"
         },
         {
           "kind": "state-assignment",
-          "line": 510,
+          "line": 532,
           "target": "pair.last_proxy_prime_stage_0419"
         },
         {
           "kind": "state-assignment",
-          "line": 513,
+          "line": 535,
           "target": "pair.last_prime_target_unit_0419"
         },
         {
           "kind": "state-assignment",
-          "line": 514,
+          "line": 536,
           "target": "pair.next_proxy_prime_tick_0419"
         },
         {
           "kind": "state-assignment",
-          "line": 515,
+          "line": 537,
           "target": "pair.last_proxy_prime_stage_0419"
         },
         {
           "callee": "commandable.set_command",
           "kind": "mutation-call-candidate",
-          "line": 525,
+          "line": 550,
           "protected_call": false
         },
         {
           "callee": "priest.set_command",
           "kind": "mutation-call-candidate",
-          "line": 528,
+          "line": 555,
           "protected_call": false
         },
         {
           "callee": "commandable.set_command",
           "kind": "mutation-call-candidate",
-          "line": 618,
+          "line": 646,
           "protected_call": false
         },
         {
           "callee": "priest.set_command",
           "kind": "mutation-call-candidate",
-          "line": 621,
+          "line": 649,
           "protected_call": false
         },
         {
           "kind": "state-assignment",
-          "line": 667,
+          "line": 695,
           "target": "pair.movement_lockdown_until_0416"
         },
         {
           "kind": "state-assignment",
-          "line": 668,
+          "line": 696,
           "target": "pair.movement_lockdown_reason_0416"
         },
         {
           "kind": "state-assignment",
-          "line": 789,
+          "line": 817,
           "target": "pair.movement_request_0418"
         },
         {
           "kind": "state-assignment",
-          "line": 794,
+          "line": 822,
           "target": "pair.movement_request_0418"
         },
         {
           "kind": "state-assignment",
-          "line": 795,
+          "line": 823,
           "target": "pair.movement_controller_state_0418"
         },
         {
           "kind": "state-assignment",
-          "line": 796,
+          "line": 824,
           "target": "pair.movement_controller_status_0418"
         },
         {
           "kind": "state-assignment",
-          "line": 826,
+          "line": 854,
           "target": "pair.movement_request_0418"
         },
         {
           "kind": "state-assignment",
-          "line": 845,
+          "line": 873,
           "target": "pair.movement_request_0418"
         },
         {
           "kind": "state-assignment",
-          "line": 859,
-          "target": "pair.movement_request_0418"
-        },
-        {
-          "kind": "state-assignment",
-          "line": 866,
-          "target": "pair.movement_controller_state_0418"
-        },
-        {
-          "kind": "state-assignment",
-          "line": 867,
-          "target": "pair.movement_controller_clamp_0418"
-        },
-        {
-          "kind": "state-assignment",
-          "line": 868,
+          "line": 887,
           "target": "pair.movement_request_0418"
         },
         {
           "kind": "state-assignment",
           "line": 894,
-          "target": "pair.movement_request_0418"
-        },
-        {
-          "kind": "state-assignment",
-          "line": 917,
           "target": "pair.movement_controller_state_0418"
         },
         {
           "kind": "state-assignment",
-          "line": 918,
-          "target": "pair.movement_request_0418"
-        },
-        {
-          "kind": "state-assignment",
-          "line": 931,
-          "target": "pair.movement_request_0418"
-        },
-        {
-          "kind": "state-assignment",
-          "line": 932,
-          "target": "pair.movement_controller_state_0418"
-        },
-        {
-          "kind": "state-assignment",
-          "line": 933,
+          "line": 895,
           "target": "pair.movement_controller_clamp_0418"
         },
         {
           "kind": "state-assignment",
-          "line": 947,
+          "line": 896,
           "target": "pair.movement_request_0418"
         },
         {
           "kind": "state-assignment",
-          "line": 967,
+          "line": 922,
           "target": "pair.movement_request_0418"
         },
         {
           "kind": "state-assignment",
-          "line": 968,
+          "line": 945,
           "target": "pair.movement_controller_state_0418"
         },
         {
           "kind": "state-assignment",
-          "line": 969,
-          "target": "pair.movement_controller_clamp_0418"
-        },
-        {
-          "kind": "state-assignment",
-          "line": 1009,
+          "line": 946,
           "target": "pair.movement_request_0418"
         },
         {
           "kind": "state-assignment",
-          "line": 1010,
+          "line": 959,
+          "target": "pair.movement_request_0418"
+        },
+        {
+          "kind": "state-assignment",
+          "line": 960,
+          "target": "pair.movement_controller_state_0418"
+        },
+        {
+          "kind": "state-assignment",
+          "line": 961,
+          "target": "pair.movement_controller_clamp_0418"
+        },
+        {
+          "kind": "state-assignment",
+          "line": 975,
+          "target": "pair.movement_request_0418"
+        },
+        {
+          "kind": "state-assignment",
+          "line": 995,
+          "target": "pair.movement_request_0418"
+        },
+        {
+          "kind": "state-assignment",
+          "line": 996,
+          "target": "pair.movement_controller_state_0418"
+        },
+        {
+          "kind": "state-assignment",
+          "line": 997,
+          "target": "pair.movement_controller_clamp_0418"
+        },
+        {
+          "kind": "state-assignment",
+          "line": 1037,
+          "target": "pair.movement_request_0418"
+        },
+        {
+          "kind": "state-assignment",
+          "line": 1038,
           "target": "pair.movement_controller_owner_0418"
         },
         {
           "kind": "state-assignment",
-          "line": 1011,
+          "line": 1039,
           "target": "pair.movement_controller_reason_0418"
         },
         {
           "kind": "state-assignment",
-          "line": 1056,
-          "target": "pair.movement_controller_status_0418"
-        },
-        {
-          "kind": "state-assignment",
-          "line": 1072,
-          "target": "pair.movement_controller_status_0418"
-        },
-        {
-          "kind": "state-assignment",
-          "line": 1078,
-          "target": "pair.movement_controller_status_0418"
-        },
-        {
-          "kind": "state-assignment",
-          "line": 1089,
-          "target": "pair.movement_controller_status_0418"
-        },
-        {
-          "kind": "state-assignment",
-          "line": 1096,
+          "line": 1084,
           "target": "pair.movement_controller_status_0418"
         },
         {
@@ -72434,274 +72385,269 @@
         },
         {
           "kind": "state-assignment",
-          "line": 1111,
+          "line": 1106,
+          "target": "pair.movement_controller_status_0418"
+        },
+        {
+          "kind": "state-assignment",
+          "line": 1117,
+          "target": "pair.movement_controller_status_0418"
+        },
+        {
+          "kind": "state-assignment",
+          "line": 1123,
+          "target": "pair.movement_controller_status_0418"
+        },
+        {
+          "kind": "state-assignment",
+          "line": 1130,
+          "target": "pair.movement_controller_status_0418"
+        },
+        {
+          "kind": "state-assignment",
+          "line": 1134,
+          "target": "pair.movement_controller_status_0418"
+        },
+        {
+          "kind": "state-assignment",
+          "line": 1145,
           "target": "pair.combat_target"
-        },
-        {
-          "kind": "state-assignment",
-          "line": 1112,
-          "target": "pair.target"
-        },
-        {
-          "kind": "state-assignment",
-          "line": 1113,
-          "target": "pair.movement_controller_combat_intent_0419"
-        },
-        {
-          "kind": "state-assignment",
-          "line": 1121,
-          "target": "pair.mode"
-        },
-        {
-          "kind": "state-assignment",
-          "line": 1133,
-          "target": "pair.mode"
         },
         {
           "kind": "state-assignment",
           "line": 1146,
-          "target": "pair.movement_request_0418"
+          "target": "pair.target"
         },
         {
           "kind": "state-assignment",
           "line": 1147,
+          "target": "pair.movement_controller_combat_intent_0419"
+        },
+        {
+          "kind": "state-assignment",
+          "line": 1155,
+          "target": "pair.mode"
+        },
+        {
+          "kind": "state-assignment",
+          "line": 1167,
+          "target": "pair.mode"
+        },
+        {
+          "kind": "state-assignment",
+          "line": 1180,
+          "target": "pair.movement_request_0418"
+        },
+        {
+          "kind": "state-assignment",
+          "line": 1181,
           "target": "pair.movement_controller_reason_0418"
         },
         {
           "kind": "state-assignment",
-          "line": 1892,
+          "line": 1926,
           "target": "pair.combat_target"
         },
         {
           "kind": "state-assignment",
-          "line": 1893,
+          "line": 1927,
           "target": "pair.paused_by_combat"
         },
         {
           "kind": "state-assignment",
-          "line": 1906,
+          "line": 1940,
           "target": "pair"
         },
         {
           "kind": "state-assignment",
-          "line": 1914,
+          "line": 1948,
           "target": "pair"
         },
         {
           "kind": "state-assignment",
-          "line": 1985,
+          "line": 2007,
           "target": "pair.movement_controller_state_0418"
         },
         {
           "kind": "state-assignment",
-          "line": 2050,
+          "line": 2072,
           "target": "pair.movement_controller_state_0418"
         },
         {
           "kind": "state-assignment",
-          "line": 2120,
+          "line": 2118,
           "target": "pair.movement_controller_state_0418"
         },
         {
           "kind": "state-assignment",
-          "line": 2121,
+          "line": 2119,
           "target": "pair.movement_controller_last_recovery_0418"
         },
         {
           "kind": "state-assignment",
-          "line": 2187,
+          "line": 2183,
           "target": "pair.movement_controller_clamp_0418"
         },
         {
           "kind": "state-assignment",
-          "line": 2191,
+          "line": 2188,
           "target": "pair.movement_controller_clamp_0418"
         },
         {
           "kind": "state-assignment",
-          "line": 2203,
+          "line": 2200,
           "target": "pair.movement_controller_state_0418"
         },
         {
           "kind": "state-assignment",
-          "line": 2246,
+          "line": 2243,
           "target": "pair.movement_controller_state_0418"
         },
         {
           "kind": "state-assignment",
-          "line": 2251,
+          "line": 2248,
           "target": "pair.movement_controller_state_0418"
         },
         {
           "kind": "state-assignment",
-          "line": 2261,
+          "line": 2258,
           "target": "pair.movement_controller_state_0418"
         },
         {
           "kind": "state-assignment",
-          "line": 2265,
+          "line": 2262,
           "target": "pair.movement_controller_state_0418"
         },
         {
           "kind": "state-assignment",
-          "line": 2271,
+          "line": 2268,
           "target": "pair.movement_controller_state_0418"
         },
         {
           "kind": "state-assignment",
-          "line": 2292,
+          "line": 2289,
           "target": "pair.movement_controller_state_0418"
         },
         {
           "kind": "state-assignment",
-          "line": 2307,
+          "line": 2304,
           "target": "pair.movement_controller_state_0418"
         },
         {
           "kind": "state-assignment",
-          "line": 2308,
+          "line": 2305,
           "target": "pair.movement_controller_last_command_0418"
         },
         {
           "kind": "state-assignment",
-          "line": 2328,
+          "line": 2323,
           "target": "pair"
         },
         {
           "kind": "state-assignment",
-          "line": 2337,
+          "line": 2335,
           "target": "pair.movement_request_0418"
         },
         {
           "kind": "state-assignment",
-          "line": 2364,
+          "line": 2375,
           "target": "pair"
         },
         {
           "kind": "state-assignment",
-          "line": 2386,
+          "line": 2405,
           "target": "pair.last_ground_snap_0418"
         },
         {
           "kind": "state-assignment",
-          "line": 2387,
+          "line": 2407,
           "target": "pair.movement_stabilize_until_0418"
         },
         {
           "kind": "state-assignment",
-          "line": 2396,
-          "target": "pair.movement_request_0418"
-        },
-        {
-          "kind": "state-assignment",
-          "line": 2397,
+          "line": 2422,
           "target": "pair.movement_controller_state_0418"
         },
         {
           "kind": "state-assignment",
-          "line": 2398,
+          "line": 2423,
           "target": "pair.movement_controller_clamp_0418"
         },
         {
           "kind": "state-assignment",
           "line": 2431,
+          "target": "pair.speed_snap_log_count_1510"
+        },
+        {
+          "kind": "state-assignment",
+          "line": 2438,
+          "target": "pair.next_speed_snap_log_tick_1510"
+        },
+        {
+          "kind": "state-assignment",
+          "line": 2439,
+          "target": "pair.speed_snap_log_count_1510"
+        },
+        {
+          "kind": "state-assignment",
+          "line": 2479,
           "target": "pair"
         },
         {
           "callee": "commandable.set_command",
           "kind": "mutation-call-candidate",
-          "line": 2471,
+          "line": 2519,
           "protected_call": false
         },
         {
           "callee": "priest.set_command",
           "kind": "mutation-call-candidate",
-          "line": 2473,
+          "line": 2521,
           "protected_call": false
         },
         {
           "kind": "state-assignment",
-          "line": 2478,
+          "line": 2526,
           "target": "_G.TECH_PRIESTS_MOVEMENT_CONTROLLER_0418"
         },
         {
           "kind": "state-assignment",
-          "line": 2479,
+          "line": 2527,
           "target": "_G.tech_priests_request_movement_0418"
         },
         {
           "kind": "state-assignment",
-          "line": 2482,
+          "line": 2530,
           "target": "_G.tech_priests_stop_movement_0418"
         },
         {
           "kind": "state-assignment",
-          "line": 2485,
+          "line": 2533,
           "target": "_G.tech_priests_movement_status_0418"
         },
         {
           "kind": "state-assignment",
-          "line": 2488,
+          "line": 2536,
           "target": "_G.tech_priests_route_ground_command_0429"
         },
         {
           "kind": "state-assignment",
-          "line": 2491,
+          "line": 2539,
           "target": "_G.TECH_PRIESTS_COMBAT_MOVEMENT_LEFTOVER_PASS_0429"
         },
         {
           "kind": "state-assignment",
-          "line": 2494,
+          "line": 2542,
           "target": "_G.TECH_PRIESTS_0418_PREVIOUS_ISSUE_PRIEST_COMMAND"
         },
         {
           "kind": "state-assignment",
-          "line": 2495,
+          "line": 2543,
           "target": "_G.issue_priest_command"
         },
         {
           "kind": "state-assignment",
-          "line": 2496,
-          "target": "pair"
-        },
-        {
-          "kind": "state-assignment",
-          "line": 2501,
-          "target": "pair"
-        },
-        {
-          "kind": "state-assignment",
-          "line": 2511,
-          "target": "pair"
-        },
-        {
-          "kind": "state-assignment",
-          "line": 2525,
-          "target": "_G.TECH_PRIESTS_0418_PREVIOUS_MOVE_PRIEST_TO"
-        },
-        {
-          "kind": "state-assignment",
-          "line": 2526,
-          "target": "_G.move_priest_to"
-        },
-        {
-          "kind": "state-assignment",
-          "line": 2527,
-          "target": "pair"
-        },
-        {
-          "kind": "state-assignment",
-          "line": 2542,
-          "target": "_G.TECH_PRIESTS_0418_PREVIOUS_RETURN_TO_STATION"
-        },
-        {
-          "kind": "state-assignment",
-          "line": 2543,
-          "target": "_G.return_to_station"
-        },
-        {
-          "kind": "state-assignment",
-          "line": 2546,
+          "line": 2544,
           "target": "pair"
         },
         {
@@ -72711,204 +72657,244 @@
         },
         {
           "kind": "state-assignment",
-          "line": 2576,
-          "target": "_G.TECH_PRIESTS_0419_PREVIOUS_PRIME_PROXY_0292"
-        },
-        {
-          "kind": "state-assignment",
-          "line": 2577,
-          "target": "_G.tech_priests_0292_prime_proxy_attack"
-        },
-        {
-          "kind": "state-assignment",
-          "line": 2591,
-          "target": "_G.TECH_PRIESTS_0419_PREVIOUS_PRIME_PROXY_0293"
-        },
-        {
-          "kind": "state-assignment",
-          "line": 2592,
-          "target": "_G.tech_priests_0293_prime_proxy_attack"
-        },
-        {
-          "kind": "state-assignment",
-          "line": 2616,
+          "line": 2559,
           "target": "pair"
         },
         {
           "kind": "state-assignment",
-          "line": 2678,
+          "line": 2573,
+          "target": "_G.TECH_PRIESTS_0418_PREVIOUS_MOVE_PRIEST_TO"
+        },
+        {
+          "kind": "state-assignment",
+          "line": 2574,
+          "target": "_G.move_priest_to"
+        },
+        {
+          "kind": "state-assignment",
+          "line": 2575,
+          "target": "pair"
+        },
+        {
+          "kind": "state-assignment",
+          "line": 2590,
+          "target": "_G.TECH_PRIESTS_0418_PREVIOUS_RETURN_TO_STATION"
+        },
+        {
+          "kind": "state-assignment",
+          "line": 2591,
+          "target": "_G.return_to_station"
+        },
+        {
+          "kind": "state-assignment",
+          "line": 2594,
+          "target": "pair"
+        },
+        {
+          "kind": "state-assignment",
+          "line": 2597,
+          "target": "pair"
+        },
+        {
+          "kind": "state-assignment",
+          "line": 2624,
+          "target": "_G.TECH_PRIESTS_0419_PREVIOUS_PRIME_PROXY_0292"
+        },
+        {
+          "kind": "state-assignment",
+          "line": 2625,
+          "target": "_G.tech_priests_0292_prime_proxy_attack"
+        },
+        {
+          "kind": "state-assignment",
+          "line": 2639,
+          "target": "_G.TECH_PRIESTS_0419_PREVIOUS_PRIME_PROXY_0293"
+        },
+        {
+          "kind": "state-assignment",
+          "line": 2640,
+          "target": "_G.tech_priests_0293_prime_proxy_attack"
+        },
+        {
+          "kind": "state-assignment",
+          "line": 2664,
+          "target": "pair"
+        },
+        {
+          "kind": "state-assignment",
+          "line": 2726,
           "target": "pair.ground_route_lease_0633"
         },
         {
           "kind": "state-assignment",
-          "line": 2679,
+          "line": 2727,
           "target": "pair.ground_route_status_0633"
         },
         {
           "kind": "state-assignment",
-          "line": 2680,
+          "line": 2728,
           "target": "pair.movement_rejected_0566"
         }
       ],
       "storage_roots": [
         {
           "expression": "storage.tech_priests",
-          "line": 280
+          "line": 282
         },
         {
           "expression": "storage.tech_priests[M . storage_key]",
-          "line": 281
+          "line": 283
         },
         {
           "expression": "storage.tech_priests[M . storage_key]",
-          "line": 288
+          "line": 290
         },
         {
           "expression": "storage.tech_priests",
-          "line": 304
+          "line": 306
         },
         {
           "expression": "storage.tech_priests.pairs_by_station",
-          "line": 304
+          "line": 306
         },
         {
           "expression": "storage.tech_priests",
-          "line": 312
-        },
-        {
-          "expression": "storage.tech_priests.pairs_by_priest",
-          "line": 312
-        },
-        {
-          "expression": "storage.tech_priests.pairs_by_priest[pn]",
           "line": 314
         },
         {
+          "expression": "storage.tech_priests.pairs_by_priest",
+          "line": 314
+        },
+        {
+          "expression": "storage.tech_priests.pairs_by_priest[pn]",
+          "line": 316
+        },
+        {
           "expression": "storage.tech_priests",
-          "line": 346
+          "line": 368
         },
         {
           "expression": "storage.tech_priests.pairs_by_station",
-          "line": 347
+          "line": 369
         },
         {
           "expression": "storage.tech_priests.pairs_by_station[selected . unit_number]",
-          "line": 347
+          "line": 369
         },
         {
           "expression": "storage.tech_priests.pairs_by_priest",
-          "line": 348
+          "line": 370
         },
         {
           "expression": "storage.tech_priests.pairs_by_priest[selected . unit_number]",
-          "line": 348
+          "line": 370
         },
         {
           "expression": "storage.tech_priests",
-          "line": 355
+          "line": 377
         },
         {
           "expression": "storage.tech_priests.pairs_by_priest",
-          "line": 356
+          "line": 378
         },
         {
           "expression": "storage.tech_priests.pairs_by_priest[priest . unit_number]",
-          "line": 356
+          "line": 378
         },
         {
           "expression": "storage.tech_priests.pairs_by_priest[priest . unit_number]",
-          "line": 357
+          "line": 379
         },
         {
           "expression": "storage.tech_priests.pairs_by_station",
-          "line": 359
+          "line": 381
         },
         {
           "expression": "storage.tech_priests.station_by_priest",
-          "line": 359
+          "line": 381
         },
         {
           "expression": "storage.tech_priests.station_by_priest[priest . unit_number]",
-          "line": 360
+          "line": 382
         },
         {
           "expression": "storage.tech_priests.pairs_by_station[station_unit]",
-          "line": 361
+          "line": 383
         },
         {
           "expression": "storage.tech_priests",
-          "line": 1160
+          "line": 1194
         },
         {
           "expression": "storage.tech_priests",
-          "line": 1228
+          "line": 1262
         },
         {
           "expression": "storage.tech_priests",
-          "line": 1341
+          "line": 1375
         },
         {
           "expression": "storage.tech_priests",
-          "line": 1451
+          "line": 1485
         }
       ],
       "unresolved_loads": [],
       "wrapper_candidates": [
         {
           "kind": "saved-function-or-value-candidate",
-          "line": 1481,
+          "line": 1515,
           "target": "original",
           "value": "type ( second )"
         },
         {
           "kind": "saved-function-or-value-candidate",
-          "line": 2137,
+          "line": 2133,
           "target": "previous",
           "value": "req . recovery_last_position if"
         },
         {
           "kind": "function-replacement-candidate; original/wrapper semantics not inferred",
-          "line": 2479,
+          "line": 2527,
           "target": "_G.tech_priests_request_movement_0418"
         },
         {
           "kind": "function-replacement-candidate; original/wrapper semantics not inferred",
-          "line": 2482,
+          "line": 2530,
           "target": "_G.tech_priests_stop_movement_0418"
         },
         {
           "kind": "function-replacement-candidate; original/wrapper semantics not inferred",
-          "line": 2485,
+          "line": 2533,
           "target": "_G.tech_priests_movement_status_0418"
         },
         {
           "kind": "function-replacement-candidate; original/wrapper semantics not inferred",
-          "line": 2488,
+          "line": 2536,
           "target": "_G.tech_priests_route_ground_command_0429"
         },
         {
           "kind": "function-replacement-candidate; original/wrapper semantics not inferred",
-          "line": 2495,
+          "line": 2543,
           "target": "_G.issue_priest_command"
         },
         {
           "kind": "function-replacement-candidate; original/wrapper semantics not inferred",
-          "line": 2526,
+          "line": 2574,
           "target": "_G.move_priest_to"
         },
         {
           "kind": "function-replacement-candidate; original/wrapper semantics not inferred",
-          "line": 2543,
+          "line": 2591,
           "target": "_G.return_to_station"
         },
         {
           "kind": "function-replacement-candidate; original/wrapper semantics not inferred",
-          "line": 2577,
+          "line": 2625,
           "target": "_G.tech_priests_0292_prime_proxy_attack"
         },
         {
           "kind": "function-replacement-candidate; original/wrapper semantics not inferred",
-          "line": 2592,
+          "line": 2640,
           "target": "_G.tech_priests_0293_prime_proxy_attack"
         }
       ]
@@ -156355,7 +156341,7 @@
     }
   ],
   "schema": "tech-priests-behavior-source-inventory-v1",
-  "source_digest": "beb2e80ec144b55e7021794cf9ee9264c0bab87a5aa149f744eb261aede639f5",
+  "source_digest": "b21d7e27f4cfd1dd47100f21828d42d0dfa2bfbfa775d6dd857d0e6680d582f2",
   "source_scope": [
     "control.lua",
     "scripts/**/*.lua",
