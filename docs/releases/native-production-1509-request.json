@@ -1,0 +1,24 @@
+{
+  "schema": "tech-priests.native-production-hotfix.v1",
+  "mod": "tech-priests",
+  "version": "1.0.4",
+  "source_commit": "fa235434452c70c3ce18bcd7d041327cac7e7700",
+  "overlay_paths": [
+    "tech-priests_src/data-updates.lua",
+    "tech-priests_src/hydrogen/decay.lua",
+    "tech-priests_src/hydrogen/native-contract.lua",
+    "tech-priests_src/hydrogen/native-recipes.lua",
+    "tech-priests_src/hydrogen/native-runtime.lua",
+    "tech-priests_src/hydrogen/pellets.lua",
+    "tech-priests_src/hydrogen/runtime.lua",
+    "tech-priests_src/locale/en/character-skins.cfg",
+    "tech-priests_src/locale/en/metallicized-hydrogen.cfg",
+    "tech-priests_src/locale/en/plasma-reactors.cfg",
+    "tech-priests_src/prototypes/character_skins.lua",
+    "tech-priests_src/scripts/core/character_skin_picker.lua",
+    "tech-priests_src/scripts/core/character_visuals.lua",
+    "tech-priests_src/scripts/core/engineer_visuals.lua"
+  ],
+  "publication_authorized": true,
+  "performance_accepted": false
+}
