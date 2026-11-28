@@ -219,7 +219,7 @@
       "covered_source_files": 389,
       "path": "docs/BEHAVIOR_MERMAID_MAP_0660.md",
       "reviewed_source_digest": "beb2e80ec144b55e7021794cf9ee9264c0bab87a5aa149f744eb261aede639f5",
-      "sha256": "cead34f3268afbba7ef06a29dd6925013d39890c53341924cefce4ead5226c5c",
+      "sha256": "d2b71e961df741a2ccbc2d39de42841543a7e7cde99f9ee500bb4f23a01a62bf",
       "source_patterns": [
         "control.lua",
         "scripts/**/*.lua",
@@ -230,7 +230,7 @@
       "covered_source_files": 389,
       "path": "docs/RECOVERY_AUTHORITY_MAP_CURRENT.md",
       "reviewed_source_digest": "beb2e80ec144b55e7021794cf9ee9264c0bab87a5aa149f744eb261aede639f5",
-      "sha256": "eedaab2ef5e3c9dfdd47e20baa2fa41592c0d85389a5c2df8501c71e0af21c92",
+      "sha256": "1f72e3037f5d583028e76ac82c38556ec794b11415f9ec4bc60cb65a0fd109c7",
       "source_patterns": [
         "control.lua",
         "scripts/**/*.lua",
