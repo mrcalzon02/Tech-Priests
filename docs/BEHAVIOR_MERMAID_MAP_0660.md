@@ -135,62 +135,49 @@ This is the canonical transaction contract. It is not an assertion that every co
 
 ```mermaid
 flowchart TD
-    Picker["Picker or player lifecycle"] --> Allow["Validate appearance availability"]
-    Allow --> Body{"Existing supported character?"}
-    Body -->|"not yet"| Pending["Retain choice until body exists"]
-    Body -->|"yes"| Selection["Record appearance on the same body"]
-    Selection --> Custom["Selected custom render layers"]
-    Selection --> Engineer["Native Engineer art and armor layers"]
-    Atlas["Measured native aim and walk atlas"] --> Engineer
+    Data["Native character prototype and menu simulations"] --> Native["Engine-owned graphics and behavior; never edited by the picker"]
+    Picker["Picker or player lifecycle"] --> Default{"Explicit custom selection?"}
+    Default -->|"no / Original Engineer"| Clear["Clear only our saved render objects"]
+    Clear --> Native
+    Default -->|"yes"| Allow{"Allowed skin and supported body?"}
+    Allow -->|"no body"| Pending["Retain explicit pending choice"]
+    Allow -->|"other mod or disabled"| Native
+    Allow -->|"yes"| Custom["Player-owned graphical overlay"]
     Broker["Existing five-tick presentation service"] --> Custom
-    Broker --> Engineer
-    Native["Factorio character and player"] -->|"read pose, color and armor"| Custom
-    Native -->|"read pose, color and armor"| Engineer
+    Native -->|"read pose and color only"| Custom
+    Legacy["Legacy custom-character prototype"] -->|"visible native graphics; preserve identity"| Native
 ```
 
-`character_skin_picker` no longer requires or calls `character_skin_transfer`.
-Selecting a skin or Engineer never creates/destroys a character, sets a controller,
-moves inventory stacks, or writes player bonuses. Crafting, combat, stickers,
-vehicles and deployed robots do not block a cosmetic selection. The old transfer
-module remains unreferenced source history, not an installed authority.
+The picker does not alter `data.raw.character.character`, its corpse, its
+animation banks, or any gameplay fields. It no longer exports or hides native
+Engineer pixels. An unselected player, disconnected body, menu simulation or
+another mod's character therefore renders natively without a Lua drawing.
+The old custom-character prototype remains a visible copy for save compatibility;
+no player entity is created, swapped or destroyed when selecting an appearance.
+The former scripted Engineer pose exporter remains uninstalled history.
 
-At data stage, `prototypes.engineer_visuals` exports native Engineer artwork before
-hiding its pixels with static zero tint. Native frame counts, animation clocks,
-footstep/particle triggers and all gameplay properties stay intact. The old custom
-host remains registered with native timing for existing saves; selecting Engineer
-on it changes only its drawing. New character deaths use the original native loot
-corpse. Picker-disabled maps retain visible native Engineer graphics.
+Custom appearances are opt-in attached graphics; Factorio 2.1.25 exposes no
+per-character runtime switch to suppress every native animation layer. Native
+pixels remain underneath the explicitly selected custom overlay. Test graphical
+coverage rather than claiming a guaranteed full sprite replacement. The default
+never needs an overlay. Existing saved ambiguous automatically selected legacy
+Enginseer/first-allowed choices are reset once; other prior selections and all
+new explicit selections are retained.
 
-`shared.engineer_pose_map` supplies the native 18-row and 40-row armed-walking
-selection tables, measured from all 128 aim/walk combinations in real engine
-screenshots. The renderer reads that map, the current armor and native movement;
-it applies the measured row, reflection and playback direction only to drawings.
-The exporter preserves continuous frame packing across atlas rows and files.
-Mech armor uses its available armed-walk and airborne idle graphics even without
-a drawn weapon, and native hover bobbing remains distinct from takeoff/landing.
-These render APIs require Factorio 2.1.25; the mod dependency declares that floor.
+`character_visuals_presentation` retains the existing five-tick broker and
+bounded actor cursor. Player overlays are indexed by player, clear when the
+body changes or native appearance is selected, and refresh before the actor
+batch. A lifecycle-only walk of owned saved render records retires old default
+drawings before the picker restores selections. No surface scan or native
+character build/clone render registration remains. NPC priest/combat/corpse
+presentation is unchanged; native movement continues every engine tick.
 
-`character_visuals_presentation` retains its existing five-tick broker route and
-bounded actor cursor. Connected player drawings refresh before the actor batch
-and are not redrawn a second time in that pulse. A lifecycle seed restores detached
-native bodies once at init/configuration; build/clone events add later raised
-creations. There is no recurring surface scan. Unraised creation of an unrelated,
-unattached native character by another mod is not discovered until lifecycle
-restoration. Native movement continues every engine tick.
-
-The focused native fixture measures positive 60-tick walking distances against an
-untouched native reference for Engineer and every allowed model, including old
-hosts, while checking exact body/inventory/equipment identities. A modifier-only
-assertion cannot establish movement parity. Graphical capture and save/reload are
-separate required evidence from the headed validation run.
-
-The same fixture executes one real go-to command per previous/current ground
-priest traversal, covers all four ground ranks and both belt-immunity variants,
-and rejects stopped movement or less than a 1.7x travel improvement. A separate
-detached Mech-armored Engineer crosses actual water beside an untouched native
-reference; its movement, takeoff, sustained rising/falling hover and landing are
-checked without assigning a flight height. Headed validation must produce the
-player, ground-priest and Mech walking/flying PNGs from those native runs.
+The native fixture compares every supported player's physical walking distance,
+identity, equipment, inventory, crafting and vehicle state against an unchanged
+native reference. Detached Engineer and Mech actors must have no scripted
+replacement; the Mech fixture retains its native walking, water flight, bob
+and landing checks. Headed player and menu-simulation capture is separate
+from native server correctness. A source contract cannot establish pixel coverage.
 
 ## 6. Observed boundaries requiring performance work
 

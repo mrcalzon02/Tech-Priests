@@ -12,8 +12,9 @@ local function data()
 end
 M.catalog=data
 function M.needed(entity)
-  local source=data()
-  return source and (entity.name==M.host_name or entity.name==source.character_name and source.native_hidden)
+  -- Retained historical renderer; no current player body is hidden or needs
+  -- scripted Engineer art. Also refuse old catalog data after an upgrade.
+  return false
 end
 local function object(id) return id and rendering.get_object_by_id(id) end
 local function clear(rec)

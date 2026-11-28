@@ -11,19 +11,19 @@ import zipfile
 ROOT=Path(__file__).resolve().parents[1]
 
 # The reference retains the real native artwork and all native motion metadata.
-# The source registration must alter only drawing pixels on the player prototype.
+# Player and corpse prototypes must remain identical, including every pixel tint.
 DATA_GUARD = r'''
 local skin_module=require("prototypes.character_skins")
 local register=skin_module.register
-local function unchanged(a,b,in_animation)
+local function unchanged(a,b,allow_pixel_tint,in_animation)
   if type(a)~=type(b) then return false end
   if type(a)~="table" then return a==b end
   for key,value in pairs(a) do
-    if not (in_animation and (key=="tint" or key=="apply_runtime_tint"))
-      and not unchanged(value,b[key],in_animation or key=="animations") then return false end
+    if not (allow_pixel_tint and in_animation and (key=="tint" or key=="apply_runtime_tint"))
+      and not unchanged(value,b[key],allow_pixel_tint,in_animation or key=="animations") then return false end
   end
   for key in pairs(b) do
-    if not (in_animation and (key=="tint" or key=="apply_runtime_tint")) and a[key]==nil then return false end
+    if not (allow_pixel_tint and in_animation and (key=="tint" or key=="apply_runtime_tint")) and a[key]==nil then return false end
   end
   return true
 end
@@ -55,19 +55,20 @@ skin_module.register=function(...)
   reference.hidden_in_factoriopedia=true
   data:extend{reference}
   local result=register(...)
-  assert(unchanged(before,data.raw.character.character,false),"Appearance changed native character gameplay or animation timing")
+  assert(unchanged(before,data.raw.character.character,false),"Appearance modified the native Engineer prototype")
+  assert(unchanged(before.animations,data.raw.character[skin_module.host_name].animations,false),"Legacy host does not retain visible native graphics")
   assert(unchanged(corpse_before,data.raw["character-corpse"]["character-corpse"],false),"Appearance changed the native visible Engineer corpse")
   for name,priest in pairs(priest_before) do
     local changed=data.raw.unit[name]
-    assert(unchanged(priest.run_animation,changed.run_animation,true),"Appearance changed native priest running timing")
-    assert(unchanged(priest.attack_parameters.animation,changed.attack_parameters.animation,true),"Appearance changed native priest attack timing")
+    assert(unchanged(priest.run_animation,changed.run_animation,true,true),"Appearance changed native priest running timing")
+    assert(unchanged(priest.attack_parameters.animation,changed.attack_parameters.animation,true,true),"Appearance changed native priest attack timing")
     assert(changed.movement_speed==priest.movement_speed,"Appearance changed priest movement speed")
   end
   for _,suffix in ipairs({"","-belt-immune"}) do
     local void=data.raw.unit["void-tech-priest"..suffix]
     assert(not void or void.movement_speed==.001,"Ground repair changed the void movement backend")
   end
-  log("[TP-SKINS-DATA] PASS exact native gameplay and animation timing, unchanged visible native corpse; only pixel tint may change")
+  log("[TP-SKINS-DATA] PASS exact unchanged native Engineer prototype and corpse; only NPC priest pixel tint may change")
   return result
 end
 '''

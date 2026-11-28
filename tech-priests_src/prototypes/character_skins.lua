@@ -43,20 +43,17 @@ function M.register()
       end
     end
   end
-  -- Preserve the original physical character. Both custom appearances and the
-  -- Engineer are attached graphics, so choosing an appearance never needs a
-  -- controller/inventory transfer. Keep the old host prototype for old saves.
-  local base=assert(data.raw.character.character,"Vanilla character unavailable")
+  -- Never edit or reinterpret the native character's graphics, even when the
+  -- picker is enabled. Menu simulations and other mods own that prototype.
+  -- Keep the old save-compatible host name, with a visible native copy of
+  -- the currently installed Engineer. Neither player body needs an atlas
+  -- export or a script-rendered default.
+  local base=assert(data.raw.character.character,"Native character unavailable")
   local host=table.deepcopy(base)
-  local enabled=settings.startup["tech-priests-character-picker-enabled"]
-  local native_hidden=not enabled or enabled.value~=false
-  Engineer.register(base,definitions,native_hidden)
   host.name=M.host_name
   host.localised_name={"tech-priests-skins.custom-character"}
   host.hidden=true
   host.hidden_in_factoriopedia=true
-  Engineer.hide_character(host)
-  if native_hidden then Engineer.hide_character(base) end
   definitions[#definitions+1]=host
   local corpse=table.deepcopy(assert(data.raw["character-corpse"]["character-corpse"]))
   corpse.name=M.corpse_name

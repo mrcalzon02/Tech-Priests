@@ -9,6 +9,7 @@ local function root()
   local tp=storage.tech_priests
   tp.character_skin_picker=tp.character_skin_picker or {selected={},pending={},reasons={},characters={}}
   tp.character_skin_picker.characters=tp.character_skin_picker.characters or {}
+  tp.character_skin_picker.explicit=tp.character_skin_picker.explicit or {}
   return tp.character_skin_picker
 end
 function M.enabled()
@@ -19,11 +20,23 @@ function M.allowed(id)
   return id=="vanilla" or M.enabled() and Catalog.allowed(id,settings.startup)
 end
 function M.selected(player) return root().selected[player.index] or "vanilla" end
-function M.default_skin()
-  if not M.enabled() then return "vanilla" end
-  if M.allowed("enginseer") then return "enginseer" end
-  for _,skin in ipairs(Catalog.skins) do if M.allowed(skin.id) then return skin.id end end
-  return "vanilla"
+function M.default_skin() return "vanilla" end
+-- Earlier builds silently chose Enginseer (or the first allowed skin).
+-- They did not record whether that choice was explicit. Reset only those
+-- ambiguous legacy defaults once; other saved selections stay selected.
+local function migrate_default_policy(r)
+  if r.native_default_policy==1 then return end
+  local ambiguous={enginseer=true}
+  for _,skin in ipairs(Catalog.skins) do
+    if M.allowed(skin.id) then ambiguous[skin.id]=true;break end
+  end
+  for index,id in pairs(r.selected) do
+    if not r.explicit[index] and ambiguous[id] then r.selected[index]="vanilla" end
+  end
+  for index,id in pairs(r.pending) do
+    if not r.explicit[index] and ambiguous[id] then r.pending[index]=nil;r.reasons[index]=nil end
+  end
+  r.native_default_policy=1
 end
 function M.ensure_button(player)
   -- Remove the previous upper-left mod-gui entry on upgrades.
@@ -101,14 +114,17 @@ function M.try_pending(player)
   if not id then return true end
   if not M.allowed(id) then r.pending[player.index]=nil;return false,"restricted" end
   local character=Visuals.player_character(player)
-  if not (character and character.valid) then return false,"no-character" end
-  -- Appearance selection only replaces attached render objects. Never create,
-  -- swap or retire the physical character, even when returning to Engineer.
-  -- Crafting, vehicles, stickers and deployed robots remain native player state.
-  if character.name~="character" and character.name~=Visuals.host_name then
-    r.reasons[player.index]="other-character"
-    return false,"other-character"
+  -- Clearing our overlay requires no particular character prototype or even a
+  -- live body. A third-party character is always valid as the native default.
+  if id~="vanilla" then
+    if not (character and character.valid) then return false,"no-character" end
+    if character.name~="character" and character.name~=Visuals.host_name then
+      Visuals.clear_player(player)
+      r.reasons[player.index]="other-character"
+      return false,"other-character"
+    end
   end
+  -- Never create, swap, hide or retire the physical character.
   local ok=Visuals.refresh_player(player,id)
   if not ok then r.reasons[player.index]="appearance";return false,"appearance" end
   r.selected[player.index]=id
@@ -126,6 +142,7 @@ function M.choose(player,id)
     r.pending[player.index]=nil
     return false,reason
   end
+  r.explicit[player.index]=true
   return true,ok and "applied" or "queued"
 end
 function M.pending_tick()
@@ -145,20 +162,18 @@ local function player_event(event)
   if not (player and player.valid) then return end
   M.ensure_button(player)
   local r=root()
-  local selected=r.selected[player.index]
-  -- An absent choice is a first use, including saves upgraded from a package
-  -- without the picker. An explicit vanilla choice remains a saved choice.
-  if selected==nil and not r.pending[player.index] then
-    r.pending[player.index]=M.default_skin()
-  end
-  if not r.pending[player.index] and selected and selected~="vanilla" then
-    r.pending[player.index]=M.allowed(selected) and selected or "vanilla"
+  local selected=M.selected(player)
+  -- A first-use player has no overlay and no pending selection. Only a real
+  -- picker action or an existing saved selection can request custom drawing.
+  if not r.pending[player.index] and not M.allowed(selected) then
+    r.pending[player.index]="vanilla"
   end
   M.try_pending(player)
   if not r.pending[player.index] then Visuals.refresh_player(player,M.selected(player)) end
 end
 local function initialize()
-  root()
+  local r=root()
+  migrate_default_policy(r)
   for _,player in pairs(game.players) do player_event{player_index=player.index} end
 end
 M.restore_player=function(player) player_event{player_index=player.index} end

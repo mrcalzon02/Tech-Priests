@@ -34,29 +34,14 @@ local function start_mech_test(player)
     entity.destructible=false
     check(entity.get_inventory(defines.inventory.character_guns).is_empty(),"Mech pose test is genuinely unarmed")
   end
-  local source=Engineer.catalog()
-  local variant=source.armor_to_variant["mech-armor"]
-  check(variant and source.variants[variant].states.running_with_gun.directions==40,"native Mech ground bank has forty directions")
-  check(source.variants[variant].states.idle_with_gun_in_air.directions==8,"native Mech air bank has eight directions")
-  t.mech={entity=actor,reference=reference,unit=actor.unit_number,variant=variant,start=game.tick,
-    result={armor="mech-armor",overlay=Engineer.needed(actor),ground=nil,flight_samples={}}}
+  check(not Engineer.needed(actor),"native Mech must not require a scripted Engineer renderer")
+  t.mech={entity=actor,reference=reference,unit=actor.unit_number,start=game.tick,
+    result={armor="mech-armor",overlay=false,ground=nil,flight_samples={}}}
 end
 local function mech_pose(mech,state,directions)
   local entity=mech.entity
   local rec=storage.tech_priests.character_visuals.actors[entity.unit_number]
-  if mech.result.overlay then
-    check(rec and rec.model=="vanilla" and rec.engineer_variant==mech.variant,"Mech uses its own Engineer armor variant")
-    check(rec.state==state,"native Mech pose selects "..state..", received "..tostring(rec.state))
-    if state=="running_with_gun" then
-      -- The independent native 40-row oracle resolves east aim + east walk
-      -- to zero-based row 10, with neither reflection nor reverse playback.
-      check(rec.row==10 and rec.mirrored==false and rec.reversed==false,"unarmed Mech uses the native aim-equals-walk row")
-    end
-    local clip=Engineer.catalog().variants[mech.variant].states[state]
-    check(clip.directions==directions,"Mech selected native direction bank")
-    local render=rendering.get_object_by_id(rec.renders[1])
-    check(render and render.valid and render.animation==clip.layers[1].animations[rec.row%clip.layers[1].directions+1],"Mech native animation renders selected pose row")
-  end
+  check(not rec,"Detached Mech must retain native graphics without script rendering")
   return {tick=game.tick-mech.start,x=entity.position.x,height=entity.flight_height,
     reference_height=mech.reference.flight_height,is_flying=entity.is_flying,
     variant=mech.variant,state=mech.result.overlay and rec.state or "native-visible",row=rec and rec.row,
@@ -173,7 +158,8 @@ local function setup_player(player)
   picker_state.selected[player.index]=nil;picker_state.pending[player.index]=nil
   -- Exercise the public entry point shared with the registered lifecycle route.
   Picker.restore_player(player)
-  check(Picker.selected(player)==Picker.default_skin(),"first-use startup appearance applies")
+  check(Picker.default_skin()=="vanilla" and Picker.selected(player)=="vanilla","first-use player retains native Engineer")
+  check(not storage.tech_priests.character_visuals.actors[player.character.unit_number],"first-use body has no scripted overlay")
   if Picker.enabled() then
     check(player.character==character and character.name==(legacy_case and Visuals.host_name or "character"),"startup keeps original native character")
     check(Picker.choose(player,"vanilla"),"explicit engineer selection")
@@ -301,11 +287,9 @@ local function tick(event)
     check(detached and detached.valid,"detached native body created")
     local clone=detached.clone{position={-25,-3},create_build_effect_smoke=false}
     check(clone and clone.valid,"native body cloned")
-    if Picker.enabled() then
-      for _,body in ipairs({detached,clone}) do
-        local rec=storage.tech_priests.character_visuals.actors[body.unit_number]
-        check(rec and rec.model=="vanilla" and next(rec.renders)~=nil,"raised-build and clone lifecycle preserve visible detached Engineers")
-      end
+    for _,body in ipairs({detached,clone}) do
+      local rec=storage.tech_priests.character_visuals.actors[body.unit_number]
+      check(not rec,"native detached and cloned Engineers have no scripted replacement")
     end
     t.lifecycle_checked=true
     local death_probe=player.surface.create_entity{name=Visuals.host_name,position={-25,0},force=player.force}
@@ -370,6 +354,7 @@ local function tick(event)
       car.set_driver(nil)
       car.destroy()
       check(player.character==t.original_character and Picker.selected(player)=="vanilla","Engineer restored on original character")
+      check(not storage.tech_priests.character_visuals.actors[player.character.unit_number],"return to native clears owned overlay")
       inventory_checks(player)
     end
     game.forces["skin-test-red"].custom_color={r=.2,g=.8,b=.3,a=1}
