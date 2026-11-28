@@ -1,0 +1,33 @@
+{
+  "unit_behavior": {
+    "actual_engine": "Version: 2.1.25 (build 88022, linux64, headless)",
+    "actual_player_mining": true,
+    "combat_types": 15,
+    "inventory_full_refusal": true,
+    "legacy_migration": true,
+    "machinery_consecration_preserved": true,
+    "managed_units_picked_up": 15,
+    "package_sha256": "c813a4e7034ff0dd66c416297f8e07fe0a85764f5a4de1edabd8e190fef890df",
+    "passed": true,
+    "prototype_forms_mined": 45,
+    "schema": "tech-priests.unit-behavior-native.v1",
+    "source_commit": "fa235434452c70c3ce18bcd7d041327cac7e7700",
+    "worker_cells_redeployed": 4
+  },
+  "native_production": {
+    "source": "fa235434452c70c3ce18bcd7d041327cac7e7700",
+    "machines": 7,
+    "recipes": 13,
+    "legacy_stock": true,
+    "native_gui": true,
+    "reactors": 3,
+    "base_package_sha256": "bf8be0c18995ece757d0092f2d3ef79860170c762295d31f1e45275feaa3c2e3",
+    "passed": true
+  },
+  "package": {
+    "source_commit": "fa235434452c70c3ce18bcd7d041327cac7e7700",
+    "bytes": 251142019,
+    "sha256": "c813a4e7034ff0dd66c416297f8e07fe0a85764f5a4de1edabd8e190fef890df",
+    "sha1": "0f028dfdeb240e77ebb34aeb48717ace9648d80a"
+  }
+}
