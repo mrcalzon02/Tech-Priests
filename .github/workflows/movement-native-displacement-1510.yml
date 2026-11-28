@@ -55,11 +55,37 @@ jobs:
           luac5.4 -p tech-priests_src/scripts/core/movement_controller.lua
           lua5.4 tests/unit/movement_native_displacement_1510.lua
           lua5.4 tests/unit/movement_waypoint_recovery.lua
-          lua5.4 tests/unit/movement_overleash_return_continuity.lua
           find tech-priests_src/hydrogen -maxdepth 2 -name '*.lua' -print0 | xargs -0 -n1 luac5.4 -p
           python3 -B tools/audit_ups_hotspots_0743.py --write-behavior-maps
           python3 -B tools/audit_ups_hotspots_0743.py --acknowledge-behavior-map-review
           python3 -B tests/run_hotpath_regressions.py --all --lua lua5.4
+      - name: Compare historical railway fixture with released controller
+        working-directory: source
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Diagnostic only: legacy aggregate fixture already fails at its rail
+          # visibility assumption; establish whether the exact released file does too.
+          set +e
+          lua5.4 tests/unit/movement_overleash_return_continuity.lua > /tmp/tp-movement-candidate.log 2>&1
+          candidate=$?
+          set -e
+          cat /tmp/tp-movement-candidate.log
+          path=tech-priests_src/scripts/core/movement_controller.lua
+          cp "$path" /tmp/tp-movement-current.lua
+          trap 'cp /tmp/tp-movement-current.lua "$path"' EXIT
+          curl -fsSL --retry 2 --max-time 60 https://raw.githubusercontent.com/mrcalzon02/Tech-Priests/fa235434452c70c3ce18bcd7d041327cac7e7700/$path -o "$path"
+          set +e
+          lua5.4 tests/unit/movement_overleash_return_continuity.lua > /tmp/tp-movement-baseline.log 2>&1
+          baseline=$?
+          set -e
+          cat /tmp/tp-movement-baseline.log
+          cp /tmp/tp-movement-current.lua "$path"
+          trap - EXIT
+          echo "TP_1510_LEGACY_RAIL_DIAGNOSTIC baseline=$baseline candidate=$candidate"
+          if [ "$candidate" -ne 0 ] && [ "$baseline" -eq 0 ]; then exit 1; fi
+          # Static inventory of coordinate writers, including retired source.
+          grep -RInE '\.teleport\s*\(|\.position\s*=|\.speed\s*=|character_running_speed_modifier\s*=' tech-priests_src/scripts tech-priests_src/control.lua | grep -E 'priest|worker|movement|pair' | head -160 || true
       - name: Commit only generated behavior inventory and reviewed fingerprints
         working-directory: source
         env:
