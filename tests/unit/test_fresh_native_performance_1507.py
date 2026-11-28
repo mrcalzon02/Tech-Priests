@@ -251,7 +251,8 @@ class CacheAndExclusivityTests(unittest.TestCase):
         records, wall, desktop_proof = observations()
         desktop_proof["game_pid"] = 918
         with tempfile.TemporaryDirectory() as directory:
-            # Match open_desktop.main: resolve the output before creating its\n            # command (Windows TEMP may use an 8.3 alias).\n            root = (Path(directory) / "native").resolve()
+            # Match the real launcher: resolve Windows TEMP short aliases.
+            root = (Path(directory) / "native").resolve()
             calls = []
             engine = (Path(directory) / "engine" / "bin" / "x64" / "factorio.exe").resolve()
             real = SimpleNamespace(Popen=lambda command, **options: SimpleNamespace(pid=918), STDOUT=subprocess.STDOUT)
