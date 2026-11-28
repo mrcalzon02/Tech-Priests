@@ -110,6 +110,7 @@ def main():
  p.add_argument('--dependency-mods',type=Path,help='Directory of required official dependency ZIPs or unpacked mods for --full')
  p.add_argument('--headless-only',action='store_true',help='Validate data and native player behavior without graphical capture/reload')
  p.add_argument('--configuration-reload',action='store_true',help='Also verify configuration migration in a separate native process')
+ p.add_argument('--native-compatibility-probe',action='store_true',help='Simulate an earlier mod changing native Engineer graphics and inventory before the picker registers')
  p.add_argument('--factorio',type=Path,default=Path(r'C:\Program Files (x86)\Steam\steamapps\common\Factorio\bin\x64\factorio.exe'))
  a=p.parse_args()
  a.factorio=a.factorio.resolve()
@@ -173,7 +174,19 @@ data:extend(definitions)
                           'Visuals.track(priest,model) -- actual prototypes; no synthetic gameplay pairs')
   (mod/'fixture.lua').write_text(fixture)
  data_final=mod/'data-final-fixes.lua'
- data_final.write_text(DATA_GUARD+'\n'+data_final.read_text(encoding='utf-8'),encoding='utf-8')
+ compatibility=''
+ if a.native_compatibility_probe:
+  compatibility=r'''
+-- Disposable test only: simulate a third-party modification before Tech Priests.
+local c=assert(data.raw.character.character)
+c.inventory_size=c.inventory_size+7
+local running=assert(c.animations[1].running)
+local layer=running
+while layer.layers do layer=assert(layer.layers[1]) end
+layer.tint={r=.37,g=.61,b=.83,a=1}
+log("[TP-SKINS-COMPAT] native inventory and running animation modified before picker registration")
+'''
+ data_final.write_text(compatibility+DATA_GUARD+'\n'+data_final.read_text(encoding='utf-8'),encoding='utf-8')
  mods=out/'mods'
  dependencies=stage_dependencies(a.dependency_mods,mods) if a.full else []
  enabled={'base':True,'tech-priests':True}
