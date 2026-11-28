@@ -1,0 +1,81 @@
+name: Verify native movement displacement and reviewed maps
+on:
+  push:
+    branches: [main]
+    paths: [.github/workflows/movement-native-displacement-1510.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: tp-movement-native-displacement-1510
+  cancel-in-progress: false
+jobs:
+  source:
+    if: github.repository == 'mrcalzon02/Tech-Priests' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Fetch exact sparse source without traversing build gitlinks
+        shell: bash
+        run: |
+          set -euo pipefail
+          git init source
+          cd source
+          git remote add origin https://github.com/mrcalzon02/Tech-Priests.git
+          git config submodule.recurse false
+          git config fetch.recurseSubmodules false
+          git config core.sparseCheckout true
+          git config core.sparseCheckoutCone false
+          git config remote.origin.promisor true
+          git config remote.origin.partialclonefilter blob:none
+          cat > .git/info/sparse-checkout <<'EOF'
+          /tech-priests_src/*.lua
+          /tech-priests_src/scripts/
+          /tech-priests_src/shared/
+          /tech-priests_src/hydrogen/*.lua
+          /tech-priests_src/hydrogen/machines/
+          /tech-priests_src/prototypes/
+          /tech-priests_src/locale/
+          /tech-priests_src/docs/
+          /tests/
+          /tools/
+          /docs/BEHAVIOR*
+          /docs/RECOVERY_AUTHORITY_MAP_CURRENT.md
+          EOF
+          git -c protocol.version=2 fetch --depth=1 --filter=blob:none --no-recurse-submodules origin "$GITHUB_SHA"
+          git checkout --detach --no-recurse-submodules FETCH_HEAD
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+      - name: Verify native stop, custody and fair movement servicing; run all source regressions
+        working-directory: source
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq lua5.4
+          luac5.4 -p tech-priests_src/scripts/core/movement_controller.lua
+          lua5.4 tests/unit/movement_native_displacement_1510.lua
+          lua5.4 tests/unit/movement_waypoint_recovery.lua
+          lua5.4 tests/unit/movement_overleash_return_continuity.lua
+          find tech-priests_src/hydrogen -maxdepth 2 -name '*.lua' -print0 | xargs -0 -n1 luac5.4 -p
+          python3 -B tools/audit_ups_hotspots_0743.py --write-behavior-maps
+          python3 -B tools/audit_ups_hotspots_0743.py --acknowledge-behavior-map-review
+          python3 -B tests/run_hotpath_regressions.py --all --lua lua5.4
+      - name: Commit only generated behavior inventory and reviewed fingerprints
+        working-directory: source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          git add docs/BEHAVIOR_SOURCE_INVENTORY.json docs/BEHAVIOR_SOURCE_INVENTORY.md docs/BEHAVIOR_MAP_REVIEW.json
+          git diff --cached --name-only
+          if git diff --cached --quiet; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "docs: refresh reviewed native displacement authority inventory [skip ci]"
+          export GIT_CONFIG_COUNT=1
+          export GIT_CONFIG_KEY_0=http.https://github.com/.extraheader
+          export GIT_CONFIG_VALUE_0="AUTHORIZATION: basic $(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)"
+          git push origin HEAD:main
+          echo "TP_MOVEMENT_MAP_COMMIT=$(git rev-parse HEAD)"
