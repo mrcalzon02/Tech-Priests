@@ -1,0 +1,81 @@
+name: Publish Tech Priests 1.0.4 after native functional verification
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [docs/releases/native-production-1509-native-receipt.json]
+permissions:
+  contents: write
+concurrency:
+  group: tech-priests-native-production-104-publication
+  cancel-in-progress: false
+jobs:
+  release:
+    if: github.repository == 'mrcalzon02/Tech-Priests' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      GH_TOKEN: ${{ github.token }}
+      TP_RELEASE_SOURCE_SHA: fa235434452c70c3ce18bcd7d041327cac7e7700
+    steps:
+      - name: Fetch release source and owner-authorized native proof
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p tools docs/releases native base-package
+          for file in tools/release_native_production_1509.py tools/release_unit_hotfix.py tools/publish_hd_mods.py docs/releases/native-production-1509-request.json docs/releases/native-production-1509-native-receipt.json; do
+            curl --fail --silent --show-error --location --retry 2 --max-time 90 "https://raw.githubusercontent.com/$GITHUB_REPOSITORY/$GITHUB_SHA/$file" -o "$file"
+          done
+          python3 -B - <<'PY'
+          import json,os,pathlib,re
+          req=json.load(open('docs/releases/native-production-1509-request.json'))
+          records=json.load(open('docs/releases/native-production-1509-native-receipt.json'))
+          proof=records['unit_behavior']
+          production=records['native_production']
+          assert production['source']==req['source_commit'] and production['passed'] is True
+          assert production['machines']==7 and production['recipes']==13 and production['legacy_stock'] is True and production['native_gui'] is True and production['reactors']==3
+          assert req['publication_authorized'] is True and req['source_commit']==os.environ['TP_RELEASE_SOURCE_SHA']
+          assert proof['schema']=='tech-priests.unit-behavior-native.v1' and proof['passed'] is True
+          assert proof['source_commit']==req['source_commit'] and re.fullmatch(r'[0-9a-f]{64}',proof['package_sha256'])
+          assert re.search(r'\b2\.1\.25\b',proof['actual_engine'])
+          assert proof['combat_types']==15 and proof['prototype_forms_mined']==45 and proof['managed_units_picked_up']==15 and proof['worker_cells_redeployed']==4 and proof['legacy_migration'] is True
+          pathlib.Path('native/unit-behavior-receipt.json').write_text(json.dumps(proof,indent=2,sort_keys=True)+'\n')
+          print('TP_104_NATIVE_FUNCTIONAL_RECEIPT_VERIFIED',proof['package_sha256'])
+          PY
+          python3 -m py_compile tools/release_native_production_1509.py tools/release_unit_hotfix.py tools/publish_hd_mods.py
+      - name: Reproduce exact tested standard package
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -B -u tools/release_native_production_1509.py prepare --request docs/releases/native-production-1509-request.json --base-archive base-package/tech-priests_1.0.3.zip --output prepared
+          python3 -B - <<'PY'
+          import json,hashlib,pathlib
+          manifest=json.load(open('prepared/native-production-package.json'))
+          native=json.load(open('native/unit-behavior-receipt.json'))
+          archive=pathlib.Path('prepared')/manifest['file_name']
+          assert archive.stat().st_size<=262100000
+          assert manifest['sha256']==native['package_sha256']==hashlib.file_digest(archive.open('rb'),'sha256').hexdigest()
+          print('TP_104_IDENTICAL_TESTED_PACKAGE',manifest['bytes'],manifest['sha256'])
+          PY
+      - name: Publish existing mod update and verify both destinations
+        env:
+          FACTORIO_MOD_UPLOAD_KEY: ${{ secrets.FACTORIO_MOD_UPLOAD_KEY }}
+          MOD_PORTAL_PUBLISH_API_KEY: ${{ secrets.MOD_PORTAL_PUBLISH_API_KEY }}
+          MOD_UPLOAD_API_KEY: ${{ secrets.MOD_UPLOAD_API_KEY }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -B -u tools/release_native_production_1509.py publish --package-dir prepared --native-dir native
+      - name: Preserve receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        continue-on-error: true
+        with:
+          name: tech-priests-1.0.4-publication-${{ github.run_id }}
+          path: |
+            prepared/native-production-package.json
+            prepared/portal-publication-receipt.json
+            prepared/SHA256SUMS
+            native/unit-behavior-receipt.json
+          if-no-files-found: warn
+          retention-days: 14
