@@ -1,6 +1,6 @@
--- Lua 5.2 regression: three seconds of sustained wrong-direction, off-route
--- position, or stalled navigation may recover only onto a legal forward
--- waypoint. The active movement request and carried materials survive.
+-- Lua regression: sustained wrong-direction, off-route or stalled travel
+-- recovers with one actual native command to the authorized goal. Neither
+-- ordinary work nor physical custody is ever recovered by teleport.
 package.path = "tech-priests_src/?.lua;tech-priests_src/?/init.lua;" .. package.path
 game = { tick = 1000 }
 storage = { tech_priests = { pairs_by_station = {} } }
@@ -63,9 +63,10 @@ for tick = 1010, 1180, 10 do
 end
 check(teleports == starting, "wrong-direction recovered before three seconds")
 step(wrong, 1190, -3.8, 0)
-check(teleports == starting + 1, "three-second wrong-direction recovery missing")
-check(wrong.priest.position.x > 0 and wrong.priest.position.x <= 12,
-  "wrong-direction recovery did not reach a forward objective waypoint")
+check(teleports == starting, "wrong-direction recovery teleported")
+check(wrong.priest.position.x == -3.8 and #wrong.priest.commandable.issued==2
+  and wrong.priest.commandable.issued[2].destination.x==12,
+  "wrong-direction recovery failed to issue one native goal without moving the entity")
 check(wrong.movement_request_0418 == route, "recovery replaced the active path")
 check(wrong.movement_controller_last_recovery_0418.reason == "wrong-direction",
   "incorrect wrong-direction recovery classification")
@@ -80,10 +81,10 @@ local second = begin(offroute, { x = 12, y = 30 })
 for tick = 2010, 2180, 10 do
   step(offroute, tick, 0, 34.5)
 end
-check(teleports == starting + 1,
+check(teleports == starting,
   "incorrect-position recovery happened before three seconds")
 step(offroute, 2190, 0, 34.5)
-check(teleports == starting + 2, "three-second incorrect-position recovery missing")
+check(teleports == starting and #offroute.priest.commandable.issued==2, "off-route native recovery missing or teleported")
 check(offroute.movement_controller_last_recovery_0418.reason == "wrong-position",
   "off-route recovery classified as a different failure")
 check(offroute.movement_request_0418 == second, "off-route correction lost route")
@@ -95,17 +96,18 @@ begin(moving, { x = 14, y = 60 })
 for tick = 3010, 3250, 10 do
   step(moving, tick, (tick - 3000) / 80, 62)
 end
-check(teleports == starting + 2,
+check(teleports == starting,
   "valid forward movement with a small lateral detour was teleported")
 Movement.stop(moving, "test-next")
 
 game.tick = 4000
 local blocked = pair_at(14, 0, 90, true)
 local blocked_route = begin(blocked, { x = 12, y = 90 })
+blocked.priest.commandable.valid=false
 for tick = 4010, 4240, 10 do
   step(blocked, tick, -(tick - 4000) / 50, 90)
 end
-check(teleports == starting + 2, "teleported onto unverified collision geometry")
+check(teleports == starting, "teleported onto unverified collision geometry")
 check(blocked.movement_request_0418 == blocked_route,
   "blocked recovery discarded active objective")
 check(blocked_route.last_recovery_blocker ~= nil,
@@ -121,13 +123,14 @@ local carrying_route = begin(carrying, { x = 0, y = 120 },
 for tick = 5010, 5190, 10 do
   step(carrying, tick, 15 + (tick - 5000) / 50, 120)
 end
-check(teleports == starting + 3, "custody return did not recover wrong-way travel")
+check(teleports == starting and #carrying.priest.commandable.issued==2,
+  "custody return did not issue native recovery or teleported")
 check(carrying.direct_acquisition_custody_0513.count == 3,
   "movement recovery destroyed physical resource custody")
 check(carrying.movement_request_0418 == carrying_route,
   "cargo-return request lost route ownership")
-check(carrying.priest.position.x < 15,
-  "cargo return did not advance toward the cogitator station")
+check(carrying.priest.position.x > 15 and carrying.priest.commandable.issued[2].destination.x==0,
+  "cargo return invented physical travel or changed its actual goal")
 Movement.stop(carrying, "test-next")
 
 game.tick = 6000
@@ -137,10 +140,11 @@ for tick = 6010, 6170, 10 do
   game.tick = tick
   Movement.service(nil, 24)
 end
-check(teleports == starting + 3, "stalled path recovered early")
+check(teleports == starting, "stalled path recovered early")
 game.tick = 6180
 Movement.service(nil, 24)
-check(teleports == starting + 4, "stationary route failed to recover after three seconds")
+check(teleports == starting and #stalled.priest.commandable.issued==2,
+  "stationary route failed to issue exactly one native repath")
 check(stalled.movement_request_0418 == stall_route,
   "stationary route recovery dropped its request")
 Movement.stop(stalled, "test-next")

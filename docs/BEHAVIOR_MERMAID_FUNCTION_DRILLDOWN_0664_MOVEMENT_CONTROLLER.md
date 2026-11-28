@@ -93,8 +93,9 @@ Other mods may deliberately edit geometry without raising events; moving entitie
 also change occupancy without a construction event. Native movement remains the
 final safety check in those cases: crossing-managed commands disable native path
 cache reuse and disallow destructive/own-entity paths. Crossing-managed recovery
-can only reissue the authorized native goal; it cannot enter legacy teleport
-recovery. Native results marked `needs_destroy_to_reach` are rejected.
+can only reissue the authorized native goal. 1510 retires coordinate-teleport
+recovery for all ordinary ground priests, not just learned routes or physical
+couriers. Native results marked `needs_destroy_to_reach` are rejected.
 
 Continuation state consists of saved tables, primitive cursors, native request
 IDs and serializable engine entity references. Handler functions and event
@@ -105,8 +106,8 @@ profilers, or background Lua threads.
 
 | Setting or service | Current source value | Meaning |
 | --- | --- | --- |
-| `movement_controller_service_0611` | 10 ticks, priority 42, budget 24 | Services active movement requests. |
-| `movement_controller_sample_0611` | 5 ticks, priority 80, budget 32 | Samples active requests. |
+| `movement_controller_service_0611` | 10 ticks, priority 42, budget 24 | Resumes saved active-key cursor; charged valid, invalid and expired visits. Expiry issues an actual native stop. |
+| `movement_controller_sample_0611` | 5 ticks, priority 80, budget 32 | Independent saved active-key cursor; large discontinuities physically stop, retain the work lease and invoke existing overleash authority when needed. |
 | `movement_controller_enforcement_0566` | 89 ticks, priority 70, budget 24 | Integrated stale-request / envelope / overleash enforcement. |
 | `command_refresh_ticks` | 45, retained constant | Does not impose periodic repathing on an advancing unit; active submission uses initial-command or stalled-progress checks. |
 | `retarget_hold_ticks` | 90 | Retarget suppression boundary. |
@@ -115,6 +116,35 @@ profilers, or background Lua threads.
 | `stall_repath_ticks` | 240 | Stalled progress repath threshold. |
 
 These are nominal ticks and offered work counts, not measured execution durations. Service budgets do not reduce the simulation tick rate. An accepted request may retain an existing owner for the same destination; callers that require their own lease must verify the returned live owner.
+
+## 1510 sandbox displacement recovery
+
+```mermaid
+flowchart TD
+    Sample["Existing five-tick active-key sampler"] --> Jump{"Same priest/surface and implausible displacement?"}
+    Jump -->|no| Continue["Continue native movement"]
+    Jump -->|yes| Stop["Issue actual native stop; record from/to, owner and success"]
+    Stop --> Preserve["Preserve original body, cargo and accepted goal; reset issued-command witness"]
+    Preserve --> Leash{"Outside hard leash?"}
+    Leash -->|yes| Home["Existing 0566 authority: preserve verified remote mission or return home"]
+    Leash -->|no| Hold["Short existing stabilization window"]
+    Home --> Hold
+    Hold --> Repath["Reissue native route after clamp ends"]
+    Repath --> Continue
+    Expire["Expired active request"] --> StopNative["Stop before dropping authority"]
+```
+
+Owner sandbox 1.0.4 reported 14,736 large displacement detections across ten
+original priests, including 133.70 tiles within five ticks. These are position
+samples, not a verified continuous velocity. The prior sampler deleted the
+active lease without issuing the stop it logged. Ground recovery also projected
+a displaced worker onto an old route and teleported it there, resetting the
+sample to hide that discontinuity. Both paths are retired. Native train travel
+of the original Magos is not treated as a walking-speed violation. Every
+violation is counted; per-priest detail logs are limited to one per 600 ticks.
+The fix leaves prototype speed and native physics, force planning and the
+existing broker cadence intact. External/native displacement causality must
+still be reproduced; do not infer it from a successful synthetic jump test.
 
 ## Native ground speed and appearance
 

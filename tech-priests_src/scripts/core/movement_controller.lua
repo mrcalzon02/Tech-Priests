@@ -49,6 +49,8 @@ M.snap_distance_sq = 0.04
 M.snap_sample_ticks = 5
 M.stabilize_ticks = 12
 M.max_tiles_per_second = 48.0
+-- Keep the existing large-jump threshold; this is not a walking-speed cap.
+M.snap_log_interval_1510 = 600
 M.combat_fire_range = 15
 M.combat_approach_radius = 13
 M.proxy_prime_cooldown_ticks = 18
@@ -328,7 +330,27 @@ local function note_active_request(root, key, pair)
 end
 
 local function clear_active_request(root, key)
-  if root and root.active_request_ids and key then root.active_request_ids[key] = nil end
+  local ids=root and root.active_request_ids
+  if not (ids and key and ids[key]) then return end
+  -- Preserve the next saved visit when the current owner retires a request.
+  local following=next(ids,key)
+  ids[key]=nil
+  if not following then following=next(ids) end
+  if root.service_cursor_1510==key then root.service_cursor_1510=following end
+  if root.sample_cursor_1510==key then root.sample_cursor_1510=following end
+end
+
+-- Both existing broker services resume at a saved active key instead of
+-- starting at the same hash-table prefix. Count invalid entries as visits.
+-- No sorted roster, new world query, per-tick scan or persistent Lua iterator.
+local function active_visit(root, field, seen)
+  local ids=root.active_request_ids
+  local key=root[field]
+  if not (key and ids[key]) then key=next(ids) end
+  if not key or seen[key] then return nil end
+  seen[key]=true
+  root[field]=next(ids,key) or next(ids)
+  return key
 end
 
 local function count_table(t) local n=0; if type(t)=="table" then for _ in pairs(t) do n=n+1 end end; return n end
@@ -518,17 +540,21 @@ end
 
 local function direct_stop(priest)
   if not (priest and priest.valid and defines and defines.command) then return false end
-  local ok_any = false
-  local command = { type = defines.command.stop }
-  pcall(function()
-    local commandable = priest.commandable
-    if commandable and commandable.valid then commandable.set_command(command); ok_any = true end
+  if priest.type=="character" then
+    return pcall(function() priest.walking_state={walking=false} end)
+  end
+  local command={type=defines.command.stop}
+  local ok,accepted=pcall(function()
+    local commandable=priest.commandable
+    if not (commandable and commandable.valid) then return false end
+    return commandable.set_command(command)~=false
   end)
-  pcall(function()
-    if priest.set_command then priest.set_command(command); ok_any = true end
+  if ok and accepted then return true end
+  ok,accepted=pcall(function()
+    if not priest.set_command then return false end
+    return priest.set_command(command)~=false
   end)
-  pcall(function() priest.walking_state = { walking = false }; ok_any = true end)
-  return ok_any
+  return ok and accepted==true
 end
 
 local function direct_go_to(priest, pos, radius, distraction)
@@ -605,7 +631,9 @@ local function direct_go_to(priest, pos, radius, distraction)
     type = defines.command.go_to_location,
     destination = { x = pos.x, y = pos.y },
     radius = radius or M.default_radius,
-    distraction = distraction or defines.distraction.none,
+    -- The worker's explicit combat intent and proxy turret own enemies.
+    -- Native go-to must not become an autonomous pursuit command.
+    distraction = defines.distraction.none,
     -- Learned crossings are advice; native physics/pathfinding is the final
     -- check, including script edits which deliberately raise no world event.
     pathfind_flags = pos.crossing_managed_1507 and {cache=false,
@@ -615,10 +643,10 @@ local function direct_go_to(priest, pos, radius, distraction)
   local ok_any = false
   pcall(function()
     local commandable = priest.commandable
-    if commandable and commandable.valid then commandable.set_command(command); ok_any = true end
+    if commandable and commandable.valid then ok_any=commandable.set_command(command)~=false end
   end)
   if not ok_any then
-    pcall(function() if priest.set_command then priest.set_command(command); ok_any = true end end)
+    pcall(function() if priest.set_command then ok_any=priest.set_command(command)~=false end end)
   end
   return ok_any
 end
@@ -1083,6 +1111,12 @@ function M.request_status(pair, owner)
   status.distance_sq = d2
   status.radius = radius
   local reach = radius + arrival_padding(pair, req)
+  if pair.movement_stabilize_until_0418 and now()<pair.movement_stabilize_until_0418 then
+    status.status="clamped"
+    status.clamp="movement-stabilizing"
+    pair.movement_controller_status_0418=status.status
+    return status
+  end
   if d2 <= reach * reach then
     status.status = "arrived"
     status.arrived = true
@@ -1937,22 +1971,10 @@ local function off_objective_route(req, position)
   return (dist_sq(position, projected) or 0) > M.recovery_off_route_distance_sq
 end
 
-local function recovery_waypoint(req, position)
-  local origin = req.recovery_route_origin or position
-  local dx, dy = req.x - origin.x, req.y - origin.y
-  local length_sq = dx * dx + dy * dy
-  if length_sq < 0.25 then return { x = req.x, y = req.y } end
-  local progress = math.max(0, math.min(1,
-    ((position.x - origin.x) * dx + (position.y - origin.y) * dy) / length_sq))
-  local next_step = M.recovery_next_waypoint_tiles / math.sqrt(length_sq)
-  local t = math.min(1, progress + next_step)
-  return { x = origin.x + dx * t, y = origin.y + dy * t }
-end
-
 -- 0877: Physical station recovery is an acceptance-gated journey. A
 -- waypoint recovery may reissue the real Factorio ground command, but must
 -- never teleport the carrier or its original-priest custody through terrain.
--- Other legacy route families retain their existing behavior.
+-- 1510 applies the same native-only recovery to ordinary ground work.
 local function physical_station_recovery_route(req)
   if not (req and type(req.owner)=="string") then return false end
   local suffix=req.owner:match("^station%-recovery%-(%d%d%d%d)$")
@@ -2065,66 +2087,40 @@ local function recover_bad_route(pair, req, reason)
   if priest.type=="character" then
     return false,"original-character-native-walk-recovery-only"
   end
-  local surface = priest.surface
-  if not (surface and priest.teleport and surface.can_place_entity) then
-    return false, "recovery-teleport-unavailable"
+  -- Ordinary workers also recover by actual native navigation. A clear
+  -- destination is not proof of a clear intervening path. Projecting a
+  -- displaced worker onto an old route and teleporting it there could jump
+  -- arbitrarily far, or across walls, and mask the jump from the sampler.
+  local goal=req.ground_route_final_destination or req
+  if not M.position_allowed(pair,goal,req.reason,{owner=req.owner,
+      ground_route_chunked=req.ground_route_chunked,
+      ground_route_final_destination=goal}) then
+    return false,"native-recovery-goal-not-authorized"
   end
-  local destination = recovery_waypoint(req, priest.position)
-  local function legal(pos)
-    local allowed = M.position_allowed(pair, pos, req.reason,
-      { owner = req.owner })
-    if not allowed then return false end
-    local ok, placeable = pcall(function()
-      return surface.can_place_entity({
-        name = priest.name, position = pos, force = priest.force })
-    end)
-    return ok and placeable == true
+  if not movement_command_budget_allowed(req) then
+    return false,"native-recovery-budget-deferred"
   end
-  local chosen = legal(destination) and destination or nil
-  if not chosen and surface.find_non_colliding_position then
-    local ok, alternative = pcall(function()
-      return surface.find_non_colliding_position(
-        priest.name, destination, M.recovery_probe_radius, 0.25, false)
-    end)
-    if ok and alternative and legal(alternative)
-      and (dist_sq(alternative, destination) or math.huge)
-        <= M.recovery_probe_radius * M.recovery_probe_radius
-    then chosen = alternative end
+  if not direct_go_to(priest,goal,math.max(.15,tonumber(req.radius) or M.default_radius),defines.distraction.none) then
+    return false,"native-recovery-command-refused"
   end
-  -- Never move backwards to a different or obstructed objective. An
-  -- unsuccessful recovery must leave the existing movement and cargo intact.
-  if not chosen or (dist_sq(chosen, req) or math.huge)
-      >= (dist_sq(priest.position, req) or 0)
-  then return false, "recovery-waypoint-not-clear-or-forward" end
-  local from = { x = priest.position.x, y = priest.position.y }
-  local ok, moved = pcall(function() return priest.teleport(chosen, surface) end)
-  if not (ok and moved == true) then return false, "recovery-teleport-rejected" end
-  local arrived = { x = priest.position.x, y = priest.position.y }
-  req.recovery_route_origin = arrived
-  req.recovery_last_position = arrived
-  req.recovery_last_motion_tick = now()
-  req.recovery_wrong_direction_since = nil
-  req.recovery_wrong_position_since = nil
-  req.recovery_last_attempt_tick = now()
-  req.last_command_tick = 0
-  req.last_progress_position = nil
-  req.last_progress_tick = now()
-  local root = ensure_root()
-  local key = pair_key(pair)
-  if key then
-    -- A legitimate recovery teleport must not trigger the separate snap
-    -- detector, which would otherwise delete the still-valid cargo route.
-    root.samples[key] = { x = arrived.x, y = arrived.y, tick = now(),
-      surface = surface.index, priest_unit = priest.unit_number }
-  end
-  pair.movement_controller_state_0418 = "waypoint-recovery-teleport"
-  pair.movement_controller_last_recovery_0418 = {
-    tick = now(), reason = reason, owner = req.owner, from = from, to = arrived }
-  root.stats.waypoint_recovery_teleports =
-    (root.stats.waypoint_recovery_teleports or 0) + 1
-  root.stats["waypoint_recovery_" .. reason] =
-    (root.stats["waypoint_recovery_" .. reason] or 0) + 1
-  metric("path_waypoint_recovery_teleports", 1)
+  req.x,req.y=goal.x,goal.y
+  req.ground_route_chunked=false
+  local pos={x=priest.position.x,y=priest.position.y}
+  req.recovery_route_origin=pos
+  req.recovery_last_position=pos
+  req.recovery_last_motion_tick=now()
+  req.recovery_wrong_direction_since=nil
+  req.recovery_wrong_position_since=nil
+  req.recovery_last_attempt_tick=now()
+  req.last_command_tick=now()
+  req.last_progress_position=pos
+  req.last_progress_tick=now()
+  pair.movement_controller_state_0418="native-repath-1510"
+  pair.movement_controller_last_recovery_0418={tick=now(),reason=reason,
+    owner=req.owner,from=pos,to={x=goal.x,y=goal.y},native=true}
+  local root=ensure_root()
+  root.stats.waypoint_recovery_native_repaths_1510=(root.stats.waypoint_recovery_native_repaths_1510 or 0)+1
+  metric("path_waypoint_recovery_native_repaths_1510",1)
   return true
 end
 
@@ -2185,7 +2181,8 @@ local function apply_request(pair, req)
   local reason = clamp_reason(pair)
   if reason then
     pair.movement_controller_clamp_0418 = reason
-    direct_stop(priest)
+    -- A stopped native command needs reissue when a legitimate clamp ends.
+    if direct_stop(priest) then req.last_command_tick=0 end
     return false
   end
   pair.movement_controller_clamp_0418 = nil
@@ -2249,7 +2246,7 @@ local function apply_request(pair, req)
       return false
     end
     pair.movement_controller_state_0418 = "loitering"
-    direct_stop(priest)
+    if direct_stop(priest) then req.last_command_tick=0 end
     return true
   end
 
@@ -2273,8 +2270,8 @@ local function apply_request(pair, req)
     return walked
   end
 
-  -- A three-second sustained wrong waypoint, wrong direction, or stall
-  -- triggers a legal forward waypoint recovery, without dropping the request.
+  -- A sustained wrong position, direction or stall triggers a budgeted
+  -- native repath to the authorized goal, never a coordinate relocation.
   if watch_bad_route(pair, req) then return true end
 
   -- A fixed command refresh restarts Factorio's native pathfinding even
@@ -2315,99 +2312,150 @@ local function apply_request(pair, req)
 end
 
 function M.service(event, budget)
-  local root = ensure_root()
-  local processed, acted = 0, 0
-  local max_count = tonumber(budget) or 24
-  root.active_request_ids = root.active_request_ids or {}
-  for key in pairs(root.active_request_ids) do
-    if processed >= max_count then
-      root.stats.service_budget_exhausted = (root.stats.service_budget_exhausted or 0) + 1
-      metric("movement_service_budget_exhausted", 1)
-      return false, "budget-exhausted"
-    end
-    local pair = pair_by_request_key(key)
-    local req = root.requests[key] or (pair and pair.movement_request_0418)
+  local root=ensure_root()
+  local processed,acted=0,0
+  local max_count=math.max(0,math.floor(tonumber(budget) or 24))
+  local seen={}
+  while processed<max_count do
+    local key=active_visit(root,"service_cursor_1510",seen)
+    if not key then break end
+    processed=processed+1
+    local pair=pair_by_request_key(key)
+    local req=root.requests[key] or (pair and pair.movement_request_0418)
     if not (pair and valid(pair.priest) and valid(pair.station) and not is_space_pair(pair)) then
-      root.requests[key] = nil
-      clear_active_request(root, key)
-      root.stats.invalid_request_pruned = (root.stats.invalid_request_pruned or 0) + 1
-    elseif req and req.expires_tick and req.expires_tick < now() then
-      root.requests[key] = nil
-      clear_active_request(root, key)
-      pair.movement_request_0418 = nil
-      root.stats.expired_request_pruned = (root.stats.expired_request_pruned or 0) + 1
+      if pair and valid(pair.priest) and not is_space_pair(pair) then direct_stop(pair.priest) end
+      root.requests[key]=nil
+      clear_active_request(root,key)
+      root.stats.invalid_request_pruned=(root.stats.invalid_request_pruned or 0)+1
+    elseif req and req.expires_tick and req.expires_tick<now() then
+      -- Never leave an engine go-to running after its authority expired.
+      if direct_stop(pair.priest) then
+        root.requests[key]=nil
+        clear_active_request(root,key)
+        pair.movement_request_0418=nil
+        root.stats.expired_request_pruned=(root.stats.expired_request_pruned or 0)+1
+      else
+        root.stats.native_stop_refused_1510=(root.stats.native_stop_refused_1510 or 0)+1
+      end
     elseif req then
-      processed = processed + 1
-      if apply_request(pair, req) then acted = acted + 1 end
+      if apply_request(pair,req) then acted=acted+1 end
     else
-      clear_active_request(root, key)
-      root.stats.empty_request_pruned = (root.stats.empty_request_pruned or 0) + 1
+      if direct_stop(pair.priest) then clear_active_request(root,key)
+      else root.stats.native_stop_refused_1510=(root.stats.native_stop_refused_1510 or 0)+1 end
+      root.stats.empty_request_pruned=(root.stats.empty_request_pruned or 0)+1
     end
   end
-  root.stats.service_active_processed = (root.stats.service_active_processed or 0) + processed
-  metric("movement_active_requests_processed", processed)
-  if processed == 0 then return false, "empty" end
-  return acted, "active-requests"
+  local exhausted=processed>=max_count and next(root.active_request_ids)~=nil
+    and not seen[root.service_cursor_1510]
+  if exhausted then
+    root.stats.service_budget_exhausted=(root.stats.service_budget_exhausted or 0)+1
+    metric("movement_service_budget_exhausted",1)
+  end
+  root.stats.service_active_processed=(root.stats.service_active_processed or 0)+processed
+  metric("movement_active_requests_processed",processed)
+  return {processed=processed,acted=acted,exhausted=exhausted,
+    detail=processed==0 and "empty" or "active-requests"}
 end
 
-function M.sample(event, budget)
-  local root = ensure_root()
-  local processed = 0
-  local max_count = tonumber(budget) or 32
-  root.active_request_ids = root.active_request_ids or {}
-  for key in pairs(root.active_request_ids) do
-    if processed >= max_count then
-      root.stats.sample_budget_exhausted = (root.stats.sample_budget_exhausted or 0) + 1
-      metric("movement_sample_budget_exhausted", 1)
-      return false, "budget-exhausted"
-    end
-    local pair = pair_by_request_key(key)
+local function on_native_train(priest)
+  if priest.type~="character" then return false end
+  local ok,vehicle=pcall(function()return priest.vehicle end)
+  return ok and vehicle and vehicle.valid==true
+end
+
+function M.sample(event,budget)
+  local root=ensure_root()
+  local processed,acted=0,0
+  local max_count=math.max(0,math.floor(tonumber(budget) or 32))
+  local seen={}
+  while processed<max_count do
+    local active_key=active_visit(root,"sample_cursor_1510",seen)
+    if not active_key then break end
+    processed=processed+1
+    local pair=pair_by_request_key(active_key)
     if pair and valid(pair.priest) and valid(pair.station) and not is_space_pair(pair) then
-      processed = processed + 1
-      local key = pair_key(pair)
-      local pos = pair.priest.position
-      local prev = key and root.samples[key]
-      if prev and prev.surface == pair.priest.surface.index and prev.priest_unit == pair.priest.unit_number then
-        local d2 = dist_sq(prev, pos) or 0
-        local dt = math.max(1, now() - (prev.tick or now()))
-        local allowed_step = math.max(0.16, (tonumber(M.max_tiles_per_second) or 2.2) * dt / 60)
-        local allowed_sq = math.max(tonumber(M.snap_distance_sq) or 0.04, allowed_step * allowed_step)
-        if dt <= 90 and d2 > math.max(36, allowed_sq) then
-          root.stats.snaps = (root.stats.snaps or 0) + 1
-          root.stats.high_speed_suppressed = (root.stats.high_speed_suppressed or 0) + 1
-          root.stats.speed_violations = (root.stats.speed_violations or 0) + 1
-          local rec = {
-            tick = now(), station = pair.station.unit_number, priest = pair.priest.unit_number,
-            from = { x = prev.x, y = prev.y }, to = { x = pos.x, y = pos.y },
-            dist = math.sqrt(d2), dt = dt, allowed = math.sqrt(allowed_sq), mode = tostring(pair.mode),
-            reason = pair.movement_controller_reason_0418 or (pair.movement_request_0418 and pair.movement_request_0418.reason)
-          }
-          root.last_snap = rec
-          pair.last_ground_snap_0418 = rec
-          pair.movement_stabilize_until_0418 = now() + M.stabilize_ticks
-          -- Do not teleport the visible ground priest backwards. Stop, clear the
-          -- current movement request, and let the scheduler submit a fresh sane
-          -- route on the next behavior pass.
-          -- 0.1.452: do not freeze normal pathing while investigating movement churn.
-          -- Only truly huge visual jumps reach this branch now; record them and clear
-          -- the stale request, then let the scheduler repath without immobilizing.
-          root.requests[key] = nil
-          clear_active_request(root, key)
-          pair.movement_request_0418 = nil
-          pair.movement_controller_state_0418 = "speed-governed"
-          pair.movement_controller_clamp_0418 = "ground-speed-governor"
-          if log then log("[Tech-Priests 0.1.442] ground speed governor stop station=" .. tostring(rec.station) .. " priest=" .. tostring(rec.priest) .. " dist=" .. tostring(rec.dist) .. " dt=" .. tostring(dt) .. " mode=" .. tostring(rec.mode) .. " reason=" .. tostring(rec.reason)) end
+      local priest=pair.priest
+      local key=pair_key(pair)
+      local pos=priest.position
+      local prev=key and root.samples[key]
+      local aboard=on_native_train(priest)
+      if not aboard and prev and not prev.aboard_1510
+          and prev.surface==priest.surface.index and prev.priest_unit==priest.unit_number then
+        local d2=dist_sq(prev,pos) or 0
+        local dt=math.max(1,now()-(prev.tick or now()))
+        local allowed_step=math.max(.16,(tonumber(M.max_tiles_per_second) or 2.2)*dt/60)
+        local allowed_sq=math.max(tonumber(M.snap_distance_sq) or .04,allowed_step*allowed_step)
+        if dt<=90 and d2>math.max(36,allowed_sq) then
+          local req=root.requests[active_key] or pair.movement_request_0418
+          local stopped=direct_stop(priest)
+          root.stats.snaps=(root.stats.snaps or 0)+1
+          root.stats.speed_violations=(root.stats.speed_violations or 0)+1
+          if stopped then
+            root.stats.high_speed_suppressed=(root.stats.high_speed_suppressed or 0)+1
+            acted=acted+1
+          else
+            root.stats.native_stop_refused_1510=(root.stats.native_stop_refused_1510 or 0)+1
+          end
+          local rec={tick=now(),station=pair.station.unit_number,priest=priest.unit_number,
+            from={x=prev.x,y=prev.y},to={x=pos.x,y=pos.y},dist=math.sqrt(d2),dt=dt,
+            allowed=math.sqrt(math.max(36,allowed_sq)),mode=tostring(pair.mode),
+            reason=req and req.reason or pair.movement_controller_reason_0418,
+            owner=req and req.owner,native_stop=stopped==true}
+          root.last_snap=rec
+          pair.last_ground_snap_0418=rec
+          root.stats.maximum_sampled_jump_1510=math.max(root.stats.maximum_sampled_jump_1510 or 0,rec.dist)
+          pair.movement_stabilize_until_0418=now()+M.stabilize_ticks
+          -- Preserve the valid lease, actual cargo and original identity.
+          -- A stop invalidates the engine command, not the work owner's goal.
+          -- After the bounded stabilization interval, issue a fresh command.
+          if req then
+            req.last_command_tick=0
+            req.last_progress_position={x=pos.x,y=pos.y}
+            req.last_progress_tick=now()
+            req.recovery_route_origin={x=pos.x,y=pos.y}
+            req.recovery_last_position={x=pos.x,y=pos.y}
+            req.recovery_last_motion_tick=now()
+            req.recovery_wrong_direction_since=nil
+            req.recovery_wrong_position_since=nil
+            req.recovery_last_attempt_tick=now()
+          end
+          pair.movement_controller_state_0418="speed-governed"
+          pair.movement_controller_clamp_0418="ground-speed-governor"
+          -- Use the existing leash/custody authority, including its verified
+          -- rail and courier exceptions, immediately after an actual jump.
+          -- Do not wait 89 ticks to discover a lost ordinary worker.
+          if (dist_sq(pos,pair.station.position) or 0)>M.hard_leash(pair)^2 then
+            M.enforce_pair(pair,"native-displacement-1510")
+          end
+          -- Count every violation, but stop flooding the log on every pulse.
+          pair.speed_snap_log_count_1510=(pair.speed_snap_log_count_1510 or 0)+1
+          if log and now()>=(pair.next_speed_snap_log_tick_1510 or 0) then
+            log("[Tech-Priests 1510] ground-displacement station="..tostring(rec.station)
+              .." priest="..tostring(rec.priest).." from="..rec.from.x..","..rec.from.y
+              .." to="..rec.to.x..","..rec.to.y.." dist="..rec.dist.." dt="..dt
+              .." stop="..tostring(rec.native_stop).." owner="..tostring(rec.owner)
+              .." reason="..tostring(rec.reason).." violations="..pair.speed_snap_log_count_1510)
+            pair.next_speed_snap_log_tick_1510=now()+M.snap_log_interval_1510
+            pair.speed_snap_log_count_1510=0
+          end
         end
       end
-      if key then root.samples[key] = { x = pos.x, y = pos.y, tick = now(), surface = pair.priest.surface.index, priest_unit = pair.priest.unit_number } end
+      if key then root.samples[key]={x=pos.x,y=pos.y,tick=now(),
+        surface=priest.surface.index,priest_unit=priest.unit_number,aboard_1510=aboard or nil} end
     else
-      clear_active_request(root, key)
+      clear_active_request(root,active_key)
     end
   end
-  root.stats.sample_active_processed = (root.stats.sample_active_processed or 0) + processed
-  metric("movement_active_samples_processed", processed)
-  if processed == 0 then return false, "empty" end
-  return processed, "active-samples"
+  local exhausted=processed>=max_count and next(root.active_request_ids)~=nil
+    and not seen[root.sample_cursor_1510]
+  if exhausted then
+    root.stats.sample_budget_exhausted=(root.stats.sample_budget_exhausted or 0)+1
+    metric("movement_sample_budget_exhausted",1)
+  end
+  root.stats.sample_active_processed=(root.stats.sample_active_processed or 0)+processed
+  metric("movement_active_samples_processed",processed)
+  return {processed=processed,acted=acted,exhausted=exhausted,
+    detail=processed==0 and "empty" or "active-samples"}
 end
 
 local function destination_from_entity_or_position(target)

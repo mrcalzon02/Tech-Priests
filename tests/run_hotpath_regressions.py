@@ -16,6 +16,9 @@ from time import perf_counter
 
 ROOT = Path(__file__).resolve().parent.parent
 SMOKE = (
+    "movement_native_displacement_1510.lua",
+    "movement_waypoint_recovery.lua",
+    "movement_overleash_return_continuity.lua",
     "hydrogen_native_recipes_1509.lua",
     "native_engineer_default_1508.lua",
     "bounded_planning_area_1507.lua",

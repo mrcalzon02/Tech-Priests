@@ -57,7 +57,7 @@ flowchart TD
 
 | Responsibility | Current owner | Preserved boundary |
 | --- | --- | --- |
-| Ground request, priority, TTL, leases, native commands | `movement_controller` | One movement request; active custody and original owner checks. |
+| Ground request, priority, TTL, leases, native commands | `movement_controller` | One movement request; active custody and original owner checks. 1510 issues a real stop on expiry/discontinuity, preserves the active objective, and recovers solely via native path commands. |
 | Corridor proposal | `authority_corridor_pathing_0574` | Read-only route proposal, no independent command owner. |
 | Void/platform backend | `void_movement_authority_0630`, explicit platform owners | Backend-specific surface/stepped movement; not an offscreen ground teleport substitute. |
 | Pair ledger/reverse maps and disappearance | `station_pair_state`, `priest_lifecycle_authority_0499` | Observe original identities, conservative rebind and controlled recovery. |
