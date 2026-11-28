@@ -27,7 +27,7 @@ function M.legacy_recipe(name)
 end
 function M.private_item(name)
  return type(name)=="string" and
-  (name:match("^tp%-mh7%-forge%-cycle%-") or name:match("^tp%-mh7%-assembler%-cycle%-")
-   or name=="tp-mh7-forge-accept-guard" or name=="tp-mh7-assembler-accept-guard")~=nil
+  (name:match("^tp%-mh7%-forge%-cycle%-")~=nil or name:match("^tp%-mh7%-assembler%-cycle%-")~=nil
+   or name=="tp-mh7-forge-accept-guard" or name=="tp-mh7-assembler-accept-guard")
 end
 return M

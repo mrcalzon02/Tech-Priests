@@ -32,4 +32,8 @@ for i=1,4 do
  assert(a.ingredients[2].name==cfg.shell and a.ingredients[2].amount==3 and a.results[1].name==cfg.contained and a.results[1].amount==3)
 end
 assert(recipes["tp-mh7-assembler-accept"].hidden and not recipes["tp-mh7-assembler-accept"].enabled)
+assert(C.private_item("tp-mh7-forge-cycle-token") and C.private_item("tp-mh7-assembler-accept-guard"))
+for _,name in ipairs({cfg.stages[1].name,cfg.formed_stages[1].name,cfg.shell,cfg.contained,cfg.inert,"steel-plate"}) do
+ assert(not C.private_item(name),"real stock must never be classified as an internal token: "..name)
+end
 print("hydrogen_native_recipes_1509 PASS: seven machines, thirteen real selectable processes, original ratios and retired clocks")
