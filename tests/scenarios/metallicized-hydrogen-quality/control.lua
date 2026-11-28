@@ -102,8 +102,8 @@ local function exercise_machine_windows()
     if machine==storage.assembler then
       local grade=grades[3] or "normal"
       machine.set_recipe("tp-mh7-native-seal-fresh",grade)
-      assert(machine.insert{name=config.shell,count=3,quality=grade}==3)
-      assert(machine.insert{name=materials,count=3,quality=grade}==3)
+      assert(machine.insert{name=config.shell,count=1,quality=grade}==1)
+      assert(machine.insert{name=materials,count=1,quality=grade}==1)
     else
       machine.set_recipe("tp-mh7-native-forge-fresh",grades[#grades])
       assert(machine.insert{name=config.stages[1].name,count=1,quality=grades[#grades]}==1)
@@ -139,7 +139,7 @@ script.on_event(defines.events.on_tick, function(event)
   local sealed = storage.assembler.get_output_inventory()[1]
   local expected = grades[3] or "normal"
   assert(sealed.valid_for_read and sealed.name == config.contained and sealed.quality.name == expected)
-  assert(storage.assembler.get_output_inventory().get_item_count(config.contained)==3,"native sealing batch incomplete")
+  assert(storage.assembler.get_output_inventory().get_item_count(config.contained)==1,"native sealing batch incomplete")
   assert(storage.assembler.get_module_inventory().get_item_count() == 3, "module loss during recipe changes")
   log("Hydrogen quality: " .. (#grades)^2 .. " grade combinations, " .. storage.upgraded ..
     " quality upgrades in " .. storage.output .. " crucible crafts; hydroformed " .. shell.quality.name .. " shell")

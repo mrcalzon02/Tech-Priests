@@ -5,8 +5,9 @@ selection. Purifier, electrolyzer, compressor, crucible and pressure-shell
 fabricator retain their original recipe IDs, amounts, power and artwork.
 The pelletization forge offers one real recipe per raw decay stage (one
 raw pellet to its matching forged stage, 24 seconds). The canister
-assembler offers one recipe per forged stage (three matching pellets and
-three pressure shells to three sealed fuel canisters, 16 seconds). The
+assembler offers one recipe per forged stage (one matching pellet and one
+pressure shell to one non-stackable fuel canister, 16/3 seconds, equivalent
+throughput to the previous three-canister/16-second batch). The
 native recipe quality selector governs ingredient quality.
 
 ```mermaid

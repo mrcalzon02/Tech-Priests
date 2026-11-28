@@ -28,8 +28,8 @@ for i=1,4 do
  assert(f.energy_required==24 and f.ingredients[1].name==cfg.stages[i].name and f.ingredients[1].amount==1)
  assert(f.results[1].name==cfg.formed_stages[i].name and f.results[1].amount==1 and not f.results[1].reset_freshness_on_craft and not f.results[1].always_fresh)
  local a=recipes[C.machines[7].recipes[i]]
- assert(a.energy_required==16 and a.ingredients[1].name==cfg.formed_stages[i].name and a.ingredients[1].amount==3)
- assert(a.ingredients[2].name==cfg.shell and a.ingredients[2].amount==3 and a.results[1].name==cfg.contained and a.results[1].amount==3)
+ assert(a.energy_required==16/3 and a.ingredients[1].name==cfg.formed_stages[i].name and a.ingredients[1].amount==1)
+ assert(a.ingredients[2].name==cfg.shell and a.ingredients[2].amount==1 and a.results[1].name==cfg.contained and a.results[1].amount==1)
 end
 assert(recipes["tp-mh7-assembler-accept"].hidden and not recipes["tp-mh7-assembler-accept"].enabled)
 assert(C.private_item("tp-mh7-forge-cycle-token") and C.private_item("tp-mh7-assembler-accept-guard"))

@@ -20,11 +20,11 @@ function M.register()
    results={{type="item",name=formed,amount=1,always_fresh=false,reset_freshness_on_craft=false}},
    raise_on_crafted=true,allow_inserter_overload=false}
   created[#created+1]={type="recipe",name=seal_id,categories={"tp-mh7-review-assembly"},
-   enabled=false,hidden=false,energy_required=16,allow_productivity=false,auto_recycle=false,
+   enabled=false,hidden=false,energy_required=16/3,allow_productivity=false,auto_recycle=false,
    allow_decomposition=false,main_product=c.contained,localised_name={"recipe-name."..seal_id},
    localised_description={"recipe-description."..seal_id},
-   ingredients={{type="item",name=formed,amount=3},{type="item",name=c.shell,amount=3,spoil_weight=0}},
-   results={{type="item",name=c.contained,amount=3}},
+   ingredients={{type="item",name=formed,amount=1},{type="item",name=c.shell,amount=1,spoil_weight=0}},
+   results={{type="item",name=c.contained,amount=1}},
    allow_inserter_overload=false}
  end
  data:extend(created)

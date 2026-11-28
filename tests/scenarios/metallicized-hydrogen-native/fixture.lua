@@ -86,8 +86,8 @@ local function migrated()
   elseif i==6 then
    check(input.insert{name="steel-plate",count=2}==2,"native fabricator input")
   elseif i==7 then
-   check(input.insert{name=config.formed_stages[1].name,count=3}==3,"native assembler pellets")
-   check(input.insert{name=config.shell,count=3}==3,"native assembler shells")
+   check(input.insert{name=config.formed_stages[1].name,count=1}==1,"native assembler pellets")
+   check(input.insert{name=config.shell,count=1}==1,"native assembler shells")
    if script.feature_flags.spoiling then
     for j=1,#input do if input[j].valid_for_read and input[j].name==config.formed_stages[1].name then input[j].spoil_tick=game.tick+1800 end end
    end
@@ -127,7 +127,7 @@ Registry.on_event(defines.events.on_tick,function(event)
    elseif i==5 then check(inv.get_item_count(config.formed_stages[1].name)==1,"forge output")
    elseif i==6 then check(inv.get_item_count(config.shell)==1,"fabricator output")
    elseif i==7 then
-    check(inv.get_item_count(config.contained)==3,"sealing output")
+    check(inv.get_item_count(config.contained)==1,"sealing output")
     for k,tier in ipairs({"minoris","majoris","maximus"}) do
      local reactor=place(e.surface,e.force,"mars-plasma-reactor-"..tier,125+k*10,0)
      local fuel=reactor.get_fuel_inventory()

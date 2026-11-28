@@ -21,7 +21,7 @@ rows[#rows+1]=inert
 local shell=table.deepcopy(data.raw.item['steel-plate']);shell.name=c.shell;shell.localised_name='Empty pressure shell';shell.stack_size=20
 rows[#rows+1]=shell
 local sealed=table.deepcopy(data.raw.item['uranium-fuel-cell']);sealed.type='item-with-tags';sealed.name=c.contained
-sealed.localised_name='Contained metallicized pellet';sealed.localised_description='Sealed containment preserves remaining lifetime, integrity and quality; it does not repair decay.'
+sealed.localised_name='Contained metallicized pellet';sealed.localised_description='Sealed fuel does not decay. Existing tagged canisters retain their containment data.'
 sealed.stack_size=1;sealed.flags={'not-stackable'};sealed.auto_recycle=false;sealed.fuel_categories=nil;sealed.fuel_value=nil;sealed.burnt_result=nil
 sealed.fuel_acceleration_multiplier=nil;sealed.fuel_top_speed_multiplier=nil
 rows[#rows+1]=sealed

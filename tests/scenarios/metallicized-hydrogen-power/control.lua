@@ -176,13 +176,13 @@ script.on_event(defines.events.on_tick, function(event)
   end
   if event.tick == 3000 then
     local line = storage.shell_first
-    assert(line.sealer.get_inventory(defines.inventory.crafter_input).get_item_count(shell)>=3,"native shell buffer missing")
+    assert(line.sealer.get_inventory(defines.inventory.crafter_input).get_item_count(shell)>=1,"native shell buffer missing")
     assert(line.output.get_item_count(fuel)==0 and line.sealer.can_insert{name=formed,count=1},"shell queue blocked the first pellet")
     assert(line.pellets.insert{name=formed,count=3}==3)
   elseif event.tick == 4500 then
     local line = storage.shell_first
     assert(line.output.get_item_count(fuel)==3,"native canisters failed to reach the output chest")
-    assert(line.sealer.products_finished==1,"assembler failed its native powered cycle")
+    assert(line.sealer.products_finished==3,"assembler failed its native powered cycles")
   end
   if event.tick == 600 or event.tick == 660 then
     for i, grid in ipairs(storage.grids) do
