@@ -2,16 +2,17 @@
 local Registry=require("scripts.core.runtime_event_registry")
 local config=require("hydrogen.config")
 local OLD=script.active_mods["tech-priests"]=="1.0.3"
+local C=not OLD and require("hydrogen.native-contract") or nil
 local function check(ok,why) if not ok then error("[TP-HYDROGEN-1509] FAIL "..why) end end
 local function place(surface,force,name,x,y)
  return assert(surface.create_entity{name=name,position={x,y},force=force,raise_built=true},"cannot place "..name)
 end
 local function area(surface)
- surface.request_to_generate_chunks({0,0},4);surface.force_generate_chunk_requests()
+ surface.request_to_generate_chunks({64,0},4);surface.force_generate_chunk_requests()
  local tiles={}
- for x=-15,125 do for y=-15,15 do tiles[#tiles+1]={name="landfill",position={x,y}} end end
+ for x=-15,165 do for y=-15,15 do tiles[#tiles+1]={name="landfill",position={x,y}} end end
  surface.set_tiles(tiles)
- for _,e in ipairs(surface.find_entities_filtered{area={{-15,-15},{125,15}},type={"tree","simple-entity","cliff","resource"}}) do e.destroy() end
+ for _,e in ipairs(surface.find_entities_filtered{area={{-15,-15},{165,15}},type={"tree","simple-entity","cliff","resource"}}) do e.destroy() end
 end
 local function seed()
  if not OLD then return end
@@ -51,7 +52,6 @@ local function migrated()
   end
  end
  check(found["old-raw"] and found["old-formed"] and found["old-sealed"] and shells==7,"original private stock not recovered")
- local C=require("hydrogen.native-contract")
  local surface=t.old_forge.surface;local force=game.forces.player
  t.cases={};t.start=game.tick
  local feed={
